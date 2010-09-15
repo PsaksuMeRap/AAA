@@ -5,7 +5,7 @@
 
 rm(list=ls(all=TRUE))
 library("RODBC")
-source ("/home/claudio/Dropbox/eclipse/calcoloCovarianze/sub_db_utilities.R")
+source ("../calcoloCovarianze/sub_db_utilities.R")
 source ("procedureImportazioneDati.R")
 
 options(browser="google-chrome")
@@ -45,7 +45,7 @@ if (length(listaFiles) == 0) {
 	print ("non ci sono azioni da importare")
 } else {
 	x = lapply(listaFiles,importaDaCvs,workDir,directory)
-	success <- lapply(x,importaAzioniInBancaDati)
+	success <- lapply(x,importaAzioniAggiunteInBancaDati)
 	print ("Terminata importazione azioni aggiunte")
 }
 

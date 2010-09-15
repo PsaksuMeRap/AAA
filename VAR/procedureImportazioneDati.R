@@ -12,13 +12,8 @@ importaDaCvs <- function(fileName,workDir,directory) {
 			quiet=TRUE,encoding="ISO-8859-1")
     dati <- iconv(dati)
 
-	checkNoData <- length(grep(pattern="NO DATA TO RETURN",x=dati[7],useBytes=TRUE))>0
-	checkNoBondData <- length(grep(pattern="NO BOND DATA",x=dati[7],useBytes=TRUE))>0
-	checkInvalidCode <- length(grep(pattern="INVALID CODE",x=dati[7],useBytes=TRUE))>0
-	if (checkNoData | checkNoBondData | checkInvalidCode) {
-		if (checkInvalidCode) {
-			print(paste("Invalid code for file:",fileName))
-		}
+	if ((length(grep(pattern="NO DATA TO RETURN",x=dati[7],useBytes=TRUE))>0 ) |
+		(length(grep(pattern="NO BOND DATA",x=dati[7],useBytes=TRUE))>0)) {
 		state = c(fileName,"no data")
 		return(list(isin="",state=state))
 	}
@@ -125,93 +120,6 @@ importaAzioniInBancaDati <- function(x) {
 	
 	return(TRUE)	
 }
-
-
-importaAzioniAggiunteInBancaDati <- function(x) {
-	getTickerFromIsin <- function(){
-		# questa funzione esegue una query sul database "prezzi storici azioni (VAR)"
-		# per determinare il ticker corrispondente all'ISIN dato
-		
-		query = "SELECT Ticker FROM universo_titoli WHERE ISIN ='"
-		query = paste(query,x$isin,"'",sep="")
-		
-		risultato.query = sqlQuery(db.prezziStoriciVAR, query,as.is=TRUE)
-		if (nrow(risultato.query)!=1) {
-			# prova nella tabella universo_azioni
-			query = "SELECT Ticker FROM universo_azioni WHERE ISIN ='"
-			query = paste(query,x$isin,"'",sep="")
-			risultato.query = sqlQuery(db.prezziStoriciVAR, query,as.is=TRUE)
-			if (nrow(risultato.query)!=1) {			
-				return (NA_character_)
-			}
-		}
-		return(risultato.query[1,1])
-	}
-	
-	if (x$state[2] != "ok") {
-		print(paste("Attenzione, lo stato della serie nel file ",
-						x$state[1]," è ",x$state[2],sep=""))
-		return(FALSE)
-	}
-	
-	ticker <- getTickerFromIsin()
-	
-	if (is.na(ticker)) {
-		print(paste("Nella banca dati il codice ISIN:",x$isin,"non esiste."))	
-		return(FALSE)
-	}
-	
-	osservazioniValide <- !is.na(x$dati[,"Prezzo"])
-	
-	if (any(osservazioniValide)) {
-		
-		# rimuovi dal DB tutte le osservazioni comprese nell'intervallo
-		# data minima disponibile, data massima disponibile
-		
-		dati <- x$dati[osservazioniValide,]
-		dataInizio <- dati[1,"Data"]
-		dataFine <- dati[nrow(x$dati),"Data"]
-		
-		dateValide <- dati[,"Data"]
-		
-		query1 <- "DELETE FROM TotalePrezziStorico WHERE Ticker = '"
-		query2 <- ticker
-		query3 <- paste("' AND TRADE_DATE >= '",dataInizio,sep="")
-		query4 <- paste("' AND TRADE_DATE <= '",dataFine,"'",sep="")
-		query <- paste(query1,query2,query3,query4,sep="")
-		
-		risultato.query <- sqlQuery(db.prezziStoriciVAR, query)
-		
-		# estendi il data.frame col campo Ticker
-		dati <- data.frame(Ticker=ticker,dati)
-		
-		risultato.query <- sqlSave(
-				channel = db.tempdb,
-				dat     = dati,
-				tablename="datiAzioniDaR",
-				rownames=FALSE
-		)
-		
-		
-		# inserisci nella tabella TotalePrezziStorico
-		query <- paste("INSERT INTO TotalePrezziStorico",
-				"            (Ticker, TRADE_DATE, [Close])",
-				"SELECT Ticker, CONVERT(nvarchar,Data,5) as TRADE_DATE,",
-				"Prezzo FROM [tempdb].dbo.datiAzioniDaR "
-		)
-		risultato.query <- sqlQuery(db.prezziStoriciVAR, query)
-		
-		# elimina la tabella datiAzioniDaR
-		query <- "DROP TABLE datiAzioniDaR"
-		risultato.query <- sqlQuery(db.tempdb, query)
-	} else {
-		print(paste("Nessuna osservazione valida per",ticker))
-	}
-	
-	return(TRUE)	
-}
-
-
 
 importaIndiciAzioniInBancaDati <- function(x) {
 	getTickerFromIsin <- function(){
@@ -642,7 +550,7 @@ importaTassiInteresseInBancaDati <- function(x) {
 				"FROM [tempdb].dbo.datiTassiDaR "
 		)
 		risultato.query <- sqlQuery(db.tassiStoriciVAR, query)
-print(risultato.query)	
+		
 		# elimina la tabella datiCambiDaR
 		query <- "DROP TABLE datiTassiDaR"
 		risultato.query <- sqlQuery(db.tempdb, query)
