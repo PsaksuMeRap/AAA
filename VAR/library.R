@@ -280,11 +280,14 @@ create_repositoryEquities <- function(equities.df) {
 				"WHERE ID_strumento=1"
 		)
 		repository$equities.df <- sqlQuery(connection,query,as.is=TRUE)
+#verifica che la query sia riuscita (anche data.frame vuoto è ok!)
+
 	} else {
 		repository$equities.df <- equities.df
 	}
 	
-	if (is.null(nrow(repository$equities.df))) {
+#	if (is.null(nrow(repository$equities.df))) {
+	if (nrow(repository$equities.df)==0) {	
 		print(repository$equities.df)
 		isEmpty <- TRUE
 	} else {
@@ -307,36 +310,43 @@ create_repositoryEquities <- function(equities.df) {
 
 
 
-create_repositoryInterestRates <- function(date) {
+create_repositoryInterestRates <- function(date,interestRates.df) {
 	repository <- list()
 	class(repository) <- "repositoryInterestRates"
 	
-	# crea un data.frame con <currency,date,Scadenza,maturity,rate>	
-	if (missing(date)) { # prendi gli ultimi tassi disponibili
+	if (missing(interestRates.df)) {
+		# crea un data.frame con <currency,date,Scadenza,maturity,rate>	
+		if (missing(date)) { # prendi gli ultimi tassi disponibili
+			
+			
+			query <- paste("SELECT Moneta AS currency, [Date] as date, Scadenza, Scadenza1 AS maturity, Tasso_aggiustato AS rate",
+					"FROM [Tassi storici (VAR)].dbo.Curva_tassi_recenti"
+			)
+		} else {
+			query <- paste("SELECT Moneta AS currency, [Date] as date, Scadenza, Scadenza1 AS maturity, Tasso_aggiustato AS rate ",
+					"FROM [Tassi storici (VAR)].dbo.TotaleTassiStorico ",
+					"WHERE [Date]='",date,"'",sep=""
+			)		
+		}
 		
-		
-		query <- paste("SELECT Moneta AS currency, [Date] as date, Scadenza, Scadenza1 AS maturity, Tasso_aggiustato AS rate",
-				"FROM [Tassi storici (VAR)].dbo.Curva_tassi_recenti"
-		)
+		connection <- odbcConnect("prezzi_storici_azioni_VAR",utente,password)
+		repository$rates.df <- sqlQuery(connection,query)
 	} else {
-		query <- paste("SELECT Moneta AS currency, [Date] as date, Scadenza, Scadenza1 AS maturity, Tasso_aggiustato AS rate ",
-				"FROM [Tassi storici (VAR)].dbo.TotaleTassiStorico ",
-				"WHERE [Date]='",date,"'",sep=""
-		)		
+		repository$rates.df <- interestRates.df
 	}
 	
-	connection <- odbcConnect("prezzi_storici_azioni_VAR",utente,password)
-	repository$rates.df <- sqlQuery(connection,query)
 	rownames(repository$rates.df) <- paste(repository$rates.df[,"currency"],
 			repository$rates.df[,"Scadenza"],sep="")
-	
-	if (is.null(nrow(repository$rates.df))) {
-		print(repositories$rates.df)
+#verifica che la query sia riuscita (anche data.frame vuoto è ok!)
+#	if (is.null(nrow(repository$rates.df))) {
+	if (nrow(repository$rates.df)==0) {	
+		print(repository$rates.df)
 		print("Error: interest rates repository is empty!")
 		stop()
 	}
 	
 	repository$allowedMonths <- function() {
+		# mesi consentiti
 		x <- c(0.25,0.5,0.75,1:360)
 	}
 	
