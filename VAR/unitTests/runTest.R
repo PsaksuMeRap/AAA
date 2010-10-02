@@ -8,7 +8,7 @@
 library("RUnit")
 home = "/home/claudio/eclipse/AAA/VAR"
 setwd(home)
-source("library.R")
+source("/lib/library.R")
 
 
 ## test per l'importazione dei dati
