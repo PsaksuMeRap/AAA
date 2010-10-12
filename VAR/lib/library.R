@@ -73,11 +73,12 @@ create_position <- function() {
 	
 	position$extendEquities <- function() {
 		# create the repository of the equities if not available
+
 		if (!exists("equities",envir=repositories)) {
 			eval(expression(equities <- create_repositoryEquities())
 					,env=repositories)
 		}
-		
+
 		# identify the ticker of the equity
 		id <- position$origin[["ID_AAA"]]
 		if (is.na(id)) {print("Errore: azione senza ID_AAA"); stop()}
@@ -87,6 +88,9 @@ create_position <- function() {
 		return()		
 		
 	}
+	
+	position$class <- function() return(class((position)))
+	
 	return(position)
 }
 
@@ -199,6 +203,12 @@ create_parserPosition <- function() {
 		}
 		
 		instrument <- repositories$instruments$getInstrumentName(record["ID_strumento"])
+		if (is.na(instrument)) {
+			print(record["ID_strumento"])
+			msg <- paste("Attenzione: lo strumento di ID",
+							record["ID_strumento"],"non esite!")
+			stop(msg)
+		}
 		return(instrument)
 	}
 	
@@ -211,8 +221,8 @@ create_parserPosition <- function() {
 				amount=as.real(record["ValorePosizione"]),
 				origin=record
 		)
-		
-		instrument <- parser$identifyInstrument(record)	
+	
+		instrument <- parser$identifyInstrument(record)
 		class(position) <- c(instrument,class(position))
 		
 		# extend position if necessary

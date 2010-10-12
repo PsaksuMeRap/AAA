@@ -16,12 +16,18 @@ approxfun(x=usdIR.df[,"maturity"],y=usdIR.df[,"rate"])
 
 
 
+
+
+## importazione portafogli
 dati.df <- DBPortfolioGeneraleLoader()
+
+dati.df <- dati.df[,]
 
 pp1 <- create_parserPositions()
 posizioni <- pp1$parse(dati.df)
 
-t <- function(x) return(class(x)[1])
+# crea una funzione che indica la classe di ogni posizione
+t <- function(x) return(x$class())
 
 a <- lapply(posizioni$positions,t)
 

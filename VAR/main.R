@@ -8,7 +8,11 @@ options(browser="google-chrome")
 options(help_type="html")
 
 library("RODBC")
-source("connessioni.R")
+
+home <- "/home/claudio/eclipse/AAA/VAR/"
+
+source("./odbc/connessioni.R")
+source("./lib/library.R")
 
 stringsAsFactors = FALSE
 repositories <- new.env()

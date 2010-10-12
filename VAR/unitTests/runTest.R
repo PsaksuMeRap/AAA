@@ -6,9 +6,7 @@
 
 
 library("RUnit")
-home = "/home/claudio/eclipse/AAA/VAR"
-setwd(home)
-source(paste(home,"/lib/library.R",sep=""))
+source(paste(home,"./lib/library.R",sep=""))
 
 
 
