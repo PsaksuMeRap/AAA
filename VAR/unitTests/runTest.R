@@ -9,13 +9,11 @@ library("RUnit")
 source(paste(home,"./lib/library.R",sep=""))
 
 
-
 ## test per l'importazione dei dati
 testsuite.repositories <- defineTestSuite("Test creazione repositories",
 		dirs = paste(home,"/unitTests/repositories",sep=""))
 
 testResult <- runTestSuite(testsuite.repositories); printTextProtocol(testResult)
-
 
 
 ## test per la classe position

@@ -6,18 +6,11 @@
 
 test.create_repositoryEquities <- function() {
 	
-	equities.df <- data.frame(id=c(1,10),
-			equity=c("Nestle","Roche"),
-			numeroValore=c("CH123","CH4939"),
-			ticker=c("NESN","ROG"),stringsAsFactors=FALSE
-	)
+	source("./unitTests/testUtilities/createEquityDataFrame.R")
+	equities.df <- createEquityDataFrame()
 	
-	emptyEquities.df <- data.frame(id=numeric(),
-			equity=character(),
-			numeroValore=character(),
-			ticker=character(),
-			stringsAsFactors=FALSE
-	)
+	source("./unitTests/testUtilities/createEmptyEquityDataFrame.R")
+	emptyEquities.df <- createEmptyEquityDataFrame()
 			
 	repository <- create_repositoryEquities(equities.df)
 	
@@ -28,11 +21,7 @@ test.create_repositoryEquities <- function() {
 	checkEquals(repository$tickerFromId(3),NA_character_)
 	
 	# with an empty repository
-	equities.df <- data.frame(id=numeric(),
-			equity=character(),
-			numeroValore=character(),
-			ticker=character(),stringsAsFactors=FALSE
-	)
+	equities.df <- createEmptyEquityDataFrame()
 	
 	repository <- create_repositoryEquities(equities.df)	
 	checkEquals(repository$tickerFromId(1),NA_character_)

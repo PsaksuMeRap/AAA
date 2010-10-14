@@ -7,11 +7,9 @@
 test.create_position <- function() {
 	
 	# crea l'equity repository
-	equities.df <- data.frame(id=c(1,10),
-			equity=c("Nestle","Roche"),
-			numeroValore=c("CH123","CH4939"),
-			ticker=c("NESN","ROG"),stringsAsFactors=FALSE
-	)
+	source("./unitTests/testUtilities/createEquityDataFrame.R")
+	equities.df <- createEquityDataFrame()
+	
 	repositories <<- new.env()
 	repositories$equities <- create_repositoryEquities(equities.df)
 	rm(equities.df)
