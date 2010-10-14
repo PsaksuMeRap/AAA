@@ -15,9 +15,6 @@ plot(usdIR.df[,"maturity"],usdIR.df[,"rate"])
 approxfun(x=usdIR.df[,"maturity"],y=usdIR.df[,"rate"])
 
 
-
-
-
 ## importazione portafogli
 dati.df <- DBPortfolioGeneraleLoader()
 

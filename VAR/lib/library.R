@@ -117,9 +117,13 @@ create_riskFactors <- function(position) {
 
 DBPortfolioGeneraleLoader <- function() {
 	connection <- odbcConnect("prezzi_storici_azioni_VAR",utente,password)
-	query = "SELECT * FROM [Sistema (prova)].dbo.DBPortfolioGenerale"
+	query = paste("SELECT B.ID, A.* FROM [Sistema (prova)].dbo.DBPortfolioGenerale A",
+	        "INNER JOIN [Sistema (prova)].dbo.Clienti_ID B ON A.Cliente=B.Cliente")
 	
 	DBPortfolioGenerale.df <- sqlQuery(connection,query,as.is=TRUE)
+	
+	DBPortfolioGenerale.df[["Cliente"]] <- NULL
+	colnames(DBPortfolioGenerale.df)[1] <- "Cliente"
 	return(DBPortfolioGenerale.df)
 }
 
