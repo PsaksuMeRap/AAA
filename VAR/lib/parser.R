@@ -4,7 +4,6 @@
 ###############################################################################
 
 source("./lib/portfolio.R")
-source("./lib/parser.R")
 source("./lib/position.R")
 
 
@@ -18,9 +17,10 @@ create_parserPortfolio <- function() {
 		portfolio$owner <- owner
 		
 		# determina la moneta di riferimento del cliente
-		query = paste("SELECT MonetaInvestimento ",
-				"FROM [Sistema (prova)].dbo.DBPoliticaInvestimento ",
-				"WHERE Cliente = '",owner,"'",sep="")
+		query = paste("SELECT A.MonetaInvestimento ",
+				"FROM [Sistema (prova)].dbo.DBPoliticaInvestimento A ",
+				"INNER JOIN [Sistema (prova)].dbo.Clienti_ID B on A.Cliente = B.Cliente ",
+				"WHERE B.ID = '",owner,"'",sep="")
 		refCurrency.df <- sqlQuery(db.prezziStoriciVAR, query,as.is=TRUE)
 		
 		if (nrow(refCurrency.df)==0) {
@@ -80,8 +80,9 @@ create_parserPosition <- function() {
 	class(parser) <- "parserPosition"
 	
 	parser$identifyInstrument <- function(record) {
+
 		# create the repository of the instruments if not available
-		if (!exists("instruments",envir=repositories)) {
+		if (!exists("instruments",envir=repositories,inherits=FALSE)) {
 			eval(expression(instruments <- create_repositoryInstruments())
 					,env=repositories)
 		}

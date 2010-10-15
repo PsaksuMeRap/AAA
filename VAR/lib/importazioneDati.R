@@ -3,6 +3,18 @@
 # Author: claudio
 ###############################################################################
 
+importDBPortfolioGenerale <- function() {
+	connection <- odbcConnect("prezzi_storici_azioni_VAR",utente,password)
+	query = paste("SELECT B.ID, A.* FROM [Sistema (prova)].dbo.DBPortfolioGenerale A",
+			"INNER JOIN [Sistema (prova)].dbo.Clienti_ID B ON A.Cliente=B.Cliente")
+	
+	DBPortfolioGenerale.df <- sqlQuery(connection,query,as.is=TRUE)
+	
+	DBPortfolioGenerale.df[["Cliente"]] <- NULL
+	colnames(DBPortfolioGenerale.df)[1] <- "Cliente"
+	return(DBPortfolioGenerale.df)
+}
+
 
 importaDaCvs <- function(fileName,workDir,directory) {
 	file <- paste(workDir,"/",directory,"/",fileName,sep="")

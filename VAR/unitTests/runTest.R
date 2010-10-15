@@ -29,3 +29,4 @@ testsuite.portfolio <- defineTestSuite("Test classe portfolio",
 
 testResult <- runTestSuite(testsuite.portfolio); printTextProtocol(testResult)
 
+

@@ -17,5 +17,10 @@ source("./lib/library.R")
 stringsAsFactors = FALSE
 repositories <- new.env()
 
+dati.df <- importDBPortfolioGenerale()
+clienti <- unique(dati.df[,"Cliente"])
+portfParser <- create_parserPortfolio()
+portafogli <- lapply(clienti,portfParser$parse,dati.df)
+
 
 
