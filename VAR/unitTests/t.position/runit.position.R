@@ -5,6 +5,8 @@
 
 
 test.create_position <- function() {
+	source("./lib/position.R")
+	source("./lib/repository.R")
 	
 	# crea l'equity repository
 	source("./unitTests/utilities/createEquityDataFrame.R")

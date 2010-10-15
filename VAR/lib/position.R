@@ -3,7 +3,7 @@
 # Author: claudio
 ###############################################################################
 
-source("./lib/repository")
+source("./lib/repository.R")
 
 create_positions <- function() {
 	positions <- new.env()

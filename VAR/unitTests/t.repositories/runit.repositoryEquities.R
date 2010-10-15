@@ -5,7 +5,7 @@
 
 
 test.create_repositoryEquities <- function() {
-	
+	source("./lib/repository.R")
 	source("./unitTests/utilities/createEquityDataFrame.R")
 	equities.df <- createEquityDataFrame()
 	
