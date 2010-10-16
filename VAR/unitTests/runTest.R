@@ -16,6 +16,15 @@ testsuite.repositories <- defineTestSuite("Test creazione repositories",
 testResult <- runTestSuite(testsuite.repositories); printTextProtocol(testResult)
 
 
+## test per la classe parser
+testsuite.parser <- defineTestSuite("Test parser",
+		dirs = paste(home,"/unitTests/t.parser",sep=""))
+
+testResult <- runTestSuite(testsuite.parser); printTextProtocol(testResult)
+
+
+
+
 ## test per la classe position
 testsuite.position <- defineTestSuite("Test classe position",
 		dirs = paste(home,"/unitTests/t.position",sep=""))

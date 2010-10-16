@@ -12,7 +12,7 @@ test.should_createPortfolio <- function() {
 	
 	checkEquals(portfolio$owner,NA_character_)
 	checkEquals(portfolio$refCurrency,NA_character_)
-	checkEquals(ls(portfolio),c("add","owner","positions","refCurrency"))
+	checkEquals(ls(portfolio),c("add","owner","positions","print","refCurrency"))
 	
 }
 

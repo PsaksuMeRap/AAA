@@ -214,5 +214,5 @@ test.shouldOrderPositions <- function() {
 	posSorted$add(position3)
 	posSorted$add(position1)		
 
-	checkEquals(positions$sortBy(c("name","currency","amount")),posSorted)
+	checkEquals(positions$sortBy(c("name","currency","amount")),posSorted$positions)
 }

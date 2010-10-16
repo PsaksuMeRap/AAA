@@ -5,30 +5,37 @@
 
 
 test.parseEquityPosition <- function() {
-	
+	# create the parser
+	source("./lib/parser.R")
 	parser <- create_parserPosition()
 	
-<<<<<<< HEAD:VAR/unitTests/parser/runit.parserPosition.R
-	source("./unitTests/testUtilities/createPositionsData.R")
-	record.df <- createPositionsData()
-=======
+	# create the data for the equity repository
 	source("./unitTests/utilities/createEquityDataFrame.R")
-	record.df <- createEquityDataFrame()
->>>>>>> cf01df5687545e21475ec33191e9f2d7985cecfa:VAR/unitTests/t.parser/runit.parserPosition.R
+	equities.df <- createEquityDataFrame()
 	
-	equity <- parser$parse(record.df[2,])
+	# create the equity repository
+	source("./lib/repository.R")
+	repository <- create_repositoryEquities(equities.df)
+    
+	# create the instrument repository
+	# to be done!!!!!!
+	
+	load("./unitTests/data/dati.df_RData")
+	
+	equity <- parser$parse(dati.df[2,])
 	
 	checkEquals(is.element("equities",class(equity)),TRUE) 
 }
 
-test.parseBondPosition <- function() {
+
+#test.parseBondPosition <- function() {
 	
-	parser <- create_parserPosition()
+#	parser <- create_parserPosition()
 	
-	source("./unitTests/testUtilities/createPositionsData.R")
-	record.df <- createPositionsData()
+#	source("./unitTests/testUtilities/createPositionsData.R")
+#	record.df <- createPositionsData()
 	
-	bond <- parser$parse(record.df[700,])
+#	bond <- parser$parse(record.df[700,])
 	
-	checkEquals(is.element("???",class(bond)),TRUE) 
-}
+#	checkEquals(is.element("???",class(bond)),TRUE) 
+#}

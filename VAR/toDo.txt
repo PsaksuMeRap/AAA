@@ -1,0 +1,3 @@
+- creare il test per parserPosition di tipo equity
+	-> richiede la creazione di un instrument repository
+	
