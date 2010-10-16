@@ -8,10 +8,22 @@ test.parseEquityPosition <- function() {
 	
 	parser <- create_parserPosition()
 	
-	source("./unitTests/testUtilities/createEquityDataFrame.R")
-	record.df <- createEquityDataFrame()
+	source("./unitTests/testUtilities/createPositionsData.R")
+	record.df <- createPositionsData()
 	
-	equity <- parser$parse(record.df[1,])
+	equity <- parser$parse(record.df[2,])
 	
 	checkEquals(is.element("equities",class(equity)),TRUE) 
+}
+
+test.parseBondPosition <- function() {
+	
+	parser <- create_parserPosition()
+	
+	source("./unitTests/testUtilities/createPositionsData.R")
+	record.df <- createPositionsData()
+	
+	bond <- parser$parse(record.df[700,])
+	
+	checkEquals(is.element("???",class(bond)),TRUE) 
 }
