@@ -5,11 +5,11 @@
 
 
 test.create_repositoryEquities <- function() {
-	
-	source("./unitTests/testUtilities/createEquityDataFrame.R")
+	source("./lib/repository.R")
+	source("./unitTests/utilities/createEquityDataFrame.R")
 	equities.df <- createEquityDataFrame()
 	
-	source("./unitTests/testUtilities/createEmptyEquityDataFrame.R")
+	source("./unitTests/utilities/createEmptyEquityDataFrame.R")
 	emptyEquities.df <- createEmptyEquityDataFrame()
 			
 	repository <- create_repositoryEquities(equities.df)

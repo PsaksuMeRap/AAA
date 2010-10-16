@@ -5,7 +5,7 @@
 
 
 test.create_repositoryInterestRates <- function() { 
-    file <- paste(home,"/unitTests/repositories/interestRates.csv",sep="")
+    file <- paste(home,"/unitTests/t.repositories/interestRates.csv",sep="")
 	interestRates.df = read.csv(file,header=TRUE,stringsAsFactors=FALSE)
 	
     emptyInterestRates.df <- data.frame(currency=character(),

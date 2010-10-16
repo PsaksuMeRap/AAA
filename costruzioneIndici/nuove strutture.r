@@ -48,7 +48,7 @@ CreateIndex <- function() {
 }
 
 AddConstituentsToIndex <- function(index,yyyymmdd,newConstituents) { 
-  if (exists(yyyymmdd,where=index)) {
+  if (exists(yyyymmdd,where=index,inherits=FALSE)) {
     actual.df <- index[[yyyymmdd]]$constituents
     areToRemove <- is.element(actual.df[,"name"],newConstituents[,"name"])
     if (any(areToRemove)) actual.df <- actual.df[!areToRemove,,drop=FALSE]
