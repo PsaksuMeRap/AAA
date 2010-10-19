@@ -5,9 +5,9 @@
 
 
 createEquityDataFrame <- function() {
-	equities.df <- read.csv(file="./unitTests/data/repositoryEquities.csv",
+	interestRates.df <- read.csv(file="./unitTests/data/repositoryInterestRates.csv",
 			header=TRUE,stringsAsFactors=FALSE)
 	
-	return(equities.df)
+	return(interestRates.df)
 	
 }

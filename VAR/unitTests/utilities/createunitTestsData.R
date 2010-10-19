@@ -6,18 +6,23 @@
 
 createUnitTestsData <- function() {
 	instruments <- create_repositoryInstruments()
-	save("instruments",file="./unitTests/data/instrumentsRepo_RData")
+	write.csv(instruments$instruments.df,"./unitTests/data/tmp/repositoryInstruments.csv",row.names=FALSE)
+	save("instruments",file="./unitTests/data/tmp/instrumentsRepo_RData")
 	
 	equities <- create_repositoryEquities()
-	save("equities",file="./unitTests/data/equitiesRepo_RData")
+	write.csv(instruments$equities.df,"./unitTests/data/tmp/repositoryEquities.csv",row.names=FALSE)
+	save("equities",file="./unitTests/data/tmp/equitiesRepo_RData")
 	
 	interestRates <- create_repositoryInterestRates()
-	save("interestRates",file="./unitTests/data/interestRatesRepo_RData")
+	write.csv(instruments$interestRates.df,"./unitTests/data/tmp/repositoryInterestRates.csv",row.names=FALSE)
+	save("interestRates",file="./unitTests/data/tmp/interestRatesRepo_RData")
 	
-	discountFactors <- create_repositoryDiscountFactors()
-	save("discountFactors",file="./unitTests/data/discountFactorsRepo_RData")
+	#discountFactors <- create_repositoryDiscountFactors()
+	#write.csv(instruments$discountFactors.df,"./unitTests/data/tmp/repositoryDiscountFactors.csv",row.names=FALSE)
+	#save("discountFactors",file="./unitTests/data/tmp/discountFactorsRepo_RData")
 	
 	exchangeRates <- create_repositoryExchangeRates()
-	save("exchangeRates",file="./unitTests/data/exchangeRatesRepo_RData")
+	write.csv(instruments$exchangeRates.df,"./unitTests/data/tmp/repositoryExchangeRates.csv",row.names=FALSE)
+	save("exchangeRates",file="./unitTests/data/tmp/exchangeRatesRepo_RData")
 }
 

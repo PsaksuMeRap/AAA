@@ -16,9 +16,9 @@ test.create_repositoryEquities <- function() {
 	
 	checkEquals(class(repository),"repositoryEquityTicker")
 	
-	checkEquals(repository$tickerFromId(1),"NESN")
-	checkEquals(repository$tickerFromId(10),"ROG")
-	checkEquals(repository$tickerFromId(3),NA_character_)
+	checkEquals(repository$tickerFromId(1403),"PRS.MAC")
+	checkEquals(repository$tickerFromId(2196),"WDC.N")
+	checkEquals(repository$tickerFromId(1),NA_character_)
 	
 	# with an empty repository
 	equities.df <- createEmptyEquityDataFrame()
@@ -28,5 +28,4 @@ test.create_repositoryEquities <- function() {
 	
 	emptyRepository <- create_repositoryEquities(emptyEquities.df)
 	checkEquals(emptyRepository$tickerFromId(1),NA_character_)
-
 }

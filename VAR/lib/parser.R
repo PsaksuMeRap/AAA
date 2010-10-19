@@ -12,6 +12,9 @@ create_parserPortfolio <- function() {
 	class(parser) <- "parserPortfolio"
 	
 	parser$parse <- function(owner,dati.df) {
+		# owner: una stringa col nome del proprietario
+		# dati.df: il data.frame proveniente da DBPortfolioGenerale
+		
 		# crea il portafoglio
 		portfolio <- create_portfolio()
 		portfolio$owner <- owner
@@ -111,7 +114,7 @@ create_parserPosition <- function() {
 		class(position) <- c(instrument,class(position))
 		
 		# extend position if necessary
-		if (instrument == "equities") position$extendEquities()
+		if (instrument == "equity") position$extendEquities()
 		
 		return(position)
 	}

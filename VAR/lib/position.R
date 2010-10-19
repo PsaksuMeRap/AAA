@@ -115,13 +115,21 @@ create_position <- function() {
 		if (is.na(id)) {print("Errore: azione senza ID_AAA"); stop()}
 		id <- as.numeric(id)
 		
-		position$ticker <<- repositories$equities$tickerFromId(id)		
+		position$ticker <<- repositories$equities$tickerFromId(id)
+		position$print <<- function()
+		{
+			print(paste(class(position)[1],"/",position$currency, "-", position$amount,
+							"/ Name:", position$name,
+							"/ Ticker:", position$ticker
+						)
+					)
+		}
 		return()		
 		
 	}
 	
 	position$print <- function() {
-		print(paste(class(position)[1],"-",position$currency,"-", position$amount, "Name:", position$name))
+		print(paste(class(position)[1],"/",position$currency,"-", position$amount, "/ Name:", position$name))
 	}
 	
 	#elimina questa funzione se non serve

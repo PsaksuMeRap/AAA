@@ -19,10 +19,10 @@ test.create_position <- function() {
 	# crea la posizione
 	position <- create_position()
 	
-	position$create(name="test",
-			currency="USD",
+	position$create(name="DEGUSSA AG",
+			currency="CHF",
 			amount=0.0,
-			origin=list(ID_AAA=10)
+			origin=list(ID_AAA=400)
 	)
 	
 	checkEquals(class(position),"position")
@@ -30,7 +30,7 @@ test.create_position <- function() {
 	checkEquals(position$isMemberOf("positions"),FALSE)
 	
 	position$extendEquities()
-	checkEquals(position$ticker,"ROG")
+	checkEquals(position$ticker,"DGX.XE")
 	rm(repositories)
 }
 

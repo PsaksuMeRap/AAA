@@ -24,7 +24,7 @@ create_portfolio <- function() {
 		}
 		
 		if (is.element("positions",class(p))) {
-			positions$addPositions(p)
+			portfolio$positions$addPositions(p)
 			return()
 		}
 		stop("Impossible to add p to portfolio: p is not of class position or positions")

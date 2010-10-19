@@ -4,25 +4,33 @@
 ###############################################################################
 
 
-create_repositoryInstruments <- function() {
+create_repositoryInstruments <- function(instruments.df) {
+	# instruments.df: a data frame with <ID (integer)>, <Instrument (character)>
+	
 	repository <- list()
 	class(repository) <- "repositoryInstruments"
 	
-	# crea un data.frame con <ID,Strumento>
-	connection <- odbcConnect("prezzi_storici_azioni_VAR",utente,password)
-	query <- "SELECT * FROM [Sistema (prova)].dbo.DBStrumenti"
-	instruments.df <- sqlQuery(connection,query,as.is=TRUE)
+	if (missing(instruments.df)) {
+		# crea un data.frame con <ID,Strumento>
+		connection <- odbcConnect("prezzi_storici_azioni_VAR",utente,password)
+		query <- "SELECT ID, Strumento AS Instrument FROM [Sistema (prova)].dbo.DBStrumenti"
+		instruments.df <- sqlQuery(connection,query,as.is=TRUE)
+	}
 	
 	if (is.null(nrow(instruments.df))) {
 		print(instruments.df)
 		isEmpty <- TRUE
 	} else {
 		isEmpty <- FALSE
-		colnames(instruments.df) <- c("ID","Instrument")
 		
 		# cambia il nome da Azioni a equities
 		toChange <- instruments.df[,"Instrument"] == "Azioni"
-		if (any(toChange)) instruments.df[toChange,"Instrument"] <- "equities"
+		if (any(toChange)) instruments.df[toChange,"Instrument"] <- "equity"
+
+		# cambia il nome da Obbligazioni a bond
+		toChange <- instruments.df[,"Instrument"] == "Obbligazioni"
+		if (any(toChange)) instruments.df[toChange,"Instrument"] <- "bond"
+		
 		rm(toChange)
 	}
 	
@@ -96,7 +104,6 @@ create_repositoryInterestRates <- function(date,interestRates.df) {
 	if (missing(interestRates.df)) {
 		# crea un data.frame con <currency,date,Scadenza,maturity,rate>	
 		if (missing(date)) { # prendi gli ultimi tassi disponibili
-			
 			
 			query <- paste("SELECT Moneta AS currency, [Date] as date, Scadenza, Scadenza1 AS maturity, Tasso_aggiustato AS rate",
 					"FROM [Tassi storici (VAR)].dbo.Curva_tassi_recenti"
@@ -265,25 +272,31 @@ create_repositoryDiscountFactors <- function() {
 }
 
 
-create_repositoryExchangeRates <- function() {
+create_repositoryExchangeRates <- function(exchangeRates.v) {
+	# exchangeRates.v: a named vector of exchangeRates
+	
 	repository <- new.env()
 	class(repository) <- "repositoryExchangeRates"
 	
-	# crea un data.frame con <ID,Strumento>
-	connection <- odbcConnect("prezzi_storici_azioni_VAR",utente,password)
-	query <- paste("SELECT Moneta, CHFPar",
-			"FROM [Sistema (prova)].dbo.Cambi"
-	)
-	
-	rates.df <- sqlQuery(connection,query,as.is=c(TRUE,FALSE))
-	
-	if (is.null(nrow(rates.df))) {
-		print("Repository exchange rates empty!")
-		stop()
+	if (missing(exchangeRates.v)) {
+		# crea un data.frame con <ID,Strumento>
+		connection <- odbcConnect("prezzi_storici_azioni_VAR",utente,password)
+		query <- paste("SELECT Moneta, CHFPar",
+				"FROM [Sistema (prova)].dbo.Cambi"
+		)
+		
+		rates.df <- sqlQuery(connection,query,as.is=c(TRUE,FALSE))
+		
+		if (is.null(nrow(rates.df))) {
+			print("Repository exchange rates empty!")
+			stop()
+		}
+		repository$rates <- rates.df[,"CHFPar"]
+		names(repository$rates) <- rates.df[,"Moneta"]
+		rm(rates.df)
+	} else {
+		repository$rates <- exchangeRates.v
 	}
-	
-	repository$rates <- rates.df[,"CHFPar"]
-	names(repository$rates) <- rates.df[,"Moneta"]
 	
 	repository$exchange <- function(amount,fromCurrency,toCurrency) {
 		if (toCurrency=="CHF" | toCurrency=="CHr") {
@@ -298,7 +311,6 @@ create_repositoryExchangeRates <- function() {
 		return(amount * repository$rates[fromCurrency] / repository$rates[toCurrency])
 	}
 	
-	rm(rates.df)
 	return(repository)
 }
 

@@ -6,7 +6,7 @@
 
 
 library("RUnit")
-source(paste(home,"./lib/library.R",sep=""))
+source("./lib/library.R")
 
 
 ## test per l'importazione dei dati
@@ -24,7 +24,6 @@ testResult <- runTestSuite(testsuite.parser); printTextProtocol(testResult)
 
 
 
-
 ## test per la classe position
 testsuite.position <- defineTestSuite("Test classe position",
 		dirs = paste(home,"/unitTests/t.position",sep=""))
@@ -37,5 +36,12 @@ testsuite.portfolio <- defineTestSuite("Test classe portfolio",
 		dirs = "./unitTests/t.portfolio")
 
 testResult <- runTestSuite(testsuite.portfolio); printTextProtocol(testResult)
+
+
+## test per la classe currencyConverter
+testsuite.currencyConverter <- defineTestSuite("Test classe currencyConverter",
+		dirs = "./unitTests/t.currencyConverter")
+
+testResult <- runTestSuite(testsuite.currencyConverter); printTextProtocol(testResult)
 
 
