@@ -1,0 +1,1422 @@
+copy_timeSeriesWidget <- function(topWindow=tkframe(),df.input,df.output=data.frame())
+  {
+    ## this function is used to copy a timeseries to a new db and table
+    ## (both of them must exist, it is not possible to create a new db or table by
+    ## means of this function).  
+    ## df.input: a dataframe with the information on the input timeseries
+    ## df.output: a dataframe, usually empty, with the information where to copy the
+    ## data from the input timeseries
+  
+  }
+
+create_timeSeriesWidget <- function(topWindow=tkframe(),tblWidth=120,odbcCon=odbcCon)
+  {
+    onShowDatabase <- function()
+      {
+        colname = "Database"
+        visualizeColumns[colname] <<- as.logical(as.numeric(ckb.showDatabase[["get.value"]]()))
+        tbl.data[["hidecolumns"]](hide=as.numeric(!visualizeColumns[colname]),columns=colname)
+      }
+    onShowTable <- function()
+      {
+        colname = "Table"
+        visualizeColumns[colname] <<- as.logical(as.numeric(ckb.showTable[["get.value"]]()))
+        tbl.data[["hidecolumns"]](hide=as.numeric(!visualizeColumns[colname]),columns=colname)
+      }
+    onShowCurrency <- function()
+      {
+        colname = "Currency"
+        visualizeColumns[colname] <<- as.logical(as.numeric(ckb.showCurrency[["get.value"]]()))
+        tbl.data[["hidecolumns"]](hide=as.numeric(!visualizeColumns[colname]),columns=colname)
+      }
+    onShowFrequency <- function()
+      {
+        colname = "Frequency"
+        visualizeColumns[colname] <<- as.logical(as.numeric(ckb.showFrequency[["get.value"]]()))
+        tbl.data[["hidecolumns"]](hide=as.numeric(!visualizeColumns[colname]),columns=colname)
+      }
+    onShowPriceAdj <- function()
+      {
+        colname = "Price adjusted"
+        visualizeColumns[colname] <<- as.logical(as.numeric(ckb.showPriceAdj[["get.value"]]()))
+        tbl.data[["hidecolumns"]](hide=as.numeric(!visualizeColumns[colname]),columns=colname)
+      }
+    onShowDescription <- function()
+      {
+        colname = "Description"
+        visualizeColumns[colname] <<- as.logical(as.numeric(ckb.showDescription[["get.value"]]()))
+        tbl.data[["hidecolumns"]](hide=as.numeric(!visualizeColumns[colname]),columns=colname)
+      }
+
+    update.data <- function()
+      {
+        query <- paste("SELECT A.[Database], A.[Table], A.ID_Category, B.Category, A.ID, A.Ticker, ",
+                   "A.NumeroValore, A.ID_Currency, C.Moneta AS Currency, A.Frequency, ",
+                   "A.[Price adjusted], A.Description ",
+                   "FROM DBTimeseries A INNER JOIN DBCategory_Timeseries B ON ",
+                   "A.ID_Category = B.ID INNER JOIN [Sistema (prova)].dbo.DBMoneta C ON A.ID_Currency = C.ID ",
+                   "ORDER BY B.Category, A.Ticker",
+                   sep=""
+                  )
+
+        data.timeseries <- sql.get.table(odbcCon, query=query,as.is=c(TRUE,TRUE,FALSE,TRUE,FALSE,TRUE,TRUE,FALSE,TRUE,TRUE,FALSE,TRUE))
+        data.timeseries["Price adjusted"] <- as.logical(data.timeseries[["Price adjusted"]])
+        data.timeseries <<- data.timeseries
+      }
+    data.timeseries.format = c(rep("character",2),"integer","character","integer",
+                                   rep("character",2),"integer",rep("character",2),
+                                   "logical","character")
+    update.data()
+    visualizeColumns <- rep(FALSE,dim(data.timeseries)[2])
+    names(visualizeColumns) <- colnames(data.timeseries)
+
+    ## select the default columns to be visualized
+    visualizeColumns["Category"] <- FALSE
+    visualizeColumns["ID"] <- TRUE
+    visualizeColumns["Ticker"] <- TRUE
+    visualizeColumns["NumeroValore"] <- TRUE
+
+    # create the first labelframe containing the Data sources
+    lf.timeseries <- create_labelFrame(parent=topWindow,text="Timeseries selection")
+
+    # create the function used to refresh the tablelist after a removal or insertion
+    refresh <- function()
+      {
+        selectedCategory <- cb.category[["get.selection"]]()
+        if (selectedCategory == "")
+          {
+            tkmessageBox (message = "Please select a valid category",icon = "error",
+                       type = "ok",parent=topWindow)
+            return()
+          }
+
+        ## get the data
+        desired <- data.timeseries[,"ID_Category"] == df.category[selectedCategory,"ID"]
+        data.selection <- data.timeseries[desired,]
+        tkdestroy(tbl.data[["frame"]])
+
+        tbl.data <<- create_tablelist(parent=lf.timeseries[["labelFrame"]],dataFrame=data.selection,width=tblWidth,
+                       height=16,withScrollBarX=TRUE,withScrollBarY=TRUE,colFormats=c(rep("no",10),"logical","no"))
+        tbl.data[["hidecolumns"]](hide=as.numeric(!visualizeColumns),names(visualizeColumns))
+        tkgrid(tbl.data[["frame"]],padx=padx,pady=pady,column=1,row=1)
+        return()
+      } ## end function lf.timeseries[["refresh"]]
+
+    # create the combo box using the data in the following query
+    query <- "SELECT ID, Category FROM DBCategory_Timeseries ORDER BY Category"
+    df.category <- sql.get.table(odbcCon, query=query)
+    rownames(df.category) <- df.category[,"Category"]
+
+    l.category <- create_label(parent=lf.timeseries[["labelFrame"]],value="Time series category:")
+    cb.category <- create_combo(parent=lf.timeseries[["labelFrame"]],
+                                editable=FALSE,values=df.category[,"Category"],
+                                          modifyCommand=refresh
+                                         )
+    ## create the check buttons to visualize the columns
+    f.show <- tkframe(parent=lf.timeseries[["labelFrame"]])
+    ckb.showDatabase <- create_checkButton(parent=f.show,label="Database",command=onShowDatabase)
+    ckb.showTable <- create_checkButton(parent=f.show,label="Table",command=onShowTable)
+    ckb.showCurrency <- create_checkButton(parent=f.show,label="Currency",command=onShowCurrency)
+    ckb.showFrequency <- create_checkButton(parent=f.show,label="Frequency",command=onShowFrequency)
+    ckb.showPriceAdj <- create_checkButton(parent=f.show,label="Price adjusted",command=onShowPriceAdj)
+    ckb.showDescription <- create_checkButton(parent=f.show,label="Description",command=onShowDescription)
+
+
+    ## create the tablelist
+    tbl.data <- create_tablelist(parent=lf.timeseries[["labelFrame"]],dataFrame=data.timeseries[FALSE,],width=tblWidth,
+                      height=16,withScrollBarX=TRUE,withScrollBarY=TRUE)
+    tbl.data[["hidecolumns"]](hide=1,names(visualizeColumns)[!visualizeColumns])
+
+    # INSERT OF THE CREATED WIDGETS
+    # insert objects in the labelframe dataSources
+    tkgrid(l.category[["label"]],cb.category[["combo"]],padx=padx,pady=pady,sticky="w")
+    tkgrid(f.show,tbl.data[["frame"]],padx=padx,pady=pady,sticky="w")
+
+    tkgrid(ckb.showDatabase[["frame"]],pady=pady,sticky="w")
+    tkgrid(ckb.showTable[["frame"]],pady=pady,sticky="w")
+    tkgrid(ckb.showCurrency[["frame"]],pady=pady,sticky="w")
+    tkgrid(ckb.showFrequency[["frame"]],pady=pady,sticky="w")
+    tkgrid(ckb.showPriceAdj[["frame"]],pady=pady,sticky="w")
+    tkgrid(ckb.showDescription[["frame"]],pady=pady,sticky="w")
+
+    get.table <- function()
+      {
+        return(tbl.data[["get.table"]]())
+      }
+    get.selection <- function()
+      {
+        selection.rows <- tbl.data[["get.selection.rowNumber"]](adjust=FALSE)
+        return(tbl.data[["get.row"]](i=selection.rows,adjust=FALSE))
+      }
+    return(list(lf.timeseries=lf.timeseries,refresh=refresh,get.selection=get.selection,
+                get.table=get.table,update.data=update.data))
+  }   ## end create_timeSeriesWidget
+
+
+create_newTableWidget <- function(myConnection,database,newTable,structureAndQuery,exec=TRUE)
+  { 
+    if (missing(structureAndQuery))
+      {
+        ## define the data.frame containing the fields attributes of a new table
+        df.tableStructure <- data.frame(character(0),character(0),character(0),
+                                        logical(0),logical(0),stringsAsFactors=FALSE)
+        dimnames(df.tableStructure)[[2]] <- c("Column Name","Data Type","Length","Allow Nulls","Primary Key")
+        structureAndQuery <- list(df.tableStructure=df.tableStructure,queries=list(query1="",query2=""))
+      }
+    else
+      {
+        df.tableStructure <- structureAndQuery[["df.tableStructure"]]
+      }
+    
+    updateQueries <- function(queries=list(query1="",query2=""))
+      {
+        tbl.attributes[["finishediting"]]()
+        txt.query1[["delete"]]()
+        txt.query1[["insert"]](text=queries[["query1"]])
+        txt.query2[["delete"]]()
+        txt.query2[["insert"]](text=queries[["query2"]]) 
+      }
+      
+    topWindow <- tktoplevel()
+    tktitle(topWindow) <- "New table"
+    if (newTable == "" | is.null(newTable))
+      {
+        tkmessageBox(message="Invalid table name!",icon="error",type="ok",parent=topWindow)
+        tkdestroy(topWindow)
+        return()
+      }
+   
+    tkgrab(topWindow)
+    
+    tbl.attributes <- create_tablelist(parent=topWindow,dataFrame=df.tableStructure,width=120,
+                      height=16,withScrollBarX=TRUE,withScrollBarY=TRUE,
+                      colFormats=c(rep("no",3),rep("logical",2)),
+                      editable=c("Entry","ComboBox","Entry",rep("checkbutton",2)),
+                      editStartValue=list("Data Type"=tableFieldTypes(myConnection)))
+    
+    f.buttons <- tkframe(parent=topWindow)
+    onAdd <- function()
+      {
+        tbl.attributes[["add.rows"]](newRows=data.frame("","","",FALSE,FALSE))
+      }
+    onImport <- function()
+      {
+        result <- select.databaseAndTable(odbcCon)
+        tkfocus(topWindow)
+        tkgrab(topWindow)
+        if (is.null(result)) return()
+        
+        result <- select.fieldsFromTable(myConnection,
+                  selectedDatabase=result["Database"],selectedTable=result["Table"])
+        tkfocus(topWindow)
+        tkgrab(topWindow)
+       
+        if (!is.null(result))
+          {
+            tbl.attributes[["add.rows"]](newRows=result)
+            df.tableStructure <- tbl.attributes[["get.table"]]()
+            queries <- sqlCreateTable(myConnection,database,newTable,df.tableStructure,exec=FALSE)
+            updateQueries(queries=queries)
+          }
+      }
+    onRemove <- function()
+      {
+        index <- tbl.attributes[["get.selection.rowNumber"]]()
+        if (length(index)>0) tbl.attributes[["remove.rows"]](index=index)
+        queries <- sqlCreateTable(myConnection,database,newTable,df.tableStructure,exec=FALSE)
+        updateQueries(queries=queries)
+      }
+    b.add <- create_button(parent=f.buttons,text="Add",command=onAdd)
+    b.import <- create_button(parent=f.buttons,text="Import",command=onImport)
+    b.remove <- create_button(parent=f.buttons,text="Remove",command=onRemove)
+    
+    ## The Ok or Cancel buttons and corresponding functions
+    onCancel <- function()
+      { 
+        tkdestroy(topWindow)
+        return()
+      }
+    onOk <- function()
+      {
+        tbl.attributes[["finishediting"]]()
+        if (exec)
+          {
+            ok <- tclvalue(tkmessageBox(message="Are you sure to create the table?",type="yesno",parent=topWindow))
+            if (ok == "yes")
+              {    
+                df.tableStructure <<- tbl.attributes[["get.table"]]()
+                queries <- sqlCreateTable(myConnection,database,newTable,df.tableStructure,exec=exec)    
+              }
+            structureAndQuery <<- list(df.tableStructure=df.tableStructure,queries=queries)
+            tkdestroy(topWindow)  
+            return()
+          }
+        else
+          {
+            df.tableStructure <<- tbl.attributes[["get.table"]]()
+            queries <- sqlCreateTable(myConnection,database,newTable,df.tableStructure,exec=exec)
+            structureAndQuery <<- list(df.tableStructure=df.tableStructure,queries=queries)
+            tkdestroy(topWindow)            
+            return()
+          }
+      }
+    
+    txt.query1 <- create_textwindow(parent=topWindow,state="normal",height=10,font="courier 8",
+                                   width=72,withScrollBarX=TRUE,withScrollBarY=TRUE)
+    txt.query2 <- create_textwindow(parent=topWindow,state="normal",height=3,font="courier 8",
+                                   width=72,withScrollBarX=TRUE,withScrollBarY=TRUE)                               
+    okCancel <- create_okCancelButton(parent=topWindow,onOk=onOk,onCancel=onCancel)
+                      
+    ## create the frame containing the input fields
+    tkgrid(tbl.attributes[["frame"]],f.buttons,padx=padx,pady=pady)
+    tkgrid(b.add[["button"]],padx=padx,pady=pady)
+    tkgrid(b.import[["button"]],padx=padx,pady=pady)
+    tkgrid(b.remove[["button"]],padx=padx,pady=pady)
+    tkgrid(txt.query1[["frame"]],padx=padx,pady=pady)
+    tkgrid(txt.query2[["frame"]],padx=padx,pady=pady)
+    tkgrid(okCancel,padx=padx,pady=pady,columnspan=2)
+    
+    tkwait.window(topWindow)
+    
+    return(structureAndQuery)
+  } # end  create_newTableWidget
+
+
+create_newTimeSeriesWidget <- function(myConnection)
+  {
+    NewTableStrAndQuery <- list(df.tableStructure=NULL,queries=list(query1="",query2=""))
+    
+    ## define the data.frame containing the fields attributes of a new table
+    NewTableStrAndQuery[["df.tableStructure"]] <- data.frame(character(0),character(0),character(0),logical(0),logical(0),stringsAsFactors=FALSE)
+    dimnames(NewTableStrAndQuery[["df.tableStructure"]])[[2]] <- c("Column Name","Data Type","Length","Allow Nulls","Primary Key")
+
+    ## function getInput used to validate the user input
+    getInput <- function()
+      {
+        inputValues <- list()
+
+        ## verify the database
+        tmp <- cb.database[["get.selection"]]()
+        if (tmp != "")
+          {
+            inputValues[["Database"]] <- tmp
+          }
+        else
+          {
+            tkmessageBox(message="Enter or select a valid database!",icon="error",type="ok",parent=topWindow)
+            return(list())
+          }
+
+
+        ## verify the table
+        tmp <- cb.table[["get.selection"]]()
+        if (tmp != "")
+          {
+            inputValues[["Table_ID_combo"]] <- cb.table[["get.id"]]()
+            inputValues[["Table"]] <- tmp
+          }
+        else
+          {
+            tkmessageBox(message="Enter or select a valid table!",icon="error",type="ok",parent=topWindow)
+            return(list())
+          }
+
+
+        ## verify the Category
+        tmp <- cb.category[["get.foreignKey"]]()
+
+        if (is.null(tmp))
+          {
+            tkmessageBox(message="Select the Category!",icon="error",type="ok",parent=topWindow)
+            return(list())
+          }
+        inputValues[["ID_Category"]] <- tmp
+
+        ## verify the ID
+        tmp <- e.id[["get.value"]]()
+        if (tmp == "")
+          {
+            tkmessageBox(message="Enter a valid ID!",icon="error",type="ok",parent=topWindow)
+            return(list())
+          }
+        inputValues[["ID"]] <- tmp
+
+        inputValues[["Ticker"]] <- e.ticker[["get.value"]]()
+        inputValues[["numeroValore"]] <- e.numeroValore[["get.value"]]()
+
+        ## Verify the ID_Currency
+        tmp <- cb.currency[["get.foreignKey"]]()
+        if (is.null(tmp))
+          {
+            tkmessageBox(message="Enter a valid currency!",icon="error",type="ok",parent=topWindow)
+            return()
+          }
+        inputValues[["ID_Currency"]] <- tmp
+
+        ## Verify the Frequency
+        tmp <- cb.frequency[["get.selection"]]()
+        if (tmp == "")
+          {
+            tkmessageBox(message="Enter a valid frequency!",icon="error",type="ok",parent=topWindow)
+            return(list())
+          }
+        inputValues[["Frequency"]] <- tmp
+
+        inputValues[["PriceAdjusted"]] <- ckb.priceAdjusted[["get.value"]]()
+        inputValues[["Description"]] <- sub("\\\n$","",txt.description[["get.value"]]())
+        return(inputValues)
+    }  ## end getInput
+    
+  createTimeseries <- function()
+    {   
+        Values <- getInput()
+        if (length(Values)==0) return()       
+        ## if required create the table: a new name is store with ID=0 in the combobox containing
+        ## the table names
+        if (Values["Table_ID_combo"]==0)
+          {
+            ## verify the existence of the table
+            existTable <- tableExist(myConnection=myConnection,tableName=Values[["Table"]],databaseName=Values[["Database"]])
+            if (NewTableStrAndQuery[["queries"]][["query1"]] != "")
+              {
+                ## extract the actual database
+                initialDb <- sqlWorkingDatabase(myConnection)
+                ## remove squared brackets if exist
+                database <- gsub("\\[|\\]","",Values[["Database"]])
+
+                sqlQuery(channel=myConnection,query=paste("USE [",Values[["Database"]],"]",sep=""))      
+                sqlGetErrMsg(channel=myConnection)
+                 
+                error <- sqlQuery(channel=myConnection,query=NewTableStrAndQuery[["queries"]][["query1"]],
+                              errors=FALSE)
+                if (error == -1) sqlGetErrMsg(channel=myConnection)
+                
+                sqlQuery(channel=myConnection,query=paste("USE [",initialDb,"]",sep=""))
+                sqlGetErrMsg(channel=myConnection)
+              }
+            else
+              {
+                if (!existTable)
+                  {
+                    tkmessageBox(message="Please define the table structure first!",type="ok",icon="error",parent=topWindow)
+                    return()
+                  }
+              }
+            ## now the primary key constraints
+            if (NewTableStrAndQuery[["queries"]][["query2"]] != "")
+              {
+                ## extract the actual database
+                initialDb <- sqlWorkingDatabase(myConnection)
+                ## remove squared brackets if exist
+                database <- gsub("\\[|\\]","",Values[["Database"]])
+
+                sqlQuery(channel=myConnection,query=paste("USE [",Values[["Database"]],"]",sep=""))      
+                sqlGetErrMsg(channel=myConnection)                
+                
+                error <- sqlQuery(channel=myConnection,query=NewTableStrAndQuery[["queries"]][["query2"]],
+                                  errors=FALSE)
+                if (error == -1) sqlGetErrMsg(channel=myConnection)
+                sqlQuery(channel=myConnection,query=paste("USE [",initialDb,"]",sep=""))
+                sqlGetErrMsg(channel=myConnection)             
+              }
+          }
+
+        ## construct the query        
+        query = "INSERT INTO DBTimeseries ([Database],[Table],ID_Category,ID,Ticker,NumeroValore,ID_Currency,Frequency,[Price adjusted],Description) VALUES("
+        values = paste("'",Values[["Database"]],"',","'",Values[["Table"]],"'",sep="")
+        values = paste(values,",",Values[["ID_Category"]],",",Values[["ID"]],sep="")
+        if (Values[["Ticker"]]!="") values = paste(values,",'",Values[["Ticker"]],"'",sep="") else values = paste(values,",NULL",sep="")
+        if (Values[["numeroValore"]]!="") values = paste(values,",'",Values[["numeroValore"]],"'",sep="") else values = paste(values,",NULL",sep="")
+        values = paste(values,",",Values[["ID_Currency"]],",","'",Values[["Frequency"]],"'",sep="")
+        values = paste(values,",",Values[["PriceAdjusted"]],sep="") 
+        if (Values[["Description"]]!="") values = paste(values,",'",Values[["Description"]],"')",sep="") else values = paste(values,",NULL",")",sep="")
+        query <- paste(query,values,sep="")
+      
+        ## insert into the table DBTimeseries
+        ## change database
+        initialDb <- sqlWorkingDatabase(myConnection)
+        
+        sqlQuery(channel=myConnection,query="USE risk")     
+        sqlGetErrMsg(channel=myConnection) 
+
+        ## insert        
+        error <- sqlQuery(channel=myConnection,query=query,errors=FALSE)
+        if (error == -1)
+          {
+            sqlGetErrMsg(channel=myConnection)
+            ## go back to the database    
+            if (initialDb!= "risk") sqlQuery(channel=myConnection,query=paste("USE [",initialDb,"]",sep=""))
+          }
+        else
+          {
+            ## go back to the database    
+            if (initialDb!= "risk") sqlQuery(channel=myConnection,query=paste("USE [",initialDb,"]",sep=""))
+        
+            ## destroy the window and return
+            exit <<- 0
+            tkdestroy(topWindow)
+          } 
+      }
+
+    onDefineFields <- function()
+      {
+        ## check for a valid database
+        database = cb.database[["get.selection"]]()
+        if (database == "")
+          { 
+            tkmessageBox(message="Select a database first!",icon="error",type="ok",parent=topWindow)
+            return()
+          }
+        newTable <- cb.table[["get.selection"]]()
+        if (cb.table[["get.id"]]() == 0 & newTable != "")
+          {         
+            ## call the widget
+            NewTableStrAndQuery <- create_newTableWidget(myConnection=myConnection,database=database,
+                    newTable=cb.table[["get.selection"]](),structureAndQuery=NewTableStrAndQuery,exec=FALSE)
+            if (!is.null(NewTableStrAndQuery)) 
+              {
+                NewTableStrAndQuery <<- NewTableStrAndQuery
+              }
+          }
+        else
+          {
+            tkmessageBox(message="Empty name or table still exists!",icon="error",type="ok",parent=topWindow)
+          }
+        tkfocus(topWindow)
+        tkgrab(topWindow)
+        return() 
+      }
+    onDatabase <- function()
+      {
+        database = cb.database[["get.selection"]]()
+        validTables <- df.timeSeries[,"Database"] == database
+        if (any(validTables))
+          {
+            tables <- unique(df.timeSeries[validTables,"Table"])
+            tables <- tables[order(tables)]
+            cb.table[["modify.values"]](tables)
+          }
+        else
+          {
+            cb.table[["modify.values"]]()
+          }
+      }
+      
+    onCategory <- function()
+      {
+        ## verify the Category
+        tmp <- cb.category[["get.foreignKey"]]()
+
+        if (is.null(tmp))
+          {
+            return()
+          }
+        ## verify if the Automatic checkbox is checked
+        onAutomaticId()
+      }
+    
+    topWindow <- tktoplevel() 
+    tktitle(topWindow) <- "Create new timeseries"
+    tkfocus(topWindow)
+    tkgrab(topWindow)
+    
+    ## create the main frame containing all widget
+    f.fields <- tkframe(parent=topWindow)
+
+    ## two labels used as headers for the columns
+    l.new <- create_label(parent=f.fields,value="New Values",font="{courier} 12")
+
+    ## get the Category
+    query <- "SELECT ID, Category FROM DBCategory_Timeseries ORDER BY Category"
+    df.categories <- sql.get.table(myConnection,query=query)
+    rownames(df.categories) <- df.categories[,"Category"]
+
+    ## get the Currency
+    query <- "SELECT ID, Moneta AS Currency FROM [Sistema (prova)].dbo.DBMoneta ORDER BY Moneta"
+    df.currencies <- sql.get.table(myConnection,query=query)
+
+    ## get the Database and tables
+    query <- "SELECT [Database], [Table], ID_Category, ID FROM DBTimeseries ORDER BY [Database],[Table]"
+    df.timeSeries <- sql.get.table(myConnection,query=query)
+
+    ## a line is compose by 3 widget: label, entry and combo
+    #l.database <- create_label(parent=f.fields,value="Time series category:")
+    #e.database <- create_entry(parent=f.fields,value="",width="6")
+    #cb.database <- create_combo(parent=f.fields,editable=FALSE,values=df.category[,"Category"],modifyCommand=onCategory)
+
+    ## database field
+    l.database <- create_label(parent=f.fields,value="Database:")
+    databases <- unique(df.timeSeries[,"Database"])
+    cb.database <- create_combo(parent=f.fields,values=databases,editable=FALSE,
+                                modifyCommand=onDatabase)
+    
+    ## table field
+    l.table <- create_label(parent=f.fields,value="Table:")
+    #tables <- unique(df.timeSeries[,"Table"])
+    #tables <- tables[order(tables)]
+    cb.table <- create_combo(parent=f.fields)
+    b.defineTable <- create_button(parent=f.fields,text="Define fields",command=onDefineFields)
+
+    ## category field
+    l.category <- create_label(parent=f.fields,value="Category:")
+    cb.category <- create_combo(parent=f.fields,editable=FALSE,values=df.categories[,"Category"],
+                                foreignKey=df.categories[,"ID"],modifyCommand=onCategory)
+
+    ## id field
+    onAutomaticId <- function()
+      {
+        if (ckb.id[["get.value"]]()=="0") return()
+        ID_Category <- cb.category[["get.foreignKey"]]()
+        if (is.null(ID_Category))
+          {
+            tkmessageBox(message="Please select the category!",type="ok",icon="info",parent=topWindow)
+            ckb.id[["set.value"]]("0")
+            return()
+          }
+          
+        ## compute the last id corresponding to the selected category
+        desired <- df.timeSeries[,"ID_Category"] == ID_Category
+        if (any(desired))
+          {
+            ID = max(df.timeSeries[desired,"ID"]) + 1
+          }
+        else
+          {
+            ID = 1
+          }        
+        e.id[["set.value"]](ID)
+      }
+    l.id <- create_label(parent=f.fields,value="ID:")
+    f.id <- tkframe(f.fields)
+    e.id <- create_entry(parent=f.id,value="",width="12")
+    ckb.id <- create_checkButton(parent=f.id,label="Automatic",command=onAutomaticId)
+
+
+    ## ticker field
+    l.ticker <- create_label(parent=f.fields,value="Ticker:")
+    e.ticker <- create_entry(parent=f.fields,value="",width="25")
+
+    ## numeroValore field
+    l.numeroValore <- create_label(parent=f.fields,value="Numero Valore:")
+    e.numeroValore <- create_entry(parent=f.fields,value="",width="25")
+
+    ## currency field
+    l.currency <- create_label(parent=f.fields,value="Currency:")
+    cb.currency <- create_combo(parent=f.fields,editable=FALSE,values=df.currencies[,"Currency"],foreignKey=df.currencies[,"ID"])
+
+    ## Frequency field
+    l.frequency <- create_label(parent=f.fields,value="Frequency:")
+    cb.frequency <- create_combo(parent=f.fields,editable=FALSE,values=c("d","w","m"))
+
+    ## PriceAdjusted field
+    l.priceAdjusted <- create_label(parent=f.fields,value="Price Adjusted:")
+    ckb.priceAdjusted <- create_checkButton(parent=f.fields,label="")
+
+    ## Description field
+    l.description <- create_label(parent=f.fields,value="Description:")
+    txt.description <- create_textwindow(parent=f.fields,state="normal",height=4,width=30,
+                                         font="{MS Sans Serif} 8")
+
+    ## The Ok or Cancel buttons and corresponding functions
+    onCancel <- function(){tkdestroy(topWindow)}
+    onOk <- function(){createTimeseries()}
+    okCancel <- create_okCancelButton(parent=f.fields,onOk=onOk,onCancel=onCancel)
+
+   ## Insert into the widget
+   tkgrid(l.new[["label"]],column=1)
+   tkgrid(l.database[["label"]],cb.database[["combo"]],padx=padx,pady=pady,sticky="w")
+   tkgrid(l.table[["label"]],cb.table[["combo"]],b.defineTable[["button"]],padx=padx,pady=pady,sticky="w")
+   tkgrid(l.category[["label"]],cb.category[["combo"]],padx=padx,pady=pady,sticky="w")
+   tkgrid(l.id[["label"]],f.id,padx=padx,pady=pady,sticky="w")
+      tkgrid(e.id[["entry"]],ckb.id[["frame"]],padx=c(0,padx),pady=pady,sticky="w")
+   tkgrid(l.ticker[["label"]],e.ticker[["entry"]],padx=padx,pady=pady,sticky="w")
+   tkgrid(l.numeroValore[["label"]],e.numeroValore[["entry"]],padx=padx,pady=pady,sticky="w")
+   tkgrid(l.currency[["label"]],cb.currency[["combo"]],padx=padx,pady=pady,sticky="w")
+   tkgrid(l.frequency[["label"]],cb.frequency[["combo"]],padx=padx,pady=pady,sticky="w")
+
+   tkgrid(l.priceAdjusted[["label"]],ckb.priceAdjusted[["frame"]],padx=padx,pady=pady,sticky="w")
+
+
+   tkgrid(l.description[["label"]],txt.description[["frame"]],padx=padx,pady=pady,sticky="w")
+   tkgrid(okCancel,pady=pady,columnspan=3)
+   tkgrid(f.fields)
+   
+   exit <- 1
+   tkwait.window(topWindow)
+   return(exit)
+  }  ## end of create_newTimeSeriesWidget
+
+
+
+
+select.databaseAndTable <- function(odbcCon)
+  {
+    result <- NULL
+    ## get the databases
+    df.databases <- sqlDatabases(odbcCon)
+    dbSpace <- grep(" ",df.databases[,"Database"])
+    databases <- df.databases[,"Database"]
+    if (length(dbSpace)>0) databases[dbSpace] <- paste("[",databases[dbSpace],"]",sep="")
+
+    ## define the function used on modifyCommand onDatabase
+    onDatabase <- function()
+      {
+        database <- cb.database[["get.selection"]]()
+        if (database == "")
+          {
+            tkmessageBox(message="Wrong database!",icon="error",type="ok",parent=topWindow)
+            return()
+          }
+
+        df.tables <<- sqlTablesInfo(myConnection=odbcCon,database=database)
+        ## construct the name of the database with Table owner, include [] if necessary
+        ownerSpace <- grep(" ",df.tables[,"Table owner"])
+        tableSpace <- grep(" ",df.tables[,"Table name"])
+        owners <- df.tables[,"Table owner"]
+        if (length(ownerSpace)>0) owners[ownerSpace] <- paste("[",owners[ownerSpace],"]",sep="")
+        tables <- df.tables[,"Table name"]
+        if (length(tableSpace)>0) tables[tableSpace] <- paste("[",tables[tableSpace],"]",sep="")
+
+        cb.table[["modify.values"]](paste(owners,".",tables,sep=""))
+        return()
+      }
+
+    topWindow <- tktoplevel()
+    tktitle(topWindow) <- "Database and table selection"
+    tkfocus(topWindow)
+    tkgrab(topWindow)
+    
+    l.database <- tklabel(parent=topWindow,text="Database:")
+    cb.database <- create_combo(parent=topWindow,editable=FALSE,values=databases,
+                                modifyCommand=onDatabase)
+
+    l.table <- tklabel(parent=topWindow,text="Table:")
+    cb.table <- create_combo(parent=topWindow,editable=FALSE)
+
+    ## The Ok or Cancel buttons and corresponding functions
+    onCancel <- function(){tkdestroy(topWindow);return()}
+    onOk <- function()
+      {
+        id <- cb.table[["get.id"]]()
+        if (id == 0) return()
+
+        tmp <- c(cb.database[["get.selection"]](),df.tables[id,"Table owner"],df.tables[id,"Table name"])
+        names(tmp) <- c("Database","Owner","Table")
+        result <<- tmp
+        tkdestroy(topWindow)
+        return()
+      }
+    okCancel <- create_okCancelButton(parent=topWindow,onOk=onOk,onCancel=onCancel)
+
+    tkgrid(l.database,cb.database[["combo"]],padx=padx,pady=pady,sticky="w")
+    tkgrid(l.table,cb.table[["combo"]],padx=padx,pady=pady,sticky="w")
+    tkgrid(okCancel,pady=pady,columnspan=2)
+
+    tkwait.window(topWindow)
+    return(result)
+  }
+
+
+select.fieldsFromTable <- function(myConnection,selectedDatabase,selectedTable)
+  {
+    df.structure <- get.tableStructure(myConnection,databaseName=selectedDatabase,
+                                            tableName=selectedTable)
+    structureNames <- dimnames(df.structure)[[2]]
+    nbColumns <- dim(df.structure)[2]
+
+    df.structure[["Import"]] <- rep(FALSE,dim(df.structure)[1])
+
+    topWindow <- tktoplevel()
+    tktitle(topWindow) <- "Field selection"
+    tkfocus(topWindow)
+    tkgrab(topWindow)
+    
+    tmp <- paste("Database - ",selectedDatabase,"\nTable - ",selectedTable,sep="")
+    l.dbAndTable <- create_label(parent=topWindow,value=tmp,font="{MS Sans Serif} 12 bold")
+    tbl.structure <- create_tablelist(parent=topWindow,dataFrame=df.structure,width=120,
+                      height=16,withScrollBarX=TRUE,withScrollBarY=TRUE,
+                      colFormats=c(rep("no",3),rep("logical",3)),
+                      editable=c(rep("Entry",3),rep("checkbutton",3)))
+
+    ## The Ok or Cancel buttons and corresponding functions
+    onCancel <- function(){tkdestroy(topWindow);return()}
+    onOk <- function()
+      {
+        tbl.structure[["finishediting"]]()
+        selection <- tbl.structure[["get.table"]]()
+        isDesired <- selection[,"Import"] == TRUE
+        if (!any(isDesired)) {tkdestroy(topWindow);return()}
+        selection <- selection[isDesired,]
+        selection <<- selection[structureNames]
+        tkdestroy(topWindow)
+        return()
+      }
+    okCancel <- create_okCancelButton(parent=topWindow,onOk=onOk,onCancel=onCancel)
+
+    tkgrid(l.dbAndTable[["label"]],padx=padx,pady=pady)
+    tkgrid(tbl.structure[["frame"]],padx=padx,pady=pady)
+    tkgrid(okCancel,padx=padx,pady=pady)
+
+    selection <- NULL
+    tkwait.window(topWindow)
+    return(selection)
+  }
+
+#select.fieldsFromTable(myConnection=odbcCon,selectedDatabase="risk",selectedTable="DBTimeseries")
+
+
+tableUniqueIdentifiers <- function(myConnection,database,tableName)
+  {
+    ## this function creates a window where the user has to specify the fields
+    ## to be used to accomplish a given task, i.e. row removal.
+      
+    ## change the db
+    connectionDatabase <- sqlSetWorkingDatabase(myConnection=myConnection,newDatabase=database)
+
+    ## get the fieldnames of the table 
+    fieldNames <- sqlColumnsInfo (myConnection, tableName)[,"COLUMN_NAME"]
+    
+    ## restore the db
+    sqlSetWorkingDatabase(myConnection=myConnection,newDatabase=connectionDatabase)
+      
+    onOk <- function()
+      {
+        tbl.selection[["finishediting"]]()
+        selection <- tbl.selection[["get.table"]]()
+        
+        if (nrow(selection) == 0) 
+          {
+            selection <<- NULL
+            tkdestroy(topWindow)
+            return()
+          }
+        
+        desired <- selection[,"Select"] == TRUE
+        if (any(desired))
+          {
+            selection <<- selection[desired,"Fields"]
+          }
+        else
+          {
+            selection <<- NULL
+          }
+        
+        tkdestroy(topWindow)
+      }
+      
+    onCancel <- function()
+      {
+        selection <<- NULL
+        tkdestroy(topWindow)     
+      }
+      
+    ## create a data.frame
+    df.field <- data.frame(Fields=fieldNames,Select=rep(FALSE,length(fieldNames)),stringsAsFactors=FALSE)
+    
+    topWindow <- tktoplevel()
+    tktitle(topWindow) <- "Field selection"
+    tkfocus(topWindow)
+    tkgrab(topWindow)
+        
+    tbl.selection <- create_tablelist(parent=topWindow,dataFrame=df.field,width=60,
+                      height=8,withScrollBarX=TRUE,withScrollBarY=TRUE,
+                      colFormats=c("no","logical"),
+                      editable=c("no","checkbutton"))
+    
+    b.onOkCancel <- create_okCancelButton (parent=topWindow,onOk=onOk,onCancel=onCancel)
+    l.message1 <- tklabel(topWindow,text=paste("The table \"",tableName,"\" has the folling fields:",sep=""))
+    l.message2 <- tklabel(topWindow,text="Please select the unique identifiers of the rows.")    
+    tkgrid(l.message1,padx=padx,pady=pady)
+    tkgrid(tbl.selection[["frame"]],padx=padx,pady=pady)
+    tkgrid(l.message2,padx=padx,pady=pady)
+    tkgrid(b.onOkCancel,padx=padx,pady=pady)
+
+    selection <- NULL
+    tkwait.window(topWindow)
+    return(selection)      
+  }
+  
+  
+  
+create_riskfactorWidget <- function(topWindow=tkframe(),tblWidth=120,odbcCon=odbcCon)
+  {
+    onShowDatabase <- function()
+      {
+        colname = "Database"
+        visualizeColumns[colname] <<- as.logical(as.numeric(ckb.showDatabase[["get.value"]]()))
+        tbl.data[["hidecolumns"]](hide=as.numeric(!visualizeColumns[colname]),columns=colname)
+      }
+    onShowTable <- function()
+      {
+        colname = "Table"
+        visualizeColumns[colname] <<- as.logical(as.numeric(ckb.showTable[["get.value"]]()))
+        tbl.data[["hidecolumns"]](hide=as.numeric(!visualizeColumns[colname]),columns=colname)
+      }
+    onShowCurrency <- function()
+      {
+        colname = "Currency"
+        visualizeColumns[colname] <<- as.logical(as.numeric(ckb.showCurrency[["get.value"]]()))
+        tbl.data[["hidecolumns"]](hide=as.numeric(!visualizeColumns[colname]),columns=colname)
+      }
+    onShowFrequency <- function()
+      {
+        colname = "Frequency"
+        visualizeColumns[colname] <<- as.logical(as.numeric(ckb.showFrequency[["get.value"]]()))
+        tbl.data[["hidecolumns"]](hide=as.numeric(!visualizeColumns[colname]),columns=colname)
+      }
+    onShowDescription <- function()
+      {
+        colname = "Description"
+        visualizeColumns[colname] <<- as.logical(as.numeric(ckb.showDescription[["get.value"]]()))
+        tbl.data[["hidecolumns"]](hide=as.numeric(!visualizeColumns[colname]),columns=colname)
+      }
+    onShowConstructionMethod <- function()
+      {
+        colname = "Construction Method"
+        visualizeColumns[colname] <<- as.logical(as.numeric(ckb.showConstructionMethod[["get.value"]]()))
+        tbl.data[["hidecolumns"]](hide=as.numeric(!visualizeColumns[colname]),columns=colname)
+      }
+      
+    update.data <- function()
+      {
+        query <- paste("SELECT A.ID_Category, C.Category, A.ID, A.Name, A.Description, ", 
+                       "A.[Database], A.[Table], A.ID_Rf_Construction, B.[Construction Method], ",
+                       "A.ID_Currency, D.Moneta AS Currency, A.Frequency ",
+                       "FROM dbo.DBRiskfactor A INNER JOIN ",
+                       "dbo.DBRf_Construction_method B ON A.ID_Rf_Construction = B.ID INNER JOIN ",
+                       "dbo.DBCategory_Riskfactor C ON A.ID_Category = C.ID INNER JOIN ",
+                       "[Sistema (prova)].dbo.DBMoneta D ON A.ID_Currency = D.ID",
+                   sep=""
+                  )
+        data.riskfactor <<- sql.get.table(odbcCon, query=query,
+                            as.is=c(FALSE,TRUE,FALSE,TRUE,TRUE,TRUE,TRUE,FALSE,
+                                    TRUE,FALSE,TRUE,TRUE)
+                                   )
+ 
+      }
+
+    data.riskfactor.format = c("integer","character","integer",rep("character",4),
+                               "integer","character","integer",rep("character",2))
+    update.data()
+    visualizeColumns <- rep(FALSE,dim(data.riskfactor)[2])
+    names(visualizeColumns) <- colnames(data.riskfactor)
+
+    ## select the default columns to be visualized
+    visualizeColumns["ID"] <- TRUE
+    visualizeColumns["Name"] <- TRUE
+    
+    # create the first labelframe containing the Data sources
+    lf.riskfactor <- create_labelFrame(parent=topWindow,text="Riskfactor selection")
+
+    # create the function used to refresh the tablelist after a removal or insertion
+    refresh <- function()
+      {
+        selectedCategory <- cb.category[["get.selection"]]()
+        if (selectedCategory == "")
+          {
+            tkmessageBox (message = "Please select a valid category",icon = "error",
+                       type = "ok",parent=topWindow)
+            return()
+          }
+
+        ## get the data
+        desired <- data.riskfactor[,"ID_Category"] == df.category[selectedCategory,"ID"]
+        data.selection <- data.riskfactor[desired,]
+        tkdestroy(tbl.data[["frame"]])
+
+        tbl.data <<- create_tablelist(parent=lf.riskfactor[["labelFrame"]],dataFrame=data.selection,width=tblWidth,
+                       height=16,withScrollBarX=TRUE,withScrollBarY=TRUE,colFormats=rep("no",12))
+        tbl.data[["hidecolumns"]](hide=as.numeric(!visualizeColumns),names(visualizeColumns))
+        tkgrid(tbl.data[["frame"]],padx=padx,pady=pady,column=1,row=1)
+        return()
+      } ## end function lf.riskfactor[["refresh"]]
+
+    ## create the combo box using the data in the following query
+# rimosso da riciclare altrove
+        ##1) create the risk method combo
+        #query <- "SELECT ID, Method FROM DBRiskmethod ORDER BY Method"
+        #df.riskMethod <- sql.get.table(odbcCon, query=query)
+        #rownames(df.riskMethod) <- df.riskMethod[,"Method"]
+        #l.riskMethod <- create_label(parent=lf.riskfactor[["labelFrame"]],value="Risk method:")
+        #cb.riskMethod <- create_combo(parent=lf.riskfactor[["labelFrame"]],
+        #                        editable=FALSE,values=df.riskMethod[,"Method"],
+        #                                  modifyCommand=refresh
+        #                                 )
+                                         
+    ##1) create the category risk factor combo
+    query <- "SELECT ID, Category FROM DBCategory_Riskfactor ORDER BY Category"
+    df.category <- sql.get.table(odbcCon, query=query)
+    rownames(df.category) <- df.category[,"Category"]
+
+    l.category <- create_label(parent=lf.riskfactor[["labelFrame"]],value="Riskfactor category:")
+    cb.category <- create_combo(parent=lf.riskfactor[["labelFrame"]],
+                                editable=FALSE,values=df.category[,"Category"],
+                                          modifyCommand=refresh
+                                         )
+
+    ## create the check buttons to visualize the columns
+    f.show <- tkframe(parent=lf.riskfactor[["labelFrame"]])
+    ckb.showDatabase <- create_checkButton(parent=f.show,label="Database",command=onShowDatabase)
+    ckb.showTable <- create_checkButton(parent=f.show,label="Table",command=onShowTable)
+    ckb.showCurrency <- create_checkButton(parent=f.show,label="Currency",command=onShowCurrency)
+    ckb.showFrequency <- create_checkButton(parent=f.show,label="Frequency",command=onShowFrequency)
+    ckb.showDescription <- create_checkButton(parent=f.show,label="Description",command=onShowDescription)
+    ckb.showConstructionMethod <- create_checkButton(parent=f.show,label="Construction Method",command=onShowConstructionMethod)
+
+    ## create the tablelist
+    tbl.data <- create_tablelist(parent=lf.riskfactor[["labelFrame"]],dataFrame=data.riskfactor[FALSE,],width=tblWidth,
+                      height=16,withScrollBarX=TRUE,withScrollBarY=TRUE)
+    tbl.data[["hidecolumns"]](hide=1,names(visualizeColumns)[!visualizeColumns])
+
+    # INSERT OF THE CREATED WIDGETS
+    # insert objects in the labelframe dataSources
+    tkgrid(l.category[["label"]],cb.category[["combo"]],padx=padx,pady=pady,sticky="w")
+    tkgrid(f.show,tbl.data[["frame"]],padx=padx,pady=pady,sticky="w")
+
+    tkgrid(ckb.showDatabase[["frame"]],pady=pady,sticky="w")
+    tkgrid(ckb.showTable[["frame"]],pady=pady,sticky="w")
+    tkgrid(ckb.showCurrency[["frame"]],pady=pady,sticky="w")
+    tkgrid(ckb.showFrequency[["frame"]],pady=pady,sticky="w")
+    tkgrid(ckb.showDescription[["frame"]],pady=pady,sticky="w")
+    tkgrid(ckb.showConstructionMethod[["frame"]],pady=pady,sticky="w")
+    
+    get.table <- function()
+      {
+        return(tbl.data[["get.table"]]())
+      }
+    get.selection <- function()
+      {
+        selection.rows <- tbl.data[["get.selection.rowNumber"]](adjust=FALSE)
+        return(tbl.data[["get.row"]](i=selection.rows,adjust=FALSE))
+      }
+      
+    remove.selection <- function()
+      {
+        selection.rows <- tbl.data[["get.selection.rowNumber"]](adjust=FALSE)
+        if (length(selection.rows) > 0)
+          {
+            df.rows <- tbl.data[["get.row"]](i=selection.rows,adjust=FALSE)
+            tbl.data[["remove.rows"]](i=selection.rows,adjust=FALSE)
+
+            ## extract the ID's
+            IDs <- df.rows[,"ID"]
+
+            ## construct the query
+            tmp = paste(IDs,collapse=",")
+            query <- paste("DELETE FROM DBRiskfactor WHERE ID IN (",tmp,")",sep="")
+            
+            ## delete from the table DBRiskfact
+            ## change database
+            initialDb <- sqlWorkingDatabase(odbcCon)
+            sqlQuery(channel=odbcCon,query="USE risk")     
+            sqlGetErrMsg(channel=odbcCon)         
+            
+            ## execute the query
+            error <- sqlQuery(channel=odbcCon,query=query,errors=FALSE)
+            if (error == -1)
+              {
+                sqlGetErrMsg(channel=odbcCon)
+                ## go back to the database    
+                if (initialDb!= "risk") sqlQuery(channel=odbcCon,query=paste("USE [",initialDb,"]",sep=""))
+              }
+            else
+              {
+                ## go back to the database    
+                if (initialDb!= "risk") sqlQuery(channel=odbcCon,query=paste("USE [",initialDb,"]",sep=""))
+              }             
+            update.data()
+            refresh()
+            return() 
+          }
+      }
+    return(list(lf.riskfactor=lf.riskfactor,refresh=refresh,get.selection=get.selection,
+                get.table=get.table,update.data=update.data,remove.selection=remove.selection))
+  }   ## end create_riskfactorWidget
+  
+  
+  
+create_newRiskfactorWidget <- function(myConnection)
+  {   
+    ## function getInput used to validate the user input
+    getInput <- function()
+      {
+        inputValues <- list()
+
+        ## verify the Category
+        tmp <- cb.category[["get.foreignKey"]]()
+
+        if (is.null(tmp))
+          {
+            tkmessageBox(message="Select the Category!",icon="error",type="ok",parent=topWindow)
+            return(list())
+          }
+        inputValues[["ID_Category"]] <- tmp
+
+        ## verify the ID
+        tmp <- e.id[["get.value"]]()
+        if (tmp == "")
+          {
+            tkmessageBox(message="Enter a valid ID!",icon="error",type="ok",parent=topWindow)
+            return(list())
+          }
+        inputValues[["ID"]] <- tmp
+
+        ## verify the name
+        tmp <- e.name[["get.value"]]()
+        if (tmp == "")
+          {
+            tkmessageBox(message="Enter a valid name!",icon="error",type="ok",parent=topWindow)
+            return(list())
+          }
+        inputValues[["Name"]] <- e.name[["get.value"]]()
+
+         ## verify the database
+        tmp <- cb.database[["get.selection"]]()
+        if (tmp != "")
+          {
+            inputValues[["Database"]] <- tmp
+          }
+        else
+          {
+            tkmessageBox(message="Enter or select a valid database!",icon="error",type="ok",parent=topWindow)
+            return(list())
+          }
+
+
+        ## verify the table
+        tmp <- cb.table[["get.selection"]]()
+        if (tmp != "")
+          {
+            inputValues[["Table_ID_combo"]] <- cb.table[["get.id"]]()
+            inputValues[["Table"]] <- tmp
+          }
+        else
+          {
+            tkmessageBox(message="Enter or select a valid table!",icon="error",type="ok",parent=topWindow)
+            return(list())
+          }
+
+
+        ## verify the constructionMethod
+        tmp <- cb.constructionMethod[["get.foreignKey"]]()
+        if (is.null(tmp))
+          {
+            tkmessageBox(message="Enter a valid construction method!",icon="error",type="ok",parent=topWindow)
+            return(list())
+          }
+        inputValues[["ID_Rf_Construction"]] <- tmp
+        ## verify the df.constructionMethod
+        if (nrow(df.constructionMethod) == 0)
+          {
+            tkmessageBox(message="Configure the construction method properties!",icon="error",type="ok",parent=topWindow)
+            return(list())
+          } 
+
+        ## Verify the ID_Currency
+        tmp <- cb.currency[["get.foreignKey"]]()
+        if (is.null(tmp))
+          {
+            tkmessageBox(message="Enter a valid currency!",icon="error",type="ok",parent=topWindow)
+            return(list())
+          }
+        inputValues[["ID_Currency"]] <- tmp
+
+        ## Verify the Frequency
+        tmp <- cb.frequency[["get.selection"]]()
+        if (tmp == "")
+          {
+            tkmessageBox(message="Enter a valid frequency!",icon="error",type="ok",parent=topWindow)
+            return(list())
+          }
+        inputValues[["Frequency"]] <- tmp
+        inputValues[["Description"]] <- sub("\\\n$","",txt.description[["get.value"]]())
+        return(inputValues)
+    }  ## end getInput
+
+    
+  insert.Risk_factor <- function()
+    {   
+      Values <- getInput()
+      if (length(Values)==0) return()       
+
+      ## construct the query for the insertion in the DBRiskfactor's table        
+      query = "INSERT INTO DBRiskfactor (ID_Category,ID,Name,Description,[Database],[Table],ID_Rf_Construction,ID_Currency,Frequency) VALUES("
+      values = paste(Values[["ID_Category"]],",",Values[["ID"]],sep="")
+      if (Values[["Name"]]!="") values = paste(values,",'",Values[["Name"]],"'",sep="") else values = paste(values,",NULL",sep="")        
+      if (Values[["Description"]]!="") values = paste(values,",'",Values[["Description"]],"'",sep="") else values = paste(values,",NULL",sep="")
+      values = paste(values,",'",Values[["Database"]],"',","'",Values[["Table"]],"',",Values[["ID_Rf_Construction"]],sep="")
+      values = paste(values,",",Values[["ID_Currency"]],",","'",Values[["Frequency"]],"')",sep="")
+
+      query.DBRiskfactor <- paste(query,values,sep="")
+      
+      ## construct the query for the insertion in the DBRf_Construction_Data_1
+      constructionMethodID <- cb.constructionMethod[["get.foreignKey"]]()
+      if (constructionMethodID==1)
+        {
+          queryStep2 = "INSERT INTO DBRf_Construction_Data_1 (ID_Riskfactor,ID_CategoryTimeseries,ID_Timeseries) VALUES("
+          queryStep2 = paste(queryStep2,Values[["ID"]],",",df.constructionMethod[1,"ID_CategoryTimeseries"],
+                        ",",df.constructionMethod[1,"ID_Timeseries"],")")
+        }
+        
+      ## insert into the table DBRiskfactor
+      ## change database
+      initialDb <- sqlWorkingDatabase(myConnection)
+        
+      sqlQuery(channel=myConnection,query="USE risk")     
+      sqlGetErrMsg(channel=myConnection) 
+
+      ## insert        
+      error <- sqlQuery(channel=myConnection,query=query.DBRiskfactor,errors=FALSE)
+      if (error == -1)
+        {
+          sqlGetErrMsg(channel=myConnection)
+          ## go back to the database    
+          if (initialDb!= "risk") sqlQuery(channel=myConnection,query=paste("USE [",initialDb,"]",sep=""))
+        }
+      else
+        {
+          error <- sqlQuery(channel=myConnection,query=queryStep2,errors=FALSE)
+          if (error == -1)
+            {
+              sqlGetErrMsg(channel=myConnection)
+              ## go back to the database    
+              if (initialDb!= "risk") sqlQuery(channel=myConnection,query=paste("USE [",initialDb,"]",sep=""))
+            }
+          else
+            {
+              ## go back to the database    
+              if (initialDb!= "risk") sqlQuery(channel=myConnection,query=paste("USE [",initialDb,"]",sep=""))
+              ## destroy the window and return
+              exit <<- 0
+              tkdestroy(topWindow)
+            }
+        } 
+    }
+
+    onDatabase <- function()
+      {
+        database = cb.database[["get.selection"]]()
+        
+        validTables <- sqlTablesInfo(myConnection=odbcCon,database=database)[,"Table name"]
+        if (length(validTables)>0)
+          {
+            cb.table[["modify.values"]](validTables)
+          }
+        else
+          {
+            cb.table[["modify.values"]]()
+          }
+      }
+      
+    onCategory <- function()
+      {
+        ## verify the Category
+        tmp <- cb.category[["get.foreignKey"]]()
+
+        if (is.null(tmp))
+          {
+            return()
+          }
+        ## verify if the Automatic checkbox is checked
+        onAutomaticId()
+      }
+    initializeConstructionMethodDataFrame <- function()
+      {
+        df.constructionMethod <<- data.frame(ID_CategoryTimeseries=numeric(0),ID_Timeseries=numeric(0))
+        return()
+      }
+    configConstrMethod <- function()
+    {
+      ## check that the field constructionMethod is not empty
+      constructionMethod <- cb.constructionMethod[["get.foreignKey"]]()
+
+      if (is.null(constructionMethod))
+        {
+          df.constructionMethod <<- initializeConstructionMethodDataFrame()
+          tkmessageBox(message="First select the construction method!",icon="info",type="ok",parent=topWindow)
+          return()
+        }
+      if (constructionMethod == 1) ## one-to-one
+        {
+          df.selection <- risk_factor.link.to.timeseriesID1()
+        }
+
+      if (nrow(df.selection)==0)
+        {
+          tkmessageBox(message="No timeseries selected!",icon="info",type="ok",parent=topWindow)
+          df.constructionMethod <<- initializeConstructionMethodDataFrame()
+          return()         
+        }
+      else
+        {
+          df.constructionMethod <- df.selection[1,c("ID_Category","ID")]
+          colnames(df.constructionMethod) <- c("ID_CategoryTimeseries","ID_Timeseries")
+          df.constructionMethod <<- df.constructionMethod
+          return()  
+        } 
+    }
+    
+    topWindow <- tktoplevel() 
+    tktitle(topWindow) <- "Create new riskfactor"
+    tkfocus(topWindow)
+    tkgrab(topWindow)
+    
+    ## create the main frame containing all widget
+    f.fields <- tkframe(parent=topWindow)
+    
+    ## get the Category
+    query <- "SELECT ID, Category FROM DBCategory_Riskfactor ORDER BY Category"
+    df.categories <- sql.get.table(myConnection,query=query)
+    rownames(df.categories) <- df.categories[,"Category"]
+
+    ## get the Currency
+    query <- "SELECT ID, Moneta AS Currency FROM [Sistema (prova)].dbo.DBMoneta ORDER BY Moneta"
+    df.currencies <- sql.get.table(myConnection,query=query)
+    rownames(df.currencies) <- df.currencies[,"Currency"]
+        
+    ## get the Database and tables
+    query <- "SELECT [Database], [Table], ID_Category, ID FROM DBRiskfactor ORDER BY [Database],[Table]"
+    df.riskfactors <- sql.get.table(myConnection,query=query)
+
+    ## category field
+    l.category <- create_label(parent=f.fields,value="Category:")
+    cb.category <- create_combo(parent=f.fields,editable=FALSE,values=df.categories[,"Category"],
+                                foreignKey=df.categories[,"ID"],modifyCommand=onCategory)
+
+
+    ## id field
+    onAutomaticId <- function()
+      {
+        if (ckb.id[["get.value"]]()=="0") return()
+          
+        ## compute the last id corresponding to the selected category
+        if (nrow(df.riskfactors)>0) 
+          {
+            ID = max(df.riskfactors[,"ID"]) + 1
+          }
+        else
+          {
+            ID = 1
+          }        
+        e.id[["set.value"]](ID)
+      }
+    l.id <- create_label(parent=f.fields,value="ID:")
+    f.id <- tkframe(f.fields)
+    e.id <- create_entry(parent=f.id,value="",width="12")
+    ckb.id <- create_checkButton(parent=f.id,label="Automatic",command=onAutomaticId)
+
+
+    ## database field
+    l.database <- create_label(parent=f.fields,value="Database:")
+    databases <- sqlDatabases(myConnection=odbcCon)[,1]
+    cb.database <- create_combo(parent=f.fields,values=databases,editable=FALSE,
+                                modifyCommand=onDatabase)
+    
+    ## table field
+    l.table <- create_label(parent=f.fields,value="Table:")
+    cb.table <- create_combo(parent=f.fields,editable=FALSE)
+
+    ## name field
+    l.name <- create_label(parent=f.fields,value="Name:")
+    e.name <- create_entry(parent=f.fields,value="",width="25",justify="left")
+
+    ## construction method field
+    query <- "SELECT ID, [Construction Method] FROM DBRf_Construction_method ORDER BY ID"
+    df.constructionMethods <- sql.get.table(myConnection,query=query)
+    l.constructionMethod <- create_label(parent=f.fields,value="Construction method:")
+    f.constructionMethod <- tkframe(parent=f.fields)
+    onConstructionMethod <- function() { initializeConstructionMethodDataFrame() }
+    cb.constructionMethod <- create_combo(parent=f.constructionMethod,editable=FALSE,
+                             values=df.constructionMethods[,"Construction Method"],
+                             foreignKey=df.constructionMethods[,"ID"],
+                             modifyCommand=onConstructionMethod)
+    b.constructionMethod <- create_button(parent=f.constructionMethod,text="Configure",command=configConstrMethod)
+    
+    
+    ## currency field
+    l.currency <- create_label(parent=f.fields,value="Currency:")
+    cb.currency <- create_combo(parent=f.fields,editable=FALSE,values=df.currencies[,"Currency"],foreignKey=df.currencies[,"ID"])
+
+    ## Frequency field
+    l.frequency <- create_label(parent=f.fields,value="Frequency:")
+    cb.frequency <- create_combo(parent=f.fields,editable=FALSE,values=c("d","w","m"))
+
+
+    ## Description field
+    l.description <- create_label(parent=f.fields,value="Description:")
+    txt.description <- create_textwindow(parent=f.fields,state="normal",height=4,width=30,
+                                         font="{MS Sans Serif} 8")
+
+    ## The Ok or Cancel buttons and corresponding functions
+    onCancel <- function(){tkdestroy(topWindow)}
+    onOk <- function(){insert.Risk_factor()}
+    okCancel <- create_okCancelButton(parent=f.fields,onOk=onOk,onCancel=onCancel)
+
+   ## Insert into the widget
+   tkgrid(l.category[["label"]],cb.category[["combo"]],padx=padx,pady=pady,sticky="w")
+   tkgrid(l.id[["label"]],f.id,padx=padx,pady=pady,sticky="w")
+   tkgrid(l.database[["label"]],cb.database[["combo"]],padx=padx,pady=pady,sticky="w")
+   tkgrid(l.table[["label"]],cb.table[["combo"]],padx=padx,pady=pady,sticky="w")
+
+      tkgrid(e.id[["entry"]],ckb.id[["frame"]],padx=c(0,padx),pady=pady,sticky="w")
+   tkgrid(l.name[["label"]],e.name[["entry"]],padx=padx,pady=pady,sticky="w")
+   tkgrid(cb.constructionMethod[["combo"]],b.constructionMethod[["button"]],padx=c(0,padx))   
+   tkgrid(l.constructionMethod[["label"]],f.constructionMethod,padx=padx,pady=pady,sticky="w")
+
+   tkgrid(l.currency[["label"]],cb.currency[["combo"]],padx=padx,pady=pady,sticky="w")
+   tkgrid(l.frequency[["label"]],cb.frequency[["combo"]],padx=padx,pady=pady,sticky="w")
+
+   tkgrid(l.description[["label"]],txt.description[["frame"]],padx=padx,pady=pady,sticky="w")
+   tkgrid(okCancel,pady=pady,columnspan=3)
+   tkgrid(f.fields)
+   
+   exit <- 1
+   tkwait.window(topWindow)
+   return(exit)
+  }  ## end of create_newRiskfactorWidget
+
+
+
+
+
+
+
+
+
+
+
+
+
+risk_factor.link.to.timeseriesID1 <- function()
+  { 
+
+    topWindow <- tktoplevel()
+    tktitle(topWindow) <- "One-to-one timeseries selection"
+    tkgrab(topWindow)
+    tkfocus(topWindow)
+
+    
+    ## The Ok or Cancel buttons and corresponding functions
+    onCancel <- function()
+      { 
+        tkdestroy(topWindow)
+        df.selection <<- data.frame(character(0))
+        return()
+      }
+    onOk <- function()
+      {
+        df.selection <<- timeSeriesWidget[["get.selection"]]()
+        tkdestroy(topWindow)            
+        return()
+      }
+    
+    ## create the timeSeriesWidget
+    timeSeriesWidget <- create_timeSeriesWidget(topWindow=topWindow,tblWidth=60,odbcCon=odbcCon)
+    tkgrid(timeSeriesWidget[["lf.timeseries"]][["labelFrame"]],padx=padx,pady=pady,rowspan=2,sticky="wn")
+                               
+    okCancel <- create_okCancelButton(parent=topWindow,onOk=onOk,onCancel=onCancel)
+    tkgrid(okCancel,padx=padx,pady=pady,columnspan=2)
+    
+    tkwait.window(topWindow)
+    return(df.selection)
+  } # end  risk_factor.link.to.timeseries

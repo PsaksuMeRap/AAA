@@ -1,0 +1,2 @@
+export("%+%",getStorageMode,getClass,as.tclDate,get.tclSortModes,setRowNamesDataFrame,
+available.desired.dataFrames,chop)

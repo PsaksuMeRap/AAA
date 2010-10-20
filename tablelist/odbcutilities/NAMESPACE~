@@ -1,0 +1,16 @@
+export(set.query,sqlColumnsInfo,sqlColumnsTypesInfo,verifySqlTypes,allowedSqlTypes,
+sqlNeedQuote,mssql.to.rType,sqlTypeConversion,sqlToTclType,sqlToTclTypeConversion,
+checkSqlTypeConversion,setOdbcConnection,rename.data.frame,get.table,tcl.get.table,
+sqlCommand,create.cov.table,drop.table,delete.table,select.result)
+
+S3method(verifySqlTypes,default)
+S3method(verifySqlTypes,mssql)
+S3method(allowedSqlTypes,default)
+S3method(allowedSqlTypes,mssql)
+S3method(sqlNeedQuote,default)
+S3method(sqlNeedQuote,mssql)
+S3method(sqlTypeConversion,default)
+S3method(sqlTypeConversion,mssql)
+S3method(sqlToTclTypeConversion,default)
+S3method(sqlToTclTypeConversion,mssql)
+

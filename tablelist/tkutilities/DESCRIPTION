@@ -1,0 +1,10 @@
+Package: tkutilities
+Version: 0.1
+Date: 2006-04-12
+Author: Claudio Ortelli <claudio.ortelli@lu.unisi.ch>
+Maintainer: Claudio Ortelli <claudio.ortelli@lu.unisi.ch>
+Title: Ayrton tk utilities function
+Description: constructor function for tk widgets
+SystemRequirements: Windows 2000 or later
+Depends: R (>= 2.2.1),ayrton (>= 0.1-0),tcltk,tkrplot
+License: GPL2
