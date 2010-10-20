@@ -110,6 +110,52 @@ test.shouldAddPositionsToPositions <- function() {
 }
 
 
+test.shouldSumPositions <- function() {
+	source("./lib/position.R")
+	# crea la posizione
+	
+	position1 <- create_position()
+	position1$create(name="test",
+			currency="USD",
+			amount=100,
+			origin=list(ID_AAA=10)
+	)
+	
+	position2 <- create_position()
+	position2$create(name="pippo",
+			currency="CHF",
+			amount=200,
+			origin=list(ID_AAA=10)
+	)	
+
+	position3 <- create_position()
+	position3$create(name="pop",
+			currency="EUR",
+			amount=300,
+			origin=list(ID_AAA=10)
+	)	
+	
+	positions <- create_positions()
+	positions$add(position1)
+	positions$add(position2)
+	positions$add(position3)
+	
+	# select the testExchangeRate repository
+	# exchange rate USD-CHF: 0.9627
+	# exchange rate EUR-CHF: 1.33853808
+	repository <- repositories$exchangeRates
+	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	testRepository <- createExchangeRatesTestRepository() 
+	repositories$exchangeRates <- testRepository
+	
+	shouldBe <- 100*0.9627+200+300*1.33853808
+	checkEquals(positions$sum("CHF"),toMoney(shouldBe,"CHF"))
+	shouldBe <- 100*0.9627/1.33853808+200/1.3385380+300
+	checkEquals(positions$sum("EUR"),toMoney(shouldBe,"EUR"))
+	
+	repositories$exchangeRates <- repository
+}
+
 test.shouldFailWithNonPosition <- function() {
 	source("./lib/position.R")
 	

@@ -4,6 +4,7 @@
 ###############################################################################
 
 source("./lib/repository.R")
+source("./lib/money.R")
 
 create_positions <- function() {
 	positions <- new.env()
@@ -33,6 +34,15 @@ create_positions <- function() {
 	positions$addPositions <- function(pos) {
 		# pos: an object of class positions
 		lapply(pos$positions,positions$addPosition)
+	}
+	
+	positions$sum <- function(toCurrency) {
+		# toCurrency: the currency to convert to
+		total <- toMoney(0,toCurrency)
+		for (p in positions$positions) {
+			total$sum(toMoney(p$amount,p$currency))
+		}
+		return(total)
 	}
 	
 	positions$remove <- function(index) {

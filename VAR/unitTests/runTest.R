@@ -45,10 +45,3 @@ testsuite.money <- defineTestSuite("Test classe money",
 testResult <- runTestSuite(testsuite.money); printTextProtocol(testResult)
 
 
-## test per la classe currencyConverter
-testsuite.currencyConverter <- defineTestSuite("Test classe currencyConverter",
-		dirs = "./unitTests/t.currencyConverter")
-
-testResult <- runTestSuite(testsuite.currencyConverter); printTextProtocol(testResult)
-
-
