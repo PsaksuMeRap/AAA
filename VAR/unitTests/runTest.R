@@ -9,7 +9,7 @@ library("RUnit")
 source("./lib/library.R")
 
 
-## test per l'importazione dei dati
+## test per le classi repositoryXYZ (exchangeRates, interestRates, ...)
 testsuite.repositories <- defineTestSuite("Test creazione repositories",
 		dirs = paste(home,"/unitTests/t.repositories",sep=""))
 
@@ -36,6 +36,13 @@ testsuite.portfolio <- defineTestSuite("Test classe portfolio",
 		dirs = "./unitTests/t.portfolio")
 
 testResult <- runTestSuite(testsuite.portfolio); printTextProtocol(testResult)
+
+
+## test per la classe money
+testsuite.money <- defineTestSuite("Test classe money",
+		dirs = "./unitTests/t.money")
+
+testResult <- runTestSuite(testsuite.money); printTextProtocol(testResult)
 
 
 ## test per la classe currencyConverter

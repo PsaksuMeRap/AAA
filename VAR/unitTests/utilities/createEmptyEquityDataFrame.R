@@ -12,5 +12,5 @@ createEmptyEquityDataFrame <- function() {
 			ticker=character(),
 			stringsAsFactors=FALSE
 	)
-	
+	return(emptyEquities.df)
 }

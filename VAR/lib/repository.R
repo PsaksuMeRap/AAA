@@ -75,7 +75,7 @@ create_repositoryEquities <- function(equities.df) {
 	
 #	if (is.null(nrow(repository$equities.df))) {
 	if (nrow(repository$equities.df)==0) {	
-		print(repository$equities.df)
+		# print(repository$equities.df)
 		isEmpty <- TRUE
 	} else {
 		isEmpty <- FALSE
@@ -297,18 +297,27 @@ create_repositoryExchangeRates <- function(exchangeRates.v) {
 	} else {
 		repository$rates <- exchangeRates.v
 	}
+
 	
-	repository$exchange <- function(amount,fromCurrency,toCurrency) {
+	repository$exchange <- function(money,toCurrency) {
+		# money: a list <amount,currency> with the amount to be converted
+		# toCurrency: the final currency
+		
+		amount <- money$amount
+		fromCurrency <- money$currency
+		
 		if (toCurrency=="CHF" | toCurrency=="CHr") {
-			return(amount * repository$rates[fromCurrency])
+			result <- toMoney(amount*repository$rates[[fromCurrency]],toCurrency)
+			return(result)
 		}
 		
 		areAvailable <- is.element(c(fromCurrency,toCurrency),names(repository$rates))
 		if (any(!areAvailable)) {
 			print(paste("Error",names(repository$rates)[!areAvailable],"not available."))
 		}
-		
-		return(amount * repository$rates[fromCurrency] / repository$rates[toCurrency])
+		result <- toMoney(amount * repository$rates[[fromCurrency]] / repository$rates[[toCurrency]],
+				toCurrency)
+		return(result)
 	}
 	
 	return(repository)
