@@ -50,9 +50,14 @@ create_positions <- function() {
 		positions$positions[[index]] <<- NULL
 	}
 	
+	positions$isCurrency <- function(currency) {
+		result <- lapply(positions$positions,
+				function(x,currency) return(x$isCurrency(currency)),
+				currency)
+		return(result)
+	}
+		
 	positions$print <- function() {
-		#df <- positions$toDataFrame()
-		#print(df)
 		criteria <- c("instrument","currency","name")
 		for (p in positions$sortBy()) p$print()
 	}
@@ -107,9 +112,13 @@ create_position <- function() {
 	}
 	
 	
-	position$isMemberOf <- function(myClass) {
+	position$isInstrument <- function(myClass) {
 		classes <- class(position)
 		if (any(classes == myClass)) return(TRUE) else return(FALSE)
+	}
+	
+	position$isCurrency <- function(currency) {
+		return(position$currency==currency)
 	}
 	
 	position$extendEquities <- function() {

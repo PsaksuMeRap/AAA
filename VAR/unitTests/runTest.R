@@ -23,9 +23,15 @@ testsuite.parser <- defineTestSuite("Test parser",
 testResult <- runTestSuite(testsuite.parser); printTextProtocol(testResult)
 
 
+## test per la classe money
+testsuite.money <- defineTestSuite("Test classe money",
+		dirs = "./unitTests/t.money")
+
+testResult <- runTestSuite(testsuite.money); printTextProtocol(testResult)
+
 
 ## test per la classe position
-testsuite.position <- defineTestSuite("Test classe position",
+testsuite.position <- defineTestSuite("Test classe position e positions",
 		dirs = paste(home,"/unitTests/t.position",sep=""))
 
 testResult <- runTestSuite(testsuite.position); printTextProtocol(testResult)
@@ -36,12 +42,5 @@ testsuite.portfolio <- defineTestSuite("Test classe portfolio",
 		dirs = "./unitTests/t.portfolio")
 
 testResult <- runTestSuite(testsuite.portfolio); printTextProtocol(testResult)
-
-
-## test per la classe money
-testsuite.money <- defineTestSuite("Test classe money",
-		dirs = "./unitTests/t.money")
-
-testResult <- runTestSuite(testsuite.money); printTextProtocol(testResult)
 
 

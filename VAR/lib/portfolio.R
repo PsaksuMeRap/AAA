@@ -30,12 +30,18 @@ create_portfolio <- function() {
 		stop("Impossible to add p to portfolio: p is not of class position or positions")
 		
 	}
+	
 	portfolio$print <- function() {
 		print(paste("Owner:",portfolio$owner))
 		print(paste("Reference currency:",portfolio$refCurrency))
 		print(paste("Positions:"))
 		portfolio$positions$print()
 	}
+	
+	portfolio$value <- function(currency) {
+		return(portfolio$positions$sum(currency))
+	}
+	
 	return(portfolio)
 }
 

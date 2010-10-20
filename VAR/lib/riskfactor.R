@@ -13,10 +13,10 @@ create_riskFactors <- function(position) {
 		riskFactors <<- rbind(riskFactors,data.frame(amount,factor))
 	}    
 	
-	if (position$isMemberOf("Conto corrente")) {
+	if (position$isInstrument("Conto corrente")) {
 		riskFactors <- add(amount=position$amount,factor=position$currency)
 	}
-	if (position$isMemberOf("equities")) {
+	if (position$isInstrument("equities")) {
 		riskFactors <- add(amount=position$amount,factor=position$currency)
 		riskFactors <- add(amount=position$amount,factor=position$ticker)
 	}
