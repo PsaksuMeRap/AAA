@@ -1,6 +1,6 @@
 
 
-
+- continuare con test.positionsMethods per creare la positionsMethods.R classe.
 
 
 

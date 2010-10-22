@@ -26,8 +26,8 @@ test.create_position <- function() {
 	)
 	
 	checkEquals(class(position),"position")
-	checkEquals(position$isMemberOf("position"),TRUE)
-	checkEquals(position$isMemberOf("positions"),FALSE)
+	checkEquals(position$isInstrument("position"),TRUE)
+	checkEquals(position$isInstrument("positions"),FALSE)
 	
 	position$extendEquities()
 	checkEquals(position$ticker,"DGX.XE")

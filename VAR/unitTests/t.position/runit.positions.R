@@ -255,32 +255,4 @@ test.shouldOrderPositions <- function() {
 	checkEquals(positions$sortBy(c("name","currency","amount")),posSorted$positions)
 }
 
-test.check <- function() {
-	source("./lib/position.R")
-	
-	# create position 1
-	position1 <- create_position()
-	position1$create(name="xxx",
-			currency="USD",
-			amount=0.0,
-			origin=list(ID_AAA=10)
-	)
-	class(position1) <- c("equities",class(position1))
-	
-	# create position 2	
-	position2 <- create_position()
-	position2$create(name="AAA",
-			currency="CHF",
-			amount=0.1,
-			origin=list(ID_AAA=10)
-	)
-	class(position2) <- c("bond",class(position2))
-	
-	
-	# create positions
-	positions <- create_positions()
-	positions$add(position1)
-	positions$add(position2)
-
-	positions$check(toMoney(19,"USD"),">")
-}
+ 

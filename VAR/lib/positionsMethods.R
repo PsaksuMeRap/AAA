@@ -6,7 +6,7 @@
 
 
 positionsSelector <- function(criterium,positions) {
-	# positions: the positions on which to apply the ckeck	
+	# positions: the positions on which to apply the check	
 	UseMethod("positionsSelector",criterium)
 }
 
