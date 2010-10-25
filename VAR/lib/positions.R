@@ -46,8 +46,16 @@ create_positions <- function() {
 	}
 	
 	positions$remove <- function(index) {
+		# if remove is called without argument, the last element is
+		# removed
 		if (missing(index)) index <- length(positions$positions)
-		positions$positions[[index]] <<- NULL
+		
+		if (mode(index)=="logical") {
+			# determine the indices to remove
+			index < (1:length(index))[index]
+		}
+		positions$positions[index] <<- NULL
+
 	}
 	
 	positions$isCurrency <- function(currency) {

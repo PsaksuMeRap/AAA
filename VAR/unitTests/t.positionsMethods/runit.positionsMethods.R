@@ -39,8 +39,20 @@ test.shouldExtractPositionsByCurrency <- function() {
 	positions$add(position2)
 	positions$add(position3)	
 		
-	criterium <- create_selectionCriterium(factor="currency",values="EUR")
+	criterium <- create_selectionCriterium(factor="currency",values=c("EUR","USD"))
 	
 	result <- positionsSelector(criterium,positions)
-	checkEquals(result,positions$positions[[3]])
+	
+	posCheck <- create_positions()
+	posCheck$add(position1)
+	posCheck$add(position3)
+	
+	checkEquals(result,posCheck)
+	checkEquals(identical(result,positions),FALSE)
+	
+	# empty positions
+	posCheck <- create_positions()
+	criterium <- create_selectionCriterium(factor="currency",values="abc")
+	result <- positionsSelector(criterium,positions)
+	checkEquals(result,posCheck)
 }

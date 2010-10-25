@@ -44,3 +44,15 @@ testsuite.portfolio <- defineTestSuite("Test classe portfolio",
 testResult <- runTestSuite(testsuite.portfolio); printTextProtocol(testResult)
 
 
+## test per la classe selectionCriterium
+testsuite.selectionCriterium <- defineTestSuite("Test classe selectionCriterium",
+		dirs = "./unitTests/t.selectionCriterium")
+
+testResult <- runTestSuite(testsuite.selectionCriterium); printTextProtocol(testResult)
+
+
+## test per la classe positionsMethods
+testsuite.positionsMethods <- defineTestSuite("Test dei metodi positionsMethods",
+		dirs = "./unitTests/t.positionsMethods")
+
+testResult <- runTestSuite(testsuite.positionsMethods); printTextProtocol(testResult)

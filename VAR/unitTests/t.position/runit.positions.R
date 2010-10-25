@@ -79,6 +79,86 @@ test.shouldAddPositionsToPositions <- function() {
 	checkEquals(positions_new$positions[[2]],position2)
 }
 
+test.shouldRemoveOnePosition <- function() {
+	source("./lib/position.R")
+	# crea la posizione
+	
+	position1 <- create_position()
+	position1$create(name="test",
+			currency="USD",
+			amount=0.0,
+			origin=list(ID_AAA=10)
+	)
+	
+	position2 <- create_position()
+	position2$create(name="pippo",
+			currency="CHF",
+			amount=0.1,
+			origin=list(ID_AAA=10)
+	)	
+
+	
+	positions <- create_positions()
+	positions$add(position1)
+	positions$add(position2)
+	positions$remove(1)
+	
+	positions_new <- create_positions()
+	positions_new$add(position2)
+		
+	checkEquals(positions_new,positions)
+
+
+	
+	
+}
+
+test.shouldRemoveTwoPositions <- function() {
+	source("./lib/position.R")
+	# crea la posizione
+	
+	position1 <- create_position()
+	position1$create(name="test",
+			currency="USD",
+			amount=0.0,
+			origin=list(ID_AAA=10)
+	)
+	
+	position2 <- create_position()
+	position2$create(name="pippo",
+			currency="CHF",
+			amount=0.1,
+			origin=list(ID_AAA=10)
+	)	
+	
+	position3 <- create_position()
+	position3$create(name="pippo2",
+			currency="CHF",
+			amount=0.8,
+			origin=list(ID_AAA=11)
+	)
+	
+	
+	positions <- create_positions()
+	positions$add(position1)
+	positions$add(position2)
+	positions$add(position3)
+	positions$remove(c(1,3))	
+	
+	positions_new <- create_positions()
+	positions_new$add(position2)
+	
+	checkEquals(positions_new,positions)
+
+	positions <- create_positions()
+	positions$add(position1)
+	positions$add(position2)
+	positions$add(position3)
+	positions$remove(c(TRUE,FALSE,TRUE))	
+	
+	checkEquals(positions_new,positions)	
+	
+}
 
 test.isCurrency <- function() {
 	source("./lib/position.R")

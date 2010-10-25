@@ -1,10 +1,5 @@
 
 
-- continuare con test.positionsMethods per creare la positionsMethods.R classe.
-
-
-
-
 - creare il test per parserPosition di tipo equity				OK
 	-> richiede la creazione di un instrument repository		OK
 		-> modificata createInstrumentsDataFrame (creare Test)  DA FARE
