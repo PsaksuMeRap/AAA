@@ -6,8 +6,6 @@
 
 test.shouldExtractPositionsByCurrency <- function() {
 	
-	load("./lib/positionsMethods.R")
-	
 	# create position 1
 	position1 <- create_position()
 	position1$create(name="xxx",
@@ -15,7 +13,7 @@ test.shouldExtractPositionsByCurrency <- function() {
 			amount=0.0,
 			origin=list(ID_AAA=10)
 	)
-	class(position1) <- c("equities",class(position1))
+	class(position1) <- c("equity",class(position1))
 	
 	# create position 2	
 	position2 <- create_position()
@@ -40,23 +38,9 @@ test.shouldExtractPositionsByCurrency <- function() {
 	positions$add(position1)
 	positions$add(position2)
 	positions$add(position3)	
-	
-	necessito della variabile di classe criterium!
-	
-	
-	positionSelector <- function(criterium,positions) {
-		if (class(criterium=="currency")) return()
-	}
-	
-	positionsSelector.currency <- function(currency,positions) {
 		
-		trueFalse <- lapply(positions,
-				function(position,currency) return(position$currency==currency),
-				currency)
-		trueFalse <- unlist(trueFalse)
-		
-		return(positions[trueFalse])
-	}
+	criterium <- create_selectionCriterium(factor="currency",values="EUR")
 	
-	checkEquals()
+	result <- positionsSelector(criterium,positions)
+	checkEquals(result,positions$positions[[3]])
 }
