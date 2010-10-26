@@ -52,7 +52,7 @@ positionsSelector.amount <- function(criterium,positions) {
 		if (criterium$type==">=") return(money$amount >= criterium$values$amount)
 		if (criterium$type=="<")  return(money$amount <  criterium$values$amount)
 		if (criterium$type=="<=") return(money$amount <= criterium$values$amount)
-		if (criterium$type=="==") return(money$amount == criterium$values$amount)
+		if (criterium$type=="=") return(money$amount == criterium$values$amount)
 		if (criterium$type=="!=") return(money$amount != criterium$values$amount)
 	}
 	

@@ -136,7 +136,7 @@ test.shouldExtractPositionsByAmount <- function() {
 	position1 <- create_position()
 	position1$create(name="xxx",
 			currency="USD",
-			amount=100.1*0.9627,
+			amount=97.1/0.9627,
 			origin=list(ID_AAA=10)
 	)
 	class(position1) <- c("equity",class(position1))
@@ -154,7 +154,7 @@ test.shouldExtractPositionsByAmount <- function() {
 	position3 <- create_position()
 	position3$create(name="AAA",
 			currency="EUR",
-			amount=100.1*1.33853808,
+			amount=80/1.33853808,
 			origin=list(ID_AAA=10)
 	)
 	class(position3) <- c("ABC",class(position3))	
@@ -173,15 +173,40 @@ test.shouldExtractPositionsByAmount <- function() {
 	positions$add(position2)
 	positions$add(position3)	
 	
-	
-	# one position
+	# check >
 	criterium <- create_selectionCriterium(factor="amount",values=toMoney(100.1,"CHF"),type=">")
 	
 	result <- positionsSelector(criterium,positions)
-	print(result)
-	posCheck <- c(FALSE,FALSE,FALSE)
+	posCheck1 <- c(FALSE,FALSE,FALSE)
+	checkEquals(result,posCheck1)
+
+	# check >=
+	criterium <- create_selectionCriterium(factor="amount",values=toMoney(100.1,"CHF"),type=">=")
 	
-	checkEquals(result,posCheck)
+	result <- positionsSelector(criterium,positions)
+	posCheck2 <- c(FALSE,TRUE,FALSE)
+	checkEquals(result,posCheck2)
+	
+	# check =
+	criterium <- create_selectionCriterium(factor="amount",values=toMoney(97.1,"CHF"),type="=")
+	
+	result <- positionsSelector(criterium,positions)
+	posCheck3 <- c(TRUE,FALSE,FALSE)
+	checkEquals(result,posCheck3)
+	
+	# check <
+	criterium <- create_selectionCriterium(factor="amount",values=toMoney(80.1/1.33853808,"EUR"),type="<")
+	
+	result <- positionsSelector(criterium,positions)
+	posCheck4 <- c(FALSE,FALSE,TRUE)
+	checkEquals(result,posCheck4)
+	
+	# check <=
+	criterium <- create_selectionCriterium(factor="amount",values=toMoney(97.1,"CHF"),type="<=")
+	
+	result <- positionsSelector(criterium,positions)
+	posCheck5 <- c(TRUE,FALSE,TRUE)
+	checkEquals(result,posCheck5)
 	
 	# reset the repository in the original state
 	repositories$exchangeRates <- repository

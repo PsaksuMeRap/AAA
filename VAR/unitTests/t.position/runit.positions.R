@@ -78,6 +78,7 @@ test.shouldAddPositionsToPositions <- function() {
 	checkEquals(positions_new$positions[[1]],position1)
 	checkEquals(positions_new$positions[[2]],position2)
 }
+
 test.shouldExtractReturnEmptypositions <- function() {
 	source("./lib/position.R")
 	# crea la posizione
