@@ -8,7 +8,7 @@ options(browser="google-chrome")
 options(help_type="html")
 
 library("RODBC")
-
+library("RUnit")
 home <- "/home/claudio/eclipse/AAA/VAR/"
 
 

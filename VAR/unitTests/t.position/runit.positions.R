@@ -78,11 +78,93 @@ test.shouldAddPositionsToPositions <- function() {
 	checkEquals(positions_new$positions[[1]],position1)
 	checkEquals(positions_new$positions[[2]],position2)
 }
+test.shouldExtractReturnEmptypositions <- function() {
+	source("./lib/position.R")
+	# crea la posizione
+	
+	position1 <- create_position()
+	position1$create(name="test",
+			currency="USD",
+			amount=0.0,
+			origin=list(ID_AAA=10)
+	)
+	
+	# with a non empty positions
+	positions <- create_positions()
+	positions$add(position1)
+	
+	result <- positions$extract(NULL)
+	check <- create_positions()
+	checkEquals(result,check)
+	
+	# with an empty positions
+	positions <- create_positions()
+	
+	result <- positions$extract(NULL)
+	check <- create_positions()
+	checkEquals(result,check)
+	
+}
+
+test.shouldExtractPositions <- function() {
+	source("./lib/position.R")
+	# crea la posizione
+	
+	position1 <- create_position()
+	position1$create(name="test",
+			currency="USD",
+			amount=0.0,
+			origin=list(ID_AAA=10)
+	)
+	
+	position2 <- create_position()
+	position2$create(name="pippo",
+			currency="CHF",
+			amount=0.1,
+			origin=list(ID_AAA=10)
+	)	
+	
+	positions <- create_positions()
+	positions$add(position1)
+	positions$add(position2)
+	
+	result <- positions$extract(c(TRUE,TRUE))
+
+	# extract all positions
+	checkEquals(length(result$positions),2)
+	checkEquals(result$positions,positions$positions)	
+	checkEquals(result$positions[[1]],position1)
+	checkEquals(result$positions[[2]],position2)
+	
+	# extract one position
+	result <- positions$extract(c(FALSE,TRUE))
+	positions$remove(1)
+	checkEquals(result,positions)
+
+}
+
+test.shouldFailExtracting <- function() {
+	source("./lib/position.R")
+	# crea la posizione
+	
+	position1 <- create_position()
+	position1$create(name="test",
+			currency="USD",
+			amount=0.0,
+			origin=list(ID_AAA=10)
+	)
+	
+	positions <- create_positions()
+	positions$add(position1)
+	
+	# generate error because of differing length
+	checkException(positions$extract(c(TRUE,TRUE)))
+}
 
 test.shouldRemoveOnePosition <- function() {
 	source("./lib/position.R")
 	# crea la posizione
-	
+
 	position1 <- create_position()
 	position1$create(name="test",
 			currency="USD",
@@ -116,7 +198,7 @@ test.shouldRemoveOnePosition <- function() {
 test.shouldRemoveTwoPositions <- function() {
 	source("./lib/position.R")
 	# crea la posizione
-	
+
 	position1 <- create_position()
 	position1$create(name="test",
 			currency="USD",

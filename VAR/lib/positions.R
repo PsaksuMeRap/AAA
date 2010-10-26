@@ -36,13 +36,31 @@ create_positions <- function() {
 		lapply(pos$positions,positions$addPosition)
 	}
 	
-	positions$sum <- function(toCurrency) {
-		# toCurrency: the currency to convert to
-		total <- toMoney(0,toCurrency)
-		for (p in positions$positions) {
-			total$sum(toMoney(p$amount,p$currency))
+	positions$extract <- function(isToExtract) {
+		# isToExtract: a vector of TRUE/FALSE indicating
+		# which component must be extracted
+		
+		positions_new <- create_positions()
+		
+		if (missing(isToExtract) | identical(isToExtract,NULL)) return(positions_new)
+		if (length(isToExtract)!=length(positions$positions)) {
+			stop("positions$extract: lenght of list != TRUE/FALSE vector")
 		}
-		return(total)
+		
+		positions_new$positions <- positions$positions[isToExtract]
+		return(positions_new)
+	}
+	
+	positions$isCurrency <- function(currency) {
+		result <- lapply(positions$positions,
+				function(x,currency) return(x$isCurrency(currency)),
+				currency)
+		return(result)
+	}
+	
+	positions$print <- function() {
+		criteria <- c("instrument","currency","name")
+		for (p in positions$sortBy()) p$print()
 	}
 	
 	positions$remove <- function(index) {
@@ -52,32 +70,29 @@ create_positions <- function() {
 		
 		if (mode(index)=="logical") {
 			# determine the indices to remove
-			index < (1:length(index))[index]
+			index <- (1:length(index))[index]
 		}
 		positions$positions[index] <<- NULL
-
-	}
-	
-	positions$isCurrency <- function(currency) {
-		result <- lapply(positions$positions,
-				function(x,currency) return(x$isCurrency(currency)),
-				currency)
-		return(result)
-	}
 		
-	positions$print <- function() {
-		criteria <- c("instrument","currency","name")
-		for (p in positions$sortBy()) p$print()
 	}
 	
 	positions$sortBy <- function(criteria) {
 		# creteria: an ordered character vector with the following criteria
 		# class - currency - name - amount
-
+		
 		df <- positions$toDataFrame()
 		indices <- do.call(order,df[criteria])
 		return(positions$positions[indices])
 	}
+	
+	positions$sum <- function(toCurrency) {
+		# toCurrency: the currency to convert to
+		total <- toMoney(0,toCurrency)
+		for (p in positions$positions) {
+			total$sum(toMoney(p$amount,p$currency))
+		}
+		return(total)
+	}	
 	
 	positions$toDataFrame <- function() {
 		# this function create a data.frame from the list of positions
