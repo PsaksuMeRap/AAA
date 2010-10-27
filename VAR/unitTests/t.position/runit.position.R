@@ -29,7 +29,9 @@ test.create_position <- function() {
 	checkEquals(position$isInstrument("position"),TRUE)
 	checkEquals(position$isInstrument("positions"),FALSE)
 	
-	position$extendEquities()
+	class(position) <- c("equity","position")
+	extendPosition(position)
+	
 	checkEquals(position$ticker,"DGX.XE")
 	rm(repositories)
 }

@@ -13,3 +13,5 @@ source("./lib/repository.R")
 source("./lib/riskfactor.R")
 source("./lib/money.R")
 source("./lib/selectionCriterium.R")
+source("./lib/accruedInterest.R")
+

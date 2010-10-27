@@ -29,6 +29,13 @@ testsuite.money <- defineTestSuite("Test classe money",
 testResult <- runTestSuite(testsuite.money); printTextProtocol(testResult)
 
 
+## test per la classe accruedInterest
+testsuite.accruedInterest <- defineTestSuite("Test classe accruedInterest",
+		dirs = paste(home,"/unitTests/t.accruedInterest",sep=""))
+
+testResult <- runTestSuite(testsuite.accruedInterest); printTextProtocol(testResult)
+
+
 ## test per la classe position
 testsuite.position <- defineTestSuite("Test classe position e positions",
 		dirs = paste(home,"/unitTests/t.position",sep=""))
