@@ -3,6 +3,22 @@
 # Author: claudio
 ###############################################################################
 
+create_repositoryFixedIncome <- function(fixedIncome.df) {
+	
+	repository <- list()
+	class(repository) <- "repositoryFixedIncome"
+	
+	if (missing(fixedIncome.df)) {
+		connection <- odbcConnect("prezzi_storici_azioni_VAR",utente,password)
+		query = paste("Select * ",
+				"FROM [Sistema (prova)].dbo.riskman_export_DBRedditoFissoConRatings")
+		repository$fixedIncome.df <- sqlQuery(connection,query,as.is=TRUE)
+	} else {
+		repository$fixedIncome.df <- fixedIncome.df
+	}
+	return(repository)
+}
+
 
 create_repositoryInstruments <- function(instruments.df) {
 	# instruments.df: a data frame with <ID (integer)>, <Instrument (character)>

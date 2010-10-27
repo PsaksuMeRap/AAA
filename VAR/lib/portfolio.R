@@ -3,7 +3,7 @@
 # Author: claudio
 ###############################################################################
 
-source("./lib/position.R")
+source("./lib/position/position.R")
 
 create_portfolio <- function() {
 	# uses positions

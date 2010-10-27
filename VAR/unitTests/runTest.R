@@ -8,16 +8,23 @@ library("RUnit")
 source("./lib/library.R")
 
 
+## test per la procedura allocateTestRepositories
+testsuite.allocateTestRepositories <- defineTestSuite("Test creazione dei repositories di test",
+		dirs = "./unitTests/t.utilities")
+
+testResult <- runTestSuite(testsuite.allocateTestRepositories); printTextProtocol(testResult)
+
+
 ## test per le classi repositoryXYZ (exchangeRates, interestRates, ...)
 testsuite.repositories <- defineTestSuite("Test creazione repositories",
-		dirs = paste(home,"/unitTests/t.repositories",sep=""))
+		dirs = "./unitTests/t.repositories")
 
 testResult <- runTestSuite(testsuite.repositories); printTextProtocol(testResult)
 
 
 ## test per la classe parser
 testsuite.parser <- defineTestSuite("Test parser",
-		dirs = paste(home,"/unitTests/t.parser",sep=""))
+		dirs = "./unitTests/t.parser")
 
 testResult <- runTestSuite(testsuite.parser); printTextProtocol(testResult)
 
@@ -31,14 +38,14 @@ testResult <- runTestSuite(testsuite.money); printTextProtocol(testResult)
 
 ## test per la classe accruedInterest
 testsuite.accruedInterest <- defineTestSuite("Test classe accruedInterest",
-		dirs = paste(home,"/unitTests/t.accruedInterest",sep=""))
+		dirs = "./unitTests/t.accruedInterest")
 
 testResult <- runTestSuite(testsuite.accruedInterest); printTextProtocol(testResult)
 
 
 ## test per la classe position
 testsuite.position <- defineTestSuite("Test classe position e positions",
-		dirs = paste(home,"/unitTests/t.position",sep=""))
+		dirs = "./unitTests/t.position")
 
 testResult <- runTestSuite(testsuite.position); printTextProtocol(testResult)
 

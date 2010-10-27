@@ -5,16 +5,10 @@
 
 
 test.create_position <- function() {
-	source("./lib/position.R")
+	source("./lib/position/position.R")
 	source("./lib/repository.R")
 	
-	# crea l'equity repository
-	source("./unitTests/utilities/createEquityDataFrame.R")
-	equities.df <- createEquityDataFrame()
-	
-	repositories <<- new.env()
-	repositories$equities <- create_repositoryEquities(equities.df)
-	rm(equities.df)
+	allocateTestRepositories("equities")
 	
 	# crea la posizione
 	position <- create_position()
@@ -33,12 +27,13 @@ test.create_position <- function() {
 	extendPosition(position)
 	
 	checkEquals(position$ticker,"DGX.XE")
-	rm(repositories)
+	
+	deallocateTestRepositories("equities")
 }
 
 
 test.isCurrency <- function() {
-	source("./lib/position.R")		
+	source("./lib/position/position.R")		
 
 	# crea la posizione
 	position <- create_position()
@@ -54,7 +49,7 @@ test.isCurrency <- function() {
 
 
 test.shouldCreateDataFrameFromPosition <- function() {
-	source("./lib/position.R")
+	source("./lib/position/position.R")
 	
 	position <- create_position()
 	position$create(name="test",

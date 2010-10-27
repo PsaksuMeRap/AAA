@@ -4,7 +4,7 @@
 ###############################################################################
 
 source("./lib/portfolio.R")
-source("./lib/position.R")
+source("./lib/position/position.R")
 
 
 create_parserPortfolio <- function() {
@@ -114,7 +114,7 @@ create_parserPosition <- function() {
 		class(position) <- c(instrument,class(position))
 		
 		# extend position if necessary
-		if (instrument == "equity") position$extendEquities()
+		extendPosition(position)
 		
 		return(position)
 	}

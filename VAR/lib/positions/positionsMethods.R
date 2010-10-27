@@ -19,7 +19,6 @@ positionsSelector.currency <- function(criterium,positions) {
 	return(extract)
 }
 
-
 positionsSelector.instrument <- function(criterium,positions) {
 	
 	if (!is.element("positions",class(positions))) stop("The argument is not of class positions")

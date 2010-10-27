@@ -4,7 +4,7 @@
 ###############################################################################
 
 test.shouldAddPositionToPositions <- function() {
-	source("./lib/position.R")
+	source("./lib/position/position.R")
 	
 	# crea la posizione
 	position <- create_position()
@@ -21,7 +21,7 @@ test.shouldAddPositionToPositions <- function() {
 }
 
 test.shouldAdd2PositionsToPositions <- function() {
-	source("./lib/position.R")
+	source("./lib/position/position.R")
 	# crea la posizione
 	
 	position1 <- create_position()
@@ -49,7 +49,7 @@ test.shouldAdd2PositionsToPositions <- function() {
 
 
 test.shouldAddPositionsToPositions <- function() {
-	source("./lib/position.R")
+	source("./lib/position/position.R")
 	# crea la posizione
 	
 	position1 <- create_position()
@@ -80,7 +80,7 @@ test.shouldAddPositionsToPositions <- function() {
 }
 
 test.shouldExtractReturnEmptypositions <- function() {
-	source("./lib/position.R")
+	source("./lib/position/position.R")
 	# crea la posizione
 	
 	position1 <- create_position()
@@ -108,7 +108,7 @@ test.shouldExtractReturnEmptypositions <- function() {
 }
 
 test.shouldExtractPositions <- function() {
-	source("./lib/position.R")
+	source("./lib/position/position.R")
 	# crea la posizione
 	
 	position1 <- create_position()
@@ -145,7 +145,7 @@ test.shouldExtractPositions <- function() {
 }
 
 test.shouldFailExtracting <- function() {
-	source("./lib/position.R")
+	source("./lib/position/position.R")
 	# crea la posizione
 	
 	position1 <- create_position()
@@ -163,7 +163,7 @@ test.shouldFailExtracting <- function() {
 }
 
 test.shouldRemoveOnePosition <- function() {
-	source("./lib/position.R")
+	source("./lib/position/position.R")
 	# crea la posizione
 
 	position1 <- create_position()
@@ -197,7 +197,7 @@ test.shouldRemoveOnePosition <- function() {
 }
 
 test.shouldRemoveTwoPositions <- function() {
-	source("./lib/position.R")
+	source("./lib/position/position.R")
 	# crea la posizione
 
 	position1 <- create_position()
@@ -244,7 +244,7 @@ test.shouldRemoveTwoPositions <- function() {
 }
 
 test.isCurrency <- function() {
-	source("./lib/position.R")
+	source("./lib/position/position.R")
 	
 	# crea la posizione
 	position1 <- create_position()
@@ -275,7 +275,7 @@ test.isCurrency <- function() {
 
 
 test.shouldSumPositions <- function() {
-	source("./lib/position.R")
+	source("./lib/position/position.R")
 	
 	# crea la posizione
 	position1 <- create_position()
@@ -329,7 +329,7 @@ test.shouldSumPositions <- function() {
 
 
 test.shouldFailWithNonPosition <- function() {
-	source("./lib/position.R")
+	source("./lib/position/position.R")
 	
 	positions <- create_positions()
 	
@@ -340,7 +340,7 @@ test.shouldFailWithNonPosition <- function() {
 
 test.shouldCreateDataFrameFromPositions <- function() {
 	
-	source("./lib/position.R")
+	source("./lib/position/position.R")
 	# create position 1
 	position1 <- create_position()
 	position1$create(name="test",
@@ -375,7 +375,7 @@ test.shouldCreateDataFrameFromPositions <- function() {
 
 test.shouldOrderPositions <- function() {
 	
-	source("./lib/position.R")
+	source("./lib/position/position.R")
 	
 	# create position 1
 	position1 <- create_position()
