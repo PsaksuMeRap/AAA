@@ -113,48 +113,67 @@ test.shouldIdenfyAccruedInterest <- function() {
 	
 }
 
-test.shouldParseSelectionCriterium <- function() {
+test.shouldParseSelectionCriteria <- function() {
 	
-	splitClassesAndFactorsFromValueType <- function(criteriumString) {
+	parser <- create_parserSelectionCriteria()
 		
-		result <- unlist(strsplit(criteriumString,";"))
-		if (length(result)==0) stop("Error: empty criteriumString")
-		
-		if (length(result)==2) names(result) <- c("classesAndFactors","valuesAndType")
-		if (length(result)==1) names(result) <- "classesAndFactors"
-		return(result)
-	}
+	criteriumString = paste("instrument:bond & currency:JPY +",
+			"instrument:bond,equity & currency:usd,chf + amount:<=100.3CHF",
+			"; =0USD")
 	
-	splitUnionOfClassesAndFactorsBlocks <- function(string) {
-		result <- unlist(strsplit(string,"\\+"))
-		return(result)
-	}
+	result <- parser$splitFactorsAndValuesFromTypeAndValue(criteriumString)
 	
-	splitClassesAndFactorsBlocks <- function(string) {
-		result <- unlist(strsplit(string,"\\&"))
-		return(result)
-	}
+	checkEquals(result[["classesAndFactors"]],"instrument:bond & currency:JPY + instrument:bond,equity & currency:usd,chf + amount:<=100.3CHF")
+	checkEquals(result[["valuesAndType"]],"=0USD")
+	
+	result <- parser$splitUnionOfFactorsAndValuesBlocks(result[["classesAndFactors"]])
+	checkEquals(result[1],"instrument:bond & currency:JPY")
+	
+	result <- parser$splitFactorsAndValuesBlocks("instrument:bond & currency:JPY")
+	checkEquals(result[1],"instrument:bond")
 
-	splitClassesFromFactors <- function(string) {
-		result <- unlist(strsplit(string,":"))
-		return(result)
-	}
-	
-	criteriumString = paste("instrument:bond & currency:JPY + instrument:bond,equity & currency:usd,chf + amount:<=100.3CHF ; =0USD")
-	
-	result <- splitClassesAndFactorsFromValueType(criteriumString)
-	
-	checkEquals(result[["classesAndFactors"]],"instrument:bond & currency:JPY + instrument:bond,equity & currency:usd,chf + amount:<=100.3CHF ")
-	checkEquals(result[["valuesAndType"]]," =0USD")
-	
-	result <- splitUnionOfClassesAndFactorsBlocks(result[[1]])
-	checkEquals(result[1],"instrument:bond & currency:JPY ")
-	
-	result <- splitClassesAndFactorsBlocks("instrument:bond & currency:JPY ")
-	checkEquals(result[1],"instrument:bond ")
-
-	result <- splitClassesFromFactors("instrument:bond ")
+	result <- parser$splitFactorsFromValues("instrument:bond")
 	checkEquals(result[1],"instrument")
-	checkEquals(result[2],"bond ")
+	checkEquals(result[2],"bond")
+
+}
+
+identifyQuantitativeConstraint <- function(string) {
+	# a string with the quantitative constraint to identify
+	# "=0USD" or "> 1.77 EUR" are examples
 	
+	string <- removeStartEndSpaces(string)
+	string <-"< 12.44 aaaB5B"
+
+	# check for operator
+	checkResult <- regexpr("^[>=,<=,<,>,=,!=]", string)
+	start = checkResult[[1]]
+	stop = start + attributes(checkResult)$match.length-1
+	if (start==-1) stop("Error: missing equality/inequality")
+	operator <- substr(string,start,stop)
+	string <- substr(string,stop+1,nchar(string))
+	string <- removeStartEndSpaces(string)
+	
+	
+	# check for currency
+	checkResult <- regexpr("[A-Z]{3}$", string)
+	start = checkResult[[1]]
+	stop = start + attributes(checkResult)$match.length-1
+	if (start>-1) {
+		constraintType = "absolute"
+		currency <- substr(string,start,stop)
+		string <- substr(string,1,start-1)		
+	} else {
+		# check for %
+		checkResult <- regexpr("%$", string)
+		start = checkResult[[1]]
+		stop = start + attributes(checkResult)$match.length-1
+		if (start>-1) {
+			constraintType = "relative"
+			string <- substr(string,1,start-1)
+		} else {
+			stop("Error: missing currency or % identifier")
+		}
+	}
+	amount <- as.numeric(string)
 }

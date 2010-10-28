@@ -126,10 +126,46 @@ create_parserPosition <- function() {
 	return(parser)
 }
 
-create_parserSelectionCriterium <- function() {
-	
-	parser <- list()
-	class(parser) <- "parserSelectionCriterium"
 
+create_parserSelectionCriteria <- function() {
 	
+	parser <- new.env()
+	class(parser) <- "parserSelectionCriteria"
+
+	parser$splitFactorsAndValuesFromTypeAndValue <- function(criteriumString) {
+		result <- unlist(strsplit(criteriumString,";"))
+		
+		if (length(result)==0) stop("Error: empty criteriumString")
+		result <- removeStartEndSpaces(result)
+		if (length(result)==2) names(result) <- c("classesAndFactors","valuesAndType")
+		if (length(result)==1) names(result) <- "classesAndFactors"
+		return(result)
+	}
+	
+	parser$splitUnionOfFactorsAndValuesBlocks <- function(string) {
+		result <- unlist(strsplit(string,"\\+"))
+		result <- removeStartEndSpaces(result)
+		return(result)
+	}
+	
+	parser$splitFactorsAndValuesBlocks <- function(string) {
+		result <- unlist(strsplit(string,"\\&"))
+		result <- removeStartEndSpaces(result)
+		return(result)
+	}
+	
+	parser$splitFactorsFromValues <- function(string) {
+		result <- unlist(strsplit(string,":"))
+		result <- removeStartEndSpaces(result)
+		return(result)
+	}
+	
+	return(parser)	
 }
+
+removeStartEndSpaces <- function(string) {
+	result <- sub("^[[:blank:]]+", "", string)
+	result <- sub("[[:blank:]]+$", "", result)
+	return(result)
+}
+

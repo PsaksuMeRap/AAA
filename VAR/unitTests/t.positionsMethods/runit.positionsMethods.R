@@ -39,7 +39,7 @@ test.shouldExtractPositionsByCurrency <- function() {
 	positions$add(position2)
 	positions$add(position3)	
 		
-	criterium <- create_selectionCriterium(factor="currency",values=c("EUR","USD"))
+	criterium <- create_criteriumSelection(factor="currency",values=c("EUR","USD"))
 	
 	result <- positionsSelector(criterium,positions)
 	
@@ -49,14 +49,14 @@ test.shouldExtractPositionsByCurrency <- function() {
 	
 	# all false
 	posCheck <- create_positions()
-	criterium <- create_selectionCriterium(factor="currency",values="abc")
+	criterium <- create_criteriumSelection(factor="currency",values="abc")
 	result <- positionsSelector(criterium,positions)
 	posCheck <- rep(FALSE,3)
 	checkEquals(result,posCheck)
 	
 	# empty positions as argument
 	positions <- create_positions()
-	criterium <- create_selectionCriterium(factor="currency",values="abc")
+	criterium <- create_criteriumSelection(factor="currency",values="abc")
 	result <- positionsSelector(criterium,positions)
 	checkEquals(result,NULL)
 }
@@ -98,7 +98,7 @@ test.shouldExtractPositionsByInstrument <- function() {
 	positions$add(position3)	
 	
 	# one position
-	criterium <- create_selectionCriterium(factor="instrument",values=c("bond"))
+	criterium <- create_criteriumSelection(factor="instrument",values=c("bond"))
 	
 	result <- positionsSelector(criterium,positions)
 	
@@ -109,7 +109,7 @@ test.shouldExtractPositionsByInstrument <- function() {
 	# two positions
 	posCheck <- c(FALSE,TRUE,TRUE)
 	
-	criterium <- create_selectionCriterium(factor="instrument",values=c("ABC","bond"))
+	criterium <- create_criteriumSelection(factor="instrument",values=c("ABC","bond"))
 	result <- positionsSelector(criterium,positions)
 	checkEquals(result,posCheck)
 
@@ -117,14 +117,14 @@ test.shouldExtractPositionsByInstrument <- function() {
 	# zero positions
 	posCheck <- c(FALSE,FALSE,FALSE)
 	
-	criterium <- create_selectionCriterium(factor="instrument",values=c("abc"))
+	criterium <- create_criteriumSelection(factor="instrument",values=c("abc"))
 	result <- positionsSelector(criterium,positions)
 	checkEquals(result,posCheck)
 	
 	# return NULL
 	posCheck <- NULL
 	positions <- create_positions()
-	criterium <- create_selectionCriterium(factor="instrument",values=c("abc"))
+	criterium <- create_criteriumSelection(factor="instrument",values=c("abc"))
 	result <- positionsSelector(criterium,positions)
 	checkEquals(result,posCheck)
 }
@@ -174,35 +174,51 @@ test.shouldExtractPositionsByAmount <- function() {
 	positions$add(position3)	
 	
 	# check >
-	criterium <- create_selectionCriterium(factor="amount",values=toMoney(100.1,"CHF"),type=">")
+	checkCriterium <- create_criteriumCheck(operator=">",
+			value=toMoney(100.1,"CHF"),kind="absolute")
+	
+	criterium <- create_criteriumSelection(factor="amount",
+			checkCriterium=checkCriterium)
 	
 	result <- positionsSelector(criterium,positions)
 	posCheck1 <- c(FALSE,FALSE,FALSE)
 	checkEquals(result,posCheck1)
 
 	# check >=
-	criterium <- create_selectionCriterium(factor="amount",values=toMoney(100.1,"CHF"),type=">=")
+	checkCriterium <- create_criteriumCheck(operator=">=",
+			value=toMoney(100.1,"CHF"),kind="absolute")
+	criterium <- create_criteriumSelection(factor="amount",
+			checkCriterium=checkCriterium)
 	
 	result <- positionsSelector(criterium,positions)
 	posCheck2 <- c(FALSE,TRUE,FALSE)
 	checkEquals(result,posCheck2)
 	
 	# check =
-	criterium <- create_selectionCriterium(factor="amount",values=toMoney(97.1,"CHF"),type="=")
+	checkCriterium <- create_criteriumCheck(operator="=",
+			value=toMoney(97.1,"CHF"),kind="absolute")
+	criterium <- create_criteriumSelection(factor="amount",
+			checkCriterium=checkCriterium)
 	
 	result <- positionsSelector(criterium,positions)
 	posCheck3 <- c(TRUE,FALSE,FALSE)
 	checkEquals(result,posCheck3)
 	
 	# check <
-	criterium <- create_selectionCriterium(factor="amount",values=toMoney(80.1/1.33853808,"EUR"),type="<")
+	checkCriterium <- create_criteriumCheck(operator="<",
+			value=toMoney(80.1/1.33853808,"EUR"),kind="absolute")
+	criterium <- create_criteriumSelection(factor="amount",
+			checkCriterium=checkCriterium)
 	
 	result <- positionsSelector(criterium,positions)
 	posCheck4 <- c(FALSE,FALSE,TRUE)
 	checkEquals(result,posCheck4)
 	
 	# check <=
-	criterium <- create_selectionCriterium(factor="amount",values=toMoney(97.1,"CHF"),type="<=")
+	checkCriterium <- create_criteriumCheck(operator="<=",
+			value=toMoney(97.1,"CHF"),kind="absolute")
+	criterium <- create_criteriumSelection(factor="amount",
+			checkCriterium=checkCriterium)
 	
 	result <- positionsSelector(criterium,positions)
 	posCheck5 <- c(TRUE,FALSE,TRUE)
