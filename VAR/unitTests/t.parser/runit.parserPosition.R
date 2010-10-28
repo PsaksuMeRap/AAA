@@ -105,6 +105,7 @@ test.shouldIdenfyAccruedInterest <- function() {
 	bond <- parser$parse(dati.df[493,])
 	
 	checkEquals(is.element("bond",class(bond)),TRUE)
+	checkEquals(is.element("accruedInterest",class(bond)),TRUE)
 	
 	# restore initial conditions
 	assign("instruments",instrumentsRepository,
@@ -112,3 +113,48 @@ test.shouldIdenfyAccruedInterest <- function() {
 	
 }
 
+test.shouldParseSelectionCriterium <- function() {
+	
+	splitClassesAndFactorsFromValueType <- function(criteriumString) {
+		
+		result <- unlist(strsplit(criteriumString,";"))
+		if (length(result)==0) stop("Error: empty criteriumString")
+		
+		if (length(result)==2) names(result) <- c("classesAndFactors","valuesAndType")
+		if (length(result)==1) names(result) <- "classesAndFactors"
+		return(result)
+	}
+	
+	splitUnionOfClassesAndFactorsBlocks <- function(string) {
+		result <- unlist(strsplit(string,"\\+"))
+		return(result)
+	}
+	
+	splitClassesAndFactorsBlocks <- function(string) {
+		result <- unlist(strsplit(string,"\\&"))
+		return(result)
+	}
+
+	splitClassesFromFactors <- function(string) {
+		result <- unlist(strsplit(string,":"))
+		return(result)
+	}
+	
+	criteriumString = paste("instrument:bond & currency:JPY + instrument:bond,equity & currency:usd,chf + amount:<=100.3CHF ; =0USD")
+	
+	result <- splitClassesAndFactorsFromValueType(criteriumString)
+	
+	checkEquals(result[["classesAndFactors"]],"instrument:bond & currency:JPY + instrument:bond,equity & currency:usd,chf + amount:<=100.3CHF ")
+	checkEquals(result[["valuesAndType"]]," =0USD")
+	
+	result <- splitUnionOfClassesAndFactorsBlocks(result[[1]])
+	checkEquals(result[1],"instrument:bond & currency:JPY ")
+	
+	result <- splitClassesAndFactorsBlocks("instrument:bond & currency:JPY ")
+	checkEquals(result[1],"instrument:bond ")
+
+	result <- splitClassesFromFactors("instrument:bond ")
+	checkEquals(result[1],"instrument")
+	checkEquals(result[2],"bond ")
+	
+}

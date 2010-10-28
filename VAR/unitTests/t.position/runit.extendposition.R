@@ -28,3 +28,36 @@ test.shouldExtendPositionEquity <- function() {
 	
 }
 
+test.shouldExtendPositionBond <- function() {
+	source("./lib/position/position.R")
+	source("./unitTests/utilities/allocateTestRepositories.R")
+	
+	allocateTestRepositories("instruments")
+	
+	record <- data.frame(
+			ID_strumento = 2,
+			Nome=I("20111130 - 2.5% E.ON 30-11-11 Pro-rata"),
+			Moneta=I("EUR"),
+			ValorePosizione=4342.4658203125,
+			ID_AAA=500,
+			Strumento=I("Oacc")
+	)
+	
+	parser <- create_parserPosition()
+	position <- parser$parse(record[1,])
+	
+	# create the accruedInterest
+	money <- toMoney(4342.4658203125,"EUR")
+	date <- "2011-11-30"
+	accruedInterest <- create_accruedInterest(money,date)
+    rm(money,date)
+	
+	checkEquals(class(position),c("accruedInterest","bond","position"))
+	checkEquals(position$name,"20111130 - 2.5% E.ON")
+	checkEquals(position$accruedInterest$paymentDate,"2011-11-30")
+	checkEquals(position$accruedInterest,accruedInterest)
+	
+	# restore initial conditions
+	deallocateTestRepositories("instruments")
+	
+}

@@ -4,8 +4,8 @@
 ###############################################################################
 
 
-create_accruedInterest <- function(money,date) {
-	accruedInterest <- list(money=money,date=date)
+create_accruedInterest <- function(money,paymentDate) {
+	accruedInterest <- list(money=money,paymentDate=paymentDate)
 	class(accruedInterest) <- "accruedInterest"
 	return(accruedInterest)
 }

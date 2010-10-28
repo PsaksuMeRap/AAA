@@ -11,5 +11,6 @@ test.create_accruedInterest <- function() {
 	checkEquals(class(accruedInterest),"accruedInterest")
 	checkEquals(accruedInterest$money$amount,10.2)
 	checkEquals(accruedInterest$money$currency,"USD")
-	checkEquals(accruedInterest$date,"2000-02-21")
+	checkEquals(accruedInterest$paymentDate,"2000-02-21")
+
 }

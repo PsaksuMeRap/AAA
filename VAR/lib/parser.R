@@ -113,6 +113,10 @@ create_parserPosition <- function() {
 		instrument <- parser$identifyInstrument(record)
 		class(position) <- c(instrument,class(position))
 		
+		if (position$origin[1,"Strumento"]=="Oacc") {
+			class(position) <- c("accruedInterest",class(position))
+		}
+		
 		# extend position if necessary
 		extendPosition(position)
 		
@@ -122,3 +126,10 @@ create_parserPosition <- function() {
 	return(parser)
 }
 
+create_parserSelectionCriterium <- function() {
+	
+	parser <- list()
+	class(parser) <- "parserSelectionCriterium"
+
+	
+}

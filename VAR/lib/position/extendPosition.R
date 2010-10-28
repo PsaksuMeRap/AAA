@@ -35,24 +35,31 @@ extendPosition.equity <- function(position) {
 	return()
 }
 
-extendPosition.bond <- function(position) {
+extendPosition.accruedInterest <- function(position) {
 	
-	if (position$origin["Strumento"]=="Ooacc") {
-		position$accruedInterest <- position$amount
-		
-		nameLength <- length(position$name)
+	if (position$origin["Strumento"]=="Oacc") {
+	
 		# " Pro-rata" must be removed from the name
-		position$name <- substr(position$name,1,nameLength-9)
+
+		name <- position$name
+		nameLength <- nchar(name)
+		assign("name",substr(name,1,nameLength-9),position,inherits=FALSE)
+		
 		# extract the date of the payment
-		date <- substr(position$name,nameLength-8-9,nameLength-9)
-		date <- paste("20",date,sep="")		
+		name <- position$name	
+		nameLength <- nchar(name)
+		paymentDate <- substr(name,nameLength-7,nameLength)
+
+		assign("name",substr(position$name,1,nameLength-9),envir=position,inherits=FALSE)
+		day <- substr(paymentDate,1,2)
+		month <- substr(paymentDate,4,5)
+		year <- substr(paymentDate,7,8)
+		paymentDate <- paste("20",year,"-",month,"-",day,sep="")		
+
 		# create the accruedInterest
 		money <- toMoney(position$amount,position$currency)
-		position$accruedInterest <- create_accruedInterest(money,date)
-	} else {
-		position$accruedInterest <- NA
+		assign("accruedInterest",create_accruedInterest(money,paymentDate),envir=position,inherits=FALSE)
 	}
-	
 	
 	position$print <- function()
 	{
