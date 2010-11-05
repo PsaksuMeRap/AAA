@@ -137,8 +137,13 @@ create_parserSelectionCriteria <- function() {
 		
 		if (length(result)==0) stop("Error: empty criteriumString")
 		result <- removeStartEndSpaces(result)
+		
+		if (length(result)==1)  {
+			result[2] <- ""	
+			}
+			
 		if (length(result)==2) names(result) <- c("classesAndFactors","valuesAndType")
-		if (length(result)==1) names(result) <- "classesAndFactors"
+			
 		return(result)
 	}
 	
@@ -156,8 +161,75 @@ create_parserSelectionCriteria <- function() {
 	
 	parser$splitFactorsFromValues <- function(string) {
 		result <- unlist(strsplit(string,":"))
+		if (length(result)<2) stop(paste("Error: splitFactorsFromValues should return 2 blocks.",
+							string))
 		result <- removeStartEndSpaces(result)
-		return(result)
+		factor <- result[1]
+		values <- removeStartEndSpaces(unlist(strsplit(result[2],",")))
+		
+		if (factor=="amount") {
+			criteriumCheck <- parser$constructCriteriumCheck(values)
+			criteriumSelection <- create_criteriumSelection(
+					factor=factor,
+					values=values,
+					criteriumCheck=criteriumCheck
+			)
+		} else {
+			criteriumSelection <- create_criteriumSelection(
+					factor=factor,
+					values=values
+			)		
+		}
+
+		return(criteriumSelection)
+	}
+	
+	parser$constructCriteriumCheck <- function(string) {
+		# a string with the quantitative constraint to identify
+		# "=0USD" or "> 1.77 EUR" or < 5% 
+	
+		string <- removeStartEndSpaces(string)
+		
+		# check for operator
+		start = 1
+		if (grepl("^>=|<=|!=", string)) {
+			stop=2
+		} else {
+			if (grepl("^>|<|=", string)) {
+				stop=1
+			} else {
+				stop(paste("Error: missing operator:",string))
+			}
+		}
+		operator <- substr(string,start,stop)
+		
+		string <- substr(string,stop+1,nchar(string))
+		string <- removeStartEndSpaces(string)
+		
+		# check for currency
+		if (grepl("[A-Z]{3}$", string)) {
+			stop  = nchar(string)
+			start = stop - 2
+			
+			kind = "absolute"
+			currency <- substr(string,start,stop)
+			string <- substr(string,1,start-1)
+			amount <- as.numeric(string)
+			money <- toMoney(amount,currency)
+			
+			return(create_criteriumCheck (operator,value=money,kind))
+		} else {
+			# check for %
+			if (grepl("%$", string)) {
+				kind = "relative"
+				string <- substr(string,1,nchar(string)-1)
+				amount <- as.numeric(string)
+				return(create_criteriumCheck (operator=operator
+								,value=amount,kind=kind))
+			} else {
+				stop("Error: missing currency or % identifier")
+			}
+		}
 	}
 	
 	return(parser)	

@@ -133,47 +133,104 @@ test.shouldParseSelectionCriteria <- function() {
 	checkEquals(result[1],"instrument:bond")
 
 	result <- parser$splitFactorsFromValues("instrument:bond")
-	checkEquals(result[1],"instrument")
-	checkEquals(result[2],"bond")
-
+	should <- create_criteriumSelection(factor="instrument",values="bond")
+	
+	checkEquals(result,should)
+	
 }
 
-identifyQuantitativeConstraint <- function(string) {
-	# a string with the quantitative constraint to identify
-	# "=0USD" or "> 1.77 EUR" are examples
+test.shouldParseSelCritWithoutTypeAndValue <- function() {
 	
-	string <- removeStartEndSpaces(string)
-	string <-"< 12.44 aaaB5B"
-
-	# check for operator
-	checkResult <- regexpr("^[>=,<=,<,>,=,!=]", string)
-	start = checkResult[[1]]
-	stop = start + attributes(checkResult)$match.length-1
-	if (start==-1) stop("Error: missing equality/inequality")
-	operator <- substr(string,start,stop)
-	string <- substr(string,stop+1,nchar(string))
-	string <- removeStartEndSpaces(string)
+	parser <- create_parserSelectionCriteria()
 	
+	criteriumString = paste("instrument:bond & currency:JPY +",
+			"instrument:bond,equity & currency:usd,chf + amount:<=100.3CHF")
 	
-	# check for currency
-	checkResult <- regexpr("[A-Z]{3}$", string)
-	start = checkResult[[1]]
-	stop = start + attributes(checkResult)$match.length-1
-	if (start>-1) {
-		constraintType = "absolute"
-		currency <- substr(string,start,stop)
-		string <- substr(string,1,start-1)		
-	} else {
-		# check for %
-		checkResult <- regexpr("%$", string)
-		start = checkResult[[1]]
-		stop = start + attributes(checkResult)$match.length-1
-		if (start>-1) {
-			constraintType = "relative"
-			string <- substr(string,1,start-1)
-		} else {
-			stop("Error: missing currency or % identifier")
-		}
-	}
-	amount <- as.numeric(string)
+	result <- parser$splitFactorsAndValuesFromTypeAndValue(criteriumString)
+	
+	checkEquals(result[["classesAndFactors"]],"instrument:bond & currency:JPY + instrument:bond,equity & currency:usd,chf + amount:<=100.3CHF")
+	checkEquals(result[["valuesAndType"]],"")
+	
+	result <- parser$splitUnionOfFactorsAndValuesBlocks(result[["classesAndFactors"]])
+	checkEquals(result[1],"instrument:bond & currency:JPY")
+	
 }
+
+test.shouldSplitFactorsFromValues <- function() {
+	parser <- create_parserSelectionCriteria()
+	
+	# check a non "amount" type factor
+	string <- "instrument:bond,equity,pippo 233"
+	
+	
+	should <- create_criteriumSelection(
+			factor="instrument",
+			values=c("bond","equity","pippo 233")
+	)
+	
+	
+	result <- parser$splitFactorsFromValues(string)
+	checkEquals(result,should)
+	
+	
+	# check an absolute criterium first
+	string <- "amount:<= 10.4           EUR  "
+
+	criteriumCheck <- create_criteriumCheck(
+			operator="<=",
+			value=toMoney(10.4,"EUR"),
+			kind="absolute")
+	
+	should <- create_criteriumSelection(
+			factor="amount",
+			values="<= 10.4           EUR",
+			criteriumCheck=criteriumCheck
+	)
+	
+	result <- parser$splitFactorsFromValues(string)
+	checkEquals(result,should)
+	
+	
+	# check a relative criterium
+	string <- "amount:= 10.4  %  "
+	
+	criteriumCheck <- create_criteriumCheck(
+			operator="=",
+			value=10.4,
+			kind="relative")
+	
+	should <- create_criteriumSelection(
+			factor="amount",
+			values="= 10.4  %",
+			criteriumCheck=criteriumCheck
+	)
+	
+	result <- parser$splitFactorsFromValues(string)
+	checkEquals(result,should)
+}
+
+
+
+test.shouldConstructCriteriumCheck <- function() {
+
+	# test an absolute criterium
+	parser <- create_parserSelectionCriteria()
+	string = " <=  100.34 EUR "
+
+	result <- parser$constructCriteriumCheck(string)
+	should <- create_criteriumCheck(operator="<=",
+			value=toMoney(100.34,"EUR"),kind="absolute")
+	
+	checkEquals(result,should)
+	
+	# test a relative criterium
+	string = " <  100.34 % "
+	
+	result <- parser$constructCriteriumCheck(string)
+	should <- create_criteriumCheck(operator="<",
+			value=100.34,kind="relative")
+	
+	checkEquals(result,should)
+	
+}
+

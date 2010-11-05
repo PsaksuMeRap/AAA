@@ -312,6 +312,12 @@ test.shouldSumPositions <- function() {
 	testRepository <- createExchangeRatesTestRepository() 
 	repositories$exchangeRates <- testRepository
 	
+	
+	# check 0 (no argument should return sum in "USD"
+	# because first position in USD)
+	shouldBe <- 100+200/0.9627+300*1.33853808/0.9627
+	checkEquals(positions$sum(),toMoney(shouldBe,"USD"))
+	
 	# check 1
 	shouldBe <- 100*0.9627+200+300*1.33853808
 	checkEquals(positions$sum("CHF"),toMoney(shouldBe,"CHF"))
@@ -320,9 +326,13 @@ test.shouldSumPositions <- function() {
 	shouldBe <- 100*0.9627/1.33853808+200/1.3385380+300
 	checkEquals(positions$sum("EUR"),toMoney(shouldBe,"EUR"))
 	
-	# check 3
+	# check 3 
 	positions <- create_positions()
-	checkEquals(positions$sum("EUR"),toMoney(0,"CHF"))
+	checkEquals(positions$sum("EUR"),toMoney(0,"EUR"))
+	
+	# check 4 (0 positions should return 0 "CHF")
+	positions <- create_positions()
+	checkEquals(positions$sum(),toMoney(0,"CHF"))
 	
 	repositories$exchangeRates <- repository
 }

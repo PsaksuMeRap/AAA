@@ -86,6 +86,14 @@ create_positions <- function() {
 	}
 	
 	positions$sum <- function(toCurrency) {
+
+		if (missing(toCurrency)) {
+			if (length(positions$positions)>0) {
+				toCurrency <- positions$positions[[1]]$currency
+			} else {
+				return(toMoney(0,"CHF"))
+			}
+		}
 		# toCurrency: the currency to convert to
 		total <- toMoney(0,toCurrency)
 		for (p in positions$positions) {

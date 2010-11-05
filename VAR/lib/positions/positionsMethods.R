@@ -20,7 +20,6 @@ positionsSelector.currency <- function(criterium,positions) {
 }
 
 positionsSelector.instrument <- function(criterium,positions) {
-	
 	if (!is.element("positions",class(positions))) stop("The argument is not of class positions")
 	# the identifier is at position length(classes)-1
 	FUNC <- function(position,criterium) {
@@ -39,24 +38,18 @@ positionsSelector.instrument <- function(criterium,positions) {
 }
 
 positionsSelector.amount <- function(criterium,positions) {
+	if (!any(is.element("criteriumSelection",class(criterium)))) stop("Selector.amount: the argument criterium is not of class criteriumSelection")
+	if (class(positions)!="positions") stop("Selector.amount: the argument positions is not of class positions")
 	
-	if (class(criterium$values)!="money") stop("Selector.amount: the argument is not of class money")
-	
-	FUNC <- function(position,criterium) {
-		# exchange the money in the desired currency
-		currencyTo <- criterium$values$currency
-		moneyToExchange <- toMoney(position$amount,position$currency)
-		money <- repositories$exchangeRates$exchange(moneyToExchange,currencyTo)
-		if (criterium$type==">")  return(money$amount >  criterium$values$amount)
-		if (criterium$type==">=") return(money$amount >= criterium$values$amount)
-		if (criterium$type=="<")  return(money$amount <  criterium$values$amount)
-		if (criterium$type=="<=") return(money$amount <= criterium$values$amount)
-		if (criterium$type=="=") return(money$amount == criterium$values$amount)
-		if (criterium$type=="!=") return(money$amount != criterium$values$amount)
+	if (criterium$criteriumCheck$kind=="relative") {
+		totalValue <- positions$sum()
+		percentageValue <- criterium$criteriumCheck$value
+		criterium <- criterium
+		criterium$criteriumCheck$value <- toMoney(percentageValue*totalValue$amount,totalValue$currency)
 	}
 	
 	# apply the function FUNC
-	extract <- lapply(positions$positions,FUNC,criterium)
+	extract <- lapply(positions$positions,FUN=check,criterium)
 	extract <- unlist(extract)
 	
 	return(extract)
@@ -65,6 +58,50 @@ positionsSelector.amount <- function(criterium,positions) {
 positionsSelector.default <- function(criterium) {
 	print(criterium)
 }
+
+
+check <- function(position,criterium) UseMethod("check",criterium)
+
+check.amount <- function(position,criterium) {
+	operator <- criterium$criteriumCheck$operator
+	# if criterium$criteriumCheck$kind=="relative", we assume that 
+	# criterium$criteriumCheck$value has been previously converted from % to absolute, i.e.
+	# criterium$criteriumCheck$value is now of class money!
+		
+	# exchange the money in the desired currency
+	currencyTo <- criterium$criteriumCheck$value$currency
+	moneyToExchange <- toMoney(position$amount,position$currency)
+	money <- repositories$exchangeRates$exchange(moneyToExchange,currencyTo)
+
+	# excecute the check
+	if (operator==">" ) return(money$amount >  criterium$criteriumCheck$value$amount)
+	if (operator==">=") return(money$amount >= criterium$criteriumCheck$value$amount)
+	if (operator=="<" ) return(money$amount <  criterium$criteriumCheck$value$amount)
+	if (operator=="<=") return(money$amount <= criterium$criteriumCheck$value$amount)
+	if (operator=="=" ) return(money$amount == criterium$criteriumCheck$value$amount)
+	if (operator=="!=") return(money$amount != criterium$criteriumCheck$value$amount)
+
+}
+
+check.instrument <- function(position,criterium) {
+	
+	instruments <- criterium$values
+	instrumentType <- class(position)[1]
+	return(any(is.element(instrumentType,instruments)))
+}
+
+check.currency <- function(position,criterium) {
+	
+	currencies <- criterium$values
+	instrumentCurrency <- position$currency
+	return(any(is.element(instrumentCurrency,currencies)))
+}
+
+check.default <- function(position,criterium) {
+	stop(paste("Error: check for factor",criterium$factor,"not implemented yet"))
+}
+
+
 
 # analizza i nomi e guarda se funzionano correttamente. crea un repository per le
 # criteriumClass con i rispettivi valori? Esempio
