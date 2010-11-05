@@ -11,12 +11,12 @@ test.criteriumSelectionDefinition <- function() {
 	criterium1 <- create_criteriumSelection(factor="instrument",values="equity")
 	
 	checkEquals(class(criterium),"criteriumSelection")
-	checkEquals(names(criterium),c("factor","values","checkCriterium"))
+	checkEquals(names(criterium),c("factor","values","criteriumCheck"))
 	
 	checkEquals(class(criterium1),c("instrument","criteriumSelection"))
 	checkEquals(criterium1$factor,"instrument")
 	checkEquals(criterium1$values,"equity")
-	checkEquals(criterium1$checkCriterium,NA)
+	checkEquals(criterium1$criteriumCheck,NA)
 	
 }
 

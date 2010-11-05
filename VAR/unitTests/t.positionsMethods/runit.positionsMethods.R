@@ -385,7 +385,7 @@ test.shouldExtractPositionsByAmountRelative <- function() {
 	position1 <- create_position()
 	position1$create(name="xxx",
 			currency="USD",
-			amount=97.1/0.9627,
+			amount=97.1,
 			origin=list(ID_AAA=10)
 	)
 	class(position1) <- c("equity",class(position1))
@@ -403,7 +403,7 @@ test.shouldExtractPositionsByAmountRelative <- function() {
 	position3 <- create_position()
 	position3$create(name="AAA",
 			currency="EUR",
-			amount=80/1.33853808,
+			amount=80,
 			origin=list(ID_AAA=10)
 	)
 	class(position3) <- c("ABC",class(position3))	
@@ -415,10 +415,10 @@ test.shouldExtractPositionsByAmountRelative <- function() {
 	repositories$exchangeRates <- testRepository
 	# exchange rate USD-CHF: 0.9627
 	# exchange rate EUR-CHF: 1.33853808
-	# valore portafogio: 97.1  ~ 34.16872406 %
-    #          + 100.1/0.9627  ~ 36.58918 %
-    #             + 80/0.9627  ~ 29.2421  %
-    #               = 284.178
+	# valore portafogio: 97.1             ~ 0.3109086 %
+    #          + 100.1/0.9627             ~ 0.3329329 %
+    #             + 80*1.33853808/0.9627  ~ 0.3561585 %
+    #               = 312.3104
 
 
 	# create positions
@@ -435,11 +435,12 @@ test.shouldExtractPositionsByAmountRelative <- function() {
 			criteriumCheck=checkCriterium)
 	
 	result <- positionsSelector(criterium,positions)
-	posCheck1 <- c(TRUE,TRUE,FALSE)
+
+	posCheck1 <- c(FALSE,FALSE,TRUE)
 	checkEquals(result,posCheck1)
 	
 	# check 2: create a relative checkCriterium of type =
-    percentage <- 100.1/0.9627/(97.1+100.1/0.9627+80/0.9627)
+    percentage <- 100.1/0.9627/(97.1+100.1/0.9627+80*1.33853808/0.9627)
 	checkCriterium <- create_criteriumCheck(operator="=",
 			value=percentage,kind="relative")
 	criterium <- create_criteriumSelection(factor="amount",
@@ -449,34 +450,44 @@ test.shouldExtractPositionsByAmountRelative <- function() {
 	posCheck2 <- c(FALSE,TRUE,FALSE)
 	checkEquals(result,posCheck2)
 	
-	# check 3: create the absolute checkCriterium of type >= 97.1 CHF
+	# check 3: create the relative checkCriterium of type >=
 	checkCriterium <- create_criteriumCheck(operator=">=",
-			value=toMoney(97.1,"CHF"),kind="absolute")
+			value=0.332932864433126,kind="relative")
 	criterium <- create_criteriumSelection(factor="amount",
 			criteriumCheck=checkCriterium)
 	
 	result <- positionsSelector(criterium,positions)
-	posCheck3 <- c(TRUE,FALSE,FALSE)
-#	checkEquals(result,posCheck3)
+	posCheck3 <- c(FALSE,TRUE,TRUE)
+	checkEquals(result,posCheck3)
 	
-	# check 4: create the absolute checkCriterium of type < 80.1/1.33853808 EUR
+	# check 4: create the relative checkCriterium of type < 
 	checkCriterium <- create_criteriumCheck(operator="<",
-			value=toMoney(80.1/1.33853808,"EUR"),kind="absolute")
+			value=0.33293286443312,kind="relative")
 	criterium <- create_criteriumSelection(factor="amount",
 			criteriumCheck=checkCriterium)
 	
 	result <- positionsSelector(criterium,positions)
-	posCheck4 <- c(FALSE,FALSE,TRUE)
+	posCheck4 <- c(TRUE,FALSE,FALSE)
 	checkEquals(result,posCheck4)
 	
-	# check 5: create the absolute checkCriterium of type <= 97.1 CHF
+	# check 5: create the relative checkCriterium of type <= 
 	checkCriterium <- create_criteriumCheck(operator="<=",
-			value=toMoney(97.1,"CHF"),kind="absolute")
+			value=0.332932864433127,kind="relative")
 	criterium <- create_criteriumSelection(factor="amount",
 			criteriumCheck=checkCriterium)
 	
 	result <- positionsSelector(criterium,positions)
-	posCheck5 <- c(TRUE,FALSE,TRUE)
+	posCheck5 <- c(TRUE,TRUE,FALSE)
+	checkEquals(result,posCheck5)
+
+	# check6: create the relative checkCriterium of type !=
+	checkCriterium <- create_criteriumCheck(operator="!=",
+			value=0.34,kind="relative")
+	criterium <- create_criteriumSelection(factor="amount",
+			criteriumCheck=checkCriterium)
+	
+	result <- positionsSelector(criterium,positions)
+	posCheck5 <- c(TRUE,TRUE,TRUE)
 	checkEquals(result,posCheck5)
 	
 	# reset the repository in the original state

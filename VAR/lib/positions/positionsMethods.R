@@ -41,15 +41,16 @@ positionsSelector.amount <- function(criterium,positions) {
 	if (!any(is.element("criteriumSelection",class(criterium)))) stop("Selector.amount: the argument criterium is not of class criteriumSelection")
 	if (class(positions)!="positions") stop("Selector.amount: the argument positions is not of class positions")
 	
+	criteriumNew <- criterium
+
 	if (criterium$criteriumCheck$kind=="relative") {
 		totalValue <- positions$sum()
 		percentageValue <- criterium$criteriumCheck$value
-		criterium <- criterium
-		criterium$criteriumCheck$value <- toMoney(percentageValue*totalValue$amount,totalValue$currency)
+		criteriumNew$criteriumCheck$value <- toMoney(percentageValue*totalValue$amount,totalValue$currency)
 	}
 	
 	# apply the function FUNC
-	extract <- lapply(positions$positions,FUN=check,criterium)
+	extract <- lapply(positions$positions,FUN=check,criteriumNew)
 	extract <- unlist(extract)
 	
 	return(extract)
@@ -78,9 +79,11 @@ check.amount <- function(position,criterium) {
 	if (operator==">=") return(money$amount >= criterium$criteriumCheck$value$amount)
 	if (operator=="<" ) return(money$amount <  criterium$criteriumCheck$value$amount)
 	if (operator=="<=") return(money$amount <= criterium$criteriumCheck$value$amount)
-	if (operator=="=" ) return(money$amount == criterium$criteriumCheck$value$amount)
 	if (operator=="!=") return(money$amount != criterium$criteriumCheck$value$amount)
-
+	if (operator=="=" ) {
+		if (abs(money$amount-criterium$criteriumCheck$value$amount) > 0.00001) return(FALSE) else return(TRUE)
+	}
+	stop (paste("Error: invalid operator",operator))
 }
 
 check.instrument <- function(position,criterium) {
