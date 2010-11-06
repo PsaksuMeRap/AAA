@@ -87,14 +87,12 @@ check.amount <- function(position,criteriumSelection) {
 }
 
 check.instrument <- function(position,criteriumSelection) {
-	
 	instruments <- criteriumSelection$values
 	instrumentType <- class(position)[1]
 	return(any(is.element(instrumentType,instruments)))
 }
 
 check.currency <- function(position,criteriumSelection) {
-	
 	currencies <- criteriumSelection$values
 	instrumentCurrency <- position$currency
 	return(any(is.element(instrumentCurrency,currencies)))
@@ -104,6 +102,49 @@ check.default <- function(position,criteriumSelection) {
 	stop(paste("Error: check for factor",criteriumSelection$factor,"not implemented yet"))
 }
 
+
+filterByCriteriaLogicalAnd <- function(criteria,positions) {
+	# criteria: a list of criteriumSelection
+	# positions: a variable of class positions
+	
+	result <- lapply(criteria,positionsSelector,positions)
+	
+	if (length(result)==0) return(result)
+	if (length(result)==1) return(result[[1]])
+	
+	x <- result[[1]]
+	for (r in result[-1]) x <- x & r
+	return(x)
+}
+
+
+filterByCriteriaLogicalOr <- function(unionOfBlocksOfCriteria,positions) {
+	# criteria: a list of criteriumSelection
+	# positions: a variable of class positions
+	
+	result <- lapply(unionOfBlocksOfCriteria,filterByCriteriaLogicalAnd,positions)
+	
+	if (length(result)==0) return(result)
+	if (length(result)==1) return(result[[1]])
+	
+	x <- result[[1]]
+	for (r in result[-1]) x <- x | r
+	return(x)
+}
+
+
+extractFromCriteriumString <- function(criteriumString,positions) {
+	# criteriumString: a string of type "instrument:bond,equity & currency:USD + amount:>5%"
+	parser <- create_parserSelectionCriteria()
+	criteriumString = "instrument:bond,equity & currency:CHF + currency:EUR & amount:>79EUR"
+	unionOfBlocksOfCriteria <- parser$splitUnionOfFactorsAndValuesBlocks(criteriumString)
+	result <- filterByCriteriaLogicalOr(unionOfBlocksOfCriteria,positions)
+	
+	# crea la lista delle posizioni
+	positionsFiltered <- create_positions()
+	lapply(positions$positions[result],positionsFiltered$addPosition)
+	return(positionsFiltered)
+}
 
 
 # analizza i nomi e guarda se funzionano correttamente. crea un repository per le

@@ -139,12 +139,13 @@ create_parserSelectionCriteria <- function() {
 		result <- removeStartEndSpaces(result)
 		
 		if (length(result)==1)  {
-			result[2] <- ""	
-			}
+			x <- list(stringSelectionCriteria=result[[1]],constraint="")	
+		} else {
+			result2 <- parser$constructCriteriumCheck(result[[2]])
+			x <- list(stringSelectionCriteria=result[[1]],constraint=result2)		
+		}
 			
-		if (length(result)==2) names(result) <- c("stringSelectionCriteria","constraint")
-			
-		return(result)
+		return(x)
 	}
 	
 	parser$splitUnionOfFactorsAndValuesBlocks <- function(string) {

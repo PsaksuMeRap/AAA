@@ -131,6 +131,7 @@ test.shouldParserSplitFactorsFromValues <- function() {
 	checkEquals(result,should)		
 }
 
+
 test.shouldParseSelectionCriteria <- function() {
 	
 	parser <- create_parserSelectionCriteria()
@@ -142,7 +143,9 @@ test.shouldParseSelectionCriteria <- function() {
 	result <- parser$splitFactorsAndValuesFromTypeAndValue(criteriumString)
 	
 	checkEquals(result[["stringSelectionCriteria"]],"instrument:bond & currency:JPY + instrument:bond,equity & currency:usd,chf + amount:<=100.3CHF")
-	checkEquals(result[["constraint"]],"=0USD")
+	
+	result2 <- parser$constructCriteriumCheck(" =0    USD ")
+	checkEquals(result[["constraint"]],result2)
 
 }
 

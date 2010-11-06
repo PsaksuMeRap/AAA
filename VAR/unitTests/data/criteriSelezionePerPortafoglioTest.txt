@@ -1,0 +1,1 @@
+instrument:bond & currency:CHF ; > 5%

@@ -494,3 +494,231 @@ test.shouldExtractPositionsByAmountRelative <- function() {
 	repositories$exchangeRates <- repository
 	
 }
+
+
+test.shouldApplyLogicalAnd <- function() {
+
+	# create position 1
+	position1 <- create_position()
+	position1$create(name="xxx",
+			currency="USD",
+			amount=97.1,
+			origin=list(ID_AAA=10)
+	)
+	class(position1) <- c("equity",class(position1))
+	
+	# create position 2	
+	position2 <- create_position()
+	position2$create(name="AAA",
+			currency="CHF",
+			amount=100.1,
+			origin=list(ID_AAA=10)
+	)
+	class(position2) <- c("bond",class(position2))
+	
+	# create position 3	
+	position3 <- create_position()
+	position3$create(name="AAA",
+			currency="EUR",
+			amount=80,
+			origin=list(ID_AAA=10)
+	)
+	class(position3) <- c("ABC",class(position3))	
+	
+	# initialize exchange rates
+	repository <- repositories$exchangeRates
+	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	testRepository <- createExchangeRatesTestRepository() 
+	repositories$exchangeRates <- testRepository
+	# exchange rate USD-CHF: 0.9627
+	# exchange rate EUR-CHF: 1.33853808
+	
+	
+	# create positions
+	positions <- create_positions()
+	positions$add(position1)
+	positions$add(position2)
+	positions$add(position3)	
+	
+	# initialize parser selectionCriteria
+	parser <- create_parserSelectionCriteria()
+	string = "instrument:bond,equity & currency:CHF"
+	criteria <- parser$splitFactorsAndValuesBlocks(string)
+	
+	result <- filterByCriteriaLogicalAnd(criteria,positions)
+	
+	posCheck1 <- c(FALSE,TRUE,FALSE)
+	checkEquals(result,posCheck1)
+	
+	# reset the repository in the original state
+	repositories$exchangeRates <- repository
+
+}
+
+test.shouldApplyLogicalOr <- function() {
+	
+	# create position 1
+	position1 <- create_position()
+	position1$create(name="xxx",
+			currency="USD",
+			amount=97.1,
+			origin=list(ID_AAA=10)
+	)
+	class(position1) <- c("equity",class(position1))
+	
+	# create position 2	
+	position2 <- create_position()
+	position2$create(name="AAA",
+			currency="CHF",
+			amount=100.1,
+			origin=list(ID_AAA=10)
+	)
+	class(position2) <- c("bond",class(position2))
+	
+	# create position 3	
+	position3 <- create_position()
+	position3$create(name="AAA",
+			currency="EUR",
+			amount=80,
+			origin=list(ID_AAA=10)
+	)
+	class(position3) <- c("ABC",class(position3))	
+	
+	# initialize exchange rates
+	repository <- repositories$exchangeRates
+	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	testRepository <- createExchangeRatesTestRepository() 
+	repositories$exchangeRates <- testRepository
+	# exchange rate USD-CHF: 0.9627
+	# exchange rate EUR-CHF: 1.33853808
+	
+	
+	# create positions
+	positions <- create_positions()
+	positions$add(position1)
+	positions$add(position2)
+	positions$add(position3)	
+	
+	# initialize parser selectionCriteria
+	parser <- create_parserSelectionCriteria()
+	string = "instrument:bond,equity & currency:CHF + currency:EUR & amount:>79EUR"
+	unionOfBlocksOfCriteria <- parser$splitUnionOfFactorsAndValuesBlocks(string)
+	result <- filterByCriteriaLogicalOr(unionOfBlocksOfCriteria,positions)
+
+	posCheck1 <- c(FALSE,TRUE,TRUE)
+	checkEquals(result,posCheck1)
+	
+	# reset the repository in the original state
+	repositories$exchangeRates <- repository
+	
+}
+
+test.shouldFilterPositionsByCriteriumString <- function() {
+	# create position 1
+	position1 <- create_position()
+	position1$create(name="xxx",
+			currency="USD",
+			amount=97.1,
+			origin=list(ID_AAA=10)
+	)
+	class(position1) <- c("equity",class(position1))
+	
+	# create position 2	
+	position2 <- create_position()
+	position2$create(name="AAA",
+			currency="CHF",
+			amount=100.1,
+			origin=list(ID_AAA=10)
+	)
+	class(position2) <- c("bond",class(position2))
+	
+	# create position 3	
+	position3 <- create_position()
+	position3$create(name="AAA",
+			currency="EUR",
+			amount=80,
+			origin=list(ID_AAA=10)
+	)
+	class(position3) <- c("ABC",class(position3))	
+	
+	# initialize exchange rates
+	repository <- repositories$exchangeRates
+	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	testRepository <- createExchangeRatesTestRepository() 
+	repositories$exchangeRates <- testRepository
+	# exchange rate USD-CHF: 0.9627
+	# exchange rate EUR-CHF: 1.33853808
+	
+	
+	# create positions
+	positions <- create_positions()
+	positions$add(position1)
+	positions$add(position2)
+	positions$add(position3)
+	
+	result <- extractFromCriteriumString(criteriumString,positions)
+	positions$remove(1)
+	
+	checkEquals(result,positions)
+	checkEquals(length(result$positions),2)
+
+	# reset the repository in the original state
+	repositories$exchangeRates <- repository
+}
+
+test.shouldCheckConstraintOnPositions <- function() {
+	# create position 1
+	position1 <- create_position()
+	position1$create(name="xxx",
+			currency="USD",
+			amount=97.1,
+			origin=list(ID_AAA=10)
+	)
+	class(position1) <- c("equity",class(position1))
+	
+	# create position 2	
+	position2 <- create_position()
+	position2$create(name="AAA",
+			currency="CHF",
+			amount=100.1,
+			origin=list(ID_AAA=10)
+	)
+	class(position2) <- c("bond",class(position2))
+	
+	# create position 3	
+	position3 <- create_position()
+	position3$create(name="AAA",
+			currency="EUR",
+			amount=80,
+			origin=list(ID_AAA=10)
+	)
+	class(position3) <- c("ABC",class(position3))	
+	
+	# initialize exchange rates
+	repository <- repositories$exchangeRates
+	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	testRepository <- createExchangeRatesTestRepository() 
+	repositories$exchangeRates <- testRepository
+	# exchange rate USD-CHF: 0.9627
+	# exchange rate EUR-CHF: 1.33853808
+	
+	
+	# create positions
+	positions <- create_positions()
+	positions$add(position1)
+	positions$add(position2)
+	positions$add(position3)
+	
+	
+	criteriumString <- scan(file="./unitTests/data/criteriSelezionePerPortafoglioTest.txt",
+			what="character",sep="\n")
+	
+	parser <- create_parserSelectionCriteria()
+	
+	parsed <- parser$splitFactorsAndValuesFromTypeAndValue(criteriumString)
+	
+	result <- extractFromCriteriumString(parsed[["stringSelectionCriteria"]],positions)
+	
+	# reset the repository in the original state
+	repositories$exchangeRates <- repository
+}
