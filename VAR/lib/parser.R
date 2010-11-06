@@ -142,7 +142,7 @@ create_parserSelectionCriteria <- function() {
 			result[2] <- ""	
 			}
 			
-		if (length(result)==2) names(result) <- c("classesAndFactors","valuesAndType")
+		if (length(result)==2) names(result) <- c("stringSelectionCriteria","constraint")
 			
 		return(result)
 	}
@@ -150,12 +150,18 @@ create_parserSelectionCriteria <- function() {
 	parser$splitUnionOfFactorsAndValuesBlocks <- function(string) {
 		result <- unlist(strsplit(string,"\\+"))
 		result <- removeStartEndSpaces(result)
+		result <- lapply(result,parser$splitFactorsAndValuesBlocks)
 		return(result)
 	}
 	
 	parser$splitFactorsAndValuesBlocks <- function(string) {
-		result <- unlist(strsplit(string,"\\&"))
+	    result <- unlist(strsplit(string,"\\&"))
 		result <- removeStartEndSpaces(result)
+		#if (length(result)==1) {
+		#	return(list(parser$splitFactorsFromValues(result)))
+		#}
+		
+		result <- lapply(result,parser$splitFactorsFromValues)
 		return(result)
 	}
 	

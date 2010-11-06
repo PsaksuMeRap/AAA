@@ -3,49 +3,49 @@
 # Author: claudio
 ###############################################################################
 
-positionsSelector <- function(criterium,positions) UseMethod("positionsSelector",criterium)
+positionsSelector <- function(criteriumSelection,positions) UseMethod("positionsSelector",criteriumSelection)
 
-positionsSelector.currency <- function(criterium,positions) {
+positionsSelector.currency <- function(criteriumSelection,positions) {
 	if (!is.element("positions",class(positions))) stop("The argument is not of class positions")
 
-	FUNC <- function(position,criterium) {
-		is.element(position$currency,criterium$values)	
+	FUNC <- function(position,criteriumSelection) {
+		is.element(position$currency,criteriumSelection$values)	
 	}
 	
 	# apply the function FUNC
-	extract <- lapply(positions$positions,FUNC,criterium)
+	extract <- lapply(positions$positions,FUNC,criteriumSelection)
 	extract <- unlist(extract)
 
 	return(extract)
 }
 
-positionsSelector.instrument <- function(criterium,positions) {
+positionsSelector.instrument <- function(criteriumSelection,positions) {
 	if (!is.element("positions",class(positions))) stop("The argument is not of class positions")
 	# the identifier is at position length(classes)-1
-	FUNC <- function(position,criterium) {
+	FUNC <- function(position,criteriumSelection) {
 		classes <- class(position)
 		# the identifier of the position is at "length(classes)-1"
 		index <- length(classes)-1
-		isElement <- is.element(classes[index],criterium$values)
+		isElement <- is.element(classes[index],criteriumSelection$values)
 		return(any(isElement))
 	}
 	
 	# apply the function FUNC
-	extract <- lapply(positions$positions,FUNC,criterium)
+	extract <- lapply(positions$positions,FUNC,criteriumSelection)
 	extract <- unlist(extract)
 	
 	return(extract)
 }
 
-positionsSelector.amount <- function(criterium,positions) {
-	if (!any(is.element("criteriumSelection",class(criterium)))) stop("Selector.amount: the argument criterium is not of class criteriumSelection")
+positionsSelector.amount <- function(criteriumSelection,positions) {
+	if (!any(is.element("criteriumSelection",class(criteriumSelection)))) stop("Selector.amount: the argument criteriumSelection is not of class criteriumSelection")
 	if (class(positions)!="positions") stop("Selector.amount: the argument positions is not of class positions")
 	
-	criteriumNew <- criterium
+	criteriumNew <- criteriumSelection
 
-	if (criterium$criteriumCheck$kind=="relative") {
+	if (criteriumSelection$criteriumCheck$kind=="relative") {
 		totalValue <- positions$sum()
-		percentageValue <- criterium$criteriumCheck$value
+		percentageValue <- criteriumSelection$criteriumCheck$value
 		criteriumNew$criteriumCheck$value <- toMoney(percentageValue*totalValue$amount,totalValue$currency)
 	}
 	
@@ -56,52 +56,52 @@ positionsSelector.amount <- function(criterium,positions) {
 	return(extract)
 }
 
-positionsSelector.default <- function(criterium) {
-	print(criterium)
+positionsSelector.default <- function(criteriumSelection) {
+	print(criteriumSelection)
 }
 
 
-check <- function(position,criterium) UseMethod("check",criterium)
+check <- function(position,criteriumSelection) UseMethod("check",criteriumSelection)
 
-check.amount <- function(position,criterium) {
-	operator <- criterium$criteriumCheck$operator
-	# if criterium$criteriumCheck$kind=="relative", we assume that 
-	# criterium$criteriumCheck$value has been previously converted from % to absolute, i.e.
-	# criterium$criteriumCheck$value is now of class money!
+check.amount <- function(position,criteriumSelection) {
+	operator <- criteriumSelection$criteriumCheck$operator
+	# if criteriumSelection$criteriumCheck$kind=="relative", we assume that 
+	# criteriumSelection$criteriumCheck$value has been previously converted from % to absolute, i.e.
+	# criteriumSelection$criteriumCheck$value is now of class money!
 		
 	# exchange the money in the desired currency
-	currencyTo <- criterium$criteriumCheck$value$currency
+	currencyTo <- criteriumSelection$criteriumCheck$value$currency
 	moneyToExchange <- toMoney(position$amount,position$currency)
 	money <- repositories$exchangeRates$exchange(moneyToExchange,currencyTo)
 
 	# excecute the check
-	if (operator==">" ) return(money$amount >  criterium$criteriumCheck$value$amount)
-	if (operator==">=") return(money$amount >= criterium$criteriumCheck$value$amount)
-	if (operator=="<" ) return(money$amount <  criterium$criteriumCheck$value$amount)
-	if (operator=="<=") return(money$amount <= criterium$criteriumCheck$value$amount)
-	if (operator=="!=") return(money$amount != criterium$criteriumCheck$value$amount)
+	if (operator==">" ) return(money$amount >  criteriumSelection$criteriumCheck$value$amount)
+	if (operator==">=") return(money$amount >= criteriumSelection$criteriumCheck$value$amount)
+	if (operator=="<" ) return(money$amount <  criteriumSelection$criteriumCheck$value$amount)
+	if (operator=="<=") return(money$amount <= criteriumSelection$criteriumCheck$value$amount)
+	if (operator=="!=") return(money$amount != criteriumSelection$criteriumCheck$value$amount)
 	if (operator=="=" ) {
-		if (abs(money$amount-criterium$criteriumCheck$value$amount) > 0.00001) return(FALSE) else return(TRUE)
+		if (abs(money$amount-criteriumSelection$criteriumCheck$value$amount) > 0.00001) return(FALSE) else return(TRUE)
 	}
 	stop (paste("Error: invalid operator",operator))
 }
 
-check.instrument <- function(position,criterium) {
+check.instrument <- function(position,criteriumSelection) {
 	
-	instruments <- criterium$values
+	instruments <- criteriumSelection$values
 	instrumentType <- class(position)[1]
 	return(any(is.element(instrumentType,instruments)))
 }
 
-check.currency <- function(position,criterium) {
+check.currency <- function(position,criteriumSelection) {
 	
-	currencies <- criterium$values
+	currencies <- criteriumSelection$values
 	instrumentCurrency <- position$currency
 	return(any(is.element(instrumentCurrency,currencies)))
 }
 
-check.default <- function(position,criterium) {
-	stop(paste("Error: check for factor",criterium$factor,"not implemented yet"))
+check.default <- function(position,criteriumSelection) {
+	stop(paste("Error: check for factor",criteriumSelection$factor,"not implemented yet"))
 }
 
 

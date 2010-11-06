@@ -17,8 +17,6 @@ source("./lib/library.R")
 stringsAsFactors = FALSE
 repositories <- new.env()
 
-
-
 source("./odbc/connessioni.R")
 
 
