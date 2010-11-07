@@ -613,7 +613,7 @@ test.shouldApplyLogicalOr <- function() {
 	
 }
 
-test.shouldFilterPositionsByCriteriumString <- function() {
+test.shouldFilterPositionsFromselectionString <- function() {
 	# create position 1
 	position1 <- create_position()
 	position1$create(name="xxx",
@@ -656,8 +656,8 @@ test.shouldFilterPositionsByCriteriumString <- function() {
 	positions$add(position2)
 	positions$add(position3)
 	
-	criteriumString = "instrument:bond,equity & currency:CHF + currency:EUR & amount:>79EUR"
-	result <- extractFromSelectionString(criteriumString,positions)
+	selectionString = "instrument:bond,equity & currency:CHF + currency:EUR & amount:>79EUR"
+	result <- extractPositionsFromSelectionString(selectionString,positions)
 	positions$remove(1)
 	
 	checkEquals(result,positions)
@@ -668,12 +668,12 @@ test.shouldFilterPositionsByCriteriumString <- function() {
 }
 
 
-test.shouldCheckConstraintOnPositions <- function() {
+test.shouldCheckOneCheckStringOnPositions <- function() {
 	# create position 1
 	position1 <- create_position()
 	position1$create(name="xxx",
 			currency="USD",
-			amount=97.1,
+			amount=100/0.9627,
 			origin=list(ID_AAA=10)
 	)
 	class(position1) <- c("equity",class(position1))
@@ -682,7 +682,7 @@ test.shouldCheckConstraintOnPositions <- function() {
 	position2 <- create_position()
 	position2$create(name="AAA",
 			currency="CHF",
-			amount=100.1,
+			amount=100,
 			origin=list(ID_AAA=10)
 	)
 	class(position2) <- c("bond",class(position2))
@@ -691,7 +691,7 @@ test.shouldCheckConstraintOnPositions <- function() {
 	position3 <- create_position()
 	position3$create(name="AAA",
 			currency="EUR",
-			amount=80,
+			amount=100/1.33853808,
 			origin=list(ID_AAA=10)
 	)
 	class(position3) <- c("ABC",class(position3))	
@@ -711,15 +711,16 @@ test.shouldCheckConstraintOnPositions <- function() {
 	positions$add(position2)
 	positions$add(position3)
 	
-	
 	checkString <- scan(file="./unitTests/data/criteriSelezionePerPortafoglioTest.txt",
 			what="character",sep="\n")
 	
-	parser <- create_parserSelectionCriteria()
+	checkEquals(checkString,"instrument:bond & currency:CHF ; > 5%")
 	
-	parsed <- parser$splitFactorsAndValuesFromTypeAndValue(checkString)
-	
-	result <- extractFromCriteriumString(parsed[["stringSelectionCriteria"]],positions)
+	# redefine the checkString
+	checkString="instrument:bond & currency:CHF ; > 30%"
+
+	result <- checkCheckStringOnPositions(checkString,positions)
+	checkEquals(result,TRUE)
 	
 	# reset the repository in the original state
 	repositories$exchangeRates <- repository

@@ -19,4 +19,3 @@ test.criteriumCheckDefinition <- function() {
 	checkEquals(criterium1$kind,"absolute")
 	
 }
-

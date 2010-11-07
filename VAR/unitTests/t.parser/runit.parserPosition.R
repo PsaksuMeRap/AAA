@@ -118,7 +118,7 @@ test.shouldParserSplitFactorsFromValues <- function() {
 	
 	parser <- create_parserSelectionCriteria()
 	
-	result <- parser$splitFactorsFromValues("instrument:bond")
+	result <- parser$splitFactorString("instrument:bond")
 	should <- create_criteriumSelection(factor="instrument",values="bond")
 	
 	checkEquals(result,should)
@@ -127,7 +127,7 @@ test.shouldParserSplitFactorsFromValues <- function() {
 	criteriumCheck <- parser$constructCriteriumCheck("<=30 %")
 	should <- criteriumSelection <- create_criteriumSelection(
 			factor="amount",values="<=30 %",criteriumCheck=criteriumCheck)
-	result <- parser$splitFactorsFromValues(string)
+	result <- parser$splitFactorString(string)
 	checkEquals(result,should)		
 }
 
@@ -145,7 +145,7 @@ test.shouldParseCheckString <- function() {
 	checkEquals(result[["selectionString"]],"instrument:bond & currency:JPY + instrument:bond,equity & currency:usd,chf + amount:<=100.3CHF")
 	
 	result2 <- parser$constructCriteriumCheck(" =0    USD ")
-	checkEquals(result[["constraintString"]],result2)
+	checkEquals(result[["criteriumCheck"]],result2)
 
 }
 
@@ -160,7 +160,7 @@ test.shouldParseCheckStringWithoutConstraintString <- function() {
 	result <- parser$splitCheckString(checkString)
 	
 	checkEquals(result[["selectionString"]],"instrument:bond & currency:JPY + instrument:bond,equity & currency:usd,chf + amount:<=100.3CHF")
-	checkEquals(result[["constraintString"]],"")
+	checkEquals(result[["criteriumCheck"]],NA)
 	
 }
 
@@ -237,7 +237,7 @@ test.shouldSplitFactorsFromValues <- function() {
 	)
 	
 	
-	result <- parser$splitFactorsFromValues(string)
+	result <- parser$splitFactorString(string)
 	checkEquals(result,should)
 	
 	
@@ -255,7 +255,7 @@ test.shouldSplitFactorsFromValues <- function() {
 			criteriumCheck=criteriumCheck
 	)
 	
-	result <- parser$splitFactorsFromValues(string)
+	result <- parser$splitFactorString(string)
 	checkEquals(result,should)
 	
 	
@@ -273,7 +273,7 @@ test.shouldSplitFactorsFromValues <- function() {
 			criteriumCheck=criteriumCheck
 	)
 	
-	result <- parser$splitFactorsFromValues(string)
+	result <- parser$splitFactorString(string)
 	checkEquals(result,should)
 }
 

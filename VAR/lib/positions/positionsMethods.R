@@ -133,7 +133,8 @@ filterByCriteriaLogicalOr <- function(unionOfBlocksOfCriteria,positions) {
 }
 
 
-extractFromSelectionString <- function(selectionString,positions) {
+
+extractPositionsFromSelectionString <- function(selectionString,positions) {
 	# selectionString: a string of type "instrument:bond,equity & currency:USD + amount:>5%"
 	parser <- create_parserSelectionCriteria()
 
@@ -144,6 +145,32 @@ extractFromSelectionString <- function(selectionString,positions) {
 	positionsFiltered <- create_positions()
 	lapply(positions$positions[result],positionsFiltered$addPosition)
 	return(positionsFiltered)
+}
+
+checkCheckStringOnPositions <- function(checkString,positions) {
+	# parsa ed estrai le posizioni soddisfacenti i criteri di selezione
+	parser <- create_parserSelectionCriteria()
+	parsed <- parser$splitCheckString(checkString)
+	extractedPositions <- extractPositionsFromSelectionString(parsed[["selectionString"]],positions)
+	
+	# crea il criterio di selezione per la verifica del vincolo finale
+	criteriumSelection <- create_criteriumSelection(factor="amount",
+			criteriumCheck=parsed[["criteriumCheck"]]
+	)
+	
+	if (criteriumSelection$criteriumCheck$kind=="relative") {
+		totalValue <- positions$sum()
+		percentageValue <- criteriumSelection$criteriumCheck$value/100
+		criteriumSelection$criteriumCheck$value <- toMoney(percentageValue*totalValue$amount,totalValue$currency)
+	}
+	
+	totalValue <- extractedPositions$sum()
+	fakePosition <- create_position()
+	fakePosition$create(name="fake",currency=totalValue$currency,
+			amount=totalValue$amount) 
+	
+	return( check(fakePosition,criteriumSelection) )
+	
 }
 
 

@@ -145,12 +145,12 @@ create_parserSelectionCriteria <- function() {
 		result <- removeStartEndSpaces(result)
 		
 		if (length(result)==1)  {
-			x <- list(selectionString=result[[1]],constraintString="")	
+			x <- list(selectionString=result[[1]],criteriumCheck=NA)	
 		} else {
 			result2 <- parser$constructCriteriumCheck(result[[2]])
-			x <- list(selectionString=result[[1]],constraintString=result2)		
+			x <- list(selectionString=result[[1]],criteriumCheck=result2)		
 		}
-			
+		
 		return(x)
 	}
 	
@@ -169,13 +169,15 @@ create_parserSelectionCriteria <- function() {
 	    result <- unlist(strsplit(factorsString,"\\&"))
 		result <- removeStartEndSpaces(result)
 		
-		result <- lapply(result,parser$splitFactorsFromValues)
+		result <- lapply(result,parser$splitFactorString)
 		return(result)
 	}
 	
-	parser$splitFactorsFromValues <- function(factorString) {
+	parser$splitFactorString <- function(factorString) {
+		# factorString: a string like "instrument:equity,bond" or
+		# "amount:<= 50 USD"
 		result <- unlist(strsplit(factorString,":"))
-		if (length(result)<2) stop(paste("Error: splitFactorsFromValues should return 2 blocks.",
+		if (length(result)<2) stop(paste("Error: splitFactorString should return 2 blocks.",
 							factorString))
 		result <- removeStartEndSpaces(result)
 		factor <- result[1]
