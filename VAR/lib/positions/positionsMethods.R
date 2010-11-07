@@ -133,11 +133,11 @@ filterByCriteriaLogicalOr <- function(unionOfBlocksOfCriteria,positions) {
 }
 
 
-extractFromCriteriumString <- function(criteriumString,positions) {
-	# criteriumString: a string of type "instrument:bond,equity & currency:USD + amount:>5%"
+extractFromSelectionString <- function(selectionString,positions) {
+	# selectionString: a string of type "instrument:bond,equity & currency:USD + amount:>5%"
 	parser <- create_parserSelectionCriteria()
-	criteriumString = "instrument:bond,equity & currency:CHF + currency:EUR & amount:>79EUR"
-	unionOfBlocksOfCriteria <- parser$splitUnionOfFactorsAndValuesBlocks(criteriumString)
+
+	unionOfBlocksOfCriteria <- parser$splitSelectionString(selectionString)
 	result <- filterByCriteriaLogicalOr(unionOfBlocksOfCriteria,positions)
 	
 	# crea la lista delle posizioni

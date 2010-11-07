@@ -131,45 +131,52 @@ create_parserSelectionCriteria <- function() {
 	
 	parser <- new.env()
 	class(parser) <- "parserSelectionCriteria"
-
-	parser$splitFactorsAndValuesFromTypeAndValue <- function(criteriumString) {
-		result <- unlist(strsplit(criteriumString,";"))
+	# checkString = factorString & factorString & ... 
+	#			  + factorString & factorString & ...
+	#			  + factorString & factorString & ...
+	#			  ; constraintString
+	
+	parser$splitCheckString <- function(checkString) {
+		#checkString: a string like "instrument:equity & currency:CHF + instrument:bond ; <=3%"
+		# i.e. the union of a selectionString and constraintString, separated by a semicolon
+		result <- unlist(strsplit(checkString,";"))
 		
-		if (length(result)==0) stop("Error: empty criteriumString")
+		if (length(result)==0) stop("Error: empty checkString")
 		result <- removeStartEndSpaces(result)
 		
 		if (length(result)==1)  {
-			x <- list(stringSelectionCriteria=result[[1]],constraint="")	
+			x <- list(selectionString=result[[1]],constraintString="")	
 		} else {
 			result2 <- parser$constructCriteriumCheck(result[[2]])
-			x <- list(stringSelectionCriteria=result[[1]],constraint=result2)		
+			x <- list(selectionString=result[[1]],constraintString=result2)		
 		}
 			
 		return(x)
 	}
 	
-	parser$splitUnionOfFactorsAndValuesBlocks <- function(string) {
-		result <- unlist(strsplit(string,"\\+"))
+	parser$splitSelectionString <- function(selectionString) {
+		# selectionString: a string like "instrument:equity & currency:CHF + instrument:bond"
+		# where factorsStrings are joined by the "+" character
+		result <- unlist(strsplit(selectionString,"\\+"))
 		result <- removeStartEndSpaces(result)
-		result <- lapply(result,parser$splitFactorsAndValuesBlocks)
+		result <- lapply(result,parser$splitFactorsString)
 		return(result)
 	}
 	
-	parser$splitFactorsAndValuesBlocks <- function(string) {
-	    result <- unlist(strsplit(string,"\\&"))
+	parser$splitFactorsString <- function(factorsString) {
+		# factorsString: a string like "instrument:equity & currency:CHF"
+		# where one or more factorString are concatenated with the "&" character
+	    result <- unlist(strsplit(factorsString,"\\&"))
 		result <- removeStartEndSpaces(result)
-		#if (length(result)==1) {
-		#	return(list(parser$splitFactorsFromValues(result)))
-		#}
 		
 		result <- lapply(result,parser$splitFactorsFromValues)
 		return(result)
 	}
 	
-	parser$splitFactorsFromValues <- function(string) {
-		result <- unlist(strsplit(string,":"))
+	parser$splitFactorsFromValues <- function(factorString) {
+		result <- unlist(strsplit(factorString,":"))
 		if (length(result)<2) stop(paste("Error: splitFactorsFromValues should return 2 blocks.",
-							string))
+							factorString))
 		result <- removeStartEndSpaces(result)
 		factor <- result[1]
 		values <- removeStartEndSpaces(unlist(strsplit(result[2],",")))
@@ -191,11 +198,11 @@ create_parserSelectionCriteria <- function() {
 		return(criteriumSelection)
 	}
 	
-	parser$constructCriteriumCheck <- function(string) {
-		# a string with the quantitative constraint to identify
+	parser$constructCriteriumCheck <- function(constraintString) {
+		# a constraintString with the quantitative constraint to identify
 		# "=0USD" or "> 1.77 EUR" or < 5% 
 	
-		string <- removeStartEndSpaces(string)
+		string <- removeStartEndSpaces(constraintString)
 		
 		# check for operator
 		start = 1

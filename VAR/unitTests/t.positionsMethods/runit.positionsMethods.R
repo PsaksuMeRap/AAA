@@ -543,7 +543,7 @@ test.shouldApplyLogicalAnd <- function() {
 	# initialize parser selectionCriteria
 	parser <- create_parserSelectionCriteria()
 	string = "instrument:bond,equity & currency:CHF"
-	criteria <- parser$splitFactorsAndValuesBlocks(string)
+	criteria <- parser$splitFactorsString(string)
 	
 	result <- filterByCriteriaLogicalAnd(criteria,positions)
 	
@@ -602,7 +602,7 @@ test.shouldApplyLogicalOr <- function() {
 	# initialize parser selectionCriteria
 	parser <- create_parserSelectionCriteria()
 	string = "instrument:bond,equity & currency:CHF + currency:EUR & amount:>79EUR"
-	unionOfBlocksOfCriteria <- parser$splitUnionOfFactorsAndValuesBlocks(string)
+	unionOfBlocksOfCriteria <- parser$splitSelectionString(string)
 	result <- filterByCriteriaLogicalOr(unionOfBlocksOfCriteria,positions)
 
 	posCheck1 <- c(FALSE,TRUE,TRUE)
@@ -656,7 +656,8 @@ test.shouldFilterPositionsByCriteriumString <- function() {
 	positions$add(position2)
 	positions$add(position3)
 	
-	result <- extractFromCriteriumString(criteriumString,positions)
+	criteriumString = "instrument:bond,equity & currency:CHF + currency:EUR & amount:>79EUR"
+	result <- extractFromSelectionString(criteriumString,positions)
 	positions$remove(1)
 	
 	checkEquals(result,positions)
@@ -665,6 +666,7 @@ test.shouldFilterPositionsByCriteriumString <- function() {
 	# reset the repository in the original state
 	repositories$exchangeRates <- repository
 }
+
 
 test.shouldCheckConstraintOnPositions <- function() {
 	# create position 1
@@ -710,12 +712,12 @@ test.shouldCheckConstraintOnPositions <- function() {
 	positions$add(position3)
 	
 	
-	criteriumString <- scan(file="./unitTests/data/criteriSelezionePerPortafoglioTest.txt",
+	checkString <- scan(file="./unitTests/data/criteriSelezionePerPortafoglioTest.txt",
 			what="character",sep="\n")
 	
 	parser <- create_parserSelectionCriteria()
 	
-	parsed <- parser$splitFactorsAndValuesFromTypeAndValue(criteriumString)
+	parsed <- parser$splitFactorsAndValuesFromTypeAndValue(checkString)
 	
 	result <- extractFromCriteriumString(parsed[["stringSelectionCriteria"]],positions)
 	

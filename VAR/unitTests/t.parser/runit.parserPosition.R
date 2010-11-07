@@ -132,35 +132,35 @@ test.shouldParserSplitFactorsFromValues <- function() {
 }
 
 
-test.shouldParseSelectionCriteria <- function() {
+test.shouldParseCheckString <- function() {
 	
 	parser <- create_parserSelectionCriteria()
 		
-	criteriumString = paste("instrument:bond & currency:JPY +",
+	checkString = paste("instrument:bond & currency:JPY +",
 			"instrument:bond,equity & currency:usd,chf + amount:<=100.3CHF",
 			"; =0USD")
 	
-	result <- parser$splitFactorsAndValuesFromTypeAndValue(criteriumString)
+	result <- parser$splitCheckString(checkString)
 	
-	checkEquals(result[["stringSelectionCriteria"]],"instrument:bond & currency:JPY + instrument:bond,equity & currency:usd,chf + amount:<=100.3CHF")
+	checkEquals(result[["selectionString"]],"instrument:bond & currency:JPY + instrument:bond,equity & currency:usd,chf + amount:<=100.3CHF")
 	
 	result2 <- parser$constructCriteriumCheck(" =0    USD ")
-	checkEquals(result[["constraint"]],result2)
+	checkEquals(result[["constraintString"]],result2)
 
 }
 
 
-test.shouldParseSelectionCriteriumWithoutConstraint <- function() {
+test.shouldParseCheckStringWithoutConstraintString <- function() {
 	
 	parser <- create_parserSelectionCriteria()
 	
-	criteriumString = paste("instrument:bond & currency:JPY +",
+	checkString = paste("instrument:bond & currency:JPY +",
 			"instrument:bond,equity & currency:usd,chf + amount:<=100.3CHF")
 	
-	result <- parser$splitFactorsAndValuesFromTypeAndValue(criteriumString)
+	result <- parser$splitCheckString(checkString)
 	
-	checkEquals(result[["stringSelectionCriteria"]],"instrument:bond & currency:JPY + instrument:bond,equity & currency:usd,chf + amount:<=100.3CHF")
-	checkEquals(result[["constraint"]],"")
+	checkEquals(result[["selectionString"]],"instrument:bond & currency:JPY + instrument:bond,equity & currency:usd,chf + amount:<=100.3CHF")
+	checkEquals(result[["constraintString"]],"")
 	
 }
 
@@ -168,13 +168,13 @@ test.shouldParseSelectionCriteriumWithoutConstraint <- function() {
 test.shouldConstructCriteriumSelectionList <- function() {
 	parser <- create_parserSelectionCriteria()
 	
-	result <- parser$splitFactorsAndValuesBlocks("instrument:bond")
+	result <- parser$splitFactorsString("instrument:bond")
 	should <- list( create_criteriumSelection(factor="instrument",values="bond") )
 	
 	checkEquals(result,should)
 	
 	string = "instrument:bond & currency:JPY & amount:<=30 %"
-	result <- parser$splitFactorsAndValuesBlocks(string)
+	result <- parser$splitFactorsString(string)
 	
 	should <- list()
 	should[[1]] <- create_criteriumSelection(factor="instrument",values="bond")
@@ -192,7 +192,7 @@ test.shouldConstructUnionsOfFactorsAndValuesBlocks <- function() {
 	parser <- create_parserSelectionCriteria()
 	string = "instrument:bond,equity"
 	
-	result <- parser$splitUnionOfFactorsAndValuesBlocks(string)
+	result <- parser$splitSelectionString(string)
 	should <- create_criteriumSelection(factor="instrument",values=c("bond","equity"))
 	should <- list(should)
 	should <- list(should)
@@ -201,7 +201,7 @@ test.shouldConstructUnionsOfFactorsAndValuesBlocks <- function() {
 	
 	string = "instrument:bond,equity & currency:USD"
 	
-	result <- parser$splitUnionOfFactorsAndValuesBlocks(string)
+	result <- parser$splitSelectionString(string)
 	should1.1 <- create_criteriumSelection(factor="instrument",values=c("bond","equity"))
 	should1.2 <- create_criteriumSelection(factor="currency",values="USD")
 	should <- list(should1.1,should1.2)
@@ -211,7 +211,7 @@ test.shouldConstructUnionsOfFactorsAndValuesBlocks <- function() {
 	
 	string = "instrument:bond,equity & currency:USD + instrument:money market"
 	
-	result <- parser$splitUnionOfFactorsAndValuesBlocks(string)
+	result <- parser$splitSelectionString(string)
 	should1.1 <- create_criteriumSelection(factor="instrument",values=c("bond","equity"))
 	should1.2 <- create_criteriumSelection(factor="currency",values="USD")
 	should2.1 <- create_criteriumSelection(factor="instrument",values="money market")

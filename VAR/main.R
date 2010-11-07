@@ -17,15 +17,12 @@ source("./lib/library.R")
 stringsAsFactors = FALSE
 repositories <- new.env()
 
-source("./odbc/connessioni.R")
 
 
+#source("./odbc/connessioni.R")
 
-
-dati.df <- importDBPortfolioGenerale()
-clienti <- unique(dati.df[,"Cliente"])
-portfParser <- create_parserPortfolio()
-portafogli <- lapply(clienti,portfParser$parse,dati.df)
-
-
+#dati.df <- importDBPortfolioGenerale()
+#clienti <- unique(dati.df[,"Cliente"])
+#portfParser <- create_parserPortfolio()
+#portafogli <- lapply(clienti,portfParser$parse,dati.df)
 
