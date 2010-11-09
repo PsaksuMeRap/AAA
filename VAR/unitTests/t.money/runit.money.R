@@ -18,6 +18,14 @@ test.createMoney <- function() {
 
 }
 
+test.moneyToString <- function() {
+	currency = "CHF"
+	amount = 105.3
+	
+	money <- toMoney(currency,amount)
+	
+	checkEquals(money$toString(),paste(amount,currency))
+}
 
 test.sumMoney <- function() {
 	

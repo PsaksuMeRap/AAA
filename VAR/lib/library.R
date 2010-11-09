@@ -15,4 +15,4 @@ source("./lib/money.R")
 source("./lib/criteriumCheck.R")
 source("./lib/criteriumSelection.R")
 source("./lib/accruedInterest.R")
-
+source("./lib/riskmanTestSuite.R")

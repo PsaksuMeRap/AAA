@@ -18,8 +18,14 @@ toMoney <- function(amount,currency) {
 		if (m$currency!=money$currency) m <- repositories$exchangeRates$exchange(m,money$currency)
 		money$amount <<- money$amount+m$amount
 	}
+	
+	money$toString <- function() {
+		string = paste(money$currency,money$amount)
+		return(string)
+	}
+	
 	money$print <- function() {
-		print(paste(money$currency,money$amount))
+		print(money$toString())
 	}
 	return(money)
 }

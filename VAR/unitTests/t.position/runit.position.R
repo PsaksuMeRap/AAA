@@ -47,6 +47,20 @@ test.isCurrency <- function() {
 	checkEquals(position$isCurrency("USD"),TRUE)	
 }
 
+test.positionToString <- function() {
+	source("./lib/position/position.R")		
+	
+	# crea la posizione
+	position <- create_position()
+	position$create(name="test",
+			currency="USD",
+			amount=100,
+			origin=list(ID_AAA=10)
+	)
+	
+	string <- paste(class(position)[1],"/","USD","-", 100, "/ Name: test")
+	checkEquals(position$toString(),string)	
+}
 
 test.shouldCreateDataFrameFromPosition <- function() {
 	source("./lib/position/position.R")

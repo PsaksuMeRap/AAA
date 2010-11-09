@@ -147,7 +147,7 @@ extractPositionsFromSelectionString <- function(selectionString,positions) {
 	return(positionsFiltered)
 }
 
-checkCheckStringOnPositions <- function(checkString,positions) {
+checkCheckStringOnPositions <- function(checkString,positions,file) {
 	# parsa ed estrai le posizioni soddisfacenti i criteri di selezione
 	parser <- create_parserSelectionCriteria()
 	parsed <- parser$splitCheckString(checkString)
@@ -169,7 +169,16 @@ checkCheckStringOnPositions <- function(checkString,positions) {
 	fakePosition$create(name="fake",currency=totalValue$currency,
 			amount=totalValue$amount) 
 	
-	return( check(fakePosition,criteriumSelection) )
+	checkResult <- check(fakePosition,criteriumSelection)
+	if (!missing(file)) {
+		cat(paste("check:",checkString),file=file)
+		cat(paste("      ",checkResult),file=file,append=TRUE)
+		for (position in extractedPositions) {
+			cat(paste("      ",position$toString()),file=file,append=TRUE)
+		}
+		cat(paste("Total:",totalValue$toString(),"\n"),file=file,append=TRUE)
+	}
+	return( checkResult )
 	
 }
 

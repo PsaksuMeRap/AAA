@@ -69,3 +69,11 @@ testsuite.positionsMethods <- defineTestSuite("Test dei metodi positionsMethods"
 		dirs = "./unitTests/t.positionsMethods")
 
 testResult <- runTestSuite(testsuite.positionsMethods); printTextProtocol(testResult)
+
+## test per la classe riskmanTestSuite
+testsuite.riskmanTestSuite <- defineTestSuite("Test della classe riskmanTestSuite",
+		dirs = "./unitTests/t.riskmanTestSuite")
+
+testResult <- runTestSuite(testsuite.riskmanTestSuite); printTextProtocol(testResult)
+
+

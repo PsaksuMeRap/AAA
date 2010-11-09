@@ -67,6 +67,16 @@ test.should_addPositionsToPortfolio <- function() {
 	checkIdentical(portfolio$positions$positions,positions$positions)
 }
 
+test.shouldParsePortfolio <- function() {
+	source("./unitTests/utilities/createPositionsData.R")
+	
+	parser <- create_parserPortfolio()
+	owner = "pippo76"
+	dati.df <- createPositionsData()
+	portfolio <- parser$parse(owner,dati.df)
+			
+}
+
 test.should_returnValueOfPortfolio <- function() {
 	source("./lib/portfolio.R")
 	

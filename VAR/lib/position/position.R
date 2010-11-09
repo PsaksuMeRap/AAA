@@ -39,6 +39,11 @@ create_position <- function() {
 		print(paste(class(position)[1],"/",position$currency,"-", position$amount, "/ Name:", position$name))
 	}
 	
+	position$toString <- function() {
+		string <- paste(class(position)[1],"/",position$currency,"-", position$amount, "/ Name:", position$name)
+		return(string)
+	}
+	
 	position$toDataFrame <- function() {
 		# this function create a data.frame from the list of positions
 		df <- data.frame(instrument=class(position)[1],
