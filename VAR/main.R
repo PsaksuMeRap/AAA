@@ -17,10 +17,9 @@ source("./lib/library.R")
 stringsAsFactors = FALSE
 repositories <- new.env()
 
-source("./odbc/connessioni.R")
 
 
-
+#source("./odbc/connessioni.R")
 
 #dati.df <- importDBPortfolioGenerale()
 #clienti <- unique(dati.df[,"Cliente"])

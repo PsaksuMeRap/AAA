@@ -147,7 +147,8 @@ extractPositionsFromSelectionString <- function(selectionString,positions) {
 	return(positionsFiltered)
 }
 
-checkCheckStringOnPositions <- function(checkString,positions,file) {
+checkCheckStringOnPositions <- function(checkString,positions,logFile) {
+
 	# parsa ed estrai le posizioni soddisfacenti i criteri di selezione
 	parser <- create_parserSelectionCriteria()
 	parsed <- parser$splitCheckString(checkString)
@@ -159,24 +160,33 @@ checkCheckStringOnPositions <- function(checkString,positions,file) {
 	)
 	
 	if (criteriumSelection$criteriumCheck$kind=="relative") {
-		totalValue <- positions$sum()
+		positionsValue <- positions$sum()
 		percentageValue <- criteriumSelection$criteriumCheck$value/100
-		criteriumSelection$criteriumCheck$value <- toMoney(percentageValue*totalValue$amount,totalValue$currency)
+		criteriumSelection$criteriumCheck$value <- toMoney(percentageValue*positionsValue$amount,positionsValue$currency)
 	}
 	
-	totalValue <- extractedPositions$sum()
+	extractedPositionsValue <- extractedPositions$sum()
 	fakePosition <- create_position()
-	fakePosition$create(name="fake",currency=totalValue$currency,
-			amount=totalValue$amount) 
+	fakePosition$create(name="fake",currency=extractedPositionsValue$currency,
+			amount=extractedPositionsValue$amount) 
 	
 	checkResult <- check(fakePosition,criteriumSelection)
-	if (!missing(file)) {
-		cat(paste("check:",checkString),file=file)
-		cat(paste("      ",checkResult),file=file,append=TRUE)
-		for (position in extractedPositions) {
-			cat(paste("      ",position$toString()),file=file,append=TRUE)
+	if (!missing(logFile)) {
+
+		cat(paste("check:",checkResult,"->", checkString),
+				file=logFile,sep="\n",append=TRUE)
+		for (position in extractedPositions$positions) {
+			cat(paste("      ",position$toString()),file=logFile,
+					sep="\n",append=TRUE)
 		}
-		cat(paste("Total:",totalValue$toString(),"\n"),file=file,append=TRUE)
+		
+		effectivePercentage <- extractedPositionsValue$divide(positionsValue)*100
+		effectivePercentage <- paste(formatC(effectivePercentage,digits=2,
+						format="f"),"%",sep="")
+		
+		cat(paste("Total:",extractedPositionsValue$toString(), "over", 
+						positionsValue$toString(), 
+						"(",effectivePercentage,")","\n"),file=logFile,sep="\n",append=TRUE)
 	}
 	return( checkResult )
 	

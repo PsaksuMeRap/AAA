@@ -4,10 +4,6 @@
 ###############################################################################
 
 importDBPortfolioGenerale <- function() {
-	# utility function
-	extractDataFrameRow <- function(i,data.df) {
-		return(data.df[i,,drop=FALSE])
-	}
 	
 	connection <- odbcConnect("prezzi_storici_azioni_VAR",utente,password)
 	query = paste("SELECT B.ID, A.* FROM [Sistema (prova)].dbo.DBPortfolioGenerale A",
@@ -17,11 +13,7 @@ importDBPortfolioGenerale <- function() {
 	
 	DBPortfolioGenerale.df[["Cliente"]] <- NULL
 	colnames(DBPortfolioGenerale.df)[1] <- "Cliente"
-	DBPortfolioGenerale <- lapply(1:nrow(DBPortfolioGenerale.df),
-			extractDataFrameRow,
-			DBPortfolioGenerale.df
-	)
-	return(DBPortfolioGenerale)
+	return(DBPortfolioGenerale.df)
 }
 
 

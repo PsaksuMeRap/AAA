@@ -4,6 +4,7 @@
 ###############################################################################
 
 source("./lib/importazioneDBPortfolioGenerale.R")
+source("./lib/lists.R")
 source("./lib/parser.R")
 source("./lib/portfolio.R")
 source("./lib/position/position.R")

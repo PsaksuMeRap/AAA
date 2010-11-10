@@ -63,6 +63,13 @@ create_positions <- function() {
 		for (p in positions$sortBy()) p$print()
 	}
 	
+	positions$toString <- function() {
+		x <- sapply(positions$sortBy(),
+				function(p) return(p$toString())
+		)
+		return(x)
+	}
+	
 	positions$remove <- function(index) {
 		# if remove is called without argument, the last element is
 		# removed

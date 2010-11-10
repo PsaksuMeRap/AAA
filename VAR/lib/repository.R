@@ -19,6 +19,24 @@ create_repositoryFixedIncome <- function(fixedIncome.df) {
 	return(repository)
 }
 
+create_repositoryPoliticaInvestimento <- function(politicaInvestimento.df) {
+	
+	repository <- list()
+	class(repository) <- "repositoryPoliticaInvestimento"
+	
+	if (missing(politicaInvestimento.df)) {
+		connection <- odbcConnect("prezzi_storici_azioni_VAR",utente,password)
+		query =paste("SELECT B.ID, A.MonetaInvestimento",
+				"FROM [Sistema (prova)].dbo.DBPoliticaInvestimento A ",
+				"INNER JOIN [Sistema (prova)].dbo.Clienti_ID B on A.Cliente = B.Cliente")
+
+		repository$politicaInvestimento.df <- sqlQuery(connection,query,as.is=TRUE)
+	} else {
+		repository$politicaInvestimento.df <- politicaInvestimento.df
+	}
+	
+	return(repository)
+}
 
 create_repositoryInstruments <- function(instruments.df) {
 	# instruments.df: a data frame with <ID (integer)>, <Instrument (character)>

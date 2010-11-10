@@ -37,7 +37,7 @@ extendPosition.equity <- function(position) {
 
 extendPosition.accruedInterest <- function(position) {
 	
-	if (position$origin["Strumento"]=="Oacc") {
+	if (position$origin[["Strumento"]]=="Oacc") {
 	
 		# " Pro-rata" must be removed from the name
 

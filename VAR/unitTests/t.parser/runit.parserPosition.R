@@ -32,10 +32,10 @@ test.shouldParseEquityPosition <- function() {
 			envir=repositories)
 
 	# create the positions data.frame
-	source("./unitTests/utilities/createPositionsData.R")
-	dati.df <- createPositionsData()
+	source("./unitTests/utilities/createOriginData.R")
+	origin <- createOriginData()
 	
-	equity <- parser$parse(dati.df[2,])
+	equity <- parser$parse(origin[[2]])
 	
 	checkEquals(is.element("equity",class(equity)),TRUE)
 	checkEquals(equity$ticker,"PHIA.AS")
@@ -64,11 +64,11 @@ test.shouldParseBondPosition <- function() {
 	assign("instruments",instrumentsRepository_tmp,
 			envir=repositories)
 	
-	# create the positions data.frame
-	source("./unitTests/utilities/createPositionsData.R")	
-	dati.df <- createPositionsData()
+	# create origin data list
+	source("./unitTests/utilities/createOriginData.R")
+	origin <- createOriginData()
 	
-	bond <- parser$parse(dati.df[700,])
+	bond <- parser$parse(origin[[700]])
 	
 	checkEquals(is.element("bond",class(bond)),TRUE)
 	
@@ -97,12 +97,11 @@ test.shouldIdenfyAccruedInterest <- function() {
 	assign("instruments",instrumentsRepository_tmp,
 			envir=repositories)
 	
+	# create origin data list
+	source("./unitTests/utilities/createOriginData.R")
+	origin <- createOriginData()
 	
-	# create the positions data.frame
-	source("./unitTests/utilities/createPositionsData.R")	
-	dati.df <- createPositionsData()
-	
-	bond <- parser$parse(dati.df[493,])
+	bond <- parser$parse(origin[[493]])
 	
 	checkEquals(is.element("bond",class(bond)),TRUE)
 	checkEquals(is.element("accruedInterest",class(bond)),TRUE)

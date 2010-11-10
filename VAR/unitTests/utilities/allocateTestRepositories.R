@@ -76,6 +76,23 @@ allocateTestRepositories <- function(repoName) {
 		# assegna i repositories
 		assign("interestRates",interestRates,envir=repositories)
 	}
+	if (repoName=="politicaInvestimento") {
+		
+		# create the data for the instrument repository
+		source("./unitTests/utilities/createPoliticaInvestimentoDataFrame.R")
+		politicaInvestimento.df <- createPoliticaInvestimentoDataFrame()
+		
+		# create the instrument repository		
+		politicaInvestimento <- create_repositoryPoliticaInvestimento(politicaInvestimento.df=politicaInvestimento.df) 
+		
+		# create backup if necessary
+		if (exists("politicaInvestimento",envir=repositories,inherits=FALSE)) {
+			eval(expression(politicaInvestimento_bak <- politicaInvestimento),envir=repositories)
+		}
+		
+		# assegna i repositories
+		assign("politicaInvestimento",politicaInvestimento,envir=repositories)
+	}
 	
 }
 
@@ -108,6 +125,15 @@ deallocateTestRepositories <- function(repoName) {
 		}
 	}
 	
+	if (repoName=="politicaInvestimento") {
+		if (exists("politicaInvestimento_bak",envir=repositories,inherits=FALSE)) {
+			eval(expression(politicaInvestimento <- politicaInvestimento_bak),envir=repositories)
+			rm("politicaInvestimento_bak",envir=repositories)
+		} else {
+			rm("politicaInvestimento",envir=repositories)
+		}
+	}
+	
 	if (repoName=="interestRates") {
 		if (exists("interestRates_bak",envir=repositories,inherits=FALSE)) {
 			eval(expression(interestRates <- interestRates_bak),envir=repositories)
@@ -116,5 +142,4 @@ deallocateTestRepositories <- function(repoName) {
 			rm("interestRates",envir=repositories)
 		}
 	}
-	
 }

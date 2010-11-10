@@ -41,20 +41,106 @@ test.shouldImportAndRunRiskmanTestSuite <- function() {
 	checkEquals(TRUE,TRUE)
 }
 
-test.shouldTestSingleRiskmanCheckFile <- function() {
-	source("./unitTests/utilities/createunitTestsData.R")
+
+test.shouldTestSingleRiskmanCheckFile1 <- function() {
+	# input is a portfolio
+	source("./unitTests/utilities/allocateTestRepositories.R")
+	source("./unitTests/utilities/createOriginData.R")
+	
+	allocateTestRepositories("equities")
+	allocateTestRepositories("instruments")
+	allocateTestRepositories("exchangeRates")
+	allocateTestRepositories("politicaInvestimento")
 	
 	fileName <- "check.RunTestSuite1.txt"
 	inputDir <- "./unitTests/data/testSuites/test1"
-	outputDir <- "./unitTests/data/testSuites/tmp"
-
-	# parsa il file
-	parser <- create_parserTestSuite()
-	parser$importFile(paste(inputDir,"/",fileName,sep=""))
-	dati.df <- createPositionsData()
-	clienti <- unique(dati.df[,"Cliente"])
+	outputDir <- "./unitTests/data/testSuites/test1"
+	
+	# crea il portafoglio da parsare
+	origin <- createOriginData()
+	owners <- unique(extractLists(origin,"Cliente"))
 	portfParser <- create_parserPortfolio()
-    portafogli <- lapply(clienti,portfParser$parse,dati.df)
+    portfolios <- lapply(owners,portfParser$parse,
+			origin,repositories$politicaInvestimento$politicaInvestimento.df)
+
+	checkResults <- testSingleRiskmanCheckFile(fileName,inputDir,
+			outputDir,po=portfolios)
+	
+	checkEquals(checkResults,c(FALSE,TRUE,TRUE))
+
+	deallocateTestRepositories("equities")
+	deallocateTestRepositories("instruments")
+	deallocateTestRepositories("exchangeRates")	
+	deallocateTestRepositories("politicaInvestimento")
+
+}
+
+test.shouldTestSingleRiskmanCheckFile2 <- function() {
+	# input are positions
+	source("./unitTests/utilities/allocateTestRepositories.R")
+	source("./unitTests/utilities/createOriginData.R")
+	
+	allocateTestRepositories("equities")
+	allocateTestRepositories("instruments")
+	allocateTestRepositories("exchangeRates")
+	allocateTestRepositories("politicaInvestimento")
+	
+	fileName <- "check.RunTestSuite1.txt"
+	inputDir <- "./unitTests/data/testSuites/test1"
+	outputDir <- "./unitTests/data/testSuites/test1"
+	
+	# crea il portafoglio da parsare
+	origin <- createOriginData()
+	owners <- unique(extractLists(origin,"Cliente"))
+	portfParser <- create_parserPortfolio()
+	portfolios <- lapply(owners,portfParser$parse,
+			origin,repositories$politicaInvestimento$politicaInvestimento.df)
+	owner <- "pippo53"
+	portfolio <- filterLists(portfolios,"owner",owner)[[1]]; rm(portfolios)
+	positions <- portfolio$positions
+	checkResults <- testSingleRiskmanCheckFile(fileName,inputDir,
+			outputDir,po=positions)
+	
+	checkEquals(checkResults,c(FALSE,TRUE,TRUE))
+	
+	deallocateTestRepositories("equities")
+	deallocateTestRepositories("instruments")
+	deallocateTestRepositories("exchangeRates")	
+	deallocateTestRepositories("politicaInvestimento")
+	
+}
+
+test.shouldTestSingleRiskmanCheckFile3 <- function() {
+	# input is a portfolio
+	source("./unitTests/utilities/allocateTestRepositories.R")
+	source("./unitTests/utilities/createOriginData.R")
+	
+	allocateTestRepositories("equities")
+	allocateTestRepositories("instruments")
+	allocateTestRepositories("exchangeRates")
+	allocateTestRepositories("politicaInvestimento")
+	
+	fileName <- "check.RunTestSuite3.txt"
+	inputDir <- "./unitTests/data/testSuites/test3"
+	outputDir <- "./unitTests/data/testSuites/test3"
+	
+	# crea il portafoglio da parsare
+	origin <- createOriginData()
+	owners <- unique(extractLists(origin,"Cliente"))
+	portfParser <- create_parserPortfolio()
+	portfolios <- lapply(owners,portfParser$parse,
+			origin,repositories$politicaInvestimento$politicaInvestimento.df)
+	
+	checkResults <- testSingleRiskmanCheckFile(fileName,inputDir,
+			outputDir,po=portfolios)
+	
+	checkEquals(checkResults,FALSE)
+	
+	deallocateTestRepositories("equities")
+	deallocateTestRepositories("instruments")
+	deallocateTestRepositories("exchangeRates")	
+	deallocateTestRepositories("politicaInvestimento")
+	
 }
 
 test.shouldRunRiskmanTestSuite <- function() {
@@ -70,5 +156,5 @@ test.shouldRunRiskmanTestSuite <- function() {
 
 		results <- unlist(lapply(fileList,importAndRunRiskmanTestSuite))
 	}
-	checkEquals(results,TRUE)
+	checkEquals(results,c(TRUE,TRUE))
 }

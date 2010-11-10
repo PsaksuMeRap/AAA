@@ -68,13 +68,32 @@ test.should_addPositionsToPortfolio <- function() {
 }
 
 test.shouldParsePortfolio <- function() {
-	source("./unitTests/utilities/createPositionsData.R")
+	source("./unitTests/utilities/allocateTestRepositories.R")
+	source("./unitTests/utilities/createOriginData.R")
 	
+	allocateTestRepositories("equities")
+	allocateTestRepositories("instruments")
+	allocateTestRepositories("exchangeRates")
+	allocateTestRepositories("politicaInvestimento")
+
 	parser <- create_parserPortfolio()
 	owner = "pippo76"
-	dati.df <- createPositionsData()
-	portfolio <- parser$parse(owner,dati.df)
-			
+
+	origin <- createOriginData()
+	
+	portfolio <- parser$parse(owner,origin,
+			repositories$politicaInvestimento$politicaInvestimento.df)
+
+	nome1 <- portfolio$positions$positions[[1]][["name"]]
+	nome2 <- portfolio$positions$positions[[3]][["name"]]
+	
+	checkEquals(nome1,"20121008 - 3.75% BASF 08-10-12")
+	checkEquals(nome2,"20101025 - 5.625% BNG 25-10-10")
+	
+	deallocateTestRepositories("equities")
+	deallocateTestRepositories("instruments")
+	deallocateTestRepositories("exchangeRates")	
+	deallocateTestRepositories("politicaInvestimento")
 }
 
 test.should_returnValueOfPortfolio <- function() {

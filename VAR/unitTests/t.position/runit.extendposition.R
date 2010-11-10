@@ -34,17 +34,17 @@ test.shouldExtendPositionBond <- function() {
 	
 	allocateTestRepositories("instruments")
 	
-	record <- data.frame(
+	record <- list(
 			ID_strumento = 2,
-			Nome=I("20111130 - 2.5% E.ON 30-11-11 Pro-rata"),
-			Moneta=I("EUR"),
+			Nome="20111130 - 2.5% E.ON 30-11-11 Pro-rata",
+			Moneta="EUR",
 			ValorePosizione=4342.4658203125,
 			ID_AAA=500,
-			Strumento=I("Oacc")
+			Strumento="Oacc"
 	)
 	
 	parser <- create_parserPosition()
-	position <- parser$parse(record[1,])
+	position <- parser$parse(record)
 	
 	# create the accruedInterest
 	money <- toMoney(4342.4658203125,"EUR")

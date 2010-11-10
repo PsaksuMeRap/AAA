@@ -3,7 +3,7 @@ creationDate: 2010-11-06
 creator: Claudio Ortelli
 # testSuiteKind: general - specific
 testSuiteKind: specific
-testTarget: pippo53
+testTarget: claudio
 reportTo: claudio.ortelli@usi.ch; info@bacep.com
 outputFile: output_$DATE
 checkListStart:

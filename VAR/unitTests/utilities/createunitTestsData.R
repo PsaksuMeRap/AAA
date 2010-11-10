@@ -29,5 +29,9 @@ createUnitTestsData <- function() {
 	write.csv(fixedIncome$fixedIncome.df,"./unitTests/data/tmp/repositoryfixedIncome.csv",row.names=FALSE)
 	save("fixedIncome",file="./unitTests/data/tmp/fixedIncomeRepo_RData")
 	
+	politicaInvestimento <- create_repositoryPoliticaInvestimento()
+	write.csv(politicaInvestimento$politicaInvestimento.df,"./unitTests/data/tmp/repositoryPoliticaInvestimento.csv",row.names=FALSE)
+	save("politicaInvestimento",file="./unitTests/data/tmp/politicaInvestimentoRepo_RData")
+
 }
 

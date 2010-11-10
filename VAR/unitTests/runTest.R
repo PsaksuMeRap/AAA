@@ -7,6 +7,13 @@
 library("RUnit")
 source("./lib/library.R")
 
+## test per le procedure lists.R
+testsuite.lists <- defineTestSuite("Test procedure lists.R",
+		dirs = "./unitTests/t.lists")
+
+testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
+
+
 
 ## test per la procedura allocateTestRepositories
 testsuite.allocateTestRepositories <- defineTestSuite("Test creazione dei repositories di test",

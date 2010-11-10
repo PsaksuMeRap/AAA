@@ -19,6 +19,15 @@ toMoney <- function(amount,currency) {
 		money$amount <<- money$amount+m$amount
 	}
 	
+	money$divide <- function(m) {
+		# m: a money 
+		if (class(m)=="money") {
+			if (m$currency!=money$currency) m <- repositories$exchangeRates$exchange(m,money$currency)
+			return(money$amount / m$amount)
+		}
+		stop("Error: invalid money argument in money$divide method!")
+	}
+	
 	money$toString <- function() {
 		string = paste(money$currency,money$amount)
 		return(string)

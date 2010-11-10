@@ -51,4 +51,26 @@ test.shouldAllocateTestInstruments <- function() {
 	deallocateTestRepositories("instruments")
 }
 
+test.shouldAllocateTestPoliticaInvestimento <- function() {
+	source("./unitTests/utilities/allocateTestRepositories.R")
+	
+	allocateTestRepositories("politicaInvestimento")
+	
+	owner <- "pippo67"
+	isDesiredOwner <- repositories$politicaInvestimento$politicaInvestimento.df[,"ID"] == owner
+	refCurrency <- repositories$politicaInvestimento$politicaInvestimento.df[isDesiredOwner,"MonetaInvestimento"]	
+	checkEquals(refCurrency,"EUR")
+	
+	owner <- "pippo165"
+	isDesiredOwner <- repositories$politicaInvestimento$politicaInvestimento.df[,"ID"] == owner
+	refCurrency <- repositories$politicaInvestimento$politicaInvestimento.df[isDesiredOwner,"MonetaInvestimento"]
+	checkEquals(refCurrency,"EUR")
+	
+	owner <- "pippo66"
+	isDesiredOwner <- repositories$politicaInvestimento$politicaInvestimento.df[,"ID"] == owner
+	refCurrency <- repositories$politicaInvestimento$politicaInvestimento.df[isDesiredOwner,"MonetaInvestimento"]	
+	checkEquals(refCurrency,"CHF")
+	
+	deallocateTestRepositories("politicaInvestimento")
+}
 

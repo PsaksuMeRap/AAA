@@ -36,11 +36,17 @@ create_position <- function() {
 	}
 	
 	position$print <- function() {
-		print(paste(class(position)[1],"/",position$currency,"-", position$amount, "/ Name:", position$name))
+		print(paste(class(position)[1],"/",position$currency,
+						formatC(position$amount,digits=2,format="f"),
+						"/ Name:", position$name
+				)
+		)
 	}
 	
 	position$toString <- function() {
-		string <- paste(class(position)[1],"/",position$currency,"-", position$amount, "/ Name:", position$name)
+		string <- paste(class(position)[1],"/",position$currency,
+				formatC(position$amount,digits=2,format="f"),
+				"/ Name:", position$name)
 		return(string)
 	}
 	
