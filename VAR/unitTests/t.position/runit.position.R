@@ -13,10 +13,10 @@ test.create_position <- function() {
 	# crea la posizione
 	position <- create_position()
 	
-	position$create(name="DEGUSSA AG",
-			currency="CHF",
+	position$create(name="Deutsche Telekom Common Stock",
+			currency="EUR",
 			amount=0.0,
-			origin=list(ID_AAA=400)
+			origin=list(ID_AAA=418)
 	)
 	
 	checkEquals(class(position),"position")
@@ -26,7 +26,7 @@ test.create_position <- function() {
 	class(position) <- c("equity","position")
 	extendPosition(position)
 	
-	checkEquals(position$ticker,"DGX.XE")
+	checkEquals(position$ticker,"DTE.XE")
 	
 	deallocateTestRepositories("equities")
 }
@@ -58,8 +58,11 @@ test.positionToString <- function() {
 			origin=list(ID_AAA=10)
 	)
 	
-	string <- paste(class(position)[1],"/","USD","-", 100, "/ Name: test")
+	string <- paste(class(position)[1],"/","USD",
+			formatC(100,digits=2,format="f"), "/ Name: test")
+
 	checkEquals(position$toString(),string)	
+
 }
 
 test.shouldCreateDataFrameFromPosition <- function() {

@@ -68,6 +68,8 @@ create_repositoryInstruments <- function(instruments.df) {
 		rm(toChange)
 	}
 	
+	repository$instruments.df <- instruments.df
+	
 	repository$getInstrumentName <- function(id) {
 		if (isEmpty) return(NA_character_)
 		
@@ -96,9 +98,17 @@ create_repositoryEquities <- function(equities.df) {
 	if (missing(equities.df)) {
 		# crea un data.frame con <ID,Strumento>
 		connection <- odbcConnect("prezzi_storici_azioni_VAR",utente,password)
-		query <- paste("SELECT ID as id, Azione AS equity, numeroValore, Ticker AS ticker",
-				"FROM [Sistema (prova)].dbo.DBAzioni",
-				"WHERE ID_strumento=1"
+#		query <- paste("SELECT ID as id, Azione AS equity, numeroValore, Ticker AS ticker",
+#				"FROM [Sistema (prova)].dbo.DBAzioni",
+#				"WHERE ID_strumento=1"
+#		)
+		query <- paste("SELECT DISTINCT",
+		               "EquityDB.ID AS id, EquityDB.Ticker AS ticker,",
+					   "CASE WHEN Company IS NULL THEN [Sistema (prova)].dbo.DBAzioni.Azione",
+					   "ELSE dbo.EquityDB.Company END AS equity",
+		               "FROM dbo.EquityDB LEFT OUTER JOIN",
+		               "[Sistema (prova)].dbo.DBAzioni ON dbo.EquityDB.ID = [Sistema (prova)].dbo.DBAzioni.ID",
+		               "WHERE (dbo.EquityDB.ID_strumento = 1)"		
 		)
 		repository$equities.df <- sqlQuery(connection,query,as.is=TRUE)
 #verifica che la query sia riuscita (anche data.frame vuoto è ok!)

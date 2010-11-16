@@ -5,6 +5,6 @@
 
 
 createOriginData <- function() {
-	dati.df <- read.csv("./unitTests/data/datiPosizioni.csv",header=TRUE,stringsAsFactors=FALSE)
+	dati.df <- read.csv("./unitTests/data/origin.csv",header=TRUE,stringsAsFactors=FALSE)
 	return(dati.df)
 }

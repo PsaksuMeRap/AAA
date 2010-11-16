@@ -33,7 +33,7 @@ test.shouldExtendPositionBond <- function() {
 	source("./unitTests/utilities/allocateTestRepositories.R")
 	
 	allocateTestRepositories("instruments")
-	
+	allocateTestRepositories("exchangeRates")
 	record <- list(
 			ID_strumento = 2,
 			Nome="20111130 - 2.5% E.ON 30-11-11 Pro-rata",
@@ -59,5 +59,5 @@ test.shouldExtendPositionBond <- function() {
 	
 	# restore initial conditions
 	deallocateTestRepositories("instruments")
-	
+	deallocateTestRepositories("exchangeRates")
 }

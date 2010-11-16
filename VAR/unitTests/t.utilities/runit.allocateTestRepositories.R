@@ -21,7 +21,7 @@ test.shouldAllocateTestExchangeRates <- function() {
 	
 	allocateTestRepositories("exchangeRates")
 	
-	checkEquals(repositories$exchangeRates$rates[["ATS"]],0.0972753559152053)
+	checkEquals(repositories$exchangeRates$rates[["ATS"]],0.0973132896811843)
 	checkEquals(repositories$exchangeRates$rates[["EUR"]],1.33853808)
 	
 	deallocateTestRepositories("exchangeRates")
@@ -35,7 +35,7 @@ test.shouldAllocateTestEquities <- function() {
 	allocateTestRepositories("equities")
 	
 	checkEquals(repositories$equities$equities.df[3,"equity"],"AVENTIS")
-	checkEquals(repositories$equities$equities.df[9,"numeroValore"],"1009374CH")
+	checkEquals(repositories$equities$equities.df[9,"ticker"],"MIRZn.S")
 	
 	deallocateTestRepositories("equities")
 }
@@ -56,10 +56,10 @@ test.shouldAllocateTestPoliticaInvestimento <- function() {
 	
 	allocateTestRepositories("politicaInvestimento")
 	
-	owner <- "pippo67"
+	owner <- "pippo47"
 	isDesiredOwner <- repositories$politicaInvestimento$politicaInvestimento.df[,"ID"] == owner
 	refCurrency <- repositories$politicaInvestimento$politicaInvestimento.df[isDesiredOwner,"MonetaInvestimento"]	
-	checkEquals(refCurrency,"EUR")
+	checkEquals(refCurrency,"USD")
 	
 	owner <- "pippo165"
 	isDesiredOwner <- repositories$politicaInvestimento$politicaInvestimento.df[,"ID"] == owner

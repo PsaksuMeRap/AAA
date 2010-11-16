@@ -114,13 +114,16 @@ create_parserPosition <- function() {
 		# record: a list
 		
 		position <- create_position()
+		moneyCHF <- toMoney(record[["ValoreMercatoMonetaCHF"]],"CHF")
+		moneyLocalCurrency <- repositories$exchangeRates$exchange(moneyCHF,record[["Moneta"]])
 		position$create(
 				name=record[["Nome"]],
 				currency=record[["Moneta"]],
-				amount=record[["ValorePosizione"]],
+				amount=moneyLocalCurrency$amount,
 				origin=record
 		)
-	
+		rm(moneyCHF,moneyLocalCurrency)
+		
 		instrument <- parser$identifyInstrument(record)
 		class(position) <- c(instrument,class(position))
 		

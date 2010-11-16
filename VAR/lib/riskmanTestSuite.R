@@ -27,18 +27,26 @@ create_riskmanTest <- function(fileName,dirs) {
 	
 }
 
-testSingleRiskmanCheckFile <- function(fileName,inputDir,outputDir,po) {
+testSingleRiskmanCheckFile <- function(fileName,inputDir,po) {
 	
-	# parsa il file della testSuite1 con i dati sui check
+	# parsa il file della testSuite con i dati sui check
 	parserTestSuite <- create_parserTestSuite()
 	parserTestSuite$importFile(paste(inputDir,"/",fileName,sep=""))
 	testSuiteData <- parserTestSuite$parseStrings()
 	
 	# crea output infos
-	if (testSuiteData$configLines[["testSuiteKind"]]=="specific") owner <- testSuiteData$configLines[["testTarget"]] else stop("Error: manca owner o aggiorna codice")
-	outputFileName <- paste(owner,"_",Sys.Date(),".log",sep="")
+	if (testSuiteData$configLines[["testSuiteKind"]]=="specific") { 
+		owner <- testSuiteData$configLines[["testTarget"]]
+		outputFileName <- paste(owner,"_",Sys.Date(),".log",sep="")
+	} else {
+		stop("Error: manca owner o aggiorna codice")
+	}
+	
+	outputDir <- testSuiteData$configLines[["outputDir"]]
 	logFile <- paste(outputDir,outputFileName,sep="/")
 	
+	# se po è di classe positions parsa po altrimenti estrai
+	# l'owner e segnala un errore
 	if (is.element("positions",class(po))) {
 		positions <- po
 	} else {
@@ -53,6 +61,12 @@ testSingleRiskmanCheckFile <- function(fileName,inputDir,outputDir,po) {
 	}		
 
 	con <- file(description=logFile,open="w")
+	cat(paste("Portfolio:",owner),file=logFile,sep="\n",append=TRUE)
+	cat(paste("Input file:",fileName),file=logFile,sep="\n",append=TRUE)
+	cat(paste("Inp. directory:",inputDir),file=logFile,sep="\n",append=TRUE)
+	cat(paste("Out. directory:",outputDir),file=logFile,sep="\n",append=TRUE)
+	cat("\n",file=logFile,sep="\n",append=TRUE)
+	
 	checkResults <- sapply(testSuiteData$checkStrings,checkCheckStringOnPositions,positions,logFile)
 	summary <- paste(checkResults,": ", names(checkResults),sep="",collapse="\n")
 	cat(paste("Summary:"),file=logFile,sep="\n",append=TRUE)
@@ -62,4 +76,18 @@ testSingleRiskmanCheckFile <- function(fileName,inputDir,outputDir,po) {
 	return(checkResults)
 }
 
-importAndRunRiskmanTestSuite <- function(x) return (TRUE)
+
+importAndRunRiskmanTestSuite <- function(testSuite,portfolios) {
+	runDirectory <- function(dir,portfolios) {
+		fileList <- list.files(path=dir, 
+				pattern=testSuite$testFileRegexp)
+		
+		result <- lapply(fileList,testSingleRiskmanCheckFile,
+				inputDir=dir,po=portfolios)
+		names(result) <- fileList
+		return(result)
+	}
+	
+	results <- lapply(testSuite$dirs,runDirectory,portfolios)
+
+}

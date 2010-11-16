@@ -5,7 +5,7 @@ creator: Claudio Ortelli
 testSuiteKind: specific
 testTarget: pippo53
 reportTo: claudio.ortelli@usi.ch; info@bacep.com
-outputFile: output_$DATE
+outputDir: ./unitTests/data/testSuites/test1
 checkListStart:
    instrument:bond & currency:CHF ; > 5%  
 currency:USD & instrument:equity ; < 10%

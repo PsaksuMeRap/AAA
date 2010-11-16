@@ -11,7 +11,7 @@ test.create_repositoryExchangeRates <- function() {
 	rates <- createExchangeRatesVector()
 	repositoryExchangeRates <- create_repositoryExchangeRates(rates)
 	
-	checkEquals(repositoryExchangeRates$rates[["ESP"]],0.00804477588258628)
+	checkEquals(repositoryExchangeRates$rates[["ESP"]],0.00804791304556874)
 	checkEquals(repositoryExchangeRates$rates[["CHF"]],1)
 }
 

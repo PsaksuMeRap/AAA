@@ -135,6 +135,7 @@ filterByCriteriaLogicalOr <- function(unionOfBlocksOfCriteria,positions) {
 
 
 extractPositionsFromSelectionString <- function(selectionString,positions) {
+
 	# selectionString: a string of type "instrument:bond,equity & currency:USD + amount:>5%"
 	parser <- create_parserSelectionCriteria()
 
@@ -148,7 +149,6 @@ extractPositionsFromSelectionString <- function(selectionString,positions) {
 }
 
 checkCheckStringOnPositions <- function(checkString,positions,logFile) {
-
 	# parsa ed estrai le posizioni soddisfacenti i criteri di selezione
 	parser <- create_parserSelectionCriteria()
 	parsed <- parser$splitCheckString(checkString)

@@ -3,4 +3,3 @@
 - scrivendo ultimo test in runit.positionsMethods, quelli relativi.
 non funziona quello sull'ugualgianza esatta (il secondo).
 
-

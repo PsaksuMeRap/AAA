@@ -35,10 +35,12 @@ test.shouldParseEquityPosition <- function() {
 	source("./unitTests/utilities/createOriginData.R")
 	origin <- createOriginData()
 	
-	equity <- parser$parse(origin[[2]])
+	allocateTestRepositories("exchangeRates")
+	equity <- parser$parse(origin[[100]])
+	deallocateTestRepositories("exchangeRates")	
 	
 	checkEquals(is.element("equity",class(equity)),TRUE)
-	checkEquals(equity$ticker,"PHIA.AS")
+	checkEquals(equity$ticker,"ROG.S")
 	
 	# restore initial conditions
 	assign("equities",equityRepository,envir=repositories)
@@ -67,14 +69,16 @@ test.shouldParseBondPosition <- function() {
 	# create origin data list
 	source("./unitTests/utilities/createOriginData.R")
 	origin <- createOriginData()
-	
-	bond <- parser$parse(origin[[700]])
-	
+
+	allocateTestRepositories("exchangeRates")
+	bond <- parser$parse(origin[[300]])
 	checkEquals(is.element("bond",class(bond)),TRUE)
+
 	
     # restore initial conditions
 	assign("instruments",instrumentsRepository,
 			envir=repositories)
+	deallocateTestRepositories("exchangeRates")		
 }
 
 
@@ -96,12 +100,15 @@ test.shouldIdenfyAccruedInterest <- function() {
 	instrumentsRepository <- repositories$instruments
 	assign("instruments",instrumentsRepository_tmp,
 			envir=repositories)
+	allocateTestRepositories("exchangeRates")	
 	
 	# create origin data list
 	source("./unitTests/utilities/createOriginData.R")
 	origin <- createOriginData()
 	
-	bond <- parser$parse(origin[[493]])
+
+	
+	bond <- parser$parse(origin[[900]])
 	
 	checkEquals(is.element("bond",class(bond)),TRUE)
 	checkEquals(is.element("accruedInterest",class(bond)),TRUE)
@@ -109,7 +116,7 @@ test.shouldIdenfyAccruedInterest <- function() {
 	# restore initial conditions
 	assign("instruments",instrumentsRepository,
 			envir=repositories)
-	
+	deallocateTestRepositories("exchangeRates")	
 }
 
 

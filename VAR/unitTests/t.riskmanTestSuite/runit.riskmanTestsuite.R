@@ -37,13 +37,10 @@ test.importTestSuite <- function() {
 	checkEquals(parserResult$checkStrings,c(testString1,testString2))
 }
 
-test.shouldImportAndRunRiskmanTestSuite <- function() {
-	checkEquals(TRUE,TRUE)
-}
 
-
-test.shouldTestSingleRiskmanCheckFile1 <- function() {
-	# input is a portfolio
+test.shouldTestSingleRiskmanCheckFile11 <- function() {
+	# l'input della procedura "testSingleRiskmanCheckFile" è
+	# in questo primo test una lista di portfoli
 	source("./unitTests/utilities/allocateTestRepositories.R")
 	source("./unitTests/utilities/createOriginData.R")
 	
@@ -54,7 +51,6 @@ test.shouldTestSingleRiskmanCheckFile1 <- function() {
 	
 	fileName <- "check.RunTestSuite1.txt"
 	inputDir <- "./unitTests/data/testSuites/test1"
-	outputDir <- "./unitTests/data/testSuites/test1"
 	
 	# crea il portafoglio da parsare
 	origin <- createOriginData()
@@ -63,8 +59,7 @@ test.shouldTestSingleRiskmanCheckFile1 <- function() {
     portfolios <- lapply(owners,portfParser$parse,
 			origin,repositories$politicaInvestimento$politicaInvestimento.df)
 
-	checkResults <- testSingleRiskmanCheckFile(fileName,inputDir,
-			outputDir,po=portfolios)
+	checkResults <- testSingleRiskmanCheckFile(fileName,inputDir,po=portfolios)
 	
 	checkEquals(checkResults,c(FALSE,TRUE,TRUE))
 
@@ -75,8 +70,9 @@ test.shouldTestSingleRiskmanCheckFile1 <- function() {
 
 }
 
-test.shouldTestSingleRiskmanCheckFile2 <- function() {
-	# input are positions
+test.shouldTestSingleRiskmanCheckFile12 <- function() {
+	# l'input della procedura "testSingleRiskmanCheckFile" è
+	# in questo secondo test un oggetto di classe positions
 	source("./unitTests/utilities/allocateTestRepositories.R")
 	source("./unitTests/utilities/createOriginData.R")
 	
@@ -98,8 +94,7 @@ test.shouldTestSingleRiskmanCheckFile2 <- function() {
 	owner <- "pippo53"
 	portfolio <- filterLists(portfolios,"owner",owner)[[1]]; rm(portfolios)
 	positions <- portfolio$positions
-	checkResults <- testSingleRiskmanCheckFile(fileName,inputDir,
-			outputDir,po=positions)
+	checkResults <- testSingleRiskmanCheckFile(fileName,inputDir,po=positions)
 	
 	checkEquals(checkResults,c(FALSE,TRUE,TRUE))
 	
@@ -110,8 +105,7 @@ test.shouldTestSingleRiskmanCheckFile2 <- function() {
 	
 }
 
-test.shouldTestSingleRiskmanCheckFile3 <- function() {
-	# input is a portfolio
+test.shouldRunRiskmanTestSuite <- function() {
 	source("./unitTests/utilities/allocateTestRepositories.R")
 	source("./unitTests/utilities/createOriginData.R")
 	
@@ -120,9 +114,12 @@ test.shouldTestSingleRiskmanCheckFile3 <- function() {
 	allocateTestRepositories("exchangeRates")
 	allocateTestRepositories("politicaInvestimento")
 	
-	fileName <- "check.RunTestSuite3.txt"
-	inputDir <- "./unitTests/data/testSuites/test3"
-	outputDir <- "./unitTests/data/testSuites/test3"
+	# inizializza la testSuite
+	name = "Test di una testSuite"
+	dirs = c("./unitTests/data/testSuites/test1",
+			 "./unitTests/data/testSuites/test2"
+	)
+	bacepTestSuite <- create_riskmanTestSuite(name=name,dirs=dirs)
 	
 	# crea il portafoglio da parsare
 	origin <- createOriginData()
@@ -131,30 +128,17 @@ test.shouldTestSingleRiskmanCheckFile3 <- function() {
 	portfolios <- lapply(owners,portfParser$parse,
 			origin,repositories$politicaInvestimento$politicaInvestimento.df)
 	
-	checkResults <- testSingleRiskmanCheckFile(fileName,inputDir,
-			outputDir,po=portfolios)
+	# run the testSuite
+	results <- importAndRunRiskmanTestSuite(bacepTestSuite,portfolios)
+	names(results) <- bacepTestSuite$dirs
 	
-	checkEquals(checkResults,FALSE)
+	# compare the results
+	should <- c(FALSE,TRUE,TRUE,FALSE,TRUE,TRUE,FALSE,TRUE)
+
+ 	checkEquals(unlist(results,use.names = FALSE),should)
 	
 	deallocateTestRepositories("equities")
 	deallocateTestRepositories("instruments")
 	deallocateTestRepositories("exchangeRates")	
 	deallocateTestRepositories("politicaInvestimento")
-	
-}
-
-test.shouldRunRiskmanTestSuite <- function() {
-	name = "Test di una testSuite"
-	dirs = c("./unitTests/data/testSuites/test1",
-			"./unitTests/data/testSuites/test2"
-	)
-	bacepTestSuite <- create_riskmanTestSuite(name=name,dirs=dirs)
-	
-	for (dir in bacepTestSuite$dirs) {
-		fileList <- list.files(path=dir, 
-			pattern=bacepTestSuite$testFileRegexp)
-
-		results <- unlist(lapply(fileList,importAndRunRiskmanTestSuite))
-	}
-	checkEquals(results,c(TRUE,TRUE))
 }

@@ -22,16 +22,21 @@ createUnitTestsData <- function() {
 	#save("discountFactors",file="./unitTests/data/tmp/discountFactorsRepo_RData")
 	
 	exchangeRates <- create_repositoryExchangeRates()
-	write.csv(exchangeRates$exchangeRates.df,"./unitTests/data/tmp/repositoryExchangeRates.csv",row.names=FALSE)
+	exchangeRates.df <- data.frame(Moneta=names(exchangeRates$rates),CHFPar=exchangeRates$rates)
+	write.csv(exchangeRates.df,"./unitTests/data/tmp/repositoryExchangeRates.csv",row.names=FALSE)
 	save("exchangeRates",file="./unitTests/data/tmp/exchangeRatesRepo_RData")
 	
 	fixedIncome <- create_repositoryFixedIncome()
-	write.csv(fixedIncome$fixedIncome.df,"./unitTests/data/tmp/repositoryfixedIncome.csv",row.names=FALSE)
+	write.csv(fixedIncome$fixedIncome.df,"./unitTests/data/tmp/repositoryFixedIncome.csv",row.names=FALSE)
 	save("fixedIncome",file="./unitTests/data/tmp/fixedIncomeRepo_RData")
 	
 	politicaInvestimento <- create_repositoryPoliticaInvestimento()
 	write.csv(politicaInvestimento$politicaInvestimento.df,"./unitTests/data/tmp/repositoryPoliticaInvestimento.csv",row.names=FALSE)
 	save("politicaInvestimento",file="./unitTests/data/tmp/politicaInvestimentoRepo_RData")
 
+	origin.df <- importDBPortfolioGeneraleDataFrame()
+	write.csv(origin.df,"./unitTests/data/tmp/origin.csv",row.names=FALSE,na = "")
+	save("origin.df",file="./unitTests/data/tmp/originDataFrame_RData")
+	
 }
 
