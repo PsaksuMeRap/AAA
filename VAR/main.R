@@ -32,9 +32,13 @@ repositories$equities <- create_repositoryEquities()
 
 clienti <- c("pippo53","pippo76")
 portfParser <- create_parserPortfolio()
-portafogli <- lapply(clienti,portfParser$parse,dati)
+portfolios <- lapply(clienti,portfParser$parse,dati)
 
-home <- "/home/claudio/"
-setwd(home)
+checkDirectory <- "/home/claudio/"
+setwd(checkDirectory)
+
+# inizializza la testSuite
+bacepTestSuite <- create_riskmanTestSuite(name="Fondi Bacep",dirs="./Bacep")
+results <- importAndRunRiskmanTestSuite(bacepTestSuite,portfolios)
 
 

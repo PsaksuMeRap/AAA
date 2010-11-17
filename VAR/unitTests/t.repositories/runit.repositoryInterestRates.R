@@ -20,7 +20,7 @@ test.shouldFailWithInvalidMaturity <- function() {
 	interestRates.df = read.csv(file,header=TRUE,stringsAsFactors=FALSE)
 	
 	repository <- create_repositoryInterestRates(interestRates.df=interestRates.df)
-	checkException(repository$getMonthTicker(0.2))
+	checkException(repository$getMonthTicker(0.2),silent=TRUE)
 }
 
 test.shouldFailWithEmptyDataFrame <- function() { 
@@ -33,5 +33,6 @@ test.shouldFailWithEmptyDataFrame <- function() {
 			rate=numeric()
 	)
 	
-	checkException(create_repositoryInterestRates(interestRates.df=emptyInterestRates.df))
+	checkException(create_repositoryInterestRates(interestRates.df=emptyInterestRates.df),
+			silent=TRUE)
 }

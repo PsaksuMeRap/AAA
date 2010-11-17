@@ -69,8 +69,13 @@ testSingleRiskmanCheckFile <- function(fileName,inputDir,po) {
 	
 	checkResults <- sapply(testSuiteData$checkStrings,checkCheckStringOnPositions,positions,logFile)
 	summary <- paste(checkResults,": ", names(checkResults),sep="",collapse="\n")
-	cat(paste("Summary:"),file=logFile,sep="\n",append=TRUE)
+	cat("Summary:",file=logFile,sep="\n",append=TRUE)
 	cat(summary,file=logFile,sep="\n",append=TRUE)
+	
+	cat("\n",file=logFile,sep="\n",append=TRUE)
+	cat("Portfolio structure:",file=logFile,sep="\n",append=TRUE)
+	portfolioStrings <- paste(positions$toString(),collapse="\n")
+	cat(portfolioStrings,file=logFile,sep="\n",append=TRUE)
 	close(con)
 	names(checkResults) <- NULL
 	return(checkResults)

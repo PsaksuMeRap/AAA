@@ -159,7 +159,7 @@ test.shouldFailExtracting <- function() {
 	positions$add(position1)
 	
 	# generate error because of differing length
-	checkException(positions$extract(c(TRUE,TRUE)))
+	checkException(positions$extract(c(TRUE,TRUE)),silent=TRUE)
 }
 
 test.shouldRemoveOnePosition <- function() {
@@ -343,7 +343,7 @@ test.shouldFailWithNonPosition <- function() {
 	
 	positions <- create_positions()
 	
-	checkException(positions$add("pippo"))
+	checkException(positions$add("pippo"),silent=TRUE)
 
 }
 

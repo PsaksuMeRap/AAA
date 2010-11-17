@@ -148,7 +148,7 @@ test.shouldCheckFailWithNonImplementedFactor <- function() {
 	# check 1: should recognize equity
 	criterium <- create_criteriumSelection(factor="test",
 			values=c("EUR","USD"))
-	checkException(check(position1,criterium))
+	checkException(check(position1,criterium),silent=TRUE)
 	
 }
 
@@ -429,7 +429,7 @@ test.shouldExtractPositionsByAmountRelative <- function() {
 	
 	# check1: create a relative checkCriterium of type > 
 	checkCriterium <- create_criteriumCheck(operator=">",
-			value=0.3416872,kind="relative")
+			value=34.16872,kind="relative")
 	
 	criterium <- create_criteriumSelection(factor="amount",
 			criteriumCheck=checkCriterium)
@@ -440,7 +440,7 @@ test.shouldExtractPositionsByAmountRelative <- function() {
 	checkEquals(result,posCheck1)
 	
 	# check 2: create a relative checkCriterium of type =
-    percentage <- 100.1/0.9627/(97.1+100.1/0.9627+80*1.33853808/0.9627)
+    percentage <- 100*100.1/0.9627/(97.1+100.1/0.9627+80*1.33853808/0.9627)
 	checkCriterium <- create_criteriumCheck(operator="=",
 			value=percentage,kind="relative")
 	criterium <- create_criteriumSelection(factor="amount",
@@ -452,7 +452,7 @@ test.shouldExtractPositionsByAmountRelative <- function() {
 	
 	# check 3: create the relative checkCriterium of type >=
 	checkCriterium <- create_criteriumCheck(operator=">=",
-			value=0.332932864433126,kind="relative")
+			value=33.2932864433126,kind="relative")
 	criterium <- create_criteriumSelection(factor="amount",
 			criteriumCheck=checkCriterium)
 	
@@ -462,7 +462,7 @@ test.shouldExtractPositionsByAmountRelative <- function() {
 	
 	# check 4: create the relative checkCriterium of type < 
 	checkCriterium <- create_criteriumCheck(operator="<",
-			value=0.33293286443312,kind="relative")
+			value=33.293286443312,kind="relative")
 	criterium <- create_criteriumSelection(factor="amount",
 			criteriumCheck=checkCriterium)
 	
@@ -472,7 +472,7 @@ test.shouldExtractPositionsByAmountRelative <- function() {
 	
 	# check 5: create the relative checkCriterium of type <= 
 	checkCriterium <- create_criteriumCheck(operator="<=",
-			value=0.332932864433127,kind="relative")
+			value=33.2932864433127,kind="relative")
 	criterium <- create_criteriumSelection(factor="amount",
 			criteriumCheck=checkCriterium)
 	
@@ -482,7 +482,7 @@ test.shouldExtractPositionsByAmountRelative <- function() {
 
 	# check6: create the relative checkCriterium of type !=
 	checkCriterium <- create_criteriumCheck(operator="!=",
-			value=0.34,kind="relative")
+			value=34,kind="relative")
 	criterium <- create_criteriumSelection(factor="amount",
 			criteriumCheck=checkCriterium)
 	

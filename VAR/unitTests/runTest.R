@@ -7,6 +7,26 @@
 library("RUnit")
 source("./lib/library.R")
 
+## test globale
+dirs = c("./unitTests/t.lists",
+		"./unitTests/t.utilities",
+		"./unitTests/t.repositories",
+		"./unitTests/t.parser",
+		"./unitTests/t.money",
+		"./unitTests/t.accruedInterest",
+		"./unitTests/t.position",
+		"./unitTests/t.portfolio",
+		"./unitTests/t.criterium",
+		"./unitTests/t.positionsMethods",
+		"./unitTests/t.riskmanTestSuite"
+		)
+testsuite.lists <- defineTestSuite("Test globale",
+		dirs = dirs)
+testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
+
+
+
+
 ## test per le procedure lists.R
 testsuite.lists <- defineTestSuite("Test procedure lists.R",
 		dirs = "./unitTests/t.lists")

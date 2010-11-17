@@ -45,7 +45,7 @@ positionsSelector.amount <- function(criteriumSelection,positions) {
 
 	if (criteriumSelection$criteriumCheck$kind=="relative") {
 		totalValue <- positions$sum()
-		percentageValue <- criteriumSelection$criteriumCheck$value
+		percentageValue <- criteriumSelection$criteriumCheck$value/100
 		criteriumNew$criteriumCheck$value <- toMoney(percentageValue*totalValue$amount,totalValue$currency)
 	}
 	
@@ -149,6 +149,9 @@ extractPositionsFromSelectionString <- function(selectionString,positions) {
 }
 
 checkCheckStringOnPositions <- function(checkString,positions,logFile) {
+	# calcola il valore totale delle posizioni
+	positionsValue <- positions$sum()
+	
 	# parsa ed estrai le posizioni soddisfacenti i criteri di selezione
 	parser <- create_parserSelectionCriteria()
 	parsed <- parser$splitCheckString(checkString)
@@ -160,7 +163,6 @@ checkCheckStringOnPositions <- function(checkString,positions,logFile) {
 	)
 	
 	if (criteriumSelection$criteriumCheck$kind=="relative") {
-		positionsValue <- positions$sum()
 		percentageValue <- criteriumSelection$criteriumCheck$value/100
 		criteriumSelection$criteriumCheck$value <- toMoney(percentageValue*positionsValue$amount,positionsValue$currency)
 	}

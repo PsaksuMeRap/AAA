@@ -171,13 +171,15 @@ test.CreateIndexConstituents <- function() {
   resultQuantity3 <- data.frame(name=name4,quantity=quantity3,stringsAsFactors=FALSE);
 
   # single constituend's checks
-  checkException(CreateIndexConstituents(name=name1))
-  checkException(CreateIndexConstituents(name=name2))
-  checkException(CreateIndexConstituents(name=name3))
+  checkException(CreateIndexConstituents(name=name1),silent=TRUE)
+  checkException(CreateIndexConstituents(name=name2),silent=TRUE)
+  checkException(CreateIndexConstituents(name=name3),silent=TRUE)
   checkEquals(CreateIndexConstituents(name=name4),resultName4)
 
-  checkException(CreateIndexConstituents(name=name4,quantity=quantity1))
-  checkException(CreateIndexConstituents(name=name4,quantity=quantity2))
+  checkException(CreateIndexConstituents(name=name4,quantity=quantity1),
+		  silent=TRUE)
+  checkException(CreateIndexConstituents(name=name4,quantity=quantity2),
+		  silent=TRUE)
   checkEquals(CreateIndexConstituents(name=name4,quantity=quantity3),
               resultQuantity3)
 
@@ -200,11 +202,15 @@ test.CreateIndexConstituents <- function() {
   manyResult1 <- data.frame(name=manyNames1,quantity=manyQuantity1,stringsAsFactors=FALSE);
 
   # many constituents checks
-  checkException(CreateIndexConstituents(name=manyNames2))
-  checkException(CreateIndexConstituents(name=manyNames2,quantity=manyQuantity2))
-  checkException(CreateIndexConstituents(name=manyNames3,quantity=manyQuantity3))
-  checkException(CreateIndexConstituents(name=manyNames4,quantity=manyQuantity4))
-  checkException(CreateIndexConstituents(name=manyNames5,quantity=manyQuantity5))
+  checkException(CreateIndexConstituents(name=manyNames2,silent=TRUE))
+  checkException(CreateIndexConstituents(name=manyNames2,quantity=manyQuantity2),
+		  silent=TRUE)
+  checkException(CreateIndexConstituents(name=manyNames3,quantity=manyQuantity3),
+		  silent=TRUE)
+  checkException(CreateIndexConstituents(name=manyNames4,quantity=manyQuantity4),
+		  silent=TRUE)
+  checkException(CreateIndexConstituents(name=manyNames5,quantity=manyQuantity5),
+		  silent=TRUE)
   checkEquals(CreateIndexConstituents(name=manyNames1,quantity=manyQuantity1),manyResult1)
 
 }
