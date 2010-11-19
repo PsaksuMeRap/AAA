@@ -35,6 +35,7 @@ test.shouldParseEquityPosition <- function() {
 	source("./unitTests/utilities/createOriginData.R")
 	origin <- createOriginData()
 	
+	source("./unitTests/utilities/allocateTestRepositories.R")
 	allocateTestRepositories("exchangeRates")
 	equity <- parser$parse(origin[[100]])
 	deallocateTestRepositories("exchangeRates")	
@@ -50,6 +51,8 @@ test.shouldParseEquityPosition <- function() {
 
 
 test.shouldParseBondPosition <- function() {
+	source("./unitTests/utilities/allocateTestRepositories.R")
+	
 	# create the parser
 	source("./lib/parser.R")
 	parser <- create_parserPosition()
@@ -84,6 +87,7 @@ test.shouldParseBondPosition <- function() {
 
 
 test.shouldIdenfyAccruedInterest <- function() {
+	source("./unitTests/utilities/allocateTestRepositories.R")
 	
 	# create the parser
 	source("./lib/parser.R")
@@ -137,6 +141,23 @@ test.shouldParserSplitFactorsFromValues <- function() {
 	checkEquals(result,should)		
 }
 
+test.shouldParserSplitFactorsFromValuesWithNegation <- function() {
+
+	parser <- create_parserSelectionCriteria()
+	
+	result <- parser$splitFactorString("instrument!:bond,equities")
+	should <- create_criteriumSelection(factor="instrument",values=c("bond","equities"),negation=TRUE)
+	
+	checkEquals(result,should)
+	
+	# negation is disregarded for factors of type amount
+	string = "amount!:<=30 %  "
+	criteriumCheck <- parser$constructCriteriumCheck("<=30 %")
+	should <- criteriumSelection <- create_criteriumSelection(
+			factor="amount",values="<=30 %",criteriumCheck=criteriumCheck)
+	result <- parser$splitFactorString(string)
+	checkEquals(result,should)		
+}
 
 test.shouldParseCheckString <- function() {
 	

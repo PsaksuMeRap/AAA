@@ -9,7 +9,9 @@ positionsSelector.currency <- function(criteriumSelection,positions) {
 	if (!is.element("positions",class(positions))) stop("The argument is not of class positions")
 
 	FUNC <- function(position,criteriumSelection) {
-		is.element(position$currency,criteriumSelection$values)	
+		check <- is.element(position$currency,criteriumSelection$values)
+		if (criteriumSelection$negation) return(!check)
+		return(check)
 	}
 	
 	# apply the function FUNC
@@ -26,8 +28,9 @@ positionsSelector.instrument <- function(criteriumSelection,positions) {
 		classes <- class(position)
 		# the identifier of the position is at "length(classes)-1"
 		index <- length(classes)-1
-		isElement <- is.element(classes[index],criteriumSelection$values)
-		return(any(isElement))
+		check <- is.element(classes[index],criteriumSelection$values)
+		if (criteriumSelection$negation) return(!check)
+		return(check)
 	}
 	
 	# apply the function FUNC

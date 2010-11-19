@@ -210,6 +210,62 @@ test.shouldExtractPositionsByCurrency <- function() {
 	checkEquals(result,NULL)
 }
 
+test.shouldExtractPositionsByCurrencyWithNegation <- function() {
+	
+	# create position 1
+	position1 <- create_position()
+	position1$create(name="xxx",
+			currency="USD",
+			amount=0.0,
+			origin=list(ID_AAA=10)
+	)
+	class(position1) <- c("equity",class(position1))
+	
+	# create position 2	
+	position2 <- create_position()
+	position2$create(name="AAA",
+			currency="CHF",
+			amount=0.1,
+			origin=list(ID_AAA=10)
+	)
+	class(position2) <- c("bond",class(position2))
+	
+	# create position 3	
+	position3 <- create_position()
+	position3$create(name="AAA",
+			currency="EUR",
+			amount=1000.5,
+			origin=list(ID_AAA=10)
+	)
+	class(position3) <- c("ABC",class(position3))	
+	
+	# create positions
+	positions <- create_positions()
+	positions$add(position1)
+	positions$add(position2)
+	positions$add(position3)	
+	
+	criterium <- create_criteriumSelection(factor="currency",values=c("EUR","USD"),negation=TRUE)
+	
+	result <- positionsSelector(criterium,positions)
+	
+	posCheck <- ! c(TRUE,FALSE,TRUE)
+	
+	checkEquals(result,posCheck)
+	
+	# all true
+	posCheck <- create_positions()
+	criterium <- create_criteriumSelection(factor="currency",values="abc",negation=TRUE)
+	result <- positionsSelector(criterium,positions)
+	posCheck <- rep(TRUE,3)
+	checkEquals(result,posCheck)
+	
+	# empty positions as argument
+	positions <- create_positions()
+	criterium <- create_criteriumSelection(factor="currency",values="abc",negation=TRUE)
+	result <- positionsSelector(criterium,positions)
+	checkEquals(result,NULL)
+}
 
 test.shouldExtractPositionsByInstrument <- function() {
 	

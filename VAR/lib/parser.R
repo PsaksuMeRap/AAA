@@ -189,12 +189,23 @@ create_parserSelectionCriteria <- function() {
 	
 	parser$splitFactorString <- function(factorString) {
 		# factorString: a string like "instrument:equity,bond" or
-		# "amount:<= 50 USD"
+		# "amount:<= 50 USD" or the negation form "instrument!: equity, bond"
 		result <- unlist(strsplit(factorString,":"))
 		if (length(result)<2) stop(paste("Error: splitFactorString should return 2 blocks.",
 							factorString))
 		result <- removeStartEndSpaces(result)
+
+		# check if negation is required
 		factor <- result[1]
+		nbChar <- nchar(factor)
+		if (substr(factor,nbChar,nbChar)=="!") {
+			factor <- removeStartEndSpaces(substr(factor,1,nbChar-1))
+			negation = TRUE
+		} else {
+			negation = FALSE
+		}
+		rm(nbChar)
+		
 		values <- removeStartEndSpaces(unlist(strsplit(result[2],",")))
 		
 		if (factor=="amount") {
@@ -207,7 +218,8 @@ create_parserSelectionCriteria <- function() {
 		} else {
 			criteriumSelection <- create_criteriumSelection(
 					factor=factor,
-					values=values
+					values=values,
+					negation=negation
 			)		
 		}
 

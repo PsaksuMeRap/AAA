@@ -71,12 +71,22 @@ testSingleRiskmanCheckFile <- function(fileName,inputDir,po) {
 	summary <- paste(checkResults,": ", names(checkResults),sep="",collapse="\n")
 	cat("Summary:",file=logFile,sep="\n",append=TRUE)
 	cat(summary,file=logFile,sep="\n",append=TRUE)
+	close(con)
 	
+	# stampa il portafoglio in un file
+	owner <- testSuiteData$configLines[["testTarget"]]
+	outputFileName <- paste("Portafoglio_",owner,"_",Sys.Date(),".log",sep="")
+	outputDir <- testSuiteData$configLines[["outputDir"]]
+	logFile <- paste(outputDir,outputFileName,sep="/")
+
+	
+	con <- file(description=logFile,open="w")
 	cat("\n",file=logFile,sep="\n",append=TRUE)
 	cat("Portfolio structure:",file=logFile,sep="\n",append=TRUE)
 	portfolioStrings <- paste(positions$toString(),collapse="\n")
 	cat(portfolioStrings,file=logFile,sep="\n",append=TRUE)
 	close(con)
+
 	names(checkResults) <- NULL
 	return(checkResults)
 }
