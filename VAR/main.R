@@ -12,10 +12,10 @@ library("RUnit")
 home <- "/home/claudio/eclipse/AAA/VAR/"
 setwd(home)
 
-source("./lib/library.R")
-
 stringsAsFactors = FALSE
 repositories <- new.env()
+
+source("./lib/library.R")
 
 
 # inizio procedura controllo

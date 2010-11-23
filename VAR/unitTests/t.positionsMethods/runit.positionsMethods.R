@@ -768,7 +768,7 @@ test.shouldCheckOneCheckStringOnPositions <- function() {
 	positions$add(position3)
 	
 	checkString <- scan(file="./unitTests/data/criteriSelezionePerPortafoglioTest.txt",
-			what="character",sep="\n")
+			what="character",sep="\n",quiet = TRUE)
 	
 	checkEquals(checkString,"instrument:bond & currency:CHF ; > 5%")
 	

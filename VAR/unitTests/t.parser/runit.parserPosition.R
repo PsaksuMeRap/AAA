@@ -9,27 +9,9 @@ test.shouldParseEquityPosition <- function() {
 	source("./lib/parser.R")
 	parser <- create_parserPosition()
 	
-	# create the data for the equity repository
-	source("./unitTests/utilities/createEquityDataFrame.R")
-	equities.df <- createEquityDataFrame()
-	
-	# create the equity repository
-	source("./lib/repository.R")
-	equityRepository_tmp <- create_repositoryEquities(equities.df)
-    
-	# create the data for the instrument repository
-	source("./unitTests/utilities/createInstrumentsDataFrame.R")
-	instruments.df <- createInstrumentsDataFrame()
-	
-	# create the instrument repository
-	instrumentsRepository_tmp <- create_repositoryInstruments(instruments.df)
-	
-	# assegna i repositories
-	equityRepository <- repositories$equities
-    assign("equities",equityRepository_tmp,envir=repositories)
-	instrumentsRepository <- repositories$instruments
-    assign("instruments",instrumentsRepository_tmp,
-			envir=repositories)
+	# create the equity repository and instrument repository
+	allocateTestRepositories("equities")	
+	allocateTestRepositories("instruments")	
 
 	# create the positions data.frame
 	source("./unitTests/utilities/createOriginData.R")
@@ -44,9 +26,9 @@ test.shouldParseEquityPosition <- function() {
 	checkEquals(equity$ticker,"ROG.S")
 	
 	# restore initial conditions
-	assign("equities",equityRepository,envir=repositories)
-	assign("instruments",instrumentsRepository,
-			envir=repositories)
+	deallocateTestRepositories("equities")	
+	deallocateTestRepositories("instruments")		
+
 }
 
 
@@ -57,17 +39,9 @@ test.shouldParseBondPosition <- function() {
 	source("./lib/parser.R")
 	parser <- create_parserPosition()
 	
+	
 	# create the data for the instrument repository
-	source("./unitTests/utilities/createInstrumentsDataFrame.R")
-	instruments.df <- createInstrumentsDataFrame()
-	
-	# create the instrument repository
-	instrumentsRepository_tmp <- create_repositoryInstruments(instruments.df)
-	
-	# assegna i repositories
-	instrumentsRepository <- repositories$instruments
-	assign("instruments",instrumentsRepository_tmp,
-			envir=repositories)
+	allocateTestRepositories("instruments")
 	
 	# create origin data list
 	source("./unitTests/utilities/createOriginData.R")
@@ -79,8 +53,7 @@ test.shouldParseBondPosition <- function() {
 
 	
     # restore initial conditions
-	assign("instruments",instrumentsRepository,
-			envir=repositories)
+	deallocateTestRepositories("instruments")	
 	deallocateTestRepositories("exchangeRates")		
 }
 
@@ -93,24 +66,14 @@ test.shouldIdenfyAccruedInterest <- function() {
 	source("./lib/parser.R")
 	parser <- create_parserPosition()
 	
-	# create the data for the instrument repository
-	source("./unitTests/utilities/createInstrumentsDataFrame.R")
-	instruments.df <- createInstrumentsDataFrame()
-	
-	# create the instrument repository
-	instrumentsRepository_tmp <- create_repositoryInstruments(instruments.df)
-	
-	# assegna i repositories
-	instrumentsRepository <- repositories$instruments
-	assign("instruments",instrumentsRepository_tmp,
-			envir=repositories)
+	# allocate the repositories instruments and exchangeRates
+	allocateTestRepositories("instruments")	
 	allocateTestRepositories("exchangeRates")	
 	
 	# create origin data list
 	source("./unitTests/utilities/createOriginData.R")
 	origin <- createOriginData()
 	
-
 	
 	bond <- parser$parse(origin[[900]])
 	
@@ -118,8 +81,8 @@ test.shouldIdenfyAccruedInterest <- function() {
 	checkEquals(is.element("accruedInterest",class(bond)),TRUE)
 	
 	# restore initial conditions
-	assign("instruments",instrumentsRepository,
-			envir=repositories)
+
+	deallocateTestRepositories("instruments")	
 	deallocateTestRepositories("exchangeRates")	
 }
 
