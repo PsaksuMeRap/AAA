@@ -61,3 +61,40 @@ test.shouldExtendPositionBond <- function() {
 	deallocateTestRepositories("instruments")
 	deallocateTestRepositories("exchangeRates")
 }
+
+
+test.shouldExtendPositionStructuredProductFixedIncome <- function() {
+	source("./lib/position/position.R")
+	source("./unitTests/utilities/allocateTestRepositories.R")
+	
+	allocateTestRepositories("instruments")
+	allocateTestRepositories("exchangeRates")
+	
+	record <- list(
+			ID_strumento = 49,
+			Nome="20130521 - <3Y - Floored Floares with Cap 1.75%-4.625% p.a. On CS",
+			Moneta="EUR",
+			ValorePosizione=399892.3,
+			ID_AAA=98,
+			Strumento="Strutturati FI"
+	)
+	
+	parser <- create_parserPosition()
+	position <- parser$parse(record)
+	
+	name <- position$name
+	# check if it is a short term fixed income position
+	
+	if (grepl("<3Y",x=name)) position$underlyingHorizon = "<3Y"
+	if (grepl(">3Y",x=name)) position$underlyingHorizon = ">3Y"
+	
+	
+	checkEquals(class(position),c("accruedInterest","bond","position"))
+	checkEquals(position$name,"20111130 - 2.5% E.ON")
+	checkEquals(position$accruedInterest$paymentDate,"2011-11-30")
+	checkEquals(position$accruedInterest,accruedInterest)
+	
+	# restore initial conditions
+	deallocateTestRepositories("instruments")
+	deallocateTestRepositories("exchangeRates")
+}
