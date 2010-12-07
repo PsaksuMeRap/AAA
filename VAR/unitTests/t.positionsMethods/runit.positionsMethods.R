@@ -334,6 +334,75 @@ test.shouldExtractPositionsByInstrument <- function() {
 	checkEquals(result,posCheck)
 }
 
+
+test.shouldExtractPositionsByFixedIncomeMaturity <- function() {
+	
+	# create position 1
+	position1 <- create_position()
+	position1$create(name="xxx",
+			currency="USD",
+			amount=0.0,
+			origin=list(ID_AAA=10)
+	)
+	class(position1) <- c("equity",class(position1))
+	
+	# create position 2	
+	position2 <- create_position()
+	position2$create(name="AAA",
+			currency="CHF",
+			amount=0.1,
+			origin=list(ID_AAA=10)
+	)
+	class(position2) <- c("bond",class(position2))
+	
+	# create position 3	
+	position3 <- create_position()
+	position3$create(name="AAA",
+			currency="EUR",
+			amount=1000.5,
+			origin=list(ID_AAA=10)
+	)
+	class(position3) <- c("ABC",class(position3))	
+	
+	# create positions
+	positions <- create_positions()
+	positions$add(position1)
+	positions$add(position2)
+	positions$add(position3)	
+	
+	# one position
+	criterium <- create_criteriumSelection(factor="instrument",values=c("bond"))
+	
+	result <- positionsSelector(criterium,positions)
+	
+	posCheck <- c(FALSE,TRUE,FALSE)
+	
+	checkEquals(result,posCheck)
+	
+	# two positions
+	posCheck <- c(FALSE,TRUE,TRUE)
+	
+	criterium <- create_criteriumSelection(factor="instrument",values=c("ABC","bond"))
+	result <- positionsSelector(criterium,positions)
+	checkEquals(result,posCheck)
+	
+	
+	# zero positions
+	# posCheck <- c(FALSE,FALSE,FALSE)
+posCheck <- c(TRUE,FALSE,FALSE) # volutamente modificato per fallire, da mettere a posto
+# questa funzione!
+	criterium <- create_criteriumSelection(factor="instrument",values=c("abc"))
+	result <- positionsSelector(criterium,positions)
+	checkEquals(result,posCheck)
+	
+	# return NULL
+	posCheck <- NULL
+	positions <- create_positions()
+	criterium <- create_criteriumSelection(factor="instrument",values=c("abc"))
+	result <- positionsSelector(criterium,positions)
+	checkEquals(result,posCheck)
+}
+
 test.shouldExtractPositionsByAmountAbsolute <- function() {
 	source("./lib/money.R")
 	

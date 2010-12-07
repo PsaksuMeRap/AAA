@@ -7,7 +7,9 @@
 extendPosition <- function(position) UseMethod("extendPosition",position)
 
 extendPosition.default <- function(position) {
-	
+	if (is.element("Strutturati FI",class(position))) {
+		extendPosition.StrutturatiFI(position)
+	}
 }
 
 extendPosition.equity <- function(position) {
@@ -33,6 +35,29 @@ extendPosition.equity <- function(position) {
 		)
 	}
 	return()
+}
+
+extendPosition.StrutturatiFI <- function(position) {
+	name <- position$name
+	
+	# check if it is a short term fixed income position
+	if (grepl("<3Y",x=name)) position$underlyingHorizon = "<3Y"
+	if (grepl(">3Y",x=name)) position$underlyingHorizon = ">3Y"
+	
+	year <- substr(name,1,4)
+	month <- substr(name,5,6)
+	day <- substr(name,7,8)
+	position$expiryDate = paste(year,month,day,sep="-")
+	
+	position$print <- function()
+	{
+		print(paste(class(position)[1],"/",position$currency, "-", position$amount,
+						"/ Name:", position$name
+				)
+		)
+	}
+	return()
+	
 }
 
 extendPosition.accruedInterest <- function(position) {

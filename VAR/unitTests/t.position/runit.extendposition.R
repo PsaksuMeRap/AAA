@@ -82,17 +82,21 @@ test.shouldExtendPositionStructuredProductFixedIncome <- function() {
 	parser <- create_parserPosition()
 	position <- parser$parse(record)
 	
-	name <- position$name
+#	name <- position$name
 	# check if it is a short term fixed income position
 	
-	if (grepl("<3Y",x=name)) position$underlyingHorizon = "<3Y"
-	if (grepl(">3Y",x=name)) position$underlyingHorizon = ">3Y"
+#	if (grepl("<3Y",x=name)) position$underlyingHorizon = "<3Y"
+#	if (grepl(">3Y",x=name)) position$underlyingHorizon = ">3Y"
+#	year <- substr(name,1,4)
+#	month <- substr(name,5,6)
+#	day <- substr(name,7,8)
+#	position$expiryDate = paste(year,month,day,sep="-")
+	extendPosition(position)
 	
-	
-	checkEquals(class(position),c("accruedInterest","bond","position"))
-	checkEquals(position$name,"20111130 - 2.5% E.ON")
-	checkEquals(position$accruedInterest$paymentDate,"2011-11-30")
-	checkEquals(position$accruedInterest,accruedInterest)
+	checkEquals(class(position),c("Strutturati FI","position"))
+	checkEquals(position$name,"20130521 - <3Y - Floored Floares with Cap 1.75%-4.625% p.a. On CS")
+	checkEquals(position$underlyingHorizon,"<3Y")
+	checkEquals(position$expiryDate,"2013-05-21")
 	
 	# restore initial conditions
 	deallocateTestRepositories("instruments")
