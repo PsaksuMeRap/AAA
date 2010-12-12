@@ -152,6 +152,76 @@ test.shouldCheckFailWithNonImplementedFactor <- function() {
 	
 }
 
+test.shouldExtractPositionsByMaturityHorizon <- function() {
+	
+	# create position 1
+	position1 <- create_position()
+	position1$create(name="xxx",
+			currency="USD",
+			amount=0.0,
+			origin=list(ID_AAA=10)
+	)
+	class(position1) <- c("equity",class(position1))
+	
+	# create position 2	
+	position2 <- create_position()
+	position2$create(name="20171217 - 1.326% Rabobank Nederland 17-12-10",
+			currency="EUR",
+			amount=401440,
+			origin=list(ID_AAA=1568)
+	)
+	class(position2) <- c("bond",class(position2))
+	extendPosition(position2)
+	
+	# create position 3	
+	position3 <- create_position()
+	position3$create(name="20110715 - 3.625% Rabo 15-07-11 Pro-rata",
+			currency="EUR",
+			amount=178.767120361328,
+			origin=list(ID_AAA=1161,Strumento="Oacc")
+	)
+	class(position3) <- c("bond",class(position3))
+	class(position3) <- c("accruedInterest",class(position3))	
+	extendPosition(position3)
+	
+	# create position 4	(strutturato FI)
+	position4 <- create_position()
+	position4$create(name="20170924 - >3Y - EUR UBS AG FRN with Floor and Cap",
+			currency="EUR",
+			amount=197800.00,
+			origin=list(ID_AAA=114)
+	)
+	class(position4) <- c("Strutturati FI",class(position4))	
+	extendPosition(position4)
+	
+	# create position 5 (equity)
+	position5 <- create_position()
+	position5$create(name="bbb",
+			currency="CHF",
+			amount=1.0,
+			origin=list(ID_AAA=11)
+	)
+	class(position5) <- c("equity",class(position5))
+	
+	# create positions
+	positions <- create_positions()
+	positions$add(position1)
+	positions$add(position2)
+	positions$add(position3)	
+	positions$add(position4)
+	positions$add(position5)
+
+	criterium <- create_criteriumSelection(factor="maturityHorizon",values=c(">3Y"))
+	baseDate <- "2010-12-10"
+	result <- positionsSelector(criterium,positions,baseDate)
+	
+	# result <- positionsSelector(criterium,positions)
+	posCheck <- c(FALSE,TRUE,FALSE,TRUE,FALSE)
+	
+	checkEquals(result,posCheck)
+}
+
+
 
 test.shouldExtractPositionsByCurrency <- function() {
 	
@@ -335,73 +405,6 @@ test.shouldExtractPositionsByInstrument <- function() {
 }
 
 
-test.shouldExtractPositionsByFixedIncomeMaturity <- function() {
-	
-	# create position 1
-	position1 <- create_position()
-	position1$create(name="xxx",
-			currency="USD",
-			amount=0.0,
-			origin=list(ID_AAA=10)
-	)
-	class(position1) <- c("equity",class(position1))
-	
-	# create position 2	
-	position2 <- create_position()
-	position2$create(name="AAA",
-			currency="CHF",
-			amount=0.1,
-			origin=list(ID_AAA=10)
-	)
-	class(position2) <- c("bond",class(position2))
-	
-	# create position 3	
-	position3 <- create_position()
-	position3$create(name="AAA",
-			currency="EUR",
-			amount=1000.5,
-			origin=list(ID_AAA=10)
-	)
-	class(position3) <- c("ABC",class(position3))	
-	
-	# create positions
-	positions <- create_positions()
-	positions$add(position1)
-	positions$add(position2)
-	positions$add(position3)	
-	
-	# one position
-	criterium <- create_criteriumSelection(factor="instrument",values=c("bond"))
-	
-	result <- positionsSelector(criterium,positions)
-	
-	posCheck <- c(FALSE,TRUE,FALSE)
-	
-	checkEquals(result,posCheck)
-	
-	# two positions
-	posCheck <- c(FALSE,TRUE,TRUE)
-	
-	criterium <- create_criteriumSelection(factor="instrument",values=c("ABC","bond"))
-	result <- positionsSelector(criterium,positions)
-	checkEquals(result,posCheck)
-	
-	
-	# zero positions
-	# posCheck <- c(FALSE,FALSE,FALSE)
-posCheck <- c(TRUE,FALSE,FALSE) # volutamente modificato per fallire, da mettere a posto
-# questa funzione!
-	criterium <- create_criteriumSelection(factor="instrument",values=c("abc"))
-	result <- positionsSelector(criterium,positions)
-	checkEquals(result,posCheck)
-	
-	# return NULL
-	posCheck <- NULL
-	positions <- create_positions()
-	criterium <- create_criteriumSelection(factor="instrument",values=c("abc"))
-	result <- positionsSelector(criterium,positions)
-	checkEquals(result,posCheck)
-}
 
 test.shouldExtractPositionsByAmountAbsolute <- function() {
 	source("./lib/money.R")

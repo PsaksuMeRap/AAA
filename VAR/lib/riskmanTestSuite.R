@@ -87,6 +87,16 @@ testSingleRiskmanCheckFile <- function(fileName,inputDir,po) {
 	cat(portfolioStrings,file=logFile,sep="\n",append=TRUE)
 	close(con)
 
+	# se c'è anche un solo FALSE crea un file di warning
+	if (!all(checkResults)) {	
+		owner <- testSuiteData$configLines[["testTarget"]]
+		outputFileName <- paste("warning_",owner,"_",Sys.Date(),".log",sep="")
+		outputDir <- testSuiteData$configLines[["outputDir"]]
+		logFile <- paste(outputDir,outputFileName,sep="/")
+		con <- file(description=logFile,open="at")
+		cat(owner,file=logFile,sep="\n",append=TRUE)
+		close(con)
+	}
 	names(checkResults) <- NULL
 	return(checkResults)
 }

@@ -3,7 +3,7 @@
 # Author: claudio
 ###############################################################################
 
-positionsSelector <- function(criteriumSelection,positions) UseMethod("positionsSelector",criteriumSelection)
+positionsSelector <- function(criteriumSelection,positions,...) UseMethod("positionsSelector",criteriumSelection)
 
 positionsSelector.currency <- function(criteriumSelection,positions) {
 	if (!is.element("positions",class(positions))) stop("The argument is not of class positions")
@@ -57,6 +57,45 @@ positionsSelector.amount <- function(criteriumSelection,positions) {
 	extract <- unlist(extract)
 	
 	return(extract)
+}
+
+positionsSelector.maturityHorizon <- function(criteriumSelection,positions,...) {
+	# extract the baseDate from the ... arguments
+	x <- list(...)
+	if (length(x)==0) baseDate = Sys.Date() else baseDate=as.Date(x[[1]])
+	
+	FUNC <- function(position,criteriumSelection,baseDate) {
+		
+		values <- criteriumSelection$values
+		
+		# attenzione: poiché una position accruedInterest è anche bond
+		# occorre testare prima accruedInterest
+		if (is.element("accruedInterest",class(position))) {
+			if (values=="<3Y") return(TRUE) else return(FALSE)
+		}
+		
+		if (is.element("bond",class(position))) {
+			bondMaturity <- as.Date(position$getMaturity())
+			maturityInYears <- as.integer(bondMaturity - baseDate)/365
+			if (maturityInYears <= 3) maturityHorizon <- "<3Y"
+			if (maturityInYears > 3) maturityHorizon <- ">3Y"
+			if (maturityHorizon == values[1]) return(TRUE) else return(FALSE)
+		}
+		
+		if (is.element("Strutturati FI",class(position))) {
+			if (position$underlyingHorizon == values[1]) return(TRUE) else return(FALSE)
+		}		
+		return(NA)
+	}
+	# apply the function FUNC
+	extract <- lapply(positions$positions,FUN=FUNC,criteriumSelection,baseDate)
+	extract <- unlist(extract)
+	
+	# convert NA to FALSE
+	extract[is.na(extract)] <- FALSE
+	
+	return(extract)
+	
 }
 
 positionsSelector.default <- function(criteriumSelection) {

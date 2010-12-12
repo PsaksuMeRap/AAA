@@ -60,10 +60,27 @@ extendPosition.StrutturatiFI <- function(position) {
 	
 }
 
+extendPosition.bond <- function(position) {
+	
+	position$getMaturity <- function() {
+		# extract the maturity
+		name <- position$name	
+		paymentDate <- substr(name,1,8)
+		
+		day <- substr(paymentDate,7,8)
+		month <- substr(paymentDate,5,6)
+		year <- substr(paymentDate,1,4)
+		paymentDate <- paste(year,"-",month,"-",day,sep="")		
+		return(paymentDate)
+	}
+	
+}
+
+
 extendPosition.accruedInterest <- function(position) {
 	
 	if (position$origin[["Strumento"]]=="Oacc") {
-	
+
 		# " Pro-rata" must be removed from the name
 
 		name <- position$name
@@ -96,3 +113,4 @@ extendPosition.accruedInterest <- function(position) {
 	}
 	return()
 }
+
