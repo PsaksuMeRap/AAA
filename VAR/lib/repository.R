@@ -316,32 +316,55 @@ create_repositoryDiscountFactors <- function() {
 }
 
 
-create_repositoryExchangeRates <- function(exchangeRates.v) {
+create_repositoryExchangeRates <- function(exchangeRates.v,exchangeRatesDate) {
 	# exchangeRates.v: a named vector of exchangeRates
-	
+
 	repository <- new.env()
 	class(repository) <- "repositoryExchangeRates"
 	
 	if (missing(exchangeRates.v)) {
-		# crea un data.frame con <ID,Strumento>
+		
 		connection <- odbcConnect("prezzi_storici_azioni_VAR",utente,password)
-		query <- paste("SELECT Moneta, CHFPar",
-				"FROM [Sistema (prova)].dbo.Cambi"
-		)
-		
-		rates.df <- sqlQuery(connection,query,as.is=c(TRUE,FALSE))
-		
-		if (is.null(nrow(rates.df))) {
-			print("Repository exchange rates empty!")
-			stop()
+		if (missing(exchangeRateDate)) {
+			# crea un data.frame con <Moneta,CHFPar>
+						query <- paste("SELECT Moneta, CHFPar",
+					"FROM [Sistema (prova)].dbo.Cambi"
+			)
+			rates.df <- sqlQuery(connection,query,as.is=c(TRUE,FALSE))
+			
+			if (is.null(nrow(rates.df))) {
+				print("Repository exchange rates empty!")
+				stop()
+			}
+		} else {
+			for (i in 1:10) {
+				# crea un data.frame con <Moneta,CHFPar>
+				query <- paste("SELECT Moneta, ParCHF AS CHFPar ",
+						"FROM [Cambi storici].dbo.vista_per_cambi_storici ",
+						"WHERE [Date] ='",exchangeRatesDate,"'",
+						sep=""
+				)
+				rates.df <- sqlQuery(connection,query,as.is=c(TRUE,FALSE))
+				
+				if (!is.null(nrow(rates.df))) {
+					break
+				}
+				exchangeRatesDate <- as.character(as.Date(exchangeRatesDate) - 1)
+			}
+			if (is.null(nrow(rates.df))) {
+				print("Repository exchange rates empty!")
+				stop()
+			}
 		}
+
 		repository$rates <- rates.df[,"CHFPar"]
 		names(repository$rates) <- rates.df[,"Moneta"]
 		rm(rates.df)
+		
 	} else {
 		repository$rates <- exchangeRates.v
 	}
-
+	
 	
 	repository$exchange <- function(money,toCurrency) {
 		# money: a list <amount,currency> with the amount to be converted
