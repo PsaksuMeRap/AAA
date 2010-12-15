@@ -325,7 +325,7 @@ create_repositoryExchangeRates <- function(exchangeRates.v,exchangeRatesDate) {
 	if (missing(exchangeRates.v)) {
 		
 		connection <- odbcConnect("prezzi_storici_azioni_VAR",utente,password)
-		if (missing(exchangeRateDate)) {
+		if (missing(exchangeRatesDate)) {
 			# crea un data.frame con <Moneta,CHFPar>
 						query <- paste("SELECT Moneta, CHFPar",
 					"FROM [Sistema (prova)].dbo.Cambi"
