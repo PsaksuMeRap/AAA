@@ -42,6 +42,14 @@ create_portfolio <- function() {
 		return(portfolio$positions$sum(currency))
 	}
 	
+	portfolio$addPortfolio <- function(portf) {
+		if (portfolio$refCurrency!=portf$refCurrency) {
+			stop(paste("The portfolios of",portfolio$owner,"and",
+							portf$owner,"have different reference currency")
+			)
+		}
+		portfolio$add(portf$positions)
+	}
 	return(portfolio)
 }
 

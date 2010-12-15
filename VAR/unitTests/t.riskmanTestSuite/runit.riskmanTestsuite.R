@@ -70,6 +70,50 @@ test.shouldTestSingleRiskmanCheckFile11 <- function() {
 
 }
 
+test.shouldTestSingleRiskmanCheckFileAggregated <- function() {
+	# l'input della procedura "testSingleRiskmanCheckFile" è
+	# in questo primo test una lista di portfoli di cui vengono
+	# considerati ed aggregati solo 2
+	source("./unitTests/utilities/allocateTestRepositories.R")
+	source("./unitTests/utilities/createOriginData.R")
+	
+	allocateTestRepositories("equities")
+	allocateTestRepositories("instruments")
+	allocateTestRepositories("exchangeRates")
+	allocateTestRepositories("politicaInvestimento")
+	
+	fileName <- "check.RunTestSuite1.txt"
+	inputDir <- "./unitTests/data/testSuites/test3"
+	
+	# crea il portafoglio da parsare
+	origin <- createOriginData()
+	owners <- unique(extractLists(origin,"Cliente"))
+	portfParser <- create_parserPortfolio()
+	portfolios <- lapply(owners,portfParser$parse,
+			origin,repositories$politicaInvestimento$politicaInvestimento.df)
+		
+	checkResults <- testSingleRiskmanCheckFile(fileName,inputDir,po=portfolios)
+	checkEquals(checkResults,c(FALSE,TRUE,TRUE))
+	
+	fileName <- "check.RunTestSuite2.txt"
+	checkResults <- testSingleRiskmanCheckFile(fileName,inputDir,po=portfolios)
+	checkEquals(checkResults,c(FALSE,FALSE,FALSE))	
+	
+	fileName <- "check.RunTestSuite3.txt"
+	checkResults <- testSingleRiskmanCheckFile(fileName,inputDir,po=portfolios)
+	
+	checkEquals(checkResults,c(FALSE,TRUE,TRUE))
+	
+	
+	deallocateTestRepositories("equities")
+	deallocateTestRepositories("instruments")
+	deallocateTestRepositories("exchangeRates")	
+	deallocateTestRepositories("politicaInvestimento")
+	
+}
+
+
+
 test.shouldTestSingleRiskmanCheckFile12 <- function() {
 	# l'input della procedura "testSingleRiskmanCheckFile" è
 	# in questo secondo test un oggetto di classe positions
@@ -104,6 +148,8 @@ test.shouldTestSingleRiskmanCheckFile12 <- function() {
 	deallocateTestRepositories("politicaInvestimento")
 	
 }
+
+
 
 test.shouldRunRiskmanTestSuite <- function() {
 	source("./unitTests/utilities/allocateTestRepositories.R")

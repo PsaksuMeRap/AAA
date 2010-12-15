@@ -12,7 +12,7 @@ test.should_createPortfolio <- function() {
 	
 	checkEquals(portfolio$owner,NA_character_)
 	checkEquals(portfolio$refCurrency,NA_character_)
-	checkEquals(ls(portfolio),c("add","owner","positions","print","refCurrency","value"))
+	checkEquals(ls(portfolio),c("add","addPortfolio","owner","positions","print","refCurrency","value"))
 	
 }
 
@@ -142,4 +142,52 @@ test.should_returnValueOfPortfolio <- function() {
 	checkEquals(portfolio$value("USD"),toMoney(amount,"USD"))
 	
 	repositories$exchangeRates <- repository
+}
+
+test.should_addPortfolio <- function() {
+	source("./lib/portfolio.R")
+	
+	p1 <- create_position()
+	p1$create(name="SUNCOR ENERGY  INC. CO",
+			currency="USD",
+			amount=243250,
+			origin=list(ID_AAA=1984)
+	)	
+	p2 <- create_position()
+	p2$create(name="Philips",
+			currency="EUR",
+			amount=22065.28,
+			origin=list(ID_AAA=766)
+	)
+	p3 <- create_position()
+	p3$create(name="E.ON",
+			currency="EUR",
+			amount=25356.00,
+			origin=list(ID_AAA=445)
+	)
+	
+	# crea le posizioni
+	positions1 <- create_positions()
+	positions1$add(p1);positions1$add(p2)
+	
+	positions2 <- create_positions()
+	positions2$add(p3)
+	
+	portfolio1 <- create_portfolio()
+	portfolio1$owner <- "pippo1"
+	portfolio1$refCurrency <- "CHF"
+	portfolio1$add(positions1)
+	
+	portfolio2 <- create_portfolio()
+	portfolio2$owner <- "pippo2"
+	portfolio2$refCurrency <- "CHF"
+	portfolio2$add(positions2)
+	
+	positionsCheck <- create_positions()
+	positionsCheck$add(p1);positionsCheck$add(p2);positionsCheck$add(p3)
+	
+	portfolio1$addPortfolio(portfolio2)
+	
+	checkIdentical(portfolio1$positions$positions,positionsCheck$positions)
+	
 }

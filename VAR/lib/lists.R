@@ -5,17 +5,25 @@
 
 
 filterLists <- function(origin,by,value) {
-	# origin: una lista di tipo origin
+	# origin: una lista di tipo origin o una lista i cui elementi,
+	# notati x, hanno il campo x[[by]]
 	# by: il nome del campo su cui applicare il filtro
 	# value: il valore del campo da filtrare
 	# output: the subset of origin with match the value
 	
+	areOkFinal <- rep(FALSE,length(origin))
+	
 	filter <- function(x,by,value) {
 		return(x[[by]] == value)
-	}
-	areOk <- sapply(origin,filter,by,value)
+	}	
 	
-	return(origin[areOk])
+	for (v in value) {
+		areOk <- sapply(origin,filter,by,value=v)
+		areOkFinal <- areOkFinal | areOk
+	}
+	
+	return(origin[areOkFinal])
+	
 }
 
 extractLists <- function(origin,fieldName) {

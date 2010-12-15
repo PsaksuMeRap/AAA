@@ -37,6 +37,39 @@ test.shouldFilterListByCriterium <- function() {
 	
 } 
 
+
+test.shouldFilterListByMultipleCriterium <- function() {
+	source("./lib/lists.R")
+	
+	origin <- list(
+			list(a=1,b="cane"),
+			list(a=2,b="gatto"),
+			list(a=1,b="gatto"),
+			list(a=4,b="pippo"),		
+			list(a=2,b="claudio")
+	)
+	
+	# filtra by a=c(1,2)
+	should <- list(
+			list(a=1,b="cane"),
+			list(a=2,b="gatto"),
+			list(a=1,b="gatto"),	
+			list(a=2,b="claudio")
+	)
+	filtered <- filterLists(origin,"a",c(1,2))
+	checkEquals(filtered,should)
+	
+	# filtra by b=c("claudio","gatto")
+	should <- list(
+			list(a=2,b="gatto"),
+			list(a=1,b="gatto"),		
+			list(a=2,b="claudio")
+	)
+	filtered <- filterLists(origin,"b",c("claudio","gatto"))
+	checkEquals(filtered,should)
+} 
+
+
 test.shouldExtractFieldName <- function() {
 	source("./lib/lists.R")
 	

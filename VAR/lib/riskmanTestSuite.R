@@ -37,7 +37,9 @@ testSingleRiskmanCheckFile <- function(fileName,inputDir,po) {
 	# crea output infos
 	if (testSuiteData$configLines[["testSuiteKind"]]=="specific") { 
 		owner <- testSuiteData$configLines[["testTarget"]]
-		outputFileName <- paste(owner,"_",Sys.Date(),".log",sep="")
+		owner <- removeStartEndSpaces(unlist(strsplit(owner,",")))
+		ownerPrintName <- paste(owner,collapse="_")
+		outputFileName <- paste(ownerPrintName,"_",Sys.Date(),".log",sep="")
 	} else {
 		stop("Error: manca owner o aggiorna codice")
 	}
@@ -53,15 +55,19 @@ testSingleRiskmanCheckFile <- function(fileName,inputDir,po) {
 		portfolio <- filterLists(po,"owner",owner)
 		if (length(portfolio)==0) {
 			con <- file(description=logFile,open="w")
-			cat(paste("Error: porfolio for owner",owner,"is missing."),file=logFile,sep="\n",append=TRUE)
+			cat(paste("Error: porfolio for owner",ownerPrintName,"is missing."),file=logFile,sep="\n",append=TRUE)
 			close(con)
 			return(FALSE)
-		}  
+		}
+		if (length(portfolio)>1) {
+			lapply(portfolio[-1],portfolio[[1]]$addPortfolio)
+		}
+		
 		positions <- portfolio[[1]]$positions
 	}		
 
 	con <- file(description=logFile,open="w")
-	cat(paste("Portfolio:",owner),file=logFile,sep="\n",append=TRUE)
+	cat(paste("Portfolio:",ownerPrintName),file=logFile,sep="\n",append=TRUE)
 	cat(paste("Input file:",fileName),file=logFile,sep="\n",append=TRUE)
 	cat(paste("Inp. directory:",inputDir),file=logFile,sep="\n",append=TRUE)
 	cat(paste("Out. directory:",outputDir),file=logFile,sep="\n",append=TRUE)
@@ -74,8 +80,7 @@ testSingleRiskmanCheckFile <- function(fileName,inputDir,po) {
 	close(con)
 	
 	# stampa il portafoglio in un file
-	owner <- testSuiteData$configLines[["testTarget"]]
-	outputFileName <- paste("Portafoglio_",owner,"_",Sys.Date(),".log",sep="")
+	outputFileName <- paste("Portafoglio_",ownerPrintName,"_",Sys.Date(),".log",sep="")
 	outputDir <- testSuiteData$configLines[["outputDir"]]
 	logFile <- paste(outputDir,outputFileName,sep="/")
 
@@ -88,13 +93,12 @@ testSingleRiskmanCheckFile <- function(fileName,inputDir,po) {
 	close(con)
 
 	# se c'è anche un solo FALSE crea un file di warning
-	if (!all(checkResults)) {	
-		owner <- testSuiteData$configLines[["testTarget"]]
-		outputFileName <- paste("warning_",owner,"_",Sys.Date(),".log",sep="")
+	if (!all(checkResults)) {
+		outputFileName <- paste("warning_",Sys.Date(),".log",sep="")
 		outputDir <- testSuiteData$configLines[["outputDir"]]
 		logFile <- paste(outputDir,outputFileName,sep="/")
 		con <- file(description=logFile,open="at")
-		cat(owner,file=logFile,sep="\n",append=TRUE)
+		cat(ownerPrintName,file=logFile,sep="\n",append=TRUE)
 		close(con)
 	}
 	names(checkResults) <- NULL
