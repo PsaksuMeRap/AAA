@@ -81,6 +81,20 @@ positionsSelector.maturityHorizon <- function(criteriumSelection,positions,...) 
 			if (maturityInYears > 3) maturityHorizon <- ">3Y"
 			if (maturityHorizon == values[1]) return(TRUE) else return(FALSE)
 		}
+
+		if (is.element("Fondi obbligazionari",class(position))) {
+			if (grepl("<3Y",x=position$name)) {
+				averageHorizon = "<3Y"
+			} else {
+				if (grepl(">3Y",x=position$name)) {
+					averageHorizon = ">3Y"
+				} else {
+					stop("errore il fondo obbligazionario non ha un indice di durata <3Y o >3Y")
+				}
+			}
+			
+			if (averageHorizon == values[1]) return(TRUE) else return(FALSE)
+		}
 		
 		if (is.element("Strutturati FI",class(position))) {
 			if (position$underlyingHorizon == values[1]) return(TRUE) else return(FALSE)

@@ -202,6 +202,16 @@ test.shouldExtractPositionsByMaturityHorizon <- function() {
 			origin=list(ID_AAA=11)
 	)
 	class(position5) <- c("equity",class(position5))
+
+	# create position 6 (Fondi obbligazionari)
+	position6 <- create_position()
+	position6$create(name="20201231 - 0% <3Y - CB-Accent Lux Sicav - Fixed Income EUR",
+			currency="EUR",
+			amount=1.0,
+			origin=list(ID_AAA=11)
+	)
+	class(position6) <- c("Fondi obbligazionari",class(position6))
+	
 	
 	# create positions
 	positions <- create_positions()
@@ -210,13 +220,23 @@ test.shouldExtractPositionsByMaturityHorizon <- function() {
 	positions$add(position3)	
 	positions$add(position4)
 	positions$add(position5)
-
+	positions$add(position6)
+	
 	criterium <- create_criteriumSelection(factor="maturityHorizon",values=c(">3Y"))
 	baseDate <- "2010-12-10"
 	result <- positionsSelector(criterium,positions,baseDate)
 	
 	# result <- positionsSelector(criterium,positions)
-	posCheck <- c(FALSE,TRUE,FALSE,TRUE,FALSE)
+	posCheck <- c(FALSE,TRUE,FALSE,TRUE,FALSE,FALSE)
+	checkEquals(result,posCheck)
+
+	# check 2
+	criterium <- create_criteriumSelection(factor="maturityHorizon",values=c("<3Y"))
+	baseDate <- "2010-12-10"
+	result <- positionsSelector(criterium,positions,baseDate)
+	
+    # result <- positionsSelector(criterium,positions)
+	posCheck <- c(FALSE,FALSE,TRUE,FALSE,FALSE,TRUE)
 	
 	checkEquals(result,posCheck)
 }
