@@ -59,13 +59,50 @@ create_positions <- function() {
 	}
 	
 	positions$print <- function() {
-		criteria <- c("instrument","currency","name")
-		for (p in positions$sortBy()) p$print()
+
+		getAmountWidth <- function(position) {
+			# questa funzione calcola il numero di caratteri da usare per
+			# la formattazione dell'output dell'importo
+			nbChar <- nchar(as.character(floor(abs(position$amount))))
+			width <- nbChar %/% 3
+			width <- nbChar + width + 3
+			if (position$amount < 0) width <- width + 1 
+			
+			return(width)
+		}
+		
+		result <- sapply(positions$positions,getAmountWidth)
+		if (length(result)>0) {
+			width <- max(sapply(positions$positions,getAmountWidth))
+		} else {
+			width <- 0
+		}
+		
+		criteria <- c("instrument","currency","name","amount")
+		for (p in positions$sortBy(criteria)) p$print(width)
 	}
 	
 	positions$toString <- function() {
+		getAmountWidth <- function(position) {
+			# questa funzione calcola il numero di caratteri da usare per
+			# la formattazione dell'output dell'importo
+			nbChar <- nchar(as.character(floor(abs(position$amount))))
+			width <- nbChar %/% 3
+			width <- nbChar + width + 3
+			if (position$amount < 0) width <- width + 1 
+			
+			return(width)
+		}
+		
+		result <- sapply(positions$positions,getAmountWidth)
+		if (length(result)>0) {
+			width <- max(sapply(positions$positions,getAmountWidth))
+		} else {
+			width <- 0
+		}
+		
 		x <- sapply(positions$sortBy(),
-				function(p) return(p$toString())
+				function(p) return(p$toString(width))
 		)
 		return(x)
 	}
@@ -85,7 +122,7 @@ create_positions <- function() {
 	
 	positions$sortBy <- function(criteria) {
 		# creteria: an ordered character vector with the following criteria
-		# class - currency - name - amount
+		# instrument - currency - name - amount
 		
 		df <- positions$toDataFrame()
 		indices <- do.call(order,df[criteria])

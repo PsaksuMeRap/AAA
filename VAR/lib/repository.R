@@ -3,21 +3,30 @@
 # Author: claudio
 ###############################################################################
 
-create_repositoryFixedIncome <- function(fixedIncome.df) {
+create_repositoryFixedIncome <- function(fixedIncome=NULL) UseMethod("create_repositoryFixedIncome",fixedIncome)
+
+create_repositoryFixedIncome.default <- function(fixedIncome) {
 	
 	repository <- list()
 	class(repository) <- "repositoryFixedIncome"
 	
-	if (missing(fixedIncome.df)) {
-		connection <- odbcConnect("prezzi_storici_azioni_VAR",utente,password)
-		query = paste("Select * ",
-				"FROM [Sistema (prova)].dbo.riskman_export_DBRedditoFissoConRatings")
-		repository$fixedIncome.df <- sqlQuery(connection,query,as.is=TRUE)
-	} else {
-		repository$fixedIncome.df <- fixedIncome.df
-	}
+	
+	connection <- odbcConnect("prezzi_storici_azioni_VAR",utente,password)
+	query = paste("Select * ",
+			"FROM [Sistema (prova)].dbo.riskman_export_DBRedditoFissoConRatings")
+	repository$fixedIncome.df <- sqlQuery(connection,query,as.is=TRUE)
 	return(repository)
 }
+
+
+create_repositoryFixedIncome.data.frame <- function(fixedIncome) {
+	repository <- list()
+	class(repository) <- "repositoryFixedIncome"
+	repository$fixedIncome.df <- fixedIncome
+	return(repository)
+}
+
+
 
 create_repositoryPoliticaInvestimento <- function(politicaInvestimento.df) {
 	

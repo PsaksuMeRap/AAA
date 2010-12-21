@@ -262,5 +262,3 @@ checkCheckStringOnPositions <- function(checkString,positions,logFile,refCurrenc
 # currency: usd, chf, eur
 # geograficArea: EU, USA, Canada, Asia, Japan
 
-
-

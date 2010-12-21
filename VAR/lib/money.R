@@ -29,7 +29,21 @@ toMoney <- function(amount,currency) {
 	}
 	
 	money$toString <- function() {
-		string = paste(money$currency,money$amount)
+		getAmountWidth <- function(amount) {
+			# questa funzione calcola il numero di caratteri da usare per
+			# la formattazione dell'output dell'importo
+			nbChar <- nchar(as.character(floor(abs(amount))))
+			width <- nbChar %/% 3
+			width <- nbChar + width + 3
+			if (amount < 0) width <- width + 1 
+			
+			return(width)
+		}
+	
+		width <- getAmountWidth(money$amount)
+		number <- formatC(money$amount,width=width,big.mark = "'",
+				decimal.mark = ".",format="f",digits=2)
+		string = paste(money$currency,number)
 		return(string)
 	}
 	

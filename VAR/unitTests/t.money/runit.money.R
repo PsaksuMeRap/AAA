@@ -20,11 +20,11 @@ test.createMoney <- function() {
 
 test.moneyToString <- function() {
 	currency = "CHF"
-	amount = 105.3
+	amount = 1105.3
 	
-	money <- toMoney(currency,amount)
+	money <- toMoney(amount,currency)
 	
-	checkEquals(money$toString(),paste(amount,currency))
+	checkEquals(money$toString(),paste(currency, "1'105.30"))
 }
 
 test.sumMoney <- function() {

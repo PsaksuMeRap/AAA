@@ -428,4 +428,52 @@ test.shouldOrderPositions <- function() {
 	checkEquals(positions$sortBy(c("name","currency","amount")),posSorted$positions)
 }
 
- 
+
+test.shouldConvertPositionsToString <- function() {
+	
+	source("./lib/position/position.R")
+	
+	# create position 1
+	position1 <- create_position()
+	position1$create(name="xxx",
+			currency="USD",
+			amount=-10.0,
+			origin=list(ID_AAA=10)
+	)
+	class(position1) <- c("Anda",class(position1))
+	
+	# create position 2	
+	position2 <- create_position()
+	position2$create(name="AAA",
+			currency="CHF",
+			amount=14947850.1,
+			origin=list(ID_AAA=10)
+	)
+	class(position2) <- c("bond",class(position2))
+	
+	# create position 3	
+	position3 <- create_position()
+	position3$create(name="AAA",
+			currency="EUR",
+			amount=1000.5876,
+			origin=list(ID_AAA=10)
+	)
+	class(position3) <- c("bond",class(position3))	
+	
+	# create positions
+	positions <- create_positions()
+	positions$add(position1)
+	positions$add(position2)
+	positions$add(position3)	
+	
+	result <- positions$toString()
+	checkEquals(result[1],"Anda / USD        -10.00 / Name: xxx")
+	checkEquals(result[3],"bond / EUR      1'000.59 / Name: AAA")
+	
+	# create empty positions
+	positions <- create_positions()	
+	
+	result <- positions$toString()
+	checkEquals(result,list())
+}
+

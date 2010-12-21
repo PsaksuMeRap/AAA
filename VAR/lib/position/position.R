@@ -35,17 +35,33 @@ create_position <- function() {
 		return(position$currency==currency)
 	}
 	
-	position$print <- function() {
+	position$print <- function(width) {
+		if (missing(width)) {
+			x <- formatC(position$amount,big.mark = "'",
+					decimal.mark = ".",format="f",digits=2)
+		} else {
+			x <- formatC(position$amount,width=width,big.mark = "'",
+					decimal.mark = ".",format="f",digits=2)
+		}
 		print(paste(class(position)[1],"/",position$currency,
-						formatC(position$amount,digits=2,format="f"),
+						x,
 						"/ Name:", position$name
 				)
 		)
 	}
 	
-	position$toString <- function() {
+	position$toString <- function(width) {
+		if (missing(width)) {
+			x <- formatC(position$amount,big.mark = "'",
+					decimal.mark = ".",format="f",digits=2)
+		} else {
+			x <- formatC(position$amount,width=width,big.mark = "'",
+					decimal.mark = ".",format="f",digits=2)
+		}
+		
 		string <- paste(class(position)[1],"/",position$currency,
-				formatC(position$amount,digits=2,format="f"),
+				x,
+#				formatC(position$amount,digits=2,format="f"),
 				"/ Name:", position$name)
 		return(string)
 	}
