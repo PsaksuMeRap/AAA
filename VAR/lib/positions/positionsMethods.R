@@ -74,6 +74,10 @@ positionsSelector.maturityHorizon <- function(criteriumSelection,positions,...) 
 			if (values=="<3Y") return(TRUE) else return(FALSE)
 		}
 		
+		if (is.element("Fondi mercato monetario",class(position))) {
+			if (values=="<3Y") return(TRUE) else return(FALSE)
+		}
+		
 		if (is.element("bond",class(position))) {
 			bondMaturity <- as.Date(position$getMaturity())
 			maturityInYears <- as.integer(bondMaturity - baseDate)/365
@@ -204,10 +208,10 @@ extractPositionsFromSelectionString <- function(selectionString,positions) {
 	return(positionsFiltered)
 }
 
-checkCheckStringOnPositions <- function(checkString,positions,logFile) {
+checkCheckStringOnPositions <- function(checkString,positions,logFile,refCurrency) {
 	# calcola il valore totale delle posizioni
-	positionsValue <- positions$sum()
-	
+	if (missing(refCurrency)) positionsValue <- positions$sum() else positionsValue <- positions$sum(refCurrency)
+
 	# parsa ed estrai le posizioni soddisfacenti i criteri di selezione
 	parser <- create_parserSelectionCriteria()
 	parsed <- parser$splitCheckString(checkString)
@@ -223,7 +227,8 @@ checkCheckStringOnPositions <- function(checkString,positions,logFile) {
 		criteriumSelection$criteriumCheck$value <- toMoney(percentageValue*positionsValue$amount,positionsValue$currency)
 	}
 	
-	extractedPositionsValue <- extractedPositions$sum()
+	if (missing(refCurrency)) extractedPositionsValue <- extractedPositions$sum() else extractedPositionsValue <- extractedPositions$sum(refCurrency)
+	
 	fakePosition <- create_position()
 	fakePosition$create(name="fake",currency=extractedPositionsValue$currency,
 			amount=extractedPositionsValue$amount) 

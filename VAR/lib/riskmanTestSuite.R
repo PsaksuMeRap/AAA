@@ -27,19 +27,20 @@ create_riskmanTest <- function(fileName,dirs) {
 	
 }
 
-testSingleRiskmanCheckFile <- function(fileName,inputDir,po) {
+testSingleRiskmanCheckFile <- function(fileName,inputDir,po,valuationDate) {
 	
 	# parsa il file della testSuite con i dati sui check
 	parserTestSuite <- create_parserTestSuite()
 	parserTestSuite$importFile(paste(inputDir,"/",fileName,sep=""))
 	testSuiteData <- parserTestSuite$parseStrings()
 	
+	if (missing(valuationDate)) valuationDate <- Sys.Date()
 	# crea output infos
 	if (testSuiteData$configLines[["testSuiteKind"]]=="specific") { 
 		owner <- testSuiteData$configLines[["testTarget"]]
 		owner <- removeStartEndSpaces(unlist(strsplit(owner,",")))
 		ownerPrintName <- paste(owner,collapse="_")
-		outputFileName <- paste(ownerPrintName,"_",Sys.Date(),".log",sep="")
+		outputFileName <- paste(ownerPrintName,"_",valuationDate,".log",sep="")
 	} else {
 		stop("Error: manca owner o aggiorna codice")
 	}
@@ -64,6 +65,7 @@ testSingleRiskmanCheckFile <- function(fileName,inputDir,po) {
 		}
 		
 		positions <- portfolio[[1]]$positions
+		refCurrency <- portfolio[[1]]$refCurrency
 	}		
 
 	con <- file(description=logFile,open="w")
@@ -73,14 +75,19 @@ testSingleRiskmanCheckFile <- function(fileName,inputDir,po) {
 	cat(paste("Out. directory:",outputDir),file=logFile,sep="\n",append=TRUE)
 	cat("\n",file=logFile,sep="\n",append=TRUE)
 	
-	checkResults <- sapply(testSuiteData$checkStrings,checkCheckStringOnPositions,positions,logFile)
+	if (is.element("positions",class(po))) {
+		checkResults <- sapply(testSuiteData$checkStrings,checkCheckStringOnPositions,positions,logFile)
+	} else {
+		checkResults <- sapply(testSuiteData$checkStrings,checkCheckStringOnPositions,positions,logFile,refCurrency)	
+	}
+	
 	summary <- paste(checkResults,": ", names(checkResults),sep="",collapse="\n")
 	cat("Summary:",file=logFile,sep="\n",append=TRUE)
 	cat(summary,file=logFile,sep="\n",append=TRUE)
 	close(con)
 	
 	# stampa il portafoglio in un file
-	outputFileName <- paste("Portafoglio_",ownerPrintName,"_",Sys.Date(),".log",sep="")
+	outputFileName <- paste("Portafoglio_",ownerPrintName,"_",valuationDate,".log",sep="")
 	outputDir <- testSuiteData$configLines[["outputDir"]]
 	logFile <- paste(outputDir,outputFileName,sep="/")
 
@@ -94,7 +101,7 @@ testSingleRiskmanCheckFile <- function(fileName,inputDir,po) {
 
 	# se c'è anche un solo FALSE crea un file di warning
 	if (!all(checkResults)) {
-		outputFileName <- paste("warning_",Sys.Date(),".log",sep="")
+		outputFileName <- paste("warning_",valuationDate,".log",sep="")
 		outputDir <- testSuiteData$configLines[["outputDir"]]
 		logFile <- paste(outputDir,outputFileName,sep="/")
 		con <- file(description=logFile,open="at")
@@ -106,17 +113,24 @@ testSingleRiskmanCheckFile <- function(fileName,inputDir,po) {
 }
 
 
-importAndRunRiskmanTestSuite <- function(testSuite,portfolios) {
-	runDirectory <- function(dir,portfolios) {
+importAndRunRiskmanTestSuite <- function(testSuite,portfolios,valuationDate) {
+	runDirectory <- function(dir,portfolios,valuationDate) {
 		fileList <- list.files(path=dir, 
 				pattern=testSuite$testFileRegexp)
-		
-		result <- lapply(fileList,testSingleRiskmanCheckFile,
-				inputDir=dir,po=portfolios)
+		if(missing(valuationDate)) {
+			result <- lapply(fileList,testSingleRiskmanCheckFile,
+					inputDir=dir,po=portfolios)
+		} else {
+			result <- lapply(fileList,testSingleRiskmanCheckFile,
+					inputDir=dir,po=portfolios,valuationDate=valuationDate)		
+		}
 		names(result) <- fileList
 		return(result)
 	}
 	
-	results <- lapply(testSuite$dirs,runDirectory,portfolios)
-
+	if (missing(valuationDate)) {
+		results <- lapply(testSuite$dirs,runDirectory,portfolios)
+	} else {
+		results <- lapply(testSuite$dirs,runDirectory,portfolios,valuationDate)	
+	}
 }

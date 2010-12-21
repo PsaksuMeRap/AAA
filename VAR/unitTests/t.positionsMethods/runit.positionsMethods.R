@@ -165,7 +165,7 @@ test.shouldExtractPositionsByMaturityHorizon <- function() {
 	
 	# create position 2	
 	position2 <- create_position()
-	position2$create(name="20171217 - 1.326% Rabobank Nederland 17-12-10",
+	position2$create(name="20101217 - 1.326% Rabobank Nederland 17-12-10",
 			currency="EUR",
 			amount=401440,
 			origin=list(ID_AAA=1568)
@@ -227,7 +227,7 @@ test.shouldExtractPositionsByMaturityHorizon <- function() {
 	result <- positionsSelector(criterium,positions,baseDate)
 	
 	# result <- positionsSelector(criterium,positions)
-	posCheck <- c(FALSE,TRUE,FALSE,TRUE,FALSE,FALSE)
+	posCheck <- c(FALSE,FALSE,FALSE,TRUE,FALSE,FALSE)
 	checkEquals(result,posCheck)
 
 	# check 2
@@ -236,7 +236,7 @@ test.shouldExtractPositionsByMaturityHorizon <- function() {
 	result <- positionsSelector(criterium,positions,baseDate)
 	
     # result <- positionsSelector(criterium,positions)
-	posCheck <- c(FALSE,FALSE,TRUE,FALSE,FALSE,TRUE)
+	posCheck <- c(FALSE,TRUE,TRUE,FALSE,FALSE,TRUE)
 	
 	checkEquals(result,posCheck)
 }

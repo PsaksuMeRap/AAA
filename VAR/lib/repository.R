@@ -332,12 +332,12 @@ create_repositoryExchangeRates <- function(exchangeRates.v,exchangeRatesDate) {
 			)
 			rates.df <- sqlQuery(connection,query,as.is=c(TRUE,FALSE))
 			
-			if (is.null(nrow(rates.df))) {
+			if (nrow(rates.df)==0) {
 				print("Repository exchange rates empty!")
 				stop()
 			}
 		} else {
-			for (i in 1:10) {
+			for (i in 1:15) {
 				# crea un data.frame con <Moneta,CHFPar>
 				query <- paste("SELECT Moneta, ParCHF AS CHFPar ",
 						"FROM [Cambi storici].dbo.vista_per_cambi_storici ",
@@ -346,16 +346,19 @@ create_repositoryExchangeRates <- function(exchangeRates.v,exchangeRatesDate) {
 				)
 				rates.df <- sqlQuery(connection,query,as.is=c(TRUE,FALSE))
 				
-				if (!is.null(nrow(rates.df))) {
+				if (nrow(rates.df)>0) {
 					break
 				}
 				exchangeRatesDate <- as.character(as.Date(exchangeRatesDate) - 1)
 			}
-			if (is.null(nrow(rates.df))) {
+			if (nrow(rates.df)==0) {
 				print("Repository exchange rates empty!")
 				stop()
 			}
 		}
+
+		# sostituisci i possibili NA
+		if (!is.element("CHr",rates.df[,"Moneta"])) rates.df <- rbind(rates.df,data.frame(Moneta="CHr",CHFPar=1.0))
 
 		repository$rates <- rates.df[,"CHFPar"]
 		names(repository$rates) <- rates.df[,"Moneta"]
@@ -377,10 +380,10 @@ create_repositoryExchangeRates <- function(exchangeRates.v,exchangeRatesDate) {
 			result <- toMoney(amount*repository$rates[[fromCurrency]],toCurrency)
 			return(result)
 		}
-		
+	
 		areAvailable <- is.element(c(fromCurrency,toCurrency),names(repository$rates))
 		if (any(!areAvailable)) {
-			print(paste("Error",names(repository$rates)[!areAvailable],"not available."))
+			print(paste("Error",c(fromCurrency,toCurrency)[!areAvailable],"not available."))
 		}
 		result <- toMoney(amount * repository$rates[[fromCurrency]] / repository$rates[[toCurrency]],
 				toCurrency)

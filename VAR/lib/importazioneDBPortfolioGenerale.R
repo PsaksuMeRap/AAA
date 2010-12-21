@@ -20,6 +20,23 @@ importDBPortfolioGenerale <- function() {
 }
 
 
+importDBPortfolioGeneraleByDate <- function(fetchDate) {
+	connection <- odbcConnect("prezzi_storici_azioni_VAR",utente,password)
+	query = paste("SELECT B.ID, A.* FROM [Performance_TW].dbo.Valori_storici_portafogli_disaggregati A ",
+			"INNER JOIN [Sistema (prova)].dbo.Clienti_ID B ON A.Cliente=B.Cliente ",
+			"WHERE A.data='",fetchDate,"'")
+	
+	DBPortfolioGenerale.df <- sqlQuery(connection,query,as.is=TRUE)
+	
+	DBPortfolioGenerale.df[["Cliente"]] <- NULL
+	colnames(DBPortfolioGenerale.df)[1] <- "Cliente"
+	getRow <- function(i,df) return(df[i,,drop=TRUE])
+	
+	origin <- lapply(1:nrow(DBPortfolioGenerale.df),getRow,DBPortfolioGenerale.df)
+	return(origin)
+}
+
+
 importDBPortfolioGeneraleDataFrame <- function() {
 	
 	connection <- odbcConnect("prezzi_storici_azioni_VAR",utente,password)

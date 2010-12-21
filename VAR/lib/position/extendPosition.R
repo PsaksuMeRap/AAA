@@ -65,12 +65,15 @@ extendPosition.bond <- function(position) {
 	position$getMaturity <- function() {
 		# extract the maturity
 		name <- position$name	
-		paymentDate <- substr(name,1,8)
+		paymentDate <- substr(name,nchar(position$name)-8+1,
+				nchar(position$name))
 		
-		day <- substr(paymentDate,7,8)
-		month <- substr(paymentDate,5,6)
-		year <- substr(paymentDate,1,4)
-		paymentDate <- paste(year,"-",month,"-",day,sep="")		
+		# verifica che il nome sia una data
+		day <- substr(paymentDate,1,2)
+		month <- substr(paymentDate,4,5)
+		year <- paste("20",substr(paymentDate,7,8),sep="")
+		paymentDate <- paste(year,month,day,sep="-")
+		
 		return(paymentDate)
 	}
 	

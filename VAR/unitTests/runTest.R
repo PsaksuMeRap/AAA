@@ -91,11 +91,14 @@ testsuite.criterium <- defineTestSuite("Test directory criterium",
 testResult <- runTestSuite(testsuite.criterium); printTextProtocol(testResult)
 
 
+
 ## test per la classe positionsMethods
 testsuite.positionsMethods <- defineTestSuite("Test dei metodi positionsMethods",
 		dirs = "./unitTests/t.positionsMethods")
 
 testResult <- runTestSuite(testsuite.positionsMethods); printTextProtocol(testResult)
+
+
 
 ## test per la classe riskmanTestSuite
 testsuite.riskmanTestSuite <- defineTestSuite("Test della classe riskmanTestSuite",
