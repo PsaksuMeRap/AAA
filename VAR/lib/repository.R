@@ -74,6 +74,8 @@ create_repositoryInstruments <- function(instruments.df) {
 		toChange <- instruments.df[,"Instrument"] == "Obbligazioni"
 		if (any(toChange)) instruments.df[toChange,"Instrument"] <- "bond"
 		
+		# sostituisci tutti gli spazi con "_"
+		instruments.df[,"Instrument"] <- gsub(" ","_",instruments.df[,"Instrument"])
 		rm(toChange)
 	}
 	

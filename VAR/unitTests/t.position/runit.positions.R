@@ -18,6 +18,7 @@ test.shouldAddPositionToPositions <- function() {
 	positions$add(position)
 	
 	checkEquals(positions$positions[[1]],position)
+	
 }
 
 test.shouldAdd2PositionsToPositions <- function() {

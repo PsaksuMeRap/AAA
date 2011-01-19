@@ -7,9 +7,33 @@
 extendPosition <- function(position) UseMethod("extendPosition",position)
 
 extendPosition.default <- function(position) {
-	if (is.element("Strutturati FI",class(position))) {
-		extendPosition.StrutturatiFI(position)
+#	if (is.element("Strutturati_FI",class(position))) {
+#		extendPosition.StrutturatiFI(position)
+#	}
+	stop(paste("No suitable method for extendPosition of class",class(position)))
+}
+
+extendPosition.Conto_corrente <- function(position) {
+	
+}
+
+extendPosition.FX_Forward <- function(position) {
+
+	parseDate <- function(position) {
+		name <- position$name
+		nameLength <- nchar(name)
+		if (nameLength < 10) stop(paste("Error: name of FX_Forward",name,"wrong!"))
+		dateString <- substr(name,nameLength-10+1,nameLength)
+		day <- substr(dateString,1,2)
+		month <- substr(dateString,4,5)
+		year <- substr(dateString,7,10)
+		return(paste(year,month,day,sep="-"))
 	}
+	position$expiry <- parseDate(position)
+}
+
+extendPosition.position <- function(position) {
+	
 }
 
 extendPosition.equity <- function(position) {
@@ -37,7 +61,7 @@ extendPosition.equity <- function(position) {
 	return()
 }
 
-extendPosition.StrutturatiFI <- function(position) {
+extendPosition.Strutturati_FI <- function(position) {
 	name <- position$name
 	
 	# check if it is a short term fixed income position

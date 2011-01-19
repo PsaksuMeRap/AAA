@@ -46,7 +46,7 @@ test.shouldAllocateTestInstruments <- function() {
 	allocateTestRepositories("instruments")
 	
 	checkEquals(repositories$instruments$getInstrumentName(1),"equity")
-	checkEquals(repositories$instruments$getId("Obbligazioni convertibili"),11)
+	checkEquals(repositories$instruments$getId("Obbligazioni_convertibili"),11)
 	
 	deallocateTestRepositories("instruments")
 }

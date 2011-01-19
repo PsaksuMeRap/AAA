@@ -18,11 +18,14 @@ dirs = c("./unitTests/t.lists",
 		"./unitTests/t.portfolio",
 		"./unitTests/t.criterium",
 		"./unitTests/t.positionsMethods",
-		"./unitTests/t.riskmanTestSuite"
+		"./unitTests/t.riskmanTestSuite",
+		"./unitTests/t.riskFactor"
 		)
-testsuite.lists <- defineTestSuite("Test globale",
-		dirs = dirs)
+testsuite.lists <- defineTestSuite("Test globale",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
+
+
+
 
 
 
@@ -107,3 +110,8 @@ testsuite.riskmanTestSuite <- defineTestSuite("Test della classe riskmanTestSuit
 testResult <- runTestSuite(testsuite.riskmanTestSuite); printTextProtocol(testResult)
 
 
+## test per la classe riskFactor
+testsuite.riskFactorTestSuite <- defineTestSuite("Test della classe riskFactor",
+		dirs = "./unitTests/t.riskFactor")
+
+testResult <- runTestSuite(testsuite.riskFactorTestSuite); printTextProtocol(testResult)

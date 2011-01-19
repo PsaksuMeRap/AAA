@@ -93,7 +93,7 @@ test.shouldParseStrutturatoFixedIncome <- function() {
 	origin$ID_strumento <- 49
 	
 	ps <- parser$parse(origin)
-	checkEquals(is.element("Strutturati FI",class(ps)),TRUE)
+	checkEquals(is.element("Strutturati_FI",class(ps)),TRUE)
 	
 	# restore initial conditions
 	deallocateTestRepositories("instruments")	

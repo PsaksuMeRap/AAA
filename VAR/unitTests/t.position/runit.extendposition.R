@@ -106,7 +106,7 @@ test.shouldExtendPositionStructuredProductFixedIncome <- function() {
 			Moneta="EUR",
 			ValorePosizione=399892.3,
 			ID_AAA=98,
-			Strumento="Strutturati FI"
+			Strumento="Strutturati_FI"
 	)
 	
 	parser <- create_parserPosition()
@@ -123,7 +123,7 @@ test.shouldExtendPositionStructuredProductFixedIncome <- function() {
 #	position$expiryDate = paste(year,month,day,sep="-")
 	extendPosition(position)
 	
-	checkEquals(class(position),c("Strutturati FI","position"))
+	checkEquals(class(position),c("Strutturati_FI","position"))
 	checkEquals(position$name,"20130521 - <3Y - Floored Floares with Cap 1.75%-4.625% p.a. On CS")
 	checkEquals(position$underlyingHorizon,"<3Y")
 	checkEquals(position$expiryDate,"2013-05-21")
@@ -132,3 +132,34 @@ test.shouldExtendPositionStructuredProductFixedIncome <- function() {
 	deallocateTestRepositories("instruments")
 	deallocateTestRepositories("exchangeRates")
 }
+
+
+
+test.shouldExtendPositionFX_Forward <- function() {
+	source("./lib/position/position.R")
+	source("./unitTests/utilities/allocateTestRepositories.R")
+
+	allocateTestRepositories("instruments")
+	allocateTestRepositories("exchangeRates")
+	
+	record <- list(
+			ID_strumento = 22,
+			Nome="EUR -5,000,000.00 Valuta 01-02-2011",
+			Moneta="EUR",
+			ValorePosizione=203040.00,
+			ID_AAA=0,
+			Strumento=""
+	)
+	
+	parser <- create_parserPosition()
+	position <- parser$parse(record)	
+	
+	checkEquals(class(position),c("FX_Forward","position"))
+	checkEquals(position$name,"EUR -5,000,000.00 Valuta 01-02-2011")
+	checkEquals(position$expiry,"2011-02-01")
+	
+	# restore initial conditions
+	deallocateTestRepositories("instruments")
+	deallocateTestRepositories("exchangeRates")
+}
+

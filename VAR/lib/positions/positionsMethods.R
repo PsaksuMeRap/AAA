@@ -74,7 +74,7 @@ positionsSelector.maturityHorizon <- function(criteriumSelection,positions,...) 
 			if (values=="<3Y") return(TRUE) else return(FALSE)
 		}
 		
-		if (is.element("Fondi mercato monetario",class(position))) {
+		if (is.element("Fondi_mercato_monetario",class(position))) {
 			if (values=="<3Y") return(TRUE) else return(FALSE)
 		}
 		
@@ -86,7 +86,7 @@ positionsSelector.maturityHorizon <- function(criteriumSelection,positions,...) 
 			if (maturityHorizon == values[1]) return(TRUE) else return(FALSE)
 		}
 
-		if (is.element("Fondi obbligazionari",class(position))) {
+		if (is.element("Fondi_obbligazionari",class(position))) {
 			if (grepl("<3Y",x=position$name)) {
 				averageHorizon = "<3Y"
 			} else {
@@ -100,7 +100,7 @@ positionsSelector.maturityHorizon <- function(criteriumSelection,positions,...) 
 			if (averageHorizon == values[1]) return(TRUE) else return(FALSE)
 		}
 		
-		if (is.element("Strutturati FI",class(position))) {
+		if (is.element("Strutturati_FI",class(position))) {
 			if (position$underlyingHorizon == values[1]) return(TRUE) else return(FALSE)
 		}		
 		return(NA)
