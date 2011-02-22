@@ -57,6 +57,21 @@ create_importer <- function() {
 		return(data)
 	}
 	
+	importer$createRepository <- function() {
+		dsNames <- importer$readDsNames()
+		dsCodes <- importer$readDsCodes()
+		data <- importer$getData()
+		
+		repository <- list()
+		class(repository) <- "repository"
+		
+		for (i in 1:length(dsCodes)) {
+			repository[[i]] <- create_dsTimeseries(name=dsNames[i],
+					dsCode=dsCodes[i], data=data[,i,drop=FALSE])
+		} 
+		return(repository)
+	}
+	
 	return(importer)
 	
 }

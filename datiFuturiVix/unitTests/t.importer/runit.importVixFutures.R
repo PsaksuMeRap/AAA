@@ -101,10 +101,12 @@ test.importer_extractSingleContract <- function() {
 }
 
 test.importer_extractAllContracts <- function() {
-
+	
 	importer <- create_importerVixFutures()
 	dsCodes <- importer$readDsCodes()
 	contractNames <- importer$getListOfContractNames(dsCodes)
+	
+	DEACTIVATED("Lungo da eseguire ... perciò temporaneamente deattivato")
 	
 	contracts <- lapply(contractNames,importer$extractSingleContract)
 	
