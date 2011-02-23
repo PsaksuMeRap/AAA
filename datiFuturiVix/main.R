@@ -14,3 +14,22 @@ setwd(home)
 stringsAsFactors = FALSE
 
 source("./lib/library.R")
+
+
+importerVix <- create_importer()
+repository <- importerVix$createRepository()
+rm(importerVix)
+
+importerVixFutures <- create_importerVixFutures()
+contracts <- importerVixFutures$extractAllContracts()
+rm(importerVixFutures)
+
+# determina le lastTradeDates
+
+settlementDates <- extractLists(contracts,fieldName="settlementDate")
+lastTradeDates  <- extractLists(contracts,fieldName="lastTradeDate")
+settlementPrices <- sapply(contracts,extractPriceAtDate,dateType="settlementDate")
+lastTradePrices <- sapply(contracts,extractPriceAtDate,dateType="lastTradeDate")
+
+
+

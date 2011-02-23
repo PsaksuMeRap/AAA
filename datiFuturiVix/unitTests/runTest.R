@@ -10,10 +10,22 @@ source("./lib/library.R")
 ## test globale
 dirs = c("./unitTests/t.importer",
 		 "./unitTests/t.dsCodeParser",
-		 "./unitTests/t.contract")
+		 "./unitTests/t.contract",
+		 "./unitTests/t.lists")
 
 testsuite.lists <- defineTestSuite("Test globale", dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
+
+
+
+
+## test per le procedure contractMethods
+testsuite.contractMethods <- defineTestSuite("Test contractMethods",
+		dirs = "./unitTests/t.contractMethods")
+
+testResult <- runTestSuite(testsuite.contractMethods); printTextProtocol(testResult)
+
+
 
 
 

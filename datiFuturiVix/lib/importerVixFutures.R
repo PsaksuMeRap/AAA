@@ -10,6 +10,11 @@ create_importerVixFutures <- function() {
 	importer$file <- "./unitTests/data/serie.csv"
 	importer$settlementFile <- "./unitTests/data/scadenze.csv"
 
+	importer$knownDataTypes <- c(PO="open",
+			PS="settlement",PH="high",PL="low",
+			OI="openInterest")
+	
+	
 	importer$readSettlementDates <- function() {
 		settDates <- read.csv(file = importer$settlementFile, header = TRUE,
 				stringsAsFactors = FALSE,skip=1)
@@ -62,12 +67,32 @@ create_importerVixFutures <- function() {
 		desired <- substr(codes,1,7)==contractName
 		data <- data[,desired]
 		
+		# parse the dsCodes and rename the timeseries headers accordingly
+		parser <- create_dsCodeParser()
+		dsCodes <- colnames(data)
+		attributes <- lapply(dsCodes,parser$extractContractName)
+
+		values <- extractLists(attributes,fieldName="dataType") 
+		colnames(data) <- importer$knownDataTypes[values]
+		
+		# construct the contract object
 		settlementDate <- importer$getSettlementDate(period)
+
 		lastTradeDate <- importer$getLastTradeDate(period)
 		contract <- create_contract(name=contractName,settlementDate=settlementDate,
 				lastTradeDate=lastTradeDate,data=data)
 		return(contract)
 	}
+	
+	importer$extractAllContracts <- function() {
+
+		dsCodes <- importer$readDsCodes()
+		contractNames <- importer$getListOfContractNames(dsCodes)
+			
+		contracts <- lapply(contractNames,importer$extractSingleContract)
+		return(contracts)
+	}
+	
 	
 	return(importer)
 
