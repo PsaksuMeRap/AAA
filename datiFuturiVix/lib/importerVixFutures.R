@@ -14,23 +14,24 @@ create_importerVixFutures <- function() {
 			PS="settlement",PH="high",PL="low",
 			OI="openInterest")
 	
-	
 	importer$readSettlementDates <- function() {
 		settDates <- read.csv(file = importer$settlementFile, header = TRUE,
 				stringsAsFactors = FALSE,skip=1)
 		colnames(settDates)[1] <- "Last Trade Date"
 		colnames(settDates)[2] <- "Settlement Date"
 		
-		return(settDates)
+		importer$repository$settlementDates <<- settDates
 	}
 		
 	
 	importer$getSettlementDate <- function(period) {
 		
-		settlementDates <- importer$readSettlementDates()
+		if (!exists("settlementDates",where=importer$repository,inherits=FALSE)) {
+			importer$readSettlementDates()
+		}
 		
-		desired <- substr(settlementDates[,"Settlement Date"],1,7) == period
-		desiredDate <- settlementDates[desired,"Settlement Date"]
+		desired <- substr(importer$repository$settlementDates[,"Settlement Date"],1,7) == period
+		desiredDate <- importer$repository$settlementDates[desired,"Settlement Date"]
 		return(desiredDate)
 	}
 	
@@ -62,11 +63,20 @@ create_importerVixFutures <- function() {
 		period <- paste(year,"-",month,sep="")
 		rm(year,month)
 		
-		data <- importer$getData()
-		codes <- importer$readDsCodes()
+		if (!exists("data",where=importer$repository,inherits = FALSE)) {
+			importer$getData()
+		}
+		data <- importer$repository$data
+		
+		if (!exists("dsCodes",where=importer$repository,inherits = FALSE)) {
+			importer$readDsCodes()
+		}	
+		codes <- importer$repository$dsCodes
+		
+		
 		desired <- substr(codes,1,7)==contractName
 		data <- data[,desired]
-		
+
 		# parse the dsCodes and rename the timeseries headers accordingly
 		parser <- create_dsCodeParser()
 		dsCodes <- colnames(data)

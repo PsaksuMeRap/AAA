@@ -11,6 +11,8 @@ create_importer <- function() {
 	
 	importer$file <- "./unitTests/data/vixAndCo.csv"
 
+	importer$repository <- new.env()
+	
 	importer$readStartEndFrequency <- function() {
 		
 		input <- read.csv(file = importer$file, header = FALSE,
@@ -31,7 +33,7 @@ create_importer <- function() {
 				stringsAsFactors = FALSE,skip=3,nrows = 1)
 		
 		names = as.vector(input[1,-1],mode="character")
-		return(names)
+		importer$repository$dsNames <<- names
 	}
 	
 	importer$readDsCodes <- function() {
@@ -41,7 +43,7 @@ create_importer <- function() {
 		
 		codes = as.vector(input[1,-1],mode="character")
 		
-		return(codes)
+		importer$repository$dsCodes <<- codes
 	}
 	
 	importer$getData <- function() {
@@ -54,13 +56,25 @@ create_importer <- function() {
 		rownames(data) <- dates
 		
 		colnames(data) <- importer$readDsCodes()
-		return(data)
+		
+		importer$repository$data <<- data
 	}
 	
 	importer$createRepository <- function() {
-		dsNames <- importer$readDsNames()
-		dsCodes <- importer$readDsCodes()
-		data <- importer$getData()
+		if (!exists("dsNames",where=importer$repository,inherits = FALSE)) {
+			importer$readDsNames()
+		}	
+		dsNames <- importer$repository$dsNames
+		
+		if (!exists("dsCodes",where=importer$repository,inherits = FALSE)) {
+			importer$readDsCodes()
+		}	
+		dsCodes <- importer$repository$dsCodes
+		
+		if (!exists("data",where=importer$repository,inherits = FALSE)) {
+			importer$getData()
+		}
+		data <- importer$repository$data
 		
 		repository <- list()
 		class(repository) <- "repository"

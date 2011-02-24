@@ -33,7 +33,11 @@ test.importer_readStartEndFrequency <- function() {
 
 test.importer_readDsNames <- function() {
 	importer <- create_importerVixFutures()
-	names <- importer$readDsNames() 
+	
+	if (!exists("dsNames",where=importer$repository,inherits = FALSE)) {
+		importer$readDsNames()
+	}	
+	names <- importer$repository$dsNames
 	
 	checkEquals(names[2],"CFE-VIX INDEX MAR 2011 - SETT. PRICE")
 	
@@ -97,14 +101,14 @@ test.importer_extractSingleContract <- function() {
 	checkEquals(contract$name,"CVX0510")
 	checkEquals(contract$settlementDate,"2010-05-19")
 	checkEquals(contract$lastTradeDate,"2010-05-18")
-	checkEquals(colnames(contract$data)[1:2],c("CVX0510(PO)","CVX0510(PS)"))
+	checkEquals(colnames(contract$data)[1:2],c("open","settlement"))
 }
 
 test.importer_extractAllContracts <- function() {
 	
 	importer <- create_importerVixFutures()
 	
-	DEACTIVATED("Lungo da eseguire ... perciò temporaneamente deattivato")
+	# DEACTIVATED("Lungo da eseguire ... perciò temporaneamente deattivato")
 	
 	contracts <- importer$extractAllContracts()
 	

@@ -28,8 +28,9 @@ rm(importerVixFutures)
 
 settlementDates <- extractLists(contracts,fieldName="settlementDate")
 lastTradeDates  <- extractLists(contracts,fieldName="lastTradeDate")
-settlementPrices <- sapply(contracts,extractPriceAtDate,dateType="settlementDate")
-lastTradePrices <- sapply(contracts,extractPriceAtDate,dateType="lastTradeDate")
+settlementPrices <- sapply(contracts,extractPriceAtSettlementOrLastTradeDate,dateType="settlementDate")
+lastTradePrices <- sapply(contracts,extractPriceAtSettlementOrLastTradeDate,dateType="lastTradeDate")
+
 
 
 

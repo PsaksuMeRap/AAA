@@ -4,7 +4,7 @@
 ###############################################################################
 
 
-test.extractPriceAtDate <- function() {
+test.extractPriceAtSettlementOrLastTradeDate <- function() {
 	
 	dateType = "settlementDate"
 	dataType = "low"
@@ -17,11 +17,64 @@ test.extractPriceAtDate <- function() {
 			lastTradeDate="2004-06-14",
 			data=data)
 	
-	result <- extractPriceAtDate(contract,dateType,dataType)
+	result <- extractPriceAtSettlementOrLastTradeDate(contract,dateType,dataType)
 	checkEquals(result,22)
 	
 	contract$settlementDate <- "2001-06-15"
-	result <- extractPriceAtDate(contract,dateType,dataType)
+	result <- extractPriceAtSettlementOrLastTradeDate(contract,dateType,dataType)
 	checkEquals(result,NA)
 }
 
+
+test.extractPriceAtSpecificDate <- function() {
+	date = "2011-01-28"
+	dataType = "open"
+
+	importer <- create_importerVixFutures()
+	
+	desiredContract <- importer$extractSingleContract("CVX0311")
+	result <- extractPriceAtSpecificDate (desiredContract,date,dataType)
+	checkEquals(result,19.38)
+
+	dataType = "high"
+	result <- extractPriceAtSpecificDate (desiredContract,date,dataType)
+	checkEquals(result,20.9)
+	
+	date <- "2000-06-15"
+	result <-  extractPriceAtSpecificDate (desiredContract,date,dataType)
+	checkEquals(result,NA)
+}
+
+
+test.extractDatePreviousToSettlement <- function() {
+	nbPeriods <- 5
+	
+	importer <- create_importerVixFutures()
+	
+	contract <- importer$extractSingleContract("CVX0504")
+	
+	result <- extractDatePreviousToSettlement(contract,nbPeriods)
+	
+	checkEquals(result,"2004-05-12")
+	
+	nbPeriods <- 1000000
+	result <- extractDatePreviousToSettlement(contract,nbPeriods)
+	checkEquals(result,NA)
+}
+
+
+test.extractPricePreviousToSettlement <- function() {
+	nbPeriods <- 5
+	dataType="settlement"
+	importer <- create_importerVixFutures()
+	
+	contract <- importer$extractSingleContract("CVX0504")
+	
+	result <- extractPricePreviousToSettlement(contract,nbPeriods,dataType)
+	
+	checkEquals(result,18.2)
+	
+	nbPeriods <- 1000000
+	result <- extractPricePreviousToSettlement(contract,nbPeriods)
+	checkEquals(result,NA)
+}
