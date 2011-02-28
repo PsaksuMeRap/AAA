@@ -78,10 +78,13 @@ create_importer <- function() {
 		
 		repository <- list()
 		class(repository) <- "repository"
-		
+		dates <- rownames(data) 
+				
 		for (i in 1:length(dsCodes)) {
+			x <- data[,i,drop=FALSE]
+			rownames(x)<- dates
 			repository[[i]] <- create_dsTimeseries(name=dsNames[i],
-					dsCode=dsCodes[i], data=data[,i,drop=FALSE])
+					dsCode=dsCodes[i], data=x)
 		} 
 		return(repository)
 	}
