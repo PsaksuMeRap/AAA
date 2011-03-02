@@ -73,7 +73,7 @@ inip <- function(n,x,l,u,m,lambda,equatn,linear,coded,checkder) {
 	coded[9]  <- 0 # evalhl
 	coded[10] <- 0 # evalhlp
 	
-	checkder = 1
+	checkder = 0
 }
 
 #    ******************************************************************
@@ -130,7 +130,7 @@ evalh <- function(n,x,hlin,hcol,hval,hnnz,flag) {
 #    ******************************************************************
 #    ******************************************************************
 
-evalc <- function(n,x,ind,c,flag) {
+evalc <- function(n,x,ind,cind,flag) {
 	
 #    This subroutine must compute the ind-th constraint. For achieving 
 #    this objective YOU MUST MOFIFY it according to your problem. See 
@@ -140,19 +140,17 @@ evalc <- function(n,x,ind,c,flag) {
 	if (datiBenchmark$conVincoloBenchmark)
 	{
 		if (ind <= datiVincoli$nrVincUgualeAlgencan) {
-			c <- (datiVincoli$M[ind,] %*% x)[1,1] - datiVincoli$b[[ind]]
+			cind <- (datiVincoli$M[ind,] %*% x)[1,1] - datiVincoli$b[[ind]]
 		} else {
 			if (ind < datiVincoli$nrVincUgualeAlgencan+datiVincoli$nrVincAlMaxAlgencan) {
-				c <- (datiVincoli$M1[ind-datiVincoli$nrVincUgualeAlgencan,] %*% x)[1,1] + 
+				cind <- (datiVincoli$M1[ind-datiVincoli$nrVincUgualeAlgencan,] %*% x)[1,1] + 
 						- datiVincoli$b1[[ind-datiVincoli$nrVincUgualeAlgencan]]
 			} else {
 				if (ind == datiVincoli$nrVincUgualeAlgencan+datiVincoli$nrVincAlMaxAlgencan) {
 					## add to improve the feasibility tolerance
-					c <- 10000*((x %*% (covMatrix %*% x) -2 * t(x)%*%(datiBenchmark$C1%*%datiBenchmark$v.pesiRiskAssets) +
+					cind <- 10000*((x %*% (covMatrix %*% x) -2 * t(x)%*%(datiBenchmark$C1%*%datiBenchmark$v.pesiRiskAssets) +
 									datiBenchmark$v.pesiRiskAssets %*% (datiBenchmark$C2%*%datiBenchmark$v.pesiRiskAssets) +
 									- datiBenchmark$trackErrorConstrSquared)[1,1])
-					
-					
 				} else {
 					flag <- -1
 				}
@@ -160,10 +158,10 @@ evalc <- function(n,x,ind,c,flag) {
 		}
 	} else { ## if (datiBenchmark$conVincoloBenchmark)
 		if (ind <= datiVincoli$nrVincUgualeAlgencan) {
-			c <- (datiVincoli$M[ind,] %*% x)[1,1] - datiVincoli$b[[ind]]
+			cind <- (datiVincoli$M[ind,] %*% x)[1,1] - datiVincoli$b[[ind]]
 		} else {
 			if (ind <= datiVincoli$nrVincUgualeAlgencan+datiVincoli$nrVincAlMaxAlgencan) {
-				c <- (datiVincoli$M1[ind-datiVincoli$nrVincUgualeAlgencan,] %*% x)[1,1] + 
+				cind <- (datiVincoli$M1[ind-datiVincoli$nrVincUgualeAlgencan,] %*% x)[1,1] + 
 						- datiVincoli$b1[[ind-datiVincoli$nrVincUgualeAlgencan]]
 			} else {
 				flag <- -1

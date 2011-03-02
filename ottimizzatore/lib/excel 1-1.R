@@ -1,6 +1,7 @@
 ## uncomment to debug 
 rm(list=ls(all=TRUE))
-setwd("/home/claudio/eclipse/AAA/ottimizzatore/")
+baseDirectory = "/home/claudio/eclipse/AAA/ottimizzatore/"
+setwd(baseDirectory)
 load("./unitTests/data/excel_input.RData")
 rSourceDirectory = "lib/"
 rOutputdirectory = "unitTests/output/"
@@ -15,6 +16,13 @@ options(stringsAsFactors = FALSE)
 exitWithError = 0
 markowitzVersion = " 2-0"
 
+
+if (Sys.info()["sysname"]=="Linux") {
+	if (Sys.info()["machine"]=="x86_64"){
+		rSolverFolder ="/solver-64/"
+	}
+	
+}
 
 vech <- function(M)
 {
@@ -2054,22 +2062,22 @@ if (any(ottimizSenzaBench$feasible))
 	## Load the problem definition file
 	source(paste(rSourceDirectory,"/markowitz",markowitzVersion,".r",sep=""))
 	
-#   Load the solver wrapper
-	RHome <- R.home()
-	dyn.load(paste(rSourceDirectory,"solver/algencan.so",sep=""))
+	##   Load the solver wrapper
+	# RHome <- R.home()
+	dyn.load(paste(rSourceDirectory,rSolverFolder,"/algencan.so",sep=""))
 	
+	
+	setwd(paste(baseDirectory,rOutputdirectory,sep=""))	
 	rimuoviAlgencanOutput()
 	index = 1
-	for (desired.r in r.range)
-	{
-		if (ottimizSenzaBench$feasible[index])
-		{
+	
+	for (desired.r in r.range) {
+		if (ottimizSenzaBench$feasible[index]) {
 			datiVincoli$b[1] = desired.r - datiVincoli$rf
-#   Call the solver
+			##   Call the solver
 			.Call("ralgencan",body(evalf),body(evalg),body(evalh),body(evalc),
-					body(evaljac),body(evalhc),body(evalfc),body(evalgjac),
-					body(evalhl),body(evalhlp),body(inip),body(endp),
-					body(param),sys.frame(0))
+					body(evaljac),body(evalhc),body(evalfc),body(evalgjac),body(evalhl),
+					body(evalhlp),body(inip),body(endp),body(param),sys.frame(0))
 			ottimizConBench$inform[index] = inform
 			ottimizConBench$message.v[index] = AlgencanErrorString(inform)
 			ottimizConBench$feasible[index] <- (if (inform==0) TRUE else FALSE)
@@ -2090,6 +2098,7 @@ if (any(ottimizSenzaBench$feasible))
 		}
 		index <- index + 1
 	}
+	
 	## add the E(r) of the benchmark, its volatility and the Information Ratio    
 	ottimizConBench$optimalStdev <- cbind(ottimizConBench$optimalStdev,
 			"Information Ratio"=rep(NA_real_,nrow(ottimizConBench$optimalStdev)))
@@ -2112,7 +2121,7 @@ if (any(ottimizSenzaBench$feasible))
 				(ottimizConBench$optimalStdev[ottimizConBench$feasible,"E(r)"]-datiBenchmark$expectedReturn) /
 				ottimizConBench$optimalStdev[ottimizConBench$feasible,"Tracking Error"]
 	}
-	# adjust the output's scale in order to satisfy the reporting horizon
+	## adjust the output's scale in order to satisfy the reporting horizon
 	tmp <- sqrt(reportingScaleFactor)  
 	ottimizConBench$optimalStdev[,"E(r)"] = reportingScaleFactor * ottimizConBench$optimalStdev[,"E(r)"]
 	ottimizConBench$optimalStdev[ottimizConBench$feasible,"Portfolio stdev"] = tmp *
@@ -2130,11 +2139,7 @@ if (any(ottimizSenzaBench$feasible))
 
 
 
-
-
-
-if (l.datiRiskFree$conRiskFree)
-{
+if (l.datiRiskFree$conRiskFree) {
 	tmp = apply(X=ottimizConBench$P,MARGIN=2,FUN=sum)
 	ottimizConBench$P = rbind(1-tmp,ottimizConBench$P)
 	rownames(ottimizConBench$P)[1] <- l.datiRiskFree$idRiskFree
@@ -2159,8 +2164,7 @@ Z$devStand[,"Stdev"] = Z$Stdev[,"Stdev"]/sqrt(orizzonteExpectedReturns)
 Z$devStand <- aggiungiClassi(riskFactors$classiConNomi,Z$devStand[riskFactors$nomi,"Stdev",drop=FALSE]) 
 
 ## aggiungi le classi al risultato dell'ottimizzazione vincolata
-if (l.datiRiskFree$conRiskFree)
-{
+if (l.datiRiskFree$conRiskFree) {
 	classiConNomi <- c(l.datiRiskFree$classiConNomi,riskFactors$classiConNomi)
 } else {
 	classiConNomi <- riskFactors$classiConNomi
@@ -2182,5 +2186,6 @@ if (is.element("Bench. Stdev",colnames(ottimizConBench$optimalStdev))) {
 
 save.image("R_output.RData")
 
+setwd(baseDirectory)
 
-
+print("stop, terminata ottimizzazione :-)")
