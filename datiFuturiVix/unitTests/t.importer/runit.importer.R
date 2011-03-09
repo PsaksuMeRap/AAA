@@ -33,5 +33,5 @@ test.importer_createRepository <- function() {
 	
 	repository <- importer$createRepository() 
 	
-	checkEquals(length(repository),11)
+	checkEquals(length(repository),12)
 }

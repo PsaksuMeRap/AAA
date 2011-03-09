@@ -85,9 +85,28 @@ create_importerVixFutures <- function() {
 		values <- extractLists(attributes,fieldName="dataType") 
 		colnames(data) <- importer$knownDataTypes[values]
 		
+		# remove NA values
+		if (nrow(data)>0) {
+			dates <- rownames(data)
+			sequence <- 1:nrow(data)
+			
+			# determine first and last entry
+			areNA <- rep(TRUE,nrow(data))
+			for (i in 1:ncol(data)) {
+				areNA <- areNA & is.na(data[,i])
+			}
+			if (!all(areNA)) {
+				start <- min(sequence[!areNA])
+				end   <- max(sequence[!areNA])
+				data <- data[start:end,,drop=FALSE]
+				rownames(data)<- dates[start:end]
+			} else {
+				data <- data[!areNA,,drop=FALSE]
+			}
+		}
 		# construct the contract object
 		settlementDate <- importer$getSettlementDate(period)
-
+		
 		lastTradeDate <- importer$getLastTradeDate(period)
 		contract <- create_contract(name=contractName,settlementDate=settlementDate,
 				lastTradeDate=lastTradeDate,data=data)

@@ -79,10 +79,23 @@ create_importer <- function() {
 		repository <- list()
 		class(repository) <- "repository"
 		dates <- rownames(data) 
-				
+
 		for (i in 1:length(dsCodes)) {
 			x <- data[,i,drop=FALSE]
-			rownames(x)<- dates
+			
+			if (nrow(x)>0) {
+				sequence <- 1:nrow(x)
+				# determine first and last entry
+				areNA <- is.na(x[,1])
+				if (!all(areNA)) {
+					start <- min(sequence[!areNA])
+					end   <- max(sequence[!areNA])
+					x <- x[start:end,,drop=FALSE]
+					rownames(x)<- dates[start:end]
+				} else {
+					x <- x[!areNA,,drop=FALSE]
+				}
+			}
 			repository[[i]] <- create_dsTimeseries(name=dsNames[i],
 					dsCode=dsCodes[i], data=x)
 		} 
