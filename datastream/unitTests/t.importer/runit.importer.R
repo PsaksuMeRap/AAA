@@ -53,7 +53,6 @@ test.importer_getDataWith_NA <- function() {
 	importer <- create_importer(importFrom="./unitTests/data/serie storiche datastream.csv")
 	data <- importer$getData()
 
-print(data[3,9])
 	checkEquals(data[3,9],NA_real_)
 	checkEquals(data[3,18],NA_real_)	
 }

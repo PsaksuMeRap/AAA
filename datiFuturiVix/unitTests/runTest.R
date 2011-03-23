@@ -8,11 +8,10 @@ library("RUnit")
 source("./lib/library.R")
 
 ## test globale
-dirs = c("./unitTests/t.importer",
+dirs = c("./unitTests/t.importerVixFutures",
 		 "./unitTests/t.dsCodeParser",
 		 "./unitTests/t.contract",
-		 "./unitTests/t.lists",
-		 "./unitTests/t.contractMethods")
+		 "./unitTests/t.futureContractMethods")
 
 testsuite.lists <- defineTestSuite("Test globale", dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
