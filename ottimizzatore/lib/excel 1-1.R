@@ -21,6 +21,9 @@ if (Sys.info()["sysname"]=="Linux") {
 	if (Sys.info()["machine"]=="x86_64"){
 		rSolverFolder ="/solver-64/"
 	}
+	if (Sys.info()["machine"]=="i686"){
+		rSolverFolder ="/solver-32/"
+	}	
 	
 }
 
@@ -2064,7 +2067,7 @@ if (any(ottimizSenzaBench$feasible))
 	
 	##   Load the solver wrapper
 	# RHome <- R.home()
-	dyn.load(paste(rSourceDirectory,rSolverFolder,"/algencan.so",sep=""))
+	dyn.load(paste(rSourceDirectory,rSolverFolder,"algencan.so",sep=""))
 	
 	
 	setwd(paste(baseDirectory,rOutputdirectory,sep=""))	
@@ -2072,8 +2075,9 @@ if (any(ottimizSenzaBench$feasible))
 	index = 1
 	
 	for (desired.r in r.range) {
-		if (ottimizSenzaBench$feasible[index]) {
-			datiVincoli$b[1] = desired.r - datiVincoli$rf
+#		if (ottimizSenzaBench$feasible[index]) {
+		if (TRUE) {
+		datiVincoli$b[1] = desired.r - datiVincoli$rf
 			##   Call the solver
 			.Call("ralgencan",body(evalf),body(evalg),body(evalh),body(evalc),
 					body(evaljac),body(evalhc),body(evalfc),body(evalgjac),body(evalhl),

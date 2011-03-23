@@ -1,0 +1,197 @@
+
+ ==============================================================================
+ This is ALGENCAN 2.3.6.
+ ALGENCAN, an augmented Lagrangian method for nonlinear programming, is part of
+ the TANGO Project: Trustable Algorithms for Nonlinear General Optimization.
+ See http://www.ime.usp.br/~egbirgin/tango/ for details.
+ ==============================================================================
+
+ The optional specification file algencan.dat was not found in the current
+ directory (this is not a problem nor an error). The default values for the
+ ALGENCAN parameters will be used.
+
+ ALGENCAN PARAMETERS:
+ hptype   =               TRUEHP
+ innslvr  =                   TN
+ sclsys   =                    F
+ skipacc  =                    T
+ lsssub   =                 NONE
+ sclsub   =                 NONE
+ rmfixv   =                    T
+ slacks   =                    F
+ scale    =                    T
+ epsfeas  =           1.0000D-05
+ epsopt   =           1.0000D-05
+ iprint   =                    1
+ ncomp    =                    5
+
+ Number of variables               :      49
+ Number of equality constraints    :      20
+ Number of inequality constraints  :      20
+ Number of bound constraints       :      36
+
+ Number of removed fixed variables :       0
+
+ Objective function scale factor   : 1.0D+00
+ Smallest constraints scale factor : 5.3D-03
+
+     Entry to GENCAN.
+     Number of variables:      49
+     Required optimality tolerance: 3.2D-03
+
+     It                f  gpsupn   xsupn   ssupn    nind   lvfit   innit    fcnt
+      0   4.33189302D-01 3.5D+00 2.0D-02
+      1   2.28879888D-02 4.4D-01 6.3D-02 4.3D-02      49       0       1       3
+      2   2.20373861D-03 1.8D-01 5.9D-02 2.4D-02      46       0       2       4
+      3   1.98332089D-03 1.7D-01 6.0D-02 5.9D-03      45       0       3       6
+      4   1.75847306D-03 1.5D-01 7.3D-02 1.3D-02      44       0       4       8
+      5   1.52319095D-03 1.4D-01 9.4D-02 2.1D-02      43       0       5      10
+      6   1.35515344D-03 1.3D-01 9.6D-02 4.2D-03      42       0       6      12
+      7   1.20269759D-03 1.1D-01 9.8D-02 4.8D-03      41       0       7      14
+      8   1.04759415D-03 1.0D-01 1.4D-01 3.7D-02      40       0       8      16
+      9   9.54377253D-04 9.4D-02 1.5D-01 1.6D-02      39       0       9      18
+
+     It                f  gpsupn   xsupn   ssupn    nind   lvfit   innit    fcnt
+     10   8.77611921D-04 8.5D-02 1.5D-01 3.4D-03      38       0      10      20
+
+     Flag of GENCAN: Maximum of iterations reached.
+
+
+     Entry to GENCAN.
+     Number of variables:      49
+     Required optimality tolerance: 3.2D-03
+
+     It                f  gpsupn   xsupn   ssupn    nind   lvfit   innit    fcnt
+      0   1.52164895D-03 1.7D-01 1.5D-01
+      1   2.68669190D-04 8.1D-03 1.5D-01 6.3D-03      38       0       1      23
+      2   2.65110502D-04 9.2D-03 1.5D-01 4.8D-04      38       0       2      26
+      3   2.56939260D-04 8.7D-03 1.6D-01 2.7D-03      37       0       3      28
+      4   2.53993728D-04 8.1D-03 1.6D-01 3.1D-04      36       0       4      30
+      5   2.51440621D-04 7.9D-03 1.6D-01 3.8D-03      36       0       5      34
+      6   2.42675432D-04 7.5D-03 1.9D-01 2.5D-02      35       0       6      36
+      7   2.34613738D-04 6.8D-03 2.0D-01 1.4D-02      34       0       7      38
+      8   2.29765125D-04 6.4D-03 2.0D-01 1.2D-02      33       0       8      40
+      9   2.17846011D-04 4.5D-03 2.0D-01 1.9D-02      32       0       9      42
+
+     It                f  gpsupn   xsupn   ssupn    nind   lvfit   innit    fcnt
+     10   2.11383029D-04 2.8D-03 2.0D-01 1.3D-02      31       0      10      44
+
+     Flag of GENCAN: Solution was found.
+
+
+     Entry to GENCAN.
+     Number of variables:      49
+     Required optimality tolerance: 3.2D-04
+
+     It                f  gpsupn   xsupn   ssupn    nind   lvfit   innit    fcnt
+      0   5.30483619D-04 4.3D-03 2.0D-01
+      1   5.29932865D-04 1.6D-02 2.0D-01 1.2D-03      31       0       1      49
+      2   5.17699329D-04 2.1D-03 2.0D-01 8.7D-04      31       0       2      50
+      3   5.11389879D-04 2.1D-03 2.0D-01 2.2D-03      30       0       3      52
+      4   5.09651336D-04 2.1D-03 2.0D-01 8.2D-04      30       0       4      56
+      5   5.07161687D-04 1.7D-02 2.0D-01 6.0D-02      25       0       5      58
+      6   5.03648725D-04 2.2D-02 2.0D-01 1.1D-03      25       0       6      65
+      7   4.96133886D-04 2.2D-02 2.0D-01 3.4D-03      25       0       7      70
+      8   4.76366272D-04 2.0D-02 2.0D-01 9.4D-03      25       0       8      75
+      9   4.73531995D-04 2.0D-02 2.0D-01 1.4D-03      25       0       9      82
+
+     It                f  gpsupn   xsupn   ssupn    nind   lvfit   innit    fcnt
+     10   4.71798193D-04 2.7D-02 2.0D-01 2.0D-03      25       0      10      89
+     11   4.45032029D-04 3.2D-03 2.0D-01 1.7D-03      25       0      11      90
+     12   4.30562586D-04 3.0D-03 2.0D-01 2.0D-02      24       0      12      92
+     13   4.30017158D-04 2.9D-03 2.0D-01 1.3D-03      24       0      13      94
+     14   4.29696411D-04 3.3D-03 2.0D-01 2.8D-03      24       0      14      97
+     15   4.28230731D-04 2.7D-03 2.0D-01 5.2D-03      24       0      15      98
+     16   4.28086328D-04 2.0D-03 2.0D-01 7.9D-05      32       1      15     107
+     17   4.27905409D-04 1.8D-03 2.0D-01 8.3D-06      31       1      16     109
+     18   4.27815503D-04 1.7D-03 2.0D-01 1.5D-05      31       1      17     112
+     19   4.27331163D-04 4.0D-03 2.0D-01 4.3D-04      30       1      18     113
+
+     It                f  gpsupn   xsupn   ssupn    nind   lvfit   innit    fcnt
+     20   4.26934106D-04 1.8D-03 2.0D-01 4.5D-05      30       1      19     117
+     21   4.24085432D-04 2.4D-03 2.0D-01 1.1D-03      29       1      20     119
+     22   4.20415285D-04 2.3D-03 2.0D-01 3.2D-03      28       1      21     121
+     23   4.12282556D-04 2.3D-03 2.0D-01 7.3D-03      27       1      22     123
+     24   4.05243404D-04 1.3D-02 2.0D-01 1.9D-02      27       1      23     127
+     25   3.98295459D-04 1.3D-02 2.0D-01 7.2D-03      27       1      24     132
+     26   3.98029707D-04 1.3D-02 2.0D-01 2.8D-04      27       1      25     141
+     27   3.97944845D-04 1.3D-02 2.0D-01 1.1D-04      27       1      26     150
+     28   3.67874376D-04 6.3D-04 2.0D-01 2.0D-02      27       1      27     151
+     29   3.62686786D-04 8.0D-04 2.0D-01 1.2D-02      27       1      28     155
+
+     It                f  gpsupn   xsupn   ssupn    nind   lvfit   innit    fcnt
+     30   3.60974979D-04 8.7D-04 2.0D-01 4.7D-03      27       1      29     160
+     31   3.60266120D-04 9.0D-04 2.0D-01 2.0D-03      27       1      30     166
+     32   3.60169106D-04 9.0D-04 2.0D-01 2.9D-04      27       1      31     174
+     33   3.60095428D-04 1.0D-03 2.0D-01 4.8D-04      27       1      32     182
+     34   3.56463242D-04 1.1D-03 2.0D-01 1.9D-02      26       1      33     183
+     35   3.56459936D-04 1.1D-03 2.0D-01 2.2D-05      26       1      34     194
+     36   3.56457291D-04 1.2D-03 2.0D-01 1.9D-05      26       1      35     206
+     37   3.56444756D-04 1.3D-03 2.0D-01 6.0D-05      26       1      36     207
+     38   3.56376112D-04 3.1D-04 2.0D-01 1.3D-04      28       2      36     209
+
+     Flag of GENCAN: Solution was found.
+
+
+     Entry to GENCAN.
+     Number of variables:      49
+     Required optimality tolerance: 3.2D-05
+
+     It                f  gpsupn   xsupn   ssupn    nind   lvfit   innit    fcnt
+      0   4.01937066D-04 1.3D-02 2.0D-01
+      1   3.81942513D-04 3.7D-02 2.0D-01 2.4D-03      26       0       1     212
+      2   3.81396597D-04 3.7D-02 2.0D-01 3.6D-04      26       0       2     220
+      3   3.80886428D-04 3.7D-02 2.0D-01 5.1D-04      26       0       3     227
+      4   3.79352722D-04 3.7D-02 2.0D-01 1.5D-03      26       0       4     234
+      5   3.79206528D-04 3.7D-02 2.0D-01 1.4D-04      26       0       5     244
+      6   3.79162545D-04 3.7D-02 2.0D-01 4.2D-05      26       0       6     254
+      7   3.79144730D-04 3.7D-02 2.0D-01 3.3D-05      26       0       7     265
+      8   3.68063368D-04 2.8D-03 2.0D-01 2.7D-03      26       0       8     266
+      9   3.65833320D-04 2.7D-03 2.0D-01 6.5D-03      26       0       9     269
+
+     It                f  gpsupn   xsupn   ssupn    nind   lvfit   innit    fcnt
+     10   3.64748084D-04 2.7D-03 2.0D-01 3.3D-03      26       0      10     272
+     11   3.64212914D-04 2.7D-03 2.0D-01 1.6D-03      26       0      11     275
+     12   3.64209535D-04 2.7D-03 2.0D-01 1.0D-05      26       0      12     283
+     13   3.64207707D-04 2.7D-03 2.0D-01 5.6D-06      26       0      13     291
+     14   3.64205790D-04 2.7D-03 2.0D-01 5.9D-06      26       0      14     300
+     15   3.64205077D-04 2.4D-03 2.0D-01 3.4D-06      26       0      15     309
+     16   3.63872789D-04 2.4D-03 2.0D-01 5.9D-04      25       0      16     311
+     17   3.62376293D-04 1.8D-03 2.0D-01 7.8D-03      25       0      17     314
+     18   3.62257918D-04 1.7D-03 2.0D-01 7.4D-04      25       0      18     320
+     19   3.62248387D-04 1.7D-03 2.0D-01 6.0D-05      25       0      19     328
+
+     It                f  gpsupn   xsupn   ssupn    nind   lvfit   innit    fcnt
+     20   3.62220432D-04 1.7D-03 2.0D-01 1.8D-04      25       0      20     336
+     21   3.62217905D-04 1.7D-03 2.0D-01 1.6D-05      25       0      21     346
+     22   3.62211014D-04 1.7D-03 2.0D-01 4.4D-05      25       0      22     356
+     23   3.62210818D-04 1.7D-03 2.0D-01 1.7D-06      25       0      23     369
+     24   3.61854415D-04 2.2D-04 2.0D-01 2.6D-03      25       0      24     370
+     25   3.61854250D-04 1.2D-04 2.0D-01 1.1D-06      25       0      25     371
+     26   3.61854083D-04 1.8D-04 2.0D-01 1.0D-06      28       1      25     372
+     27   3.61815282D-04 1.4D-03 2.0D-01 4.4D-04      27       1      26     373
+     28   3.61814750D-04 1.4D-03 2.0D-01 4.4D-06      27       1      27     386
+     29   3.61814497D-04 1.4D-03 2.0D-01 2.1D-06      27       1      28     399
+
+     It                f  gpsupn   xsupn   ssupn    nind   lvfit   innit    fcnt
+     30   3.61814318D-04 1.4D-03 2.0D-01 1.8D-06      27       1      29     413
+     31   3.61813984D-04 1.4D-03 2.0D-01 3.0D-06      27       1      30     427
+     32   3.60179094D-04 2.0D-04 2.0D-01 2.4D-02      27       1      31     428
+     33   3.60178965D-04 1.8D-04 2.0D-01 7.9D-07      27       1      32     429
+     34   3.60178913D-04 1.4D-04 2.0D-01 1.4D-06      28       2      32     430
+     35   3.60178810D-04 3.1D-09 2.0D-01 1.5D-06      28       2      33     431
+
+     Flag of GENCAN: Solution was found.
+
+
+     Entry to GENCAN.
+     Number of variables:      49
+     Required optimality tolerance: 1.0D-05
+
+     It                f  gpsupn   xsupn   ssupn    nind   lvfit   innit    fcnt
+      0   3.60279424D-04 5.0D-04 2.0D-01
+      1   3.60230235D-04 3.2D-05 2.0D-01 3.7D-04      27       0       1     434
+      2   3.60230176D-04 1.6D-06 2.0D-01 1.4D-04      27       0       2     435
+
+     Flag of GENCAN: Solution was found.
+
