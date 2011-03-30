@@ -5,52 +5,9 @@
 
 load("excel_input_cov_matrix.RData")
 library(tcltk)
+source("./lib/utilities.R")
 exitWithError = 0
 
-trim <- function(s)
-{
-  s <- sub(pattern="^ +", replacement="", x=s)
-  s <- sub(pattern=" +$", replacement="", x=s)
-  s  
-}
-completeDatePart <- function(v.dayOrMonth)
-{
-  ## this function complete with a zero the daily or monthly part
-  ## of a date
-  ## v.dayOrMonth: a vector containing the day [1-31] or the month [1-12].
-  
-  toComplete <- nchar(v.dayOrMonth) == 1
-  v.dayOrMonth[toComplete] = paste("0",v.dayOrMonth[toComplete],sep="")
-  return(v.dayOrMonth)
-}
-
-verifyNonNegativity <- function(dataFrame)
-{
-  ## this function verify that the imported prices are larger than 0
-  ## dataFrame is a data.frame with only data (no dates!)
-
-  for (nome in colnames(dataFrame))
-  {
-    isAvailable <- !is.na(dataFrame[,nome])
-    if (sum(isAvailable) < 3)
-    {
-      string = paste("La serie '",nome,"' ha meno di 3 valori validi!",sep="")
-      tkmessageBox(message=string,icon="error")
-      exitWithError <<- 1
-      save.image("error.RData")
-      stop()       
-    }
-    largerThenZero <- dataFrame[isAvailable,nome] > 0
-    if (!all(largerThenZero))
-    {
-      string = paste("La serie '",nome,"' ha valori negativi o uguali a zero!",sep="")
-      tkmessageBox(message=string,icon="error")
-      exitWithError <<- 1
-      save.image("error.RData")
-      stop()    
-    }
-  }
-}
 
 dailyToMonthly <- function(dataFrame,endOfMonth=FALSE)
 {
@@ -91,6 +48,7 @@ dailyToMonthly <- function(dataFrame,endOfMonth=FALSE)
   datesToExtract <- paste(yearMonth[isOk,1],yearMonth[isOk,2],v.endStartMonth,sep="-")
   return(datesToExtract)
 }
+
 df_dailyToMonthly <- function(dataFrame,datiMensili)
 {
   ## dataFrame contiene la prima colonna di date (formato data) seguita dalle colonne di dati
@@ -363,7 +321,7 @@ if (frequenzaOsservazioni == 1) ## daily
   
   if (frequenzaCalcolo > 3)
   {
-    string = "La trasformazione da frequenza giornaliera a frequenza annua non è ancora implementata"
+    string = "La trasformazione da frequenza giornaliera a frequenza annua non ï¿½ ancora implementata"
     tkmessageBox(message=string,icon="error")
     exitWithError = 1
     save.image("error.RData")
@@ -554,7 +512,7 @@ if ((frequenzaOsservazioni == 1) & conSerieMensili)
   # if the number of observation is smaller than 3 show a warning and exit.
   if (Z$nrObs <= 2) 
   {
-    string = "Il numero di osservazioni diponibili è insufficiente (inferiore a 3).\nProcedura terminata."
+    string = "Il numero di osservazioni diponibili ï¿½ insufficiente (inferiore a 3).\nProcedura terminata."
     tkmessageBox(message=string,icon="error")
     exitWithError = 1
     save.image("error.RData")
