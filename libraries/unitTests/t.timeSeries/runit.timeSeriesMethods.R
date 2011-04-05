@@ -123,3 +123,52 @@ test.toMatrix <- function() {
 	checkEquals(m.data[,3],l.timeSeries[[3]]$data)
 	
 }
+
+test.computeReturns <- function() {
+	
+	# crea le serie
+	l.ts <- utility.creaTimeSeries3()
+	ts1 <- l.ts[[1]]
+	nbObs <- length(ts1$data)
+	result <- computeReturns(ts1)
+	
+	checkEquals(length(result$data),nbObs-1)
+	a <- result$data[1]
+	names(a) <- NULL
+	checkEquals(a,1.0)
+	
+	# timeSeries con singola osservazione
+	ts1$data <- ts1$data[1]
+	ts1$type <- "percentage"
+	result <- computeReturns(ts1)
+	ts1$data <- NA
+	checkEquals(result,ts1)
+
+}
+
+
+test.computeLogReturns <- function() {
+	
+	# crea le serie
+	l.ts <- utility.creaTimeSeries3()
+	ts1 <- l.ts[[1]]
+	nbObs <- length(ts1$data)
+	result <- computeLogReturns(ts1)
+	
+	checkEquals(length(result$data),nbObs-1)
+	a <- result$data[1]
+	names(a) <- NULL
+	checkEquals(a,log(2))
+	
+}
+
+test.linearInterpolate <- function() {
+	
+	data = c(NA,4,NA,6,NA,7,NA)
+	shouldData <- c(4,4,5,6,6.5,7,7)
+	timeSeries <- create_timeSeries(name="test",data=data)
+	
+	linearInterpolate(timeSeries)
+	
+}
+

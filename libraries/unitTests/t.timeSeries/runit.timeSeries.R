@@ -15,6 +15,7 @@ test.create_timeSeries <- function() {
 	checkEquals(class(timeSeries),"timeSeries")
 	checkEquals(timeSeries$name, "nome")
 	checkEquals(timeSeries$data,data)
-	checkEquals(timeSeries$kind,NA)
+	checkEquals(timeSeries$type,NA)
+	checkEquals(timeSeries$freq,"dailyNoWeekend")
 	
 }

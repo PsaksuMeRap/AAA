@@ -95,3 +95,48 @@ toMatrix <- function(l.timeSeries) {
 	return(m.data)
 }
 
+computeReturns <- function(timeSeries) {
+
+	nbObs <- length(timeSeries$data)
+
+	if (nbObs<=1) return(create_timeSeries(name=timeSeries$name,data=NA,type="percentage"))
+	
+	returns <- timeSeries$data[-1] / timeSeries$data[-nbObs] -1
+	names(returns) <- names(timeSeries$data[-1])
+	result <- create_timeSeries(name=timeSeries$name,data=returns,
+			type="percentage",freq=timeSeries$freq)
+	return(result)
+}
+
+computeLogReturns <- function(timeSeries) {
+	
+	nbObs <- length(timeSeries$data)
+	
+	if (nbObs<=1) return(create_timeSeries(name=timeSeries$name,data=NA))
+	valid <- !is.na(timeSeries$data)
+	logReturns <- timeSeries$data
+	logReturns[valid] <- log(timeSeries$data[valid])
+	returns <- logReturns[-1] - logReturns[-nbObs]
+	names(returns) <- names(timeSeries$data[-1])
+	result <- create_timeSeries(name=timeSeries$name,data=returns,
+			type="logarithmic",freq=timeSeries$freq)
+	return(result)
+}
+
+
+linearInterpolate <- function(timeSeries) {
+	
+	nbObs <- length(timeSeries$data)
+	if (nbObs==0) return(0)
+	
+	isMissing <- is.na(timeSeries$data)
+	if (!any(isMissing)) return(0)
+	
+	x <- 1:nbObs
+	y <- timeSeries$data
+	
+	interpolatedValues <- approx(x,y,xout=x[isMissing],
+			rule=c(2,2),ties="ordered")
+	timeSeries$data[isMissing] <- interpolatedValues$y
+	
+}

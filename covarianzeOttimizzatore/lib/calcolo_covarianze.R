@@ -167,29 +167,25 @@ colnames(dati_df) <- c("Year","Month","Day","Date",v.nomiSerieStoriche)
 date.v <- paste(dati_df[,"Year"],completeDatePart(dati_df[,"Month"]),
                 completeDatePart(dati_df[,"Day"]),sep="-")
 
-l.tmp <- as.list(dati_df[,-(1:4),drop=FALSE])
-
-
-rm(l.tmp)
+df.tmp <- dati_df[,-(1:4),drop=FALSE]
+dati_df <- data.frame("Date"=date.v,df.tmp)
 colnames(dati_df) = c("Date",v.nomiSerieStoriche) # not the "Month" and "Day" column
+l.timeSeries <- toTimeSeries(dati_df)
 rm(date.v,tmp.df)
 
 
-
-
 ## verify the strict positivity of prices
-verifyNonNegativity(dati_df[,v.nomiSerieStoriche,drop=FALSE])                 
-
-conSerieMensili <- conSerieMensili - 1
-if (conSerieMensili)
-{
-  v.nomiSerieStoricheMensili <- trim(v.nomiSerieStoricheMensili)
-  colnames(datiMensili) <- c("Date",v.nomiSerieStoricheMensili)
+isProblem <- sapply(l.timeSeries,verifyPositivity)                 
+if (any(isProblem)) {
+	string = "Some timeseries have zero or negative values!"
+	tkmessageBox(message=string,icon="error")
+	exitWithError = 1
+	save.image("error.RData")
+	stop()
 }
 
 
-## modify the names of the subjective standard deviations if available
-
+## clean the names of the subjective standard deviations if available
 if (exists("df_stdevSoggettive",inherits = FALSE))
 {
 
@@ -204,7 +200,7 @@ if (exists("df_stdevSoggettive",inherits = FALSE))
     stop()   
   }
   
-  nomiStdevSoggettive <- trim(as.character(df_stdevSoggettive[,"Nome"]))
+  nomiStdevSoggettive <- trimString(as.character(df_stdevSoggettive[,"Nome"]))
   v.stdevSoggettive <- as.numeric(df_stdevSoggettive[,"Stdev"])
   names(v.stdevSoggettive) <- nomiStdevSoggettive
   conStdevSoggettive = TRUE
@@ -215,22 +211,12 @@ if (exists("df_stdevSoggettive",inherits = FALSE))
 
 ## create the list where to store the original prices
 P <- list()
-P$Date <- dati_df[,1,drop=FALSE]
-P$Data <- as.matrix(dati_df[,-1,drop=FALSE])
-tmp <- log(P$Data)
-P$logReturns <- tmp[-1,,drop=FALSE] - tmp[-nrow(tmp),,drop=FALSE]
-rm(tmp)
+P$l.originalTimeSeries <- l.timeSeries
 
-P$withMonthlyData <- conSerieMensili
-if (conSerieMensili) 
-{
-  P$monthlyDate <- datiMensili[,1,drop=FALSE]
-  P$monthlyData <- as.matrix(datiMensili[,-1,drop=FALSE])
-  tmp <- log(P$monthlyData)
-  P$monthlylogReturns <- tmp[-1,,drop=FALSE] - tmp[-nrow(tmp),,drop=FALSE]
-  rm(tmp)  
-}
-
+# execute a linear interpolation of missing values
+lapply(l.timeSeries,linearInterpolate)
+P$l.timeSeries <- l.timeSeries
+P$l.logReturns <- lapply(l.timeSeries,computeLogReturns)
 
 ## create the list containing the data (prices and returns at different freq.)
 Z <- list()
@@ -245,8 +231,8 @@ if (frequenzaCalcolo < frequenzaOsservazioni)
   stop() 
 }
 
-############################## Step 1: A daily frequency
-if (frequenzaOsservazioni == 1) ## daily
+############################## Step 1: A dailyNoWeekend frequency
+if (frequenzaOsservazioni == 1) ## dailyNoWeekend
 {
   ## da completare: mettere un controllo che non ci siano buchi infrasettimanali.
   ## Date <- as.Date(dati_df[,"Date"]) 
@@ -255,14 +241,19 @@ if (frequenzaOsservazioni == 1) ## daily
     Z$Date <- dati_df[,1,drop=FALSE]
     Z$dati_df <- dati_df[,-1,drop=FALSE]
   }
-  if (frequenzaCalcolo == 2)
+  
+  if (frequenzaCalcolo == 2) # Weekly at specified date
   {
     Day = as.numeric(format(dati_df[,"Date"],"%w"))
-
+	
     isDesiredDay = Day == frequenzaCalcoloGiorno
-    if (!any(isDesiredDay))
+    nbObs <- length(isDesiredDay)
+	extractedDates <- 1:nbObs[isDesiredDay]
+	dayDiff <- extractedDates[-1] - extractedDates[-length(extractedDates)]
+	
+	if (!all(isDesiredDay))
     {
-      string = "Moving from daily to weekly observations: daily data are not complete.\nSome desired day is missing."
+      string = "Daily data are not complete.\nSome desired day is missing."
       tkmessageBox(message=string,icon="error")
       exitWithError = 1
       save.image("error.RData")
@@ -270,10 +261,6 @@ if (frequenzaOsservazioni == 1) ## daily
     }
     Z$dati_df <- dati_df[isDesiredDay,-1,drop=FALSE]
     Z$Date <- dati_df[isDesiredDay,1,drop=FALSE]
-  }
-  if (frequenzaCalcolo == 3)
-  {
-    Z = df_dailyToMonthly(dati_df,datiMensili)
   }
   
   if (frequenzaCalcolo > 3)

@@ -5,7 +5,7 @@
 
 
 
-create_timeSeries <- function(name,data=NA,kind=NA) {
+create_timeSeries <- function(name,data=NA,type=NA,freq="dailyNoWeekend") {
 	
 	
 	timeSeries <- new.env()
@@ -13,7 +13,8 @@ create_timeSeries <- function(name,data=NA,kind=NA) {
 	
 	timeSeries$name <- name # string
 	timeSeries$data <- data # labeled vector
-	timeSeries$kind <- kind # description field, optional
+	timeSeries$type <- type # description field, optional
+	timeSeries$freq <- freq # frequency
 	
 	return(timeSeries)
 }
