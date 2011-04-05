@@ -6,6 +6,9 @@
 load("excel_input_cov_matrix.RData")
 library(tcltk)
 source("./lib/utilities.R")
+source("../libraries/lib/utilities/datesUtilities.R")
+
+
 exitWithError = 0
 
 
@@ -83,43 +86,6 @@ df_dailyToMonthly <- function(dataFrame,datiMensili)
   return(Z)
 }
 
-standardize <- function(namedArray)
-{
-  ## namedArray: a data.frame or a matrix with data in columns. Each column must
-  ## be identified by a unique name.
-  arrayNames <- colnames(namedArray)
-  if (is.null(arrayNames))
-    {
-      string = "The array does not have column names!"
-      tkmessageBox(message=string,icon="error")
-      exitWithError <<- 1
-      save.image("error.RData")
-      stop()            
-    }
-        
-  v.averages <- apply(namedArray,MARGIN=2,FUN=mean,na.rm=TRUE)
-  
-  ## create the vector containing the variances of the time series
-  v.variances <- rep(NA_real_,length(v.averages))
-  names(v.variances) <- arrayNames
-  
-  for (Name in arrayNames)
-    {    
-      isValid = !is.na(namedArray[,Name])
-      if (sum(isValid)==0)
-        {
-          string = paste("The series", Name,"does not have valid observations!")
-          tkmessageBox(message=string,icon="error")
-          exitWithError <<- 1
-          save.image("error.RData")
-          stop()          
-        }
-      v.variances[Name] = var(namedArray[isValid,Name])  
-      namedArray[isValid,Name] = (namedArray[isValid,Name]- v.averages[Name]) / sqrt(v.variances[Name])
-    }
-  return(list(standardizedData=namedArray,v.averages=v.averages,v.variances=v.variances))
-}
-
 subjectiveCov <- function(logReturns,conversion,stdevSoggettiveFreqOsservaz,
                           v.stdevSoggettive)
 {
@@ -177,16 +143,6 @@ subjectiveCov <- function(logReturns,conversion,stdevSoggettiveFreqOsservaz,
   return(Z)
 }
 
-cambiaNomi <- function(vecchiNomi,nuoviNomi.df) {
-  v.nuoviNomi <- nuoviNomi.df[,"New names"]
-  names(v.nuoviNomi) <- nuoviNomi.df[,"Old names"]
-  
-  isToChange <- is.element(vecchiNomi,nuoviNomi.df[,"Old names"])
-  if (any(isToChange)) {
-    vecchiNomi[isToChange] <- v.nuoviNomi[vecchiNomi[isToChange]]
-  }
-  return(vecchiNomi)
-}
 
 ################################################################################
 ##################            START PROCEDURE              #####################
@@ -211,9 +167,10 @@ colnames(dati_df) <- c("Year","Month","Day","Date",v.nomiSerieStoriche)
 date.v <- paste(dati_df[,"Year"],completeDatePart(dati_df[,"Month"]),
                 completeDatePart(dati_df[,"Day"]),sep="-")
 
-tmp.df <- dati_df[,-(1:4),drop=FALSE]
-dati_df <- data.frame(as.Date(date.v),tmp.df)
+l.tmp <- as.list(dati_df[,-(1:4),drop=FALSE])
 
+
+rm(l.tmp)
 colnames(dati_df) = c("Date",v.nomiSerieStoriche) # not the "Month" and "Day" column
 rm(date.v,tmp.df)
 

@@ -3,9 +3,6 @@
 # Author: claudio
 ###############################################################################
 
-
-
-
 trim <- function(string)
 {
 	## remove leading and ending white spaces
@@ -13,3 +10,4 @@ trim <- function(string)
 	string <- sub(pattern=" +$", replacement="", x=string)
 	return(string)
 }
+

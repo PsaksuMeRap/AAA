@@ -8,12 +8,10 @@ library("RUnit")
 source("./lib/library.R")
 
 ## test globale
-dirs = c("./unitTests/t.utilities","./unitTests/t.timeSeries",
-		"./unitTests/t.lists")
+dirs = c("./unitTests/t.utilities")
 
 testsuite.lists <- defineTestSuite("Test globale", dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
-
 
 
 ## test per le procedure utilities
