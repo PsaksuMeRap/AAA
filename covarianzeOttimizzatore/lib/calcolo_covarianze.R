@@ -244,7 +244,9 @@ if (frequenzaOsservazioni == 1) ## dailyNoWeekend
   
   if (frequenzaCalcolo == 2) # Weekly at specified date
   {
-    Day = as.numeric(format(dati_df[,"Date"],"%w"))
+    
+	  
+	Day = as.numeric(format(dati_df[,"Date"],"%w"))
 	
     isDesiredDay = Day == frequenzaCalcoloGiorno
     nbObs <- length(isDesiredDay)
@@ -276,8 +278,7 @@ if (frequenzaOsservazioni == 1) ## dailyNoWeekend
 ############################## Step 1: B weekly frequency
 if (frequenzaOsservazioni == 2) ## settimanale
 {
-  ## da completare: mettere un controllo che non ci siano buchi infrasettimanali.
-  
+   
   if (frequenzaCalcolo == 2)
   {
     ## da completare mettere il controllo che sia effettivamente il giorno desiderato
@@ -316,16 +317,7 @@ if (frequenzaOsservazioni > 2)
 Z$ldati <- log(as.matrix(Z$dati_df))
 
 ############################## Step 1: D1 verify some conditions 
-## if the number of time series is larger than 250 show a warning and exit.
 Z$nrSerie = ncol(Z$ldati)
-if (Z$nrSerie > 250) 
-{
-  string = "The number of time series exceeds the maximum MS Excel 2003 number of 250 columns."
-  tkmessageBox(message=string,icon="error")
-  exitWithError = 1
-  save.image("error.RData")
-  stop()
-}
 
 if (Z$nrSerie < 1) 
 {
@@ -403,126 +395,6 @@ dimnames(Z$Stdev) <- list(Z$serieDisponibili,"Stdev")
 
 ###################         END STEP 1                    ######################
 ################################################################################
-
-
-
-################################################################################
-###################          START STEP 2                 ######################
-
-############################## Step 2: Consider the monthly time series and the correlation with the previous ones. 
-## if the previous data are observed with a frequency other than daily, show a warning and exit.
-if ((frequenzaOsservazioni > 1) & conSerieMensili)
-{
-  string = "The use of mixed time series other than <daily,monthly> is not implemented."
-  tkmessageBox(message=string,icon="error")
-  exitWithError = 1
-  save.image("error.RData")
-  stop()
-}
-
-############################## Step 2: A trasform daily observations in monthly observations
-if ((frequenzaOsservazioni == 1) & conSerieMensili)
-{
-  ## transform the daily observations in monthly observations
-  datiTrasformati <- df_dailyToMonthly(dati_df,datiMensili)
-  Z$transfMonthlyDates.m <- as.matrix(datiTrasformati$Date)
-  Z$transfMonthlyPrices.m <- as.matrix(datiTrasformati$Dati)
-  Z$ldati <- log(as.matrix(datiTrasformati$Dati))
-
-  ## if the number of time series is larger than 260 show a warning and exit.
-  Z$nrSerie = ncol(Z$ldati)
-  if (Z$nrSerie > 250) 
-  {
-    string = "The number of monthly time series is larger than 260.\nUpper limit exceeded."
-    tkmessageBox(message=string,icon="error")
-    exitWithError = 1
-    save.image("error.RData")
-    stop()
-  }
-  ## if the number of time series is zero show a warning and exit.
-  if (Z$nrSerie < 1) 
-  {
-    string = "The number of time series is zero."
-    tkmessageBox(message=string,icon="error")
-    exitWithError = 1
-    save.image("error.RData")
-    stop()
-  }
-
-  ############################## Step 2: B compute the number of obervations
-  # calcola il numero di osservazioni
-  Z$nrObs = nrow(Z$ldati)
-  
-  # if the number of observation is smaller than 3 show a warning and exit.
-  if (Z$nrObs <= 2) 
-  {
-    string = "Il numero di osservazioni diponibili � insufficiente (inferiore a 3).\nProcedura terminata."
-    tkmessageBox(message=string,icon="error")
-    exitWithError = 1
-    save.image("error.RData")
-    stop()
-  }
-
-  if (Z$nrObs <= 20) 
-  {
-    string = paste("The number of observations is very low:",Z$nrObs)
-    tkmessageBox(message=string,icon="error")
-  }
-
-
-  if (Z$nrObs <= Z$nrSerie) 
-  {
-    string = "The number of observation is less or equal to the number of time series.\nInstability/infeasibility problems are possible."
-    tkmessageBox(message=string,icon="error")
-  }
-
-  ############################## Step 2: C compute the monthly log returns
-  Z$MonthlylogReturns <- Z$ldati[-1,,drop=FALSE]-Z$ldati[-Z$nrObs,,drop=FALSE]
-  Z$ldati <- NULL
-
-
-  ############################## Step 2: D change the volatility if necessary
-  conversion = 12
-  if (!conStdevSoggettive)
-  {
-    # compute the historical returns, volatilities, the correlation matrix and the covariance matrix  
-    Z$rhoMensile <- cor(Z$MonthlylogReturns,use="pair")
-    Z$SMensile <- cov(Z$MonthlylogReturns,use="pair") * conversion
-
-    Z$rhoMensile_tmp <- Z$rhoMensile
-    Z$SMensile_tmp <- Z$SMensile
-  
-    Z$rhoMensile_tmp[Z$serieDisponibili,Z$serieDisponibili]  = Z$rho
-    Z$SMensile_tmp[Z$serieDisponibili,Z$serieDisponibili] <- Z$S
- 
-    Z$rho = Z$rhoMensile_tmp
-    Z$S = Z$SMensile_tmp
-    Z$rhoMensile_tmp <- NULL
-    Z$SMensile_tmp <- NULL
-    Z$serieDisponibili <- matrix(rownames(Z$rho),ncol=1)
-    Z$Stdev <- matrix(sqrt(diag(Z$S)),ncol=1)
-    dimnames(Z$Stdev) <- list(Z$serieDisponibili,"Stdev")
-  } else {
-    # compute the historical returns, volatilities, the correlation matrix and the covariance matrix  
-    V <- subjectiveCov(Z$MonthlylogReturns,conversion,stdevSoggettiveFreqOsservaz,
-                      v.stdevSoggettive)
-    Z$rhoMensile_tmp <- V$rho
-    Z$SMensile_tmp <- V$S
-    rm(V)
-        
-    Z$rhoMensile_tmp[Z$serieDisponibili,Z$serieDisponibili]  = Z$rho
-    Z$SMensile_tmp[Z$serieDisponibili,Z$serieDisponibili] <- Z$S
- 
-    Z$rho = Z$rhoMensile_tmp
-    Z$S =  Z$SMensile_tmp
-    Z$rhoMensile_tmp <- NULL
-    Z$SMensile_tmp <- NULL
-    Z$serieDisponibili <- matrix(rownames(Z$rho),ncol=1)
-    Z$Stdev <- matrix(sqrt(diag(Z$S)),ncol=1)
-    dimnames(Z$Stdev) <- list(Z$serieDisponibili,"Stdev")
-  }
-  Z$MonthlylogReturns <- NULL
-} ## end if ((frequenzaOsservazioni == 1) & conSerieMensili)
 
 
 if (exitWithError!=1) save.image("cov_matrix_output.RData")

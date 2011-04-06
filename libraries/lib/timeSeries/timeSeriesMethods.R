@@ -80,15 +80,20 @@ toTimeSeries <- function(df.x,timeSeriesNames) {
 	
 }
 
+extractDates <- function(l.timeSeries){
+	dates <- unlist(lapply(l.timeSeries,function(x){return(names(x$data))}))
+	dates <- sort(unique(dates))
+	return(dates)
+}
+
 toMatrix <- function(l.timeSeries) {
 	
 	nSeries <- length(l.timeSeries)
 	if (length(nSeries)==0) return(matrix())
 	
-	dates <- unlist(lapply(l.timeSeries,function(x){return(names(x$data))}))
-	dates <- sort(unique(dates))
+	dates <- extractDates(l.timeSeries)
 	m.data <- matrix(NA,nrow=length(dates),ncol=nSeries)
-	colnames(m.data) <- extractLists(l.timeSeries,"name")
+	colnames(m.data) <- extractFromList(l.timeSeries,"name")
 	rownames(m.data) <- dates
 	for (i in 1:nSeries) m.data[names(l.timeSeries[[i]]$data),i] <- l.timeSeries[[i]]$data
 	
@@ -140,3 +145,4 @@ linearInterpolate <- function(timeSeries) {
 	timeSeries$data[isMissing] <- interpolatedValues$y
 	
 }
+

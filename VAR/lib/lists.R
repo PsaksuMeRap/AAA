@@ -26,7 +26,7 @@ filterLists <- function(origin,by,value) {
 	
 }
 
-extractLists <- function(origin,fieldName) {
+extractFromList <- function(origin,fieldName) {
 	# origin: una lista di tipo origin
 	# fieldName: il nome del campo i cui valori sono da estrarre
 	# output: il vettore dei valori

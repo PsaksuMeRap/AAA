@@ -82,19 +82,19 @@ test.shouldExtractFieldName <- function() {
 	)
 	
 	# extract a
-	extracted <- extractLists(origin,"a")
+	extracted <- extractFromList(origin,"a")
 	checkEquals(extracted,c(1,2,1,4,2))
 	
 	# extract b (ritorna una lista con 1 solo elemento)
 	origin <- list(
 			list(a=1,b="cane")
 	)
-	extracted <- extractLists(origin,"b")
+	extracted <- extractFromList(origin,"b")
 	checkEquals(extracted,"cane")	
 	
 	# filtra by b="lld" (ritorna lista vuota!)
 	origin <- list()
-	extracted <- extractLists(origin,"b")
+	extracted <- extractFromList(origin,"b")
 	checkEquals(extracted,origin)
 	
 } 

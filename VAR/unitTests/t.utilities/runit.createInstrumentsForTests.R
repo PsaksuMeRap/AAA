@@ -36,7 +36,7 @@ test.create_ETF_EquityTestPositions <- function() {
 test.create_FX_ForwardTestPositions <- function() {
 	source("./unitTests/utilities/createInstrumentsForTests.R")
 	
-	positions <- create_FX_Forward_TestPositions()
+	positions <- create_FX_ForwardTestPositions()
 	
 	checkEquals(positions$positions[[1]]$amount,120)
 	checkEquals(positions$positions[[1]]$currency,"CHF")

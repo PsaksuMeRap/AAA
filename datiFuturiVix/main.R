@@ -27,7 +27,7 @@ rm(importerVixFutures)
 
 # determina le lastTradeDates
 
-settlementDates <- extractLists(contracts,fieldName="settlementDate")
+settlementDates <- extractFromList(contracts,fieldName="settlementDate")
 orderSettlementDates <- order(as.Date(settlementDates))
 contracts <- contracts[orderSettlementDates]
 settlementDates <- settlementDates[orderSettlementDates]
@@ -37,11 +37,11 @@ toSelect <- as.Date(settlementDates) >= as.Date("2005-10-19")
 contracts <- contracts[toSelect]
 
 # estrai tutte le lastTradeDates ed i lastTradePrices
-lastTradeDates  <- extractLists(contracts,fieldName="lastTradeDate")
+lastTradeDates  <- extractFromList(contracts,fieldName="lastTradeDate")
 lastTradePrices <- sapply(contracts,extractPriceAtLastTradeDate)
 
 # estrai tutti i settlementPrices 
-settlementDates <- extractLists(contracts,fieldName="settlementDate")
+settlementDates <- extractFromList(contracts,fieldName="settlementDate")
 settlementPrices <- sapply(contracts,extractPriceAtSettlementDate)
 
 # estrai tutti i prezzi nbPeriods 3 giorni prima del settlement

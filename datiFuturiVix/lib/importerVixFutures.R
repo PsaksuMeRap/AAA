@@ -82,7 +82,7 @@ create_importerVixFutures <- function() {
 		dsCodes <- colnames(data)
 		attributes <- lapply(dsCodes,parser$extractContractName)
 
-		values <- extractLists(attributes,fieldName="dataType") 
+		values <- extractFromList(attributes,fieldName="dataType") 
 		colnames(data) <- importer$knownDataTypes[values]
 		
 		# remove NA values

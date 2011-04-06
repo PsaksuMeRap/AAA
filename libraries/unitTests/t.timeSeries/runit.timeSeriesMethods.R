@@ -87,6 +87,17 @@ utility.creaTimeSeries3 <- function() {
 	return(list(ts1,ts2,ts3))
 }
 
+test.extractDates <- function() {
+	# crea le serie
+	l.timeSeries <- utility.creaTimeSeries3()
+	
+	dates <- extractDates(l.timeSeries)
+	
+	shouldDates <- c("2001-01-02","2002-01-04","2004-08-23",
+			"2004-09-15")
+	checkEquals(dates,shouldDates)
+	
+}
 
 test.toTimeSeries <- function() {
 	
@@ -118,7 +129,7 @@ test.toMatrix <- function() {
 	m.data <- toMatrix (l.timeSeries)
 	
 	checkEquals(dim(m.data),c(4,3))
-	checkEquals(colnames(m.data),extractLists(l.timeSeries,"name"))
+	checkEquals(colnames(m.data),extractFromList(l.timeSeries,"name"))
 	checkEquals(m.data[,1],c(l.timeSeries[[1]]$data,"2004-09-15"=NA))
 	checkEquals(m.data[,3],l.timeSeries[[3]]$data)
 	
@@ -172,3 +183,8 @@ test.linearInterpolate <- function() {
 	
 }
 
+test.computeCor <- function() {
+	# crea le serie e calcola la correlazione
+	# utilizzando tutte le osservazioni disponibili
+	# P$l.logReturns <- lapply(l.timeSeries,computeLogReturns)
+}

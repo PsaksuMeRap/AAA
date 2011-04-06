@@ -13,7 +13,7 @@ test.create_contracts <- function() {
 	class(orderedContracts) <- "vixFutures"
 
 	# ordina i contratti
-	settlementDates <- extractLists(contracts,fieldName="settlementDate")
+	settlementDates <- extractFromList(contracts,fieldName="settlementDate")
 	orderSettlementDates <- order(as.Date(settlementDates))
 	contracts <- contracts[orderSettlementDates]
 	class(contracts) <- "vixFutures"

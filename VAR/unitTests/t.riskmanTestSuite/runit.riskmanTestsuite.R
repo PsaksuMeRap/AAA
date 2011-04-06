@@ -54,7 +54,7 @@ test.shouldTestSingleRiskmanCheckFile11 <- function() {
 	
 	# crea il portafoglio da parsare
 	origin <- createOriginData()
-	owners <- unique(extractLists(origin,"Cliente"))
+	owners <- unique(extractFromList(origin,"Cliente"))
 	portfParser <- create_parserPortfolio()
     portfolios <- lapply(owners,portfParser$parse,
 			origin,repositories$politicaInvestimento$politicaInvestimento.df)
@@ -87,7 +87,7 @@ test.shouldTestSingleRiskmanCheckFileAggregated <- function() {
 	
 	# crea il portafoglio da parsare
 	origin <- createOriginData()
-	owners <- unique(extractLists(origin,"Cliente"))
+	owners <- unique(extractFromList(origin,"Cliente"))
 	portfParser <- create_parserPortfolio()
 	portfolios <- lapply(owners,portfParser$parse,
 			origin,repositories$politicaInvestimento$politicaInvestimento.df)
@@ -131,7 +131,7 @@ test.shouldTestSingleRiskmanCheckFile12 <- function() {
 	
 	# crea il portafoglio da parsare
 	origin <- createOriginData()
-	owners <- unique(extractLists(origin,"Cliente"))
+	owners <- unique(extractFromList(origin,"Cliente"))
 	portfParser <- create_parserPortfolio()
 	portfolios <- lapply(owners,portfParser$parse,
 			origin,repositories$politicaInvestimento$politicaInvestimento.df)
@@ -169,7 +169,7 @@ test.shouldRunRiskmanTestSuite <- function() {
 	
 	# crea il portafoglio da parsare
 	origin <- createOriginData()
-	owners <- unique(extractLists(origin,"Cliente"))
+	owners <- unique(extractFromList(origin,"Cliente"))
 	portfParser <- create_parserPortfolio()
 	portfolios <- lapply(owners,portfParser$parse,
 			origin,repositories$politicaInvestimento$politicaInvestimento.df)

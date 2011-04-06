@@ -107,7 +107,7 @@ extractPriceAndDatePreviousToSettlement.df <- function(contracts,nbPeriods,dateL
 
 sortContractsBySettlementDate <- function(contracts) {
 	
-	settlementDates <- extractLists(contracts,fieldName="settlementDate")
+	settlementDates <- extractFromList(contracts,fieldName="settlementDate")
 	orderSettlementDates <- order(as.Date(settlementDates))
 	contracts <- contracts[orderSettlementDates]
 	return(contracts)
@@ -118,7 +118,7 @@ sortContractsBySettlementDate <- function(contracts) {
 extractContractWithYM <- function(contracts,desiredYM) {
 	## desiredYM = "2004-12"
 	
-	settlementDates <- extractLists(origin=contracts,"settlementDate") 
+	settlementDates <- extractFromList(origin=contracts,"settlementDate") 
 	areOk <- substr(settlementDates,1,7)==desiredYM
 	contract <- contracts[areOk]
 	
