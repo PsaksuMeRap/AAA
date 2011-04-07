@@ -9,7 +9,7 @@ positionsSelector.currency <- function(criteriumSelection,positions) {
 	if (!is.element("positions",class(positions))) stop("The argument is not of class positions")
 
 	FUNC <- function(position,criteriumSelection) {
-		check <- is.element(position$currency,criteriumSelection$values)
+		check <- is.element(position$money$currency,criteriumSelection$values)
 		if (criteriumSelection$negation) return(!check)
 		return(check)
 	}
@@ -131,8 +131,7 @@ check.amount <- function(position,criteriumSelection) {
 		
 	# exchange the money in the desired currency
 	currencyTo <- criteriumSelection$criteriumCheck$value$currency
-	moneyToExchange <- toMoney(position$amount,position$currency)
-	money <- repositories$exchangeRates$exchange(moneyToExchange,currencyTo)
+	money <- repositories$exchangeRates$exchange(position$money,currencyTo)
 
 	# excecute the check
 	if (operator==">" ) return(money$amount >  criteriumSelection$criteriumCheck$value$amount)
@@ -154,7 +153,7 @@ check.instrument <- function(position,criteriumSelection) {
 
 check.currency <- function(position,criteriumSelection) {
 	currencies <- criteriumSelection$values
-	instrumentCurrency <- position$currency
+	instrumentCurrency <- position$money$currency
 	return(any(is.element(instrumentCurrency,currencies)))
 }
 

@@ -10,7 +10,7 @@ test.create_equityTest <- function() {
 	positions <- create_equityTestPositions()
 
 	checkEquals(positions$positions[[1]]$name,"Converium N")
-	checkEquals(positions$positions[[3]]$amount,98)
+	checkEquals(positions$positions[[3]]$money$amount,98)
 }
 
 test.create_Conto_correnteTestPositions <- function() {
@@ -18,9 +18,9 @@ test.create_Conto_correnteTestPositions <- function() {
 	
 	positions <- create_Conto_correnteTestPositions()
 	
-	checkEquals(positions$positions[[2]]$currency,"USD")
-	checkEquals(positions$positions[[1]]$amount,120)
-	checkEquals(positions$positions[[3]]$currency,"EUR")
+	checkEquals(positions$positions[[2]]$money$currency,"USD")
+	checkEquals(positions$positions[[1]]$money$amount,120)
+	checkEquals(positions$positions[[3]]$money$currency,"EUR")
 }
 
 test.create_ETF_EquityTestPositions <- function() {
@@ -28,9 +28,9 @@ test.create_ETF_EquityTestPositions <- function() {
 	
 	positions <- create_ETF_equityTestPositions()
 	
-	checkEquals(positions$positions[[1]]$amount,100)
-	checkEquals(positions$positions[[2]]$currency,"USD")
-	checkEquals(positions$positions[[3]]$currency,"CHF")
+	checkEquals(positions$positions[[1]]$money$amount,100)
+	checkEquals(positions$positions[[2]]$money$currency,"USD")
+	checkEquals(positions$positions[[3]]$money$currency,"CHF")
 }
 
 test.create_FX_ForwardTestPositions <- function() {
@@ -38,7 +38,7 @@ test.create_FX_ForwardTestPositions <- function() {
 	
 	positions <- create_FX_ForwardTestPositions()
 	
-	checkEquals(positions$positions[[1]]$amount,120)
-	checkEquals(positions$positions[[1]]$currency,"CHF")
-	checkEquals(positions$positions[[2]]$currency,"EUR")
+	checkEquals(positions$positions[[1]]$money$amount,120)
+	checkEquals(positions$positions[[1]]$money$currency,"CHF")
+	checkEquals(positions$positions[[2]]$money$currency,"EUR")
 }

@@ -13,15 +13,17 @@ create_position <- function() {
 	class(position) <- "position"
 	
 	position$name = NA_character_
-	position$currency = NA_character_
-	position$amount = NA_real_
+#	position$amount = NA_real_
+	position$money = NA
+#	position$money$currency = NA_character_
 	position$origin = NA
 	
 	position$create <- function(name=NA_character_,currency="CHF",
 			amount=0.0,origin=NA) {
 		position$name <<- name
-		position$currency <<- currency
-		position$amount <<- amount
+#		position$amount <<- amount
+		position$money <<- toMoney(amount,currency)
+#		position$money$currency <<- currency
 		position$origin <<- origin
 	}
 	
@@ -32,18 +34,18 @@ create_position <- function() {
 	}
 	
 	position$isCurrency <- function(currency) {
-		return(position$currency==currency)
+		return(position$money$currency==currency)
 	}
 	
 	position$print <- function(width) {
 		if (missing(width)) {
-			x <- formatC(position$amount,big.mark = "'",
+			x <- formatC(position$money$amount,big.mark = "'",
 					decimal.mark = ".",format="f",digits=2)
 		} else {
-			x <- formatC(position$amount,width=width,big.mark = "'",
+			x <- formatC(position$money$amount,width=width,big.mark = "'",
 					decimal.mark = ".",format="f",digits=2)
 		}
-		print(paste(class(position)[1],"/",position$currency,
+		print(paste(class(position)[1],"/",position$money$currency,
 						x,
 						"/ Name:", position$name
 				)
@@ -52,14 +54,14 @@ create_position <- function() {
 	
 	position$toString <- function(width) {
 		if (missing(width)) {
-			x <- formatC(position$amount,big.mark = "'",
+			x <- formatC(position$money$amount,big.mark = "'",
 					decimal.mark = ".",format="f",digits=2)
 		} else {
-			x <- formatC(position$amount,width=width,big.mark = "'",
+			x <- formatC(position$money$amount,width=width,big.mark = "'",
 					decimal.mark = ".",format="f",digits=2)
 		}
 		
-		string <- paste(class(position)[1],"/",position$currency,
+		string <- paste(class(position)[1],"/",position$money$currency,
 				x,
 #				formatC(position$amount,digits=2,format="f"),
 				"/ Name:", position$name)
@@ -70,8 +72,8 @@ create_position <- function() {
 		# this function create a data.frame from the list of positions
 		df <- data.frame(instrument=class(position)[1],
 				name=position$name,
-				currency=position$currency,
-				amount=position$amount,stringsAsFactors=FALSE
+				currency=position$money$currency,
+				amount=position$money$amount,stringsAsFactors=FALSE
 				)
 		return(df)
 	}

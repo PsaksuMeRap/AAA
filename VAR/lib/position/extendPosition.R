@@ -52,7 +52,7 @@ extendPosition.equity <- function(position) {
 	position$ticker <- repositories$equities$tickerFromId(id)
 	position$print <- function()
 	{
-		print(paste(class(position)[1],"/",position$currency, "-", position$amount,
+		print(paste(class(position)[1],"/",position$money$currency, "-", position$money$amount,
 						"/ Name:", position$name,
 						"/ Ticker:", position$ticker
 				)
@@ -75,7 +75,7 @@ extendPosition.Strutturati_FI <- function(position) {
 	
 	position$print <- function()
 	{
-		print(paste(class(position)[1],"/",position$currency, "-", position$amount,
+		print(paste(class(position)[1],"/",position$money$currency, "-", position$money$amount,
 						"/ Name:", position$name
 				)
 		)
@@ -126,13 +126,13 @@ extendPosition.accruedInterest <- function(position) {
 		paymentDate <- paste("20",year,"-",month,"-",day,sep="")		
 
 		# create the accruedInterest
-		money <- toMoney(position$amount,position$currency)
+		money <- toMoney(position$money$amount,position$money$currency)
 		assign("accruedInterest",create_accruedInterest(money,paymentDate),envir=position,inherits=FALSE)
 	}
 	
 	position$print <- function()
 	{
-		print(paste(class(position)[1],"/",position$currency, "-", position$amount,
+		print(paste(class(position)[1],"/",position$money$currency, "-", position$money$amount,
 						"/ Name:", position$name,
 						"/ Accrued interest"
 				)

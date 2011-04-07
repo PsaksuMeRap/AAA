@@ -30,10 +30,10 @@ test.determine_riskFactor_equity <- function() {
 	riskFactors <- determine_riskFactors(position)
 	
 	checkEquals(riskFactors[[1]]$factor,"currency")
-	checkEquals(riskFactors[[1]]$money,toMoney(amount=position$amount,currency=position$currency))	
+	checkEquals(riskFactors[[1]]$money,position$money)	
 	
 	checkEquals(riskFactors[[2]]$factor,"price")
-	checkEquals(riskFactors[[2]]$money,toMoney(amount=position$amount,currency=position$currency))
+	checkEquals(riskFactors[[2]]$money,position$money)
 
 }
 
@@ -50,7 +50,7 @@ test.determine_riskFactor_Conto_corrente <- function() {
 	
 	
 	checkEquals(riskFactors[[1]]$factor,"currency")
-	checkEquals(riskFactors[[1]]$money,toMoney(amount=position$amount,currency=position$currency))	
+	checkEquals(riskFactors[[1]]$money,position$money)	
 	checkEquals(length(riskFactors),1)
 	
 }
@@ -66,10 +66,10 @@ test.determine_riskFactor_ETF_equity <- function() {
 	riskFactors <- determine_riskFactors(position)
 	
 	checkEquals(riskFactors[[1]]$factor,"currency")
-	checkEquals(riskFactors[[1]]$money,toMoney(amount=position$amount,currency=position$currency))	
+	checkEquals(riskFactors[[1]]$money,position$money)	
 	
 	checkEquals(riskFactors[[2]]$factor,"price")
-	checkEquals(riskFactors[[2]]$money,toMoney(amount=position$amount,currency=position$currency))
+	checkEquals(riskFactors[[2]]$money,position$money)
 	
 }
 
@@ -86,25 +86,25 @@ test.determine_riskFactor_FX_Forward <- function() {
 	
 	# assign the currency risk factor
 	subclass <- "currency"
-	attributes <- list(currency=position$currency)
-	money <- toMoney(amount=position$amount,currency=position$currency)
+	attributes <- list(currency=position$money$currency)
+	money <- position$money
 	
 	moneyRiskFactor <- create_riskFactor(subclass,attributes,money)
 	
 	# assign the interest rate risk factor
 
 	subclass <- "interestRate"
-	attributes <- list(currency=position$currency,expiry=position$expiry)
-	money <- toMoney(amount=position$amount,currency=position$currency)
+	attributes <- list(currency=position$money$currency,expiry=position$expiry)
+	money <- position$money
 	
 	interestRateRiskFactor <- create_riskFactor(subclass,attributes,money)
 	riskFactors <- list(moneyRiskFactor,interestRateRiskFactor)
 	
 	checkEquals(riskFactors[[1]]$factor,"currency")
-	checkEquals(riskFactors[[2]]$money,toMoney(amount=position$amount,currency=position$currency))	
+	checkEquals(riskFactors[[2]]$money,position$money)	
 	
 	checkEquals(riskFactors[[2]]$factor,"interestRate")
-	checkEquals(riskFactors[[2]]$attributes,list(currency=position$currency,expiry=position$expiry))
+	checkEquals(riskFactors[[2]]$attributes,list(currency=position$money$currency,expiry=position$expiry))
 	
 }
 

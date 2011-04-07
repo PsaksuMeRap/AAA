@@ -63,10 +63,10 @@ create_positions <- function() {
 		getAmountWidth <- function(position) {
 			# questa funzione calcola il numero di caratteri da usare per
 			# la formattazione dell'output dell'importo
-			nbChar <- nchar(as.character(floor(abs(position$amount))))
+			nbChar <- nchar(as.character(floor(abs(position$money$amount))))
 			width <- nbChar %/% 3
 			width <- nbChar + width + 3
-			if (position$amount < 0) width <- width + 1 
+			if (position$money$amount < 0) width <- width + 1 
 			
 			return(width)
 		}
@@ -86,10 +86,10 @@ create_positions <- function() {
 		getAmountWidth <- function(position) {
 			# questa funzione calcola il numero di caratteri da usare per
 			# la formattazione dell'output dell'importo
-			nbChar <- nchar(as.character(floor(abs(position$amount))))
+			nbChar <- nchar(as.character(floor(abs(position$money$amount))))
 			width <- nbChar %/% 3
 			width <- nbChar + width + 3
-			if (position$amount < 0) width <- width + 1 
+			if (position$money$amount < 0) width <- width + 1 
 			
 			return(width)
 		}
@@ -133,7 +133,7 @@ create_positions <- function() {
 
 		if (missing(toCurrency)) {
 			if (length(positions$positions)>0) {
-				toCurrency <- positions$positions[[1]]$currency
+				toCurrency <- positions$positions[[1]]$money$currency
 			} else {
 				return(toMoney(0,"CHF"))
 			}
@@ -141,7 +141,7 @@ create_positions <- function() {
 		# toCurrency: the currency to convert to
 		total <- toMoney(0,toCurrency)
 		for (p in positions$positions) {
-			total$sum(toMoney(p$amount,p$currency))
+			total$sum(p$money)
 		}
 		return(total)
 	}	
