@@ -1,8 +1,8 @@
 Package: ayrton
 Version: 0.1-0
 Date: 2006-04-10
-Author: Claudio Ortelli <claudio.ortelli@lu.unisi.ch>
-Maintainer: Claudio Ortelli <claudio.ortelli@lu.unisi.ch>
+Author: Claudio Ortelli <claudio.ortelli@usi.ch>
+Maintainer: Claudio Ortelli <claudio.ortelli@usi.ch>
 Title: Ayrton utilities function
 Description: Some general purpose utilities
 SystemRequirements: Windows 2000 or later
