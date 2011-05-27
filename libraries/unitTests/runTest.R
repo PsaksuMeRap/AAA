@@ -9,7 +9,7 @@ source("./lib/library.R")
 
 ## test globale
 dirs = c("./unitTests/t.utilities","./unitTests/t.timeSeries",
-		"./unitTests/t.lists")
+		"./unitTests/t.lists","./unitTests/t.fileUtils")
 
 testsuite.lists <- defineTestSuite("Test globale", dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)

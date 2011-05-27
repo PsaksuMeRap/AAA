@@ -10,6 +10,12 @@ create_dsCodeParser <- function() {
 	
 	
 	parser$extractContractName <- function(dsCode) {
+		# legge e parsa la linea di datastream denominata code 
+		# (che contiene il codice datastream con il datatype tra parentesi)
+		# e ritorna una lista di attributi con nameWithoutType, dataType, year, month
+
+		# Esempio: da "CVX0311(OI)" viene estratto CVX0311, OI, 2011, 03
+		
 		nameWithoutType <- substr(dsCode,1,7) 
 		month <- substr(dsCode,4,5) 
 		year  <- substr(dsCode,6,7)
@@ -23,6 +29,11 @@ create_dsCodeParser <- function() {
 	}
 	
 	parser$extractNameWithoutType <- function(code) {
+		# estrae il codice datastream dalla linea di datastream denominata code 
+		# (che contiene il codice datastream con il datatype tra parentesi)
+		# e ritorna il puro codice datastream 
+		
+		# Esempio: da "CVX0311(OI)" viene estratto CVX0311
 		
 		attributes <- parser$extractContractName(code)
 		nameWithoutType <- attributes$nameWithoutType

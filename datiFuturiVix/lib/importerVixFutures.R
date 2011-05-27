@@ -15,6 +15,8 @@ create_importerVixFutures <- function() {
 			OI="openInterest")
 	
 	importer$readSettlementDates <- function() {
+		# legge il file contenente le date dell'ultima data di trade
+		# e della data di settlement dei diversi contratti
 		settDates <- read.csv(file = importer$settlementFile, header = TRUE,
 				stringsAsFactors = FALSE,skip=1)
 		colnames(settDates)[1] <- "Last Trade Date"
@@ -25,6 +27,7 @@ create_importerVixFutures <- function() {
 		
 	
 	importer$getSettlementDate <- function(period) {
+		# period e' una stringa di tipo "yyyy-mm", ad esempio "2010-11"
 		
 		if (!exists("settlementDates",where=importer$repository,inherits=FALSE)) {
 			importer$readSettlementDates()
@@ -37,6 +40,7 @@ create_importerVixFutures <- function() {
 	
 	
 	importer$getLastTradeDate <- function(period) {
+		# period e' una stringa di tipo "yyyy-mm", ad esempio "2010-11"
 		
 		settlementDates <- importer$readSettlementDates()
 		
@@ -46,6 +50,8 @@ create_importerVixFutures <- function() {
 	}
 	
 	importer$getListOfContractNames <- function(dsCodes.v) {
+		# da un vettore di codici datastream estrae solo i codici escludendo
+		# i tipi di dato tra parentesi.
 		
 		parser <- create_dsCodeParser()
 		
@@ -72,7 +78,7 @@ create_importerVixFutures <- function() {
 			importer$readDsCodes()
 		}	
 		codes <- importer$repository$dsCodes
-		
+??? continuare a mettere i commenti da qui		
 		
 		desired <- substr(codes,1,7)==contractName
 		data <- data[,desired]
