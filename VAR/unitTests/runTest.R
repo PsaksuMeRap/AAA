@@ -28,8 +28,6 @@ testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
 
 
 
-
-
 ## test per le procedure lists.R
 testsuite.lists <- defineTestSuite("Test procedure lists.R",
 		dirs = "./unitTests/t.lists")

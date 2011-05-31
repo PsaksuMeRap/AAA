@@ -13,17 +13,13 @@ create_position <- function() {
 	class(position) <- "position"
 	
 	position$name = NA_character_
-#	position$amount = NA_real_
 	position$money = NA
-#	position$money$currency = NA_character_
 	position$origin = NA
 	
 	position$create <- function(name=NA_character_,currency="CHF",
 			amount=0.0,origin=NA) {
 		position$name <<- name
-#		position$amount <<- amount
 		position$money <<- toMoney(amount,currency)
-#		position$money$currency <<- currency
 		position$origin <<- origin
 	}
 	
@@ -37,19 +33,32 @@ create_position <- function() {
 		return(position$money$currency==currency)
 	}
 	
-	position$print <- function(width) {
+	position$posPrint <- function(width) {
+
 		if (missing(width)) {
 			x <- formatC(position$money$amount,big.mark = "'",
 					decimal.mark = ".",format="f",digits=2)
+			print(paste(class(position)[1],"/",position$money$currency,
+							x,
+							"/ Name:", position$name
+					)
+			)
 		} else {
-			x <- formatC(position$money$amount,width=width,big.mark = "'",
+			
+			# costruisci il primo argomento (la classe della posizione)
+			classPosition <- class(position)[1]
+			nbChar <- nchar(classPosition)
+			part1 <- paste(classPosition,paste(rep(" ", width["name"] - nbChar),collapse=""))
+			
+			# costruisci l'importo
+			x <- formatC(position$money$amount,width=width["amount"],big.mark = "'",
 					decimal.mark = ".",format="f",digits=2)
+			print(paste(part1,"/",position$money$currency,
+							x,
+							"/ Name:", position$name
+					)
+			)
 		}
-		print(paste(class(position)[1],"/",position$money$currency,
-						x,
-						"/ Name:", position$name
-				)
-		)
 	}
 	
 	position$toString <- function(width) {

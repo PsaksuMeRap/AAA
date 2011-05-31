@@ -22,6 +22,30 @@ source("./lib/library.R")
 source("./odbc/connessioni.R")
 
 
+
+#/poi cancella
+
+dati <- importDBPortfolioGenerale()
+repositories$fixedIncome <- create_repositoryFixedIncome()
+repositories$politicaInvestimento <- create_repositoryPoliticaInvestimento()
+repositories$instruments <- create_repositoryInstruments()
+repositories$exchangeRates <- create_repositoryExchangeRates()
+repositories$equities <- create_repositoryEquities()
+
+
+clienti <- c("pippo76","pippo53")
+portfParser <- create_parserPortfolio()
+portfolios <- lapply(clienti,portfParser$parse,dati)
+
+
+#/fine poi cancella
+
+
+
+
+
+
+
 allDates <- seq(as.Date("2010-07-05"),to=as.Date("2010-12-17"),by="days")
 fetch <- rep(c(TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE),length(allDates)/7)
 fetchDates <- allDates[fetch]

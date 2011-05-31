@@ -84,7 +84,7 @@ create_repositoryInstruments <- function(instruments.df) {
 	repository$getInstrumentName <- function(id) {
 		if (isEmpty) return(NA_character_)
 		
-		if (is.na(id)) return("Conto corrente")
+		if (is.na(id)) return("Conto_corrente")
 		isDesired <- instruments.df[,"ID"] == as.integer(id)
 		
 		if (any(isDesired)) return(instruments.df[isDesired,"Instrument"])
@@ -391,7 +391,7 @@ create_repositoryExchangeRates <- function(exchangeRates.v,exchangeRatesDate) {
 			result <- toMoney(amount*repository$rates[[fromCurrency]],toCurrency)
 			return(result)
 		}
-	
+
 		areAvailable <- is.element(c(fromCurrency,toCurrency),names(repository$rates))
 		if (any(!areAvailable)) {
 			print(paste("Error",c(fromCurrency,toCurrency)[!areAvailable],"not available."))

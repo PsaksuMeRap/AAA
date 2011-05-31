@@ -254,6 +254,58 @@ checkCheckStringOnPositions <- function(checkString,positions,logFile,refCurrenc
 	
 }
 
+identifyFundsToExplode <- function(fundData,positions) {
+	# fundData: una lista con tre campi: nomeFondo, numeroValore, nomePortafoglio
+	# una variabile di classe positions
+	
+	# return a vector with the positions matching the numeroValore field
+	
+	nbPositions <- length(positions)
+	if (nbPositions==0) return (numeric(0))
+	
+	isFundToExplode <- function(position,fundData) {
+		
+		return(fundData[["numeroValore"]] == position$origin[["NumeroValore"]])
+	}
+	
+	result <- sapply(positions,isFundToExplode,fundData)
+	return(result)		
+}
+
+
+identifyCB_Accent_Lux_sicav_FIXED_INCOME <- function(positions,fundData) {
+	# identify CB-Accent Lux sicav - fixed Income
+	isAccentLuxFixedIncome <- identifyFundsToExplode(fundData,positions$positions)
+	
+	# identify accrued interest
+	isAccruedInterest <- function(position) {is.element("accruedInterest",class(position))}
+	result <- sapply(positions$positions,isAccruedInterest) & isAccentLuxFixedIncome
+	
+	return(result)
+}
+
+
+weightPositions <- function(positions,weight) {
+	nbPositions <- length(positions$positions)
+	if (nbPositions > 0) {
+		for (i in 1:nbPositions) {
+			positions$positions[[i]]$money$amount <- weight *
+					positions$positions[[i]]$money$amount
+			positions$positions[[i]]$origin$Saldo <- weight *
+					positions$positions[[i]]$origin$Saldo
+			positions$positions[[i]]$origin$ValorePosizione <- weight *
+					positions$positions[[i]]$origin$ValorePosizione			
+			positions$positions[[i]]$origin$ValoreMonetaRiferimento <- weight *
+					positions$positions[[i]]$origin$ValoreMonetaRiferimento	
+			positions$positions[[i]]$origin$ValoreMercatoMonetaCHF <- weight *
+					positions$positions[[i]]$origin$ValoreMercatoMonetaCHF						
+			positions$positions[[i]]$origin$ValoreMercatoMonetaEUR <- weight *
+					positions$positions[[i]]$origin$ValoreMercatoMonetaEUR					
+			positions$positions[[i]]$origin$ValoreMercatoMonetaUSD <- weight *
+					positions$positions[[i]]$origin$ValoreMercatoMonetaUSD						
+		}
+	}
+}
 
 # analizza i nomi e guarda se funzionano correttamente. crea un repository per le
 # criteriumClass con i rispettivi valori? Esempio

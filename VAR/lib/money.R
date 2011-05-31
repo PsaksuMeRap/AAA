@@ -10,7 +10,7 @@ toMoney <- function(amount,currency) {
 	money <- new.env()
 	class(money) <- "money"
 
-	money$amount <- amount
+	money$amount <- as.numeric(amount)
 	money$currency <- currency
 	
 	money$sum <- function(m) {

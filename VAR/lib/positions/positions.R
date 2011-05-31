@@ -71,15 +71,28 @@ create_positions <- function() {
 			return(width)
 		}
 		
+		getNameWidth <- function(position) {
+			# questa funzione calcola il numero di caratteri da usare per
+			# la formattazione dell'output del nome
+			width <- nchar(class(position)[1])
+			
+			return(width)
+		}	
+		
 		result <- sapply(positions$positions,getAmountWidth)
 		if (length(result)>0) {
-			width <- max(sapply(positions$positions,getAmountWidth))
+			widthAmount <- max(sapply(positions$positions,getAmountWidth))
+			widthName <- max(sapply(positions$positions,getNameWidth))
 		} else {
-			width <- 0
+			widthAmount <- 0
+			widthName <- 0
 		}
-		
+	
+		width=c(name=widthName,amount=widthAmount)
 		criteria <- c("instrument","currency","name","amount")
-		for (p in positions$sortBy(criteria)) p$print(width)
+		sortedPositions <- positions$sortBy(criteria)
+
+		for (p in sortedPositions) p$posPrint(width)
 	}
 	
 	positions$toString <- function() {

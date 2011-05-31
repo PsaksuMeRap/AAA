@@ -4,6 +4,43 @@
 ###############################################################################
 
 
+
+test.shouldTestIsListFieldEqual <- function() {
+	source("./lib/lists.R")
+	
+	origin <- list(
+			list(a=1,b="cane"),
+			list(a=2,b="gatto"),
+			list(a=1,b="gatto"),
+			list(a=4,b="pippo"),		
+			list(a=2,b="claudio")
+	)
+	
+	# filtra by a=1
+	should <- c(TRUE,FALSE,TRUE,FALSE,FALSE)
+	filtered <- isListFieldEqual(origin,"a",1)
+	checkEquals(filtered,should)
+	
+	# filtra by b="cane" (ritorna una lista con 1 solo elemento)
+	should <- c(TRUE,FALSE,FALSE,FALSE,FALSE)
+	filtered <- isListFieldEqual(origin,"b","cane")
+	checkEquals(filtered,should)	
+	
+	# filtra by b="lld" 
+	should <- c(FALSE,FALSE,FALSE,FALSE,FALSE)
+	filtered <- isListFieldEqual(origin,"b","lld")
+	checkEquals(filtered,should)
+
+	# filtra by b="lld" (ritorna lista vuota!)
+	origin <- list()
+	should <- list()
+	filtered <- isListFieldEqual(origin,"b","lld")
+	checkEquals(filtered,should)
+	
+} 
+
+
+
 test.shouldFilterListByCriterium <- function() {
 	source("./lib/lists.R")
 		

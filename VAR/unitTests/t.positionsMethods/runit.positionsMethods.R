@@ -875,3 +875,252 @@ test.shouldCheckOneCheckStringOnPositions <- function() {
 	# reset the repository in the original state
 	repositories$exchangeRates <- repository
 }
+
+
+# questa parte di test riguarda i fondi nostri da esplodere nei portafogli cliente
+test.shouldIdentifyFundsToExplode <- function() {
+	source("./lib/repository.R")
+	source("./unitTests/utilities/allocateTestRepositories.R")
+
+	nomi <- c("Cliente","Strumento","Moneta","Saldo","NumeroValore",
+			"Nome","PrezzoMedio","PrezzoMercato","ValorePosizione",
+			"ValoreMonetaRiferimento","Evoluzione","Ordine","Categoria",
+			"ValoreMercatoMonetaCHF","ValoreMercatoMonetaEUR",
+			"ValoreMercatoMonetaUSD","ID_AAA","ID_strumento",
+			"ID_transazione","Ticker_indice_per_BETA","Valuta",
+			"VariazioneFX")
+	
+	origin1 <- list("pippo123","A","CHF",2000,"2742261CH",
+			"CB-Accent Global Equity Fund Cap B",77.3339998779297,73.74,147480,
+			110510.651752904,-0.0464737357902443,"E","Azioni e simili",
+			147480,110510.651752904,154283.920912229,1701,14,NA,NA,NA,NA)
+	names(origin1) <- nomi
+	
+	origin2 <- list("pippo16","Oacc","EUR",0,"2490099",
+			"20201231 - 0% CB-Accent Lux Sicav - Fixed Income EUR 31-12-20 Pro-rata",
+			NA,NA,0,0,NA,"D","Obbligazioni e simili          ",0,0,0,825,
+			2,NA,NA,NA,NA)
+	names(origin2) <- nomi
+	
+	origin3 <- list("pippo16","O      ","EUR",11000,"2490099",
+			"20201231 - 0% CB-Accent Lux Sicav - Fixed Income EUR 31-12-20",
+			10126.7272727273,11487,1263570,1263570,0.134325008528287,"D ",
+			"Obbligazioni e simili          ",1686274.5866043,1263570,
+			1764070.077,825,2,NA,NA,NA,NA)
+	names(origin3) <- nomi
+	
+	
+	# initialize the different repositories
+	allocateTestRepositories("equities")
+	allocateTestRepositories("instruments")
+	allocateTestRepositories("politicaInvestimento")
+	allocateTestRepositories("exchangeRates")
+	
+	
+	# create position 1
+	parser <- create_parserPosition()
+	position1 <- parser$parse(origin1)
+	
+	# create position 2
+	parser <- create_parserPosition()
+	position2 <- parser$parse(origin2)
+	
+	# create position 3
+	parser <- create_parserPosition()
+	position3 <- parser$parse(origin3)
+	
+	# create positions
+	positions <- create_positions()
+	positions$add(position1)
+	positions$add(position2)
+	positions$add(position3)
+	
+	fundsDb <- create_fundsDB()
+	
+	# identify GLOBAL EQUITY
+	fundData <- as.list(fundsDb[1,,drop=FALSE])
+	result <- identifyFundsToExplode(fundData,positions$positions)
+	checkEquals(result,c(TRUE,FALSE,FALSE))
+	
+	# identify FIXED INCOME
+	fundData <- as.list(fundsDb[3,,drop=FALSE])
+	result <- identifyFundsToExplode(fundData,positions$positions)
+	checkEquals(result,c(FALSE,TRUE,TRUE))
+	
+	# identify nothing
+	fundData <- as.list(fundsDb[1,,drop=FALSE])
+	fundData["numeroValore"] <- "1kdkd"
+	result <- identifyFundsToExplode(fundData,positions$positions)
+	checkEquals(result,c(FALSE,FALSE,FALSE))
+	
+	# reset the repositories in the original state
+	deallocateTestRepositories("exchangeRates")
+	deallocateTestRepositories("equities")
+	deallocateTestRepositories("instruments")
+	deallocateTestRepositories("politicaInvestimento")
+	
+}
+
+
+test.shouldIdentifyAccruedInterest <- function() {
+	source("./lib/repository.R")
+	source("./unitTests/utilities/allocateTestRepositories.R")
+	
+	nomi <- c("Cliente","Strumento","Moneta","Saldo","NumeroValore",
+			"Nome","PrezzoMedio","PrezzoMercato","ValorePosizione",
+			"ValoreMonetaRiferimento","Evoluzione","Ordine","Categoria",
+			"ValoreMercatoMonetaCHF","ValoreMercatoMonetaEUR",
+			"ValoreMercatoMonetaUSD","ID_AAA","ID_strumento",
+			"ID_transazione","Ticker_indice_per_BETA","Valuta",
+			"VariazioneFX")
+	
+	origin1 <- list("pippo123","A","CHF",2000,"2742261CH",
+			"CB-Accent Global Equity Fund Cap B",77.3339998779297,73.74,147480,
+			110510.651752904,-0.0464737357902443,"E","Azioni e simili",
+			147480,110510.651752904,154283.920912229,1701,14,NA,NA,NA,NA)
+	names(origin1) <- nomi
+	
+	origin2 <- list("pippo16","Oacc","EUR",0,"2490099",
+			"20201231 - 0% CB-Accent Lux Sicav - Fixed Income EUR 31-12-20 Pro-rata",
+			NA,NA,0,0,NA,"D","Obbligazioni e simili          ",0,0,0,825,
+			2,NA,NA,NA,NA)
+	names(origin2) <- nomi
+	
+	origin3 <- list("pippo16","O      ","EUR",11000,"2490099",
+			"20201231 - 0% CB-Accent Lux Sicav - Fixed Income EUR 31-12-20",
+			10126.7272727273,11487,1263570,1263570,0.134325008528287,"D ",
+			"Obbligazioni e simili          ",1686274.5866043,1263570,
+			1764070.077,825,2,NA,NA,NA,NA)
+	names(origin3) <- nomi
+	
+	
+	# initialize the different repositories
+	allocateTestRepositories("equities")
+	allocateTestRepositories("instruments")
+	allocateTestRepositories("politicaInvestimento")
+	allocateTestRepositories("exchangeRates")
+	
+	
+	# create position 1
+	parser <- create_parserPosition()
+	position1 <- parser$parse(origin1)
+	
+	# create position 2
+	parser <- create_parserPosition()
+	position2 <- parser$parse(origin2)
+	
+	# create position 3
+	parser <- create_parserPosition()
+	position3 <- parser$parse(origin3)
+	
+	# create positions
+	positions <- create_positions()
+	positions$add(position1)
+	positions$add(position2)
+	positions$add(position3)
+	
+	fundsDb <- create_fundsDB()
+	fundData <- as.list(fundsDb[3,,drop=FALSE])
+	result <- identifyCB_Accent_Lux_sicav_FIXED_INCOME(positions,fundData)
+
+	checkEquals(result,c(FALSE,TRUE,FALSE))
+	
+	# reset the repositories in the original state
+	deallocateTestRepositories("exchangeRates")
+	deallocateTestRepositories("equities")
+	deallocateTestRepositories("instruments")
+	deallocateTestRepositories("politicaInvestimento")
+	
+}
+
+
+test.shouldReweightPositions <- function() {
+	source("./lib/repository.R")
+	source("./unitTests/utilities/allocateTestRepositories.R")
+	
+	nomi <- c("Cliente","Strumento","Moneta","Saldo","NumeroValore",
+			"Nome","PrezzoMedio","PrezzoMercato","ValorePosizione",
+			"ValoreMonetaRiferimento","Evoluzione","Ordine","Categoria",
+			"ValoreMercatoMonetaCHF","ValoreMercatoMonetaEUR",
+			"ValoreMercatoMonetaUSD","ID_AAA","ID_strumento",
+			"ID_transazione","Ticker_indice_per_BETA","Valuta",
+			"VariazioneFX")
+
+	origin1 <- list("pippo16","L","EUR",4477.2698043909,"",
+			"EUR-0456-0122993-92-000",NA,NA,4477.2698043909,4477.2698043909,
+			NA,"A","Saldi in Cto. Corrente",5975.0597818207,4477.2698043909,
+			6250.71637391013,NA,40,NA,NA,NA,NA)
+	names(origin1) <- nomi
+	
+	origin2 <- list("pippo16","Oacc","EUR",0,"2490099",
+			"20201231 - 0% CB-Accent Lux Sicav - Fixed Income EUR 31-12-20 Pro-rata",
+			NA,NA,0,0,NA,"D","Obbligazioni e simili          ",0,0,0,825,
+			2,NA,NA,NA,NA)
+	names(origin2) <- nomi
+	
+	origin3 <- list("pippo16","O      ","EUR",11000,"2490099",
+			"20201231 - 0% CB-Accent Lux Sicav - Fixed Income EUR 31-12-20",
+			10126.7272727273,11487,1263570,1263570,0.134325008528287,"D ",
+			"Obbligazioni e simili          ",1686274.5866043,1263570,
+			1764070.077,825,2,NA,NA,NA,NA)
+	names(origin3) <- nomi
+	
+	origin4 <- list("pippo16","A","CHF",30050,"2742261CH",
+			"CB-Accent Global Equity Fund Cap B",99.9755741239983,73.74,
+			2215887,1660422.54258738,-0.262419839584604,"E","Azioni e simili",
+			2215887,1660422.54258738,2318115.91170625,1701,14,NA,NA,NA,NA)
+	names(origin4) <- nomi
+	
+	# initialize the different repositories
+	allocateTestRepositories("equities")
+	allocateTestRepositories("instruments")
+	allocateTestRepositories("politicaInvestimento")
+	allocateTestRepositories("exchangeRates")
+	
+	# create client portfolio
+	# create position 1
+	parser <- create_parserPosition()
+	position1 <- parser$parse(origin1)
+	
+	# create position 2
+	parser <- create_parserPosition()
+	position2 <- parser$parse(origin2)
+	
+	# create position 3
+	parser <- create_parserPosition()
+	position3 <- parser$parse(origin3)
+	
+	# create position 4
+	parser <- create_parserPosition()
+	position4 <- parser$parse(origin4)
+	
+	# create positions
+	positions <- create_positions()
+	positions$add(position1)
+	positions$add(position2)
+	positions$add(position3)
+	positions$add(position4)
+	
+	portfolio <- create_portfolio()
+	portfolio$owner <- "composizione fondo"
+	portfolio$refCurrency <- "EUR"
+	portfolio$add(positions)
+	
+	valorePortafoglio <- portfolio$positions$sum("CHF")
+	pesoCliente <- 0.0025
+	
+	weightPositions(portfolio$positions,pesoCliente)
+	
+	NuovoValorePortafoglio <- portfolio$positions$sum("CHF")
+	
+	checkEquals(NuovoValorePortafoglio$amount,valorePortafoglio$amount*pesoCliente)
+	
+	# reset the repositories in the original state
+	deallocateTestRepositories("exchangeRates")
+	deallocateTestRepositories("equities")
+	deallocateTestRepositories("instruments")
+	deallocateTestRepositories("politicaInvestimento")
+	
+}
+
+

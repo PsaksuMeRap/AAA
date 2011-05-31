@@ -4,6 +4,25 @@
 ###############################################################################
 
 
+
+
+isListFieldEqual <- function(origin,by,value) {
+	# origin: una lista di tipo origin o una lista i cui elementi,
+	# notati x, hanno il campo x[[by]]
+	# by: il nome del campo su cui applicare il filtro
+	# value: il valore del campo da filtrare
+	# output: un vettore di vero/falso
+	
+	filter <- function(x,by,value) {
+		return(x[[by]] == value)
+	}	
+
+	areOk <- sapply(origin,filter,by,value=value)
+	
+	return(areOk)
+}
+
+
 filterLists <- function(origin,by,value) {
 	# origin: una lista di tipo origin o una lista i cui elementi,
 	# notati x, hanno il campo x[[by]]
