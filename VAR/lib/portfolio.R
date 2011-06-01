@@ -36,6 +36,9 @@ create_portfolio <- function() {
 		print(paste("Reference currency:",portfolio$refCurrency))
 		print(paste("Positions:"))
 		portfolio$positions$print()
+		# compute the total value of the portfolio
+		total <- portfolio$value(portfolio$refCurrency)
+		print(paste("Total:",total$toString()))
 	}
 	
 	portfolio$value <- function(currency) {

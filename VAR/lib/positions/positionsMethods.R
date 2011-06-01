@@ -255,12 +255,12 @@ checkCheckStringOnPositions <- function(checkString,positions,logFile,refCurrenc
 }
 
 identifyFundsToExplode <- function(fundData,positions) {
-	# fundData: una lista con tre campi: nomeFondo, numeroValore, nomePortafoglio
+	# fundData: una lista con tre campi: nomeFondo, numeroValore, owner
 	# una variabile di classe positions
 	
 	# return a vector with the positions matching the numeroValore field
 	
-	nbPositions <- length(positions)
+	nbPositions <- length(positions$positions)
 	if (nbPositions==0) return (numeric(0))
 	
 	isFundToExplode <- function(position,fundData) {
@@ -268,44 +268,86 @@ identifyFundsToExplode <- function(fundData,positions) {
 		return(fundData[["numeroValore"]] == position$origin[["NumeroValore"]])
 	}
 	
-	result <- sapply(positions,isFundToExplode,fundData)
+	result <- sapply(positions$positions,isFundToExplode,fundData)
 	return(result)		
 }
 
 
-identifyCB_Accent_Lux_sicav_FIXED_INCOME <- function(positions,fundData) {
+identifyCB_Accent_Lux_sicav_FIXED_INCOME_oacc <- function(positions) {
 	# identify CB-Accent Lux sicav - fixed Income
-	isAccentLuxFixedIncome <- identifyFundsToExplode(fundData,positions$positions)
+	isAccentLuxFixedIncome <- identifyFundsToExplode(list("numeroValore"="2490099"),positions)
 	
 	# identify accrued interest
 	isAccruedInterest <- function(position) {is.element("accruedInterest",class(position))}
-	result <- sapply(positions$positions,isAccruedInterest) & isAccentLuxFixedIncome
+	result <- sapply(positions$positions,isAccruedInterest)  & isAccentLuxFixedIncome
 	
 	return(result)
 }
 
 
 weightPositions <- function(positions,weight) {
-	nbPositions <- length(positions$positions)
-	if (nbPositions > 0) {
-		for (i in 1:nbPositions) {
-			positions$positions[[i]]$money$amount <- weight *
-					positions$positions[[i]]$money$amount
-			positions$positions[[i]]$origin$Saldo <- weight *
-					positions$positions[[i]]$origin$Saldo
-			positions$positions[[i]]$origin$ValorePosizione <- weight *
-					positions$positions[[i]]$origin$ValorePosizione			
-			positions$positions[[i]]$origin$ValoreMonetaRiferimento <- weight *
-					positions$positions[[i]]$origin$ValoreMonetaRiferimento	
-			positions$positions[[i]]$origin$ValoreMercatoMonetaCHF <- weight *
-					positions$positions[[i]]$origin$ValoreMercatoMonetaCHF						
-			positions$positions[[i]]$origin$ValoreMercatoMonetaEUR <- weight *
-					positions$positions[[i]]$origin$ValoreMercatoMonetaEUR					
-			positions$positions[[i]]$origin$ValoreMercatoMonetaUSD <- weight *
-					positions$positions[[i]]$origin$ValoreMercatoMonetaUSD						
-		}
-	}
+	return(invisible(lapply(positions$positions,weightPosition,weight)))
 }
+
+explodePortfolioByFund <- function(fundData,fundPortfolios,portfolio) {
+
+	# identifica il portafoglio del fondo in questione
+	owner <- fundData["owner"]
+	fundPortfolio <- filterLists(fundPortfolios,by="owner",value=owner)[[1]]
+
+	result <- identifyFundsToExplode(fundData,portfolio$positions)
+
+	if (fundData[["nomeFondo"]]=="FIXED INCOME") {
+		result_oacc <- identifyCB_Accent_Lux_sicav_FIXED_INCOME_oacc(portfolio$positions)
+		result <- result & !result_oacc
+	} else {
+		result_oacc <- rep(FALSE,length(result))
+	}
+	
+	# se non sono state trovati posizioni termina
+	if (!any(result)) return()
+	
+	# salva e poi elimina la posizione dal portafoglio
+	position <- portfolio$positions$positions[result]
+	if (length(position)==1) {
+		position <- position[[1]] 
+	} else {
+		stop(paste("Errore: portafoglio",portfolio$owner,"con piu' di una posizione in CB Fixed Income."))
+	}
+	# la precedente operazione andrebbe generalizzata al caso in cui ci siano diverse posizioni
+	
+	# rimuovi le posizioni relative al fondo in questione
+	portfolio$positions$remove(result | result_oacc)
+	
+	# calcola il peso relativo della posizione del portafoglio sul NAV del fondo
+	weight <- position$money$divide(fundPortfolio$value())
+	
+	positionTmp <- lapply(fundPortfolio$positions$positions,copyPosition)
+	
+	addToName <- function(position,nameToAdd) {
+		position$name <- paste(position$name,"/","From",nameToAdd)
+	}
+	invisible(lapply(positionTmp,addToName,fundData[["nomeFondo"]]))
+	
+	# ripesa le posizioni del portafoglio
+	invisible(lapply(positionTmp,weightPosition,weight))
+	
+	# aggiungi le posizioni al portafoglio
+	invisible(lapply(positionTmp,portfolio$positions$add))
+	
+}
+
+explodePortfolioByAllFunds <- function(portfolio,fundsDb,fundPortfolios) {
+	apply(fundsDb,1,explodePortfolioByFund,fundPortfolios,portfolio)
+browser()
+}
+
+explodeAllPortfoliosByAllFunds <- function(portfolios) {
+	fundsDb <- create_fundsDB()
+	lapply(portfolios,explodePortfolioByAllFunds,fundsDb,fundPortfolios=portfolios)
+}
+
+
 
 # analizza i nomi e guarda se funzionano correttamente. crea un repository per le
 # criteriumClass con i rispettivi valori? Esempio

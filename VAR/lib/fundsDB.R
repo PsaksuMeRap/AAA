@@ -10,12 +10,12 @@ create_fundsDB <- function() {
 	
 	nomeFondo <- c("GLOBAL EQUITY","GLOBAL ECONOMY","FIXED INCOME")
 	numeroValore <- c("2742261CH","11995588CH","2490099")
-	nomePortafoglio <- c("pippo53","pippo210","pippo76")
+	owner <- c("pippo53","pippo210","pippo76")
 	
 	fundsDB <- data.frame(
 			nomeFondo = nomeFondo,
 			numeroValore = numeroValore,
-			nomePortafoglio = nomePortafoglio,
+			owner = owner,
 			stringsAsFactors=FALSE
 	)
 	return(fundsDB)

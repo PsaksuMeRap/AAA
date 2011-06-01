@@ -11,5 +11,4 @@ createOriginData <- function() {
 			header=TRUE,stringsAsFactors=FALSE)
 	origin <- lapply(1:nrow(dati.df),getRow,dati.df)
 	return(origin)
-
 }

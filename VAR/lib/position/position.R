@@ -86,6 +86,8 @@ create_position <- function() {
 				)
 		return(df)
 	}
+	
+	
 	return(position)
 }
 
