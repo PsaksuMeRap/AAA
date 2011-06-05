@@ -33,48 +33,46 @@ create_position <- function() {
 		return(position$money$currency==currency)
 	}
 	
-	position$posPrint <- function(width) {
+	position$toStringDefault <- function(width) {
+		fields <- list()
 
-		if (missing(width)) {
-			x <- formatC(position$money$amount,big.mark = "'",
-					decimal.mark = ".",format="f",digits=2)
-			print(paste(class(position)[1],"/",position$money$currency,
-							x,
-							"/ Name:", position$name
-					)
-			)
-		} else {
-			
-			# costruisci il primo argomento (la classe della posizione)
-			classPosition <- class(position)[1]
-			nbChar <- nchar(classPosition)
-			part1 <- paste(classPosition,paste(rep(" ", width["name"] - nbChar),collapse=""))
-			
-			# costruisci l'importo
-			x <- formatC(position$money$amount,width=width["amount"],big.mark = "'",
-					decimal.mark = ".",format="f",digits=2)
-			print(paste(part1,"/",position$money$currency,
-							x,
-							"/ Name:", position$name
-					)
-			)
+		fields$class <- class(position)[1]
+		fields$name <- position$name
+		
+		# format the class name
+		if (exists("className",where=width)) {
+			nbChar <- nchar(fields$class)
+			fields$class <- paste(fields$class,paste(rep(" ", width["className"] - nbChar),collapse=""))
 		}
-	}
-	
-	position$toString <- function(width) {
-		if (missing(width)) {
-			x <- formatC(position$money$amount,big.mark = "'",
+		
+		if (exists("amount",where=width)) {	
+			fields$amount <- formatC(position$money$amount,width=width[["amount"]],big.mark = "'",
 					decimal.mark = ".",format="f",digits=2)
 		} else {
-			x <- formatC(position$money$amount,width=width,big.mark = "'",
+			fields$amount <- formatC(position$money$amount,big.mark = "'",
 					decimal.mark = ".",format="f",digits=2)
 		}
 		
-		string <- paste(class(position)[1],"/",position$money$currency,
-				x,
-#				formatC(position$amount,digits=2,format="f"),
-				"/ Name:", position$name)
+		fields$currency <- position$money$currency
+		
+		return(fields)	
+	}
+	
+	position$toString <- function(width) {
+	
+		if (missing(width)) width=list(empty=TRUE)
+		
+		f <- position$toStringDefault(width)
+		
+		string <- paste(f$class,"/",f$currency,
+				f$amount,
+				"/ Name:", f$name)
 		return(string)
+	}
+	
+	position$print <- function(width) {
+		if (missing(width)) width=list()
+		print(position$toString(width))
 	}
 	
 	position$toDataFrame <- function() {
@@ -83,7 +81,7 @@ create_position <- function() {
 				name=position$name,
 				currency=position$money$currency,
 				amount=position$money$amount,stringsAsFactors=FALSE
-				)
+		)
 		return(df)
 	}
 	

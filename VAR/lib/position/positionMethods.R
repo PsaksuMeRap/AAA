@@ -14,6 +14,7 @@ copyPosition <- function(position) {
 			origin=position$origin
 	)
 	class(newPosition) <- class(position)
+	extendPosition(position)
 	return(newPosition)
 }
 

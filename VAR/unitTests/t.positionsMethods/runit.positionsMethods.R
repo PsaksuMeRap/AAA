@@ -1259,13 +1259,14 @@ test.shouldExplodeAllPortfoliosByAllFunds <- function() {
 	cliente <- c("pippo16","pippo22","pippo53","pippo210","pippo76")
 	portfParser <- create_parserPortfolio()
 	portfolios <- lapply(cliente,portfParser$parse,origin,politicaInvestimento.df)
-	valorePortafoglioPrimaEsplosione <- portfolios[[1]]$value()
+	
+	valorePortafoglioPrimaEsplosione <- sapply(portfolios,function(x){x$value()})
 	
 	
 	explodeAllPortfoliosByAllFunds(portfolios)
 	
-	checkEquals(portfolio$value(),valorePortafoglioPrimaEsplosione)
-	checkEquals(length(portfolio$positions$positions),132)
+	checkEquals(sapply(portfolios,function(x){x$value()}),valorePortafoglioPrimaEsplosione)
+	checkEquals(length(portfolios[[1]]$positions$positions),132)
 	
 	
 	# reset the repositories in the original state

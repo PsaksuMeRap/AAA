@@ -50,14 +50,22 @@ extendPosition.equity <- function(position) {
 	id <- as.numeric(id)
 	
 	position$ticker <- repositories$equities$tickerFromId(id)
-	position$print <- function()
-	{
-		print(paste(class(position)[1],"/",position$money$currency, "-", position$money$amount,
-						"/ Name:", position$name,
-						"/ Ticker:", position$ticker
-				)
-		)
+	
+	position$toString <- function(width) {
+		
+		if (missing(width)) width=list(empty=TRUE)
+		
+		f <- position$toStringDefault(width)
+		
+		f$ticker <- position$ticker
+		
+		string <- paste(f$class,"/",f$currency,
+				f$amount,
+				"/ Name:", f$name,
+				"/ Ticker:", f$ticker)
+		return(string)
 	}
+	
 	return()
 }
 
@@ -73,13 +81,6 @@ extendPosition.Strutturati_FI <- function(position) {
 	day <- substr(name,7,8)
 	position$expiryDate = paste(year,month,day,sep="-")
 	
-	position$print <- function()
-	{
-		print(paste(class(position)[1],"/",position$money$currency, "-", position$money$amount,
-						"/ Name:", position$name
-				)
-		)
-	}
 	return()
 	
 }
@@ -130,14 +131,21 @@ extendPosition.accruedInterest <- function(position) {
 		assign("accruedInterest",create_accruedInterest(money,paymentDate),envir=position,inherits=FALSE)
 	}
 	
-	position$print <- function()
-	{
-		print(paste(class(position)[1],"/",position$money$currency, "-", position$money$amount,
-						"/ Name:", position$name,
-						"/ Accrued interest"
-				)
-		)
+	position$toString <- function(width) {
+		
+		if (missing(width)) width=list(empty=TRUE)
+		
+		f <- position$toStringDefault(width)
+		
+		f$accruedInterest <- "Accrued interest"
+		
+		string <- paste(f$class,"/",f$currency,
+				f$amount,
+				"/ Name:", f$name,
+				"/", position$accruedInterest)
+		return(string)
 	}
+	
 	return()
 }
 

@@ -261,7 +261,7 @@ identifyFundsToExplode <- function(fundData,positions) {
 	# return a vector with the positions matching the numeroValore field
 	
 	nbPositions <- length(positions$positions)
-	if (nbPositions==0) return (numeric(0))
+	if (nbPositions==0) return (logical(0))
 	
 	isFundToExplode <- function(position,fundData) {
 		
@@ -274,12 +274,16 @@ identifyFundsToExplode <- function(fundData,positions) {
 
 
 identifyCB_Accent_Lux_sicav_FIXED_INCOME_oacc <- function(positions) {
+
+	nbPositions <- length(positions$positions)
+	if (nbPositions==0) return (logical(0))
+	
 	# identify CB-Accent Lux sicav - fixed Income
 	isAccentLuxFixedIncome <- identifyFundsToExplode(list("numeroValore"="2490099"),positions)
 	
 	# identify accrued interest
 	isAccruedInterest <- function(position) {is.element("accruedInterest",class(position))}
-	result <- sapply(positions$positions,isAccruedInterest)  & isAccentLuxFixedIncome
+	result <- sapply(positions$positions,isAccruedInterest) & isAccentLuxFixedIncome
 	
 	return(result)
 }
@@ -291,6 +295,10 @@ weightPositions <- function(positions,weight) {
 
 explodePortfolioByFund <- function(fundData,fundPortfolios,portfolio) {
 
+	# il portfolio è vuoto termina
+	nbPositions <- length(portfolio$positions$positions)
+	if (nbPositions==0) return(invisible())
+	
 	# identifica il portafoglio del fondo in questione
 	owner <- fundData["owner"]
 	fundPortfolio <- filterLists(fundPortfolios,by="owner",value=owner)[[1]]
@@ -339,12 +347,11 @@ explodePortfolioByFund <- function(fundData,fundPortfolios,portfolio) {
 
 explodePortfolioByAllFunds <- function(portfolio,fundsDb,fundPortfolios) {
 	apply(fundsDb,1,explodePortfolioByFund,fundPortfolios,portfolio)
-browser()
 }
 
 explodeAllPortfoliosByAllFunds <- function(portfolios) {
 	fundsDb <- create_fundsDB()
-	lapply(portfolios,explodePortfolioByAllFunds,fundsDb,fundPortfolios=portfolios)
+	invisible(lapply(portfolios,explodePortfolioByAllFunds,fundsDb,fundPortfolios=portfolios))
 }
 
 
