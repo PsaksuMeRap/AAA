@@ -49,7 +49,7 @@ extendPosition.equity <- function(position) {
 	if (is.na(id)) {print("Error: equity without ID_AAA"); stop()}
 	id <- as.numeric(id)
 	
-	position$ticker <- repositories$equities$tickerFromId(id)
+	position$ticker <- unique(repositories$equities$tickerFromId(id))
 	
 	position$toString <- function(width) {
 		
@@ -59,10 +59,13 @@ extendPosition.equity <- function(position) {
 		
 		f$ticker <- position$ticker
 		
-		string <- paste(f$class,"/",f$currency,
-				f$amount,
-				"/ Name:", f$name,
+		string <- paste(f$class,
+				"/", f$currency,
+				"/", f$amount,
+				"/", f$name,
 				"/ Ticker:", f$ticker)
+if (length(string)>1) browser()
+
 		return(string)
 	}
 	
@@ -139,10 +142,11 @@ extendPosition.accruedInterest <- function(position) {
 		
 		f$accruedInterest <- "Accrued interest"
 		
-		string <- paste(f$class,"/",f$currency,
-				f$amount,
-				"/ Name:", f$name,
-				"/", position$accruedInterest)
+		string <- paste(f$class,
+				"/", f$currency,
+				"/", f$amount,
+				"/", f$name,
+				"/", f$accruedInterest)
 		return(string)
 	}
 	

@@ -441,7 +441,7 @@ test.shouldConvertPositionsToString <- function() {
 			amount=-10.0,
 			origin=list(ID_AAA=10)
 	)
-	class(position1) <- c("Anda",class(position1))
+	class(position1) <- c("Equity",class(position1))
 	
 	# create position 2	
 	position2 <- create_position()
@@ -468,8 +468,8 @@ test.shouldConvertPositionsToString <- function() {
 	positions$add(position3)	
 	
 	result <- positions$toString()
-	checkEquals(result[1],"Anda / USD        -10.00 / Name: xxx")
-	checkEquals(result[3],"bond / EUR      1'000.59 / Name: AAA")
+	checkEquals(result[3],"Equity / USD /        -10.00 / xxx")
+	checkEquals(result[2],"bond   / EUR /      1'000.59 / AAA")
 	
 	# create empty positions
 	positions <- create_positions()	

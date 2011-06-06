@@ -40,12 +40,12 @@ create_position <- function() {
 		fields$name <- position$name
 		
 		# format the class name
-		if (exists("className",where=width)) {
+		if (is.element("className",names(width))) {
 			nbChar <- nchar(fields$class)
-			fields$class <- paste(fields$class,paste(rep(" ", width["className"] - nbChar),collapse=""))
+			fields$class <- paste(fields$class,paste(rep(" ", width["className"] - nbChar),collapse=""),sep="")
 		}
 		
-		if (exists("amount",where=width)) {	
+		if (is.element("amount",names(width))) {	
 			fields$amount <- formatC(position$money$amount,width=width[["amount"]],big.mark = "'",
 					decimal.mark = ".",format="f",digits=2)
 		} else {
@@ -64,14 +64,15 @@ create_position <- function() {
 		
 		f <- position$toStringDefault(width)
 		
-		string <- paste(f$class,"/",f$currency,
-				f$amount,
-				"/ Name:", f$name)
+		string <- paste(f$class,
+				"/", f$currency,
+				"/", f$amount,
+				"/", f$name)
 		return(string)
 	}
 	
 	position$print <- function(width) {
-		if (missing(width)) width=list()
+		if (missing(width)) width=list(empty=TRUE)
 		print(position$toString(width))
 	}
 	

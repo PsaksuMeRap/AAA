@@ -58,8 +58,8 @@ test.positionToString <- function() {
 			origin=list(ID_AAA=10)
 	)
 	
-	string <- paste(class(position)[1],"/","USD",
-			formatC(100,digits=2,format="f"), "/ Name: test")
+	string <- paste(class(position)[1],"/","USD","/",
+			formatC(100,digits=2,format="f"), "/ test")
 
 	checkEquals(position$toString(),string)	
 
