@@ -33,7 +33,7 @@ repositories$exchangeRates <- create_repositoryExchangeRates()
 repositories$equities <- create_repositoryEquities()
 
 
-clienti <- c("pippo76","pippo53")
+clienti <- c("pippo76","pippo53","pippo210")
 portfParser <- create_parserPortfolio()
 portfolios <- lapply(clienti,portfParser$parse,dati)
 

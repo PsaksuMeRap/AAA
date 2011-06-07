@@ -51,22 +51,14 @@ extendPosition.equity <- function(position) {
 	
 	position$ticker <- unique(repositories$equities$tickerFromId(id))
 	
-	position$toString <- function(width) {
+	position$fieldsToPrint <- function(width) {
 		
-		if (missing(width)) width=list(empty=TRUE)
+		if (missing(width)) width=c(empty=TRUE)
 		
-		f <- position$toStringDefault(width)
+		fields <- position$fieldsToPrintDefault(width)
+		fields$ticker <- position$ticker
 		
-		f$ticker <- position$ticker
-		
-		string <- paste(f$class,
-				"/", f$currency,
-				"/", f$amount,
-				"/", f$name,
-				"/ Ticker:", f$ticker)
-if (length(string)>1) browser()
-
-		return(string)
+		return(fields)
 	}
 	
 	return()
@@ -134,20 +126,15 @@ extendPosition.accruedInterest <- function(position) {
 		assign("accruedInterest",create_accruedInterest(money,paymentDate),envir=position,inherits=FALSE)
 	}
 	
-	position$toString <- function(width) {
+	position$fieldsToPrint <- function(width) {
 		
-		if (missing(width)) width=list(empty=TRUE)
+		if (missing(width)) width=c(empty=TRUE)
 		
-		f <- position$toStringDefault(width)
+		fields <- position$fieldsToPrintDefault(width)
 		
-		f$accruedInterest <- "Accrued interest"
+		fields$accruedInterest <- "Accrued interest"
 		
-		string <- paste(f$class,
-				"/", f$currency,
-				"/", f$amount,
-				"/", f$name,
-				"/", f$accruedInterest)
-		return(string)
+		return(fields)
 	}
 	
 	return()

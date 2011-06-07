@@ -18,6 +18,7 @@ dirs = c("./unitTests/t.lists",
 		"./unitTests/t.portfolio",
 		"./unitTests/t.criterium",
 		"./unitTests/t.positionsMethods",
+		"./unitTests/t.portfolioMethods",
 		"./unitTests/t.riskmanTestSuite",
 		"./unitTests/t.riskFactor"
 		)

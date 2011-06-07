@@ -150,10 +150,13 @@ create_positions <- function() {
 	positions$sortBy <- function(criteria) {
 		# creteria: an ordered character vector with the following criteria
 		# instrument - currency - name - amount
-		
-		df <- positions$toDataFrame()
-		indices <- do.call(order,df[criteria])
-		return(positions$positions[indices])
+		if (length(positions$positions)>0) {
+			df <- positions$toDataFrame()
+			indices <- do.call(order,df[criteria])
+			return(positions$positions[indices])
+		}  else {
+			return(positions$positions)
+		}
 	}
 	
 	positions$sum <- function(toCurrency) {

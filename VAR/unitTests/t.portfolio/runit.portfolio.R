@@ -6,7 +6,7 @@
 
 
 test.should_createPortfolio <- function() {
-	source("./lib/portfolio.R")
+	source("./lib/portfolio/portfolio.R")
 	
 	portfolio <- create_portfolio()
 	
@@ -18,7 +18,7 @@ test.should_createPortfolio <- function() {
 
 
 test.should_addPositionToPortfolio <- function() {
-	source("./lib/portfolio.R")
+	source("./lib/portfolio/portfolio.R")
 	
     p <- create_position()
 	p$create(name="pippo",
@@ -34,7 +34,7 @@ test.should_addPositionToPortfolio <- function() {
 }
 
 test.should_addPositionsToPortfolio <- function() {
-	source("./lib/portfolio.R")
+	source("./lib/portfolio/portfolio.R")
 	
 	p1 <- create_position()
 	p1$create(name="SUNCOR ENERGY  INC. CO",
@@ -97,7 +97,7 @@ test.shouldParsePortfolio <- function() {
 }
 
 test.should_returnValueOfPortfolio <- function() {
-	source("./lib/portfolio.R")
+	source("./lib/portfolio/portfolio.R")
 	
 	p1 <- create_position()
 	p1$create(name="SUNCOR ENERGY  INC. CO",
@@ -145,7 +145,7 @@ test.should_returnValueOfPortfolio <- function() {
 }
 
 test.should_addPortfolio <- function() {
-	source("./lib/portfolio.R")
+	source("./lib/portfolio/portfolio.R")
 	
 	p1 <- create_position()
 	p1$create(name="SUNCOR ENERGY  INC. CO",

@@ -19,8 +19,17 @@ test.shouldExtendPositionEquity <- function() {
 	)
 	class(position) <- c("equity",class(position))
 
+	# check the new ticker field
 	extendPosition(position)
 	checkEquals(position$ticker,"SIE.XE")
+	
+	# check position$fieldsToPrint
+	width=c(empty=TRUE)
+	fields <- position$fieldsToPrintDefault(width) # giusto e già testato
+	fields$ticker <- position$ticker
+	
+	fieldsResult <- position$fieldsToPrint() 
+	checkEquals(fieldsResult,fields)
 	
 	# restore initial conditions
 	deallocateTestRepositories("equities")
@@ -52,10 +61,19 @@ test.shouldExtendPositionAccruedInterest <- function() {
 	accruedInterest <- create_accruedInterest(money,date)
     rm(money,date)
 	
+	# check the new fields and their properties
 	checkEquals(class(position),c("accruedInterest","bond","position"))
 	checkEquals(position$name,"20111130 - 2.5% E.ON")
 	checkEquals(position$accruedInterest$paymentDate,"2011-11-30")
 	checkEquals(position$accruedInterest,accruedInterest)
+	
+	# check position$fieldsToPrint
+	width=c(empty=TRUE)
+	fields <- position$fieldsToPrintDefault(width) # giusto e già testato
+	fields$accruedInterest <- "Accrued interest"
+	
+	fieldsResult <- position$fieldsToPrint() 
+	checkEquals(fieldsResult,fields)
 	
 	# restore initial conditions
 	deallocateTestRepositories("instruments")

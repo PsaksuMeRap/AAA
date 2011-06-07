@@ -3,7 +3,7 @@
 # Author: claudio
 ###############################################################################
 
-source("./lib/portfolio.R")
+source("./lib/portfolio/portfolio.R")
 source("./lib/position/position.R")
 
 

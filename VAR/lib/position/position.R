@@ -33,11 +33,12 @@ create_position <- function() {
 		return(position$money$currency==currency)
 	}
 	
-	position$toStringDefault <- function(width) {
+	position$fieldsToPrintDefault <- function(width) {
+		
 		fields <- list()
-
+		
 		fields$class <- class(position)[1]
-		fields$name <- position$name
+		fields$currency <- position$money$currency
 		
 		# format the class name
 		if (is.element("className",names(width))) {
@@ -52,27 +53,32 @@ create_position <- function() {
 			fields$amount <- formatC(position$money$amount,big.mark = "'",
 					decimal.mark = ".",format="f",digits=2)
 		}
-		
-		fields$currency <- position$money$currency
-		
+		fields$name <- position$name
+
 		return(fields)	
+	}
+	
+	position$fieldsToPrint <- function(width) {
+		
+		if (missing(width)) width=c(empty=TRUE)
+		fields <- position$fieldsToPrintDefault(width)
+		
+		return(fields)
 	}
 	
 	position$toString <- function(width) {
 	
-		if (missing(width)) width=list(empty=TRUE)
+		if (missing(width)) width=c(empty=TRUE)
 		
-		f <- position$toStringDefault(width)
+		f <- position$fieldsToPrint(width)
 		
-		string <- paste(f$class,
-				"/", f$currency,
-				"/", f$amount,
-				"/", f$name)
+		string <- paste(f,collapse=" / ")
+		
 		return(string)
 	}
 	
 	position$print <- function(width) {
-		if (missing(width)) width=list(empty=TRUE)
+		if (missing(width)) width=c(empty=TRUE)
 		print(position$toString(width))
 	}
 	
@@ -86,6 +92,18 @@ create_position <- function() {
 		return(df)
 	}
 	
+	position$isConsistent <- function() {
+		# this function check for the consistency of the fields
+		# at the moment it checks for NA values only
+		
+		isNotAvailable <- c(name=is.na(position$name),
+				amount=is.na(position$money$amount),
+				currency=is.na(position$money$currency)
+		)
+		
+		if (any(isNotAvailable)) return(FALSE) else return(TRUE)
+		
+	}
 	
 	return(position)
 }
