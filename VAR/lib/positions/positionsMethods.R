@@ -300,6 +300,14 @@ weightPositions <- function(positions,weight) {
 	return(invisible(lapply(positions$positions,weightPosition,weight)))
 }
 
+areConsistent <- function(positions) {
+	isConsistent <- function(position) {
+		return(position$isConsistent())
+	}
+	
+	areConsistent <- lapply(positions$positions,isConsistent)
+	return(areConsistent)
+}
 
 # analizza i nomi e guarda se funzionano correttamente. crea un repository per le
 # criteriumClass con i rispettivi valori? Esempio
