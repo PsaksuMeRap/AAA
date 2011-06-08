@@ -4,6 +4,16 @@
 ###############################################################################
 
 
+
+
+var.timeSeries <- function(x,y=NULL,na.rm=FALSE,use) {
+	variance <- var(timeSeries$data,na.rm=na.rm)
+	print("pipop")
+	return(variance)
+}
+
+var <- function(x,...) UseMethod("var",x)
+
 verifyPositivity <- function(timeSeries,showErrorMessage=FALSE) {
 	## this function verify that timeSeries values are larger than 0
 	 
