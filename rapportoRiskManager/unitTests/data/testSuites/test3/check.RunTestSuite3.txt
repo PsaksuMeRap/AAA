@@ -1,0 +1,14 @@
+testSuiteName: test numero 1
+creationDate: 2010-11-06
+creator: Claudio Ortelli
+# testSuiteKind: general - specific
+testSuiteKind: specific
+testTarget: pippo118,pippo120
+reportTo: claudio.ortelli@usi.ch; info@bacep.com
+outputDir: ./unitTests/data/testSuites/test3
+checkListStart:
+   instrument:bond & currency:CHF ; > 5%  
+amount:>638800USD ; > 10%
+currency:CHF + instrument:equity & currency:EUR ; > 50%  
+checkListEnd:
+externalSuiteFileName:
