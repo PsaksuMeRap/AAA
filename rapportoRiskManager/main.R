@@ -13,7 +13,6 @@ home <- "/home/claudio/eclipse/AAA/rapportoRiskManager/"
 setwd(home)
 
 stringsAsFactors = FALSE
-repositories <- new.env()
 
 source("./lib/library.R")
 

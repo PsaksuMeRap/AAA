@@ -3,7 +3,8 @@
 # Author: claudio
 ###############################################################################
 
-importCashflowsAdjustedReturns <- function(startDate) {
+
+importCashflowsAdjustedReturnsInDataFrame <- function(startDate) {
 	# startDate: a date string yyyy-mm-dd
 	
 	startDate <- "2010-05-02"
@@ -21,21 +22,40 @@ importCashflowsAdjustedReturns <- function(startDate) {
 				"ORDER BY B.ID, A.Data2")	
 	}
 	stringsAsFactors = TRUE
-	DBPortfolioGenerale.df <- sqlQuery(connection,query,as.is=TRUE)
-	DBPortfolioGenerale.df[["Data"]] <- as.character(as.Date(DBPortfolioGenerale.df[["Data"]]))
-	DBPortfolioGenerale.l <- split(DBPortfolioGenerale.df,DBPortfolioGenerale.df[,"Cliente"])
+	DBPortfolioGenerale.df <- sqlQuery(connection,query)
+	return(DBPortfolioGenerale.df)
+}
+
+transformToTimeSeriesReturnDataFrame <- function(returns.df) {
 	
-	if (length(DBPortfolioGenerale.l)==0) return(list())
+	returns.df[["Data"]] <- as.character(as.Date(returns.df[["Data"]]))
+	returns.l <- split(returns.df,returns.df[,"Cliente"])
+	
+	if (length(returns.l)==0) return(list())
 	
 	toTimeSeries <- function(df) {
-		name <- df[1,"Cliente"]
+		name <- as.character(df[1,"Cliente"])
 		data <- df[,"Return_giornaliero"]
 		names(data) <- df[,"Data"]
 		ts <- create_timeSeries(name,data,type="percentage_returns")
 		return(ts)
 	}
 	
-	timeSeries.l <- lapply(DBPortfolioGenerale.l,toTimeSeries)
+	timeSeries.l <- lapply(returns.l,toTimeSeries)
+	
+	return(timeSeries.l)
+}
+
+importCashflowsAdjustedReturns <- function(startDate) {
+	# startDate: a date string yyyy-mm-dd
+	
+	if (missing(startDate)) {
+		DBPortfolioGenerale.df <- importCashflowsAdjustedReturnsInDataFrame()
+	} else {
+		DBPortfolioGenerale.df <- importCashflowsAdjustedReturnsInDataFrame(startDate)		
+	}
+	
+	timeSeries.l <- transformToTimeSeriesReturnDataFrame(DBPortfolioGenerale.df)
 
 	return(timeSeries.l)
 }

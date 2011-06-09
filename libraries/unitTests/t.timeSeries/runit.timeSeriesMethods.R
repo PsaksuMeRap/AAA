@@ -3,20 +3,33 @@
 # Author: claudio
 ###############################################################################
 
-test.var <- function() {
+test.variance <- function() {
 	
 	# Test 1
 	name = "nome"
-	date=c("2010-01-02","2010-01-03","2011-02-23","2011-02-24")
-	value <- c(100,NA,0,50)
-	names(value) <- date
-	data = value
+	dates=c("2010-01-02","2010-01-03","2011-02-24")
+	values <- c(100,0,50)
+	names(values) <- dates
 	
-	timeSeries <- create_timeSeries(name=name,data=data)
+	timeSeries <- create_timeSeries(name=name,data=values)
 	
-	variance <- var(timeSeries)
+	variance <- Var(timeSeries)
 	
 	checkEquals(variance,0.5*((100-50)^2 + (-50)^2))
+	
+	# Test 2
+	name = "nome"
+	dates=c("2010-01-02","2010-01-03","2011-02-23","2011-02-24")
+	values <- c(100,NA,0,50)
+	names(values) <- dates
+	
+	timeSeries <- create_timeSeries(name=name,data=values)
+	
+	variance <- Var(timeSeries,na.rm=TRUE)
+	
+	checkEquals(variance,0.5*((100-50)^2 + (-50)^2))
+	
+	
 }
 
 test.verifyPositivity <- function() {
