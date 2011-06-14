@@ -17,13 +17,14 @@ stringsAsFactors = FALSE
 source("./lib/library.R")
 
 
-importerVix <- create_importer()
+importerVix <- create_importer(importFrom="./datiVix.csv")
 repository <- importerVix$createRepository()
 rm(importerVix)
 
-importerVixFutures <- create_importerVixFutures()
+importerVixFutures <- create_importerVixFutures(file="./serie.csv",settlementFile="./scadenze.csv")
 contracts <- importerVixFutures$extractAllContracts()
 rm(importerVixFutures)
+
 
 # determina le lastTradeDates
 
@@ -32,22 +33,30 @@ orderSettlementDates <- order(as.Date(settlementDates))
 contracts <- contracts[orderSettlementDates]
 settlementDates <- settlementDates[orderSettlementDates]
 
-# seleziona i contratti dopo il settembre 2005
-toSelect <- as.Date(settlementDates) >= as.Date("2005-10-19")
+# seleziona i contratti dopo il settembre 2005 e fino all'ultimo contratto scaduto
+toSelect <- (as.Date(settlementDates) >= as.Date("2005-10-19")) & (as.Date(settlementDates) <= as.Date("2011-05-20"))
 contracts <- contracts[toSelect]
 
 # estrai tutte le lastTradeDates ed i lastTradePrices
 lastTradeDates  <- extractFromList(contracts,fieldName="lastTradeDate")
 lastTradePrices <- sapply(contracts,extractPriceAtLastTradeDate)
+names(lastTradePrices) <- lastTradeDates
+write.csv(lastTradePrices,file="./unitTests/data/lastTradePrices.csv")
+
 
 # estrai tutti i settlementPrices 
 settlementDates <- extractFromList(contracts,fieldName="settlementDate")
 settlementPrices <- sapply(contracts,extractPriceAtSettlementDate)
+names(settlementPrices) <- settlementDates
+write.csv(settlementPrices,file="./unitTests/data/settlementPrices.csv")
+
 
 # estrai tutti i prezzi nbPeriods 3 giorni prima del settlement
 nbPeriods <- 3
 result3 <- extractPriceAndDatePreviousToSettlement.df(contracts,nbPeriods,
-		dateLimit="2011-02-21") 
+		dateLimit="2011-04-21") 
+write.csv(result3,file="./unitTests/data/futuri_3_giorni.csv")
+
 
 # estrai tutti i prezzi dei futuri del mese successivo al lastTradeDate
 result1 <- data.frame(priceNextContract=vector(mode="numeric",
@@ -58,47 +67,35 @@ for (i in 1:(length(contracts)-1)) {
 	result1[i,1] <- extractPriceOfNextContract(desiredContractYM=YM,
 			contracts, desiredDate=lastTradeDates[i])
 }
+write.csv(result1,file="./unitTests/data/futuri_price_next_contract_lastTradeDate.csv")
+
 
 vix <- repository[[1]]$data[lastTradeDates,1,drop=FALSE] 
 rownames(vix) <- lastTradeDates
 
-write.csv(result3$data,file="./unitTests/data/futuri_3_giorni.csv")
-write.csv(result1$data,file="./unitTests/data/futuri_price_next_contract_lastTradeDate.csv")
-write.csv(result1$data,file="./unitTests/data/futuri_vix_at_lastTradeDate.csv")
+
+write.csv(vix,file="./unitTests/data/futuri_vix_at_lastTradeDate.csv")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # determina le date 1 giorno prima del settlement
 
-
-
-
-
 plot(repository[[1]],from="2004-01-01")
 lapply(contracts,addToPlot)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 # compute a moving average of the daily Vix volatility
 vixTs <- repository[[1]]$data

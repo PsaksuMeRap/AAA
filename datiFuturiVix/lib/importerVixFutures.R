@@ -3,13 +3,22 @@
 # Author: claudio
 ###############################################################################
 
-create_importerVixFutures <- function() {
+create_importerVixFutures <- function(file,settlementFile) {
 	importer <- create_importer()
 	class(importer) <- "importerExcelDataStreamSheet"
 	
-	importer$file <- "./unitTests/data/serie.csv"
-	importer$settlementFile <- "./unitTests/data/scadenze.csv"
-
+	if (missing(file)) {
+		importer$file <- "./unitTests/data/serie.csv"
+	} else {
+		importer$file <- file
+	}
+	
+	if (missing(settlementFile)) {
+		importer$settlementFile <- "./unitTests/data/scadenze.csv"
+	} else {
+		importer$settlementFile <- settlementFile
+	}
+	
 	importer$knownDataTypes <- c(PO="open",
 			PS="settlement",PH="high",PL="low",
 			OI="openInterest")
@@ -78,7 +87,7 @@ create_importerVixFutures <- function() {
 			importer$readDsCodes()
 		}	
 		codes <- importer$repository$dsCodes
-??? continuare a mettere i commenti da qui		
+#??? continuare a mettere i commenti da qui		
 		
 		desired <- substr(codes,1,7)==contractName
 		data <- data[,desired]
