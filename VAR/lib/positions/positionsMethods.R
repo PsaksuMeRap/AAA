@@ -305,7 +305,7 @@ areConsistent <- function(positions) {
 		return(position$isConsistent())
 	}
 	
-	areConsistent <- lapply(positions$positions,isConsistent)
+	areConsistent <- sapply(positions$positions,isConsistent)
 	return(areConsistent)
 }
 

@@ -66,4 +66,17 @@ explodeAllPortfoliosByAllFunds <- function(portfolios) {
 	invisible(lapply(portfolios,explodePortfolioByAllFunds,fundsDb,fundPortfolios=portfolios))
 }
 
-
+extractUnconsistentPortfolioPositions <- function(portfolio) {
+	
+	isPositionConsistent <- areConsistent(portfolio$positions)
+	
+	if (is.null(isPositionConsistent) | all(isPositionConsistent)) {
+		inconsistentPositions <- list()
+	} else {
+		inconsistentPositions <- portfolio$positions$positions[!isPositionConsistent]
+	}
+	
+	output <- list()
+	output[[portfolio$owner]] <- inconsistentPositions
+	return(output)
+}

@@ -5,7 +5,7 @@
 
 source("./lib/repository.R")
 
-toMoney <- function(amount,currency) {
+toMoney <- function(amount=NA_real_,currency=NA_character_) {
 	# create an object of class money
 	money <- new.env()
 	class(money) <- "money"

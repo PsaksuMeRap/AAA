@@ -1346,7 +1346,7 @@ test.shouldAreConsistent <- function() {
 	positions$add(position6)
 	
 	result <- areConsistent(positions)
-	posCheck <- list(TRUE,TRUE,TRUE,TRUE,TRUE,TRUE)
+	posCheck <- c(TRUE,TRUE,TRUE,TRUE,TRUE,TRUE)
 	checkEquals(result,posCheck)
 	
 	# check 2
@@ -1381,7 +1381,7 @@ test.shouldAreConsistent <- function() {
 	positions$add(position6)
 	
 	result <- areConsistent(positions)
-	posCheck <- list(TRUE,FALSE,TRUE,TRUE,FALSE,TRUE)
+	posCheck <- c(TRUE,FALSE,TRUE,TRUE,FALSE,TRUE)
 	checkEquals(result,posCheck)
 }
 

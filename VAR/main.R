@@ -40,11 +40,7 @@ portfolios <- lapply(clienti,portfParser$parse,dati)
 
 #/fine poi cancella
 
-
-
-
-
-
+output <- extractUnconsistentPortfolioPositions(portfolio)
 
 allDates <- seq(as.Date("2010-07-05"),to=as.Date("2010-12-17"),by="days")
 fetch <- rep(c(TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE),length(allDates)/7)

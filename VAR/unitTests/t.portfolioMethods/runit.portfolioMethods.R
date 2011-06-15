@@ -156,3 +156,53 @@ test.shouldExplodeAllPortfoliosByAllFunds <- function() {
 	deallocateTestRepositories("politicaInvestimento")
 	deallocateTestRepositories("fixedIncome")
 }
+
+
+test.shouldVerifyPortfolioPositionsConsistency <- function() {
+	source("./lib/repository.R")
+	source("./unitTests/utilities/allocateTestRepositories.R")
+	source("./unitTests/utilities/createOriginData.R")
+	
+	origin <- createOriginData()
+	
+	# initialize the different repositories
+	allocateTestRepositories("equities")
+	allocateTestRepositories("instruments")
+	allocateTestRepositories("politicaInvestimento")
+	allocateTestRepositories("exchangeRates")
+	allocateTestRepositories("fixedIncome")
+	
+	# initialize the investmentPolicy table used in the portfolio construction in order
+	# to determine the reference currency
+	politicaInvestimento.df <- repositories$politicaInvestimento$politicaInvestimento.df	
+	
+	cliente <- c("pippo16")
+	portfParser <- create_parserPortfolio()
+	portfolio <- lapply(cliente,portfParser$parse,origin,politicaInvestimento.df)[[1]]
+
+	output <- extractUnconsistentPortfolioPositions(portfolio)
+	# ----- Test 1 --------
+	# all positions should be ok
+	checkEquals(output[[1]],list())
+	
+	
+	portfolio$positions$positions[[1]]$money$amount <- NA_real_
+	portfolio$positions$positions[[3]]$money$currency <- NA_character_
+	
+	output <- extractUnconsistentPortfolioPositions(portfolio)
+	
+	# ----- Test 2 --------
+	# two positions should be incomplete
+	checkEquals(length(output[[1]]),2)
+	
+	
+	# reset the repositories in the original state
+	deallocateTestRepositories("exchangeRates")
+	deallocateTestRepositories("equities")
+	deallocateTestRepositories("instruments")
+	deallocateTestRepositories("politicaInvestimento")
+	deallocateTestRepositories("fixedIncome")
+}
+
+
+

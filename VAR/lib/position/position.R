@@ -13,7 +13,7 @@ create_position <- function() {
 	class(position) <- "position"
 	
 	position$name = NA_character_
-	position$money = NA
+	position$money = toMoney()
 	position$origin = NA
 	
 	position$create <- function(name=NA_character_,currency="CHF",
