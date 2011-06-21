@@ -57,22 +57,51 @@ xyplot(dati[["eurGov13"]]~dati[["vstoxx"]] | factor1)
 xyplot(dati[["eurStoxx50"]]~dati[["vstoxx"]] | factor1)
 
 
-analisi <- function(series){
-	x <- data.frame(nrOss=tapply(X=vstoxx,factor1,FUN=length))
-	nomi <- c("  < 0"," 0-10","10-20","20-30","30-40","  >40")
+analisi <- function(series,conditioningSeries,
+		levels=c(0,10,20,30,40)){
+	levels=levels/100
+	tmp <- rep(0,length(conditioningSeries))
+	for (i in levels) {
+		tmp <- tmp + as.integer(conditioningSeries > i)
+	}
+	factor1 <- factor(tmp,levels=0:length(levels))	
+	
+	x <- data.frame(nrOss=tapply(X=conditioningSeries,factor1,FUN=length))
+	
+	levels=levels*100
+	lengthLevels <- length(levels) + 1
+	nomi <- rep(NA_character_,lengthLevels)
+	nomi[1] <- c(paste(" <",levels[1],sep=""))
+	if (lengthLevels>1) {
+		for (i in 1:(length(levels))) {
+			if (i!=length(levels)) {
+				nomi[i+1] <- c(paste(levels[i],":",levels[i+1],sep=""))
+			} else {
+				nomi[i+1] <- c(paste(">",levels[i],sep=""))
+			}
+		}
+		
+	}
+
 	rownames(x) <- nomi
-	x <- cbind(x,mediaVstoxx=tapply(X=vstoxx,factor1,FUN=mean)*100)
+	x <- cbind(x,mediaSerieCondizionante=tapply(X=conditioningSeries,factor1,FUN=mean)*100)
 	
 	x <- cbind(x,"q_25"=tapply(X=series,factor1,FUN=quantile,probs=0.25)*100)
 	x <- cbind(x,median=tapply(X=series,factor1,FUN=median)*100)
 	x <- cbind(x,mean=tapply(X=series,factor1,FUN=mean)*100)
 	x <- cbind(x,"q_75"=tapply(X=series,factor1,FUN=quantile,probs=0.75)*100)
-	x <- cbind(x,rapporto=x[["mediaVstoxx"]]/x[["q_25"]])
+	x <- cbind(x,rapporto=x[["mediaSerieCondizionante"]]/x[["q_25"]])
 	
 	print(x,digits=4)
 
 }
 
-analisi(dati[["eurStoxx50"]])
-analisi(dati[["eurConv"]])
-analisi(dati[["eurHY"]])
+analisi(dati[["eurStoxx50"]],vstoxx)
+
+analisi(dati[["eurConv"]],vstoxx)
+analisi(dati[["eurHY"]],vstoxx)
+
+livelli <- c(-20,-10,-6,-3,0,3,5,8)
+analisi(vstoxx,dati[["eurStoxx50"]],livelli)
+
+
