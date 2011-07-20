@@ -77,6 +77,60 @@ test.shouldExplodePortfolioByFund <- function() {
 	deallocateTestRepositories("fixedIncome")
 }
 
+test.shouldExplodeByFundUnionOfPortfolios <- function() {
+	source("./lib/repository.R")
+	source("./unitTests/utilities/allocateTestRepositories.R")
+	source("./unitTests/utilities/createOriginData.R")
+	
+	origin <- createOriginData()
+	
+	# initialize the different repositories
+	allocateTestRepositories("equities")
+	allocateTestRepositories("instruments")
+	allocateTestRepositories("politicaInvestimento")
+	allocateTestRepositories("exchangeRates")
+	allocateTestRepositories("fixedIncome")
+	
+	# initialize the investmentPolicy table used in the portfolio construction in order
+	# to determine the reference currency
+	politicaInvestimento.df <- repositories$politicaInvestimento$politicaInvestimento.df	
+	
+	clienti <- c("pippo15","pippo16")
+	portfParser <- create_parserPortfolio()
+	portfolios <- lapply(clienti,portfParser$parse,origin,politicaInvestimento.df)
+	portfolios[[1]]$addPortfolio(portfolios[[2]])
+	portfolio <- portfolios[[1]]
+	valorePortafoglioPrimaEsplosione <- portfolio$value()
+	numeroPosizioniPrimaEsplosione <- length(portfolio$positions$positions)
+	
+	# crea il data.frame dei fondi BAC&P e la lista di fundPortfolios
+	fundsDb <- create_fundsDB()
+	fundPortfolios <- lapply(fundsDb[["owner"]],portfParser$parse,origin,politicaInvestimento.df)
+	
+	
+	# ----- Test 1 --------
+	clienti <- c("pippo15","pippo16")
+	portfParser <- create_parserPortfolio()
+	portfolios <- lapply(clienti,portfParser$parse,origin,politicaInvestimento.df)
+	portfolios[[1]]$addPortfolio(portfolios[[2]])
+	portfolio <- portfolios[[1]]
+	
+	# identify and check CB Fixed Income
+	fundData <- as.list(fundsDb[3,,drop=FALSE])
+	explodePortfolioByFund(fundData,fundPortfolios,portfolio)
+	checkEquals(portfolio$value(),valorePortafoglioPrimaEsplosione)
+	checkEquals(length(portfolio$positions$positions),88)
+	
+	
+	# reset the repositories in the original state
+	deallocateTestRepositories("exchangeRates")
+	deallocateTestRepositories("equities")
+	deallocateTestRepositories("instruments")
+	deallocateTestRepositories("politicaInvestimento")
+	deallocateTestRepositories("fixedIncome")
+}
+
+
 test.shouldExplodePortfolioByAllFunds <- function() {
 	source("./lib/repository.R")
 	source("./unitTests/utilities/allocateTestRepositories.R")
