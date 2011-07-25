@@ -35,7 +35,7 @@ explodePortfolioByFund <- function(fundData,fundPortfolios,portfolio) {
 	if (!any(result)) return()
 	
 	# salva e poi elimina la posizione dal portafoglio
-
+	
 	positions <- portfolio$positions$extract(result)
 	
 	# rimuovi le posizioni relative al fondo in questione
@@ -47,42 +47,22 @@ explodePortfolioByFund <- function(fundData,fundPortfolios,portfolio) {
 	}
 	
 	
-#	for (position in positions$positions) {
-position <- positions$positions[[1]]
-browser()
-	weight <- position$money$divide(fundPortfolio$value())
-
+	for (position in positions$positions) {
+		
+		weight <- position$money$divide(fundPortfolio$value())
+		
 		positionTmp <- lapply(fundPortfolio$positions$positions,copyPosition)
 		
 		invisible(lapply(positionTmp,addToName,fundData[["nomeFondo"]]))
-
+		
 		# ripesa le posizioni del portafoglio
 		invisible(lapply(positionTmp,weightPosition,weight))
-	
+		
 		# aggiungi le posizioni al portafoglio
 		invisible(lapply(positionTmp,portfolio$positions$add))
 		rm(positionTmp)
-
-position <- positions$positions[[2]]
-addToName <- function(position,nameToAdd) {
-browser()
-	position$name <- paste(position$name,"/","From",nameToAdd)
-}
-weight <- position$money$divide(fundPortfolio$value())
-
-positionTmp <- lapply(fundPortfolio$positions$positions,copyPosition)
-browser()	
-invisible(lapply(positionTmp,addToName,fundData[["nomeFondo"]]))
-
-# ripesa le posizioni del portafoglio
-invisible(lapply(positionTmp,weightPosition,weight))
-
-# aggiungi le posizioni al portafoglio
-invisible(lapply(positionTmp,portfolio$positions$add))
-rm(positionTmp)
-
 		
-#	}	
+	}	
 }
 
 explodePortfolioByAllFunds <- function(portfolio,fundsDb,fundPortfolios) {
