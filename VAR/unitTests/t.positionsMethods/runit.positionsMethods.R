@@ -868,7 +868,8 @@ test.shouldCheckOneCheckStringOnPositions <- function() {
 	checkString="instrument:bond & currency:CHF ; > 30%"
 
 	result <- checkCheckStringOnPositions(checkString,positions)
-	checkEquals(result,TRUE)
+	checkEquals(result$checkResult,TRUE)
+	checkEquals(result$percentageValue,"30.00%")
 	
 	# reset the repository in the original state
 	repositories$exchangeRates <- repository

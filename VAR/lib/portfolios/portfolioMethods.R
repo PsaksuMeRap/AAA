@@ -42,8 +42,9 @@ explodePortfolioByFund <- function(fundData,fundPortfolios,portfolio) {
 	portfolio$positions$remove(result | result_oacc)
 	
 	# calcola il peso relativo della posizione del portafoglio sul NAV del fondo
-	addToName <- function(position,nameToAdd) {
-		position$name <- paste(position$name,"/","From",nameToAdd)
+
+	addToPosition <- function(position,nameToAdd) {
+		position$explodeString <- paste("From",nameToAdd)
 	}
 	
 	
@@ -53,7 +54,7 @@ explodePortfolioByFund <- function(fundData,fundPortfolios,portfolio) {
 		
 		positionTmp <- lapply(fundPortfolio$positions$positions,copyPosition)
 		
-		invisible(lapply(positionTmp,addToName,fundData[["nomeFondo"]]))
+		invisible(lapply(positionTmp,addToPosition,fundData[["nomeFondo"]]))
 		
 		# ripesa le posizioni del portafoglio
 		invisible(lapply(positionTmp,weightPosition,weight))

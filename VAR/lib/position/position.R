@@ -55,6 +55,9 @@ create_position <- function() {
 		}
 		fields$name <- position$name
 
+		if (exists("explodeString",envir=position)) {
+			fields$explodeString <- position$explodeString
+		}
 		return(fields)	
 	}
 	

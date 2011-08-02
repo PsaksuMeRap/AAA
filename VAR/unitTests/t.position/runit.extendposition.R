@@ -109,7 +109,30 @@ test.shouldExtendPositionBond <- function() {
 	deallocateTestRepositories("exchangeRates")
 }
 
-
+test.shouldFailToExtendPositionBond <- function() {
+	source("./lib/position/position.R")
+	source("./unitTests/utilities/allocateTestRepositories.R")
+	
+	allocateTestRepositories("instruments")
+	allocateTestRepositories("exchangeRates")
+	record <- list(
+			ID_strumento = 2,
+			Nome="20110615 - 4.375% Carrefour 15-06-11 B",
+			Moneta="EUR",
+			ValorePosizione=203040.00,
+			ID_AAA=500,
+			Strumento="O"
+	)
+	
+	parser <- create_parserPosition()
+	position <- parser$parse(record)
+	checkException(position$getMaturity())	
+	
+	
+	# restore initial conditions
+	deallocateTestRepositories("instruments")
+	deallocateTestRepositories("exchangeRates")
+}
 
 test.shouldExtendPositionStructuredProductFixedIncome <- function() {
 	source("./lib/position/position.R")

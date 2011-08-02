@@ -90,10 +90,15 @@ extendPosition.bond <- function(position) {
 		
 		# verifica che il nome sia una data
 		day <- substr(paymentDate,1,2)
-		month <- substr(paymentDate,4,5)
-		year <- paste("20",substr(paymentDate,7,8),sep="")
+		month <- substr(paymentDate,4,5)	
+		year <- paste("20",substr(paymentDate,7,8),sep="")		
 		paymentDate <- paste(year,month,day,sep="-")
 		
+		if (!grepl(pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}",x=paymentDate,perl=TRUE)) {
+			message <- position$toString()
+			message <- paste("Invalid date parsed",paymentDate,"for position:\n",message)
+			stop(message)
+		}
 		return(paymentDate)
 	}
 	

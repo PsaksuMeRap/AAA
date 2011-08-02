@@ -37,7 +37,6 @@ clienti <- c("pippo76","pippo53","pippo210")
 portfParser <- create_parserPortfolio()
 portfolios <- lapply(clienti,portfParser$parse,dati)
 
-
 #/fine poi cancella
 
 output <- extractUnconsistentPortfolioPositions(portfolio)
@@ -186,8 +185,3 @@ if (TRUE) {
 		results <- importAndRunRiskmanTestSuite(AyrtonTestSuite,portfolios,valuationDate=fetchDate)	
 	}
 }
-
-
-
-
-
