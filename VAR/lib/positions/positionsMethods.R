@@ -199,6 +199,7 @@ extractPositionsFromSelectionString <- function(selectionString,positions) {
 	parser <- create_parserSelectionCriteria()
 
 	unionOfBlocksOfCriteria <- parser$splitSelectionString(selectionString)
+E qui che va modificata la funzione filterByCriteria	
 	result <- filterByCriteriaLogicalOr(unionOfBlocksOfCriteria,positions)
 	
 	# crea la lista delle posizioni
