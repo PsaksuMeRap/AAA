@@ -221,14 +221,15 @@ checkCheckStringOnPositions <- function(checkString,positions,logFile,refCurrenc
 			criteriumCheck=parsed[["criteriumCheck"]]
 	)
 	
-	# crea il valore assoluto da verificare se il check è relativo e crea il
-	# il valore percentuale limite da stampare assieme a quello effettivo nel summary
+	# crea il valore assoluto da verificare se il check è relativo mentre se il tipo
+	# di vincolo è assoluto crea il valore limite percentuale da stampare assieme 
+	# a quello effettivo nel summary
 	if (criteriumSelection$criteriumCheck$kind=="relative") {
 		percentageValue <- criteriumSelection$criteriumCheck$value/100
 		criteriumSelection$criteriumCheck$value <- toMoney(percentageValue*positionsValue$amount,positionsValue$currency)
 	} else {
-	# questo parte di codice andrebbe e' corretta solo se le due grandezze sono nella stessa moneta!
-		percentageValue <- criteriumSelection$criteriumCheck$value / positionsValue$amount
+	# in questo caso criteriumSelection$criteriumCheck$value è una variabile di tipo money
+		percentageValue <- criteriumSelection$criteriumCheck$value$divide(positionsValue)
 	}
 	percentageValue <- paste(formatC(percentageValue*100,digits=2,
 					format="f"),"%",sep="")

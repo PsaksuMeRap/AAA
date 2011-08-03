@@ -74,7 +74,7 @@ testSingleRiskmanCheckFile <- function(fileName,inputDir,po,valuationDate) {
 	cat(paste("Inp. directory:",inputDir),file=logFile,sep="\n",append=TRUE)
 	cat(paste("Out. directory:",outputDir),file=logFile,sep="\n",append=TRUE)
 	cat("\n",file=logFile,sep="\n",append=TRUE)
-# browser()	
+
 	if (is.element("positions",class(po))) {
 		results <- lapply(testSuiteData$checkStrings,checkCheckStringOnPositions,positions,logFile)
 		checkResults <- extractFromList(results,"checkResult")

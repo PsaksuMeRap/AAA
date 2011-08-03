@@ -7,14 +7,27 @@
 extendPosition <- function(position) UseMethod("extendPosition",position)
 
 extendPosition.default <- function(position) {
-#	if (is.element("Strutturati_FI",class(position))) {
-#		extendPosition.StrutturatiFI(position)
-#	}
 	stop(paste("No suitable method for extendPosition of class",class(position)))
 }
 
-extendPosition.Conto_corrente <- function(position) {
+extendPosition.position <- function(position) {
 	
+}
+
+extendPosition.Fondi_misti <- function(position) {
+	
+	split1 <- strsplit(position$name," ")
+	split2 <- unlist(strsplit(split1[[1]][1],"-"))
+	errorMessage <- paste("Errore nel parsare fondo misto:",position$name)
+	
+	if (length(split2)!=2) stop(errorMessage)
+	
+	if (all(grepl("^[0-9]+.*[0-9]*$",split2))) {
+		position$quotaEquities <- as.numeric(split2[1])
+		position$quotaBonds<- as.numeric(split2[2])
+	} else {
+		stop(errorMessage)
+	}
 }
 
 extendPosition.FX_Forward <- function(position) {
@@ -30,10 +43,6 @@ extendPosition.FX_Forward <- function(position) {
 		return(paste(year,month,day,sep="-"))
 	}
 	position$expiry <- parseDate(position)
-}
-
-extendPosition.position <- function(position) {
-	
 }
 
 extendPosition.equity <- function(position) {
