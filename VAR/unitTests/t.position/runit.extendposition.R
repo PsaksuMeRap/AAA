@@ -2,6 +2,64 @@
 # 
 # Author: claudio
 ###############################################################################
+test.shouldExtendPositionDefault <- function() {
+	source("./lib/position/position.R")
+	source("./unitTests/utilities/allocateTestRepositories.R")
+	
+	allocateTestRepositories("instruments")
+	
+	position <- create_position()
+	position$create(name="Siemens N eur",
+			currency="EUR",
+			amount=131376.0,
+			origin=list(ID_AAA=879)
+	)
+	class(position) <- c("test")
+	
+	# check the new ticker field
+	checkException(extendPosition(position))
+	
+	# restore initial conditions
+	deallocateTestRepositories("instruments")
+	
+}
+
+
+test.shouldExtendPositionFondiMisti <- function() {
+	source("./lib/position/position.R")
+	source("./unitTests/utilities/allocateTestRepositories.R")
+
+	allocateTestRepositories("instruments")
+	
+	position <- create_position()
+	position$create(name="70-30 UBS Strategy Fund Yield CHF",
+			currency="CHF",
+			amount=131376.0,
+			origin=list(ID_AAA=879)
+	)
+	class(position) <- c("Fondi_misti",class(position))
+	
+	# check the percentage invested
+	extendPosition(position)
+
+	checkEquals(position$quotaEquities,70)
+	checkEquals(position$quotaBonds,30)
+	
+	# use a differente percentage
+	position$name <- "0.5-99.5 UBS Strategy Fund Yield CHF"
+	extendPosition(position)
+	
+	checkEquals(position$quotaEquities,0.5)
+	checkEquals(position$quotaBonds,99.5)
+
+	# generate an error
+	position$name <- "70 -30 UBS Strategy Fund Yield CHF"
+	checkException(extendPosition(position))
+	
+	# restore initial conditions
+	deallocateTestRepositories("instruments")
+	
+}
 
 
 test.shouldExtendPositionEquity <- function() {
@@ -109,7 +167,30 @@ test.shouldExtendPositionBond <- function() {
 	deallocateTestRepositories("exchangeRates")
 }
 
-
+test.shouldFailToExtendPositionBond <- function() {
+	source("./lib/position/position.R")
+	source("./unitTests/utilities/allocateTestRepositories.R")
+	
+	allocateTestRepositories("instruments")
+	allocateTestRepositories("exchangeRates")
+	record <- list(
+			ID_strumento = 2,
+			Nome="20110615 - 4.375% Carrefour 15-06-11 B",
+			Moneta="EUR",
+			ValorePosizione=203040.00,
+			ID_AAA=500,
+			Strumento="O"
+	)
+	
+	parser <- create_parserPosition()
+	position <- parser$parse(record)
+	checkException(position$getMaturity())	
+	
+	
+	# restore initial conditions
+	deallocateTestRepositories("instruments")
+	deallocateTestRepositories("exchangeRates")
+}
 
 test.shouldExtendPositionStructuredProductFixedIncome <- function() {
 	source("./lib/position/position.R")

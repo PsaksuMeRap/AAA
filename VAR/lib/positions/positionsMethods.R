@@ -199,6 +199,7 @@ extractPositionsFromSelectionString <- function(selectionString,positions) {
 	parser <- create_parserSelectionCriteria()
 
 	unionOfBlocksOfCriteria <- parser$splitSelectionString(selectionString)
+E qui che va modificata la funzione filterByCriteria	
 	result <- filterByCriteriaLogicalOr(unionOfBlocksOfCriteria,positions)
 	
 	# crea la lista delle posizioni
@@ -221,10 +222,19 @@ checkCheckStringOnPositions <- function(checkString,positions,logFile,refCurrenc
 			criteriumCheck=parsed[["criteriumCheck"]]
 	)
 	
+	# crea il valore assoluto da verificare se il check è relativo mentre se il tipo
+	# di vincolo è assoluto crea il valore limite percentuale da stampare assieme 
+	# a quello effettivo nel summary
 	if (criteriumSelection$criteriumCheck$kind=="relative") {
 		percentageValue <- criteriumSelection$criteriumCheck$value/100
 		criteriumSelection$criteriumCheck$value <- toMoney(percentageValue*positionsValue$amount,positionsValue$currency)
+	} else {
+	# in questo caso criteriumSelection$criteriumCheck$value è una variabile di tipo money
+		percentageValue <- criteriumSelection$criteriumCheck$value$divide(positionsValue)
 	}
+	percentageValue <- paste(formatC(percentageValue*100,digits=2,
+					format="f"),"%",sep="")
+	
 	
 	if (missing(refCurrency)) extractedPositionsValue <- extractedPositions$sum() else extractedPositionsValue <- extractedPositions$sum(refCurrency)
 	
@@ -232,33 +242,36 @@ checkCheckStringOnPositions <- function(checkString,positions,logFile,refCurrenc
 	fakePosition$create(name="fake",currency=extractedPositionsValue$currency,
 			amount=extractedPositionsValue$amount) 
 	
+	actualPercentage <- extractedPositionsValue$divide(positionsValue)*100
+	actualPercentage <- paste(formatC(actualPercentage,digits=2,
+					format="f"),"%",sep="")
+	
 	checkResult <- check(fakePosition,criteriumSelection)
+	result <- list()
+	result$checkString <- checkString
+	result$checkResult <- checkResult
+	result$percentageValue <- percentageValue
+	result$actualPercentage <- actualPercentage
+	
 	if (!missing(logFile)) {
 
 		cat(paste("check:",checkResult,"->", checkString),
 				file=logFile,sep="\n",append=TRUE)
 		
 		positionsToBePrinted  <- extractedPositions$toString()
-	
+		result$positions <- positionsToBePrinted
+		
 		for (p in positionsToBePrinted) {	
 			cat(paste("      ",p), file=logFile, sep="\n",append=TRUE)
 		}
-	
-		#for (position in extractedPositions$positions) {	
-		#	cat(paste("      ",position$toString()),file=logFile,
-		#			sep="\n",append=TRUE)
-		#}
-		
-		effectivePercentage <- extractedPositionsValue$divide(positionsValue)*100
-		effectivePercentage <- paste(formatC(effectivePercentage,digits=2,
-						format="f"),"%",sep="")
 		
 		cat(paste("Total:",extractedPositionsValue$toString(), "over", 
 						positionsValue$toString(), 
-						"(",effectivePercentage,")","\n"),file=logFile,sep="\n",append=TRUE)
+						"(",actualPercentage,")","\n"),file=logFile,sep="\n",append=TRUE)
 	}
-	return( checkResult )
-	
+
+	# return( checkResult )
+	return( result )
 }
 
 identifyFundsToExplode <- function(fundData,positions) {

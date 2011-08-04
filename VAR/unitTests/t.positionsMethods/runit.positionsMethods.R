@@ -859,16 +859,25 @@ test.shouldCheckOneCheckStringOnPositions <- function() {
 	positions$add(position2)
 	positions$add(position3)
 	
+	# Test 1
 	checkString <- scan(file="./unitTests/data/criteriSelezionePerPortafoglioTest.txt",
 			what="character",sep="\n",quiet = TRUE)
 	
 	checkEquals(checkString,"instrument:bond & currency:CHF ; > 5%")
 	
+	# Test 2
 	# redefine the checkString
 	checkString="instrument:bond & currency:CHF ; > 30%"
 
 	result <- checkCheckStringOnPositions(checkString,positions)
-	checkEquals(result,TRUE)
+	checkEquals(result$checkResult,TRUE)
+	checkEquals(result$percentageValue,"30.00%")
+	
+	# Test 3
+	# use an absolute constraint
+	checkString="instrument:bond & currency:CHF ; >= 30CHF"
+	checkEquals(result$checkResult,TRUE)
+	checkEquals(result$percentageValue,"30.00%")
 	
 	# reset the repository in the original state
 	repositories$exchangeRates <- repository

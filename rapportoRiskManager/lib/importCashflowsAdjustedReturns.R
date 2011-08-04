@@ -4,22 +4,38 @@
 ###############################################################################
 
 
-importCashflowsAdjustedReturnsInDataFrame <- function(startDate) {
+importCashflowsAdjustedReturnsInDataFrame <- function(startDate,endDate) {
 	# startDate: a date string yyyy-mm-dd
 	
-	startDate <- "2010-05-02"
+	# startDate <- "2010-05-02";endDate <- "2010-06-10"
 	connection <- odbcConnect("Performance_TW",utente,password)
-	if (missing(startDate)) {
+	if (missing(startDate) & missing(endDate)) {
 		query = paste("SELECT B.ID AS Cliente, A.Data2 AS Data, A.Return_giornaliero",
 				"FROM [Performance_TW].dbo.Serie_returns_giornalieri A",
 				"INNER JOIN [Sistema (prova)].dbo.Clienti_ID B ON A.Cliente=B.Cliente",
 				"ORDER BY B.ID, A.Data2")
 	} else {
-		query = paste("SELECT B.ID AS Cliente, A.Data2 AS Data, A.Return_giornaliero ",
-				"FROM [Performance_TW].dbo.Serie_returns_giornalieri A ",
-				"INNER JOIN [Sistema (prova)].dbo.Clienti_ID B ON A.Cliente=B.Cliente ",
+		if (missing(endDate) & !missing(startDate)) {
+		query = paste("SELECT B.ID AS Cliente, A.Data2 AS Data, A.Return_giornaliero",
+				"FROM [Performance_TW].dbo.Serie_returns_giornalieri A",
+				"INNER JOIN [Sistema (prova)].dbo.Clienti_ID B ON A.Cliente=B.Cliente",
 				paste("WHERE A.Data2>='",startDate,"' ",sep=""),
-				"ORDER BY B.ID, A.Data2")	
+				"ORDER BY B.ID, A.Data2")
+		}
+		if (missing(startDate) & !missing(endDate)) {
+			query = paste("SELECT B.ID AS Cliente, A.Data2 AS Data, A.Return_giornaliero",
+					"FROM [Performance_TW].dbo.Serie_returns_giornalieri A",
+					"INNER JOIN [Sistema (prova)].dbo.Clienti_ID B ON A.Cliente=B.Cliente",
+					paste("WHERE A.Data2<='",endDate,"' ",sep=""),
+					"ORDER BY B.ID, A.Data2")
+		}
+		if (!missing(startDate) & !missing(endDate)) {
+			query = paste("SELECT B.ID AS Cliente, A.Data2 AS Data, A.Return_giornaliero",
+					"FROM [Performance_TW].dbo.Serie_returns_giornalieri A",
+					"INNER JOIN [Sistema (prova)].dbo.Clienti_ID B ON A.Cliente=B.Cliente",
+					paste("WHERE A.Data2<='",endDate,"' AND a.Data2>='",startDate,"'",sep=""),
+					"ORDER BY B.ID, A.Data2")			
+		}
 	}
 	stringsAsFactors = TRUE
 	DBPortfolioGenerale.df <- sqlQuery(connection,query)

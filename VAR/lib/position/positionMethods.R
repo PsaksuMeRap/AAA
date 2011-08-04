@@ -5,16 +5,8 @@
 
 
 copyPosition <- function(position) {
-	newPosition <- create_position()
-	# crea la nuova posizione e copia la vecchia
-	NewPosition <- create_position()
-	newPosition$create(name=position$name,
-			currency=position$money$currency,
-			amount=position$money$amount,
-			origin=position$origin
-	)
-	class(newPosition) <- class(position)
-	extendPosition(position)
+	parser <- create_parserPosition()
+	newPosition <- parser$parse(position$origin)
 	return(newPosition)
 }
 

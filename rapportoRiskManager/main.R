@@ -20,6 +20,9 @@ source("./lib/library.R")
 # inizio procedura controllo
 source("./odbc/connessioni.R")
 
+startDate <- "2010-05-02"
+returnsTimeSeriesByClients <- importCashflowsAdjustedReturns(startDate) 
+
 
 
 clientiAAA <- c(

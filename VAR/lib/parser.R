@@ -112,7 +112,7 @@ create_parserPosition <- function() {
 	
 	parser$parse <- function(record) {
 		# record: a list
-	
+
 		position <- create_position()
 		moneyCHF <- toMoney(record[["ValoreMercatoMonetaCHF"]],"CHF")
 		moneyLocalCurrency <- repositories$exchangeRates$exchange(moneyCHF,record[["Moneta"]])

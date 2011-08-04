@@ -28,7 +28,7 @@ create_riskmanTest <- function(fileName,dirs) {
 }
 
 testSingleRiskmanCheckFile <- function(fileName,inputDir,po,valuationDate) {
-	
+
 	# parsa il file della testSuite con i dati sui check
 	parserTestSuite <- create_parserTestSuite()
 	parserTestSuite$importFile(paste(inputDir,"/",fileName,sep=""))
@@ -74,14 +74,19 @@ testSingleRiskmanCheckFile <- function(fileName,inputDir,po,valuationDate) {
 	cat(paste("Inp. directory:",inputDir),file=logFile,sep="\n",append=TRUE)
 	cat(paste("Out. directory:",outputDir),file=logFile,sep="\n",append=TRUE)
 	cat("\n",file=logFile,sep="\n",append=TRUE)
-	
+
 	if (is.element("positions",class(po))) {
-		checkResults <- sapply(testSuiteData$checkStrings,checkCheckStringOnPositions,positions,logFile)
+		results <- lapply(testSuiteData$checkStrings,checkCheckStringOnPositions,positions,logFile)
+		checkResults <- extractFromList(results,"checkResult")
+		names(checkResults) <- extractFromList(results,"checkString")
 	} else {
-		checkResults <- sapply(testSuiteData$checkStrings,checkCheckStringOnPositions,positions,logFile,refCurrency)	
+		results <- lapply(testSuiteData$checkStrings,checkCheckStringOnPositions,positions,logFile,refCurrency)			
+		checkResults <- extractFromList(results,"checkResult")
+		names(checkResults) <- extractFromList(results,"checkString")
 	}
 	
-	summary <- paste(checkResults,": ", names(checkResults),sep="",collapse="\n")
+	results.actualPercentage <- extractFromList(results,"actualPercentage")
+	summary <- paste(checkResults,": ", names(checkResults)," (actual ",results.actualPercentage,")",sep="",collapse="\n")
 	cat("Summary:",file=logFile,sep="\n",append=TRUE)
 	cat(summary,file=logFile,sep="\n",append=TRUE)
 	close(con)
@@ -114,6 +119,7 @@ testSingleRiskmanCheckFile <- function(fileName,inputDir,po,valuationDate) {
 
 
 importAndRunRiskmanTestSuite <- function(testSuite,portfolios,valuationDate) {
+
 	runDirectory <- function(dir,portfolios,valuationDate) {
 		fileList <- list.files(path=dir, 
 				pattern=testSuite$testFileRegexp)
