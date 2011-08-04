@@ -11,6 +11,7 @@ home <- "/home/claudio/eclipse/AAA/utilizzoVarianza/"
 setwd(home)
 
 dati <- read.csv("Book1.csv",header=TRUE,stringsAsFactors=FALSE)
+dati1 <- read.csv("eurostoxx600banche.csv",header=TRUE,stringsAsFactors=FALSE)
 
 names(dati)[ 2] <- "eurGov13"
 names(dati)[17] <- "chfGov13"
@@ -24,7 +25,7 @@ names(dati)[60] <- "vstoxx"
 
 vstoxx <- dati[["vstoxx"]]
 eurstoxx50 <- dati[["eurStoxx50"]]
-
+eurstoxx600Banche <- dati1[[2]]
 
 vsxx <- rep(45.03,length(vstoxx)+1)
 tmp <- 45.03
