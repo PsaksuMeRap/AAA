@@ -3,7 +3,19 @@
 # Author: claudio
 ###############################################################################
 
-
+test.shouldParserIdentifyDirective <- function() {
+	checkString = paste("explode:Fondi_misti :: instrument:bond & currency:JPY +",
+			"instrument:bond,equity & currency:usd,chf + amount:<=100.3CHF",
+			"; =0USD")
+	
+	parser <- create_parserSelectionCriteria()
+	
+	result <- parser$splitCheckString(checkString)
+	
+	checkEquals(result[["directives"]],"explode:Fondi_misti")
+	
+	
+}
 
 test.shouldParserSplitFactorsFromValues <- function() {
 	

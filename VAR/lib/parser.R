@@ -151,18 +151,29 @@ create_parserSelectionCriteria <- function() {
 	#			  ; constraintString
 	
 	parser$splitCheckString <- function(checkString) {
-		#checkString: a string like "instrument:equity & currency:CHF + instrument:bond ; <=3%"
-		# i.e. the union of a selectionString and constraintString, separated by a semicolon
-		result <- unlist(strsplit(checkString,";"))
+		#checkString: a string like "instrument:equity & currency:CHF + instrument:bond ; <=3% :: explode:Fondo_misto"
+		# i.e. the union of a selectionString, a constraintString and a directive string, separated by a 
+		# a semicolon and ::, respectively
+		# the selectionString is mandatory, the constraintString and directive string are optional
 		
-		if (length(result)==0) stop("Error: empty checkString")
-		result <- removeStartEndSpaces(result)
+		firstSplit <- unlist(strsplit(checkString,";"))
 		
-		if (length(result)==1)  {
-			x <- list(selectionString=result[[1]],criteriumCheck=NA)	
+		if (length(firstSplit)==0) stop("Error: empty checkString")
+		firstSplit <- removeStartEndSpaces(firstSplit)
+		
+		if (length(firstSplit)==1)  {
+			criteriumCheck <- NA
+			secondSplit <- unlist(strsplit(firstSplit[[1]],"::"))
+	??		firstSplit <- removeStartEndSpaces(firstSplit)
+			if (length(secondSplit)==1)  {
+				directiveString <- NA
+			} else {
+				
+			}
+			x <- list(selectionString=firstSplit[[1]],criteriumCheck=criteriumCheck)	
 		} else {
-			result2 <- parser$constructCriteriumCheck(result[[2]])
-			x <- list(selectionString=result[[1]],criteriumCheck=result2)		
+			result2 <- parser$constructCriteriumCheck(firstSplit[[2]])
+			x <- list(selectionString=firstSplit[[1]],criteriumCheck=result2)		
 		}
 		
 		return(x)
