@@ -18,7 +18,7 @@ extendPosition.Fondi_misti <- function(position) {
 	
 	split1 <- strsplit(position$name," ")
 	split2 <- unlist(strsplit(split1[[1]][1],"-"))
-	errorMessage <- paste("Errore nel parsare fondo misto:",position$name)
+	errorMessage <- paste("Errore nel parsare fondo misto:",position$name,"\nMancano i pesi %!")
 	
 	if (length(split2)!=2) stop(errorMessage)
 	

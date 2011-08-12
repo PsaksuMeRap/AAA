@@ -199,7 +199,7 @@ extractPositionsFromSelectionString <- function(selectionString,positions) {
 	parser <- create_parserSelectionCriteria()
 
 	unionOfBlocksOfCriteria <- parser$splitSelectionString(selectionString)
-E qui che va modificata la funzione filterByCriteria	
+#E qui che va modificata la funzione filterByCriteria	
 	result <- filterByCriteriaLogicalOr(unionOfBlocksOfCriteria,positions)
 	
 	# crea la lista delle posizioni
@@ -215,6 +215,10 @@ checkCheckStringOnPositions <- function(checkString,positions,logFile,refCurrenc
 	# parsa ed estrai le posizioni soddisfacenti i criteri di selezione
 	parser <- create_parserSelectionCriteria()
 	parsed <- parser$splitCheckString(checkString)
+	
+	# utilizza la directiveString
+	positions <- applyDirectiveString(parsed[["directiveString"]],positions)
+	
 	extractedPositions <- extractPositionsFromSelectionString(parsed[["selectionString"]],positions)
 	
 	# crea il criterio di selezione per la verifica del vincolo finale
@@ -321,6 +325,24 @@ areConsistent <- function(positions) {
 	areConsistent <- sapply(positions$positions,isConsistent)
 	return(areConsistent)
 }
+
+
+applyDirectiveString <- function(directiveString,positions)
+{
+	if (class(positions)!="positions") stop("Function 'applyDirectiveString: positions argument not of class positions")
+	
+	if (is.na(directiveString)) return(positions)
+	if (directiveString!="explode:Fondi_misti") stop("directiveString other than explode:Fondi_misti not implemented yet.")
+	
+	# create newPositions
+	newPositions <- create_positions()
+	
+	for (position in positions$positions) {
+		newPositions$add(explode(position))
+	}
+	return(newPositions)
+}
+
 
 # analizza i nomi e guarda se funzionano correttamente. crea un repository per le
 # criteriumClass con i rispettivi valori? Esempio

@@ -4,15 +4,43 @@
 ###############################################################################
 
 test.shouldParserIdentifyDirective <- function() {
-	checkString = paste("explode:Fondi_misti :: instrument:bond & currency:JPY +",
-			"instrument:bond,equity & currency:usd,chf + amount:<=100.3CHF",
-			"; =0USD")
 	
 	parser <- create_parserSelectionCriteria()
-	
+
+	## test 1: all 3 strings
+	checkString = paste(" instrument:bond & currency:JPY +",
+			"instrument:bond,equity & currency:usd,chf + amount:<=100.3CHF",
+			"; =0  USD     ::explode:Fondi_misti ")
 	result <- parser$splitCheckString(checkString)
+	checkEquals(result[["criteriumCheck"]],parser$constructCriteriumCheck("=0 USD"))
+	checkEquals(result[["selectionString"]],"instrument:bond & currency:JPY + instrument:bond,equity & currency:usd,chf + amount:<=100.3CHF")
+	checkEquals(result[["directiveString"]],"explode:Fondi_misti")
 	
-	checkEquals(result[["directives"]],"explode:Fondi_misti")
+	## test 2: selectionString con directiveString, no criteriumCheck
+	checkString = paste(" instrument:bond & currency:JPY +",
+			"instrument:bond,equity & currency:usd,chf + amount:<=100.3CHF",
+			" ::   explode:Fondi_misti ")
+	result <- parser$splitCheckString(checkString)
+	checkEquals(result[["criteriumCheck"]],NA)
+	checkEquals(result[["selectionString"]],"instrument:bond & currency:JPY + instrument:bond,equity & currency:usd,chf + amount:<=100.3CHF")
+	checkEquals(result[["directiveString"]],"explode:Fondi_misti")
+	
+	## test 3: selectionString con criteriumCheck
+	checkString = paste(" instrument:bond & currency:JPY +",
+			"instrument:bond,equity & currency:usd,chf + amount:<=100.3CHF",
+			"; =0  USD")
+	result <- parser$splitCheckString(checkString)
+	checkEquals(result[["criteriumCheck"]],parser$constructCriteriumCheck("=0 USD"))
+	checkEquals(result[["selectionString"]],"instrument:bond & currency:JPY + instrument:bond,equity & currency:usd,chf + amount:<=100.3CHF")
+	checkEquals(result[["directiveString"]],NA)
+	
+	## test 4: solo selectionString
+	checkString = paste(" instrument:bond & currency:JPY +",
+			"instrument:bond,equity & currency:usd,chf + amount:<=100.3CHF")
+	result <- parser$splitCheckString(checkString)
+	checkEquals(result[["criteriumCheck"]],NA)
+	checkEquals(result[["selectionString"]],"instrument:bond & currency:JPY + instrument:bond,equity & currency:usd,chf + amount:<=100.3CHF")
+	checkEquals(result[["directiveString"]],NA)
 	
 	
 }

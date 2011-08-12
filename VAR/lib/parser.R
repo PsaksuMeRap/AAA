@@ -164,18 +164,31 @@ create_parserSelectionCriteria <- function() {
 		if (length(firstSplit)==1)  {
 			criteriumCheck <- NA
 			secondSplit <- unlist(strsplit(firstSplit[[1]],"::"))
-	??		firstSplit <- removeStartEndSpaces(firstSplit)
+			secondSplit <- removeStartEndSpaces(secondSplit)
 			if (length(secondSplit)==1)  {
 				directiveString <- NA
+				selectionString <- secondSplit[[1]]
 			} else {
-				
-			}
-			x <- list(selectionString=firstSplit[[1]],criteriumCheck=criteriumCheck)	
+				directiveString <- secondSplit[[2]]
+				selectionString <- secondSplit[[1]]				
+			}	
 		} else {
-			result2 <- parser$constructCriteriumCheck(firstSplit[[2]])
-			x <- list(selectionString=firstSplit[[1]],criteriumCheck=result2)		
+			selectionString <- firstSplit[[1]]
+		
+			secondSplit <- unlist(strsplit(firstSplit[[2]],"::"))
+			secondSplit <- removeStartEndSpaces(secondSplit)
+		
+			if (length(secondSplit)==1)  {
+				directiveString <- NA
+				criteriumCheck <- parser$constructCriteriumCheck(secondSplit[[1]])
+			} else {
+				directiveString <- secondSplit[[2]]
+				criteriumCheck <- parser$constructCriteriumCheck(secondSplit[[1]])				
+			}				
 		}
 		
+		x <- list(selectionString=selectionString,criteriumCheck=criteriumCheck,
+				directiveString=directiveString)		
 		return(x)
 	}
 	
