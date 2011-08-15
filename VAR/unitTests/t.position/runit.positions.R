@@ -10,8 +10,8 @@ test.shouldAddPositionToPositions <- function() {
 	position <- create_position()
 	position$create(name="test",
 			currency="USD",
-			amount=0.0,
-			origin=list(ID_AAA=10)
+			amount=0.0#,
+			#origin=list(ID_AAA=10)
 	)
 	
 	positions <- create_positions()
@@ -28,15 +28,15 @@ test.shouldAdd2PositionsToPositions <- function() {
 	position1 <- create_position()
 	position1$create(name="test",
 			currency="USD",
-			amount=0.0,
-			origin=list(ID_AAA=10)
+			amount=0.0 #,
+			#origin=list(ID_AAA=10)
 	)
 	
 	position2 <- create_position()
 	position2$create(name="pippo",
 			currency="CHF",
-			amount=0.1,
-			origin=list(ID_AAA=10)
+			amount=0.1 #,
+			# origin=list(ID_AAA=10)
 	)	
 	
 	positions <- create_positions()
@@ -56,15 +56,15 @@ test.shouldAddPositionsToPositions <- function() {
 	position1 <- create_position()
 	position1$create(name="test",
 			currency="USD",
-			amount=0.0,
-			origin=list(ID_AAA=10)
+			amount=0.0 #,
+			# origin=list(ID_AAA=10)
 	)
 	
 	position2 <- create_position()
 	position2$create(name="pippo",
 			currency="CHF",
-			amount=0.1,
-			origin=list(ID_AAA=10)
+			amount=0.1 #,
+			# origin=list(ID_AAA=10)
 	)	
 	
 	positions <- create_positions()
@@ -87,8 +87,8 @@ test.shouldExtractReturnEmptypositions <- function() {
 	position1 <- create_position()
 	position1$create(name="test",
 			currency="USD",
-			amount=0.0,
-			origin=list(ID_AAA=10)
+			amount=0.0 #,
+			# origin=list(ID_AAA=10)
 	)
 	
 	# with a non empty positions
@@ -115,15 +115,15 @@ test.shouldExtractPositions <- function() {
 	position1 <- create_position()
 	position1$create(name="test",
 			currency="USD",
-			amount=0.0,
-			origin=list(ID_AAA=10)
+			amount=0.0 #,
+			# origin=list(ID_AAA=10)
 	)
 	
 	position2 <- create_position()
 	position2$create(name="pippo",
 			currency="CHF",
-			amount=0.1,
-			origin=list(ID_AAA=10)
+			amount=0.1# ,
+			# origin=list(ID_AAA=10)
 	)	
 	
 	positions <- create_positions()
@@ -152,8 +152,8 @@ test.shouldFailExtracting <- function() {
 	position1 <- create_position()
 	position1$create(name="test",
 			currency="USD",
-			amount=0.0,
-			origin=list(ID_AAA=10)
+			amount=0.0# ,
+	# origin=list(ID_AAA=10)
 	)
 	
 	positions <- create_positions()
@@ -170,15 +170,15 @@ test.shouldRemoveOnePosition <- function() {
 	position1 <- create_position()
 	position1$create(name="test",
 			currency="USD",
-			amount=0.0,
-			origin=list(ID_AAA=10)
+			amount=0.0# ,
+	# origin=list(ID_AAA=10)
 	)
 	
 	position2 <- create_position()
 	position2$create(name="pippo",
 			currency="CHF",
-			amount=0.1,
-			origin=list(ID_AAA=10)
+			amount=0.1# ,
+	# origin=list(ID_AAA=10)
 	)	
 
 	
@@ -204,22 +204,22 @@ test.shouldRemoveTwoPositions <- function() {
 	position1 <- create_position()
 	position1$create(name="test",
 			currency="USD",
-			amount=0.0,
-			origin=list(ID_AAA=10)
+			amount=0.0# ,
+	# origin=list(ID_AAA=10)
 	)
 	
 	position2 <- create_position()
 	position2$create(name="pippo",
 			currency="CHF",
-			amount=0.1,
-			origin=list(ID_AAA=10)
+			amount=0.1# ,
+	# origin=list(ID_AAA=10)
 	)	
 	
 	position3 <- create_position()
 	position3$create(name="pippo2",
 			currency="CHF",
-			amount=0.8,
-			origin=list(ID_AAA=11)
+			amount=0.8# ,
+	# origin=list(ID_AAA=11)
 	)
 	
 	
@@ -251,15 +251,15 @@ test.isCurrency <- function() {
 	position1 <- create_position()
 	position1$create(name="test",
 			currency="USD",
-			amount=0.0,
-			origin=list(ID_AAA=10)
+			amount=0.0# ,
+	# origin=list(ID_AAA=10)
 	)
 	
 	position2 <- create_position()
 	position2$create(name="pippo",
 			currency="CHF",
-			amount=0.1,
-			origin=list(ID_AAA=10)
+			amount=0.1# ,
+	# origin=list(ID_AAA=10)
 	)	
 	
 	positions <- create_positions()
@@ -282,22 +282,22 @@ test.shouldSumPositions <- function() {
 	position1 <- create_position()
 	position1$create(name="test",
 			currency="USD",
-			amount=100,
-			origin=list(ID_AAA=10)
+			amount=100# ,
+	# origin=list(ID_AAA=10)
 	)
 	
 	position2 <- create_position()
 	position2$create(name="pippo",
 			currency="CHF",
-			amount=200,
-			origin=list(ID_AAA=10)
+			amount=200# ,
+	# origin=list(ID_AAA=10)
 	)	
 
 	position3 <- create_position()
 	position3$create(name="pop",
 			currency="EUR",
-			amount=300,
-			origin=list(ID_AAA=10)
+			amount=300# ,
+	# origin=list(ID_AAA=10)
 	)	
 	
 	positions <- create_positions()
@@ -356,8 +356,8 @@ test.shouldCreateDataFrameFromPositions <- function() {
 	position1 <- create_position()
 	position1$create(name="test",
 			currency="USD",
-			amount=0.0,
-			origin=list(ID_AAA=10)
+			amount=0.0# ,
+	# origin=list(ID_AAA=10)
 	)
 	class(position1) <- c("equities",class(position1))
 	
@@ -365,8 +365,8 @@ test.shouldCreateDataFrameFromPositions <- function() {
 	position2 <- create_position()
 	position2$create(name="pippo",
 			currency="CHF",
-			amount=0.1,
-			origin=list(ID_AAA=10)
+			amount=0.1# ,
+	# origin=list(ID_AAA=10)
 	)
 	class(position2) <- c("bond",class(position2))
 	
@@ -392,8 +392,8 @@ test.shouldOrderPositions <- function() {
 	position1 <- create_position()
 	position1$create(name="xxx",
 			currency="USD",
-			amount=0.0,
-			origin=list(ID_AAA=10)
+			amount=0.0# ,
+	# origin=list(ID_AAA=10)
 	)
 	class(position1) <- c("equities",class(position1))
 	
@@ -401,8 +401,8 @@ test.shouldOrderPositions <- function() {
 	position2 <- create_position()
 	position2$create(name="AAA",
 			currency="CHF",
-			amount=0.1,
-			origin=list(ID_AAA=10)
+			amount=0.1# ,
+	# origin=list(ID_AAA=10)
 	)
 	class(position2) <- c("bond",class(position2))
 	
@@ -410,8 +410,8 @@ test.shouldOrderPositions <- function() {
 	position3 <- create_position()
 	position3$create(name="AAA",
 			currency="EUR",
-			amount=1000.5,
-			origin=list(ID_AAA=10)
+			amount=1000.5# ,
+	# origin=list(ID_AAA=10)
 	)
 	class(position3) <- c("ABC",class(position3))	
 	
@@ -438,8 +438,8 @@ test.shouldConvertPositionsToString <- function() {
 	position1 <- create_position()
 	position1$create(name="xxx",
 			currency="USD",
-			amount=-10.0,
-			origin=list(ID_AAA=10)
+			amount=-10.0# ,
+	# origin=list(ID_AAA=10)
 	)
 	class(position1) <- c("Equity",class(position1))
 	
@@ -447,8 +447,8 @@ test.shouldConvertPositionsToString <- function() {
 	position2 <- create_position()
 	position2$create(name="AAA",
 			currency="CHF",
-			amount=14947850.1,
-			origin=list(ID_AAA=10)
+			amount=14947850.1# ,
+	# origin=list(ID_AAA=10)
 	)
 	class(position2) <- c("bond",class(position2))
 	
@@ -456,8 +456,8 @@ test.shouldConvertPositionsToString <- function() {
 	position3 <- create_position()
 	position3$create(name="AAA",
 			currency="EUR",
-			amount=1000.5876,
-			origin=list(ID_AAA=10)
+			amount=1000.5876# ,
+	# 	origin=list(ID_AAA=10)
 	)
 	class(position3) <- c("bond",class(position3))	
 	

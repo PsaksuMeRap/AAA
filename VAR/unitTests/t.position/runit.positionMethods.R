@@ -18,20 +18,23 @@ test.positionCopy <- function() {
 	position <- create_position()
 	position$create(name="Deutsche Telekom Common Stock",
 			currency="EUR",
-			amount=0.0,
-			origin=list(
-					ID_AAA=418,
-					esempio="Claudio",
-					ValoreMercatoMonetaCHF=0.0,
-					Moneta="EUR",
-					Cliente="pippo160",
-					Strumento= "A",
-					Nome="Deutsche Telekom Common Stock",
-					ID_strumento=1
-				)
+			amount=0.0
 	)
-	class(position) <- c("equity",class(position))
-	extendPosition.equity(position)
+	
+	origin=list()
+	origin$ID_AAA <-418
+	origin$esempio <-"Claudio"
+	origin$ValoreMercatoMonetaCHF <- 0.0
+	origin$Moneta <- "EUR"
+	origin$Cliente <- "pippo160"
+	origin$Strumento <- "A"
+	origin$Nome <- "Deutsche Telekom Common Stock"
+	origin$ID_strumento <- 1
+
+#	class(position) <- c("equity",class(position))
+#	extendPosition(position,origin)
+	parser <- create_parserPosition()
+	position <- parser$parse(origin)
 	
 	# crea la nuova posizione e copia la vecchia
 	newPosition <- copyPosition(position)

@@ -17,13 +17,11 @@ create_position <- function() {
 	position$origin = NA
 	
 	position$create <- function(name=NA_character_,currency="CHF",
-			amount=0.0,origin=NA) {
+			amount=0.0) {
 		position$name <<- name
 		position$money <<- toMoney(amount,currency)
-		position$origin <<- origin
 	}
-	
-	
+		
 	position$isInstrument <- function(myClass) {
 		classes <- class(position)
 		if (any(classes == myClass)) return(TRUE) else return(FALSE)

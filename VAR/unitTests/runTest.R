@@ -86,6 +86,13 @@ testsuite.portfolio <- defineTestSuite("Test classe portfolio",
 testResult <- runTestSuite(testsuite.portfolio); printTextProtocol(testResult)
 
 
+## test per il file portfolioMethods
+testsuite.portfolioMethods <- defineTestSuite("Test portfolioMethods",
+		dirs = "./unitTests/t.portfolioMethods")
+
+testResult <- runTestSuite(testsuite.portfolioMethods); printTextProtocol(testResult)
+
+
 ## test per la directory t.criterium
 testsuite.criterium <- defineTestSuite("Test directory criterium",
 		dirs = "./unitTests/t.criterium")

@@ -12,22 +12,22 @@ explode <- function(position) {
 		equityFundPosition$create(
 				name=paste("Fondo misto:",position$name),
 				currency=position$money$currency,
-				amount=position$money$amount*position$quotaEquities/100,
-				origin=list(ID_AAA=NA,ID_strumento=14,Strumento="Fondo azionario")
+				amount=position$money$amount*position$quotaEquities/100
 		)
 		class(equityFundPosition) <- c("Fondi_azionari","position")
-		extendPosition(equityFundPosition)
+		extendPosition(equityFundPosition,
+				origin=list(ID_AAA=NA,ID_strumento=14,Strumento="Fondo azionario"))
 		
 		# crea posizione bondFund
 		BondFundPosition <- create_position()
 		BondFundPosition$create(
 				name=paste("Fondo misto:",position$name),
 				currency=position$money$currency,
-				amount=position$money$amount*position$quotaBonds/100,
-				origin=list(ID_AAA=NA,ID_strumento=3,Strumento="Fondo obbligazionario")
+				amount=position$money$amount*position$quotaBonds/100
 		)
 		class(BondFundPosition) <- c("Fondi_obbligazionari","position")
-		extendPosition(BondFundPosition)
+		extendPosition(BondFundPosition,
+				origin=list(ID_AAA=NA,ID_strumento=3,Strumento="Fondo obbligazionario"))
 		
 		positions <- create_positions()
 		positions$add(equityFundPosition)

@@ -56,7 +56,6 @@ create_parserPortfolio <- function() {
 	}
 	
 	return(parser)
-	
 }
 
 
@@ -110,29 +109,33 @@ create_parserPosition <- function() {
 		return(instrument)
 	}
 	
-	parser$parse <- function(record) {
-		# record: a list
+	parser$parse <- function(origin) {
+		# origin: a list
 
 		position <- create_position()
-		moneyCHF <- toMoney(record[["ValoreMercatoMonetaCHF"]],"CHF")
-		moneyLocalCurrency <- repositories$exchangeRates$exchange(moneyCHF,record[["Moneta"]])
+		moneyCHF <- toMoney(origin[["ValoreMercatoMonetaCHF"]],"CHF")
+		moneyLocalCurrency <- repositories$exchangeRates$exchange(moneyCHF,origin[["Moneta"]])
 		position$create(
-				name=record[["Nome"]],
-				currency=record[["Moneta"]],
-				amount=moneyLocalCurrency$amount,
-				origin=record
+				name=origin[["Nome"]],
+				currency=origin[["Moneta"]],
+				amount=moneyLocalCurrency$amount
 		)
 		rm(moneyCHF,moneyLocalCurrency)
 		
-		instrument <- parser$identifyInstrument(record)
-		class(position) <- c(instrument,class(position))
+		# consider the CB-Accent Lux Sicav - Fixed Income as a special case
+		if (origin[["ID_strumento"]]==2 & origin[["ID_AAA"]]==825) {
+			class(position) <- c("Fondi_obbligazionari",class(position))
+		} else {
+			instrument <- parser$identifyInstrument(origin)
+			class(position) <- c(instrument,class(position))
+		}
 		
-		if (position$origin[["Strumento"]]=="Oacc") {
+		if (origin[["Strumento"]]=="Oacc") {
 			class(position) <- c("accruedInterest",class(position))
 		}
 		
 		# extend position if necessary
-		extendPosition(position)
+		extendPosition(position,origin)
 		
 		return(position)
 	}

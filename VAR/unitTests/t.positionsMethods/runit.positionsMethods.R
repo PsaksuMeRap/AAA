@@ -11,8 +11,8 @@ test.shouldCheckPositionByAmount <- function() {
 	position1 <- create_position()
 	position1$create(name="xxx",
 			currency="USD",
-			amount=100.0,
-			origin=list(ID_AAA=10)
+			amount=100.0 # ,
+	# origin=list(ID_AAA=10)
 	)
 	class(position1) <- c("equity",class(position1))
 		
@@ -86,8 +86,8 @@ test.shouldCheckPositionByInstrument <- function() {
 	position1 <- create_position()
 	position1$create(name="xxx",
 			currency="USD",
-			amount=97.1,
-			origin=list(ID_AAA=10)
+			amount=97.1# ,
+			# origin=list(ID_AAA=10)
 	)
 	class(position1) <- c("equity",class(position1))
 	
@@ -113,8 +113,8 @@ test.shouldCheckPositionByCurrency <- function() {
 	position1 <- create_position()
 	position1$create(name="xxx",
 			currency="USD",
-			amount=97.1,
-			origin=list(ID_AAA=10)
+			amount=97.1#,
+			#origin=list(ID_AAA=10)
 	)
 	class(position1) <- c("equity",class(position1))
 	
@@ -140,8 +140,8 @@ test.shouldCheckFailWithNonImplementedFactor <- function() {
 	position1 <- create_position()
 	position1$create(name="xxx",
 			currency="USD",
-			amount=97.1,
-			origin=list(ID_AAA=10)
+			amount=97.1#,
+			#origin=list(ID_AAA=10)
 	)
 	class(position1) <- c("equity",class(position1))
 	
@@ -158,8 +158,8 @@ test.shouldExtractPositionsByMaturityHorizon <- function() {
 	position1 <- create_position()
 	position1$create(name="xxx",
 			currency="USD",
-			amount=0.0,
-			origin=list(ID_AAA=10)
+			amount=0.0#,
+			#origin=list(ID_AAA=10)
 	)
 	class(position1) <- c("equity",class(position1))
 	
@@ -167,39 +167,39 @@ test.shouldExtractPositionsByMaturityHorizon <- function() {
 	position2 <- create_position()
 	position2$create(name="20101217 - 1.326% Rabobank Nederland 17-12-10",
 			currency="EUR",
-			amount=401440,
-			origin=list(ID_AAA=1568)
+			amount=401440#,
+			#origin=list(ID_AAA=1568)
 	)
 	class(position2) <- c("bond",class(position2))
-	extendPosition(position2)
+	extendPosition(position2,origin=list(ID_AAA=1568))
 	
 	# create position 3	
 	position3 <- create_position()
 	position3$create(name="20110715 - 3.625% Rabo 15-07-11 Pro-rata",
 			currency="EUR",
-			amount=178.767120361328,
-			origin=list(ID_AAA=1161,Strumento="Oacc")
+			amount=178.767120361328#,
+			#origin=list(ID_AAA=1161,Strumento="Oacc")
 	)
 	class(position3) <- c("bond",class(position3))
 	class(position3) <- c("accruedInterest",class(position3))	
-	extendPosition(position3)
+	extendPosition(position3,origin=list(ID_AAA=1161,Strumento="Oacc"))
 	
 	# create position 4	(strutturato FI)
 	position4 <- create_position()
 	position4$create(name="20170924 - >3Y - EUR UBS AG FRN with Floor and Cap",
 			currency="EUR",
-			amount=197800.00,
-			origin=list(ID_AAA=114)
+			amount=197800.00#,
+			#origin=list(ID_AAA=114)
 	)
 	class(position4) <- c("Strutturati_FI",class(position4))	
-	extendPosition(position4)
+	extendPosition(position4,origin=list(ID_AAA=114))
 	
 	# create position 5 (equity)
 	position5 <- create_position()
 	position5$create(name="bbb",
 			currency="CHF",
-			amount=1.0,
-			origin=list(ID_AAA=11)
+			amount=1.0#,
+			#origin=list(ID_AAA=11)
 	)
 	class(position5) <- c("equity",class(position5))
 
@@ -207,8 +207,8 @@ test.shouldExtractPositionsByMaturityHorizon <- function() {
 	position6 <- create_position()
 	position6$create(name="20201231 - 0% <3Y - CB-Accent Lux Sicav - Fixed Income EUR",
 			currency="EUR",
-			amount=1.0,
-			origin=list(ID_AAA=11)
+			amount=1.0#,
+			#origin=list(ID_AAA=11)
 	)
 	class(position6) <- c("Fondi_obbligazionari",class(position6))
 	
@@ -249,8 +249,8 @@ test.shouldExtractPositionsByCurrency <- function() {
 	position1 <- create_position()
 	position1$create(name="xxx",
 			currency="USD",
-			amount=0.0,
-			origin=list(ID_AAA=10)
+			amount=0.0#,
+			#origin=list(ID_AAA=10)
 	)
 	class(position1) <- c("equity",class(position1))
 	
@@ -258,8 +258,8 @@ test.shouldExtractPositionsByCurrency <- function() {
 	position2 <- create_position()
 	position2$create(name="AAA",
 			currency="CHF",
-			amount=0.1,
-			origin=list(ID_AAA=10)
+			amount=0.1#,
+			#origin=list(ID_AAA=10)
 	)
 	class(position2) <- c("bond",class(position2))
 	
@@ -267,8 +267,8 @@ test.shouldExtractPositionsByCurrency <- function() {
 	position3 <- create_position()
 	position3$create(name="AAA",
 			currency="EUR",
-			amount=1000.5,
-			origin=list(ID_AAA=10)
+			amount=1000.5#,
+			#origin=list(ID_AAA=10)
 	)
 	class(position3) <- c("ABC",class(position3))	
 	
@@ -306,8 +306,8 @@ test.shouldExtractPositionsByCurrencyWithNegation <- function() {
 	position1 <- create_position()
 	position1$create(name="xxx",
 			currency="USD",
-			amount=0.0,
-			origin=list(ID_AAA=10)
+			amount=0.0#,
+			#origin=list(ID_AAA=10)
 	)
 	class(position1) <- c("equity",class(position1))
 	
@@ -315,8 +315,8 @@ test.shouldExtractPositionsByCurrencyWithNegation <- function() {
 	position2 <- create_position()
 	position2$create(name="AAA",
 			currency="CHF",
-			amount=0.1,
-			origin=list(ID_AAA=10)
+			amount=0.1#,
+			#origin=list(ID_AAA=10)
 	)
 	class(position2) <- c("bond",class(position2))
 	
@@ -324,8 +324,8 @@ test.shouldExtractPositionsByCurrencyWithNegation <- function() {
 	position3 <- create_position()
 	position3$create(name="AAA",
 			currency="EUR",
-			amount=1000.5,
-			origin=list(ID_AAA=10)
+			amount=1000.5#,
+			#origin=list(ID_AAA=10)
 	)
 	class(position3) <- c("ABC",class(position3))	
 	
@@ -363,8 +363,8 @@ test.shouldExtractPositionsByInstrument <- function() {
 	position1 <- create_position()
 	position1$create(name="xxx",
 			currency="USD",
-			amount=0.0,
-			origin=list(ID_AAA=10)
+			amount=0.0#,
+			#origin=list(ID_AAA=10)
 	)
 	class(position1) <- c("equity",class(position1))
 	
@@ -372,8 +372,8 @@ test.shouldExtractPositionsByInstrument <- function() {
 	position2 <- create_position()
 	position2$create(name="AAA",
 			currency="CHF",
-			amount=0.1,
-			origin=list(ID_AAA=10)
+			amount=0.1#,
+			#origin=list(ID_AAA=10)
 	)
 	class(position2) <- c("bond",class(position2))
 	
@@ -381,8 +381,8 @@ test.shouldExtractPositionsByInstrument <- function() {
 	position3 <- create_position()
 	position3$create(name="AAA",
 			currency="EUR",
-			amount=1000.5,
-			origin=list(ID_AAA=10)
+			amount=1000.5#,
+			#origin=list(ID_AAA=10)
 	)
 	class(position3) <- c("ABC",class(position3))	
 	
@@ -433,8 +433,8 @@ test.shouldExtractPositionsByAmountAbsolute <- function() {
 	position1 <- create_position()
 	position1$create(name="xxx",
 			currency="USD",
-			amount=97.1/0.9627,
-			origin=list(ID_AAA=10)
+			amount=97.1/0.9627#,
+			#origin=list(ID_AAA=10)
 	)
 	class(position1) <- c("equity",class(position1))
 	
@@ -442,8 +442,8 @@ test.shouldExtractPositionsByAmountAbsolute <- function() {
 	position2 <- create_position()
 	position2$create(name="AAA",
 			currency="CHF",
-			amount=100.1,
-			origin=list(ID_AAA=10)
+			amount=100.1#,
+			#origin=list(ID_AAA=10)
 	)
 	class(position2) <- c("bond",class(position2))
 	
@@ -451,8 +451,8 @@ test.shouldExtractPositionsByAmountAbsolute <- function() {
 	position3 <- create_position()
 	position3$create(name="AAA",
 			currency="EUR",
-			amount=80/1.33853808,
-			origin=list(ID_AAA=10)
+			amount=80/1.33853808#,
+			#origin=list(ID_AAA=10)
 	)
 	class(position3) <- c("ABC",class(position3))	
 	
@@ -533,8 +533,8 @@ test.shouldExtractPositionsByAmountRelative <- function() {
 	position1 <- create_position()
 	position1$create(name="xxx",
 			currency="USD",
-			amount=97.1,
-			origin=list(ID_AAA=10)
+			amount=97.1#,
+			#origin=list(ID_AAA=10)
 	)
 	class(position1) <- c("equity",class(position1))
 	
@@ -542,8 +542,8 @@ test.shouldExtractPositionsByAmountRelative <- function() {
 	position2 <- create_position()
 	position2$create(name="AAA",
 			currency="CHF",
-			amount=100.1,
-			origin=list(ID_AAA=10)
+			amount=100.1#,
+			#origin=list(ID_AAA=10)
 	)
 	class(position2) <- c("bond",class(position2))
 	
@@ -551,8 +551,8 @@ test.shouldExtractPositionsByAmountRelative <- function() {
 	position3 <- create_position()
 	position3$create(name="AAA",
 			currency="EUR",
-			amount=80,
-			origin=list(ID_AAA=10)
+			amount=80#,
+			#origin=list(ID_AAA=10)
 	)
 	class(position3) <- c("ABC",class(position3))	
 	
@@ -650,8 +650,8 @@ test.shouldApplyLogicalAnd <- function() {
 	position1 <- create_position()
 	position1$create(name="xxx",
 			currency="USD",
-			amount=97.1,
-			origin=list(ID_AAA=10)
+			amount=97.1#,
+			#origin=list(ID_AAA=10)
 	)
 	class(position1) <- c("equity",class(position1))
 	
@@ -659,8 +659,8 @@ test.shouldApplyLogicalAnd <- function() {
 	position2 <- create_position()
 	position2$create(name="AAA",
 			currency="CHF",
-			amount=100.1,
-			origin=list(ID_AAA=10)
+			amount=100.1#,
+			#origin=list(ID_AAA=10)
 	)
 	class(position2) <- c("bond",class(position2))
 	
@@ -668,8 +668,8 @@ test.shouldApplyLogicalAnd <- function() {
 	position3 <- create_position()
 	position3$create(name="AAA",
 			currency="EUR",
-			amount=80,
-			origin=list(ID_AAA=10)
+			amount=80#,
+			#origin=list(ID_AAA=10)
 	)
 	class(position3) <- c("ABC",class(position3))	
 	
@@ -709,8 +709,8 @@ test.shouldApplyLogicalOr <- function() {
 	position1 <- create_position()
 	position1$create(name="xxx",
 			currency="USD",
-			amount=97.1,
-			origin=list(ID_AAA=10)
+			amount=97.1#,
+			#origin=list(ID_AAA=10)
 	)
 	class(position1) <- c("equity",class(position1))
 	
@@ -718,8 +718,8 @@ test.shouldApplyLogicalOr <- function() {
 	position2 <- create_position()
 	position2$create(name="AAA",
 			currency="CHF",
-			amount=100.1,
-			origin=list(ID_AAA=10)
+			amount=100.1#,
+			#origin=list(ID_AAA=10)
 	)
 	class(position2) <- c("bond",class(position2))
 	
@@ -727,8 +727,8 @@ test.shouldApplyLogicalOr <- function() {
 	position3 <- create_position()
 	position3$create(name="AAA",
 			currency="EUR",
-			amount=80,
-			origin=list(ID_AAA=10)
+			amount=80#,
+			#origin=list(ID_AAA=10)
 	)
 	class(position3) <- c("ABC",class(position3))	
 	
@@ -766,8 +766,8 @@ test.shouldFilterPositionsFromselectionString <- function() {
 	position1 <- create_position()
 	position1$create(name="xxx",
 			currency="USD",
-			amount=97.1,
-			origin=list(ID_AAA=10)
+			amount=97.1#,
+			#origin=list(ID_AAA=10)
 	)
 	class(position1) <- c("equity",class(position1))
 	
@@ -775,8 +775,8 @@ test.shouldFilterPositionsFromselectionString <- function() {
 	position2 <- create_position()
 	position2$create(name="AAA",
 			currency="CHF",
-			amount=100.1,
-			origin=list(ID_AAA=10)
+			amount=100.1#,
+			#origin=list(ID_AAA=10)
 	)
 	class(position2) <- c("bond",class(position2))
 	
@@ -784,8 +784,8 @@ test.shouldFilterPositionsFromselectionString <- function() {
 	position3 <- create_position()
 	position3$create(name="AAA",
 			currency="EUR",
-			amount=80,
-			origin=list(ID_AAA=10)
+			amount=80#,
+			#origin=list(ID_AAA=10)
 	)
 	class(position3) <- c("ABC",class(position3))	
 	
@@ -821,8 +821,8 @@ test.shouldCheckOneCheckStringOnPositions <- function() {
 	position1 <- create_position()
 	position1$create(name="xxx",
 			currency="USD",
-			amount=100/0.9627,
-			origin=list(ID_AAA=10)
+			amount=100/0.9627#,
+			#origin=list(ID_AAA=10)
 	)
 	class(position1) <- c("equity",class(position1))
 	
@@ -830,8 +830,8 @@ test.shouldCheckOneCheckStringOnPositions <- function() {
 	position2 <- create_position()
 	position2$create(name="AAA",
 			currency="CHF",
-			amount=100,
-			origin=list(ID_AAA=10)
+			amount=100#,
+			#origin=list(ID_AAA=10)
 	)
 	class(position2) <- c("bond",class(position2))
 	
@@ -839,8 +839,8 @@ test.shouldCheckOneCheckStringOnPositions <- function() {
 	position3 <- create_position()
 	position3$create(name="AAA",
 			currency="EUR",
-			amount=100/1.33853808,
-			origin=list(ID_AAA=10)
+			amount=100/1.33853808#,
+			#origin=list(ID_AAA=10)
 	)
 	class(position3) <- c("ABC",class(position3))	
 	
@@ -1041,6 +1041,64 @@ test.shouldIdentifyAccruedInterest <- function() {
 }
 
 
+test.shouldFailToApplyDirectiveString <- function() {
+	source("./lib/repository.R")
+	source("./unitTests/utilities/allocateTestRepositories.R")
+	
+	# crea position di tipo accrued interest e Fondo_misto
+	nomi <- c("Cliente","Strumento","Moneta","Saldo","NumeroValore",
+			"Nome","PrezzoMedio","PrezzoMercato","ValorePosizione",
+			"ValoreMonetaRiferimento","Evoluzione","Ordine","Categoria",
+			"ValoreMercatoMonetaCHF","ValoreMercatoMonetaEUR",
+			"ValoreMercatoMonetaUSD","ID_AAA","ID_strumento",
+			"ID_transazione","Ticker_indice_per_BETA","Valuta",
+			"VariazioneFX")
+	
+	origin1 <- list("pippo16","A","EUR",4477.2698043909,"",
+			"25.3-74.7 Fondo misto di test",NA,NA,4477.2698043909,4477.2698043909,
+			NA,"A","Fondo misto",5975.0597818207,4477.2698043909,
+			6250.71637391013,12,26,NA,NA,NA,NA)
+	names(origin1) <- nomi
+	
+	
+	origin2 <- list("pippo16","Oacc","EUR",0,"2490099",
+			"20201231 - 0% CB-Accent Lux Sicav - Fixed Income EUR 31-12-20 Pro-rata",
+			NA,NA,0,0,NA,"D","Obbligazioni e simili          ",0,0,0,825,
+			2,NA,NA,NA,NA)
+	names(origin2) <- nomi
+	
+	# initialize the different repositories
+	allocateTestRepositories("instruments")
+	allocateTestRepositories("politicaInvestimento")
+	allocateTestRepositories("exchangeRates")
+	
+	# create client portfolio
+	# create position 1
+	parser <- create_parserPosition()
+	position1 <- parser$parse(origin1)
+	
+	# create position 2
+	parser <- create_parserPosition()
+	position2 <- parser$parse(origin2)
+	
+	positions <- create_positions()
+	positions$add(position1)
+	positions$add(position2)
+	
+	# Test 1: positions argument not of class positions
+	checkException(applyDirectiveString(directiveString=NA,positions="pippo"))
+		
+	
+	# Test 2: directiveString="dadd" -> stop
+	checkException(applyDirectiveString(directiveString="dadd",positions))
+	
+		
+	# reset the repositories in the original state
+	deallocateTestRepositories("exchangeRates")
+	deallocateTestRepositories("instruments")
+	deallocateTestRepositories("politicaInvestimento")
+}
+
 
 test.shouldApplyDirectiveString <- function() {
 	source("./lib/repository.R")
@@ -1086,21 +1144,15 @@ test.shouldApplyDirectiveString <- function() {
 	positions$add(position1)
 	positions$add(position2)
 
-	# Test 1: positions argument not of class position
-
-	checkException(applyDirectiveString(directiveString=NA,positions="pippo"))
 	
-	# Test 2: directiveString=NA -> return identical positions
+	# Test 1: directiveString=NA -> return identical positions
 	directiveString <- NA
 	results <- applyDirectiveString(directiveString,positions)
 	
 	checkEquals(results,positions)
 	
-	
-	# Test 3: directiveString="dadd" -> stop
-	checkException(applyDirectiveString(directiveString="dadd",positions))
 
-	# Test 4: esplodi le posizioni
+	# Test 2: esplodi le posizioni
 	directiveString <- "explode:Fondi_misti"
 	newPositions <- applyDirectiveString(directiveString,positions)
 
@@ -1367,8 +1419,8 @@ test.shouldAreConsistent <- function() {
 	position1 <- create_position()
 	position1$create(name="xxx",
 			currency="USD",
-			amount=0.0,
-			origin=list(ID_AAA=10)
+			amount=0.0#,
+			#origin=list(ID_AAA=10)
 	)
 	class(position1) <- c("equity",class(position1))
 	
@@ -1376,39 +1428,39 @@ test.shouldAreConsistent <- function() {
 	position2 <- create_position()
 	position2$create(name="20101217 - 1.326% Rabobank Nederland 17-12-10",
 			currency="EUR",
-			amount=401440,
-			origin=list(ID_AAA=1568)
+			amount=401440#,
+			#origin=list(ID_AAA=1568)
 	)
 	class(position2) <- c("bond",class(position2))
-	extendPosition(position2)
+	extendPosition(position2,origin=list(ID_AAA=1568))
 	
 	# create position 3	
 	position3 <- create_position()
 	position3$create(name="20110715 - 3.625% Rabo 15-07-11 Pro-rata",
 			currency="EUR",
-			amount=178.767120361328,
-			origin=list(ID_AAA=1161,Strumento="Oacc")
+			amount=178.767120361328#,
+			#origin=list(ID_AAA=1161,Strumento="Oacc")
 	)
 	class(position3) <- c("bond",class(position3))
 	class(position3) <- c("accruedInterest",class(position3))	
-	extendPosition(position3)
+	extendPosition(position3,origin=list(ID_AAA=1161,Strumento="Oacc"))
 	
 	# create position 4	(strutturato FI)
 	position4 <- create_position()
 	position4$create(name="20170924 - >3Y - EUR UBS AG FRN with Floor and Cap",
 			currency="EUR",
-			amount=197800.00,
-			origin=list(ID_AAA=114)
+			amount=197800.00#,
+			#origin=list(ID_AAA=114)
 	)
 	class(position4) <- c("Strutturati_FI",class(position4))	
-	extendPosition(position4)
+	extendPosition(position4,origin=list(ID_AAA=114))
 	
 	# create position 5 (equity)
 	position5 <- create_position()
 	position5$create(name="bbb",
 			currency="CHF",
-			amount=1.0,
-			origin=list(ID_AAA=11)
+			amount=1.0#,
+			#origin=list(ID_AAA=11)
 	)
 	class(position5) <- c("equity",class(position5))
 	
@@ -1416,8 +1468,8 @@ test.shouldAreConsistent <- function() {
 	position6 <- create_position()
 	position6$create(name="20201231 - 0% <3Y - CB-Accent Lux Sicav - Fixed Income EUR",
 			currency="EUR",
-			amount=1.0,
-			origin=list(ID_AAA=11)
+			amount=1.0#,
+			#origin=list(ID_AAA=11)
 	)
 	class(position6) <- c("Fondi_obbligazionari",class(position6))
 	
@@ -1441,19 +1493,19 @@ test.shouldAreConsistent <- function() {
 	position2 <- create_position()
 	position2$create(name="20101217 - 1.326% Rabobank Nederland 17-12-10",
 			currency=NA,
-			amount=401440,
-			origin=list(ID_AAA=1568)
+			amount=401440#,
+			#origin=list(ID_AAA=1568)
 	)
 	class(position2) <- c("bond",class(position2))
-	extendPosition(position2)
+	extendPosition(position2,origin=list(ID_AAA=1568))
 	
 	
 	# create position 5 (equity)
 	position5 <- create_position()
 	position5$create(name="bbb",
 			currency="CHF",
-			amount=NA,
-			origin=list(ID_AAA=11)
+			amount=NA#,
+			#origin=list(ID_AAA=11)
 	)
 	class(position5) <- c("equity",class(position5))
 	

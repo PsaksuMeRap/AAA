@@ -289,7 +289,11 @@ identifyFundsToExplode <- function(fundData,positions) {
 	
 	isFundToExplode <- function(position,fundData) {
 		
-		return(fundData[["numeroValore"]] == position$origin[["NumeroValore"]])
+		numeroValore <- position$numeroValore
+		if (is.null(numeroValore)) return(FALSE)
+		if (is.na(numeroValore))   return(FALSE)
+
+		return(fundData[["numeroValore"]] == numeroValore)
 	}
 	
 	result <- sapply(positions$positions,isFundToExplode,fundData)
@@ -301,7 +305,7 @@ identifyCB_Accent_Lux_sicav_FIXED_INCOME_oacc <- function(positions) {
 
 	nbPositions <- length(positions$positions)
 	if (nbPositions==0) return (logical(0))
-	
+
 	# identify CB-Accent Lux sicav - fixed Income
 	isAccentLuxFixedIncome <- identifyFundsToExplode(list("numeroValore"="2490099"),positions)
 	

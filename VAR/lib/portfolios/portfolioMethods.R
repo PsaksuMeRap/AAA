@@ -11,7 +11,6 @@ explodePortfolioByFund <- function(fundData,fundPortfolios,portfolio) {
 	# fundPortfolios: una lista con i portafogli dei fondi
 	# portfolio: il portafoglio le cui posizioni sono da esplodere
 	
-	
 	# determina il numero di posizioni in portafoglio
 	nbPositions <- length(portfolio$positions$positions)
 	
@@ -21,7 +20,7 @@ explodePortfolioByFund <- function(fundData,fundPortfolios,portfolio) {
 	# identifica il portafoglio del fondo in questione
 	owner <- fundData["owner"]
 	fundPortfolio <- filterLists(fundPortfolios,by="owner",value=owner)[[1]]
-	
+
 	result <- identifyFundsToExplode(fundData,portfolio$positions)
 	
 	if (fundData[["nomeFondo"]]=="FIXED INCOME") {

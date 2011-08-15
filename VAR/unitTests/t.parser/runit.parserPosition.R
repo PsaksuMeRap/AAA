@@ -13,9 +13,6 @@ test.shouldParseEquityPosition <- function() {
 	allocateTestRepositories("equities")	
 	allocateTestRepositories("instruments")	
 
-	# create the positions data.frame
-	# source("./unitTests/utilities/createOriginData.R")
-	# origin <- createOriginData()
 	origin <- list()
 	origin$Cliente <- "pippo160"
 	origin$Strumento <- "A"
@@ -54,12 +51,12 @@ test.shouldParseBondPosition <- function() {
 	
 	# create origin data list
 	origin <- list()
-	origin$Cliente <- "pippo61"	
+	origin$Cliente <- "pippo97"	
 	origin$Strumento <- "O      "
 	origin$Moneta <- "EUR"
-	origin$Nome <- "20201231 - 0% CB-Accent Lux Sicav - Fixed Income EUR 31-12-20"
-	origin$ValoreMercatoMonetaCHF <- 306595.4
-	origin$ID_AAA <- 825
+	origin$Nome <- "20101217 - 1.326% Rabobank Nederland 17-12-10"
+	origin$ValoreMercatoMonetaCHF <- 66966.8152582
+	origin$ID_AAA <- 1568
 	origin$ID_strumento <- 2
 	
 
@@ -68,6 +65,37 @@ test.shouldParseBondPosition <- function() {
 
 	
     # restore initial conditions
+	deallocateTestRepositories("instruments")	
+	deallocateTestRepositories("exchangeRates")		
+}
+
+test.shouldParseFondo_obbligazionario <- function() {
+	source("./unitTests/utilities/allocateTestRepositories.R")
+	
+	# create the parser
+	source("./lib/parser.R")
+	parser <- create_parserPosition()
+	
+	# create the data for the instrument and exchange rates repositories
+	allocateTestRepositories("instruments")
+	allocateTestRepositories("exchangeRates")	
+	
+	# create origin data list
+	origin <- list()
+	origin$Cliente <- "pippo61"	
+	origin$Strumento <- "O      "
+	origin$Moneta <- "EUR"
+	origin$Nome <- "20201231 - 0% CB-Accent Lux Sicav - Fixed Income EUR 31-12-20"
+	origin$ValoreMercatoMonetaCHF <- 306595.4
+	origin$ID_AAA <- 825
+	origin$ID_strumento <- 2
+	
+	
+	fondo <- parser$parse(origin)
+	checkEquals(is.element("Fondi_obbligazionari",class(fondo)),TRUE)
+	
+	
+	# restore initial conditions
 	deallocateTestRepositories("instruments")	
 	deallocateTestRepositories("exchangeRates")		
 }

@@ -23,8 +23,7 @@ test.should_addPositionToPortfolio <- function() {
     p <- create_position()
 	p$create(name="pippo",
 			currency="CHF",
-			amount=0.1,
-			origin=list(ID_AAA=10)
+			amount=0.1
 	)	
 	
 	portfolio <- create_portfolio()
@@ -39,20 +38,17 @@ test.should_addPositionsToPortfolio <- function() {
 	p1 <- create_position()
 	p1$create(name="SUNCOR ENERGY  INC. CO",
 			currency="USD",
-			amount=243250,
-			origin=list(ID_AAA=1984)
+			amount=243250 #,origin=list(ID_AAA=1984)
 	)	
 	p2 <- create_position()
 	p2$create(name="Philips",
 			currency="EUR",
-			amount=22065.28,
-			origin=list(ID_AAA=766)
+			amount=22065.28 #,origin=list(ID_AAA=766)
 	)
 	p3 <- create_position()
 	p3$create(name="E.ON",
 			currency="EUR",
-			amount=25356.00,
-			origin=list(ID_AAA=445)
+			amount=25356.00 #,origin=list(ID_AAA=445)
 	)
 	
 	# crea le posizioni
@@ -102,20 +98,20 @@ test.should_returnValueOfPortfolio <- function() {
 	p1 <- create_position()
 	p1$create(name="SUNCOR ENERGY  INC. CO",
 			currency="USD",
-			amount=100,
-			origin=list(ID_AAA=1984)
+			amount=100#,
+			#origin=list(ID_AAA=1984)
 	)	
 	p2 <- create_position()
 	p2$create(name="Philips",
 			currency="EUR",
-			amount=10.50,
-			origin=list(ID_AAA=766)
+			amount=10.50#,
+			#origin=list(ID_AAA=766)
 	)
 	p3 <- create_position()
 	p3$create(name="E.ON",
 			currency="EUR",
-			amount=200,
-			origin=list(ID_AAA=445)
+			amount=200#,
+			#origin=list(ID_AAA=445)
 	)
 	
 	# crea le posizioni
@@ -150,20 +146,20 @@ test.should_addPortfolio <- function() {
 	p1 <- create_position()
 	p1$create(name="SUNCOR ENERGY  INC. CO",
 			currency="USD",
-			amount=243250,
-			origin=list(ID_AAA=1984)
+			amount=243250#,
+			#origin=list(ID_AAA=1984)
 	)	
 	p2 <- create_position()
 	p2$create(name="Philips",
 			currency="EUR",
-			amount=22065.28,
-			origin=list(ID_AAA=766)
+			amount=22065.28#,
+			#origin=list(ID_AAA=766)
 	)
 	p3 <- create_position()
 	p3$create(name="E.ON",
 			currency="EUR",
-			amount=25356.00,
-			origin=list(ID_AAA=445)
+			amount=25356.00#,
+			#origin=list(ID_AAA=445)
 	)
 	
 	# crea le posizioni
