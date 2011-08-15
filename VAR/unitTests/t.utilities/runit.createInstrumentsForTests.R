@@ -7,38 +7,38 @@
 test.create_equityTest <- function() {
 	source("./unitTests/utilities/createInstrumentsForTests.R")
 
-	positions <- create_equityTestPositions()
+	positions.l <- create_equityTestPositions()
 
-	checkEquals(positions$positions[[1]]$name,"Converium N")
-	checkEquals(positions$positions[[3]]$money$amount,98)
+	checkEquals(positions.l[["equityCHF1"]]$name,"Credit Suisse Group Na")
+	checkEquals(positions.l[["equityEUR1"]]$money$amount,98)
 }
 
 test.create_Conto_correnteTestPositions <- function() {
 	source("./unitTests/utilities/createInstrumentsForTests.R")
 	
-	positions <- create_Conto_correnteTestPositions()
+	positions.l <- create_Conto_correnteTestPositions()
 	
-	checkEquals(positions$positions[[2]]$money$currency,"USD")
-	checkEquals(positions$positions[[1]]$money$amount,120)
-	checkEquals(positions$positions[[3]]$money$currency,"EUR")
+	checkEquals(positions.l[[2]]$money$currency,"USD")
+	checkEquals(positions.l[[1]]$money$amount,120)
+	checkEquals(positions.l[[3]]$money$currency,"EUR")
 }
 
 test.create_ETF_EquityTestPositions <- function() {
 	source("./unitTests/utilities/createInstrumentsForTests.R")
 	
-	positions <- create_ETF_equityTestPositions()
+	positions.l <- create_ETF_equityTestPositions()
 	
-	checkEquals(positions$positions[[1]]$money$amount,100)
-	checkEquals(positions$positions[[2]]$money$currency,"USD")
-	checkEquals(positions$positions[[3]]$money$currency,"CHF")
+	checkEquals(positions.l[[1]]$money$amount,100)
+	checkEquals(positions.l[[2]]$money$currency,"USD")
+	checkEquals(positions.l[[3]]$money$currency,"CHF")
 }
 
 test.create_FX_ForwardTestPositions <- function() {
 	source("./unitTests/utilities/createInstrumentsForTests.R")
 	
-	positions <- create_FX_ForwardTestPositions()
+	positions.l <- create_FX_ForwardTestPositions()
 	
-	checkEquals(positions$positions[[1]]$money$amount,120)
-	checkEquals(positions$positions[[1]]$money$currency,"CHF")
-	checkEquals(positions$positions[[2]]$money$currency,"EUR")
+	checkEquals(positions.l[[1]]$money$amount,120)
+	checkEquals(positions.l[[1]]$money$currency,"CHF")
+	checkEquals(positions.l[[2]]$money$currency,"EUR")
 }

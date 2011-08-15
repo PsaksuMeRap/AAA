@@ -23,8 +23,8 @@ test.determine_riskFactor_equity <- function() {
 	source("./lib/riskfactor.R")
 	
 	# create an equity
-	positions <- create_equityTestPositions()
-	position <- positions$positions[[1]]
+	positions.l <- create_equityTestPositions()
+	position <- positions.l[[1]]
 
 	
 	riskFactors <- determine_riskFactors(position)
@@ -42,8 +42,8 @@ test.determine_riskFactor_Conto_corrente <- function() {
 	source("./lib/riskfactor.R")
 
 	# create a Conto_corrente	
-	positions <- create_Conto_correnteTestPositions()
-    position <- positions$positions[[1]]
+	positions.l <- create_Conto_correnteTestPositions()
+    position <- positions.l[[1]]
 	
 	
 	riskFactors <- determine_riskFactors(position)
@@ -60,8 +60,8 @@ test.determine_riskFactor_ETF_equity <- function() {
 	source("./lib/riskfactor.R")
 	
 	# create an equity
-	positions <- create_ETF_equityTestPositions()
-	position <- positions$positions[[2]]
+	positions.l <- create_ETF_equityTestPositions()
+	position <- positions.l[[2]]
 	
 	riskFactors <- determine_riskFactors(position)
 	
@@ -79,8 +79,8 @@ test.determine_riskFactor_FX_Forward <- function() {
 	
 	# create a FX_Forward (one leg only)
 	
-	positions <- create_FX_ForwardTestPositions()
-	position <- positions$positions[[2]]
+	positions.l <- create_FX_ForwardTestPositions()
+	position <- positions.l[[2]]
 	
 	# riskFactors <- determine_riskFactors(position)
 	

@@ -87,7 +87,7 @@ test.shouldExtendPositionEquity <- function() {
 	class(position) <- c("equity",class(position))
 
 	# check the new ticker field
-	extendPosition(position,origin=list(ID_AAA=879,NumeroValore="CH1234494pippo"))
+	extendPosition(position,origin=list(ID_AAA=879))
 	
 	checkEquals(position$ticker,"SIE.XE")
 	

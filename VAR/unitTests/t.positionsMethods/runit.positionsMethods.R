@@ -956,7 +956,7 @@ test.shouldIdentifyFundsToExplode <- function() {
 	
 	# identify nothing
 	fundData <- as.list(fundsDb[1,,drop=FALSE])
-	fundData["numeroValore"] <- "1kdkd"
+	fundData["id"] <- -13949
 	result <- identifyFundsToExplode(fundData,positions)
 	checkEquals(result,c(FALSE,FALSE,FALSE))
 	

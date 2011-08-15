@@ -25,14 +25,14 @@ copyPosition.position <- function(position) {
 copyPosition.Fondi_obbligazionari <- function(position,...) {
 	newPosition <- copyPosition.position(position)
 	
-	newPosition$numeroValore <- position$numeroValore 
+	newPosition$id <- position$id 
 	return(newPosition)
 }
 
 copyPosition.Fondi_azionari <- function(position,...) {
 	newPosition <- copyPosition.position(position)
 	
-	newPosition$numeroValore <- position$numeroValore 
+	newPosition$id <- position$id 
 	return(newPosition)
 }
 
@@ -63,8 +63,8 @@ copyPosition.equity <- function(position) {
 	
 	newPosition$ticker <- position$ticker	
 	
-	# store the numeroValore
-	newPosition$numeroValore <- position$numeroValore
+	# store the id
+	newPosition$id <- position$id
 	
 	newPosition$fieldsToPrint <- function(width) {
 		
@@ -122,8 +122,8 @@ copyPosition.accruedInterest <- function(position) {
 	# create the accruedInterest
 	newPosition$accruedInterest <- position$accruedInterest
 	
-	# copy the numeroValore
-	newPosition$numeroValore <- position$numeroValore
+	# copy the id
+	newPosition$id <- position$id
 	
 	newPosition$fieldsToPrint <- function(width) {
 		

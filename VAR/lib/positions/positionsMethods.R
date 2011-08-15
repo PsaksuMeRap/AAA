@@ -279,21 +279,21 @@ checkCheckStringOnPositions <- function(checkString,positions,logFile,refCurrenc
 }
 
 identifyFundsToExplode <- function(fundData,positions) {
-	# fundData: una lista con tre campi: nomeFondo, numeroValore, owner
+	# fundData: una lista con tre campi: nomeFondo, id, owner
 	# una variabile di classe positions
 	
-	# return a vector with the positions matching the numeroValore field
+	# return a vector with the positions matching the id field
 	
 	nbPositions <- length(positions$positions)
 	if (nbPositions==0) return (logical(0))
 	
 	isFundToExplode <- function(position,fundData) {
 		
-		numeroValore <- position$numeroValore
-		if (is.null(numeroValore)) return(FALSE)
-		if (is.na(numeroValore))   return(FALSE)
+		id <- position$id
+		if (is.null(id)) return(FALSE)
+		if (is.na(id))   return(FALSE)
 
-		return(fundData[["numeroValore"]] == numeroValore)
+		return(fundData[["id"]] == id)
 	}
 	
 	result <- sapply(positions$positions,isFundToExplode,fundData)
@@ -307,7 +307,7 @@ identifyCB_Accent_Lux_sicav_FIXED_INCOME_oacc <- function(positions) {
 	if (nbPositions==0) return (logical(0))
 
 	# identify CB-Accent Lux sicav - fixed Income
-	isAccentLuxFixedIncome <- identifyFundsToExplode(list("numeroValore"="2490099"),positions)
+	isAccentLuxFixedIncome <- identifyFundsToExplode(list("id"=825),positions)
 	
 	# identify accrued interest
 	isAccruedInterest <- function(position) {is.element("accruedInterest",class(position))}

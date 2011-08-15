@@ -19,37 +19,32 @@ test.should_createPortfolio <- function() {
 
 test.should_addPositionToPortfolio <- function() {
 	source("./lib/portfolio/portfolio.R")
+	source("./unitTests/utilities/createInstrumentsForTests.R")
 	
-    p <- create_position()
-	p$create(name="pippo",
-			currency="CHF",
-			amount=0.1
-	)	
+	positions.l <- create_equityTestPositions()
+	
+    p <- positions.l[["equityCHF2"]]
+	
 	
 	portfolio <- create_portfolio()
 	portfolio$add(p)
-    
-	checkEquals(portfolio$positions$positions[[1]]$name,"pippo")
+	
+	checkEquals(portfolio$positions$positions[[1]]$name,"Nestle Na")
+	checkEquals(portfolio$positions$positions[[1]]$money$currency,"CHF")
+	checkEquals(portfolio$positions$positions[[1]]$money$amount,13.0)
+	checkEquals(portfolio$positions$positions[[1]]$id,697)
 }
 
 test.should_addPositionsToPortfolio <- function() {
 	source("./lib/portfolio/portfolio.R")
+	source("./unitTests/utilities/createInstrumentsForTests.R")
 	
-	p1 <- create_position()
-	p1$create(name="SUNCOR ENERGY  INC. CO",
-			currency="USD",
-			amount=243250 #,origin=list(ID_AAA=1984)
-	)	
-	p2 <- create_position()
-	p2$create(name="Philips",
-			currency="EUR",
-			amount=22065.28 #,origin=list(ID_AAA=766)
-	)
-	p3 <- create_position()
-	p3$create(name="E.ON",
-			currency="EUR",
-			amount=25356.00 #,origin=list(ID_AAA=445)
-	)
+	positions.l <- c(create_equityTestPositions(),
+			create_Conto_correnteTestPositions())
+	
+	p1 <- positions.l[["equityUSD1"]]
+	p2 <- positions.l[["equityEUR1"]]
+	p3 <- positions.l[["Conto_correnteEUR1"]]
 	
 	# crea le posizioni
 	positions <- create_positions()
@@ -58,8 +53,7 @@ test.should_addPositionsToPortfolio <- function() {
 	portfolio <- create_portfolio()
 	portfolio$add(positions)
 	
-	checkEquals(portfolio$positions$positions[[2]]$name,"Philips")
-
+	checkEquals(portfolio$positions$positions[[2]]$name,"DT Telekom N")
 	checkIdentical(portfolio$positions$positions,positions$positions)
 }
 
@@ -94,25 +88,15 @@ test.shouldParsePortfolio <- function() {
 
 test.should_returnValueOfPortfolio <- function() {
 	source("./lib/portfolio/portfolio.R")
+	source("./unitTests/utilities/createInstrumentsForTests.R")
 	
-	p1 <- create_position()
-	p1$create(name="SUNCOR ENERGY  INC. CO",
-			currency="USD",
-			amount=100#,
-			#origin=list(ID_AAA=1984)
-	)	
-	p2 <- create_position()
-	p2$create(name="Philips",
-			currency="EUR",
-			amount=10.50#,
-			#origin=list(ID_AAA=766)
-	)
-	p3 <- create_position()
-	p3$create(name="E.ON",
-			currency="EUR",
-			amount=200#,
-			#origin=list(ID_AAA=445)
-	)
+	positions.l <- c(create_equityTestPositions(),
+			create_Conto_correnteTestPositions())
+	
+	p1 <- positions.l[["equityUSD1"]]
+	p2 <- positions.l[["equityEUR1"]]
+	p3 <- positions.l[["Conto_correnteEUR1"]]
+	
 	
 	# crea le posizioni
 	positions <- create_positions()
@@ -130,37 +114,27 @@ test.should_returnValueOfPortfolio <- function() {
 	# exchange rate EUR-CHF: 1.33853808
 	
 	# check 1
-	amount <- 100*0.9627+10.50+200*1.33853808
+	amount <- 124.0*0.9627+98+10*1.33853808
 	checkEquals(portfolio$value("CHF"),toMoney(amount,"CHF"))
 
 	# check 2
-	amount <- 100+10.50/0.9627+200*1.33853808/0.9627
+	amount <- 124.0+98/0.9627+10*1.33853808/0.9627
 	checkEquals(portfolio$value("USD"),toMoney(amount,"USD"))
 	
+	# ripristina la situazione iniziale
 	repositories$exchangeRates <- repository
 }
 
 test.should_addPortfolio <- function() {
 	source("./lib/portfolio/portfolio.R")
+	source("./unitTests/utilities/createInstrumentsForTests.R")
 	
-	p1 <- create_position()
-	p1$create(name="SUNCOR ENERGY  INC. CO",
-			currency="USD",
-			amount=243250#,
-			#origin=list(ID_AAA=1984)
-	)	
-	p2 <- create_position()
-	p2$create(name="Philips",
-			currency="EUR",
-			amount=22065.28#,
-			#origin=list(ID_AAA=766)
-	)
-	p3 <- create_position()
-	p3$create(name="E.ON",
-			currency="EUR",
-			amount=25356.00#,
-			#origin=list(ID_AAA=445)
-	)
+	positions.l <- c(create_equityTestPositions(),
+			create_Conto_correnteTestPositions())
+	
+	p1 <- positions.l[["equityUSD1"]]
+	p2 <- positions.l[["equityEUR1"]]
+	p3 <- positions.l[["Conto_correnteEUR1"]]
 	
 	# crea le posizioni
 	positions1 <- create_positions()
@@ -185,5 +159,4 @@ test.should_addPortfolio <- function() {
 	portfolio1$addPortfolio(portfolio2)
 	
 	checkIdentical(portfolio1$positions$positions,positionsCheck$positions)
-	
 }

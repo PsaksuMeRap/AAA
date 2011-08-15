@@ -20,14 +20,14 @@ extendPosition.position <- function(position,...) {
 extendPosition.Fondi_obbligazionari <- function(position,...) {
 	origin <- list(...)[[1]]
 	
-	position$numeroValore <- origin[["NumeroValore"]]
+	position$id <- origin[["ID_AAA"]]
 	
 }
 
 extendPosition.Fondi_azionari <- function(position,...) {
 	origin <- list(...)[[1]]
 	
-	position$numeroValore <- origin[["NumeroValore"]]
+	position$id <- origin[["ID_AAA"]]
 	
 }
 
@@ -80,12 +80,7 @@ extendPosition.equity <- function(position,...) {
 	id <- as.numeric(id)
 	position$id <- id
 	
-	position$ticker <- unique(repositories$equities$tickerFromId(id))	
-	
-	# store the numeroValore
-	numeroValore <- origin[["NumeroValore"]]
-	if (is.null(numeroValore)) stop(paste("Call to extendPosition.equity for",position$name,"without numeroValore argument"))
-	position$numeroValore <- numeroValore
+	position$ticker <- unique(repositories$equities$tickerFromId(id)) 
 	
 	
 	position$fieldsToPrint <- function(width) {
@@ -167,8 +162,8 @@ extendPosition.accruedInterest <- function(position,...) {
 	#assign("accruedInterest",create_accruedInterest(money,paymentDate),envir=position,inherits=FALSE)
 	position$accruedInterest <- create_accruedInterest(money,paymentDate)
 	
-	# create the NumeroValore
-	position$numeroValore <- origin[["NumeroValore"]]
+	# create the id field
+	position$id <- origin[["ID_AAA"]]
 	
 	position$fieldsToPrint <- function(width) {
 		

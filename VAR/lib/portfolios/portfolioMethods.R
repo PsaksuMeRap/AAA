@@ -6,7 +6,7 @@
 
 
 explodePortfolioByFund <- function(fundData,fundPortfolios,portfolio) {
-	# fundData: una lista contenente i tre campi $nomeFondo, $numeroValore e $owner,
+	# fundData: una lista contenente i tre campi $nomeFondo, $id e $owner,
 	#           Esempio: "FIXED INCOME", "2490099", "pippo76"
 	# fundPortfolios: una lista con i portafogli dei fondi
 	# portfolio: il portafoglio le cui posizioni sono da esplodere
