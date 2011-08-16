@@ -48,7 +48,7 @@ copyPosition.Fondi_misti <- function(position) {
 
 
 copyPosition.FX_Forward <- function(position) {
-	newPosition <- copyPosition.position(postition)
+	newPosition <- copyPosition.position(position)
 
 	newPosition$expiry <- position$expiry
 	return(newPosition)

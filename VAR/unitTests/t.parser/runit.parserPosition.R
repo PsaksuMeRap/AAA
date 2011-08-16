@@ -88,7 +88,7 @@ test.shouldParseFondo_obbligazionario <- function() {
 	origin$Nome <- "20201231 - 0% CB-Accent Lux Sicav - Fixed Income EUR 31-12-20"
 	origin$ValoreMercatoMonetaCHF <- 306595.4
 	origin$ID_AAA <- 825
-	origin$ID_strumento <- 2
+	origin$ID_strumento <- 3
 	
 	
 	fondo <- parser$parse(origin)

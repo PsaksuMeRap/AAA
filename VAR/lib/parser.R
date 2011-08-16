@@ -122,13 +122,13 @@ create_parserPosition <- function() {
 		)
 		rm(moneyCHF,moneyLocalCurrency)
 		
-		# consider the CB-Accent Lux Sicav - Fixed Income as a special case
-		if (origin[["ID_strumento"]]==2 & origin[["ID_AAA"]]==825) {
-			class(position) <- c("Fondi_obbligazionari",class(position))
-		} else {
-			instrument <- parser$identifyInstrument(origin)
-			class(position) <- c(instrument,class(position))
-		}
+		## consider the CB-Accent Lux Sicav - Fixed Income as a special case
+		#if (origin[["ID_strumento"]]==2 & origin[["ID_AAA"]]==825) {
+	    #	class(position) <- c("Fondi_obbligazionari",class(position))
+		#} else {
+	    instrument <- parser$identifyInstrument(origin)
+		class(position) <- c(instrument,class(position))
+		#}
 		
 		if (origin[["Strumento"]]=="Oacc") {
 			class(position) <- c("accruedInterest",class(position))
