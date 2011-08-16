@@ -906,16 +906,20 @@ test.shouldIdentifyFundsToExplode <- function() {
 	origin2 <- list("pippo16","Oacc","EUR",0,"2490099",
 			"20201231 - 0% CB-Accent Lux Sicav - Fixed Income EUR 31-12-20 Pro-rata",
 			NA,NA,0,0,NA,"D","Obbligazioni e simili          ",0,0,0,825,
-			2,NA,NA,NA,NA)
+			3,NA,NA,NA,NA)
 	names(origin2) <- nomi
 	
 	origin3 <- list("pippo16","O      ","EUR",11000,"2490099",
 			"20201231 - 0% CB-Accent Lux Sicav - Fixed Income EUR 31-12-20",
 			10126.7272727273,11487,1263570,1263570,0.134325008528287,"D ",
 			"Obbligazioni e simili          ",1686274.5866043,1263570,
-			1764070.077,825,2,NA,NA,NA,NA)
+			1764070.077,825,3,NA,NA,NA,NA)
 	names(origin3) <- nomi
 	
+	origin4 <- list("pippo51","A","CHF",100,"11995588CH",
+			"CB-Accent Global Economy",100,92.63,9263,8935.55,-0.07,"E",
+			"Azioni e simili",9263,8935.55,12826.09,2256,14,NA,NA,NA,NA)
+	names(origin4) <- nomi
 	
 	# initialize the different repositories
 	allocateTestRepositories("equities")
@@ -936,29 +940,39 @@ test.shouldIdentifyFundsToExplode <- function() {
 	parser <- create_parserPosition()
 	position3 <- parser$parse(origin3)
 	
+	# create position 4
+	parser <- create_parserPosition()
+	position4 <- parser$parse(origin4)
+	
 	# create positions
 	positions <- create_positions()
 	positions$add(position1)
 	positions$add(position2)
 	positions$add(position3)
+	positions$add(position4)
 	
 	fundsDb <- create_fundsDB()
 	
 	# identify GLOBAL EQUITY
 	fundData <- as.list(fundsDb[1,,drop=FALSE])
 	result <- identifyFundsToExplode(fundData,positions)
-	checkEquals(result,c(TRUE,FALSE,FALSE))
+	checkEquals(result,c(TRUE,FALSE,FALSE,FALSE))
 	
-	# identify FIXED INCOME
+	# identify FIXED INCOME fund (without accruedInterests)
 	fundData <- as.list(fundsDb[3,,drop=FALSE])
 	result <- identifyFundsToExplode(fundData,positions)
-	checkEquals(result,c(FALSE,TRUE,TRUE))
+	checkEquals(result,c(FALSE,FALSE,TRUE,FALSE))
+	
+	# identify GLOBAL ECONOMY
+	fundData <- as.list(fundsDb[2,,drop=FALSE])
+	result <- identifyFundsToExplode(fundData,positions)
+	checkEquals(result,c(FALSE,FALSE,FALSE,TRUE))
 	
 	# identify nothing
 	fundData <- as.list(fundsDb[1,,drop=FALSE])
 	fundData["id"] <- -13949
 	result <- identifyFundsToExplode(fundData,positions)
-	checkEquals(result,c(FALSE,FALSE,FALSE))
+	checkEquals(result,c(FALSE,FALSE,FALSE,FALSE))
 	
 	# reset the repositories in the original state
 	deallocateTestRepositories("exchangeRates")
@@ -969,7 +983,7 @@ test.shouldIdentifyFundsToExplode <- function() {
 }
 
 
-test.shouldIdentifyAccruedInterest <- function() {
+test.shouldIdentifyCB_Fixed_Income_AccruedInterest <- function() {
 	source("./lib/repository.R")
 	source("./unitTests/utilities/allocateTestRepositories.R")
 	
@@ -990,17 +1004,21 @@ test.shouldIdentifyAccruedInterest <- function() {
 	origin2 <- list("pippo16","Oacc","EUR",0,"2490099",
 			"20201231 - 0% CB-Accent Lux Sicav - Fixed Income EUR 31-12-20 Pro-rata",
 			NA,NA,0,0,NA,"D","Obbligazioni e simili          ",0,0,0,825,
-			2,NA,NA,NA,NA)
+			3,NA,NA,NA,NA)
 	names(origin2) <- nomi
 	
 	origin3 <- list("pippo16","O      ","EUR",11000,"2490099",
 			"20201231 - 0% CB-Accent Lux Sicav - Fixed Income EUR 31-12-20",
 			10126.7272727273,11487,1263570,1263570,0.134325008528287,"D ",
 			"Obbligazioni e simili          ",1686274.5866043,1263570,
-			1764070.077,825,2,NA,NA,NA,NA)
+			1764070.077,825,3,NA,NA,NA,NA)
 	names(origin3) <- nomi
 	
-	
+	origin4 <- list("pippo51","A","CHF",100,"11995588CH",
+			"CB-Accent Global Economy",100,92.63,9263,8935.55,-0.07,"E",
+			"Azioni e simili",9263,8935.55,12826.09,2256,14,NA,NA,NA,NA)
+	names(origin4) <- nomi
+		
 	# initialize the different repositories
 	allocateTestRepositories("equities")
 	allocateTestRepositories("instruments")
@@ -1020,17 +1038,22 @@ test.shouldIdentifyAccruedInterest <- function() {
 	parser <- create_parserPosition()
 	position3 <- parser$parse(origin3)
 	
+	# create position 4
+	parser <- create_parserPosition()
+	position4 <- parser$parse(origin4)
+	
 	# create positions
 	positions <- create_positions()
 	positions$add(position1)
 	positions$add(position2)
 	positions$add(position3)
+	positions$add(position4)
 	
 	fundsDb <- create_fundsDB()
 	fundData <- as.list(fundsDb[3,,drop=FALSE])
 	result <- identifyCB_Accent_Lux_sicav_FIXED_INCOME_oacc(positions)
 
-	checkEquals(result,c(FALSE,TRUE,FALSE))
+	checkEquals(result,c(FALSE,TRUE,FALSE,FALSE))
 	
 	# reset the repositories in the original state
 	deallocateTestRepositories("exchangeRates")
@@ -1191,14 +1214,14 @@ test.shouldReweightPositions <- function() {
 	origin2 <- list("pippo16","Oacc","EUR",0,"2490099",
 			"20201231 - 0% CB-Accent Lux Sicav - Fixed Income EUR 31-12-20 Pro-rata",
 			NA,NA,0,0,NA,"D","Obbligazioni e simili          ",0,0,0,825,
-			2,NA,NA,NA,NA)
+			3,NA,NA,NA,NA)
 	names(origin2) <- nomi
 	
 	origin3 <- list("pippo16","O      ","EUR",11000,"2490099",
 			"20201231 - 0% CB-Accent Lux Sicav - Fixed Income EUR 31-12-20",
 			10126.7272727273,11487,1263570,1263570,0.134325008528287,"D ",
 			"Obbligazioni e simili          ",1686274.5866043,1263570,
-			1764070.077,825,2,NA,NA,NA,NA)
+			1764070.077,825,3,NA,NA,NA,NA)
 	names(origin3) <- nomi
 	
 	origin4 <- list("pippo16","A","CHF",30050,"2742261CH",

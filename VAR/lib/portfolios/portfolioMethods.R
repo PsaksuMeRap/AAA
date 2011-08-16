@@ -6,8 +6,8 @@
 
 
 explodePortfolioByFund <- function(fundData,fundPortfolios,portfolio) {
-	# fundData: una lista contenente i tre campi $nomeFondo, $id e $owner,
-	#           Esempio: "FIXED INCOME", "2490099", "pippo76"
+	# fundData: una lista contenente i 4 campi $nomeFondo, $instrumentClass, $id e $owner,
+	#           Esempio: "FIXED INCOME", "Fondi_obbligazionari", "2490099", "pippo76"
 	# fundPortfolios: una lista con i portafogli dei fondi
 	# portfolio: il portafoglio le cui posizioni sono da esplodere
 	
@@ -21,24 +21,25 @@ explodePortfolioByFund <- function(fundData,fundPortfolios,portfolio) {
 	owner <- fundData["owner"]
 	fundPortfolio <- filterLists(fundPortfolios,by="owner",value=owner)[[1]]
 
+	# seleziona le posizione che corrispondono al fondo in fundData. Per
+	# CB_Accent_Lux_sicav_FIXED_INCOME la posizione accruedInterest non è considerata!
 	result <- identifyFundsToExplode(fundData,portfolio$positions)
-	
-	if (fundData[["nomeFondo"]]=="FIXED INCOME") {
-		result_oacc <- identifyCB_Accent_Lux_sicav_FIXED_INCOME_oacc(portfolio$positions)
-		result <- result & !result_oacc
-	} else {
-		result_oacc <- rep(FALSE,length(result))
-	}
 	
 	# se non sono state trovati posizioni termina
 	if (!any(result)) return()
 	
-	# salva e poi elimina la posizione dal portafoglio
-	
+	# salva le posizioni da esplodere
 	positions <- portfolio$positions$extract(result)
+
+	# identifica le posizioni accruedInterest di CB_Accent_Lux_sicav_FIXED_INCOME
+	# ed aggiungile a quelle gia' da eliminare
+	if (fundData[["nomeFondo"]]=="FIXED INCOME") {
+		result_oacc <- identifyCB_Accent_Lux_sicav_FIXED_INCOME_oacc(portfolio$positions)
+		result <- result | result_oacc
+	}
 	
 	# rimuovi le posizioni relative al fondo in questione
-	portfolio$positions$remove(result | result_oacc)
+	portfolio$positions$remove(result)
 	
 	# calcola il peso relativo della posizione del portafoglio sul NAV del fondo
 

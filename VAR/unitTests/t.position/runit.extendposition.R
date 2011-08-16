@@ -33,15 +33,15 @@ test.shouldExtendPositionFondiMisti <- function() {
 	# check the percentage invested
 	extendPosition(position,origin=list(ID_AAA=879))
 
-	checkEquals(position$quotaEquities,70)
-	checkEquals(position$quotaBonds,30)
+	checkEquals(position$quotaEquities,30)
+	checkEquals(position$quotaBonds,70)
 	
 	# use a differente percentage
 	position$name <- "0.5-99.5 UBS Strategy Fund Yield CHF"
 	extendPosition(position)
 	
-	checkEquals(position$quotaEquities,0.5)
-	checkEquals(position$quotaBonds,99.5)
+	checkEquals(position$quotaEquities,99.5)
+	checkEquals(position$quotaBonds,0.5)
 	
 	# restore initial conditions
 	deallocateTestRepositories("instruments")

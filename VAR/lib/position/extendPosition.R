@@ -40,8 +40,8 @@ extendPosition.Fondi_misti <- function(position,...) {
 	if (length(split2)!=2) stop(errorMessage)
 	
 	if (all(grepl("^[0-9]+.*[0-9]*$",split2))) {
-		position$quotaEquities <- as.numeric(split2[1])
-		position$quotaBonds<- as.numeric(split2[2])
+		position$quotaBonds <- as.numeric(split2[1])
+		position$quotaEquities <- as.numeric(split2[2])
 	} else {
 		stop(errorMessage)
 	}
