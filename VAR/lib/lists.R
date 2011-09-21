@@ -30,7 +30,11 @@ filterLists <- function(origin,by,value) {
 	# value: il valore del campo da filtrare
 	# output: the subset of origin with match the value
 	
-	areOkFinal <- rep(FALSE,length(origin))
+	l <- length(origin)
+	
+	if (l==0) return(list())
+	
+	areOkFinal <- rep(FALSE,length(l))
 	
 	filter <- function(x,by,value) {
 		return(x[[by]] == value)

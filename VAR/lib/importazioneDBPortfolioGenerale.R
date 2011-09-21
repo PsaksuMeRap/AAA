@@ -5,7 +5,7 @@
 
 importDBPortfolioGenerale <- function() {
 	
-	connection <- odbcConnect("prezzi_storici_azioni_VAR",utente,password)
+	connection <- odbcConnect("prezzi_storici_azioni_VAR",.utente,.password)
 	query = paste("SELECT B.ID, A.* FROM [Sistema (prova)].dbo.DBPortfolioGenerale A",
 			"INNER JOIN [Sistema (prova)].dbo.Clienti_ID B ON A.Cliente=B.Cliente")
 	
@@ -23,7 +23,7 @@ importDBPortfolioGenerale <- function() {
 
 importDBPortfolioGeneraleByDate <- function(fetchDate) {
 
-	connection <- odbcConnect("prezzi_storici_azioni_VAR",utente,password)
+	connection <- odbcConnect("prezzi_storici_azioni_VAR",.utente,.password)
 	query = paste("SELECT B.ID, A.* FROM [Performance_TW].dbo.Valori_storici_portafogli_disaggregati A ",
 			"INNER JOIN [Sistema (prova)].dbo.Clienti_ID B ON A.Cliente=B.Cliente ",
 			"WHERE A.data='",fetchDate,"'")
@@ -42,7 +42,7 @@ importDBPortfolioGeneraleByDate <- function(fetchDate) {
 
 importDBPortfolioGeneraleDataFrame <- function() {
 	
-	connection <- odbcConnect("prezzi_storici_azioni_VAR",utente,password)
+	connection <- odbcConnect("prezzi_storici_azioni_VAR",.utente,.password)
 	query = paste("SELECT B.ID, A.* FROM [Sistema (prova)].dbo.DBPortfolioGenerale A",
 			"INNER JOIN [Sistema (prova)].dbo.Clienti_ID B ON A.Cliente=B.Cliente")
 	

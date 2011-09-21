@@ -698,6 +698,11 @@ test.shouldApplyLogicalAnd <- function() {
 	posCheck1 <- c(FALSE,TRUE,FALSE)
 	checkEquals(result,posCheck1)
 	
+	# check that returns an empty logical when applying to empty positions
+	positions <- create_positions()
+	result <- filterByCriteriaLogicalAnd(criteria,positions)
+	checkEquals(result,vector(mode="logical"))
+	
 	# reset the repository in the original state
 	repositories$exchangeRates <- repository
 
@@ -756,6 +761,11 @@ test.shouldApplyLogicalOr <- function() {
 	posCheck1 <- c(FALSE,TRUE,TRUE)
 	checkEquals(result,posCheck1)
 	
+	# check that returns an empty logical when applying to empty positions
+	positions <- create_positions()
+	result <- filterByCriteriaLogicalOr(unionOfBlocksOfCriteria,positions)
+	checkEquals(result,vector(mode="logical"))
+
 	# reset the repository in the original state
 	repositories$exchangeRates <- repository
 	

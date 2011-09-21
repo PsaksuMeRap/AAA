@@ -41,6 +41,15 @@ test.shouldTestIsListFieldEqual <- function() {
 
 
 
+test.shouldFilterEmptylist <- function() {
+	source("./lib/lists.R")
+	
+	origin <- list()
+	filtered <- filterLists(origin,by="a",value=1)
+	checkEquals(filtered,list())
+}
+
+
 test.shouldFilterListByCriterium <- function() {
 	source("./lib/lists.R")
 		

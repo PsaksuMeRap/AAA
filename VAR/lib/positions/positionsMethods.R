@@ -166,6 +166,7 @@ filterByCriteriaLogicalAnd <- function(criteria,positions) {
 	# criteria: a list of criteriumSelection
 	# positions: a variable of class positions
 	
+	if (length(positions$positions)==0) return(vector(mode = "logical"))
 	result <- lapply(criteria,positionsSelector,positions)
 	
 	if (length(result)==0) return(result)
@@ -180,6 +181,8 @@ filterByCriteriaLogicalAnd <- function(criteria,positions) {
 filterByCriteriaLogicalOr <- function(unionOfBlocksOfCriteria,positions) {
 	# criteria: a list of criteriumSelection
 	# positions: a variable of class positions
+	
+	if (length(positions$positions)==0) return(vector(mode = "logical"))
 	
 	result <- lapply(unionOfBlocksOfCriteria,filterByCriteriaLogicalAnd,positions)
 	
@@ -204,7 +207,7 @@ extractPositionsFromSelectionString <- function(selectionString,positions) {
 	
 	# crea la lista delle posizioni
 	positionsFiltered <- create_positions()
-	lapply(positions$positions[result],positionsFiltered$addPosition)
+	if (length(positions$positions)>0) lapply(positions$positions[result],positionsFiltered$addPosition)
 	return(positionsFiltered)
 }
 
