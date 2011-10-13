@@ -33,13 +33,15 @@ test.shouldExtendPositionFondiMisti <- function() {
 	# check the percentage invested
 	extendPosition(position,origin=list(ID_AAA=879))
 
+	checkEquals(position$id,879)
 	checkEquals(position$quotaEquities,30)
 	checkEquals(position$quotaBonds,70)
 	
 	# use a differente percentage
 	position$name <- "0.5-99.5 UBS Strategy Fund Yield CHF"
-	extendPosition(position)
+	extendPosition(position,origin=list(ID_AAA=879))
 	
+	checkEquals(position$id,879)
 	checkEquals(position$quotaEquities,99.5)
 	checkEquals(position$quotaBonds,0.5)
 	
@@ -167,6 +169,7 @@ test.shouldExtendPositionBond <- function() {
 	position <- parser$parse(record)	
 	
 	checkEquals(class(position),c("bond","position"))
+	checkEquals(position$id,500)
 	checkEquals(position$name,"20110615 - 4.375% Carrefour 15-06-11")
 	checkEquals(position$getMaturity(),"2011-06-15")
 
@@ -193,6 +196,7 @@ test.shouldFailToExtendPositionBond <- function() {
 	
 	parser <- create_parserPosition()
 	position <- parser$parse(record)
+	checkEquals(position$id,500)
 	checkException(position$getMaturity())	
 	
 	
@@ -220,17 +224,9 @@ test.shouldExtendPositionStructuredProductFixedIncome <- function() {
 	parser <- create_parserPosition()
 	position <- parser$parse(record)
 	
-#	name <- position$name
-	# check if it is a short term fixed income position
+	extendPosition(position,origin=record)
 	
-#	if (grepl("<3Y",x=name)) position$underlyingHorizon = "<3Y"
-#	if (grepl(">3Y",x=name)) position$underlyingHorizon = ">3Y"
-#	year <- substr(name,1,4)
-#	month <- substr(name,5,6)
-#	day <- substr(name,7,8)
-#	position$expiryDate = paste(year,month,day,sep="-")
-	extendPosition(position)
-	
+	checkEquals(position$id,98)
 	checkEquals(class(position),c("Strutturati_FI","position"))
 	checkEquals(position$name,"20130521 - <3Y - Floored Floares with Cap 1.75%-4.625% p.a. On CS")
 	checkEquals(position$underlyingHorizon,"<3Y")

@@ -70,3 +70,4 @@ defaultDate <- function() {
 }
 
 getFundNav()
+

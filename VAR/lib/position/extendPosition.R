@@ -32,6 +32,9 @@ extendPosition.Fondi_azionari <- function(position,...) {
 }
 
 extendPosition.Fondi_misti <- function(position,...) {
+	origin <- list(...)[[1]]
+	
+	position$id <- origin[["ID_AAA"]]
 	
 	split1 <- strsplit(position$name," ")
 	split2 <- unlist(strsplit(split1[[1]][1],"-"))
@@ -89,7 +92,7 @@ extendPosition.equity <- function(position,...) {
 		
 		fields <- position$fieldsToPrintDefault(width)
 		fields$ticker <- position$ticker
-		fields$ID_AAA <- position$ID_AAA
+		fields$id <- position$ID_AAA
 		return(fields)
 	}
 
@@ -97,6 +100,10 @@ extendPosition.equity <- function(position,...) {
 }
 
 extendPosition.Strutturati_FI <- function(position,...) {
+	origin <- list(...)[[1]]
+	
+	position$id <- origin[["ID_AAA"]]
+	
 	name <- position$name
 	
 	# check if it is a short term fixed income position
@@ -113,6 +120,9 @@ extendPosition.Strutturati_FI <- function(position,...) {
 }
 
 extendPosition.bond <- function(position,...) {
+	origin <- list(...)[[1]]
+	
+	position$id <- origin[["ID_AAA"]]
 	
 	position$getMaturity <- function() {
 		# extract the maturity
