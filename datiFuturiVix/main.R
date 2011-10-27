@@ -9,7 +9,8 @@ options(help_type="html")
 
 library("RUnit")
 library("fTrading")
-home <- "/home/claudio/eclipse/AAA/datiFuturiVix/"
+# home <- "/home/claudio/eclipse/AAA/datiFuturiVix/"
+
 setwd(home)
 
 stringsAsFactors = FALSE
@@ -17,17 +18,16 @@ stringsAsFactors = FALSE
 source("./lib/library.R")
 
 
-importerVix <- create_importer(importFrom="./datiVix.csv")
+importerVix <- create_importer(importFrom="./datiVix1.csv")
 repository <- importerVix$createRepository()
 rm(importerVix)
 
-importerVixFutures <- create_importerVixFutures(file="./serie.csv",settlementFile="./scadenze.csv")
+importerVixFutures <- create_importerVixFutures(file="./serie1.csv",settlementFile="./scadenze.csv")
 contracts <- importerVixFutures$extractAllContracts()
 rm(importerVixFutures)
 
 
 # determina le lastTradeDates
-
 settlementDates <- extractFromList(contracts,fieldName="settlementDate")
 orderSettlementDates <- order(as.Date(settlementDates))
 contracts <- contracts[orderSettlementDates]
@@ -69,11 +69,25 @@ for (i in 1:(length(contracts)-1)) {
 }
 write.csv(result1,file="./unitTests/data/futuri_price_next_contract_lastTradeDate.csv")
 
+# estrai tutti i prezzi dei futuri del mese successivo alla settlementDate
+result1 <- data.frame(priceNextContract=vector(mode="numeric",
+				length=length(contracts)-1))
+rownames(result1) <- settlementDates[-length(contracts)]
+for (i in 1:(length(contracts)-1)) {
+	YM <- substr(settlementDates[i],1,7)
+	result1[i,1] <- extractPriceOfNextContract(desiredContractYM=YM,
+			contracts, desiredDate=settlementDates[i])
+}
+write.csv(result1,file="./unitTests/data/futuri_price_next_contract_settlementDates.csv")
+
 
 vix <- repository[[1]]$data[lastTradeDates,1,drop=FALSE] 
 rownames(vix) <- lastTradeDates
 
 
+# estrai il vix alle settlement dates
+vix <- repository[[1]]$data[settlementDates,1,drop=FALSE] 
+rownames(vix) <- settlementDates
 write.csv(vix,file="./unitTests/data/futuri_vix_at_lastTradeDate.csv")
 
 

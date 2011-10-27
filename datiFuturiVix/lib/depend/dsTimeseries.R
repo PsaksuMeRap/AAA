@@ -17,4 +17,4 @@
 #
 #}
 
-source("/home/claudio/eclipse/AAA/datastream/lib/dsTimeseries.R")
+source("../datastream/lib/dsTimeseries.R")

@@ -3,4 +3,4 @@
 # Author: claudio
 ###############################################################################
 
-source("/home/claudio/eclipse/AAA/datastream/lib/lists.R")
+source("../datastream/lib/lists.R")
