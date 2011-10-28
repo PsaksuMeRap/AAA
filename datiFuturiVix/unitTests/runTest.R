@@ -11,7 +11,9 @@ source("./lib/library.R")
 dirs = c("./unitTests/t.importerVixFutures",
 		 "./unitTests/t.dsCodeParser",
 		 "./unitTests/t.contract",
-		 "./unitTests/t.futureContractMethods")
+		 "./unitTests/t.futureContractMethods",
+		 "./unitTests/t.dataProcedures",
+		 "./unitTests/t.utilities")
 
 testsuite.lists <- defineTestSuite("Test globale", dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
