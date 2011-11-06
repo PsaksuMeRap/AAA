@@ -22,7 +22,7 @@ test.extractPriceAtSettlementDate <- function() {
 	dataType = "open"
 	contract$settlementDate <- "2001-06-15"
 	result <- extractPriceAtSettlementDate(contract,dataType)
-	checkEquals(result,NA)
+	checkEquals(result,NA_real_)
 }
 
 
@@ -43,7 +43,7 @@ test.extractPriceAtLastTradeDate <- function() {
 	
 	contract$lastTradeDate <- "2001-06-15"
 	result <- extractPriceAtLastTradeDate(contract,dataType)
-	checkEquals(result,NA)
+	checkEquals(result,NA_real_)
 }
 
 
@@ -64,7 +64,7 @@ test.extractPriceAtSpecificDate <- function() {
 	
 	date <- "2000-06-15"
 	result <-  extractPriceAtSpecificDate (desiredContract,date,dataType)
-	checkEquals(result,NA)
+	checkEquals(result,NA_real_)
 }
 
 

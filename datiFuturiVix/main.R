@@ -10,8 +10,8 @@ options(help_type="html")
 library("RUnit")
 library("fTrading")
 # home <- "/home/claudio/eclipse/AAA/datiFuturiVix/"
-home <- getwd()
-setwd(home)
+# home <- getwd()
+# setwd(home)
 
 stringsAsFactors = FALSE
 
@@ -34,7 +34,9 @@ future_vix_contracts <- future_vix_contracts[orderSettlementDates]
 settlementDates <- settlementDates[orderSettlementDates]
 
 # seleziona i contratti dopo il settembre 2005 e fino all'ultimo contratto scaduto
-toSelect <- (as.Date(settlementDates) >= as.Date("2005-10-19")) & (as.Date(settlementDates) <= as.Date("2011-10-24"))
+# toSelect <- (as.Date(settlementDates) >= as.Date("2005-10-19")) & (as.Date(settlementDates) <= as.Date("2011-10-24"))
+# seleziona i contratti dopo il settembre 2005
+toSelect <- (as.Date(settlementDates) >= as.Date("2005-10-19"))
 future_vix_contracts <- future_vix_contracts[toSelect]
 
 # estrai tutte le lastTradeDates ed i lastTradePrices
@@ -51,7 +53,7 @@ names(settlementPrices) <- settlementDates
 write.csv(settlementPrices,file="./output/futuri_vix_at_settlementPrices.csv")
 
 
-# estrai tutti i prezzi nbPeriods 1 giorn0 prima del settlement
+# estrai tutti i prezzi nbPeriods 1 giorno prima del settlement
 nbPeriods <- 1
 result1 <- extractPriceAndDatePreviousToSettlement.df(future_vix_contracts,nbPeriods,
 		dateLimit="2011-10-19") 
@@ -102,14 +104,28 @@ vix <- repository[[1]]$data[settlementDates,1,drop=FALSE]
 rownames(vix) <- settlementDates
 write.csv(vix,file="./output/vix_at_settlementDate.csv")
 
+
 # estrai tutte le date disponibili
 desiredDates <- rownames(repository[[1]]$data)
+# allinea le serie rispetto alla lastTradeDate
 tmp <- lapply(desiredDates,aligneFutureContractsAtDate,future_vix_contracts,2,1)
 serieAllineate.df <- data.frame(Date=character(0),Price1=numeric(0),Price2=numeric(0),Switch=logical(0))
 for (i in tmp) serieAllineate.df <- rbind(serieAllineate.df,as.data.frame(i))
+dateNomi <- as.character(serieAllineate.df[[1]])
+rownames(serieAllineate.df) <- dateNomi
+serieAllineate.df[[1]] <- repository[[1]]$data[dateNomi,1]
+colnames(serieAllineate.df)[1] <- "Vix"
+write.csv(serieAllineate.df,file="./output/serieAllineate_ltd.csv")
 
-
-
+# allinea le serie rispetto alla settlementDate
+tmp <- lapply(desiredDates,aligneFutureContractsAtDate,future_vix_contracts,2,1)
+serieAllineate.df <- data.frame(Date=character(0),Price1=numeric(0),Price2=numeric(0),Switch=logical(0))
+for (i in tmp) serieAllineate.df <- rbind(serieAllineate.df,as.data.frame(i))
+dateNomi <- as.character(serieAllineate.df[[1]])
+rownames(serieAllineate.df) <- dateNomi
+serieAllineate.df[[1]] <- repository[[1]]$data[dateNomi,1]
+colnames(serieAllineate.df)[1] <- "Vix"
+write.csv(serieAllineate.df,file="./output/serieAllineate_std.csv")
 
 
 

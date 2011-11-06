@@ -13,7 +13,7 @@ extractPriceAtSettlementDate <- function(contract,dataType="settlement") {
 		return(result)
 	}
 	
-	return(NA)
+	return(NA_real_)
 }
 
 extractPriceAtLastTradeDate <- function(contract,dataType="settlement") {
@@ -25,7 +25,7 @@ extractPriceAtLastTradeDate <- function(contract,dataType="settlement") {
 		return(result)
 	}
 	
-	return(NA)
+	return(NA_real_)
 }
 
 
@@ -38,7 +38,7 @@ extractPriceAtSpecificDate <- function(contract,date,dataType="settlement") {
 		return(result)
 	}
 	
-	return(NA)
+	return(NA_real_)
 }
 
 
