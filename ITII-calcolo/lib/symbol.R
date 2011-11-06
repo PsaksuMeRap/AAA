@@ -35,17 +35,15 @@ sort.symbols <- function(symbols) {
 
 "*.symbol" <- function(a,b) {
 	
-	if (class(b)=="symbol") {
-		if (a$name==b$name) {
-			a$power=a$power+b$power
-			return(create_symbols(a))
-		}	
-		c <- create_symbols(a)
-		c[[2]] <- b
-		return(c)
-	}
+	if (a$name==b$name) {
+		a$power=a$power+b$power
+		return(create_symbols(a))
+	}	
+	c <- create_symbols(a)
+	c[[2]] <- b
+	return(c)
 	
-	stop("Error in function '*': entered symbols are not valid symbols")
+	stop("Error in function '*.symbol': entered symbols are not valid symbols")
 }
 
 "*.symbols" <- function(a,b) {
@@ -68,5 +66,21 @@ sort.symbols <- function(symbols) {
 	
 	if (length(tmp)>0) { a <- c(a,tmp); class(a) <- "symbols" }
 	return(a)
-	stop("Error in function '*': entered symbols are not valid symbols")
+	stop("Error in function '*.symbols': entered symbols are not valid symbols")
+}
+
+"==.symbol" <- function(a,b) {
+	if (a$name != b$name) return(FALSE)
+	if (a$power != b$power) return(FALSE)
+	return(TRUE)
+}
+
+"==.symbols" <- function(a,b) {
+	la <- length(a)
+	lb <- length(b)
+	if (la != lb) return(FALSE)
+	if (la + lb == 0) return(TRUE)
+	
+	result <- mapply(FUN="==",sort(a),sort(b))
+	if (all(result)) return(TRUE) else return(FALSE)
 }

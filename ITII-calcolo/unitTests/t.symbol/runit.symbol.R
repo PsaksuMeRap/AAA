@@ -58,6 +58,8 @@ test.multiply_two_symbol <- function() {
 	checkEquals(c[[1]]$name,"a")
 	checkEquals(c[[1]]$power,6)	
 	
+	# check error
+	checkException(symbol1 * 2)
 }
 
 test.multiply_two_symbols <- function() {
@@ -118,6 +120,62 @@ test.multiply_two_symbols <- function() {
 	checkEquals(c[[2]]$name,"b")
 	checkEquals(c[[2]]$power,4)
 
+	# error
+	checkException(tmp * 2)
+}
+
+test.equality_two_symbol <- function() {
+	
+	# are equals
+	a <- create_symbol("a",4)
+	b <- create_symbol("a",4)
+	checkEquals(a==b,TRUE)
+	
+	# are different names
+	a <- create_symbol("a",4)
+	b <- create_symbol("b",4)
+	checkEquals(a==b,FALSE)
+	
+	# are different powers
+	a <- create_symbol("a",4)
+	b <- create_symbol("a",5)
+	checkEquals(a==b,FALSE)
+}
+
+test.equality_two_symbols <- function() {
+	
+	# compare same symbols 
+	symbol1 <- create_symbol("a",4)
+	symbol2 <- create_symbol("b",2)
+	a <- symbol1 * symbol2
+	b <- symbol1 * symbol2
+		
+	checkEquals(a==b,TRUE)
+	
+	# compare same symbols but in different order 
+	symbol1 <- create_symbol("a",4)
+	symbol2 <- create_symbol("b",2)
+	a <- symbol1 * symbol2
+	b <- symbol2 * symbol1
+	
+	checkEquals(a==b,TRUE)
+	
+	# compare symbols of different length
+	symbol1 <- create_symbol("a",4)
+	symbol2 <- create_symbol("b",2)
+	a <- symbol1 * symbol2
+	b <- create_symbol("d",2) * create_symbol("e",1) * create_symbols(create_symbol("c",1))
+	
+	checkEquals(a==b,FALSE)
+	
+	# compare different symbols of same length
+	symbol1 <- create_symbol("a",4)
+	symbol2 <- create_symbol("b",2)
+	a <- symbol1 * symbol2
+	b <- create_symbol("d",2) * create_symbol("e",1) 
+	
+	checkEquals(a==b,FALSE)
+	
 }
 
 
