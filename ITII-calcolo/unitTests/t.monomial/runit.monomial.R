@@ -107,23 +107,6 @@ test.sum_two_monomials <- function() {
 test.multiply_two_monomial <- function() {
 	
 	
-	"*.monomial" <- function(a,b) {
-		
-		number <- a$number * b$number
-		if (number==0) {
-			monomial <- create_monomial(number=0)
-			return(create_monomials(monomial))
-		}
-		symbols <- a$symbols * b$symbols
-		randoms <- a$randoms * b$randoms
-		
-		c <- create_monomials(create_monomial(number,symbols,randoms))
-		return(c)
-		
-		stop("Error in function '*.monomial': entered arguments are not valid monomial")
-	}
-	
-	
 	# multiply two empty monomial
 	monomial <- create_monomial()
 	
@@ -153,6 +136,83 @@ test.multiply_two_monomial <- function() {
 }
 
 
+test.compact.monomials <- function() {
+	# compact an empty monomial
+	a <- list()
+	class(a) <- "monomials"
+	
+	b <- compact(a)
+	checkEquals(class(b),"monomials")
+	checkEquals(length(b),0)	
+	
+	# compact a monomials of length 1
+	a <- create_monomials()
+	
+	b <- compact(a)
+	checkEquals(class(b),"monomials")
+	checkEquals(length(b),1)	
+	checkEquals(b[[1]]$number,1)
+	
+	# compact three unit monomials
+	monomial <- create_monomial()
+	
+	a <- list(monomial,monomial,monomial)
+	class(a) <- "monomials"
+	
+	b <- compact(a)
+	checkEquals(class(b),"monomials")
+	checkEquals(length(b),1)	
+	checkEquals(b[[1]]$number,3)
+	
+}
+
+test.multiply_two_monomials <- function() {
+	
+	# multiply two unit monomials
+	a <- create_monomials()
+	b <- a * a
+	checkEquals(class(b),"monomials")
+	checkEquals(length(b),1)	
+	checkEquals(b[[1]]$number,1)
+	
+	# multiply two different monomials
+	# create 2*a^2*b^3Z_t^3
+	symbols1 <- create_symbol(name="a",power=2) * create_symbol(name="b",power=3)
+	randomVariables1 <- create_randomVariables(create_randomVariable("Z",0,3))
+	a <- create_monomial(2,symbols1,randomVariables1)
+	# create 2*c^3
+	symbols2 <- create_symbols(create_symbol(name="c",power=3))
+	randomVariables2 <- create_randomVariables()
+	b <- create_monomial(4,symbols2,randomVariables2)
+	
+	# create a*b^3W_t^2
+	symbols3 <- create_symbol(name="a") * create_symbol(name="b",power=3)
+	randomVariables3 <- create_randomVariables(create_randomVariable("W",0,2))
+	c <- create_monomial(1,symbols3,randomVariables3)
+	# create 8*c^4
+	symbols4 <- create_symbols(create_symbol(name="c",power=4))
+	randomVariables4 <- create_randomVariables()
+	d <- create_monomial(8,symbols4,randomVariables4)
+	
+	# create 2*f^0.5
+	symbols5 <- create_symbols(create_symbol(name="f",power=0.5))
+	randomVariables5 <- create_randomVariables()
+	e <- create_monomial(2,symbols5,randomVariables5)
+	
+	a1 <- a + b
+	a2 <- c + d + create_monomials(e)
+	
+	b <- a1 * a2
+	checkEquals(class(b),"monomials")
+	checkEquals(length(b),6)	
+	checkEquals(b[[1]]$number,2)
+	checkEquals(b[[1]]$random,randomVariables1*randomVariables3)
+	xxx <- list(); class(xxx) <- "randomVariables"
+	checkEquals(b[[6]]$random,xxx)
+}
+
+
+
 test.create_monomials <- function() {
 	
 	# create monomials with unity as the only monomial
@@ -170,12 +230,4 @@ test.create_monomials <- function() {
 	
 	checkEquals(class(monomials),"monomials")
 	checkEquals(monomials[[1]],monomial)
-}
-
-test.sum_two_monomials <- function() {
-	DEACTIVATED()
-	# necessito la funzione sort
-	# ... mon1 <- create_monomial(number=1,symbols=NULL,randoms=NULL)
-	
-	
 }
