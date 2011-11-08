@@ -1,4 +1,7 @@
 source("./lib/randomVariable.R")
+source("./lib/randomVariables.R")
 source("./lib/symbol.R")
+source("./lib/symbols.R")
 source("./lib/monomial.R")
+source("./lib/monomials.R")
 source("./lib/depend/lists.R")
