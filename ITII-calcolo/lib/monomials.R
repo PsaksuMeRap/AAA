@@ -10,8 +10,9 @@ create_monomials<- function(monomial=NULL) {
 	monomials <- list()
 	class(monomials) <- "monomials"
 	
-	if (is.null(monomial)) monomial <- create_monomial()
-	monomials[[1]] <- monomial
+	# if (is.null(monomial)) monomial <- create_monomial()
+	if (!is.null(monomial)) monomials[[1]] <- monomial
+	
 	return(monomials)
 }
 
@@ -27,6 +28,7 @@ create_monomials<- function(monomial=NULL) {
 		for (i in 1:length(a)) {
 			if (mon_b$symbol==a[[i]]$symbol & mon_b$randoms==a[[i]]$randoms) {
 				a[[i]]$number=a[[i]]$number+mon_b$number
+				if (a[[i]]$number==0) a[[i]] <- NULL
 				copy <- FALSE
 				break
 			}
@@ -37,7 +39,6 @@ create_monomials<- function(monomial=NULL) {
 	if (length(tmp)>0) { a <- c(a,tmp); class(a) <- "monomials" }
 	return(a)
 	
-	stop("Error in function '*.monomials': entered arguments are not valid monomials")
 }
 
 
@@ -84,3 +85,18 @@ compact.monomials <- function(a) {
 	return(tmp)	
 }
 
+
+toString.monomials <- function(monomials) {
+	result <- sapply(monomials,toString)
+	
+	if (length(result)>1) {
+		sign <- sapply(monomials,function(x){if(x$number>=0) return(" + ") else return(" - ")})
+		first <- result[1]
+		result <- sapply(result,function(x){return(sub('^-',"",x))})
+		result <- paste(sign[-1],result[-1],sep="",collapse="")
+		result = paste(first,result,sep="")
+		return(result)
+	}
+	
+	return("")
+}

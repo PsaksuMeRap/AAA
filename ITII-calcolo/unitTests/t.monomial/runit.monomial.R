@@ -56,10 +56,22 @@ test.sum_two_monomial <- function() {
 	checkEquals(c[[1]],a)
 	checkEquals(c[[2]],b)
 	
+	# sum same monomial but with different sign
+	x <- constructMonomial()
+	c <- x[[2]] + x[[3]]
+	checkEquals(class(c),"monomials")
+	checkEquals(length(c),0)
 }
 
 
 test.sum_two_monomials <- function() {	
+	
+	# sum same monomials but with different sign
+	x <- constructMonomial()
+	c <- create_monomials(x[[2]]) + create_monomials(x[[3]])
+	checkEquals(class(c),"monomials")
+	checkEquals(length(c),0)	
+	
 	
 	# sum three empty monomial
 	monomial <- create_monomial()
@@ -138,15 +150,14 @@ test.multiply_two_monomial <- function() {
 
 test.compact.monomials <- function() {
 	# compact an empty monomial
-	a <- list()
-	class(a) <- "monomials"
+	a <- create_monomials()
 	
 	b <- compact(a)
 	checkEquals(class(b),"monomials")
 	checkEquals(length(b),0)	
 	
 	# compact a monomials of length 1
-	a <- create_monomials()
+	a <- create_monomials(create_monomial())
 	
 	b <- compact(a)
 	checkEquals(class(b),"monomials")
@@ -168,12 +179,23 @@ test.compact.monomials <- function() {
 
 test.multiply_two_monomials <- function() {
 	
-	# multiply two unit monomials
+	# multiply two empty monomials
 	a <- create_monomials()
 	b <- a * a
 	checkEquals(class(b),"monomials")
-	checkEquals(length(b),1)	
-	checkEquals(b[[1]]$number,1)
+	checkEquals(length(b),0)
+	
+	# multiply one empty monomials with one non empty
+	a <- create_monomials()
+	symbols1 <- create_symbol(name="a",power=2) * create_symbol(name="b",power=3)
+	randomVariables1 <- create_randomVariables(create_randomVariable("Z",0,3))
+	b <- create_monomial(2,symbols1,randomVariables1)
+	c <- a * (b * b)
+	checkEquals(class(c),"monomials")
+	checkEquals(length(c),0)
+	c <- (b * b) * a
+	checkEquals(class(c),"monomials")
+	checkEquals(length(c),0)
 	
 	# multiply two different monomials
 	# create 2*a^2*b^3Z_t^3
@@ -219,7 +241,7 @@ test.create_monomials <- function() {
 	monomials <- create_monomials()
 
 	checkEquals(class(monomials),"monomials")
-	checkEquals(monomials[[1]],create_monomial())
+	checkEquals(length(monomials),0)
 	
 	# create monomials with  2*a^2*b^3Z_t^3
 	symbols <- create_symbol(name="a",power=2) * create_symbol(name="b",power=3)
@@ -252,23 +274,9 @@ test.toString.monomial <- function() {
 
 test.toString.monomials <- function() {
 	
-	toString.monomials <- function(monomials) {
-		result <- sapply(monomials,toString)
-		
-		if (length(result)>1) {
-			sign <- sapply(monomials,function(x){if(x$number>=0) return(" + ") else return(" - ")})
-			first <- result[1]
-			result <- sapply(result,function(x){return(sub('^-',"",x))})
-			result <- paste(sign[-1],result[-1],sep="",collapse="")
-			result = paste(first,result,sep="")
-		}
-		
-		return(result)
-	}
-	
-	# empty monomial (only "1")
+	# empty monomials 
 	a <- create_monomials()
-	checkEquals(toString(a),"1")
+	checkEquals(toString(a),"")
 	
 	# create 2*a^2*b^3*Z_t^3 + 4*c^3
 	monomial1 <- constructMonomial()[[1]]

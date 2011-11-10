@@ -30,13 +30,11 @@ create_monomial <- function(number=1,symbols=NULL,randoms=NULL) {
 "+.monomial" <- function(a,b) {
 	if (a$symbols==b$symbols & a$randoms==b$randoms) {
 		a$number=a$number+b$number
-		return(create_monomials(a))
+		if (a$number==0) return(create_monomials()) else return(create_monomials(a))
 	}	
 	c <- create_monomials(a)
 	c[[2]] <- b
 	return(c)
-	
-	stop("Error in function '*.monomial': entered arguments are not valid monomial")
 }
 
 
