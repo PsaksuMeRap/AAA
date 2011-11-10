@@ -10,3 +10,5 @@ library("RUnit")
 stringsAsFactors = FALSE
 
 source("./lib/library.R")
+source("./unitTests/testUtilities.R")
+

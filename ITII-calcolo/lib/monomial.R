@@ -58,3 +58,9 @@ create_monomial <- function(number=1,symbols=NULL,randoms=NULL) {
 }
 
 
+toString.monomial <- function(monomial) {
+	if (length(monomial$symbols)==0) stringSymbols <- "" else stringSymbols <- paste("*",toString(monomial$symbols),sep="")
+	if (length(monomial$randoms)==0) stringRandoms <- "" else stringRandoms <- paste("*",toString(monomial$randoms),sep="")
+	result = paste(monomial$number,stringSymbols,stringRandoms,sep="")
+	return(result)
+}

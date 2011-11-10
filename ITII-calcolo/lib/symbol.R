@@ -3,7 +3,7 @@
 # Author: ortellic
 ###############################################################################
 
-create_symbol <- function(name="",power=1) {
+create_symbol <- function(name="a",power=1) {
 	symbol <- list()
 	class(symbol) <- "symbol"
 	
@@ -31,3 +31,8 @@ create_symbol <- function(name="",power=1) {
 	return(TRUE)
 }
 
+toString <- function(x) UseMethod("toString",x)
+
+toString.symbol <- function(symbol) {
+	a = paste(symbol$name,"^",symbol$power,sep="")
+}

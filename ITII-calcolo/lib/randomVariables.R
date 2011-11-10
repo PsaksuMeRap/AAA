@@ -65,3 +65,11 @@ sort.randomVariables <- function(randomVariables) {
 	stop("Error in function '*.randomVariables': entered randomVariables are not valid randomVariables")
 }
 
+
+
+toString.randomVariables <- function(x) {
+	
+	result <- sapply(x,toString)
+	result <- paste(result,collapse="*")
+	return(result)
+}

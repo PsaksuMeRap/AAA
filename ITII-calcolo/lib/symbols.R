@@ -58,3 +58,11 @@ sort.symbols <- function(symbols) {
 	result <- mapply(FUN="==",sort(a),sort(b))
 	if (all(result)) return(TRUE) else return(FALSE)
 }
+
+
+toString.symbols <- function(symbols){
+		
+	result <- sapply(symbols,toString)
+	result <- paste(result,collapse="*")
+	return(result)
+}

@@ -231,3 +231,63 @@ test.create_monomials <- function() {
 	checkEquals(class(monomials),"monomials")
 	checkEquals(monomials[[1]],monomial)
 }
+
+
+
+test.toString.monomial <- function() {
+	
+	# create 2*a^2*b^3*Z_t^3
+	monomial <- constructMonomial()[[1]]
+	checkEquals(toString(monomial),"2*a^2*b^3*Z_{t}^3")
+	
+	# create monomial with empty symbols
+	monomial <- create_monomial(randoms=create_randomVariables(create_randomVariable(lag=2,power=3)))
+	checkEquals(toString(monomial),"1*epsilon_{t-2}^3")
+	
+	# create empty monomial
+	monomial <- create_monomial()
+	checkEquals(toString(monomial),"1")
+}
+
+
+test.toString.monomials <- function() {
+	
+	toString.monomials <- function(monomials) {
+		result <- sapply(monomials,toString)
+		
+		if (length(result)>1) {
+			sign <- sapply(monomials,function(x){if(x$number>=0) return(" + ") else return(" - ")})
+			first <- result[1]
+			result <- sapply(result,function(x){return(sub('^-',"",x))})
+			result <- paste(sign[-1],result[-1],sep="",collapse="")
+			result = paste(first,result,sep="")
+		}
+		
+		return(result)
+	}
+	
+	# empty monomial (only "1")
+	a <- create_monomials()
+	checkEquals(toString(a),"1")
+	
+	# create 2*a^2*b^3*Z_t^3 + 4*c^3
+	monomial1 <- constructMonomial()[[1]]
+	monomial2 <- constructMonomial()[[2]]
+	a <- monomial1 + monomial2
+	checkEquals(toString(a),"2*a^2*b^3*Z_{t}^3 + 4*c^3")
+	
+	# create 2*a^2*b^3*Z_t^3 - 4*c^3
+	monomial1 <- constructMonomial()[[1]]
+	monomial2 <- constructMonomial()[[3]]
+	a <- monomial1 + monomial2
+	checkEquals(toString(a),"2*a^2*b^3*Z_{t}^3 - 4*c^3")
+	
+	# create 2*a^2*b^3*Z_t^3 - 4*c^3 +  4*c^3*epsilon_t^1
+	monomial1 <- constructMonomial()[[1]]
+	monomial2 <- constructMonomial()[[3]]
+	monomial3 <- constructMonomial()[[2]]
+	monomial3$randoms <- create_randomVariables(create_randomVariable())
+	
+	a <- monomial1 + monomial2 + create_monomials(monomial3)
+	checkEquals(toString(a),"2*a^2*b^3*Z_{t}^3 - 4*c^3 + 4*c^3*epsilon_{t}^1")	
+}

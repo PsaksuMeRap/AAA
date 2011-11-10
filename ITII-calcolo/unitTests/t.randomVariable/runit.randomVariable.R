@@ -185,3 +185,39 @@ test.equality_two_randomVariables <- function() {
 	checkEquals(a==b,FALSE)
 	
 }
+
+
+test.toString.randomVariable <- function() {
+	
+	
+	a <- create_randomVariable()
+	
+	checkEquals(toString(a),"epsilon_{t}^1")
+	
+	# con lag>0
+	a <- create_randomVariable(lag=3,power=4)
+	
+	checkEquals(toString(a),"epsilon_{t-3}^4")
+	
+	# con lag<0
+	a <- create_randomVariable(lag=-3,power=4)
+	
+	checkEquals(toString(a),"epsilon_{t+3}^4")
+	
+}
+
+
+test.toString.randomVariables <- function() {
+	
+	a <- create_randomVariable(lag=1,power=1)
+	b <- create_randomVariable("Z",1,2)
+	c <- a * b
+	
+	result <- toString(c)
+	checkEquals(toString(c),"epsilon_{t-1}^1*Z_{t-1}^2")
+	
+	# con empty randomVariables
+	a <- create_randomVariables()
+	checkEquals(toString(a),"")
+	
+}

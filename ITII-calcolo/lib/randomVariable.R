@@ -34,3 +34,13 @@ create_randomVariable <- function(name="epsilon",lag=0,power=1) {
 	
 	stop("Error in function '*.randomVariable': entered randomVariable are not valid randomVariables")
 }
+
+
+toString.randomVariable <- function(x) {
+	
+	if (x$lag==0) str <- "" else if (x$lag>0) str <- paste("-",x$lag,sep="") else str <- paste("+",abs(x$lag),sep="")
+	result <- paste(x$name,"_{t",str,"}^",x$power,sep="")
+	
+	return(result)
+}
+

@@ -10,7 +10,7 @@ test.create_symbol <- function() {
 	
 	symbol <- create_symbol()
 			
-	checkEquals(symbol$name,"")
+	checkEquals(symbol$name,"a")
 	checkEquals(symbol$power,1)
 	checkEquals(class(symbol),"symbol")
 	
@@ -215,3 +215,27 @@ test.sort_symbols <- function() {
 	checkEquals(a[[3]]$power,1)
 	
 }
+
+test.toString.symbol <- function() {
+	a5 <- create_symbol("a",5)
+	checkEquals(toString(a5),"a^5")
+	
+	# empty symbol
+	a <- create_symbol()
+	checkEquals(toString(a),"a^1")
+}
+
+test.toString.symbol <- function() {
+	
+	a5 <- create_symbol("a",5)
+	b4 <- create_symbol("b",4)
+	product <- a5 * b4	
+	
+	checkEquals(toString(product),"a^5*b^4")
+	
+	# a empty symbols
+	a <- create_symbols()
+	checkEquals(toString(a),"")
+}
+
+
