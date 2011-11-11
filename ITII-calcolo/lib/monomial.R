@@ -87,8 +87,8 @@ toString.monomial <- function(monomial) {
 sort.monomial <- function(x) {
 	# x: a monomial whose symbols and randoms must be ordered
 	result <- x
-	if (length(x$symbols!=0)) result$symbols <- order(x$symbols)
-	if (length(x$randoms!=0)) result$randoms <- order(x$randoms)
+	if (length(x$symbols)!=0) result$symbols <- sort(x$symbols)
+	if (length(x$randoms)!=0) result$randoms <- sort(x$randoms)
 	return(result)
 }
 

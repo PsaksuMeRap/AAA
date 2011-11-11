@@ -102,3 +102,11 @@ toString.monomials <- function(monomials) {
 	
 	return(toString(monomials[[1]]))
 }
+
+
+sort.monomials <- function(x) {
+	# x: a list of class monomials. The components are monomial whose symbols and randoms must be ordered
+	result <- lapply(x,sort)
+	class(result) <- "monomials"
+	return(result)
+}

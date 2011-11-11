@@ -34,7 +34,7 @@ test.explode.randomVariable <- function() {
 	# replace with a monomials containing 1 only
 	with <- create_monomials(create_monomial())
 	originalWhere <- where
-	where$randoms[[3]] < -NULL
+	where$randoms[[3]] <- NULL
 	checkEquals(explode(what,originalWhere,with),create_monomials(where))
 	
 }
@@ -76,3 +76,21 @@ test.explode.symbol <- function() {
 	
 }
 
+test.isFirstRandomAnOddPowers.monomial <- function() {
+	
+	# Test numero 1
+	x <- create_monomial()
+	result <- isFirstRandomAnOddPowers(x,"Pippo")
+	checkEquals(result,FALSE)
+	
+	# Test numero 2
+	# x1="2*a^2*b^3*Z_{t}^3", x2="4*c^3" and x3=3*Z_{t-1}^2
+	x <- constructListOfMonomial()
+	
+	result <- isFirstRandomAnOddPowers.monomial(x[[1]],"Z")
+	checkEquals(result,TRUE)
+	
+	# terminare i test
+	checkEquals(FALSE,TRUE)
+	
+}

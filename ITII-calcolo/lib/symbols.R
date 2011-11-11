@@ -14,7 +14,6 @@ create_symbols <- function(symbol) {
 }
 
 sort.symbols <- function(symbols) {
-	
 	if (length(symbols)==0) return(symbols)
 	
 	names <- extractFromList(symbols,"name")

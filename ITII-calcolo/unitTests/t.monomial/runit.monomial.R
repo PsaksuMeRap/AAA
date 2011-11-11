@@ -347,24 +347,32 @@ test.sort.monomial <- function() {
 	randoms <- create_randomVariable("a",1,1) * create_randomVariable("b",1,2)
 	b <- create_monomial(3,symbols=symbols,randoms=randoms)
 	checkEquals(sort(a),b)
-	
 }
 
 
 test.sort.monomials <- function() {
 	
-	sort.monomials <- function(x) {
-		# x: a list of class monomials. The components are monomial whose symbols and randoms must be ordered
-		result <- lapply(x,sort)
-		class(result) <- "monomials"
-		return(result)
-	}
-	
 	# check with empty monomials
 	a <- create_monomials()
 	checkEquals(sort(a),a)
 	
-	# check with monomials
+	# check with identity monomials
 	a <- create_monomials(create_monomial())
 	checkEquals(sort(a),a)
+	
+	# check with monomials of length 2
+	symbols <- create_symbol("b",2) * create_symbol("a",1)
+	randoms <- create_randomVariable("b",1,2) * create_randomVariable("a",1,1)
+	a <- create_monomial(3,symbols=symbols,randoms=randoms)
+	symbols <- create_symbol("c",1) * create_symbol("b",2)
+	randoms <- create_randomVariable("ex",1,1) * create_randomVariable("b",1,2)
+	b <- create_monomial(3,symbols=symbols,randoms=randoms)
+	
+	c <- a + b
+	result <- sort(c)
+	checkEquals(result[[1]],sort(a))
+	checkEquals(result[[2]],sort(b))
+	checkEquals(class(result),"monomials")
+	checkEquals(length(result),2)
+
 }
