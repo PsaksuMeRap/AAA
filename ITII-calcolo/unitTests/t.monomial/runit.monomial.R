@@ -57,7 +57,7 @@ test.sum_two_monomial <- function() {
 	checkEquals(c[[2]],b)
 	
 	# sum same monomial but with different sign
-	x <- constructMonomial()
+	x <- constructListOfMonomial()
 	c <- x[[2]] + x[[3]]
 	checkEquals(class(c),"monomials")
 	checkEquals(length(c),0)
@@ -67,7 +67,7 @@ test.sum_two_monomial <- function() {
 test.sum_two_monomials <- function() {	
 	
 	# sum same monomials but with different sign
-	x <- constructMonomial()
+	x <- constructListOfMonomial()
 	c <- create_monomials(x[[2]]) + create_monomials(x[[3]])
 	checkEquals(class(c),"monomials")
 	checkEquals(length(c),0)	
@@ -254,17 +254,44 @@ test.create_monomials <- function() {
 	checkEquals(monomials[[1]],monomial)
 }
 
-
+test.specialMultiplicationPaste <- function() {
+	
+	# test1
+	x = ""
+	y = ""
+	c <- specialMultiplicationPaste(x,y)
+	checkEquals(c,"")
+	
+	# test2
+	x = "a"
+	y = ""
+	c <- specialMultiplicationPaste(x,y)
+	checkEquals(c,"a")
+	
+	# test3
+	x = ""
+	y = "b"
+	c <- specialMultiplicationPaste(x,y)
+	checkEquals(c,"b")
+	
+	# test4
+	x = "a"
+	y = "b"
+	c <- specialMultiplicationPaste(x,y)
+	checkEquals(c,"a*b")
+	
+	
+}
 
 test.toString.monomial <- function() {
 	
 	# create 2*a^2*b^3*Z_t^3
-	monomial <- constructMonomial()[[1]]
+	monomial <- constructListOfMonomial()[[1]]
 	checkEquals(toString(monomial),"2*a^2*b^3*Z_{t}^3")
 	
 	# create monomial with empty symbols
 	monomial <- create_monomial(randoms=create_randomVariables(create_randomVariable(lag=2,power=3)))
-	checkEquals(toString(monomial),"1*epsilon_{t-2}^3")
+	checkEquals(toString(monomial),"epsilon_{t-2}^3")
 	
 	# create empty monomial
 	monomial <- create_monomial()
@@ -279,23 +306,65 @@ test.toString.monomials <- function() {
 	checkEquals(toString(a),"")
 	
 	# create 2*a^2*b^3*Z_t^3 + 4*c^3
-	monomial1 <- constructMonomial()[[1]]
-	monomial2 <- constructMonomial()[[2]]
+	monomial1 <- constructListOfMonomial()[[1]]
+	monomial2 <- constructListOfMonomial()[[2]]
 	a <- monomial1 + monomial2
 	checkEquals(toString(a),"2*a^2*b^3*Z_{t}^3 + 4*c^3")
 	
 	# create 2*a^2*b^3*Z_t^3 - 4*c^3
-	monomial1 <- constructMonomial()[[1]]
-	monomial2 <- constructMonomial()[[3]]
+	monomial1 <- constructListOfMonomial()[[1]]
+	monomial2 <- constructListOfMonomial()[[3]]
 	a <- monomial1 + monomial2
 	checkEquals(toString(a),"2*a^2*b^3*Z_{t}^3 - 4*c^3")
 	
 	# create 2*a^2*b^3*Z_t^3 - 4*c^3 +  4*c^3*epsilon_t^1
-	monomial1 <- constructMonomial()[[1]]
-	monomial2 <- constructMonomial()[[3]]
-	monomial3 <- constructMonomial()[[2]]
+	monomial1 <- constructListOfMonomial()[[1]]
+	monomial2 <- constructListOfMonomial()[[3]]
+	monomial3 <- constructListOfMonomial()[[2]]
 	monomial3$randoms <- create_randomVariables(create_randomVariable())
 	
 	a <- monomial1 + monomial2 + create_monomials(monomial3)
-	checkEquals(toString(a),"2*a^2*b^3*Z_{t}^3 - 4*c^3 + 4*c^3*epsilon_{t}^1")	
+	checkEquals(toString(a),"2*a^2*b^3*Z_{t}^3 - 4*c^3 + 4*c^3*epsilon_{t}")
+	
+	# create  x3="-4*c^3"
+	x <- constructListOfMonomial()
+	monomials = create_monomials(x[[3]])
+	checkEquals(toString(monomials),"-4*c^3")
+}
+
+
+test.sort.monomial <- function() {
+	
+	# check with unit monomial
+	a <- create_monomial()
+	checkEquals(sort(a),a)
+	
+	# check with non empty monomial
+	symbols <- create_symbol("b",2) * create_symbol("a",1)
+	randoms <- create_randomVariable("b",1,2) * create_randomVariable("a",1,1)
+	a <- create_monomial(3,symbols=symbols,randoms=randoms)
+	symbols <- create_symbol("a",1) * create_symbol("b",2)
+	randoms <- create_randomVariable("a",1,1) * create_randomVariable("b",1,2)
+	b <- create_monomial(3,symbols=symbols,randoms=randoms)
+	checkEquals(sort(a),b)
+	
+}
+
+
+test.sort.monomials <- function() {
+	
+	sort.monomials <- function(x) {
+		# x: a list of class monomials. The components are monomial whose symbols and randoms must be ordered
+		result <- lapply(x,sort)
+		class(result) <- "monomials"
+		return(result)
+	}
+	
+	# check with empty monomials
+	a <- create_monomials()
+	checkEquals(sort(a),a)
+	
+	# check with monomials
+	a <- create_monomials(create_monomial())
+	checkEquals(sort(a),a)
 }

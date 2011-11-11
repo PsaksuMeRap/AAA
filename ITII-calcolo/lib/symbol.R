@@ -34,5 +34,6 @@ create_symbol <- function(name="a",power=1) {
 toString <- function(x) UseMethod("toString",x)
 
 toString.symbol <- function(symbol) {
-	a = paste(symbol$name,"^",symbol$power,sep="")
+	if (symbol$power==1) return(symbol$name)
+	return(paste(symbol$name,"^",symbol$power,sep=""))
 }

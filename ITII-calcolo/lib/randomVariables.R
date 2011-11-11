@@ -62,7 +62,6 @@ sort.randomVariables <- function(randomVariables) {
 	
 	if (length(tmp)>0) { a <- c(a,tmp); class(a) <- "randomVariables" }
 	return(a)
-	stop("Error in function '*.randomVariables': entered randomVariables are not valid randomVariables")
 }
 
 

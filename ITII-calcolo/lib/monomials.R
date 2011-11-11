@@ -87,6 +87,8 @@ compact.monomials <- function(a) {
 
 
 toString.monomials <- function(monomials) {
+	if (length(monomials)==0) return("")
+	
 	result <- sapply(monomials,toString)
 	
 	if (length(result)>1) {
@@ -98,5 +100,5 @@ toString.monomials <- function(monomials) {
 		return(result)
 	}
 	
-	return("")
+	return(toString(monomials[[1]]))
 }

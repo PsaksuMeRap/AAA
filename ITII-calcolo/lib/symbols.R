@@ -45,7 +45,7 @@ sort.symbols <- function(symbols) {
 	
 	if (length(tmp)>0) { a <- c(a,tmp); class(a) <- "symbols" }
 	return(a)
-	#stop("Error in function '*.symbols': entered symbols are not valid symbols")
+
 }
 
 

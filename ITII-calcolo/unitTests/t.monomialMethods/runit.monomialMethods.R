@@ -4,38 +4,75 @@
 ###############################################################################
 
 test.explode.randomVariable <- function() {
-	DEACTIVATED()
-	explode.randomVariable <- function(what,where,with) {
-		# what: the random variable to be injected in "where"
-		# where: a monomial possibly containing what
-		# with: the monomials "replacing" what 
-		
-		l_where = length(where$randoms) 
-		if (l_where==0) return(create_monomials(where))
-		
-	}
 
-	# create the random variable epsilon_t^2
+	# create the random variable epsilon_t^2, the "what"
 	what <- create_randomVariable(power=2)
-	tmp <- constructMonomial()
-	randoms <- tmp[[1]]$randoms * tmp[[2]]$randoms * create_randomVariables(what)
 	
+	# create the where monomial given by "Z_{t}^3*Z_{t-1}^2*epsilon_{t}^2"
+	Zt3 <- create_randomVariable("Z",lag=0,power=3)
+	Zt_1_2 <- create_randomVariable("Z",lag=1,power=2)
+	randoms <- Zt3 * Zt_1_2 * create_randomVariables(what)
 	where <- create_monomial(randoms=randoms)
-	x <- constructMonomial()
-	with = x[[1]] + x[[2]] + create_monomials(x[[3]])
 	
-	# determini if replacement is needed
-	areEquals <- sapply(where$randoms,"==",what)
 	
-	# qui fare in modo che ci sia un solo elemento uguale (applicare compact?)
-	nbWhat <- sum(areEquals)
-	if (nbWhat==0) return(where)
-	tmp <- with
-	if (nbWhat>1) for (i in 2:nbWhat) tmp <- tmp * with
+	# Test numero 1
+	# x1="2*a^2*b^3*Z_{t}^3", x2="4*c^3" and x3=3*Z_{t-1}^2
+	x <- constructListOfMonomial()
+	randoms <- create_randomVariables(create_randomVariable("Z",lag=1,power=2))
+	n3_Zt_1_2 <- create_monomials(create_monomial(3,randoms=randoms))
+	with = x[[1]] + x[[2]] + n3_Zt_1_2
 	
-	result <- create_monomials()
-	for (i in tmp) {
-		result <- result + where * i 
-	}
+	# with is equal to "2*a^2*b^3*Z_{t}^3 + 4*c^3 + 3*Z_{t-1}^2"
+	checkEquals(toString(explode.randomVariable(what,where,with)),"2*a^2*b^3*Z_{t}^6*Z_{t-1}^2 + 4*c^3*Z_{t}^3*Z_{t-1}^2 + 3*Z_{t}^3*Z_{t-1}^4")
+
+	# Test numero 2
+	# replace with an empty monomials (is zero and therefore the result is an empty list)
+	with <- create_monomials()
+	checkEquals(toString(explode.randomVariable(what,where,with)),"")
+	
+	# Test numero 3
+	# replace with a monomials containing 1 only
+	with <- create_monomials(create_monomial())
+	originalWhere <- where
+	where$randoms[[3]] < -NULL
+	checkEquals(explode(what,originalWhere,with),create_monomials(where))
 	
 }
+
+test.explode.symbol <- function() {
+
+	# create the symbol alpha^2, the "what"
+	what <- create_symbol(name="alpha",power=2)
+	
+	# create the where monomial given by "alpha^2*Z_{t}^3*Z_{t-1}
+	Zt3 <- create_randomVariable("Z",lag=0,power=3)
+	Zt_1_2 <- create_randomVariable("Z",lag=1,power=2)
+	randoms <- Zt3 * Zt_1_2
+	symbols <- create_symbols(what)
+	where <- create_monomial(symbols=symbols) * create_monomial(randoms=randoms)
+	where <- where[[1]]
+	
+	# Test numero 1
+	# x1="2*a^2*b^3*Z_{t}^3", x2="4*c^3" and x3=3*Z_{t-1}^2
+	x <- constructListOfMonomial()
+	randoms <- create_randomVariables(create_randomVariable("Z",lag=1,power=2))
+	n3_Zt_1_2 <- create_monomials(create_monomial(3,randoms=randoms))
+	with = x[[1]] + x[[2]] + n3_Zt_1_2
+	
+	# with is equal to "2*a^2*b^3*Z_{t}^3 + 4*c^3 + 3*Z_{t-1}^2"
+	checkEquals(toString(explode(what,where,with)),"2*a^2*b^3*Z_{t}^6*Z_{t-1}^2 + 4*c^3*Z_{t}^3*Z_{t-1}^2 + 3*Z_{t}^3*Z_{t-1}^4")
+	
+	# Test numero 2
+	# replace with an empty monomials (is zero and therefore the result is an empty list)
+	with <- create_monomials()
+	checkEquals(toString(explode(what,where,with)),"")
+	
+	# Test numero 3
+	# replace with a monomials containing 1 only
+	with <- create_monomials(create_monomial())
+	originalWhere <- where
+	where$symbols[[1]] <- NULL
+	checkEquals(explode(what,originalWhere,with),create_monomials(where))
+	
+}
+

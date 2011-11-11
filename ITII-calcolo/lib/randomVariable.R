@@ -39,7 +39,7 @@ create_randomVariable <- function(name="epsilon",lag=0,power=1) {
 toString.randomVariable <- function(x) {
 	
 	if (x$lag==0) str <- "" else if (x$lag>0) str <- paste("-",x$lag,sep="") else str <- paste("+",abs(x$lag),sep="")
-	result <- paste(x$name,"_{t",str,"}^",x$power,sep="")
+	if (x$power!=1) result <- paste(x$name,"_{t",str,"}^",x$power,sep="") else result <- paste(x$name,"_{t",str,"}",sep="")
 	
 	return(result)
 }

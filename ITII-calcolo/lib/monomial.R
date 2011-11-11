@@ -37,7 +37,7 @@ create_monomial <- function(number=1,symbols=NULL,randoms=NULL) {
 	return(c)
 }
 
-
+# eval(parse(text=toString(monomial)))
 
 "*.monomial" <- function(a,b) {
 	
@@ -56,9 +56,39 @@ create_monomial <- function(number=1,symbols=NULL,randoms=NULL) {
 }
 
 
+specialMultiplicationPaste <- function(x,y) {
+	if (x=="") return(y)
+	if (y=="") return(x)
+	return(paste(x,"*",y,sep=""))
+}
+
+
 toString.monomial <- function(monomial) {
-	if (length(monomial$symbols)==0) stringSymbols <- "" else stringSymbols <- paste("*",toString(monomial$symbols),sep="")
-	if (length(monomial$randoms)==0) stringRandoms <- "" else stringRandoms <- paste("*",toString(monomial$randoms),sep="")
-	result = paste(monomial$number,stringSymbols,stringRandoms,sep="")
+	lengthSymbols <- length(monomial$symbols)
+	lengthRandoms <- length(monomial$randoms)
+	
+	
+	if (monomial$number==1) {
+		if (lengthSymbols + lengthRandoms == 0) stringNumber <- "1" else stringNumber <- ""
+	} else {
+		stringNumber <- as.character(monomial$number)
+	}
+	
+	result <- specialMultiplicationPaste(toString(monomial$symbols),toString(monomial$randoms))
+	
+	if (result=="") {
+		return(stringNumber) 
+	} else {
+		specialMultiplicationPaste(stringNumber,result)
+	}
+}
+
+
+sort.monomial <- function(x) {
+	# x: a monomial whose symbols and randoms must be ordered
+	result <- x
+	if (length(x$symbols!=0)) result$symbols <- order(x$symbols)
+	if (length(x$randoms!=0)) result$randoms <- order(x$randoms)
 	return(result)
 }
+

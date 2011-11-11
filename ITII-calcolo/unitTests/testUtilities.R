@@ -4,7 +4,7 @@
 ###############################################################################
 
 
-constructMonomial <- function() {
+constructListOfMonomial <- function() {
 
 	# create 2*a^2*b^3*Z_t^3
 	symbols <- create_symbol(name="a",power=2) * create_symbol(name="b",power=3)

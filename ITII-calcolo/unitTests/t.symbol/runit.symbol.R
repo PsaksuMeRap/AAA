@@ -222,10 +222,7 @@ test.toString.symbol <- function() {
 	
 	# empty symbol
 	a <- create_symbol()
-	checkEquals(toString(a),"a^1")
-}
-
-test.toString.symbol <- function() {
+	checkEquals(toString(a),"a")
 	
 	a5 <- create_symbol("a",5)
 	b4 <- create_symbol("b",4)

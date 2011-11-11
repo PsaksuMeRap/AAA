@@ -192,7 +192,7 @@ test.toString.randomVariable <- function() {
 	
 	a <- create_randomVariable()
 	
-	checkEquals(toString(a),"epsilon_{t}^1")
+	checkEquals(toString(a),"epsilon_{t}")
 	
 	# con lag>0
 	a <- create_randomVariable(lag=3,power=4)
@@ -214,7 +214,7 @@ test.toString.randomVariables <- function() {
 	c <- a * b
 	
 	result <- toString(c)
-	checkEquals(toString(c),"epsilon_{t-1}^1*Z_{t-1}^2")
+	checkEquals(toString(c),"epsilon_{t-1}*Z_{t-1}^2")
 	
 	# con empty randomVariables
 	a <- create_randomVariables()
