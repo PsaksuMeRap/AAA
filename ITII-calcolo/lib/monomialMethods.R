@@ -68,11 +68,11 @@ explode.symbol <- function(what,where,with) {
 }
 
 
-isFirstRandomAnOddPowers <- function(x,randomName) UseMethod("isFirstRandomAnOddPowers",x)
+isFirstRandomAnOddPower <- function(x,randomName) UseMethod("isFirstRandomAnOddPower",x)
 # questa funzione restituisce TRUE se nella parte randoms la variabile aleatoria
 # più vicina nel tempo fra tutte quelle con nome "randomName" ha potenza dispari. 
 
-isFirstRandomAnOddPowers.monomial <- function(x,randomName) {
+isFirstRandomAnOddPower.monomial <- function(x,randomName) {
 	randoms <- x$randoms
 	if (length(randoms)==0) return(FALSE)
 
@@ -86,4 +86,20 @@ isFirstRandomAnOddPowers.monomial <- function(x,randomName) {
 	} else {
 		return(FALSE)
 	}
+}
+
+
+isFirstRandomAnOddPower.monomials <- function(x,randomName) {
+	
+	result <- sapply(x,isFirstRandomAnOddPower,randomName)
+	return(result)
+}
+
+
+dropWhereFirstRandomIsOddPower <- function(x,randomName) {
+
+	isOdd <- sapply(x,isFirstRandomAnOddPower,randomName)
+	result <- x[!isOdd]
+	class(result) <- "monomials"
+	return(result)
 }

@@ -39,6 +39,8 @@ test.explode.randomVariable <- function() {
 	
 }
 
+
+
 test.explode.symbol <- function() {
 
 	# create the symbol alpha^2, the "what"
@@ -76,21 +78,79 @@ test.explode.symbol <- function() {
 	
 }
 
-test.isFirstRandomAnOddPowers.monomial <- function() {
+
+
+test.isFirstRandomAnOddPower.monomial <- function() {
 	
 	# Test numero 1
 	x <- create_monomial()
-	result <- isFirstRandomAnOddPowers(x,"Pippo")
+	result <- isFirstRandomAnOddPower(x,"Pippo")
 	checkEquals(result,FALSE)
 	
 	# Test numero 2
-	# x1="2*a^2*b^3*Z_{t}^3", x2="4*c^3" and x3=3*Z_{t-1}^2
+	# x1="2*a^2*b^3*Z_{t}^3", x2="4*c^3" and x3="-4*c^3"
 	x <- constructListOfMonomial()
 	
-	result <- isFirstRandomAnOddPowers.monomial(x[[1]],"Z")
+	result <- isFirstRandomAnOddPower.monomial(x[[1]],"Z")
 	checkEquals(result,TRUE)
 	
-	# terminare i test
-	checkEquals(FALSE,TRUE)
+	result <- isFirstRandomAnOddPower.monomial(x[[3]],"Z")
+	checkEquals(result,FALSE)
+	
+	# test numero 3
+	y <- x[[1]] * x[[3]]
+	result <- isFirstRandomAnOddPower.monomial(y[[1]],"Z")
+	checkEquals(result,TRUE)
+
+}
+
+
+
+test.isFirstRandomAnOddPower.monomials <- function() {
+	# x1="2*a^2*b^3*Z_{t}^3", x2="4*c^3" and x3="-4*c^3"
+	x <- constructListOfMonomial()
+	class(x) <- "monomials"
+	
+	# Test numero 1
+	y <- create_monomial()
+	z <- create_monomials(y)
+	z <- z + x
+	
+	result <- isFirstRandomAnOddPower(z,"Z")
+	checkEquals(result,c(FALSE,TRUE,FALSE,FALSE))
+	
+	# Test numero 2
+	z <- create_monomials()
+	result <- isFirstRandomAnOddPower(z,"Z")
+	checkEquals(result,list())
+}
+
+
+
+test.dropWhereFirstRandomIsOddPower <- function() {
+		
+	# x1="2*a^2*b^3*Z_{t}^3", x2="4*c^3" and x3="-4*c^3"
+	x <- constructListOfMonomial()
+	class(x) <- "monomials"
+	
+	# Test numero 1
+	y <- create_monomial()
+	z <- create_monomials(y)
+	z <- z + x
+	should <- z[-2]
+	class(should) <- "monomials"
+
+	result <- dropWhereFirstRandomIsOddPower(z,"Z")
+	checkEquals(result,should)
+	
+	# Test numero 2
+	z <- create_monomials()
+	should <- list()
+	class(should) <- "monomials"
+
+	result <- dropWhereFirstRandomIsOddPower(z,"Z")
+	checkEquals(result,should)
 	
 }
+
+
