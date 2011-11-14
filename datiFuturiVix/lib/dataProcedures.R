@@ -7,9 +7,9 @@
 aligneFutureContractsAtDate <- function(date,orderedFutureList,nbDesiredFutures=1,nbBusDaysBefSettlement=1) {
 	# questa funzione prende una lista ordinata per data crescente
 	# di contratti di classe "Future" e ritorna il prezzo
-	# del contratto con scadenza più vicina alla 
+	# del contratto con scadenza piï¿½ vicina alla 
 	# data desiderata. Se nbDesiredFutures>1 viene restituito anche il prezzo
-	# del secondo, terzo, ... contratto più vicino.
+	# del secondo, terzo, ... contratto piï¿½ vicino.
 	# date: la data desiderata in formato testo
 	# futureList: una lista di elementi di classe "Future"
 	# nbDesiredFutures: quante scadenze si desiderano avere
@@ -39,7 +39,7 @@ aligneFutureContractsAtDate <- function(date,orderedFutureList,nbDesiredFutures=
 		
 		# determina se ci troviamo nell'ultimo giorno prima di cambiare contratto
 		criteriumDate <- determineBusinessDate(contracts[[1]]$settlementDate,-nbBusDaysBefSettlement)
-		if (criteriumDate==date) switch <- TRUE else switch <- FALSE
+		if (criteriumDate==date) switch <- 1 else switch <- 0
 		
 		# scrivi i risultati
 		result <- list(Date=date)
@@ -58,7 +58,7 @@ aligneFutureContractsAtDate <- function(date,orderedFutureList,nbDesiredFutures=
 		for (i in 1:nbDesiredFutures) {
 			result[paste("Price",i,sep="")] <- NA_real_
 		}
-		switch <- FALSE
+		switch <- 0
 	}
 	result[["Switch"]] <- switch
 	return(result)

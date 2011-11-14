@@ -69,5 +69,5 @@ defaultDate <- function() {
 	return(Sys.Date()-1)
 }
 
-getFundNav()
+getFundNav("2011-10-28")
 

@@ -9,8 +9,8 @@ options(help_type="html")
 
 library("RUnit")
 library("fTrading")
-# home <- "/home/claudio/eclipse/AAA/datiFuturiVix/"
-home <- getwd()
+home <- "/home/claudio/workspace/AAA/datiFuturiVix/"
+#home <- getwd()
 setwd(home)
 
 stringsAsFactors = FALSE
@@ -18,11 +18,11 @@ stringsAsFactors = FALSE
 source("./lib/library.R")
 
 
-importerVix <- create_importer(importFrom="./datiVix1.csv")
+importerVix <- create_importer(importFrom="./datiVix2.csv")
 repository <- importerVix$createRepository()
 rm(importerVix)
 
-importerVixFutures <- create_importerVixFutures(file="./serie1.csv",settlementFile="./scadenze.csv")
+importerVixFutures <- create_importerVixFutures(file="./serie2.csv",settlementFile="./scadenze.csv")
 future_vix_contracts <- importerVixFutures$extractAllContracts()
 rm(importerVixFutures)
 
@@ -34,7 +34,8 @@ future_vix_contracts <- future_vix_contracts[orderSettlementDates]
 settlementDates <- settlementDates[orderSettlementDates]
 
 # seleziona i contratti dopo il settembre 2005 e fino all'ultimo contratto scaduto
-toSelect <- (as.Date(settlementDates) >= as.Date("2005-10-19")) & (as.Date(settlementDates) <= as.Date("2011-10-24"))
+#toSelect <- (as.Date(settlementDates) >= as.Date("2005-10-19")) & (as.Date(settlementDates) <= as.Date("2011-10-24"))
+toSelect <- (as.Date(settlementDates) >= as.Date("2005-10-19"))
 future_vix_contracts <- future_vix_contracts[toSelect]
 
 # estrai tutte le lastTradeDates ed i lastTradePrices
@@ -51,7 +52,7 @@ names(settlementPrices) <- settlementDates
 write.csv(settlementPrices,file="./output/futuri_vix_at_settlementPrices.csv")
 
 
-# estrai tutti i prezzi nbPeriods 1 giorn0 prima del settlement
+# estrai tutti i prezzi nbPeriods 1 giorni prima del settlement
 nbPeriods <- 1
 result1 <- extractPriceAndDatePreviousToSettlement.df(future_vix_contracts,nbPeriods,
 		dateLimit="2011-10-19") 
@@ -92,7 +93,7 @@ for (i in 1:(length(future_vix_contracts)-1)) {
 }
 write.csv(result1,file="./output/futuri_vix_price_next_contract_settlementDates.csv")
 
-# estrai il vix alle settlement dates
+# estrai il vix alle lastTrade dates
 vix <- repository[[1]]$data[lastTradeDates,1,drop=FALSE] 
 rownames(vix) <- lastTradeDates
 write.csv(vix,file="./output/vix_at_lastTradeDate.csv")
@@ -104,10 +105,10 @@ write.csv(vix,file="./output/vix_at_settlementDate.csv")
 
 # estrai tutte le date disponibili
 desiredDates <- rownames(repository[[1]]$data)
-tmp <- lapply(desiredDates,aligneFutureContractsAtDate,future_vix_contracts,2,1)
+tmp <- lapply(desiredDates,aligneFutureContractsAtDate,future_vix_contracts,2,0)
 serieAllineate.df <- data.frame(Date=character(0),Price1=numeric(0),Price2=numeric(0),Switch=logical(0))
 for (i in tmp) serieAllineate.df <- rbind(serieAllineate.df,as.data.frame(i))
-
+write.csv(serieAllineate.df,file="./output/serie_allineate.csv")
 
 
 

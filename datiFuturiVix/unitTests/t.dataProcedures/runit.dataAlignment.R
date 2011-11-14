@@ -31,24 +31,24 @@ test.aligneFutureContractsAtDate <- function() {
 	contracts <- list(contract1,contract2,contract3)
 
 	result <- aligneFutureContractsAtDate("2004-06-14",contracts)
-	checkEquals(result,list(Date="2004-06-14",Price1=1,Switch=FALSE))
+	checkEquals(result,list(Date="2004-06-14",Price1=1,Switch=0))
 	
 	result <- aligneFutureContractsAtDate("2004-06-14",contracts,nbDesiredFutures=2)
-	checkEquals(result,list(Date="2004-06-14",Price1=1,Price2=4,Switch=FALSE))
+	checkEquals(result,list(Date="2004-06-14",Price1=1,Price2=4,Switch=0))
 	
 	result <- aligneFutureContractsAtDate("2004-06-14",contracts,nbDesiredFutures=3)
-	checkEquals(result,list(Date="2004-06-14",Price1=1,Price2=4,Price3=NA_real_,Switch=FALSE))
+	checkEquals(result,list(Date="2004-06-14",Price1=1,Price2=4,Price3=NA_real_,Switch=0))
 	
 	result <- aligneFutureContractsAtDate("2006-06-14",contracts,nbDesiredFutures=3)
-	checkEquals(result,list(Date="2006-06-14",Price1=NA_real_,Price2=NA_real_,Price3=NA_real_,Switch=FALSE))
+	checkEquals(result,list(Date="2006-06-14",Price1=NA_real_,Price2=NA_real_,Price3=NA_real_,Switch=0))
 	
 	result <- aligneFutureContractsAtDate("2004-06-14",contracts,nbBusDaysBefSettlement=7)
-	checkEquals(result,list(Date="2004-06-14",Price1=4,Switch=FALSE))
+	checkEquals(result,list(Date="2004-06-14",Price1=4,Switch=0))
 	
 	result <- aligneFutureContractsAtDate("2004-06-14",contracts,nbBusDaysBefSettlement=5)
-	checkEquals(result,list(Date="2004-06-14",Price1=1,Switch=TRUE))
+	checkEquals(result,list(Date="2004-06-14",Price1=1,Switch=1))
 	
 	result <- aligneFutureContractsAtDate("2004-06-15",contracts,nbBusDaysBefSettlement=5)
-	checkEquals(result,list(Date="2004-06-15",Price1=5,Switch=FALSE))
+	checkEquals(result,list(Date="2004-06-15",Price1=5,Switch=0))
 	
 }
