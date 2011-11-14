@@ -1,0 +1,231 @@
+
+ The optional specification file algencan.dat was not found in the current
+ directory (this is not a problem nor an error). The default values for the
+ ALGENCAN parameters will be used.
+
+ ALGENCAN PARAMETERS:
+ rhoauto  =                    T
+ rhotype  =                    1
+ rhomult  =           1.0000E+01
+ rhofrac  =           5.0000E-01
+ gtype    =                    0
+ hptype   =                    0
+ intype   =                    0
+ precond  =               QNCGNA
+ checkder =                    F
+ epsfeas  =           1.0000E-05
+ epsopt   =           1.0000E-05
+ maxoutit =                   50
+ maxtotit =              1000000
+ maxtotfc =              5000000
+ iprint   =                    1
+ ncomp    =                    5
+
+ Entry to ALGENCAN.
+
+ Number of variables:      26 Number of constraints:      22
+
+ Lower bounds (first       5 components): 
+ -1.0000E+20 -1.0000E+20 -1.0000E+20  0.0000E+00 -1.0000E+20
+
+ Upper bounds (first       5 components): 
+  1.0000E+20  1.0000E+20  1.0000E+20  2.0000E-01  1.0000E+20
+
+ ALGENCAN outer iteration:       0
+
+ Current point (first       5 components): 
+  3.8462E-02  3.8462E-02  3.8462E-02  3.8462E-02  3.8462E-02
+
+ Updated Lagrange multipliers (first       5 components): 
+  0.0000E+00  0.0000E+00  0.0000E+00  0.0000E+00  0.0000E+00
+
+ Updated penalty parameters (first       5 components): 
+  2.0875E-02  2.0875E-02  2.0875E-02  2.0875E-02  2.0875E-02
+
+ Objective function value                                       =  4.8002E-03
+ Sup-norm of the constraints                                    =  3.0953E+01
+ Sup-norm of the projected gradient of the Lagrangian           =  2.6129E-02
+
+ Up-to-now number of inner iterations                           =           0
+ Up-to-now number of Augmented Lagrangian function evaluations  =           1
+ Up-to-now number of Augmented Lagrangian gradient evaluations  =           1
+
+ The penalty parameters are not modified
+ after the resolution of the first subproblem.
+
+ ALGENCAN outer iteration:       1
+
+ Current point (first       5 components): 
+ -1.7515E-03 -2.7552E-03  7.9765E-04  0.0000E+00 -8.4123E-04
+
+ Updated Lagrange multipliers (first       5 components): 
+ -5.5905E-04 -3.6562E-05 -5.7513E-05  1.6651E-05 -1.7560E-05
+
+ Updated penalty parameters (first       5 components): 
+  2.0875E-02  2.0875E-02  2.0875E-02  2.0875E-02  2.0875E-02
+
+ Objective function value                                       =  1.2089E-06
+ Sup-norm of the constraints                                    =  2.6781E-02
+ Sup-norm of the projected gradient of the Lagrangian           =  6.6768E-06
+
+ Up-to-now number of inner iterations                           =          34
+ Up-to-now number of Augmented Lagrangian function evaluations  =          79
+ Up-to-now number of Augmented Lagrangian gradient evaluations  =          37
+
+ The desired infeasibility was not achieved ( 1.3391E-02). The penalty
+ parameter will be increased multiplying by rhofrac =  1.0000E+01.
+
+ ALGENCAN outer iteration:       2
+
+ Current point (first       5 components): 
+ -1.8515E-03 -2.9187E-03  4.2372E-04  0.0000E+00 -7.6100E-04
+
+ Updated Lagrange multipliers (first       5 components): 
+ -1.0424E-03 -7.5212E-05 -1.1844E-04  2.5496E-05 -3.3446E-05
+
+ Updated penalty parameters (first       5 components): 
+  2.0875E-01  2.0875E-01  2.0875E-01  2.0875E-01  2.0875E-01
+
+ Objective function value                                       =  3.8346E-06
+ Sup-norm of the constraints                                    =  2.3154E-02
+ Sup-norm of the projected gradient of the Lagrangian           =  5.8575E-06
+
+ Up-to-now number of inner iterations                           =          39
+ Up-to-now number of Augmented Lagrangian function evaluations  =          93
+ Up-to-now number of Augmented Lagrangian gradient evaluations  =          44
+
+ The desired infeasibility was not achieved ( 1.1577E-02). The penalty
+ parameter will be increased multiplying by rhofrac =  1.0000E+01.
+
+ ALGENCAN outer iteration:       3
+
+ Current point (first       5 components): 
+ -1.1008E-03 -1.7530E-03  8.6830E-05  0.0000E+00 -3.7294E-04
+
+ Updated Lagrange multipliers (first       5 components): 
+ -3.4824E-03 -3.0499E-04 -4.8437E-04  4.3621E-05 -1.1130E-04
+
+ Updated penalty parameters (first       5 components): 
+  2.0875E+00  2.0875E+00  2.0875E+00  2.0875E+00  2.0875E+00
+
+ Objective function value                                       =  2.8142E-05
+ Sup-norm of the constraints                                    =  1.1689E-02
+ Sup-norm of the projected gradient of the Lagrangian           =  1.0635E-10
+
+ Up-to-now number of inner iterations                           =          45
+ Up-to-now number of Augmented Lagrangian function evaluations  =         110
+ Up-to-now number of Augmented Lagrangian gradient evaluations  =          52
+
+ Desired feasibility improvement was achieved,
+ so, penalty parameters will not be modified.
+
+ ALGENCAN outer iteration:       4
+
+ Current point (first       5 components): 
+ -2.0402E-04 -3.2192E-04  1.3684E-05  0.0000E+00 -6.5040E-05
+
+ Updated Lagrange multipliers (first       5 components): 
+ -7.8997E-03 -7.3089E-04 -1.1564E-03  7.2185E-05 -2.4707E-04
+
+ Updated penalty parameters (first       5 components): 
+  2.0875E+00  2.0875E+00  2.0875E+00  2.0875E+00  2.0875E+00
+
+ Objective function value                                       =  1.0208E-04
+ Sup-norm of the constraints                                    =  2.4519E-03
+ Sup-norm of the projected gradient of the Lagrangian           =  6.7493E-07
+
+ Up-to-now number of inner iterations                           =          51
+ Up-to-now number of Augmented Lagrangian function evaluations  =         128
+ Up-to-now number of Augmented Lagrangian gradient evaluations  =          60
+
+ The desired infeasibility was not achieved ( 1.2259E-03). The penalty
+ parameter will be increased multiplying by rhofrac =  1.0000E+01.
+
+ ALGENCAN outer iteration:       5
+
+ Current point (first       5 components): 
+ -6.3801E-05 -9.4010E-05  1.1172E-05  0.0000E+00 -1.9010E-05
+
+ Updated Lagrange multipliers (first       5 components): 
+ -9.2563E-03 -8.6407E-04 -1.3526E-03  9.5508E-05 -2.8675E-04
+
+ Updated penalty parameters (first       5 components): 
+  2.0875E+01  2.0875E+01  2.0875E+01  2.0875E+01  2.0875E+01
+
+ Objective function value                                       =  1.3285E-04
+ Sup-norm of the constraints                                    =  1.2949E-03
+ Sup-norm of the projected gradient of the Lagrangian           =  3.6008E-09
+
+ Up-to-now number of inner iterations                           =          53
+ Up-to-now number of Augmented Lagrangian function evaluations  =         132
+ Up-to-now number of Augmented Lagrangian gradient evaluations  =          64
+
+ Desired feasibility improvement was achieved,
+ so, penalty parameters will not be modified.
+
+ ALGENCAN outer iteration:       6
+
+ Current point (first       5 components): 
+ -5.1852E-06 -7.4111E-06  1.0769E-06  0.0000E+00 -1.5220E-06
+
+ Updated Lagrange multipliers (first       5 components): 
+ -1.0354E-02 -9.7231E-04 -1.5073E-03  1.1799E-04 -3.1852E-04
+
+ Updated penalty parameters (first       5 components): 
+  2.0875E+01  2.0875E+01  2.0875E+01  2.0875E+01  2.0875E+01
+
+ Objective function value                                       =  1.6353E-04
+ Sup-norm of the constraints                                    =  1.2673E-04
+ Sup-norm of the projected gradient of the Lagrangian           =  1.9586E-10
+
+ Up-to-now number of inner iterations                           =          55
+ Up-to-now number of Augmented Lagrangian function evaluations  =         136
+ Up-to-now number of Augmented Lagrangian gradient evaluations  =          68
+
+ Desired feasibility improvement was achieved,
+ so, penalty parameters will not be modified.
+
+ ALGENCAN outer iteration:       7
+
+ Current point (first       5 components): 
+ -3.8658E-07 -6.7949E-07  1.9234E-08  0.0000E+00 -1.5140E-07
+
+ Updated Lagrange multipliers (first       5 components): 
+ -1.0452E-02 -9.8038E-04 -1.5215E-03  1.1839E-04 -3.2168E-04
+
+ Updated penalty parameters (first       5 components): 
+  2.0875E+01  2.0875E+01  2.0875E+01  2.0875E+01  2.0875E+01
+
+ Objective function value                                       =  1.6675E-04
+ Sup-norm of the constraints                                    =  1.2361E-05
+ Sup-norm of the projected gradient of the Lagrangian           =  2.4139E-06
+
+ Up-to-now number of inner iterations                           =          56
+ Up-to-now number of Augmented Lagrangian function evaluations  =         139
+ Up-to-now number of Augmented Lagrangian gradient evaluations  =          71
+
+ Desired feasibility improvement was achieved,
+ so, penalty parameters will not be modified.
+
+ ALGENCAN outer iteration:       8
+
+ Current point (first       5 components): 
+ -2.2460E-08 -1.4162E-07 -2.4292E-08  0.0000E+00 -1.7459E-08
+
+ Updated Lagrange multipliers (first       5 components): 
+ -1.0463E-02 -9.8085E-04 -1.5244E-03  1.1788E-04 -3.2204E-04
+
+ Updated penalty parameters (first       5 components): 
+  2.0875E+01  2.0875E+01  2.0875E+01  2.0875E+01  2.0875E+01
+
+ Objective function value                                       =  1.6706E-04
+ Sup-norm of the constraints                                    =  1.2049E-06
+ Sup-norm of the projected gradient of the Lagrangian           =  3.8814E-06
+
+ Up-to-now number of inner iterations                           =          57
+ Up-to-now number of Augmented Lagrangian function evaluations  =         142
+ Up-to-now number of Augmented Lagrangian gradient evaluations  =          74
+
+ Flag of ALGENCAN =  0 (Convergence with Sup-norm of the Lagrangian projected
+ gradient smaller than  1.0000E-05, constraints Sup-norm smaller than
+  1.0000E-05, and largest complementarity violation smaller than  1.0000E-05)

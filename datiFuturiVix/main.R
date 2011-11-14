@@ -9,9 +9,11 @@ options(help_type="html")
 
 library("RUnit")
 library("fTrading")
+
 home <- "/home/claudio/workspace/AAA/datiFuturiVix/"
 #home <- getwd()
 setwd(home)
+
 
 stringsAsFactors = FALSE
 
@@ -53,6 +55,7 @@ write.csv(settlementPrices,file="./output/futuri_vix_at_settlementPrices.csv")
 
 
 # estrai tutti i prezzi nbPeriods 1 giorni prima del settlement
+
 nbPeriods <- 1
 result1 <- extractPriceAndDatePreviousToSettlement.df(future_vix_contracts,nbPeriods,
 		dateLimit="2011-10-19") 
@@ -103,17 +106,35 @@ vix <- repository[[1]]$data[settlementDates,1,drop=FALSE]
 rownames(vix) <- settlementDates
 write.csv(vix,file="./output/vix_at_settlementDate.csv")
 
+
 # estrai tutte le date disponibili
 desiredDates <- rownames(repository[[1]]$data)
+
 tmp <- lapply(desiredDates,aligneFutureContractsAtDate,future_vix_contracts,2,0)
 serieAllineate.df <- data.frame(Date=character(0),Price1=numeric(0),Price2=numeric(0),Switch=logical(0))
 for (i in tmp) serieAllineate.df <- rbind(serieAllineate.df,as.data.frame(i))
 write.csv(serieAllineate.df,file="./output/serie_allineate.csv")
 
 
+# allinea le serie rispetto alla lastTradeDate
+tmp <- lapply(desiredDates,aligneFutureContractsAtDate,future_vix_contracts,2,1)
+serieAllineate.df <- data.frame(Date=character(0),Price1=numeric(0),Price2=numeric(0),Switch=logical(0))
+for (i in tmp) serieAllineate.df <- rbind(serieAllineate.df,as.data.frame(i))
+dateNomi <- as.character(serieAllineate.df[[1]])
+rownames(serieAllineate.df) <- dateNomi
+serieAllineate.df[[1]] <- repository[[1]]$data[dateNomi,1]
+colnames(serieAllineate.df)[1] <- "Vix"
+write.csv(serieAllineate.df,file="./output/serieAllineate_ltd.csv")
 
-
-
+# allinea le serie rispetto alla settlementDate
+tmp <- lapply(desiredDates,aligneFutureContractsAtDate,future_vix_contracts,2,1)
+serieAllineate.df <- data.frame(Date=character(0),Price1=numeric(0),Price2=numeric(0),Switch=logical(0))
+for (i in tmp) serieAllineate.df <- rbind(serieAllineate.df,as.data.frame(i))
+dateNomi <- as.character(serieAllineate.df[[1]])
+rownames(serieAllineate.df) <- dateNomi
+serieAllineate.df[[1]] <- repository[[1]]$data[dateNomi,1]
+colnames(serieAllineate.df)[1] <- "Vix"
+write.csv(serieAllineate.df,file="./output/serieAllineate_std.csv")
 
 
 
