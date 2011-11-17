@@ -153,4 +153,70 @@ test.dropWhereFirstRandomIsOddPower <- function() {
 	
 }
 
+test.shiftToZero.monomial <- function() {
+	
+	# Test1
+	# x1="2*a^2*b^3*Z_{t}^3", x2="4*c^3" and x3="-4*c^3"
+	x <- constructListOfMonomial()
+	class(x) <- "monomials"
+	x1 <- x[[1]]
+	x2 <- x[[2]]
+	
+	a <- shiftToZero(x1)
+	checkEquals(a,x1)
+	
+	b <- shiftToZero(x2)
+	checkEquals(b,x2)
+	
+	# Test2
+	# x1="2*a^2*b^3*Z_{t}^3", x2="4*c^3" and x3=3*Z_{t-1}^2
+	x <- constructListOfMonomial()
+	randoms <- create_randomVariables(create_randomVariable("Z",lag=1,power=2))
+	n3_Zt_1_2 <- create_monomial(3,randoms=randoms)
+	x1 = x[[1]] * n3_Zt_1_2
 
+	a <- shiftToZero(x1[[1]])
+	checkEquals(a,x1[[1]])
+	
+	# Test3
+	# x1="2*a^2b^3*Y_{t-5}^3*Z_{t-1}^2
+	symbols <- create_symbol(name="a",power=2) * create_symbol(name="b",power=3)
+	randoms <- create_randomVariables(create_randomVariable("Y",lag=5,power=3))
+	a <- create_monomial(2,symbols=symbols,randoms=randoms)
+	randoms <- create_randomVariables(create_randomVariable("Z",lag=1,power=2))
+	b <- create_monomial(1,randoms=randoms)
+	x1 = a * b
+	
+	a <- shiftToZero(x1[[1]])
+	x1[[1]]$randoms[[1]]$lag <- 4
+	x1[[1]]$randoms[[2]]$lag <- 0
+	checkEquals(a,x1[[1]])
+	
+}
+
+
+test.shiftToZero.monomials <- function() {	
+	
+	x <- create_monomials()
+	
+	checkEquals(shiftToZero(x),x)
+	
+	# Test2
+	# x1="2*a^2b^3*Y_{t-5}^3*Z_{t-1}^2
+	symbols <- create_symbol(name="a",power=2) * create_symbol(name="b",power=3)
+	randoms <- create_randomVariables(create_randomVariable("Y",lag=5,power=3))
+	a <- create_monomial(2,symbols=symbols,randoms=randoms)
+	randoms <- create_randomVariables(create_randomVariable("Z",lag=1,power=2))
+	b <- create_monomial(1,randoms=randoms)
+	x1 <- a * b
+	y  <- constructListOfMonomial()
+	z <- x1 + create_monomials(y[[1]])
+			
+
+	x1[[1]]$randoms[[1]]$lag <- 4
+	x1[[1]]$randoms[[2]]$lag <- 0
+	z[[1]] <- x1
+	a <- shiftToZero(z)
+	checkEquals(a,z)
+	
+}
