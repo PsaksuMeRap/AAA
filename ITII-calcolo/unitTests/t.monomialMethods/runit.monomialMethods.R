@@ -220,3 +220,39 @@ test.shiftToZero.monomials <- function() {
 	checkEquals(a,z)
 	
 }
+
+test.compactMonomials <- function() {	
+	
+	compactMonomials <- function(x) {
+		if (class(x)!="monomials") stop("Error compactSum: argument is not of class monomials.")
+		# x: a monomials whose terms must be compacted
+		if (length(x)<=1) return(x)	
+		tmp <- create_monomials()
+		for (y in x) tmp <- tmp + create_monomials(y)
+		return(tmp)
+	}
+	
+	# Test1: empty monomials
+	x <- create_monomials()
+	
+	checkEquals(compactMonomials(x),x)
+	
+	# Test2: atomic monomials
+	# x1="2*a^2b^3*Y_{t-5}^3
+	symbols <- create_symbol(name="a",power=2) * create_symbol(name="b",power=3)
+	randoms <- create_randomVariables(create_randomVariable("Y",lag=5,power=3))
+	x <- create_monomials(create_monomial(2,symbols=symbols,randoms=randoms))
+	
+	checkEquals(compactMonomials(x),x)
+	
+	# Test2: atomic monomials
+	# x1="2*a^2b^3*Y_{t-5}^3
+	symbols <- create_symbol(name="a",power=2) * create_symbol(name="b",power=3)
+	randoms <- create_randomVariables(create_randomVariable("Y",lag=5,power=3))
+	x <- create_monomials(create_monomial(2,symbols=symbols,randoms=randoms))
+	
+	checkEquals(compactMonomials(x),x)
+	
+}
+
+
