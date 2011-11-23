@@ -28,7 +28,7 @@ create_symbolWithRandom <- function(symbolName,randomName,index) {
 
 u_t <- create_symbolWithRandom(symbolName="b",randomName="eps",index=0)
 
-for (i in 1:5) u_t <- u_t + create_symbolWithRandom(symbolName="b",randomName="eps",index=i)
+for (i in 1:4) u_t <- u_t + create_symbolWithRandom(symbolName="b",randomName="eps",index=i)
 
 u_tPower4 <- sort(u_t*u_t*u_t*u_t)
 toString(u_tPower4)

@@ -11,7 +11,8 @@ source("./lib/library.R")
 dirs = c("./unitTests/t.monomial",
 		"./unitTests/t.randomVariable",
 		"./unitTests/t.symbol",
-		"./unitTests/t.monomialMethods"
+		"./unitTests/t.monomialMethods",
+		"./unitTests/t.parser"
 		)
 testsuite.lists <- defineTestSuite("Test globale",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)

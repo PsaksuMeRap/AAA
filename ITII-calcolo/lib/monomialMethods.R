@@ -103,3 +103,30 @@ dropWhereFirstRandomIsOddPower <- function(x,randomName) {
 	class(result) <- "monomials"
 	return(result)
 }
+
+
+shiftToZero <- function(x) UseMethod("shiftToZero",x)
+shiftToZero.monomial <- function(x) {
+	
+	# this function shifts the lags in the randoms part
+	if (length(x$randoms)==0) return(x)
+	lags <- extractFromList(x$randoms,"lag")
+	if (all(lags>0)) {
+		a <- min(lags)
+		for (i in 1:length(x$randoms)) {
+			x$randoms[[i]]$lag <- x$randoms[[i]]$lag - a
+		}
+		return(x)
+	} else {
+		return(x)
+	}
+	
+}
+
+shiftToZero.monomials <- function(x) {
+	
+	if (length(x)==0) return(x)
+	result <- lapply(x,shiftToZero)
+	class(result) <- "monomials"
+	return(result)
+}
