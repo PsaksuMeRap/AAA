@@ -47,7 +47,7 @@ parser.stringRandomVariable <- function(x) {
 			power <- as.numeric(power)
 		}
 	} else {
-		power=0
+		power=1
 	}
 	result <- result[1]
 	
@@ -79,8 +79,48 @@ identifySymbolComponent <- function(x) {
 	# pure number or a symbol or a randomVariable
 	
 	if (grepl("_",x)) return("stringRandomVariable")
-	if (grepl("[:alpha:]",x)) return("stringSymbol")
+	if (grepl("[[:alpha:]]",x)) return("stringSymbol")
 	return("number")
 	
+}
+
+
+parser.stringMonomial <- function(x) {	
+	# x: a string monomial, i.e. "3*a^2*b^3*Z_t^3"
+	x <- trim(x)
+	if (x=="") stop("Error in parser.stringMonomial: the argument is an empty string.")
+	result <- strsplit(x, split="\\*")[[1]]
+	
+	number <- 1
+	symbols <- create_symbols()
+	randoms <- create_randomVariables()
+	
+	for (i in result) {
+		tmp <- i
+		class(tmp) <- identifySymbolComponent(i)
+		tmp <- parser(tmp)
+		
+		if (is.element("randomVariable",class(tmp))) {
+			randoms[[length(randoms)+1]] <- tmp
+		} else {
+			if (class(tmp)=="symbol") {
+				symbols[[length(symbols)+1]] <- tmp
+			} else {
+				number <- number * tmp
+			}
+		}		
+	}
+	
+	return(create_monomial(number,symbols=symbols,randoms=randoms))
+}
+
+
+create_stringMonomial <- function(string) {
+	x <- as.character(string); class(x) <- "stringMonomial"
+	return(x)
+}
+
+monomialFromString <- function(x) {
+	return(parser(create_stringMonomial(x)))
 }
 
