@@ -6,21 +6,17 @@
 
 test.explode.monomial <- function() {
 
-	# create the random variable epsilon_t^2, the "what"
-	what <- create_randomVariable(power=2)
-	
 	# create the where monomial given by "Z_{t}^3*Z_{t-1}^2*epsilon_{t}^2"
 	where <- monomialFromString("Z_{t}^3*Z_{t-1}^2*epsilon_{t}^2")
 	
-	# Test numero 1
-	# x1="2*a^2*b^3*Z_{t}^3", x2="4*c^3" and x3=3*Z_{t-1}^2
-	x <- constructListOfMonomial()
-	randoms <- create_randomVariables(create_randomVariable("Z",lag=1,power=2))
-	n3_Zt_1_2 <- create_monomials(create_monomial(3,randoms=randoms))
-	with = x[[1]] + x[[2]] + n3_Zt_1_2
+	# create the random variable epsilon_t^2, the "what"
+	what <- create_randomVariable(power=2)
 	
-	# with is equal to "2*a^2*b^3*Z_{t}^3 + 4*c^3 + 3*Z_{t-1}^2"
-	checkEquals(toString(explode.monomial(where,what,with)),"2*a^2*b^3*Z_{t}^6*Z_{t-1}^2 + 4*c^3*Z_{t}^3*Z_{t-1}^2 + 3*Z_{t}^3*Z_{t-1}^4")
+	# Test numero 1
+	with <- monomialsFromString("2*a^2*b^3*Z_{t}^3 + 4*c^3 + 3*Z_{t-1}^2")
+	
+	checkEquals(toString(explode.monomial(where,what,with)),
+			"2*a^2*b^3*Z_{t}^6*Z_{t-1}^2 + 4*c^3*Z_{t}^3*Z_{t-1}^2 + 3*Z_{t}^3*Z_{t-1}^4")
 
 	# Test numero 2
 	# replace with an empty monomials (is zero and therefore the result is an empty list)
@@ -29,7 +25,7 @@ test.explode.monomial <- function() {
 	
 	# Test numero 3
 	# replace with a monomials containing 1 only
-	with <- create_monomials(create_monomial())
+	with <- monomialsFromString("1")
 	originalWhere <- where
 	where$randoms[[3]] <- NULL
 	checkEquals(explode.monomial(originalWhere,what,with),create_monomials(where))
@@ -38,25 +34,18 @@ test.explode.monomial <- function() {
 	# generate an error
 	checkException(explode.monomial(originalWhere,what="Z",with))
 	
-	########## now check the symbol part of the command
-	# create the symbol alpha^2, the "what"
-	what <- create_symbol(name="alpha",power=2)
-	
+	#----------------- now check the symbol part of the command ----------------------------
+ 	
 	# create the where monomial given by "alpha^2*Z_{t}^3*Z_{t-1}^2"
 	where <- monomialFromString("alpha^2*Z_{t}^3*Z_{t-1}^2")
 	
+	# create the symbol alpha^2, the "what"
+	what <- create_symbol(name="alpha",power=2)
 	
 	# Test numero 1
-	# x1="2*a^2*b^3*Z_{t}^3", x2="4*c^3" and x3="3*Z_{t-1}^2"
-	
-	x1 <- monomialFromString("2*a^2*b^3*Z_{t}^3")
-	x2 <- monomialFromString("4*c^3")
-	x3 <- monomialFromString("3*Z_{t-1}^2")
-	x3 <- create_monomials(x3)
-	with = x1 + x2 + x3
-	
-	# with is equal to "2*a^2*b^3*Z_{t}^3 + 4*c^3 + 3*Z_{t-1}^2"
-	checkEquals(toString(explode.monomial(where,what,with)),"2*a^2*b^3*Z_{t}^6*Z_{t-1}^2 + 4*c^3*Z_{t}^3*Z_{t-1}^2 + 3*Z_{t}^3*Z_{t-1}^4")
+	with <- monomialsFromString("2*a^2*b^3*Z_{t}^3 + 4*c^3 + 3*Z_{t-1}^2")
+	checkEquals(toString(explode.monomial(where,what,with)),
+			"2*a^2*b^3*Z_{t}^6*Z_{t-1}^2 + 4*c^3*Z_{t}^3*Z_{t-1}^2 + 3*Z_{t}^3*Z_{t-1}^4")
 	
 	# Test numero 2
 	# replace with an empty monomials (is zero and therefore the result is an empty list)
@@ -65,13 +54,66 @@ test.explode.monomial <- function() {
 	
 	# Test numero 3
 	# replace with a monomials containing 1 only
-	with <- create_monomials(create_monomial())
+	with <- monomialsFromString("1")
 	originalWhere <- where
 	where$symbols[[1]] <- NULL
 	checkEquals(explode.monomial(originalWhere,what,with),create_monomials(where))
 }
 
+test.explode.monomials <- function() {
+		
+	# create the where monomial given by "Z_{t}^3*Z_{t-1}^2*epsilon_{t}^2"
+	where <- monomialsFromString("Z_{t}^3 + Z_{t-1}^2 + a^2")
+	
+	# create the random variable Z_t^3, the "what"
+	what <- create_randomVariable(name="Z",power=3)
+	
 
+	# Test numero 1
+	with <- monomialsFromString("2*a^2*Z_{t}^3 + 4*c^3")
+	checkEquals(toString(explode.monomials(where,what,with)),
+			"2*a^2*Z_{t}^3 + 4*c^3 + Z_{t-1}^2 + a^2")
+	
+	# Test numero 2: replace with an empty monomials
+	with <- create_monomials()
+	checkEquals(toString(explode.monomials(where,what,with)),"Z_{t-1}^2 + a^2")
+	
+	# Test numero 3: replace with a monomials containing 1 only
+	where <- monomialsFromString("Z_{t}^3 + a^2*Z_{t}^3 + a^2")
+	what <- create_randomVariable(name="Z",power=3)
+	with <- monomialsFromString("1")
+
+	checkEquals(explode.monomials(where,what,with),
+			monomialsFromString("1 + a^2 + a^2"))
+	
+	# Test numero 4
+	# generate an error
+	checkException(explode.monomials(where,what="Z",with))
+	
+	#----------------- now check the symbol part of the command ----------------------------
+	
+	# create the where monomial given by "alpha^2*Z_{t}^3*Z_{t-1}^2"
+	where <- monomialsFromString("a^2*Z_{t}^3 + Z_{t-1}^2")
+	
+	# create the symbol alpha^2, the "what"
+	what <- create_symbol(name="a",power=2)
+	
+	# Test numero 1
+	with <- monomialsFromString("2*a^2*b^3*Z_{t}^3 + 4*c^3 + 3*Z_{t-1}^2")
+
+	checkEquals(toString(explode.monomials(where,what,with)),
+			"2*a^2*b^3*Z_{t}^6 + 4*c^3*Z_{t}^3 + 3*Z_{t}^3*Z_{t-1}^2 + Z_{t-1}^2")
+	
+	# Test numero 2: replace with an empty monomials (it is considered 0)
+	with <- create_monomials()
+	checkEquals(toString(explode.monomials(where,what,with)),"Z_{t-1}^2")
+	
+	# Test numero 3
+	# replace with a monomials containing 1 only
+	with <- monomialsFromString("1")
+	checkEquals(explode.monomials(where,what,with),
+			monomialsFromString("Z_{t}^3 + Z_{t-1}^2"))
+}
 
 
 
@@ -301,12 +343,25 @@ test.shiftToZeroAndCompact <- function() {
 
 
 test.create.h_t.expansion <- function() {
+
+	# test1: crea il default
+	should <- "b0 + b1*w_{t-1}*h_{t-1} + b2*h_{t-1}"
+	checkEquals(create.h_t.expansion(),monomialsFromString(should))
 	
-	create.h_t.expansion <- function(toLag=1) {
-		ht <- monomialFromString("b0") + monomialFromString("b2*h_{t-1}")
-		ht <- ht + create_monomials(monomialFromString("b1*w_{t-1}*h_{t-1}"))
-		ht.lagged <- Lag(ht)
-		ht <- lapply()
-	}
+	
+	# Test2: crea un'errore
+	checkException(create.h_t.expansion(0,0))
+	
+	# test3: crea l'espansione quando fromLag=0 e toLag=2
+	should <- "b0 + b1*b0*w_{t-1} + b1^2*w_{t-1}*w_{t-2}*h_{t-2} + b1*b2*w_{t-1}*h_{t-2} + b2*b0 + b2*b1*w_{t-2}*h_{t-2} + b2^2*h_{t-2}"
+	checkEquals(create.h_t.expansion(0,2),monomialsFromString(should))
+	
+	# test4: crea l'espansione quando fromLag=1 e toLag=3
+	should <- "b0 + b1*b0*w_{t-1} + b1^2*w_{t-1}*w_{t-2}*h_{t-2} + b1*b2*w_{t-1}*h_{t-2} + b2*b0 + b2*b1*w_{t-2}*h_{t-2} + b2^2*h_{t-2}"
+	checkEquals(create.h_t.expansion(1,3),Lag(monomialsFromString(should),1))
+	
+	# mettere la verifica per 0 to 3 calcolata a mano!
 	checkEquals(TRUE,FALSE)
 }
+
+

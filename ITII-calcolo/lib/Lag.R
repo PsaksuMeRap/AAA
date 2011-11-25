@@ -4,19 +4,19 @@
 ###############################################################################
 
 # questa funzione implementa l'operatore Lag
-Lag <- function(x,lags=1) UseMethod("Lag",x)
+Lag <- function(x,power=1) UseMethod("Lag",x)
 
-Lag.monomial <- function(monomial,lags=1) {
+Lag.monomial <- function(monomial,power=1) {
 	nbRandomVariables <- length(monomial$randoms)
 	if (nbRandomVariables==0) return(monomial)
 	x <- monomial
-	for (i in 1:nbRandomVariables) x$randoms[[i]]$lag <- x$randoms[[i]]$lag + lags
+	for (i in 1:nbRandomVariables) x$randoms[[i]]$lag <- x$randoms[[i]]$lag + power
 	return(x)
 }
 
-Lag.monomials <- function(monomials,lags=1) {
+Lag.monomials <- function(monomials,power=1) {
 	if (length(monomials)==0) return(monomials)
-	result <- lapply(monomials,Lag,lags=lags)
+	result <- lapply(monomials,Lag,power=power)
 	class(result) <- "monomials"
 	return(result)
 }

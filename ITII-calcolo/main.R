@@ -21,7 +21,7 @@ source("./unitTests/testUtilities.R")
 #
 # con h_t = b0 + b1*|e_{t-1}| + b2*h_{t-1}
 # o   h_t = b0 + (b2 + b1*|z_{t-1}|)*h_{t-1}
-# o   h_t = b0 + b2*h_{t-1} + b1*w_{t-1}*h_{t-1}      eq. (2)
+# o   h_t = b0 + b1*w_{t-1}*h_{t-1} + b2*h_{t-1}      eq. (2)
 
 # il modello ausiliario 
 # x_t = c1*x_{t-1} + c2*x_{t-2} + u_t                 eq. (3)
@@ -53,6 +53,29 @@ u_t <- create_monomials(monomialFromString("e_t"))
 
 for (i in 1:4) u_t <- u_t + create_symbolWithRandom(symbolName="f",randomName="e",index=i)
 
+# rimpiazza e_{t-i} con h_{t-i}*z_{t-i}
+where <- u_t
+for (lag in 0:4) {
+	what <- create_randomVariable("e",lag=lag,power=1)
+	with <- monomialFromString(paste("h_{t-",lag,"}*z_{t-",lag,"}",sep=""))
+	where <- explode(where,what,with)
+}
+
+u.1 <- where; rm(where)
+
+# rimpiazza tutti gli h_{t-i} con l'espressione con h_{t-4} quale unico lag di h
+for (i in 0:3) {
+	where <- u.1
+	what <- create_randomVariable("h",lag=i)
+	print(toString(what))
+	with <- create.h_t.expansion(i,4)
+	# print(toString(with))
+	where <- explode(where,what,with)
+	print(toString(where))
+}
+
+Quit sopra non funzia!!!
+
 u4 <- sort(u_t*u_t*u_t*u_t)
 
 string1 <- toString(u4)
@@ -60,5 +83,24 @@ string1 <- toString(u4)
 u4.1 <- shiftToZeroAndCompact(u4)
 u4.2 <- dropWhereFirstRandomIsOddPower(u4.1,"e")
 
+# rimpiazza e_{t-i} con h_{t-i}*z_{t-i}
+where <- u4.2
+for (lag in 0:4) {
+	for (power in 1:4) {
+		what <- create_randomVariable("e",lag=lag,power=power)
+		with <- monomialFromString(paste("h_{t-",lag,"}^",power,"*z_{t-",lag,"}^",power,sep=""))
+		where <- explode(where,what,with)
+	}
+}
 
-	
+u4.3 <- where; rm(where)
+
+# calcola E(z_{t}^k)
+where <- u4.3
+for (power in 1:4) {
+	what <- create_randomVariable(name="z",power=power)
+	with <- create_monomials(create_monomial(number=E_z(power)))
+	where <- explode(where,what,with)
+}
+
+u4.4 <- where; rm(where)

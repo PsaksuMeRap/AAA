@@ -127,3 +127,22 @@ test.parse.stringMonomial <- function() {
 	checkEquals(parser(x),create_monomial(24,symbols,randoms))
 
 }
+
+
+test.parse.stringMonomials <- function() {
+	
+	# test 1
+	x <- "1"; class(x)<-"stringMonomials"
+	checkEquals(parser(x),create_monomials(create_monomial(1)))
+	
+	# test 2
+	x <- "x^23 + a^2*Z_{t-1}"; class(x)<-"stringMonomials"
+	should <- monomialFromString("x^23 ") + monomialFromString("a^2*Z_{t-1}")
+	checkEquals(parser(x),should)
+	
+	# test 3
+	x <- ""; class(x)<-"stringMonomials"
+	checkException(parser(x))
+		
+}
+

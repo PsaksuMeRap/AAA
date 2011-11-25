@@ -114,6 +114,17 @@ parser.stringMonomial <- function(x) {
 	return(create_monomial(number,symbols=symbols,randoms=randoms))
 }
 
+parser.stringMonomials <- function(x) {
+	x <- trim(x)
+	if (x=="") stop("Error in parser.stringMonomials: the argument is an empty string.")
+	
+	result <- as.list(strsplit(x, split="\\+")[[1]])
+	result <- lapply(result,function(x) {class(x)<-"stringMonomial";return(x)})
+	
+	monomials <- lapply(result,parser)
+	class(monomials) <- "monomials"	
+	return(monomials)
+}
 
 create_stringMonomial <- function(string) {
 	x <- as.character(string); class(x) <- "stringMonomial"
@@ -124,3 +135,11 @@ monomialFromString <- function(x) {
 	return(parser(create_stringMonomial(x)))
 }
 
+create_stringMonomials <- function(string) {
+	x <- as.character(string); class(x) <- "stringMonomials"
+	return(x)
+}
+
+monomialsFromString <- function(x) {
+	return(parser(create_stringMonomials(x)))
+}

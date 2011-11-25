@@ -16,9 +16,13 @@ test.Lag.monomial <- function() {
 
 	# Test 3
 	x <- monomialFromString("4*Z_t")
-	checkEquals(Lag(x,lags=1),monomialFromString("4*Z_{t-1}"))
+	checkEquals(Lag(x,power=1),monomialFromString("4*Z_{t-1}"))
 	
-	# Test4
+	# Test 4
+	x <- monomialFromString("4*Z_t")
+	checkEquals(Lag(x,power=3),monomialFromString("4*Z_{t-3}"))
+	
+	# Test 5
 	x <- monomialFromString("4*a*c^2*Z_t*e_{t+1}")
 	checkEquals(Lag(x),monomialFromString("4*a*c^2*Z_{t-1}*e_{t}"))
 	
@@ -40,7 +44,7 @@ test.Lag.monomials <- function() {
 	x2 <- monomialFromString("2*Z_{t-4}")
 	x <- x1 + x2
 	should <- monomialFromString("4*a*c^2*Z_{t+2}*e_{t+3}") + monomialFromString("2*Z_{t-2}")
-	checkEquals(Lag(x,lags=-2),should)
+	checkEquals(Lag(x,power=-2),should)
 	
 }
 

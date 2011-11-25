@@ -9,6 +9,10 @@ explode.monomial <- function(where,what,with) {
 	# where: a monomial possibly containing what
 	# what: the random variable or symbol to be injected in "where"
 	# with: the monomials "replacing" what 
+
+	if (class(with)=="monomial") {
+		with <- create_monomials(with)
+	}
 	
 	if (is.element("randomVariable",class(what))) {
 		lengthRandoms = length(where$randoms) 
@@ -16,7 +20,7 @@ explode.monomial <- function(where,what,with) {
 		
 		# is the randomVariable "what" in the "where" monomial?
 		areEquals <- sapply(where$randoms,"==",what)
-		
+	
 		nbWhat <- sum(areEquals)
 		# if no match return a monomials with "where"
 		if (nbWhat==0) return(create_monomials(where))
@@ -66,6 +70,25 @@ explode.monomial <- function(where,what,with) {
 	
 	stop("Error in explode.monomial: what is not of class 'randomVariable' or 'symbol'")
 }
+
+
+explode.monomials <- function(where, what, with) {
+	# where: a monomials possibly containing what
+	# what: the random variable or symbol to be injected in "where"
+	# with: the monomials "replacing" what 
+	
+	if (class(with)=="monomial") {
+		with <- create_monomials(with)
+	}
+	
+	if (length(where)==0) return(where)
+	result <- lapply(where,explode,what,with)
+	result <- unlist(result, recursive=FALSE)
+	
+	class(result) <- "monomials"
+	return(result)
+}
+
 
 
 isFirstRandomAnOddPower <- function(x,randomName) UseMethod("isFirstRandomAnOddPower",x)
@@ -149,3 +172,30 @@ shiftToZeroAndCompact <- function(x) {
 }
 
 
+create.h_t.expansion <- function(fromLag=0,toLag=1) {
+	# fromLag: il lag iniziale di h_{t-fromLag} = b0 + b1*w_{t-fromLag-1}* ...
+	# toLag: il ritardo massimo nell'espressione finale
+	
+	if (toLag-fromLag < 1) stop("Error in create.h_t.expansion: fromLag must be smaller than toLag")
+	# fai come se fromLag fosse 0 e alla fine shifta tutto di fromLag periodi
+	if (fromLag!=0) {
+		timeShift <- fromLag
+		fromLag <- 0
+		toLag <- toLag - timeShift
+	} else {
+		timeShift <- 0
+	}
+	
+	ht <- monomialsFromString("b0 + b1*w_{t-1}*h_{t-1} + b2*h_{t-1}")
+	where <- ht
+	with  <- ht
+	if (toLag>1) {
+		for (i in 1:(toLag-1)) {
+			what <- create_randomVariable(name="h",lag=i)
+			with <- Lag(with)
+			where <- explode(where,what,with)
+		}
+	}
+	if (timeShift) where <- Lag(where,lag=timeShift)
+	return(where)
+}
