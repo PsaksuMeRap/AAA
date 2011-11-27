@@ -196,6 +196,6 @@ create.h_t.expansion <- function(fromLag=0,toLag=1) {
 			where <- explode(where,what,with)
 		}
 	}
-	if (timeShift) where <- Lag(where,lag=timeShift)
+	if (timeShift) where <- Lag(where,power=timeShift)
 	return(where)
 }
