@@ -81,8 +81,6 @@ u.4 <- dropWhereFirstRandomIsOddPower(u4,"z")
 
 
 # questo è il vecchio codice 
-
-
 u_t <- create_monomials(monomialFromString("e_t"))
 
 for (i in 1:4) u_t <- u_t + create_symbolWithRandom(symbolName="f",randomName="e",index=i)
@@ -91,7 +89,7 @@ u.1 <- sort(u_t*u_t*u_t*u_t)
 u.2 <- shiftToZeroAndCompact(u.1)
 u.3 <- dropWhereFirstRandomIsOddPower(u.2,"e")
 
-# rimpiazza e_{t-i} con h_{t-i}*z_{t-i}
+# rimpiazza e_{t-i}^power con h_{t-i}^power*z_{t-i}^power
 where <- u.3
 for (lag in 0:4) {
 	for (power in 1:4) {
