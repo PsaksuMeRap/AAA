@@ -20,15 +20,11 @@ create_symbol <- function(name="a",power=1) {
 	}	
 	c <- create_symbols(a)
 	c[[2]] <- b
-	return(c)
-	
-	#stop("Error in function '*.symbol': entered symbols are not valid symbols")
+	return(sort(c))
 }
 
 "==.symbol" <- function(a,b) {
-	if (a$name != b$name) return(FALSE)
-	if (a$power != b$power) return(FALSE)
-	return(TRUE)
+	return (identical(a,b))
 }
 
 toString <- function(x) UseMethod("toString",x)

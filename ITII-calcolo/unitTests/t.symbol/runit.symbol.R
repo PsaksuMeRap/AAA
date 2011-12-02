@@ -42,13 +42,23 @@ test.multiply_two_symbol <- function() {
 	symbol1 <- create_symbol("a",4)
 	symbol2 <- create_symbol("b",2)
 	
-	# multiply two disjoint symbols
+	# multiply two different symbols
 	c <- symbol1 * symbol2
 	checkEquals(class(c),"symbols")
 	checkEquals(c[[1]]$name,"a")
 	checkEquals(c[[2]]$name,"b")
 	checkEquals(c[[1]]$power,4)
 	checkEquals(c[[2]]$power,2)
+	
+	# check that symbols are automatically ordered
+	c <- symbol2 * symbol1
+	checkEquals(class(c),"symbols")
+	checkEquals(c[[1]]$name,"a")
+	checkEquals(c[[2]]$name,"b")
+	checkEquals(c[[1]]$power,4)
+	checkEquals(c[[2]]$power,2)
+	
+	
 	
 	# check when same symbol
 	symbol2 <- create_symbol("a",2)
@@ -79,7 +89,7 @@ test.multiply_two_symbols <- function() {
 	checkEquals(c[[2]]$power,2)
 	checkEquals(length(c),2)
 	
-	# check commutativity
+	# check commutativity (symbols are sorted!)
 	c <- symbols2 * symbols1
 	checkEquals(class(c),"symbols")
 	checkEquals(c[[1]]$name,"a")
@@ -96,17 +106,18 @@ test.multiply_two_symbols <- function() {
 
 	c <- symbols1 * symbols2
 	checkEquals(class(c),"symbols")
+	checkEquals(length(c),5)
 	checkEquals(c[[1]]$name,"a")
 	checkEquals(c[[1]]$power,4)
 	checkEquals(c[[2]]$name,"b")
 	checkEquals(c[[2]]$power,2)
-	checkEquals(length(c),5)
-	checkEquals(c[[3]]$name,"d")
-	checkEquals(c[[3]]$power,2)
-	checkEquals(c[[4]]$name,"e")
-	checkEquals(c[[4]]$power,1)
-	checkEquals(c[[5]]$name,"c")
+	checkEquals(c[[3]]$name,"c")
+	checkEquals(c[[3]]$power,1)
+	checkEquals(c[[4]]$name,"d")
+	checkEquals(c[[4]]$power,2)
+	checkEquals(c[[5]]$name,"e")
 	checkEquals(c[[5]]$power,1)
+
 	
 	# square one symbols
 	symbol1 <- create_symbol("a",4)

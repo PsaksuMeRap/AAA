@@ -44,7 +44,7 @@ test.multiply_two_randomVariable <- function() {
 	checkEquals(length(a),1)
 	checkEquals(a[[1]]$lag,2)
 	checkEquals(a[[1]]$power,2)
-
+	
 	# check different random variables
 	rv1 <- create_randomVariable(name="a",lag=2)
 	rv2 <- create_randomVariable(name="b",lag=3,power=12)
@@ -55,6 +55,19 @@ test.multiply_two_randomVariable <- function() {
 	checkEquals(length(a),2)
 	checkEquals(a[[1]]$lag,2)
 	checkEquals(a[[2]]$power,12)
+	
+	# check that the rv are sorted
+	rv1 <- create_randomVariable(name="a",lag=2)
+	rv2 <- create_randomVariable(name="b",lag=3,power=12)
+	
+	a <- rv2 * rv1
+	
+	checkEquals(class(a),"randomVariables")
+	checkEquals(length(a),2)
+	checkEquals(a[[1]]$lag,2)
+	checkEquals(a[[1]]$name,"a")
+	checkEquals(a[[2]]$power,12)
+	checkEquals(a[[2]]$name,"b")
 	
 	# check error
 	checkException(a * 6)

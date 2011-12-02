@@ -8,7 +8,7 @@ rm(list=ls(all=TRUE))
 library("RUnit")
 
 stringsAsFactors = FALSE
-
+setwd("/home/claudio/workspace/AAA/ITII-calcolo/")
 source("./lib/library.R")
 source("./unitTests/testUtilities.R")
 
@@ -61,22 +61,69 @@ for (lag in 0:4) {
 	where <- explode(where,what,with)
 }
 
-u.1 <- where; rm(where)
+u_t <- where; rm(where)
 
 # rimpiazza tutti gli h_{t-i} con l'espressione con h_{t-4} quale unico lag di h
-where <- u.1
+where <- u_t
 for (i in 0:3) {
 	what <- create_randomVariable("h",lag=i)
 	with <- create.h_t.expansion(i,4)
 	where <- explode(where,what,with)
 }
 
-u.2 <- where
+u_t <- where; rm(where)
+u_t.2 <- u_t*u_t
 
-u.3 <- sort(u.2*u.2*u.2*u.2)
 
-u.4 <- shiftToZeroAndCompact(u.3)
-u.4 <- dropWhereFirstRandomIsOddPower(u4,"z")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# ora calcola E(u_t.2). Rimuovi dapprima tutti i termini la cui
+# variabile aleatoria z con indice temporale più alto ha potenza
+# dispari
+
+tmp <- dropWhereFirstRandomIsOddPower(u_t.2,"z")
+tmp <- shiftToZeroAndCompact(tmp)
+
+
+
+
+
+
+
+
+
+
+
+
+# calcola u_t^4
+u_t.4 <- u_t.2 * u_t.2
+
+u_t.4 <- shiftToZeroAndCompact(u_t.4)
+u_t.4 <- dropWhereFirstRandomIsOddPower(u_t.4,"z")
 
 
 

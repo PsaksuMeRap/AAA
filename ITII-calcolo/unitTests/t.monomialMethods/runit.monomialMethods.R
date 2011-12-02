@@ -27,7 +27,7 @@ test.explode.monomial <- function() {
 	# replace with a monomials containing 1 only
 	with <- monomialsFromString("1")
 	originalWhere <- where
-	where$randoms[[3]] <- NULL
+	where$randoms[[1]] <- NULL
 	checkEquals(explode.monomial(originalWhere,what,with),create_monomials(where))
 
 	# Test numero 4
@@ -345,7 +345,7 @@ test.shiftToZeroAndCompact <- function() {
 test.create.h_t.expansion <- function() {
 
 	# test1: crea il default
-	should <- "b0 + b1*w_{t-1}*h_{t-1} + b2*h_{t-1}"
+	should <- "b0 + b1*h_{t-1}*w_{t-1} + b2*h_{t-1}"
 	checkEquals(create.h_t.expansion(),monomialsFromString(should))
 	
 	
@@ -353,11 +353,11 @@ test.create.h_t.expansion <- function() {
 	checkException(create.h_t.expansion(0,0))
 	
 	# test3: crea l'espansione quando fromLag=0 e toLag=2
-	should <- "b0 + b1*b0*w_{t-1} + b1^2*w_{t-1}*w_{t-2}*h_{t-2} + b1*b2*w_{t-1}*h_{t-2} + b2*b0 + b2*b1*w_{t-2}*h_{t-2} + b2^2*h_{t-2}"
+	should <- "b0 + b0*b1*w_{t-1} + b1^2*w_{t-1}*w_{t-2}*h_{t-2} + b1*b2*w_{t-1}*h_{t-2} + b0*b2 + b1*b2*w_{t-2}*h_{t-2} + b2^2*h_{t-2}"
 	checkEquals(create.h_t.expansion(0,2),monomialsFromString(should))
 	
 	# test4: crea l'espansione quando fromLag=1 e toLag=3
-	should <- "b0 + b1*b0*w_{t-1} + b1^2*w_{t-1}*w_{t-2}*h_{t-2} + b1*b2*w_{t-1}*h_{t-2} + b2*b0 + b2*b1*w_{t-2}*h_{t-2} + b2^2*h_{t-2}"
+	should <- "b0 + b0*b1*w_{t-1} + b1^2*w_{t-1}*w_{t-2}*h_{t-2} + b1*b2*w_{t-1}*h_{t-2} + b0*b2 + b1*b2*w_{t-2}*h_{t-2} + b2^2*h_{t-2}"
 	checkEquals(create.h_t.expansion(1,3),Lag(monomialsFromString(should),1))
 	
 	# mettere la verifica per 0 to 3 calcolata a mano!

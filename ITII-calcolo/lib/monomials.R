@@ -50,6 +50,20 @@ create_monomials<- function(monomial=NULL) {
 	if (lb == 0) return(b)
 	if (la == 0) return(a)
 	
+	# questa è la versione con for
+	result <- vector("list",la*lb);
+	index <- 1
+	for (i in a) {
+		for (j in b) {
+			result[index] <- i * j
+			index <- index + 1
+		}
+	}
+	class(result) <- "monomials"
+	result <- compact(result)
+	return(result)
+	
+	# questa è la versione col prodotto cartesiano
 	cartProd.df <- expand.grid(a,b)
 	result <- mapply("*",cartProd.df[[1]],cartProd.df[[2]])
 	class(result) <- "monomials"
@@ -57,8 +71,6 @@ create_monomials<- function(monomial=NULL) {
 	return(result)
 	
 }
-
-
 
 compact <- function(a) UseMethod("compact",a)
 
@@ -72,13 +84,19 @@ compact.monomials <- function(a) {
 	for(monomial in a[-1]) {
 		copy <- TRUE
 		for (i in 1:length(tmp)) {
-			if (monomial$symbol==tmp[[i]]$symbol & monomial$randoms==tmp[[i]]$randoms) {
-				tmp[[i]]$number=tmp[[i]]$number+monomial$number
+			if(identical(monomial[2:3],tmp[[i]][2:3])) {
+				tmp[[i]][["number"]] <- tmp[[i]][["number"]] + monomial[["number"]]
 				copy <- FALSE
 				break
 			}
+		#	if (monomial$symbol==tmp[[i]]$symbol & monomial$randoms==tmp[[i]]$randoms) {
+		#		tmp[[i]]$number=tmp[[i]]$number+monomial$number
+		#		copy <- FALSE
+		#		break
+		#	}
 		}
-		if (copy) tmp[[length(tmp)+1]] <- monomial
+		
+		if (copy) tmp[[i+1]] <- monomial
 	}
 	
 	class(tmp) <- "monomials"

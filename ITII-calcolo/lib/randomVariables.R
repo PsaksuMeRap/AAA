@@ -17,12 +17,13 @@ create_randomVariables <- function(randomVariable) {
 
 
 "==.randomVariables" <- function(a,b) {
+	return(identical(a,b))
 	la <- length(a)
 	lb <- length(b)
 	if (la != lb) return(FALSE)
 	if (la + lb == 0) return(TRUE)
 	
-	result <- mapply(FUN="==",sort(a),sort(b))
+	result <- mapply(FUN="==",a,b)
 	if (all(result)) return(TRUE) else return(FALSE)
 }
 
@@ -61,6 +62,7 @@ sort.randomVariables <- function(randomVariables) {
 	}
 	
 	if (length(tmp)>0) { a <- c(a,tmp); class(a) <- "randomVariables" }
+	a <- sort(a)
 	return(a)
 }
 

@@ -33,8 +33,8 @@ sort.symbols <- function(symbols) {
 	for(sym_b in b) {
 		copy <- TRUE
 		for (i in 1:length(a)) {
-			if (sym_b$name==a[[i]]$name) {
-				a[[i]]$power=a[[i]]$power+sym_b$power
+			if (sym_b[["name"]]==a[[i]][["name"]]) {
+				a[[i]][["power"]]=a[[i]][["power"]]+sym_b[["power"]]
 				copy <- FALSE
 				break
 			}
@@ -43,18 +43,19 @@ sort.symbols <- function(symbols) {
 	}
 	
 	if (length(tmp)>0) { a <- c(a,tmp); class(a) <- "symbols" }
+	a <- sort(a)
 	return(a)
-
 }
 
 
 "==.symbols" <- function(a,b) {
+	return(identical(a,b))
 	la <- length(a)
 	lb <- length(b)
 	if (la != lb) return(FALSE)
 	if (la + lb == 0) return(TRUE)
 	
-	result <- mapply(FUN="==",sort(a),sort(b))
+	result <- mapply(FUN="==",a,b)
 	if (all(result)) return(TRUE) else return(FALSE)
 }
 

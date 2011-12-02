@@ -5,8 +5,8 @@
 
 
 create_randomVariable <- function(name="epsilon",lag=0,power=1) {
-	randomVariable <- create_symbol(name=name,power=power)
-	randomVariable$lag = lag
+	randomVariable <- create_symbol(name=name,power=as.numeric(power))
+	randomVariable$lag <- as.numeric(lag)
 	
 	
 	class(randomVariable) <- c("randomVariable",class(randomVariable))
@@ -14,6 +14,7 @@ create_randomVariable <- function(name="epsilon",lag=0,power=1) {
 }
 
 "==.randomVariable" <- function(a,b) {
+	return(identical(a,b))
 	if (a$name != b$name) return(FALSE)
 	if (a$lag != b$lag) return(FALSE)		
 	if (a$power != b$power) return(FALSE)
@@ -30,7 +31,7 @@ create_randomVariable <- function(name="epsilon",lag=0,power=1) {
 	}
 	c <- create_randomVariables(a)
 	c[[2]] <- b
-	return(c)
+	return(sort(c))
 	
 	stop("Error in function '*.randomVariable': entered randomVariable are not valid randomVariables")
 }

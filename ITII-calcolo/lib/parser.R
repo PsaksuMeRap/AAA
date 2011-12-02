@@ -42,7 +42,7 @@ parser.stringRandomVariable <- function(x) {
 	if (length(result)==2) {
 		power = trim(result[2])
 		if (substr(power,1,1)=="-") {
-			power <- -1*as.numeric(trim(substr(power,2,nchar(power)))) 
+			power <- -1.0*as.numeric(trim(substr(power,2,nchar(power)))) 
 		} else {
 			power <- as.numeric(power)
 		}
@@ -55,21 +55,21 @@ parser.stringRandomVariable <- function(x) {
 	result <- strsplit(result, split="_")[[1]]
 	name <- trim(result[[1]])
 	lag  <- trim(result[[2]])
-	# se il primo carattere non è "{" allora deve essere "t"
+	# se il primo carattere non e' "{" allora deve essere "t"
 	if (substr(lag,1,1)=="{") {
 		# elimina "{}
 		lag <- trim(substr(lag,2,nchar(lag)-1))
 		# elimina la "t"
 		lag <- trim(substr(lag,2,nchar(lag)))
-		if (nchar(lag)==0) lag=0
+		if (nchar(lag)==0) lag <- as.numeric(0)
 		if (substr(lag,1,1)=="-") {
 			lag <- as.numeric(trim(substr(lag,2,nchar(lag)))) 
 		}
 		if (substr(lag,1,1)=="+") {
-			lag <- -1 * as.numeric(trim(substr(lag,2,nchar(lag))))
+			lag <- -1.0 * as.numeric(trim(substr(lag,2,nchar(lag))))
 		}
 	} else {
-		lag=0
+		lag <- (0)
 	}
 	
 	return(create_randomVariable(name,lag,power))
@@ -111,7 +111,7 @@ parser.stringMonomial <- function(x) {
 		}		
 	}
 	
-	return(create_monomial(number,symbols=symbols,randoms=randoms))
+	return(create_monomial(number,symbols=sort(symbols),randoms=sort(randoms)))
 }
 
 parser.stringMonomials <- function(x) {

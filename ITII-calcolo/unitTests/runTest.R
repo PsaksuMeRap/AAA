@@ -3,9 +3,14 @@
 # Author: claudio
 ###############################################################################
 
+rm(list=ls(all=TRUE))
 
 library("RUnit")
+
+stringsAsFactors = FALSE
+setwd("/home/claudio/workspace/AAA/ITII-calcolo/")
 source("./lib/library.R")
+source("./unitTests/testUtilities.R")
 
 ## test globale
 dirs = c("./unitTests/t.lag",
