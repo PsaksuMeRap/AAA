@@ -9,7 +9,7 @@ options(help_type="html")
 
 library("RODBC")
 library("RUnit")
-home <- "/home/claudio/eclipse/AAA/VAR/"
+home <- "/home/claudio/workspace/AAA/VAR/"
 setwd(home)
 
 stringsAsFactors = FALSE

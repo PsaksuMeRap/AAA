@@ -8,7 +8,7 @@ options(browser="firefox")
 options(help_type="html")
 
 library("RODBC")
-home <- "/home/claudio/eclipse/AAA/VAR/"
+home <- "/home/claudio/workspace/AAA/VAR/"
 setwd(home)
 
 stringsAsFactors = FALSE
@@ -69,5 +69,5 @@ defaultDate <- function() {
 	return(Sys.Date()-1)
 }
 
-getFundNav("2011-10-28")
+getFundNav("2011-11-21")
 

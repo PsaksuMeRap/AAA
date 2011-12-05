@@ -169,7 +169,7 @@ if (FALSE) {
 
 
 whoisP <- function(names) {
-	df <- read.csv("/home/claudio/eclipse/Produzione/associazionePippo.csv",header=TRUE,sep=",",
+	df <- read.csv("/home/claudio/workspace/Produzione/associazionePippo.csv",header=TRUE,sep=",",
 			as.is=TRUE)
 	
 	getName <- function(name,df) {isOk <- df[,1]==name;return(df[isOk,2])}
@@ -178,7 +178,7 @@ whoisP <- function(names) {
 }
 
 whois <- function(names) {
-	df <- read.csv("/home/claudio/eclipse/Produzione/associazionePippo.csv",header=TRUE,sep=",",
+	df <- read.csv("/home/claudio/workspace/Produzione/associazionePippo.csv",header=TRUE,sep=",",
 			as.is=TRUE)
 	
 	getName <- function(name,df) {isOk <- df[,2]==name;return(df[isOk,1])}
