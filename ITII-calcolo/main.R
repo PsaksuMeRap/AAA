@@ -9,9 +9,9 @@ library("RUnit")
 
 stringsAsFactors = FALSE
 setwd("/home/claudio/workspace/AAA/ITII-calcolo/")
+setwd("\\\\usi/dfs/Utenti/O/ortellic/My Documents/workspace/AAA/ITII-calcolo")
 source("./lib/library.R")
 source("./unitTests/testUtilities.R")
-
 
 # il modello strutturale
 # calcolo di x_t generato da un modello MA(2)
@@ -22,6 +22,10 @@ source("./unitTests/testUtilities.R")
 # con h_t = b0 + b1*|e_{t-1}| + b2*h_{t-1}
 # o   h_t = b0 + (b2 + b1*|z_{t-1}|)*h_{t-1}
 # o   h_t = b0 + b1*w_{t-1}*h_{t-1} + b2*h_{t-1}      eq. (2)
+# o con notazione di teraesvirta
+#     h_t = g_t + c_{t-1} * h_{t-1}
+# con g_t := b0 e quindi deterministo e costante nel tempo
+#     c_t := b1*w_{t} + b2 = alpha*|z_{t}|+beta
 
 # il modello ausiliario 
 # x_t = c1*x_{t-1} + c2*x_{t-2} + u_t                 eq. (3)
@@ -35,7 +39,6 @@ source("./unitTests/testUtilities.R")
 # u_t = (1 - c1L - c2L^2) * x_t = (1 - c1L - c2L^2)*(1 - a1L - a2L^2) * e_t
 # quindi
 # u_t = (1 - f1L - f2L^2 - f3L^3 - f4L^4) * e_t
-
 
 # calcolo di u_t
 
@@ -75,43 +78,12 @@ u_t <- where; rm(where)
 u_t.2 <- u_t*u_t
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # ora calcola E(u_t.2). Rimuovi dapprima tutti i termini la cui
-# variabile aleatoria z con indice temporale più alto ha potenza
+# variabile aleatoria z con indice temporale piu' alto ha potenza
 # dispari
 
 tmp <- dropWhereFirstRandomIsOddPower(u_t.2,"z")
 tmp <- shiftToZeroAndCompact(tmp)
-
-
-
-
-
 
 
 
