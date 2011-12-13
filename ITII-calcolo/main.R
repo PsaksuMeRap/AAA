@@ -146,3 +146,12 @@ for (power in 1:4) {
 }
 
 u4.4 <- where; rm(where)
+
+p1 <- monomialsFromString("1 + -1*c1*L + -1*c2*L^2")
+p2 <- monomialsFromString("1 + -1*a1*L + -1*a2*L^2")
+toString(p1*p2)
+# "1 - 1*a1*L - 1*a2*L^2 - 1*c1*L + a1*c1*L^2 + a2*c1*L^3 - 1*c2*L^2 + a1*c2*L^3 + a2*c2*L^4"
+# "1 "
+# "1 + ( -c1 - a1 )*L + (a1*c1 - a2 -c2)*L^2 + (a2*c1 + a1*c2)*L^3 + a2*c2*L^4"
+# "1 +           f1*L +               f2*L^2 +              f3*L^3 + f4"
+
