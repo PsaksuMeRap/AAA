@@ -77,3 +77,34 @@ test.gamma_gc <- function() {
 	checkEquals(gamma_gc(g,beta,alpha,k1,k2),g^k1*k)
 
 }
+
+
+test.E_h <- function() {
+	g <- 0.5
+	alpha <- 0.5  
+	beta <- 0.2
+	
+	m <- 0
+	result <- E_h(g,beta,alpha,m)
+	checkEquals(result,1.0)
+	
+	m <- 1
+	result <- E_h(g,beta,alpha,m)
+	checkEquals(result,1.246703344)
+	
+	m <- 2
+	result <- E_h(g,beta,alpha,m)
+	checkEquals(result,1.810794942)
+	
+	m <- 3
+	result <- E_h(g,beta,alpha,m)
+	checkEquals(result,3.205492909)
+	
+	m <- 7
+	result <- E_h(g,beta,alpha,m)
+	checkEquals(result,2707.206627)
+	
+	m <- 8
+	checkException(E_h(g,beta,alpha,m))
+	
+}
