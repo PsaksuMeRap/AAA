@@ -4,20 +4,17 @@
 ###############################################################################
 
 
-test.create_position <- function() {
+test.Position <- function() {
 	source("./lib/position/position.R")
 	source("./lib/repository.R")
 	
 	# crea la posizione
-	position <- create_position()
-	position$create(name="Deutsche Telekom Common Stock",
-			currency="EUR",
-			amount=0.0
-	)
+	position <- new("Position",name="Deutsche Telekom Common Stock",
+			money=new("Money",currency="EUR",amount=0.0))
 	
-	checkEquals(class(position),"position")
-	checkEquals(position$isInstrument("position"),TRUE)
-	checkEquals(position$isInstrument("positions"),FALSE)
+	checkEquals(class(position)[[1]],"Position")
+	checkEquals(is.instrument(position,"Position"),TRUE)
+	checkEquals(is.instrument(position,"Positions"),FALSE)
 	
 }
 
@@ -26,52 +23,45 @@ test.isCurrency <- function() {
 	source("./lib/position/position.R")		
 
 	# crea la posizione
-	position <- create_position()
-	position$create(name="test",
-			currency="USD",
-			amount=100 #,
-			#origin=list(ID_AAA=10)
+	position <- new("Position",name="test",
+			money=new("Money",currency="USD",amount=100)
 	)
 	
-	checkEquals(position$isCurrency("EUR"),FALSE)
-	checkEquals(position$isCurrency("USD"),TRUE)	
+	checkEquals(isCurrency(position,"EUR"),FALSE)
+	checkEquals(isCurrency(position,"USD"),TRUE)	
 }
 
 test.fieldsToPrintDefault <- function() {
 	source("./lib/position/position.R")		
 	
 	# crea la posizione
-	position <- create_position()
-	position$create(name="test",
-			currency="USD",
-			amount=100#,
-			#origin=list(ID_AAA=10)
+	position <- new("Position",name="test",
+			money=new("Money",currency="USD",amount=100)
 	)
 	
-
 	fields <- list()
-	fields$class <- class(position)[1]
-	fields$currency <- position$money$currency
-	fields$amount <- formatC(position$money$amount,big.mark = "'",
+	fields$class <- class(position)[[1]]
+	fields$currency <- position@money@currency
+	fields$amount <- formatC(position@money@amount,big.mark = "'",
 				decimal.mark = ".",format="f",digits=2)
-	fields$name <- position$name
+	fields$name <- position@name
 	
 	# test 1: senza width
 	width <- list();
-	fieldsResult <- position$fieldsToPrintDefault(width)	
+	fieldsResult <- fieldsToPrintDefault(position,width)	
 	checkEquals(fieldsResult,fields)	
 
 	# test 2: con width$className
 	width <- c(className=12)
-	fields$class <- "position    "
-	fieldsResult <- position$fieldsToPrintDefault(width)	
+	fields$class <- "Position    "
+	fieldsResult <- fieldsToPrintDefault(position,width)
 	checkEquals(fieldsResult,fields)
 	
 	# test 3: con width$className e width$amount
 	width <- c(className=12,amount=10)
-	fields$class <- "position    "
+	fields$class <- "Position    "
 	fields$amount <- "    100.00"
-	fieldsResult <- position$fieldsToPrintDefault(width)	
+	fieldsResult <- fieldsToPrintDefault(position,width)	
 	checkEquals(fieldsResult,fields)
 }
 
@@ -79,11 +69,8 @@ test.fieldsToPrint <- function() {
 	source("./lib/position/position.R")		
 	
 	# crea la posizione
-	position <- create_position()
-	position$create(name="test",
-			currency="USD",
-			amount=100#,
-			#origin=list(ID_AAA=10)
+	position <- new("Position",name="test",
+			money=new("Money",currency="USD",amount=100)
 	)
 	
 	
