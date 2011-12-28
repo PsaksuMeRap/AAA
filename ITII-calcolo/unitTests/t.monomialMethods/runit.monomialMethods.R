@@ -360,8 +360,9 @@ test.create.h_t.expansion <- function() {
 	should <- "b0 + b0*b1*w_{t-1} + b1^2*w_{t-1}*w_{t-2}*h_{t-2} + b1*b2*w_{t-1}*h_{t-2} + b0*b2 + b1*b2*w_{t-2}*h_{t-2} + b2^2*h_{t-2}"
 	checkEquals(create.h_t.expansion(1,3),Lag(monomialsFromString(should),1))
 	
-	# mettere la verifica per 0 to 3 calcolata a mano!
-	checkEquals(TRUE,FALSE)
+	# test4: crea l'espansione quando fromLag=1 e toLag=4        
+	should <- "b0 + b0*b1*w_{t-2} + b0*b1^2*w_{t-2}*w_{t-3} + b1^3*h_{t-4}*w_{t-2}*w_{t-3}*w_{t-4} + b1^2*b2*h_{t-4}*w_{t-2}*w_{t-3} + b0*b1*b2*w_{t-2} + b1^2*b2*h_{t-4}*w_{t-2}*w_{t-4} + b1*b2^2*h_{t-4}*w_{t-2} + b0*b2 + b0*b1*b2*w_{t-3} + b1^2*b2*h_{t-4}*w_{t-3}*w_{t-4} + b1*b2^2*h_{t-4}*w_{t-3} + b0*b2^2 + b1*b2^2*h_{t-4}*w_{t-4} + b2^3*h_{t-4}"
+	checkEquals(create.h_t.expansion(1,4),monomialsFromString(should))
 }
 
 

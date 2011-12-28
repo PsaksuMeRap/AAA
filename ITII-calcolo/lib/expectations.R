@@ -98,8 +98,10 @@ gamma_c <- function(beta, alpha, k) {
 }
 
 gamma_gc <- function(g,beta,alpha,k1,k2) {
-	## questa funzione restituisce il valore atteso di g^k1 * c^k2
-	## dove g è un numero
+	# questa funzione calcola il valore atteso del prodotto
+	# g^k1 * c^k2 dove g corrisponde a b0 e c = b1*|z_t| + b2
+	# come da Teraesvirta
+	
 	return(g^k1*gamma_c(beta,alpha,k2))
 
 }
