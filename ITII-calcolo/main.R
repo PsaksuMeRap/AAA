@@ -66,16 +66,23 @@ for (lag in 0:4) {
 
 u_t <- where; rm(where)
 
+# calcola u_t^2
+u_t.2 <- u_t*u_t
+rm(u_t)
+
+# rimuovi le potenze dispari di "z" quando sono il termine con indice temporale
+# piu' grande
+u_t.2 <- dropWhereFirstRandomIsOddPower(u_t.2,"z")
+
 # rimpiazza tutti gli h_{t-i} con l'espressione con h_{t-4} quale unico lag di h
-where <- u_t
+where <- u_t.2
 for (i in 0:3) {
 	what <- create_randomVariable("h",lag=i)
-	with <- create.h_t.expansion(i,4)
+	with <- create.h_t.expansion(fromLag=i,toLag=4)
 	where <- explode(where,what,with)
 }
 
-u_t <- where; rm(where)
-u_t.2 <- u_t*u_t
+u_t.2 <- where; rm(where)
 
 
 # ora calcola E(u_t.2). Rimuovi dapprima tutti i termini la cui
@@ -84,7 +91,16 @@ u_t.2 <- u_t*u_t
 
 tmp <- dropWhereFirstRandomIsOddPower(u_t.2,"z")
 tmp <- shiftToZeroAndCompact(tmp)
+u_t.2 <- tmp
+rm(tmp)
 
+# calcola z_{t}^k e poi rimpiazza con E(z_{t}^k)
+where <- u.5
+for (power in 1:4) {
+	what <- create_randomVariable(name="z",power=power)
+	with <- create_monomials(create_monomial(number=E_z(power)))
+	where <- explode(where,what,with)
+}
 
 
 

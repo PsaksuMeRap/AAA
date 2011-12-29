@@ -234,3 +234,13 @@ test.toString.randomVariables <- function() {
 	checkEquals(toString(a),"")
 	
 }
+
+
+test.disaggregateRandomVariable <- function() {
+	
+	disaggregate <- function(x) {
+		
+	}
+	
+	checkEquals(TRUE,FALSE)
+}
