@@ -8,8 +8,8 @@ rm(list=ls(all=TRUE))
 library("RUnit")
 
 stringsAsFactors = FALSE
-setwd("/home/claudio/workspace/AAA/ITII-calcolo/")
-setwd("\\\\usi/dfs/Utenti/O/ortellic/My Documents/workspace/AAA/ITII-calcolo")
+# setwd("/home/claudio/workspace/AAA/ITII-calcolo/")
+# setwd("\\\\usi/dfs/Utenti/O/ortellic/My Documents/workspace/AAA/ITII-calcolo")
 source("./lib/library.R")
 source("./unitTests/testUtilities.R")
 
@@ -102,14 +102,36 @@ u_t.2 <- tmp
 rm(tmp)
 
 # calcola z_{t}^k e poi rimpiazza con E(z_{t}^k)
-where <- u.5
+where <- u_t.2
 for (power in 1:4) {
 	what <- create_randomVariable(name="z",power=power)
 	with <- create_monomials(create_monomial(number=E_z(power)))
 	where <- explode(where,what,with)
 }
 
+u_t.2 <- where; rm(where)
 
+# calcola w_{t}^k e poi rimpiazza con E(w_{t}^k)
+where <- u_t.2
+for (lag in 0:4) {
+	for (power in 1:4) {
+		what <- create_randomVariable(name="w",power=power,lag=lag)
+		with <- create_monomials(create_monomial(number=E_w(power)))
+		where <- explode(where,what,with)
+	}
+}
+u_t.2 <- where; rm(where)
+
+# calcola h_{t}^k e poi rimpiazza con E(h_{t}^k)
+where <- u_t.2
+for (lag in 0:4) {
+	for (power in 1:4) {?
+		what <- create_randomVariable(name="h",power=power,lag=lag)
+		with <- create_monomials(create_monomial(number=E_h(power)))
+		where <- explode(where,what,with)
+	}
+}
+u_t.2 <- where; rm(where)
 
 
 
@@ -119,6 +141,22 @@ u_t.4 <- u_t.2 * u_t.2
 
 u_t.4 <- shiftToZeroAndCompact(u_t.4)
 u_t.4 <- dropWhereFirstRandomIsOddPower(u_t.4,"z")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
