@@ -235,12 +235,3 @@ test.toString.randomVariables <- function() {
 	
 }
 
-
-test.disaggregateRandomVariable <- function() {
-	
-	disaggregate <- function(x) {
-		
-	}
-	
-	checkEquals(TRUE,FALSE)
-}

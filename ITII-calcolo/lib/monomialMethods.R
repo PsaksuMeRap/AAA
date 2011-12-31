@@ -3,6 +3,82 @@
 # Author: ortellic
 ###############################################################################
 
+disaggregate <- function(x,...) UseMethod("disaggregate",x)
+
+disaggregate.randomVariable <- function(x,name="",lag=0) {
+	# x: a randomVariable
+	# name: the name of the randomVariable to replace
+	# lag: the desired lag for wich the randomVariable
+	# name must be disaggregated
+	
+	# questa funzione restituisce una lista di classe
+	# randomVariables contenente la randomVariable x
+	# con power 1 ripetuta tante volte quante la potenza
+	# originale di x.
+	if (name==x$name & lag==x$lag) {
+		power <- x$power
+		tmp <- create_randomVariable(name=x$name,lag=x$lag)
+		new <- create_randomVariables(tmp)
+		if (power>1) {
+			for (i in (2:power)) new[[i]] <- tmp
+		}
+		return(new)
+	} 
+	
+	return(create_randomVariables(x))
+}
+
+disaggregate.randomVariables <- function(x,name="",lag=0) {
+	# x: a randomVariables
+	# name: the name of the randomVariable to replace
+	# lag: the desired lag for wich the randomVariable
+	# name must be disaggregated
+	
+	# questa funzione restituisce una lista di classe
+	# randomVariables contenente tutte le randomVariables
+	# in x con power 1 ripetute tante volte quante la potenza
+	# originali.
+	if (length(x)==0) return(create_randomVariables())
+	new <- unlist(lapply(x,disaggregate,name=name,lag=lag),recursive=FALSE,use.names=FALSE)
+	class(new) <- "randomVariables"
+	return(new)
+}
+
+disaggregate.monomial <- function(x,rv=create_randomVariable(name="",lag=0)) {
+	# x: the monomial to work with
+	# randomVariable: the randomVariable to disaggregate (only the name is considered)
+	
+	# questa funzione restituisce un oggetto di classe
+	# monomial contenente tutte la randomVariable name
+	# in x con power 1 ripetuta tante volte quante le potenze
+	# originali.
+
+	if (is.element("randomVariable",class(rv))) {
+		newRandomVariables <- disaggregate(x$randoms,name=rv$name,lag=rv$lag)
+		monomial <- create_monomial(number=x$number,symbols=x$symbols,
+				randoms=newRandomVariables)
+		return(monomial)
+	}
+	stop("Method disaggregate.monomial with other than randomVariable not implemented yet.")
+}
+
+disaggregate.monomials <- function(x,rv=create_randomVariable(name="",lag=0)) {
+	# x: the monomials to work with
+	# randomVariable: the randomVariable to disaggregate (only the name is considered)
+	
+	# questa funzione restituisce un oggetto di classe
+	# monomials contenente tutte le randomVariables rv
+	# in x con power 1 ripetuta tante volte quante le potenze
+	# originali.
+	if (length(x)==0) return(x)
+	
+	monomials <- lapply(x,disaggregate,rv)
+	class(monomials) <- "monomials"
+	return(monomials)
+	
+}
+
+
 explode <- function(where,what,with) UseMethod("explode",where)
 
 explode.monomial <- function(where,what,with) {

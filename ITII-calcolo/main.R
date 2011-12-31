@@ -74,6 +74,13 @@ rm(u_t)
 # piu' grande
 u_t.2 <- dropWhereFirstRandomIsOddPower(u_t.2,"z")
 
+# rimpiazza tutti gli h_{t-i}^k con h_{t-i}*h_{t-i}*... k-volte
+for (i in 0:3) {
+	rv <- create_randomVariable("h",lag=i)
+	u_t.2 <- disaggregate(u_t.2,rv)
+}
+
+
 # rimpiazza tutti gli h_{t-i} con l'espressione con h_{t-4} quale unico lag di h
 where <- u_t.2
 for (i in 0:3) {

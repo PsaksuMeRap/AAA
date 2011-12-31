@@ -366,3 +366,66 @@ test.create.h_t.expansion <- function() {
 }
 
 
+
+test.disaggregateRandomVariable <- function() {
+	
+	# verifica quando la potenza è 1
+	testRV <- create_randomVariable(name="a",lag=2)
+	result <- disaggregate(testRV)
+	
+	checkEquals(toString(result),"a_{t-2}")
+	
+	# verifica quando la potenza è 3
+	testRV <- create_randomVariable(name="a",lag=2,power=3)
+	result <- disaggregate(testRV,name="a",lag=2)
+	
+	checkEquals(toString(result),"a_{t-2}*a_{t-2}*a_{t-2}")
+
+	# verifica quando la potenza è 3 ma lag non corretto
+	testRV <- create_randomVariable(name="a",lag=2,power=3)
+	result <- disaggregate(testRV,name="a",lag=1)
+	
+	checkEquals(toString(result),"a_{t-2}^3")
+	
+}
+
+
+test.disaggregateRandomVariables <- function() {
+	
+	# con empty random_variables
+	randomVariables <- create_randomVariables()
+	result <- disaggregate(randomVariables,"a",2)
+	
+	checkEquals(result,randomVariables)
+	
+	# verifica quando la potenza è 3
+	testRV1 <- create_randomVariable(name="a",lag=2,power=3)
+	testRV2 <- create_randomVariable(name="b",lag=3,power=4)
+	randomVariables1 <- create_randomVariables(testRV1)
+	randomVariables2 <- create_randomVariables(testRV2)
+	randomVariables <- randomVariables1 * randomVariables2
+	
+	result <- disaggregate(randomVariables,"a",2)
+	checkEquals(toString(result),"a_{t-2}*a_{t-2}*a_{t-2}*b_{t-3}^4")
+	
+}
+
+test.disaggregateMonomial <- function() {
+	
+	# 
+	monomial <- monomialFromString("4*a*b^3*h_t^2*g_{t-2}^3")
+	rv <- create_randomVariable(name="h",lag=0,power=2)
+	
+	result <- disaggregate(monomial,rv)
+	checkEquals(toString(result),"4*a*b^3*g_{t-2}^3*h_{t}*h_{t}")
+}
+
+test.disaggregateMonomials <- function() {
+	
+	# 
+	monomial <- monomialsFromString("2*a*z_t + h_t^2*g_t^3")
+	rv <- create_randomVariable(name="h",lag=0,power=2)
+	
+	result <- disaggregate(monomial,rv)
+	checkEquals(toString(result),"2*a*z_{t} + g_{t}^3*h_{t}*h_{t}")
+}
