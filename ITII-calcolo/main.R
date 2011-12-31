@@ -123,15 +123,54 @@ for (lag in 0:4) {
 u_t.2 <- where; rm(where)
 
 # calcola h_{t}^k e poi rimpiazza con E(h_{t}^k)
+b0 = 1.0
+b1 = 0.2
+b2 = 0.3
 where <- u_t.2
 for (lag in 0:4) {
-	for (power in 1:4) {?
+	for (power in 1:4) {
 		what <- create_randomVariable(name="h",power=power,lag=lag)
-		with <- create_monomials(create_monomial(number=E_h(power)))
+		Eh <- E_h(g=b0,beta=b2,alpha=b1,m=power)
+		with <- create_monomials(create_monomial(number=Eh))
 		where <- explode(where,what,with)
 	}
 }
 u_t.2 <- where; rm(where)
+
+tmp <- shiftToZeroAndCompact(u_t.2)
+
+
+
+
+
+
+
+p1 <- monomialsFromString("1 + -1*c1*L + -1*c2*L^2")
+p2 <- monomialsFromString("1 + -1*a1*L + -1*a2*L^2")
+toString(p1*p2)
+# "1 - 1*a1*L - 1*a2*L^2 - 1*c1*L + a1*c1*L^2 + a2*c1*L^3 - 1*c2*L^2 + a1*c2*L^3 + a2*c2*L^4"
+# "1 "
+# "1 + ( -c1 - a1 )*L + (a1*c1 - a2 -c2)*L^2 + (a2*c1 + a1*c2)*L^3 + a2*c2*L^4"
+# "1 +           f1*L +               f2*L^2 +              f3*L^3 +    f4*L^4"
+
+# 1) Parto dai valori a1 e a2 del modello strutturale MA(2)
+a1 <- 0.25
+a2 <- 0.5
+#    e ricavo i pseudo valori del modello ausiliario c1 e c2
+c1c2 <- f(a1,a2) f da definire
+
+# 2) Calcolo i valori della rappresentazione di u_t in termini di e_t, ovvero
+#    i coefficienti f1,...,f4
+f1 <- "f1 <- -c1 -a1"
+f2 <- "f2 <- a1*c1 - a2 -c2"
+f3 <- "f3 <- a2*c1 + a1*c2"
+f4 <- "f4 <- a2*c2"
+
+# 3) utilizzo i valori di b0, b1 e b2 del modello strutturale garch per calcolare
+#    il valore atteso di h_t^k
+
+# 4) utilizzo i valori attesi di h_t^k per calcolare l'espressione
+
 
 
 
@@ -141,78 +180,4 @@ u_t.4 <- u_t.2 * u_t.2
 
 u_t.4 <- shiftToZeroAndCompact(u_t.4)
 u_t.4 <- dropWhereFirstRandomIsOddPower(u_t.4,"z")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# questo è il vecchio codice 
-u_t <- create_monomials(monomialFromString("e_t"))
-
-for (i in 1:4) u_t <- u_t + create_symbolWithRandom(symbolName="f",randomName="e",index=i)
-
-u.1 <- sort(u_t*u_t*u_t*u_t)
-u.2 <- shiftToZeroAndCompact(u.1)
-u.3 <- dropWhereFirstRandomIsOddPower(u.2,"e")
-
-# rimpiazza e_{t-i}^power con h_{t-i}^power*z_{t-i}^power
-where <- u.3
-for (lag in 0:4) {
-	for (power in 1:4) {
-		what <- create_randomVariable("e",lag=lag,power=power)
-		with <- monomialFromString(paste("h_{t-",lag,"}^",power,"*z_{t-",lag,"}^",power,sep=""))
-		where <- explode(where,what,with)
-	}
-}
-
-u.4 <- where; rm(where)
-
-# rimpiazza tutti gli h_{t-i} con l'espressione con h_{t-4} quale unico lag di h
-lagMassimo <- max( maxLag(u.4,"h") )
-lagMinimo  <- min( minLag(u.4,"h") )
-where <- u.4
-for (i in lagMinimo:(lagMassimo-1)) {
-	with <- create.h_t.expansion(i,lagMassimo)
-	for (power in 1:lagMassimo) {
-		what <- create_randomVariable("h",lag=i,power=power)
-		where <- explode(where,what,with)
-		if (i != lagMassimo) with <- with * with
-	}
-}
-
-u.5 <- where; rm(where)
-u.6 <- shiftToZeroAndCompact(u.5);rm(u.5)
-
-
-# calcola E(z_{t}^k)
-where <- u.5
-for (power in 1:4) {
-	what <- create_randomVariable(name="z",power=power)
-	with <- create_monomials(create_monomial(number=E_z(power)))
-	where <- explode(where,what,with)
-}
-
-u4.4 <- where; rm(where)
-
-p1 <- monomialsFromString("1 + -1*c1*L + -1*c2*L^2")
-p2 <- monomialsFromString("1 + -1*a1*L + -1*a2*L^2")
-toString(p1*p2)
-# "1 - 1*a1*L - 1*a2*L^2 - 1*c1*L + a1*c1*L^2 + a2*c1*L^3 - 1*c2*L^2 + a1*c2*L^3 + a2*c2*L^4"
-# "1 "
-# "1 + ( -c1 - a1 )*L + (a1*c1 - a2 -c2)*L^2 + (a2*c1 + a1*c2)*L^3 + a2*c2*L^4"
-# "1 +           f1*L +               f2*L^2 +              f3*L^3 + f4"
 

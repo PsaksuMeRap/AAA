@@ -118,6 +118,11 @@ E_h <- function(g,beta,alpha,m) {
 	# con g_t := b0 e quindi deterministo e costante nel tempo
 	#     c_t := b1*w_{t} + b2 = alpha*|z_{t}|+beta
 	
+	# da cui la seguente relazione: 
+	# g = b0
+	# beta = b2
+	# alpha = b1
+	
 	if (m == 0) return(1.0)
 	
 	if (m == 1) {
