@@ -3,21 +3,16 @@
 # Author: claudio
 ###############################################################################
 
-
-derive <- function(x,wrt="L") UseMethod("derive",x)
-
-derive.symbol <- function(x,wrt="L") {
-	# x: a symbol
-	# wrt: "with respect to", i.e. the variable name wrt derive
+test.derive.symbol <- function()  {
 	
-	if (x$name!=wrt) return(NULL)
+	# check 1: derive constant
+	a1 <- create_symbol(name="a1",power=4)
+	result <- derive(a1)
+	checkEquals(result,create_monomial(number=0))
 	
-	checkEquals(symbol$name,"a")
-	checkEquals(symbol$power,1)
-	
-}
-
-	symbol <- create_symbol(name="L",power=3)
-
-
+	a1 <- create_symbol(name="L",power=4)
+	result <- derive(a1)
+	checkEquals(result$number,4)
+	checkEquals(result$symbols[[1]]$name,"L")
+	checkEquals(result$symbols[[1]]$power,3)
 }

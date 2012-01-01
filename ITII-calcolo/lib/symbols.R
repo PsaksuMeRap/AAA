@@ -47,6 +47,30 @@ sort.symbols <- function(symbols) {
 	return(a)
 }
 
+compact.symbols <- function(a) {
+	# a symbol
+
+	la <- length(a)
+	if (la <= 1) return(a)
+	
+	tmp <- list()
+	tmp[[1]] <- a[[1]]
+	for(symbol in a[-1]) {
+		copy <- TRUE
+		for (i in 1:length(tmp)) {
+			if(symbol$name==tmp[[i]]$name) {
+				tmp[[i]]$power <- tmp[[i]]$power + symbol$power
+				copy <- FALSE
+				break
+			}
+		}
+		if (copy) tmp[[i+1]] <- symbol
+	}
+	
+	class(tmp) <- "symbols"
+	return(tmp)
+}
+
 
 "==.symbols" <- function(a,b) {
 	return(identical(a,b))

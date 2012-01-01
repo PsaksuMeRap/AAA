@@ -135,6 +135,49 @@ test.multiply_two_symbols <- function() {
 	checkException(tmp * 2)
 }
 
+test.compact.symbols <- function() {
+	
+	# with 2 symbol 
+	symbol1 <- create_symbol("b",4)
+	symbol2 <- create_symbol("b",2)
+	symbols <- create_symbols(symbol1)
+	symbols[[2]] <- symbol2
+	
+	result <- compact(symbols)
+	symbols[[2]] <- NULL
+	symbols[[1]]$power <- 6
+	checkEquals(result,symbols)
+	
+	
+	# with 3 symbols 
+	symbol1 <- create_symbol("b",4)
+	symbol2 <- create_symbol("b",2)
+	symbol3 <- create_symbol("b",2)
+	symbols <- create_symbols(symbol1)
+	symbols[[2]] <- symbol2
+	symbols[[3]] <- symbol3
+	
+	result <- compact(symbols)
+	symbols[[3]] <- NULL
+	symbols[[2]] <- NULL
+	symbols[[1]]$power <- 8
+	checkEquals(result,symbols)
+	
+	
+	# with 3 symbols 
+	symbol1 <- create_symbol("a",4)
+	symbol2 <- create_symbol("b",2)
+	symbol3 <- create_symbol("b",2)
+	symbols <- symbol1 * symbol2
+	symbols[[3]] <- symbol3
+	
+	result <- compact(symbols)
+	symbols[[3]] <- NULL
+	symbols[[2]]$power <- 4
+	checkEquals(result,symbols)
+}
+
+
 test.equality_two_symbol <- function() {
 	
 	# are equals
