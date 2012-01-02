@@ -9,7 +9,7 @@ derive <- function(x,wrt="L") UseMethod("derive",x)
 derive.monomial <- function(x,wrt="L") {
 	# x: a monomial
 	# wrt: "with respect to", i.e. the variable name wrt derive
-	
+
 	symbols <- x$symbols
 	l.symbols <- length(symbols)
 	
@@ -41,7 +41,7 @@ derive.monomial <- function(x,wrt="L") {
 		symbols[areDerived] <- NULL
 		tmpMonomial <- create_monomial(number=x$number,symbols=symbols,randoms=x$randoms)
 		tmpToDerive <- create_monomial(number=1,symbols=symbolsToDerive)
-		result <- tmpMonomial*derive(tmpToDerive)
+		result <- tmpMonomial*derive(tmpToDerive,wrt)
 		return(result[[1]])
 	} else {
 		return(create_monomial(number=0))
@@ -49,4 +49,14 @@ derive.monomial <- function(x,wrt="L") {
 	
 }
 
+derive.monomials <- function(monomials,wrt="L") {
+	# x: a monomials
+	# wrt: "with respect to", i.e. the variable name wrt derive
+	
+	l.monomials <- length(monomials)
+	if (l.monomials==0) return(monomials)
+	result <- lapply(monomials,derive,wrt)
+	class(result) <- "monomials"
+	return(result)
+}
 

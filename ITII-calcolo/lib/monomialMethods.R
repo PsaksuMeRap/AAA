@@ -275,3 +275,12 @@ create.h_t.expansion <- function(fromLag=0,toLag=1) {
 	if (timeShift) where <- Lag(where,power=timeShift)
 	return(where)
 }
+
+removeZero <- function(monomials) {
+	areZero <- sapply(monomials,function(x){return(x$number==0)})
+	if (length(areZero)>0) {
+		if (any(areZero)) monomials[areZero] <- NULL
+	}
+	return(monomials)
+}
+

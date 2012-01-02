@@ -70,3 +70,12 @@ minLag.monomials <- function(x,randomVariableName) {
 	
 	return(numeric(0))
 }
+
+
+extractLagCoeff <- function(monomial,power=1) {
+	symbols <- compact(monomial$symbols)
+	areOk <- sapply(symbols,function(x){return(x$name=="L" & x$power==power)},power)
+	if (any(areOk)) return(create_monomial(number=monomial$number,symbols=symbols[!areOk],randoms=monomial$randoms))
+	return(NULL)
+}
+

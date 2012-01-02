@@ -19,7 +19,8 @@ dirs = c("./unitTests/t.lag",
 		"./unitTests/t.parser",
 		"./unitTests/t.randomVariable",
 		"./unitTests/t.symbol",
-		"./unitTests/t.expectations"		
+		"./unitTests/t.expectations",
+		"./unitTests/t.derive"	
 		)
 testsuite.lists <- defineTestSuite("Test globale",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)

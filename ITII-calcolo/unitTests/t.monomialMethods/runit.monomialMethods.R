@@ -429,3 +429,30 @@ test.disaggregateMonomials <- function() {
 	result <- disaggregate(monomial,rv)
 	checkEquals(toString(result),"2*a*z_{t} + g_{t}^3*h_{t}*h_{t}")
 }
+
+test.removeZero <- function() {
+	
+	# return all monomial
+	monomials <- monomialsFromString("3.5*a + 5*b - 3*c")
+	result <- removeZero(monomials)
+	checkEquals(result,monomials)
+	
+	# remove one monomial
+	monomials <- monomialsFromString("3.5*a + 0*b - 3*c")
+	result <- removeZero(monomials)
+	monomials[[2]] <- NULL
+	checkEquals(result,monomials)
+	
+	# remove all monomials
+	monomials <- monomialsFromString("0 + 0*b - 0*c")
+	result <- removeZero(monomials)
+	checkEquals(result,create_monomials())
+
+	# remove from empty monomials
+	monomials <- create_monomials()
+	result <- removeZero(monomials)
+	checkEquals(result,create_monomials())
+}
+
+
+
