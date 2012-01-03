@@ -128,33 +128,7 @@ test.minLag.monomials <- function() {
 }
 
 test.extractLagCoeff <- function() {
-	extractLagCoeff <- function(monomial,power=1) {
-		symbols <- compact(monomial$symbols)
-		if (power==0) {
-			areL <- sapply(symbols,function(x){return(x$name=="L")})
-			if (any(areL)) {
-				areL <- sapply(symbols,function(x,power){return(x$name=="L" & x$power==power)},power)
-				if (any(areL)) {
-					tmp <- symbols[!areL]
-					class(tmp) <- "symbols"
-					return(create_monomial(number=monomial$number,symbols=tmp,randoms=monomial$randoms))
-				} else {
-					return(NULL)
-				}
-			} else {
-				return(monomial)
-			}
-		}
-		areL <- sapply(symbols,function(x,power){return(x$name=="L" & x$power==power)},power)
-		if (any(areL)) {
-			tmp <- symbols[!areL]
-			class(tmp) <- "symbols"
-			return(create_monomial(number=monomial$number,symbols=tmp,randoms=monomial$randoms))
-		}
-		
-		return(NULL)
-	}
-	
+
 	# check a zero Lag monomial
 	monomial <- monomialFromString("4*a^2*b^3")
 	result <- extractLagCoeff(monomial,power=0)
@@ -190,7 +164,7 @@ test.extractLagCoeff <- function() {
 	result <- extractLagCoeff(monomial,power=0)
 	checkEquals(result,monomialFromString("1"))
 	
-	# check a monomial with L^k, k>0
+	# check a monomial with L^k, k=0
 	monomial <- monomialFromString("6*a^3*b*L^0")
 	result <- extractLagCoeff(monomial,power=0)
 	checkEquals(result,monomialFromString("6*a^3*b"))

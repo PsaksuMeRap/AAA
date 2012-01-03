@@ -72,10 +72,33 @@ minLag.monomials <- function(x,randomVariableName) {
 }
 
 
-extractLagCoeff <- function(monomial,power=1) {
-	symbols <- compact(monomial$symbols)
-	areOk <- sapply(symbols,function(x){return(x$name=="L" & x$power==power)},power)
-	if (any(areOk)) return(create_monomial(number=monomial$number,symbols=symbols[!areOk],randoms=monomial$randoms))
+# questa funzione estrae i coefficienti del lag desiderato
+extractLagCoeff <- function(x,power=1) UseMethod("extractLagCoeff",x)
+
+extractLagCoeff.monomial <- function(x,power=1) {
+	symbols <- compact(x$symbols)
+	if (power==0) {
+		areL <- sapply(symbols,function(x){return(x$name=="L")})
+		if (any(areL)) {
+			areL <- sapply(symbols,function(x,power){return(x$name=="L" & x$power==power)},power)
+			if (any(areL)) {
+				tmp <- symbols[!areL]
+				class(tmp) <- "symbols"
+				return(create_monomial(number=x$number,symbols=tmp,randoms=x$randoms))
+			} else {
+				return(NULL)
+			}
+		} else {
+			return(x)
+		}
+	}
+	areL <- sapply(symbols,function(x,power){return(x$name=="L" & x$power==power)},power)
+	if (any(areL)) {
+		tmp <- symbols[!areL]
+		class(tmp) <- "symbols"
+		return(create_monomial(number=x$number,symbols=tmp,randoms=x$randoms))
+	}
+	
 	return(NULL)
 }
 
