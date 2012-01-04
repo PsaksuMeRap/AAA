@@ -102,3 +102,12 @@ extractLagCoeff.monomial <- function(x,power=1) {
 	return(NULL)
 }
 
+extractLagCoeff.monomials <- function(x,power=1) {
+	if (length(x)==0) return(x)
+	result <- lapply(x,extractLagCoeff,power)
+	areNull <- sapply(result,is.null)
+	if (all(areNull)) return(create_monomials())
+	result <- result[!areNull]
+	class(result) <- "monomials"
+	return(result)
+}

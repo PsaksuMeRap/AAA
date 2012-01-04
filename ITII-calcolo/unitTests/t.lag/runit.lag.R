@@ -127,7 +127,7 @@ test.minLag.monomials <- function() {
 	checkEquals(minLag(x,"Z"),numeric(0))
 }
 
-test.extractLagCoeff <- function() {
+test.extractLagCoeff.monomial <- function() {
 
 	# check a zero Lag monomial
 	monomial <- monomialFromString("4*a^2*b^3")
@@ -169,4 +169,22 @@ test.extractLagCoeff <- function() {
 	result <- extractLagCoeff(monomial,power=0)
 	checkEquals(result,monomialFromString("6*a^3*b"))
 	
+}
+
+test.extractLagCoeff.monomials <- function() {	
+	
+	# check an empty monomials
+	monomials <- create_monomials()
+	result <- extractLagCoeff(monomials,power=0)
+	checkEquals(result,monomials)
+	
+	# check a monomials with a NULL return
+	monomials <- monomialsFromString("4*a^2*L + abc*d*L^2")
+	result <- extractLagCoeff(monomials,power=1)
+	checkEquals(result,monomialsFromString("4*a^2"))
+	
+	# check a monomial with three valid returns
+	monomials <- monomialsFromString("4*a^2*L + abc*d*L+5*L")
+	result <- extractLagCoeff(monomials,power=1)
+	checkEquals(result,monomialsFromString("4*a^2 + abc*d+5"))
 }

@@ -147,7 +147,13 @@ tmp <- shiftToZeroAndCompact(u_t.2)
 
 p1 <- monomialsFromString("1 + -1*c1*L + -1*c2*L^2")
 p2 <- monomialsFromString("1 + -1*a1*L + -1*a2*L^2")
-toString(p1*p2)
+product <- p1*p2
+
+f <- list()
+for (i in 0:4) {
+f[[i+1]] <- extractLagCoeff(product,i)
+}
+
 # "1 - 1*a1*L - 1*a2*L^2 - 1*c1*L + a1*c1*L^2 + a2*c1*L^3 - 1*c2*L^2 + a1*c2*L^3 + a2*c2*L^4"
 # "1 "
 # "1 + ( -c1 - a1 )*L + (a1*c1 - a2 -c2)*L^2 + (a2*c1 + a1*c2)*L^3 + a2*c2*L^4"
