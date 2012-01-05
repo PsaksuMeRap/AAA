@@ -8,14 +8,14 @@ create_symbol <- function(name="a",power=1) {
 	class(symbol) <- "symbol"
 	
 	symbol$name <- name
-	symbol$power <- power
+	symbol$power <- as.integer(power)
 	return(symbol)
 }
 
 "*.symbol" <- function(a,b) {
 	
 	if (a$name==b$name) {
-		a$power=a$power+b$power
+		a$power=as.integer(a$power+b$power)
 		return(create_symbols(a))
 	}	
 	c <- create_symbols(a)

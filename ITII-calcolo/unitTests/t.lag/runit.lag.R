@@ -53,7 +53,7 @@ test.maxLag.monomial <- function() {
 	
 	# Test 1
 	x <- monomialFromString("4")
-	checkEquals(maxLag(x,"pippo"),NA_integer_)
+	checkEquals(maxLag(x,"pippo"),-Inf)
 	
 	# Test 2
 	x <- monomialFromString("4*Z_t")
@@ -76,7 +76,7 @@ test.maxLag.monomials <- function() {
 	
 	# Test 1
 	x <- monomialFromString("4") + monomialFromString("3*a*pippo_t")
-	checkEquals(maxLag(x,"pippo"),c(NA_integer_,0))
+	checkEquals(maxLag(x,"pippo"),c(-Inf,0))
 	
 	# Test 2
 	x <- monomialFromString("4*Z_t") + monomialFromString("Z_{t+1}")
@@ -84,7 +84,7 @@ test.maxLag.monomials <- function() {
 	
 	# Test 3
 	x <- create_monomials()
-	checkEquals(maxLag(x,"Z"),numeric(0))
+	checkEquals(maxLag(x,"Z"),-Inf)
 	
 }
 
@@ -93,7 +93,7 @@ test.minLag.monomial <- function() {
 	
 	# Test 1
 	x <- monomialFromString("4")
-	checkEquals(minLag(x,"pippo"),NA_integer_)
+	checkEquals(minLag(x,"pippo"),Inf)
 	
 	# Test 2
 	x <- monomialFromString("4*Z_t")
@@ -116,7 +116,7 @@ test.minLag.monomials <- function() {
 	
 	# Test 1
 	x <- monomialFromString("4") + monomialFromString("3*a*pippo_t")
-	checkEquals(minLag(x,"pippo"),c(NA_integer_,0))
+	checkEquals(minLag(x,"pippo"),c(Inf,0))
 	
 	# Test 2
 	x <- monomialFromString("4*Z_t") + monomialFromString("Z_{t+1}")
@@ -124,7 +124,7 @@ test.minLag.monomials <- function() {
 	
 	# Test 3
 	x <- create_monomials()
-	checkEquals(minLag(x,"Z"),numeric(0))
+	checkEquals(minLag(x,"Z"),Inf)
 }
 
 test.extractLagCoeff.monomial <- function() {

@@ -455,4 +455,52 @@ test.removeZero <- function() {
 }
 
 
+test.maxPower.monomial <- function() {
+	
+	# check no random Variables
+	a <- monomialFromString("3*a")
+	result <- maxPower(a,"g")
+	checkEquals(result,-Inf)
+	
+	# check no desired random variable
+	a <- monomialFromString("3*a*z_t^2*g_{t-3}^2*g_{t-2}^14")
+	result <- maxPower(a,"k")
+	checkEquals(result,-Inf)
+	
+	# check desired random variable
+	a <- monomialFromString("3*a*z_t^2*g_{t-3}^2*g_{t-2}^14")
+	result <- maxPower(a,"g")
+	checkEquals(result,14)
+
+	# check no symbols
+	a <- monomialFromString("3*a_t")
+	result <- maxPower(a,"g","symbol")
+	checkEquals(result,-Inf)
+	
+	# check no desired symbol
+	a <- monomialFromString("3*a*z_t^2*g_{t-3}^2*g_{t-2}^14")
+	result <- maxPower(a,"k","symbol")
+	checkEquals(result,-Inf)
+	
+	# check desired symbol
+	a <- monomialFromString("3*a*qq^3*beta^12*z_t^2*g_{t-3}^2*g_{t-2}^14")
+	result <- maxPower(a,"beta","symbol")
+	checkEquals(result,12)
+}
+
+
+test.maxPower.monomial <- function() {
+	
+	# check no random Variables
+	a <- monomialsFromString("3*a + z_t^2*g_{t-3}^2*g_{t-2}^14")
+	result <- maxPower(a,"g")
+	checkEquals(result,c(-Inf,14))
+	
+	# check no desired random variable
+	a <- create_monomials()
+	result <- maxPower(a,"k")
+	checkEquals(result,-Inf)
+	
+}
+
 

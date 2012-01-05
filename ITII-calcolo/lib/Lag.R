@@ -35,7 +35,7 @@ maxLag.monomial <- function(x,randomVariableName) {
 		}
 	}
 	
-	return(NA_real_)
+	return(-Inf)
 }
 
 maxLag.monomials <- function(x,randomVariableName) {
@@ -43,7 +43,7 @@ maxLag.monomials <- function(x,randomVariableName) {
 		return(sapply(x,maxLag,randomVariableName=randomVariableName))
 	}
 	
-	return(numeric(0))
+	return(-Inf)
 }
 
 
@@ -60,7 +60,7 @@ minLag.monomial <- function(x,randomVariableName) {
 		}
 	}
 	
-	return(NA_real_)
+	return(Inf)
 }
 
 minLag.monomials <- function(x,randomVariableName) {
@@ -68,7 +68,7 @@ minLag.monomials <- function(x,randomVariableName) {
 		return(sapply(x,minLag,randomVariableName=randomVariableName))
 	}
 	
-	return(numeric(0))
+	return(Inf)
 }
 
 

@@ -116,7 +116,7 @@ explode.monomial <- function(where,what,with) {
 		
 		return(result)
 	}
-	
+
 	if (class(what)=="symbol") {
 		lengthSymbols = length(where$symbols) 
 		if (lengthSymbols==0) return(create_monomials(where))
@@ -128,7 +128,7 @@ explode.monomial <- function(where,what,with) {
 		# if no match return a monomials with "where"
 		if (nbWhat==0) return(create_monomials(where))
 		
-		# remove "what" from where$randoms
+		# remove "what" from where$symbols
 		where$symbols[areEquals] <- NULL
 		
 		# create a temporary copy of with
@@ -284,3 +284,44 @@ removeZero <- function(monomials) {
 	return(monomials)
 }
 
+# questa funzione restituisce la potenza massima della variabile aleatoria o del 
+# simbolo di nome "name" indipendentemente dal ritardo
+maxPower <- function(x,name,nameOf="randomVariable") UseMethod("maxPower",x)
+
+maxPower.monomial <- function(x,name,nameOf="randomVariable") {
+	if (nameOf=="randomVariable") {
+		if (length(x$randoms)>0) {
+			nomi <- extractFromList(x$randoms,"name")
+			isOk <- is.element(nomi,name)
+			if (any(isOk)) {
+				powers <- extractFromList(x$randoms,"power")
+				return(max(powers[isOk]))
+			}
+		}
+		
+		return(-Inf)
+	}
+	
+	if (nameOf=="symbol") {
+		if (length(x$symbols)>0) {
+			nomi <- extractFromList(x$symbols,"name")
+			isOk <- is.element(nomi,name)
+			if (any(isOk)) {
+				powers <- extractFromList(x$symbols,"power")
+				return(max(powers[isOk]))
+			}
+		}
+		
+		return(-Inf)
+	}
+}
+
+maxPower.monomials <- function(x,name,nameOf="randomVariable") {
+	
+	if (length(x)>0) {
+		return(sapply(x,maxPower,name=name,nameOf=nameOf))
+	}
+	
+	return(-Inf)
+
+}

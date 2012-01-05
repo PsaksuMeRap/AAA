@@ -234,4 +234,3 @@ test.toString.randomVariables <- function() {
 	checkEquals(toString(a),"")
 	
 }
-
