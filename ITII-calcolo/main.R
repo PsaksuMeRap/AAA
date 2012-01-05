@@ -16,7 +16,8 @@ source("./unitTests/testUtilities.R")
 # il modello strutturale
 # calcolo di x_t generato da un modello MA(2)
 # x_t = e_t + a1*e_{t-1} + a2*e_{t-2}                 eq. (1)
-
+a1 <- 1
+a2 <- 0.25 # (1-0.5L)^2
 # con e_t = h_t*z_t
 #
 # con h_t = b0 + b1*|e_{t-1}| + b2*h_{t-1}
@@ -26,6 +27,8 @@ source("./unitTests/testUtilities.R")
 #     h_t = g_t + c_{t-1} * h_{t-1}
 # con g_t := b0 e quindi deterministo e costante nel tempo
 #     c_t := b1*w_{t} + b2 = alpha*|z_{t}|+beta
+b0 <- 
+
 
 # il modello ausiliario 
 # x_t = c1*x_{t-1} + c2*x_{t-2} + u_t                 eq. (3)
@@ -54,7 +57,7 @@ create_symbolWithRandom <- function(symbolName,randomName,index) {
 
 u_t <- create_monomials(monomialFromString("e_t"))
 
-for (i in 1:4) u_t <- u_t + create_symbolWithRandom(symbolName="f",randomName="e",index=i)
+for (i in 1:4) u_t <- u_t + create_symbolWithRandom(symbolName="b",randomName="e",index=i)
 
 # rimpiazza e_{t-i} con h_{t-i}*z_{t-i}
 where <- u_t
@@ -146,12 +149,12 @@ tmp <- shiftToZeroAndCompact(u_t.2)
 
 
 p1 <- monomialsFromString("1 + -1*c1*L + -1*c2*L^2")
-p2 <- monomialsFromString("1 + -1*a1*L + -1*a2*L^2")
+p2 <- monomialsFromString("1 +    a1*L +    a2*L^2")
 product <- p1*p2
 
 f <- list()
 for (i in 0:4) {
-f[[i+1]] <- extractLagCoeff(product,i)
+	f[[i+1]] <- extractLagCoeff(product,i)
 }
 
 # "1 - 1*a1*L - 1*a2*L^2 - 1*c1*L + a1*c1*L^2 + a2*c1*L^3 - 1*c2*L^2 + a1*c2*L^3 + a2*c2*L^4"
@@ -160,24 +163,24 @@ f[[i+1]] <- extractLagCoeff(product,i)
 # "1 +           f1*L +               f2*L^2 +              f3*L^3 +    f4*L^4"
 
 # 1) Parto dai valori a1 e a2 del modello strutturale MA(2)
-a1 <- 0.25
-a2 <- 0.5
+a1 <- 1
+a2 <- 0.25
 #    e ricavo i pseudo valori del modello ausiliario c1 e c2
-c1c2 <- f(a1,a2) f da definire
+c <- pseudoTrueValues(ma=c(0,1,a1,a2),p=2)
+c1 <- c$pseudoTrueValues[2]
+c2 <- c$pseudoTrueValues[3]
+
 
 # 2) Calcolo i valori della rappresentazione di u_t in termini di e_t, ovvero
-#    i coefficienti f1,...,f4
-f1 <- "f1 <- -c1 -a1"
-f2 <- "f2 <- a1*c1 - a2 -c2"
-f3 <- "f3 <- a2*c1 + a1*c2"
-f4 <- "f4 <- a2*c2"
+#    i coefficienti b1,...,b4
+fCoefficients <- c$f[,1]
 
 # 3) utilizzo i valori di b0, b1 e b2 del modello strutturale garch per calcolare
 #    il valore atteso di h_t^k
 
+
+
 # 4) utilizzo i valori attesi di h_t^k per calcolare l'espressione
-
-
 
 
 
