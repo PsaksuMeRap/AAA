@@ -61,12 +61,15 @@ test.multiply_two_symbol <- function() {
 	
 	
 	# check when same symbol
+	symbol1 <- create_symbol("a",4.0)
 	symbol2 <- create_symbol("a",2)
+	symbolCheck <- create_symbol("a",6.0)
 	
-	c <- symbol1 * symbol2
-	checkEquals(class(c),"symbols")
-	checkEquals(c[[1]]$name,"a")
-	checkEquals(c[[1]]$power,6)	
+	result <- symbol1 * symbol2
+	checkEquals(class(result),"symbols")
+	checkEquals(result[[1]]$name,"a")
+	checkEquals(result[[1]]$power,6)	
+	checkEquals(identical(symbolCheck,result[[1]]),TRUE)
 	
 	# check error
 	checkException(symbol1 * 2)
