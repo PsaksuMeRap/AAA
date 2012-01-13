@@ -27,9 +27,10 @@ a2 <- 0.25 # (1-0.5L)^2
 #     h_t = g_t + c_{t-1} * h_{t-1}
 # con g_t := b0 e quindi deterministo e costante nel tempo
 #     c_t := b1*w_{t} + b2 = alpha*|z_{t}|+beta
-b0 = 1.0
-b1 = 0.3
-b2 = 0.2
+b0 <- 1.0
+b1 <- 0.3
+b2 <- 0.2
+bCoefficients <- c(b0,b1,b2)
 
 # il modello ausiliario 
 # x_t = c1*x_{t-1} + c2*x_{t-2} + u_t                 eq. (3)
@@ -48,59 +49,14 @@ b2 = 0.2
 
 c <- pseudoTrueValues(ma=c(0,1,a1,a2),p=2)
 fCoefficients <- c$f[,1]
-maxLag = lengt(fCoefficients) -1 
+max.Lag <- length(fCoefficients) - 1 
+power <- 2
 
-# calcolo simbolico di u_t
-u_t <- create_representation_ut(maxLag=maxLag)
+E_u_t.1 <- compute_E_u_t.k(power=1,max.Lag=1,fCoefficients,bCoefficients)
 
-# calcolo simbolico di u_t^2
-u_t.2 <- create_representation_ut_k(u_t,power=2)
+E_u_t.2 <- compute_E_u_t.k(power=2,max.Lag,fCoefficients,bCoefficients)
 
-# sostituzione di z e w con i valori attesi corrispondenti
-E_u_t.2 <- expectation_f_b(u_t.2)
-
-# explode wrt f_i coefficients
-tmp <- E_u_t.2
-## explode wrt f_i
-for (i in 2:length(fCoefficients)) {
-	symbolName <- paste("f",i-1,sep="")
-	tmp <- explode_wrt_symbol(tmp,symbolName,fCoefficients[i])
-}
-
-## explode wrt b0, b1 e b2
-tmp <- explode_wrt_symbol(a=tmp,"b0",b0)
-tmp <- explode_wrt_symbol(tmp,"b1",b1)
-tmp <- explode_wrt_symbol(tmp,"b2",b2)
-tmp <- compact(tmp)
-
-E_u_t.2 <- tmp
-rm(tmp)
-
-
-
-
-
-
-
-# calcola h_{t}^k e poi rimpiazza con E(h_{t}^k)
-where <- u_t.2
-for (lag in 0:4) {
-	for (power in 1:4) {
-		what <- create_randomVariable(name="h",power=power,lag=lag)
-		Eh <- E_h(g=b0,beta=b2,alpha=b1,m=power)
-		with <- create_monomials(create_monomial(number=Eh))
-		where <- explode(where,what,with)
-	}
-}
-u_t.2 <- where; rm(where)
-
-tmp <- shiftToZeroAndCompact(u_t.2)
-
-
-
-
-
-
+E_u_t.3 <- compute_E_u_t.k(power=3,max.Lag=1,fCoefficients,bCoefficients)
 
 p1 <- monomialsFromString("1 + -1*c1*L + -1*c2*L^2")
 p2 <- monomialsFromString("1 +    a1*L +    a2*L^2")
