@@ -179,9 +179,17 @@ explode_wrt_h_t <- function(where,power=1,max.Lag=0) {
 	return(where)
 }
 
-compute_E_u_t.k <- function(power=1,max.Lag=0,fCoefficients,bCoefficients) {
+compute_E_u_t.k <- function(power=1,fCoefficients,bCoefficients) {
 	## questa funzione ritorna il valore atteso di u_t^k
-
+	
+	## power: la potenza per cui elevare u_t
+	## fCoefficients: i coefficienti della rappresentazione di u_t in termini
+	## della costante e dell'errore e_t del modello MA. Il lag massimo è dato
+	## dal ritardo del MA + ritardo AR, infatti u_t = a + AR(p)*MA(q)*e_t
+	
+	nbCoef <- length(fCoefficients)
+	ifelse(nbCoef>0, max.Lag <- nbCoef - 1, max.Lag <- 0)
+	
 	##1) crea la rappresentazione di u_t^2 con già E(z_t) e E(u_t) calcolati
 	##   e con h_{t-max.Lag}^k e basta
 	E_u_t.k <- create_representation2_ut_k(u_t,power,max.Lag=max.Lag)
@@ -200,3 +208,4 @@ compute_E_u_t.k <- function(power=1,max.Lag=0,fCoefficients,bCoefficients) {
 	result <- compact(E_u_t.k)[[1]]$number
 	return(result)
 }
+

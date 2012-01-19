@@ -9,6 +9,7 @@ library("RUnit")
 
 stringsAsFactors = FALSE
 setwd("/home/claudio/workspace/AAA/ITII-calcolo/")
+setwd("\\\\usi/dfs/Utenti/O/ortellic/My Documents/workspace/AAA/ITII-calcolo")
 source("./lib/library.R")
 source("./unitTests/testUtilities.R")
 
@@ -21,7 +22,9 @@ dirs = c("./unitTests/t.lag",
 		"./unitTests/t.symbol",
 		"./unitTests/t.expectations",
 		"./unitTests/t.derive",
-		"./unitTests/t.pseudoTrueValues"
+		"./unitTests/t.pseudoTrueValues",
+		"./unitTests/t.garch",
+		"./unitTests/t.ma"
 		)
 testsuite.lists <- defineTestSuite("Test globale",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)

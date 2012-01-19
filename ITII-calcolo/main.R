@@ -16,6 +16,7 @@ source("./unitTests/testUtilities.R")
 # il modello strutturale
 # calcolo di x_t generato da un modello MA(2)
 # x_t = e_t + a1*e_{t-1} + a2*e_{t-2}                 eq. (1)
+
 a1 <- 1
 a2 <- 0.25 # (1-0.5L)^2
 # con e_t = h_t*z_t
@@ -49,14 +50,38 @@ bCoefficients <- c(b0,b1,b2)
 
 c <- pseudoTrueValues(ma=c(0,1,a1,a2),p=2)
 fCoefficients <- c$f[,1]
-max.Lag <- length(fCoefficients) - 1 
 power <- 2
 
-E_u_t.1 <- compute_E_u_t.k(power=1,max.Lag=1,fCoefficients,bCoefficients)
+E_u_t.2 <- compute_E_u_t.k(power=2,fCoefficients,bCoefficients)
 
-E_u_t.2 <- compute_E_u_t.k(power=2,max.Lag,fCoefficients,bCoefficients)
 
-E_u_t.3 <- compute_E_u_t.k(power=3,max.Lag=1,fCoefficients,bCoefficients)
+
+
+
+
+# test con max.Lag=1
+c <- pseudoTrueValues(ma=c(0,1),p=1)
+fCoefficients <- c$f[,1]
+
+E_u_t.1 <- compute_E_u_t.k(power=1,fCoefficients,bCoefficients)
+
+E_u_t.2 <- compute_E_u_t.k(power=2,fCoefficients,bCoefficients)
+
+E_u_t.3 <- compute_E_u_t.k(power=3,fCoefficients,bCoefficients)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 p1 <- monomialsFromString("1 + -1*c1*L + -1*c2*L^2")
 p2 <- monomialsFromString("1 +    a1*L +    a2*L^2")
