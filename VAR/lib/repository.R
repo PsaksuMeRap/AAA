@@ -404,6 +404,15 @@ create_repositoryExchangeRates <- function(exchangeRates.v,exchangeRatesDate) {
 	return(repository)
 }
 
+create_repositoryAssetClassMapping <- function() {	
+	repository <- list()
+	class(repository) <- "repositoryAssetClassMapping"
+	
+	filePath <- "./unitTests/data/repositoryAssetClassMapping.csv"
+	data <- read.csv(file=filePath,header=TRUE,as.is=TRUE)		
+	repository$assetClassMapping.df <- data
+	return(repository)
+}
 
 create_repositoryVincoliSicav <- function() {
 	repository <- new.env()

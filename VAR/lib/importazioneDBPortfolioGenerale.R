@@ -40,17 +40,38 @@ importDBPortfolioGeneraleByDate <- function(fetchDate) {
 }
 
 
-importDBPortfolioGeneraleDataFrame <- function() {
+importDBPortfolioGeneraleDataFrame <- function(cliente,fetchDate) {
 	
 	connection <- odbcConnect("prezzi_storici_azioni_VAR",.utente,.password)
-	query = paste("SELECT B.ID, A.* FROM [Sistema (prova)].dbo.DBPortfolioGenerale A",
-			"INNER JOIN [Sistema (prova)].dbo.Clienti_ID B ON A.Cliente=B.Cliente")
+	
+	if (missing(cliente) & missing(fetchDate)) {
+		query = paste("SELECT B.ID, A.* FROM [Sistema (prova)].dbo.DBPortfolioGenerale A",
+				"INNER JOIN [Sistema (prova)].dbo.Clienti_ID B ON A.Cliente=B.Cliente")
+	}
+
+	if (missing(cliente)) {
+	query = paste("SELECT B.ID, A.* FROM [Performance_TW].dbo.Valori_storici_portafogli_disaggregati A ",
+			"INNER JOIN [Sistema (prova)].dbo.Clienti_ID B ON A.Cliente=B.Cliente ",
+			"WHERE A.data='",fetchDate,"'",sep="")
+	}
+	
+	if (missing(fetchDate)) {
+		query = paste("SELECT B.ID, A.* FROM [Performance_TW].dbo.Valori_storici_portafogli_disaggregati A ",
+				"INNER JOIN [Sistema (prova)].dbo.Clienti_ID B ON A.Cliente=B.Cliente ",
+				"WHERE B.ID='",cliente,"'",sep="")
+	}
+	
+	if (!missing(cliente) & !missing(fetchDate)) {
+		query = paste("SELECT B.ID, A.* FROM [Performance_TW].dbo.Valori_storici_portafogli_disaggregati A ",
+				"INNER JOIN [Sistema (prova)].dbo.Clienti_ID B ON A.Cliente=B.Cliente ",
+				"WHERE B.ID='",cliente,"' AND A.data='",fetchDate,"'",sep="")
+	}
 	
 	DBPortfolioGenerale.df <- sqlQuery(connection,query,as.is=TRUE)
 	
 	DBPortfolioGenerale.df[["Cliente"]] <- NULL
 	colnames(DBPortfolioGenerale.df)[1] <- "Cliente"
-
+	
 	return(DBPortfolioGenerale.df)
 }
 

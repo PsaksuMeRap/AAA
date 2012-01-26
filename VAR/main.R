@@ -4,8 +4,6 @@
 ###############################################################################
 
 rm(list=ls(all=TRUE))
-options(browser="google-chrome")
-options(help_type="html")
 
 library("RODBC")
 library("RUnit")
