@@ -19,17 +19,51 @@ desiredFields <- c("Cliente",
 		"ID_AAA","ID_strumento",
 		"Scadenza")
 
-datiFI <- importDBPortfolioGeneraleDataFrame(c=clienteFI,f=fetchDate)[,desiredFields]
+datiFI  <- importDBPortfolioGeneraleDataFrame(c=clienteFI,f=fetchDate)[,desiredFields]
 datiGec <- importDBPortfolioGeneraleDataFrame(c=clienteGec,f=fetchDate)[,desiredFields]
 datiGeq <- importDBPortfolioGeneraleDataFrame(c=clienteGeq,f=fetchDate)[,desiredFields]
 
 # prendi repositoryAssetClassMapping
 repo <- create_repositoryAssetClassMapping()
-missing <- datiFI[-(1:nrow(datiFI)),]
+areMissing <- logical(nrow(datiFI))
 
 for (i in 1:nrow(datiFI)) {
-	isElement <- datiFI[i,"Nome"] == repo$assetClassMapping.df[["Nome"]]
-	if (!any(isElement)) missing <- rbind(missing,datiFI[i,"Nome"])
+	areMissing[i] <- !any(is.element(datiFI[i,"Nome"],repo$assetClassMapping.df[["Nome"]]))
 }
+
+fieldsNames <- c("ID_strumento","ID_AAA","Strumento","Moneta","Nome")
+if (any(areMissing)) {
+	missing <- datiFI[areMissing,fieldsNames]
+	write.csv(missing,file="./repositories/missingInstrForAssetClassMapping_FI.csv")
+}
+
+
+# ora Global Economy
+areMissing <- logical(nrow(datiGec))
+
+for (i in 1:nrow(datiGec)) {
+	areMissing[i] <- !any(is.element(datiGec[i,"Nome"],repo$assetClassMapping.df[["Nome"]]))
+}
+
+if (any(areMissing)) {
+	missing <- datiGec[areMissing,fieldsNames]
+	write.csv(missing,file="./repositories/missingInstrForAssetClassMapping_Gec.csv")
+}
+
+
+
+# ora Global Equity
+areMissing <- logical(nrow(datiGeq))
+
+for (i in 1:nrow(datiGeq)) {
+	areMissing[i] <- !any(is.element(datiGeq[i,"Nome"],repo$assetClassMapping.df[["Nome"]]))
+}
+
+if (any(areMissing)) {
+	missing <- datiGeq[areMissing,fieldsNames]
+	write.csv(missing,file="./repositories/missingInstrForAssetClassMapping_Geq.csv")
+}
+
+
 
 
