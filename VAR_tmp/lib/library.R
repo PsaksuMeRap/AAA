@@ -3,6 +3,7 @@
 # Author: claudio
 ###############################################################################
 
+source("./lib/classes.R")
 source("./lib/importazioneDBPortfolioGenerale.R") 
 source("./lib/lists.R") 
 source("./lib/parser.R") 

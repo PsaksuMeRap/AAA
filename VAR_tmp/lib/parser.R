@@ -99,13 +99,13 @@ create_parserPosition <- function() {
 					,env=repositories)
 		}
 		
-		instrument <- repositories$instruments$getInstrumentName(record["ID_strumento"])
+		instrumentName <- repositories$instruments$getInstrumentName(record["ID_strumento"])
 		if (is.na(instrument)) {
 			msg <- paste("Attenzione: lo strumento di ID",
 					record[["ID_strumento"]],"non esite!")
 			stop(msg)
 		}
-		return(instrument)
+		return(instrumentName)
 	}
 	
 	parser$parse <- function(origin) {
@@ -121,8 +121,12 @@ create_parserPosition <- function() {
 		)
 		rm(moneyCHF,moneyLocalCurrency)
 		
-	    instrument <- parser$identifyInstrument(origin)
-		class(position) <- c(instrument,class(position))
+	    instrumentName <- parser$identifyInstrument(origin)
+		# factory che crea la security corrispondente da una stringa
+	
+		# factory che crea la position corrispondente da una stringa
+	
+		class(position) <- c(instrumentName,class(position))
 
 		
 		if (origin[["Strumento"]]=="Oacc") {
