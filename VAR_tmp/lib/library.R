@@ -4,6 +4,7 @@
 ###############################################################################
 
 source("./lib/classes.R")
+source("./lib/securityFactory.R")
 source("./lib/importazioneDBPortfolioGenerale.R") 
 source("./lib/lists.R") 
 source("./lib/parser.R") 
