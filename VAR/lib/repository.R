@@ -408,7 +408,7 @@ create_repositoryAssetClassMapping <- function() {
 	repository <- list()
 	class(repository) <- "repositoryAssetClassMapping"
 	
-	filePath <- "./repositories/repositoryAssetClassMapping.csv"
+	filePath <- "./repositories/assetClassMapping/repositoryAssetClassMapping.csv"
 	data <- read.csv(file=filePath,header=TRUE,as.is=TRUE)		
 	repository$assetClassMapping.df <- data
 	return(repository)
