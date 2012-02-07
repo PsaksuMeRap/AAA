@@ -4,4 +4,4 @@
 ###############################################################################
 
 
-setClass("Id_Ayrton",representation(ID_AAA="numeric",ID_strumento="numeric"))
+setClass("IdAyrton",representation(idAAA="numeric",idStrumento="numeric"))

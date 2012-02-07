@@ -13,10 +13,10 @@ securityFactory.default <- function(origin) {
 securityFactory.ayrton <- function(origin) {
 	
 	# this is a common slot of all instruments
-	ID_Ayrton <- new("ID_Ayrton",ID_AAA=origin[["ID_AAA"]],
-			ID_strumento=origin[["ID_strumento"]])
+	idAyrton <- new("IdAyrton",idAAA=origin[["ID_AAA"]],
+			idStrumento=origin[["ID_strumento"]])
 	
-	identifyInstrument <- function(record) {
+	identifyInstrumentType <- function(record) {
 		# record: a list
 		
 		# create the repository of the instruments if not available
@@ -34,9 +34,10 @@ securityFactory.ayrton <- function(origin) {
 		return(securityType)
 	}
 	
-	securityType <- identifyInstrument(origin)
+	securityType <- identifyInstrumentType(origin)
+
 	if (identical(securityType,"equity")) {
-		equity <- new("Equity",name=origin[["Nome"]],ID=ID_Ayrton)
+		equity <- new("Equity",name=origin[["Nome"]],id=idAyrton)
 		return(equity)
 	}
 	
@@ -46,7 +47,7 @@ securityFactory.ayrton <- function(origin) {
 		
 		if (origin[["Strumento"]]=="Oacc") return(NULL)
 		
-		getMaturity <- function(origin) {
+		getMaturity <- function() {
 			# extract the maturity
 			name <- origin[["Nome"]]	
 			paymentDate <- substr(name,nchar(name)-8+1,
@@ -66,7 +67,7 @@ securityFactory.ayrton <- function(origin) {
 			return(paymentDate)
 		}
 		
-		bond <- new("Bond",name=origin[["Nome"]],ID=ID_Ayrton,maturity=maturity)
+		bond <- new("Bond",name=origin[["Nome"]],id=idAyrton,maturity=getMaturity())
 		return(bond)
 		
 	}

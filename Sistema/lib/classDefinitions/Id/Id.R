@@ -3,7 +3,7 @@
 # Author: claudio
 ###############################################################################
 
-source("./lib/classDefinitions/Id/Id_Ayrton.R")
+source("./lib/classDefinitions/Id/IdAyrton.R")
 
 # crea la classe Id come classe virtuale di cui ID_Ayrton è un membro
-setClassUnion("Id", "Id_Ayrton")
+setClassUnion("Id", "IdAyrton")

@@ -4,6 +4,9 @@
 ###############################################################################
 
 source("./lib/importazioneDBPortfolioGenerale.R") 
+source("./lib/genericFunctions.R") 
+source("./lib/useMethods/SecurityFactory/SecurityFactory.R") 
+
 source("./lib/classDefinitions/Money/Money.R") 
 
 source("./lib/classDefinitions/Security/Bond.R")
