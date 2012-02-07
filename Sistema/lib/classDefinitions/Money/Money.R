@@ -67,3 +67,6 @@ fun <- function(x) {
 setMethod("print","Money",fun)
 
 
+toMoney <- function(amount=0,currency="CHF") {
+	return(new("Money",amount=amount,currency=currency))
+}

@@ -3,6 +3,7 @@
 # Author: claudio
 ###############################################################################
 
+source("./lib/repository.R")
 source("./lib/importazioneDBPortfolioGenerale.R") 
 source("./lib/genericFunctions.R") 
 source("./lib/useMethods/SecurityFactory/SecurityFactory.R") 

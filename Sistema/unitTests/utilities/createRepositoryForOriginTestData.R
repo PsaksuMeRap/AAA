@@ -77,5 +77,32 @@ createRepositoryForOriginTestData <- function() {
 	
 	testData$bond3 <- x
 	
+	
+	# create a valid AccruedInterest di Fondi_obbligazionari
+	x <- list()
+	x$Cliente <- "pippo11"
+	x$Strumento <- "Oacc"
+	x$Moneta <- "EUR"
+	x$Nome <- "20201231 - 0% <3Y - CB-Accent Lux Sicav - Fixed Income EUR 31-12-20 Pro-rata"
+	x$ValoreMercatoMonetaCHF <- 0
+	x$ID_AAA <- 825
+	x$ID_strumento <- 3
+	class(x) <- "ayrton"
+		
+	testData$proRataFondiObbligazionari <- x
+	
+	# create a valid AccruedInterest
+	x <- list()
+	x$Cliente <- "pippo13"
+	x$Strumento <- "Oacc"
+	x$Moneta <- "CHF"
+	x$Nome <- "20120221 - 2% Toyota 21-02-12 Pro-rata"
+	x$ValoreMercatoMonetaCHF <- 796.818833446452
+	x$ID_AAA <- 1073
+	x$ID_strumento <- 2
+	class(x) <- "ayrton"
+	
+	testData$proRata1 <- x
+	
 	return(testData)
 }

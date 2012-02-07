@@ -4,7 +4,7 @@
 ###############################################################################
 
 
-source("./lib/Money.R")
+source("./lib/classDefinitions/Money/Money.R")
 
 test.createMoney <- function() {
 	currency = "CHF"
