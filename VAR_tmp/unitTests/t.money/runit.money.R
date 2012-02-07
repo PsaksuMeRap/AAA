@@ -4,7 +4,7 @@
 ###############################################################################
 
 
-source("./lib/money.R")
+source("./lib/Money.R")
 
 test.createMoney <- function() {
 	currency = "CHF"
@@ -16,18 +16,6 @@ test.createMoney <- function() {
 	checkEquals(money@amount,105.3)
 	checkEquals(money@currency,"CHF")
 
-}
-
-test.createMoneyWithStringAmount <- function() {
-	currency = "CHF"
-	amount = "105.3"
-	
-	money <- new("Money",amount=amount,currency=currency)
-	
-	checkEquals(class(money)[1],"Money")
-	checkEquals(money@amount,105.3)
-	checkEquals(money@currency,"CHF")
-	
 }
 
 

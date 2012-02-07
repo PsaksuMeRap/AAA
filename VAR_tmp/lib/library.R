@@ -3,23 +3,12 @@
 # Author: claudio
 ###############################################################################
 
-source("./lib/classes.R")
-source("./lib/securityFactory.R")
 source("./lib/importazioneDBPortfolioGenerale.R") 
-source("./lib/lists.R") 
-source("./lib/parser.R") 
-source("./lib/portfolio/portfolio.R") 
-source("./lib/portfolios/portfolioMethods.R") 
-source("./lib/position/position.R") 
-source("./lib/position/positionMethods.R") 
-source("./lib/position/explode.R") 
-source("./lib/positions/positions.R") 
-source("./lib/positions/positionsMethods.R") 
-source("./lib/repository.R") 
-source("./lib/riskfactor.R") 
-source("./lib/money.R") 
-source("./lib/criteriumCheck.R") 
-source("./lib/criteriumSelection.R") 
-source("./lib/accruedInterest.R") 
-source("./lib/riskmanTestSuite.R") 
-source("./lib/fundsDB.R") 
+source("./lib/classDefinitions/Money/Money.R") 
+
+source("./lib/classDefinitions/Security/Bond.R")
+source("./lib/classDefinitions/Security/Equity.R")
+
+source("./lib/classDefinitions/Id/Id.R")
+source("./lib/classDefinitions/Position/PositionBond.R")
+source("./lib/classDefinitions/Position/AccruedInterest.R")

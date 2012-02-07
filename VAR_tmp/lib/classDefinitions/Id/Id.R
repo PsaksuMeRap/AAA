@@ -1,0 +1,9 @@
+# TODO: Add comment
+# 
+# Author: claudio
+###############################################################################
+
+source("./lib/classDefinitions/Id/Id_Ayrton.R")
+
+# crea la classe Id come classe virtuale di cui ID_Ayrton è un membro
+setClassUnion("Id", "Id_Ayrton")

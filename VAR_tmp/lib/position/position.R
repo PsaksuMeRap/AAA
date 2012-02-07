@@ -4,7 +4,7 @@
 ###############################################################################
 
 source("./lib/repository.R")
-source("./lib/money.R")
+source("./lib/Money.R")
 source("./lib/position/extendPosition.R")
 
 ## create the class Position
