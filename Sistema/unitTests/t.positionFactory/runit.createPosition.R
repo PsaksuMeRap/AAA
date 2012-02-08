@@ -18,10 +18,9 @@ test.shouldCreateUnclassifiedPosition <- function() {
 	
 	unclassified <- securityFactory(origin)
 	
-	position <- createPositionFromAyrton(unclassified,origin)
+	position <- createPosition(unclassified,origin)
 	
-	checkEquals(position$id,10.2)
-	checkEquals(position@owner,"pippo13")	
+	checkEquals(position@id,10.2)	
 	checkEquals(position@quantity,100.3)
 	checkEquals(position@value,toMoney(123.55,"CHF"))
 	
@@ -44,7 +43,7 @@ test.shouldBeNullPositionFromAccruedInterest <- function() {
 	
 	security <- securityFactory(origin)
 	
-	position <- createPositionFromAyrton(security,origin)
+	position <- createPosition(security,origin)
 	
 	checkEquals(position,NULL)
 	

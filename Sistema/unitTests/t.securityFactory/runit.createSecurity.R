@@ -12,7 +12,7 @@ test.shouldCreateUnclassified <- function() {
 	origin <- repository$equity1
 	class(origin) <- "Unclassified"
 	
-	unclassified <- createSecurityFromAyrton(origin)
+	unclassified <- createSecurity(origin)
 	class(unclassified) <- "Unclassified"
 
 	checkEquals(unclassified@name,"Roche Holding Gs")
@@ -35,7 +35,7 @@ test.shouldCreateEquity <- function() {
 	origin <- repository$equity1
 	class(origin) <- "Equity"
 	
-	equity <- createSecurityFromAyrton(origin)
+	equity <- createSecurity(origin)
 	
 	checkEquals(equity@name,"Roche Holding Gs")
 	checkEquals(equity@id,new("IdAyrton",idAAA=824,idStrumento=1))
@@ -54,7 +54,7 @@ test.shouldCreateBond <- function() {
 	origin <- repository$bond1
 	class(origin) <-  "Bond"
 
-	bond <- createSecurityFromAyrton(origin)
+	bond <- createSecurity(origin)
 	
 	checkEquals(bond@name,"20130603 - 3.625% Pfizer 03-06-13")
 	checkEquals(bond@id,new("IdAyrton",idAAA=1218,idStrumento=2))
@@ -74,7 +74,7 @@ test.shouldNULLForAccruedInterest <- function() {
 	origin <- repository$proRata1
 	class(origin) <- "Bond"
 
-	null <- createSecurityFromAyrton(origin)
+	null <- createSecurity(origin)
 	
 	checkEquals(is.null(null),TRUE)
 	

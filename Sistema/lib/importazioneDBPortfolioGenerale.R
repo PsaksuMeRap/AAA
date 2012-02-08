@@ -13,10 +13,11 @@ importDBPortfolioGenerale <- function() {
 	
 	DBPortfolioGenerale.df[["Cliente"]] <- NULL
 	colnames(DBPortfolioGenerale.df)[1] <- "Cliente"
-	getRow <- function(i,df) return(df[i,,drop=TRUE])
+	getRow <- function(i,df) return(as(df[i,,drop=TRUE],"AyrtonPosition"))
 	
-	if (nrow(DBPortfolioGenerale.df)==0) return(origin=list())
+	if (nrow(DBPortfolioGenerale.df)==0) return(origin=as(list(),"AyrtonPosition"))
 	origin <- lapply(1:nrow(DBPortfolioGenerale.df),getRow,DBPortfolioGenerale.df)
+	class(origin) <- "AyrtonPositions"
 	return(origin)
 }
 
@@ -32,10 +33,11 @@ importDBPortfolioGeneraleByDate <- function(fetchDate) {
 	
 	DBPortfolioGenerale.df[["Cliente"]] <- NULL
 	colnames(DBPortfolioGenerale.df)[1] <- "Cliente"
-	getRow <- function(i,df) return(df[i,,drop=TRUE])
+	getRow <- function(i,df) return(as(df[i,,drop=TRUE],"AyrtonPosition"))
 	
-	if (nrow(DBPortfolioGenerale.df)==0) return(origin=list())
+	if (nrow(DBPortfolioGenerale.df)==0) return(origin=as(list(),"AyrtonPosition"))
 	origin <- lapply(1:nrow(DBPortfolioGenerale.df),getRow,DBPortfolioGenerale.df)
+	class(origin) <- "AyrtonPositions"
 	return(origin)
 }
 

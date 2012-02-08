@@ -17,7 +17,7 @@ test.shouldIdentifyAyrtonInstrument <- function() {
 	
 	# create the origin
 	origin <- list()
-	class(origin) <- "ayrton"
+	class(origin) <- "AyrtonPosition"
 	origin$ID_strumento <- 2
 	
 	checkEquals(securityFactory(origin,identifyOnly=TRUE),"Bond")
@@ -31,7 +31,7 @@ test.shouldFailToIdentifyAyrtonInstrument <- function() {
 	
 	# create the origin
 	origin <- list()
-	class(origin) <- "ayrton"
+	class(origin) <- "AyrtonPosition"
 	origin$ID_strumento <- -2
 	
 	checkException(securityFactory(origin,identifyOnly=TRUE))

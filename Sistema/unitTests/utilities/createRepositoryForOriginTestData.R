@@ -19,7 +19,7 @@ createRepositoryForOriginTestData <- function() {
 	x$ID_AAA <- 824
 	x$ID_strumento <- 1
 	
-	class(x) <- "ayrton"
+	class(x) <- "AyrtonPosition"
 
 	testData$equity1 <- x
 	
@@ -33,7 +33,7 @@ createRepositoryForOriginTestData <- function() {
 	x$ValoreMercatoMonetaCHF <- 88205
 	x$ID_AAA <- 100020202
 	x$ID_strumento <- 1
-	class(x) <- "ayrton"
+	class(x) <- "AyrtonPosition"
 	
 	testData$noExists <- x
 	
@@ -48,7 +48,7 @@ createRepositoryForOriginTestData <- function() {
 	x$ValoreMercatoMonetaCHF <- 124345.632268
 	x$ID_AAA <- 1218
 	x$ID_strumento <- 2
-	class(x) <- "ayrton"
+	class(x) <- "AyrtonPosition"
 	
 	testData$bond1 <- x
 	
@@ -63,7 +63,7 @@ createRepositoryForOriginTestData <- function() {
 	x$ValoreMercatoMonetaCHF <- 362217.41556
 	x$ID_AAA <- 1976
 	x$ID_strumento <- 2
-	class(x) <- "ayrton"
+	class(x) <- "AyrtonPosition"
 	
 	testData$bond2 <- x
 	
@@ -78,7 +78,7 @@ createRepositoryForOriginTestData <- function() {
 	x$ValoreMercatoMonetaCHF <- 241164.668888
 	x$ID_AAA <- 1967
 	x$ID_strumento <- 2
-	class(x) <- "ayrton"
+	class(x) <- "AyrtonPosition"
 	
 	testData$bond3 <- x
 	
@@ -93,7 +93,7 @@ createRepositoryForOriginTestData <- function() {
 	x$ValoreMercatoMonetaCHF <- 0
 	x$ID_AAA <- 825
 	x$ID_strumento <- 3
-	class(x) <- "ayrton"
+	class(x) <- "AyrtonPosition"
 		
 	testData$proRataFondiObbligazionari <- x
 	
@@ -107,7 +107,7 @@ createRepositoryForOriginTestData <- function() {
 	x$ValoreMercatoMonetaCHF <- 796.818833446452
 	x$ID_AAA <- 1073
 	x$ID_strumento <- 2
-	class(x) <- "ayrton"
+	class(x) <- "AyrtonPosition"
 	
 	testData$proRata1 <- x
 	
@@ -122,7 +122,7 @@ createRepositoryForOriginTestData <- function() {
 	x$ValoreMercatoMonetaCHF <- 123.55
 	x$ID_AAA <- 1073
 	x$ID_strumento <- 51
-	class(x) <- "ayrton"
+	class(x) <- "AyrtonPosition"
 	
 	testData$unclassified1 <- x
 	
