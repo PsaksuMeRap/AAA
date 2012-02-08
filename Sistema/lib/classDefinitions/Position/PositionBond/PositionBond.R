@@ -3,7 +3,7 @@
 # Author: claudio
 ###############################################################################
 
-source("./lib/classDefinitions/Position/AccruedInterest.R")
+source("./lib/classDefinitions/Position/PositionBond/AccruedInterest.R")
 source("./lib/classDefinitions/Position/Position.R")
 
 # crea la classe virtuale "Position"

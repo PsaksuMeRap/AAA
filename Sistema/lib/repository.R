@@ -68,11 +68,11 @@ create_repositoryInstruments <- function(instruments.df) {
 		
 		# cambia il nome da Azioni a equities
 		toChange <- instruments.df[,"Instrument"] == "Azioni"
-		if (any(toChange)) instruments.df[toChange,"Instrument"] <- "equity"
+		if (any(toChange)) instruments.df[toChange,"Instrument"] <- "Equity"
 
 		# cambia il nome da Obbligazioni a bond
 		toChange <- instruments.df[,"Instrument"] == "Obbligazioni"
-		if (any(toChange)) instruments.df[toChange,"Instrument"] <- "bond"
+		if (any(toChange)) instruments.df[toChange,"Instrument"] <- "Bond"
 		
 		# sostituisci tutti gli spazi con "_"
 		instruments.df[,"Instrument"] <- gsub(" ","_",instruments.df[,"Instrument"])

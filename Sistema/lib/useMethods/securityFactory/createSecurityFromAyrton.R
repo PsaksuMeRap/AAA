@@ -4,45 +4,10 @@
 ###############################################################################
 
 
-securityFactory <- function(origin,...) UseMethod("securityFactory")
 
-securityFactory.default <- function(origin,...) {
-	stop(paste("No suitable securityFactory method for origin of class",class(origin)))
-}
+createSecurityFromAyrton <- function(origin) UseMethod("createSecurityFromAyrton")
 
-securityFactory.ayrton <- function(origin,identifyOnly=FALSE) {
-		
-	identifyInstrumentType <- function(record) {
-		# record: a list
-		
-		# create the repository of the instruments if not available
-		if (!exists("instruments",envir=repositories,inherits=FALSE)) {
-			eval(expression(instruments <- create_repositoryInstruments())
-					,env=repositories)
-		}
-		
-		securityType <- repositories$instruments$getInstrumentName(record["ID_strumento"])
-		if (is.na(securityType)) {
-			msg <- paste("Attenzione: lo strumento di ID",
-					record[["ID_strumento"]],"non esite!")
-			stop(msg)
-		}
-		return(securityType)
-	}
-	
-	# identify the security Type according to Ayrton classification
-	securityType <- identifyInstrumentType(origin)
-	if (identifyOnly) return(securityType)
-	
-	class(origin) <- securityType
-
-	security <- createSecurity(origin)
-	return(security)
-}
-
-createSecurity <- function(origin) UseMethod("createSecurity")
-
-createSecurity.default <- function(origin) {
+createSecurityFromAyrton.default <- function(origin) {
 	# this is a common slot of all instruments
 	idAyrton <- new("IdAyrton",idAAA=origin[["ID_AAA"]],
 			idStrumento=origin[["ID_strumento"]])
@@ -51,7 +16,7 @@ createSecurity.default <- function(origin) {
 	return(security)
 }
 
-createSecurity.Bond <- function(origin) {
+createSecurityFromAyrton.Bond <- function(origin) {
 	# se si tratta di accrued interest non considerarli ora
 	# verranno considerati solo nella costruzione delle posizioni
 	

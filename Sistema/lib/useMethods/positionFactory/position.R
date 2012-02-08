@@ -32,7 +32,7 @@ setGeneric("isCurrency", fun)
 fun <- function(x,currency) {
 	# x: a Position 
 	
-	ifelse (x@money@currency == currency,return(TRUE),return(FALSE))
+	if (identical(x@money@currency,currency)) return(TRUE) else return(FALSE))
 }
 setMethod("isCurrency","Position",fun)
 

@@ -6,4 +6,4 @@
 source("./lib/classDefinitions/Id/IdAyrton.R")
 
 # crea la classe Id come classe virtuale di cui ID_Ayrton è un membro
-setClassUnion("Id", "IdAyrton")
+setClassUnion("Id", c("IdAyrton","numeric"))
