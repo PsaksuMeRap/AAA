@@ -16,9 +16,8 @@ test.shouldFailWithNonAyrton <- function() {
 test.shouldIdentifyAyrtonInstrument <- function() {
 	
 	# create the origin
-	origin <- list()
-	class(origin) <- "AyrtonPosition"
-	origin$ID_strumento <- 2
+	origin <- new("AyrtonPosition")
+	origin@ID_strumento <- 2
 	
 	checkEquals(securityFactory(origin,identifyOnly=TRUE),"Bond")
 }
@@ -30,9 +29,8 @@ test.shouldFailToIdentifyAyrtonInstrument <- function() {
 	allocateTestRepositories("instruments")
 	
 	# create the origin
-	origin <- list()
-	class(origin) <- "AyrtonPosition"
-	origin$ID_strumento <- -2
+	origin <- new("AyrtonPosition")
+	origin@ID_strumento <- -2
 	
 	checkException(securityFactory(origin,identifyOnly=TRUE))
 	

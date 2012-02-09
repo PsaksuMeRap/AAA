@@ -11,7 +11,7 @@ setMethod("securityFactory",signature(origin="AyrtonPosition"),
 		function(origin,identifyOnly=FALSE) {
 			# define the function use to identify the position type, i.e. Equity, Bond, 
 			# Hedge Fund, ...
-			
+		
 			identifyInstrumentType <- function(origin) {
 				# record: a list
 				
@@ -21,10 +21,10 @@ setMethod("securityFactory",signature(origin="AyrtonPosition"),
 							,env=repositories)
 				}
 				
-				securityType <- repositories$instruments$getInstrumentName(origin["ID_strumento"])
+				securityType <- repositories$instruments$getInstrumentName(origin@ID_strumento)
 				if (is.na(securityType)) {
 					msg <- paste("Warning: the instrument with ID",
-							origin[["ID_strumento"]],"does not exist!")
+							origin@ID_strumento,"does not exist!")
 					stop(msg)
 				}
 				return(securityType)

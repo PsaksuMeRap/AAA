@@ -13,11 +13,18 @@ importDBPortfolioGenerale <- function() {
 	
 	DBPortfolioGenerale.df[["Cliente"]] <- NULL
 	colnames(DBPortfolioGenerale.df)[1] <- "Cliente"
-	getRow <- function(i,df) return(as(df[i,,drop=TRUE],"AyrtonPosition"))
+	getRow <- function(i,df) { 
+		x <- df[i,,drop=TRUE]
+		ayrtonPosition <- new("AyrtonPositio",
+				Cliente=x[["Cliente"]],Strumento=x[["Strumento"]],Moneta=x[["Moneta"]],
+				Saldo=x[["Saldo"]],Nome=x[["Nome"]],ValoreMercatoMonetaCHF=x[["ValoreMercatoMonetaCHF"]],
+				ID_AAA=x[["ID_AAA"]],ID_strumento=x[["ID_strumento"]])
+		return(ayrtonPosition)
+	}
 	
-	if (nrow(DBPortfolioGenerale.df)==0) return(origin=as(list(),"AyrtonPosition"))
+	if (nrow(DBPortfolioGenerale.df)==0) return(origin=new("AyrtonPositions",positions=list()))
 	origin <- lapply(1:nrow(DBPortfolioGenerale.df),getRow,DBPortfolioGenerale.df)
-	class(origin) <- "AyrtonPositions"
+	return(origin=new("AyrtonPositions",positions=origin))
 	return(origin)
 }
 
@@ -33,11 +40,18 @@ importDBPortfolioGeneraleByDate <- function(fetchDate) {
 	
 	DBPortfolioGenerale.df[["Cliente"]] <- NULL
 	colnames(DBPortfolioGenerale.df)[1] <- "Cliente"
-	getRow <- function(i,df) return(as(df[i,,drop=TRUE],"AyrtonPosition"))
+	getRow <- function(i,df) { 
+		x <- df[i,,drop=TRUE]
+		ayrtonPosition <- new("AyrtonPositio",
+				Cliente=x[["Cliente"]],Strumento=x[["Strumento"]],Moneta=x[["Moneta"]],
+				Saldo=x[["Saldo"]],Nome=x[["Nome"]],ValoreMercatoMonetaCHF=x[["ValoreMercatoMonetaCHF"]],
+				ID_AAA=x[["ID_AAA"]],ID_strumento=x[["ID_strumento"]])
+		return(ayrtonPosition)
+	}
 	
-	if (nrow(DBPortfolioGenerale.df)==0) return(origin=as(list(),"AyrtonPosition"))
+	if (nrow(DBPortfolioGenerale.df)==0) return(origin=new("AyrtonPositions",positions=list()))
 	origin <- lapply(1:nrow(DBPortfolioGenerale.df),getRow,DBPortfolioGenerale.df)
-	class(origin) <- "AyrtonPositions"
+	return(origin=new("AyrtonPositions",positions=origin))
 	return(origin)
 }
 

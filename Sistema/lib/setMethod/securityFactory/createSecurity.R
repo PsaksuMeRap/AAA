@@ -10,10 +10,10 @@ createSecurity <- function(origin) UseMethod("createSecurity")
 setGeneric("createSecurity",
 		useAsDefault=function(origin) {
 			# this is a common slot of all instruments
-			idAyrton <- new("IdAyrton",idAAA=origin[["ID_AAA"]],
-					idStrumento=origin[["ID_strumento"]])
+			idAyrton <- new("IdAyrton",idAAA=origin@ID_AAA,
+					idStrumento=origin@ID_strumento)
 			
-			security <- new(class(origin),name=origin[["Nome"]],id=idAyrton)
+			security <- new(class(origin),name=origin@Nome,id=idAyrton)
 			return(security)
 		}
 )
@@ -23,15 +23,15 @@ setMethod("createSecurity",signature(origin="Bond"),
 			# se si tratta di accrued interest non considerarli ora
 			# verranno considerati solo nella costruzione delle posizioni
 			
-			if (origin[["Strumento"]]=="Oacc") return(NULL)
+			if (origin@Strumento=="Oacc") return(NULL)
 			
 			# this is a common slot of all instruments
-			idAyrton <- new("IdAyrton",idAAA=origin[["ID_AAA"]],
-					idStrumento=origin[["ID_strumento"]])
+			idAyrton <- new("IdAyrton",idAAA=origin@ID_AAA,
+					idStrumento=origin@ID_strumento)
 			
 			getMaturity <- function() {
 				# extract the maturity
-				name <- origin[["Nome"]]	
+				name <- origin@Nome
 				paymentDate <- substr(name,nchar(name)-8+1,
 						nchar(name))
 				
@@ -49,7 +49,7 @@ setMethod("createSecurity",signature(origin="Bond"),
 				return(paymentDate)
 			}
 			
-			security <- new(class(origin),name=origin[["Nome"]],id=idAyrton,maturity=getMaturity())
+			security <- new(class(origin),name=origin@Nome,id=idAyrton,maturity=getMaturity())
 			return(security)	
 		}
 )
