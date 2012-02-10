@@ -19,7 +19,7 @@ test.shouldCreateDefaultPosition <- function() {
 	position <- positionFactory(origin)
 	
 	checkEquals(position@quantity,100.3)
-	checkEquals(position@value,toMoney(123.55,"CHF"))
+	checkEquals(position@value,toMoney(123.55,new("Currency","CHF")))
 	
 	# restore initial conditions	
 	deallocateTestRepositories("instruments")

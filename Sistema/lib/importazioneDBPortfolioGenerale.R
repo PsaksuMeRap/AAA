@@ -24,7 +24,7 @@ importDBPortfolioGenerale <- function() {
 	
 	if (nrow(DBPortfolioGenerale.df)==0) return(origin=new("AyrtonPositions",positions=list()))
 	origin <- lapply(1:nrow(DBPortfolioGenerale.df),getRow,DBPortfolioGenerale.df)
-	return(origin=new("AyrtonPositions",positions=origin))
+	return(origin=new("AyrtonPositions",origin))
 	return(origin)
 }
 
@@ -51,7 +51,7 @@ importDBPortfolioGeneraleByDate <- function(fetchDate) {
 	
 	if (nrow(DBPortfolioGenerale.df)==0) return(origin=new("AyrtonPositions",positions=list()))
 	origin <- lapply(1:nrow(DBPortfolioGenerale.df),getRow,DBPortfolioGenerale.df)
-	return(origin=new("AyrtonPositions",positions=origin))
+	return(origin=new("AyrtonPositions",origin))
 	return(origin)
 }
 

@@ -5,18 +5,9 @@
 
 # crea la classe Money
 setClass("Money",
-		representation(amount="numeric",currency="character"),
-		prototype(amount=0,currency="CHF")
+		representation(amount="numeric",currency="Currency"),
+		prototype(amount=0,currency=new("Currency","CHF"))
 )
-
-#fun <- function(.Object, amount, currency) {
-	# initialize function for object of class Money
-#	ifelse(missing(amount),.Object@amount <- NA_real_,.Object@amount <- as.real(amount))
-#	ifelse(missing(currency),.Object@currency <- NA_character_,.Object@currency <- currency)
-#	return(.Object)
-#}
-#setMethod("initialize", "Money", fun)
-
 
 
 fun <- function(x,moneyToAdd) {

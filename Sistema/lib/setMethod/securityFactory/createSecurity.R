@@ -20,7 +20,7 @@ setGeneric("createSecurity",
 
 setMethod("createSecurity",signature(origin="Bond"),
 		function(origin) {
-			# se si tratta di accrued interest non considerarli ora
+			# se si tratta di accrued interest non considerarli ora,
 			# verranno considerati solo nella costruzione delle posizioni
 			
 			if (origin@Strumento=="Oacc") return(NULL)
@@ -51,5 +51,17 @@ setMethod("createSecurity",signature(origin="Bond"),
 			
 			security <- new(class(origin),name=origin@Nome,id=idAyrton,maturity=getMaturity())
 			return(security)	
+		}
+)
+
+setMethod("createSecurity",signature(origin="Fondi_obbligazionari"),
+		function(origin) {
+			# se si tratta di accrued interest non considerarli ora,
+			# verranno considerati solo nella costruzione delle posizioni
+			
+			if (origin@Strumento=="Oacc") return(NULL)
+			
+			callNextMethod()
+			
 		}
 )

@@ -3,38 +3,7 @@
 # Author: claudio
 ###############################################################################
 
-source("./lib/repository.R")
-source("./lib/Money.R")
-source("./lib/position/extendPosition.R")
 
-## create the class Position
-setClass("Position",representation(name="character",money="Money"),prototype(name=NA_character_,money=new("Money")))
-
-## define the is.instrument generic method
-fun <- function(x,instrument) standardGeneric("is.instrument")
-setGeneric("is.instrument", fun)
-
-## define the is.instrument method for the class Position
-fun <- function(x,instrument) {
-	# x: a Position 
-	# desiredInstrument: a string with the name of the instrument
-	
-	ifelse (class(x)[[1]] == instrument,return(TRUE),return(FALSE))
-}
-setMethod("is.instrument","Position",fun)
-
-
-## define the isCurrency generic method
-fun <- function(x,currency) standardGeneric("isCurrency")
-setGeneric("isCurrency", fun)
-
-## define the isCurrency method for the class Position
-fun <- function(x,currency) {
-	# x: a Position 
-	
-	if (identical(x@money@currency,currency)) return(TRUE) else return(FALSE))
-}
-setMethod("isCurrency","Position",fun)
 
 
 

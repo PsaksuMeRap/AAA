@@ -382,12 +382,12 @@ create_repositoryExchangeRates <- function(exchangeRates.v,exchangeRatesDate) {
 	
 	repository$exchange <- function(money,toCurrency) {
 		# money: an Object of class Money containing the amount to be converted
-		# toCurrency: the final currency (a string)
+		# toCurrency: the final currency (of Class "Currency")
 	
 		amount <- money@amount
 		fromCurrency <- money@currency
 		
-		if (toCurrency=="CHF" | toCurrency=="CHr") {
+		if (identical(toCurrency,new("Currency","CHF")) | identical(toCurrency,new("Currency","CHr"))) {
 			result <- new("Money",amount=amount*repository$rates[[fromCurrency]],currency=toCurrency)
 			return(result)
 		}

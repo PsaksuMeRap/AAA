@@ -7,7 +7,7 @@ setGeneric("createPosition",
 		useAsDefault=function(security,origin) {
 			id <- 10.2
 			quantity <- origin@Saldo
-			value <- toMoney(origin@ValoreMercatoMonetaCHF,origin@Moneta)
+			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency",origin@Moneta))
 			position <- new("Position",id=id,security=security,
 					quantity=quantity,value=value)
 			

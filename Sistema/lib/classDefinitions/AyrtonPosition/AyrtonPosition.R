@@ -9,5 +9,4 @@ setClass("AyrtonPosition",representation(Cliente="character",Strumento="characte
 				Saldo="numeric",Nome="character",ValoreMercatoMonetaCHF="numeric",ID_AAA="numeric",
 				ID_strumento="numeric"))
 
-# crea la classe AyrtonPositions uguale all'insieme dei records della tabella DBPortfolioGenerale
-setClass("AyrtonPositions",representation(positions="list"))
+
