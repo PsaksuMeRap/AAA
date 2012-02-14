@@ -9,8 +9,8 @@ options(help_type="html")
 
 library("RODBC")
 library("RUnit")
-# home <- "/home/claudio/workspace/AAA/Sistema/"
-home <- "\\\\usi/dfs/Utenti/O/ortellic/My Documents/workspace/AAA/Sistema"
+home <- "/home/claudio/workspace/AAA/Sistema/"
+# home <- "\\\\usi/dfs/Utenti/O/ortellic/My Documents/workspace/AAA/Sistema"
 setwd(home)
 
 stringsAsFactors = FALSE

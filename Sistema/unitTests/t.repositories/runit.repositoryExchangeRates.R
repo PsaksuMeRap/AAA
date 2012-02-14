@@ -30,7 +30,7 @@ test.exchange <- function() {
 
 	result <- repo$exchange(toMoney(100,new("Currency","EUR")),currencyTo)
 
-	checkEquals(result@amount,amountConverted)
+	checkEquals(result@amount,new("Amount",amountConverted))
 	checkEquals(result@currency,currencyTo)
 
 	# convert 100 CHF to USD
@@ -38,14 +38,14 @@ test.exchange <- function() {
 	amountConverted <- 100.0 / 0.9627
 
 	result <- repo$exchange(toMoney(100,new("Currency","CHF")),currencyTo)
-	checkEquals(result@amount,amountConverted)
+	checkEquals(result@amount,new("Amount",amountConverted))
 	checkEquals(result@currency,currencyTo)
 	
 	# convert 100 EUR to USD
 	currencyTo <- new("Currency","USD")
 	amountConverted <- 100.0 * 1.33853808 / 0.9627
 	result <- repo$exchange(toMoney(100,new("Currency","EUR")),currencyTo)
-	checkEquals(result@amount,amountConverted)
+	checkEquals(result@amount,new("Amount",amountConverted))
 	checkEquals(result@currency,currencyTo)
 
 }

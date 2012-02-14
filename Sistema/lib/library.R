@@ -7,6 +7,7 @@ source("./lib/repository.R")
 source("./lib/importazioneDBPortfolioGenerale.R") 
 source("./lib/genericFunctions.R") 
 
+source("./lib/classDefinitions/Amount/Amount.R")
 source("./lib/classDefinitions/Currency/Currency.R") 
 source("./lib/classDefinitions/Money/Money.R") 
 source("./lib/classDefinitions/AyrtonPosition/AyrtonPosition.R")

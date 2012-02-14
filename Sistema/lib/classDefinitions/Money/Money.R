@@ -5,8 +5,8 @@
 
 # crea la classe Money
 setClass("Money",
-		representation(amount="numeric",currency="Currency"),
-		prototype(amount=0,currency=new("Currency","CHF"))
+		representation(amount="Amount",currency="Currency"),
+		prototype(amount=new("Amount",0),currency=new("Currency","CHF"))
 )
 
 
@@ -58,6 +58,29 @@ fun <- function(x) {
 setMethod("print","Money",fun)
 
 
-toMoney <- function(amount=0,currency="CHF") {
-	return(new("Money",amount=amount,currency=currency))
-}
+
+setGeneric("toMoney",def=function(amount,currency) standardGeneric("toMoney"))
+
+setMethod("toMoney",signature(amount="Amount",currency="Currency"),
+		function(amount=new("Amount",0),currency=new("Currency","CHF")) {
+			return(new("Money",amount=amount,currency=currency))
+		}
+)
+
+setMethod("toMoney",signature(amount="numeric",currency="Currency"),
+		function(amount=0,currency=new("Currency","CHF")) {
+			return(new("Money",amount=new("Amount",amount),currency=currency))
+		}
+)
+
+setMethod("toMoney",signature(amount="Amount",currency="character"),
+		function(amount=new("Amount",0),currency="CHF") {
+			return(new("Money",amount=amount,currency=new("Currency",currency)))
+		}
+)
+
+setMethod("toMoney",signature(amount="numeric",currency="character"),
+		function(amount=0,currency="CHF") {
+			return(new("Money",amount=new("Amount",amount),currency=new("Currency",currency)))
+		}
+)

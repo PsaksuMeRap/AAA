@@ -22,7 +22,7 @@ test.shouldCreateUnclassifiedPosition <- function() {
 	
 	checkEquals(position@id,10.2)	
 	checkEquals(position@quantity,100.3)
-	checkEquals(position@value,toMoney(123.55,new("Currency","CHF")))
+	checkEquals(position@value,toMoney(new("Amount",123.55),new("Currency","CHF")))
 	
 	# restore initial conditions	
 	deallocateTestRepositories("instruments")
