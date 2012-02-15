@@ -5,5 +5,5 @@
 
 source("./lib/classDefinitions/Security/Security.R")
 
-setClass("Fondi_obbligazionari",representation(name="character",id="Id"),contains="Security") 
+setClass("Fondi_obbligazionari",representation(currency="Currency",name="character",id="Id"),contains="Security") 
 

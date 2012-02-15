@@ -5,6 +5,6 @@
 
 source("./lib/classDefinitions/Security/Security.R")
 
-setClass("Bond",representation(name="character",id="Id",maturity="character"),contains="Security")
+setClass("Bond",representation(currency="Currency",name="character",id="Id",maturity="character"),contains="Security")
 
 

@@ -11,7 +11,7 @@ test.shouldReturnFieldsToPrint <- function() {
 	
 	unclassified <- repoPosition$unclassified1
 	result <- fieldsToPrint(unclassified,list(empty=TRUE))
-	should <- list(class="Unclassified",
+	should <- list(securityClassName="Unclassified",
 			currency="CHF",
 			amount="123.55",
 			name="Security not classified")

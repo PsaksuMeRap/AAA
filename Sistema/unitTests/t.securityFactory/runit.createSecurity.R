@@ -16,6 +16,7 @@ test.shouldCreateUnclassified <- function() {
 	class(unclassified) <- "Unclassified"
 
 	checkEquals(unclassified@name,"Roche Holding Gs")
+	checkEquals(unclassified@currency,new("Currency","CHF"))
 	checkEquals(unclassified@id,new("IdAyrton",idAAA=824,idStrumento=1))
 	
 }
@@ -38,7 +39,17 @@ test.shouldCreateEquity <- function() {
 	equity <- createSecurity(origin)
 	
 	checkEquals(equity@name,"Roche Holding Gs")
+	checkEquals(equity@currency,new("Currency","CHF"))
 	checkEquals(equity@id,new("IdAyrton",idAAA=824,idStrumento=1))
+	
+	# same test but with equity in EUR
+	origin <- repository$equity2
+	class(origin) <- "Equity"
+
+	equity <- createSecurity(origin)
+
+	checkEquals(equity@currency,new("Currency","EUR"))
+	
 	
 	# restore initial conditions	
 	deallocateTestRepositories("equities")	

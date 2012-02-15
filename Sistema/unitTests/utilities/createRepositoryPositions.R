@@ -19,6 +19,9 @@ createRepositoryPositions <- function() {
 
 	# create a valid equity
 	testData$equity1 <- positionFactory(repository$equity1)
+
+	# create a valid equity
+	testData$equity2 <- positionFactory(repository$equity2)
 	
 	# create a non existing equity
 	testData$noExists <- positionFactory(repository$noExists)
@@ -31,6 +34,9 @@ createRepositoryPositions <- function() {
 	
 	# create a valid bond
 	testData$bond3 <- positionFactory(repository$bond3)
+	
+	# create a valid bond (match to proRata1)
+	testData$bond4 <- positionFactory(repository$bond4)
 	
 	# create a valid AccruedInterest di Fondi_obbligazionari
 	testData$proRataFondiObbligazionari <- positionFactory(repository$proRataFondiObbligazionari)

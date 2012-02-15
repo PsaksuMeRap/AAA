@@ -23,6 +23,21 @@ createRepositoryAyrtonPositions <- function() {
 
 	testData$equity1 <- x
 	
+	# create a valid equity
+	x <- new("AyrtonPosition")
+	x@Cliente <- "pippo11"
+	x@Strumento <- "A"
+	x@Moneta <- "EUR"
+	x@Saldo <- 1000
+	x@Nome <- "Kontron AG"
+	x@ValoreMercatoMonetaCHF <- 7439.7503136
+	x@ID_AAA <- 1772
+	x@ID_strumento <- 1
+	
+	class(x) <- "AyrtonPosition"
+	
+	testData$equity2 <- x
+	
 	# create a non existing equity
 	x <- new("AyrtonPosition")
 	x@Cliente <- "pippo160"
@@ -82,6 +97,19 @@ createRepositoryAyrtonPositions <- function() {
 	
 	testData$bond3 <- x
 	
+	# create a valid bond
+	x <- new("AyrtonPosition")
+	x@Cliente <- "pippo13"
+	x@Strumento <- "O      "
+	x@Moneta <- "CHF"
+	x@Saldo <- 50000
+	x@Nome <- "20120221 - 2% Toyota 21-02-12"
+	x@ValoreMercatoMonetaCHF <- 50025
+	x@ID_AAA <- 1073
+	x@ID_strumento <- 2
+	class(x) <- "AyrtonPosition"
+	
+	testData$bond4 <- x
 	
 	# create a valid AccruedInterest di Fondi_obbligazionari
 	x <- new("AyrtonPosition")

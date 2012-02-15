@@ -45,7 +45,7 @@ test.shouldCreateValidPositions <- function() {
 	
 	checkEquals(length(positions),3)
 	checkEquals(positions[[1]]@quantity,15)
-	checkEquals(positions[[2]]@value,toMoney(new("Amount",124345.632268),new("Currency","EUR")))
+	checkEquals(positions[[2]]@value,toMoney(new("Amount",124345.632268),new("Currency","CHF")))
 	
 	# restore initial conditions	
 	deallocateTestRepositories("instruments")
@@ -72,7 +72,7 @@ test.shouldRemoveAccruedInterest <- function() {
 	
 	checkEquals(length(positions),2)
 	checkEquals(is(positions[[1]]@security,"Bond"),TRUE)
-	checkEquals(positions[[1]]@quantity,100000)
+	checkEquals(positions[[1]]@quantity,new("NominalValue",toMoney(100000,"EUR")))
 	checkEquals(is(positions[[2]]@security,"Unclassified"),TRUE)
 	checkEquals(positions[[2]]@value,toMoney(new("Amount",123.55),new("Currency","CHF")))
 	

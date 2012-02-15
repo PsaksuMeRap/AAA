@@ -13,7 +13,7 @@ setGeneric("createSecurity",
 			idAyrton <- new("IdAyrton",idAAA=origin@ID_AAA,
 					idStrumento=origin@ID_strumento)
 			
-			security <- new(class(origin),name=origin@Nome,id=idAyrton)
+			security <- new(class(origin),currency=new("Currency",origin@Moneta),name=origin@Nome,id=idAyrton)
 			return(security)
 		}
 )
@@ -49,7 +49,7 @@ setMethod("createSecurity",signature(origin="Bond"),
 				return(paymentDate)
 			}
 			
-			security <- new(class(origin),name=origin@Nome,id=idAyrton,maturity=getMaturity())
+			security <- new(class(origin),currency=new("Currency",origin@Moneta),name=origin@Nome,id=idAyrton,maturity=getMaturity())
 			return(security)	
 		}
 )

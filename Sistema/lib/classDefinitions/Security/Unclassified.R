@@ -5,5 +5,5 @@
 
 source("./lib/classDefinitions/Security/Security.R")
 
-setClass("Unclassified",representation(name="character",id="Id"),contains="Security") 
+setClass("Unclassified",representation(currency="Currency",name="character",id="Id"),contains="Security") 
 
