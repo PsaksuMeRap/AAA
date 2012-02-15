@@ -19,6 +19,7 @@ source("./lib/classDefinitions/Security/Fondi_obbligazionari.R")
 source("./lib/classDefinitions/Security/Unclassified.R")
 
 source("./lib/classDefinitions/Id/Id.R")
+source("./lib/classDefinitions/Position/PositionEquity/PositionEquity.R")
 source("./lib/classDefinitions/Position/PositionBond/PositionBond.R")
 source("./lib/classDefinitions/Position/PositionBond/AccruedInterest.R")
 source("./lib/classDefinitions/Positions/Positions.R")

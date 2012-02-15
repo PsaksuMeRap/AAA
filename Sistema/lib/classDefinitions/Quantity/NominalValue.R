@@ -4,4 +4,4 @@
 ###############################################################################
 
 
-setClass("NominalValue",representation(nominalValue="Money"))
+setClass("NominalValue",contains="Money")

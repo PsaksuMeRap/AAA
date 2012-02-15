@@ -5,10 +5,10 @@
 
 test.shouldCreateUnclassified <- function() {
 	# uses a default method
-	source("./unitTests/utilities/createRepositoryForOriginTestData.R")
+	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
 	
 	# create the origin
-	repository <- createRepositoryForOriginTestData()
+	repository <- createRepositoryAyrtonPositions()
 	origin <- repository$equity1
 	class(origin) <- "Unclassified"
 	
@@ -24,14 +24,14 @@ test.shouldCreateUnclassified <- function() {
 test.shouldCreateEquity <- function() {
 	# uses a default method
 	source("./unitTests/utilities/allocateTestRepositories.R")	
-	source("./unitTests/utilities/createRepositoryForOriginTestData.R")
+	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
 	
 	# create the equity repository and instrument repository
 	allocateTestRepositories("equities")	
 	allocateTestRepositories("instruments")
 	
 	# create the origin
-	repository <- createRepositoryForOriginTestData()
+	repository <- createRepositoryAyrtonPositions()
 	origin <- repository$equity1
 	class(origin) <- "Equity"
 	
@@ -47,10 +47,10 @@ test.shouldCreateEquity <- function() {
 
 test.shouldCreateBond <- function() {
 	
-	source("./unitTests/utilities/createRepositoryForOriginTestData.R")
+	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
 	
 	# create the origin
-	repository <- createRepositoryForOriginTestData()
+	repository <- createRepositoryAyrtonPositions()
 	origin <- repository$bond1
 	class(origin) <-  "Bond"
 
@@ -64,13 +64,13 @@ test.shouldCreateBond <- function() {
 
 test.shouldNULLForAccruedInterest <- function() {
 	
-	source("./unitTests/utilities/createRepositoryForOriginTestData.R")
+	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
 	
 	# create the equity repository and instrument repository
 	allocateTestRepositories("instruments")	
 	
 	# create the origin
-	repository <- createRepositoryForOriginTestData()
+	repository <- createRepositoryAyrtonPositions()
 	origin <- repository$proRata1
 	class(origin) <- "Bond"
 

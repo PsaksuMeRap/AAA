@@ -19,4 +19,4 @@ validityCurrency <- function(object) {
 
 setClass("Currency",contains="character",validity=validityCurrency)
 
-
+setMethod("as.character",signature(x="Currency"),function(x) return(unclass(x)))

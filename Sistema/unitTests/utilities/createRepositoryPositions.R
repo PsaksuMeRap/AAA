@@ -4,16 +4,16 @@
 ###############################################################################
 
 
-createRepositoryForPositionsTestData <- function() {
+createRepositoryPositions <- function() {
 	
 	source("./unitTests/utilities/allocateTestRepositories.R")	
-	source("./unitTests/utilities/createRepositoryForOriginTestData.R")
+	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
 	
 	# create the instrument repository	
 	allocateTestRepositories("instruments")
 	
 	# create the origin
-	repository <- createRepositoryForOriginTestData()
+	repository <- createRepositoryAyrtonPositions()
 	
 	testData <- new.env()
 

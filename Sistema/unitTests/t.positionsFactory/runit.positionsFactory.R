@@ -28,13 +28,13 @@ test.shouldCreateEmpyPositions <- function() {
 test.shouldCreateValidPositions <- function() {
 	# uses a default method
 	source("./unitTests/utilities/allocateTestRepositories.R")	
-	source("./unitTests/utilities/createRepositoryForOriginTestData.R")
+	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
 	
 	# create the instrument repository	
 	allocateTestRepositories("instruments")
 	
 	# create the origins
-	repository <- createRepositoryForOriginTestData()
+	repository <- createRepositoryAyrtonPositions()
 	origin1 <- repository$equity1
 	origin2 <- repository$bond1
 	origin3 <- repository$unclassified1
@@ -55,13 +55,13 @@ test.shouldRemoveAccruedInterest <- function() {
 	
 	# uses a default method
 	source("./unitTests/utilities/allocateTestRepositories.R")	
-	source("./unitTests/utilities/createRepositoryForOriginTestData.R")
+	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
 	
 	# create the instrument repository	
 	allocateTestRepositories("instruments")
 	
 	# create the origins
-	repository <- createRepositoryForOriginTestData()
+	repository <- createRepositoryAyrtonPositions()
 	origin1 <- repository$proRataFondiObbligazionari
 	origin2 <- repository$bond1
 	origin3 <- repository$unclassified1

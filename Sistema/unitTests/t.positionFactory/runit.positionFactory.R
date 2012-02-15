@@ -7,13 +7,13 @@
 test.shouldCreateDefaultPosition <- function() {
 	# uses a default method
 	source("./unitTests/utilities/allocateTestRepositories.R")	
-	source("./unitTests/utilities/createRepositoryForOriginTestData.R")
+	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
 	
 	# create the instrument repository	
 	allocateTestRepositories("instruments")
 	
 	# create the origin
-	repository <- createRepositoryForOriginTestData()
+	repository <- createRepositoryAyrtonPositions()
 	origin <- repository$unclassified1
 	
 	position <- positionFactory(origin)

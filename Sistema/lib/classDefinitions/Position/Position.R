@@ -15,24 +15,24 @@ setClass("Position",representation(id="Id",security="Security",quantity="Quantit
 
 setGeneric("fieldsToPrint",def=function(position,width) standardGeneric("fieldsToPrint"))
 
-setMethod("fieldsToPrint",signature(position="Position",width="list"),
-		function(position,width) {
+setMethod("fieldsToPrint",signature(position="Position"),
+		function(position,width=list(empty=TRUE)) {
 			# this function returns a named list with the formatted strings
 			fields <- list()
 			
-			fields$class <- is(position)[1]
-			fields$currency <- position@money@currency
+			fields$securityClassName <- is(position@security)[1]
+			fields$currency <- as.character(position@value@currency)
 			
-			# format the class name
-			if (is.element("className",names(width))) {
-				nbChar <- nchar(fields$class)
-				fields$class <- paste(fields$class,paste(rep(" ", width["className"] - nbChar),collapse=""),sep="")
+			# format the security class name
+			if (is.element("securityClassName",names(width))) {
+				nbChar <- nchar(fields$securityClassName)
+				fields$securityClassName <- paste(fields$securityClassName,paste(rep(" ", width[["securityClassName"]] - nbChar),collapse=""),sep="")
 			}
 			
 			if (is.element("amount",names(width))) {	
-				fields$amount <- formatC(position@money@amount,width=width[["amount"]])
+				fields$amount <- formatC(position@value@amount,width=width[["amount"]])
 			} else {
-				fields$amount <- formatC(position@money@amount)
+				fields$amount <- formatC(position@value@amount)
 			}
 			fields$name <- position@security@name
 			
@@ -46,26 +46,21 @@ setMethod("fieldsToPrint",signature(position="Position",width="list"),
 		}
 )
 
-fieldsToPrint <- function(width) {
-	
-	if (missing(width)) width=c(empty=TRUE)
-	fields <- position$fieldsToPrintDefault(width)
-	
-	return(fields)
-}
 
-
-
-
-
-setMethod("as.character","Position", function(width) {
+setMethod("as.character","Position", 
+		function(x,width=list(empty=TRUE)) {	
+			if (missing(width)) width=list(empty=TRUE)
 			
-			if (missing(width)) width=c(empty=TRUE)
-			
-			f <- position$fieldsToPrint(width)
+			f <- fieldsToPrint(x,width)
 			
 			string <- paste(f,collapse=" / ")
 			
 			return(string)
 		}
 )
+
+
+setMethod("print","Position",
+		function(x,width=list(empty=TRUE)) {
+			print(as.character(x,width=width))
+		})
