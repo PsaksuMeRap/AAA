@@ -8,7 +8,7 @@ rm(list=ls(all=TRUE))
 library("RUnit")
 
 stringsAsFactors = FALSE
-setwd("/home/claudio/workspace/AAA/ITII-calcolo/")
+## setwd("/home/claudio/workspace/AAA/ITII-calcolo/")
 setwd("\\\\usi/dfs/Utenti/O/ortellic/My Documents/workspace/AAA/ITII-calcolo")
 source("./lib/library.R")
 source("./unitTests/testUtilities.R")

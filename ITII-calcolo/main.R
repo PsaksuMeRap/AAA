@@ -19,6 +19,8 @@ source("./unitTests/testUtilities.R")
 
 a1 <- 1
 a2 <- 0.25 # (1-0.5L)^2
+maConstant <- 0
+maCoeff <- c(a1,a2)
 # con e_t = h_t*z_t
 #
 # con h_t = b0 + b1*|e_{t-1}| + b2*h_{t-1}
@@ -32,6 +34,9 @@ b0 <- 1.0
 b1 <- 0.3
 b2 <- 0.2
 bCoefficients <- c(b0,b1,b2)
+garchConstant <- 1
+garchMaCoeff <- b1
+garchArCoeff <- b2
 
 # il modello ausiliario 
 # x_t = c1*x_{t-1} + c2*x_{t-2} + u_t                 eq. (3)
@@ -56,8 +61,20 @@ E_u_t.2 <- compute_E_u_t.k(power=2,fCoefficients,bCoefficients)
 
 
 
+# simulazione
+maAbsGarch <- simulate_ma_abs_garch(
+		maConstant,
+		maCoeff,
+		garchConstant,
+		garchMaCoeff,
+		garchArCoeff,
+		nbObs=10000
+)
 
 
+# stima i valori
+result <- ar(x=maAbsGarch,aic=FALSE2)
+c$pseudoTrueValues
 
 # test con max.Lag=1
 c <- pseudoTrueValues(ma=c(0,1),p=1)
