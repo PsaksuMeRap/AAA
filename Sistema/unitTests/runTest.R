@@ -9,6 +9,7 @@ source("./lib/library.R")
 
 ## test globale
 dirs = c(
+		"./unitTests/t.lists",
 		"./unitTests/t.utilities",
 		"./unitTests/t.repositories",
 		"./unitTests/t.currency",
@@ -24,7 +25,7 @@ testsuite.lists <- defineTestSuite("Test globale",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
 
 
-dirs = c("./unitTests/t.positionsFactory")
+dirs = c("./unitTests/t.lists")
 testsuite.lists <- defineTestSuite("positionsFactory",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
 
