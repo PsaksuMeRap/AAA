@@ -25,6 +25,7 @@ source("./lib/classDefinitions/Position/PositionEquity/PositionEquity.R")
 source("./lib/classDefinitions/Position/PositionBond/PositionBond.R")
 source("./lib/classDefinitions/Position/PositionBond/AccruedInterest.R")
 source("./lib/classDefinitions/Positions/Positions.R")
+source("./lib/classDefinitions/Portfolio/Portfolio.R")
 
 source("./lib/setMethod/securityFactory/securityFactory.R") 
 source("./lib/setMethod/positionFactory/positionFactory.R")
@@ -32,3 +33,6 @@ source("./lib/setMethod/positionsFactory/positionsFactory.R")
 source("./lib/setMethod/positionsFactory/completeBondPosition.R")
 source("./lib/setMethod/positionsFactory/matchToPositionBond.R")
 source("./lib/setMethod/positionsFactory/adjustForAccruedInterest.R")
+
+source("./lib/setMethod/portfolioFactory/portfolioFactory.R")
+

@@ -24,3 +24,26 @@ test.shouldJoinTwoPositions <- function() {
 	
 	checkEquals(e3,new("Positions",list()))
 }
+
+
+
+test.shouldExtractPositions <- function() {
+	
+	source("./unitTests/utilities/createRepositoryPositions.R")
+	repository <- createRepositoryPositions()
+	
+	# create the positions
+	positions <- list(repository$equity1,repository$equity2,repository$bond1)
+	Positions <- new("Positions",positions)
+	
+	# test1: with a numeric index
+	result <- Positions[c(1,3)]
+	checkEquals(is(result,"Positions"),TRUE)
+	checkEquals(result,new("Positions",positions[-2]))
+
+	# test1: with a logical index
+	result <- Positions[c(TRUE,FALSE,TRUE)]
+	checkEquals(is(result,"Positions"),TRUE)
+	checkEquals(result,new("Positions",positions[-2]))
+}
+

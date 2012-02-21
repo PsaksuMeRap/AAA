@@ -6,9 +6,24 @@
 
 setClass("Positions",contains="list")
 
-setMethod("union",signature(x="Positions",y="Positions"),
+setMethod("join",signature(x="Positions",y="Positions"),
 		
 		function(x,y) {
 			return(new("Positions",c(x@.Data,y@.Data)))
 		}
 )
+
+setMethod(`[`,signature(x="Positions"),
+		function(x,i,j,...,drop=TRUE) {
+			positions <- x@.Data[i]
+			return(new("Positions",positions))
+		}
+)
+
+setMethod("[",signature(x="Positions"),
+		function(x,i,j,...,drop=TRUE) {
+			positions <- x@.Data[i]
+			return(new("Positions",positions))
+		}
+)
+

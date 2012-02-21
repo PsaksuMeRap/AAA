@@ -13,5 +13,7 @@ setGeneric("print", fun)
 fun <- function(x,divisor) standardGeneric("divide")
 setGeneric("divide", fun)
 
-# union is a generic function used to merge Positions or Portfolios
-setGeneric("union",function(x,y,...) standardGeneric("union"))
+# join is a generic function used to join Positions or Portfolios
+# the positions are joined and duplicated positions are not removed
+# or summed together
+setGeneric("join",function(x,y,...) standardGeneric("join"))

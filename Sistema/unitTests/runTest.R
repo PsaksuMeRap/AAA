@@ -11,7 +11,7 @@ source("./lib/library.R")
 dirs = c(
 		"./unitTests/t.lists",
 		"./unitTests/t.utilities",
-		"./unitTests/t.repositories",
+		"./unitTests/t.repositories/runit.repositoryExchangeRates",
 		"./unitTests/t.currency",
 		"./unitTests/t.money",
 		"./unitTests/t.securityFactory",
@@ -19,13 +19,14 @@ dirs = c(
 		"./unitTests/t.ayrtonPositions",
 		"./unitTests/t.positionsFactory",
 		"./unitTests/t.position",		
-		"./unitTests/t.positions"
+		"./unitTests/t.positions",
+		"./unitTests/t.portfolio" # ,"./unitTests/t.portfolioFactory"
 		)
 testsuite.lists <- defineTestSuite("Test globale",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
 
-
-dirs = c("./unitTests/t.lists")
+library("RUnit")
+dirs = c("./unitTests/t.repositories")
 testsuite.lists <- defineTestSuite("positionsFactory",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
 
