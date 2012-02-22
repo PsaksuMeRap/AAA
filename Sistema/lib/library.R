@@ -18,6 +18,7 @@ source("./lib/classDefinitions/AyrtonPositions/AyrtonPositions.R")
 source("./lib/classDefinitions/Security/Bond.R")
 source("./lib/classDefinitions/Security/Equity.R")
 source("./lib/classDefinitions/Security/Fondi_obbligazionari.R")
+source("./lib/classDefinitions/Security/Fondi_azionari.R")
 source("./lib/classDefinitions/Security/Unclassified.R")
 
 source("./lib/classDefinitions/Id/Id.R")
@@ -35,4 +36,4 @@ source("./lib/setMethod/positionsFactory/matchToPositionBond.R")
 source("./lib/setMethod/positionsFactory/adjustForAccruedInterest.R")
 
 source("./lib/setMethod/portfolioFactory/portfolioFactory.R")
-
+source("./lib/setMethod/portfoliosFactory/portfoliosFactory.R")
