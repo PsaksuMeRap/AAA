@@ -15,7 +15,7 @@ importDBPortfolioGenerale <- function() {
 	colnames(DBPortfolioGenerale.df)[1] <- "Cliente"
 	getRow <- function(i,df) { 
 		x <- df[i,,drop=TRUE]
-		ayrtonPosition <- new("AyrtonPositio",
+		ayrtonPosition <- new("AyrtonPosition",
 				Cliente=x[["Cliente"]],Strumento=x[["Strumento"]],Moneta=x[["Moneta"]],
 				Saldo=x[["Saldo"]],Nome=x[["Nome"]],ValoreMercatoMonetaCHF=x[["ValoreMercatoMonetaCHF"]],
 				ID_AAA=x[["ID_AAA"]],ID_strumento=x[["ID_strumento"]])
@@ -42,7 +42,7 @@ importDBPortfolioGeneraleByDate <- function(fetchDate) {
 	colnames(DBPortfolioGenerale.df)[1] <- "Cliente"
 	getRow <- function(i,df) { 
 		x <- df[i,,drop=TRUE]
-		ayrtonPosition <- new("AyrtonPositio",
+		ayrtonPosition <- new("AyrtonPosition",
 				Cliente=x[["Cliente"]],Strumento=x[["Strumento"]],Moneta=x[["Moneta"]],
 				Saldo=x[["Saldo"]],Nome=x[["Nome"]],ValoreMercatoMonetaCHF=x[["ValoreMercatoMonetaCHF"]],
 				ID_AAA=x[["ID_AAA"]],ID_strumento=x[["ID_strumento"]])

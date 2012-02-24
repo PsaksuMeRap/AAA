@@ -13,3 +13,7 @@ setGeneric("print", fun)
 fun <- function(x,divisor) standardGeneric("divide")
 setGeneric("divide", fun)
 
+# join is a generic function used to join Positions or Portfolios
+# the positions are joined and duplicated positions are not removed
+# or summed together
+setGeneric("join",function(x,y,...) standardGeneric("join"))
