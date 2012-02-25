@@ -29,7 +29,7 @@ allocateTestRepositories <- function(repoName) {
 		rates <- createExchangeRatesVector()
 		
 		# create the instrument repository		
-		exchangeRates <- create_repositoryExchangeRates(rates)
+		exchangeRates <- create_testRepositoryExchangeRates(rates)
 		
 		# create backup if necessary
 		if (exists("exchangeRates",envir=repositories,inherits=FALSE)) {

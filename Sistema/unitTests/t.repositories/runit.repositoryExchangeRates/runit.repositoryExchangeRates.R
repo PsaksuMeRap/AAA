@@ -9,7 +9,7 @@ test.create_repositoryExchangeRates <- function() {
 	source("./unitTests/utilities/createExchangeRatesVector.R")
 	
 	rates <- createExchangeRatesVector()
-	repositoryExchangeRates <- create_repositoryExchangeRates(rates)
+	repositoryExchangeRates <- create_testRepositoryExchangeRates(rates)
 	
 	checkEquals(repositoryExchangeRates$rates[["ESP"]],0.00804791304556874)
 	checkEquals(repositoryExchangeRates$rates[["CHF"]],1)
@@ -22,7 +22,7 @@ test.exchange <- function() {
 	source("./unitTests/utilities/createExchangeRatesVector.R")
 	
 	rates <- createExchangeRatesVector()
-	repo <- create_repositoryExchangeRates(rates)
+	repo <- create_testRepositoryExchangeRates(rates)
 	
 	# convert 100 EUR to CHF
 	currencyTo <- new("Currency","CHF")
