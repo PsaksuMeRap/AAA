@@ -73,7 +73,7 @@ maAbsGarch <- simulate_ma_abs_garch(
 
 
 # stima i valori
-result <- ar(x=maAbsGarch,aic=FALSE2)
+result <- ar(x=maAbsGarch,order.max=2,method="ols",aic=FALSE)
 c$pseudoTrueValues
 
 # test con max.Lag=1
