@@ -51,6 +51,7 @@ source("./lib/setMethod/positionsFactory/positionsFactory.R")
 source("./lib/setMethod/positionsFactory/completeBondPosition.R")
 source("./lib/setMethod/positionsFactory/matchToPositionBond.R")
 source("./lib/setMethod/positionsFactory/adjustForAccruedInterest.R")
+source("./lib/setMethod/testSuiteFactory/testSuiteFactory.R")
 
 source("./lib/setMethod/portfolioFactory/portfolioFactory.R")
 source("./lib/setMethod/portfoliosFactory/portfoliosFactory.R")

@@ -61,7 +61,7 @@ browser()
 			return(FALSE)
 		}
 		if (length(portfolio)>1) {
-			lapply(portfolio[-1],portfolio[[1]]$addPortfolio)
+			portfolio <- join(portfolio[[1]],portfolio[-1])
 		}
 		
 		positions <- as(portfolio[[1]]@.Data,"Positions")
@@ -74,7 +74,7 @@ browser()
 	cat(paste("Inp. directory:",inputDir),file=logFile,sep="\n",append=TRUE)
 	cat(paste("Out. directory:",outputDir),file=logFile,sep="\n",append=TRUE)
 	cat("\n",file=logFile,sep="\n",append=TRUE)
-
+arrivato qui: devo verificare che la funzione checkCheckStringOnPositions funzioni
 	if (is.element("positions",class(po))) {
 		results <- lapply(testSuiteData@checkStrings,checkCheckStringOnPositions,positions,logFile)
 		checkResults <- extractFromList(results,"checkResult")

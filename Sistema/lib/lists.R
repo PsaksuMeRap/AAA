@@ -59,6 +59,14 @@ extractFromList <- function(origin,fieldName) {
 
 }
 
+
+extractSlotFromList <- function(x,fieldName) {
+	# x: una lista
+	# fieldName: il nome del campo i cui valori sono da estrarre
+	
+	return(sapply(x,slot,fieldName))
+}
+
 filterClassLists <- function(origin,by,value) {
 	# origin: una lista i cui elementi,
 	# notati x, sono una classe con il campo x@by
