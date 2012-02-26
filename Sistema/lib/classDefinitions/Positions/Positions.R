@@ -27,3 +27,8 @@ setMethod("[",signature(x="Positions"),
 		}
 )
 
+setMethod("print","Positions",
+		function(x,width=list(empty=TRUE)) {
+			for (i in x@.Data) print(i,width=width)
+		}
+)

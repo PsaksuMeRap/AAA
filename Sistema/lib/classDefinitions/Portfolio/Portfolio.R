@@ -21,3 +21,11 @@ setMethod("join",signature(x="Portfolio",y="Portfolio"),
 							newPositions))			
 		}
 )
+
+setMethod("print","Portfolio",
+		function(x,width=list(empty=TRUE)) {
+			print(paste("Owner:",x@owner))
+			print(paste("Reference currency:",x@referenceCurrency))
+			sapply(as(x@.Data,"Positions"),print,width=width)
+		}
+)

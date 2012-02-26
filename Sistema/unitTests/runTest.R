@@ -21,7 +21,8 @@ dirs = c(
 		"./unitTests/t.position",		
 		"./unitTests/t.positions",
 		"./unitTests/t.portfolio" ,
-		"./unitTests/t.portfolioFactory" # ,"./unitTests/t.portfolioFactory"
+		"./unitTests/t.portfolioFactory", # "./unitTests/t.portfolioFactory",
+		"./unitTests/t.riskmanTestSuite"
 		)
 testsuite.lists <- defineTestSuite("Test globale",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)

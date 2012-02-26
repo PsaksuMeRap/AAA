@@ -63,4 +63,5 @@ setMethod("as.character","Position",
 setMethod("print","Position",
 		function(x,width=list(empty=TRUE)) {
 			print(as.character(x,width=width))
-		})
+		}
+)

@@ -7,7 +7,8 @@ source("./lib/lists.R")
 
 source("./lib/repository.R")
 source("./lib/importazioneDBPortfolioGenerale.R") 
-source("./lib/genericFunctions.R") 
+source("./lib/genericFunctions.R")
+source("./lib/riskmanTestSuite.R")
 
 source("./lib/classDefinitions/Amount/Amount.R")
 source("./lib/classDefinitions/Currency/Currency.R") 

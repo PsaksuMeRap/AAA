@@ -58,3 +58,29 @@ extractFromList <- function(origin,fieldName) {
 	return(sapply(origin,extract,fieldName))
 
 }
+
+filterClassLists <- function(origin,by,value) {
+	# origin: una lista i cui elementi,
+	# notati x, sono una classe con il campo x@by
+	# by: il nome del campo su cui applicare il filtro
+	# value: il/i valore/i del campo da filtrare per cui eseguire la selezione
+	# output: a list, the subset of origin with match the value
+	
+	l <- length(origin)
+	
+	if (l==0) return(list())
+	
+	areOkFinal <- rep(FALSE,length(l))
+	
+	filter <- function(x,by,value) {
+		return(x[[by]] == value)
+	}	
+	
+	for (v in value) {
+		areOk <- sapply(origin,slot,by) == v
+		areOkFinal <- areOkFinal | areOk
+	}
+	
+	return(origin[areOkFinal])
+	
+}
