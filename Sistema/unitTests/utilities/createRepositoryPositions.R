@@ -47,5 +47,8 @@ createRepositoryPositions <- function() {
 	# create an Unclassified security
 	testData$unclassified1 <- positionFactory(repository$unclassified1)
 	
+	# create a strutturati_FI 
+	testData$strutturati_FI <- positionFactory(testData$strutturati_FI)
+	
 	return(testData)
 }

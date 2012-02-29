@@ -5,5 +5,5 @@
 
 source("./lib/classDefinitions/Security/Security.R")
 
-setClass("Strutturati_FI",representation(currency="Currency",name="character",id="Id"),contains="Security") 
+setClass("Strutturati_FI",representation(currency="Currency",name="character",id="Id",expiryDate="character",underlyingHorizon="character"),contains="Security") 
 

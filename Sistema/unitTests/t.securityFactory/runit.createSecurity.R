@@ -91,4 +91,21 @@ test.shouldNULLForAccruedInterest <- function() {
 	
 }
 
-
+test.shouldCreateStrutturati_FI <- function() {
+	
+	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
+	
+	# create the equity repository and instrument repository
+	allocateTestRepositories("instruments")	
+	
+	# create the origin
+	repository <- createRepositoryAyrtonPositions()
+	origin <- repository$strutturati_FI
+	class(origin) <- "Strutturati_FI"
+	
+	security <- createSecurity(origin)
+	
+	checkEquals(security@expiryDate,"2013-05-21")
+	checkEquals(security@underlyingHorizon,"<3Y")
+	
+}

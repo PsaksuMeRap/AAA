@@ -65,3 +65,29 @@ setMethod("createSecurity",signature(origin="Fondi_obbligazionari"),
 			
 		}
 )
+
+setMethod("createSecurity",signature(origin="Strutturati_FI"),
+		function(origin) {
+			
+			# this is a common slot of all instruments
+			idAyrton <- new("IdAyrton",idAAA=origin@ID_AAA,
+					idStrumento=origin@ID_strumento)
+			
+			# extract the name of the security
+			name <- origin@Nome
+			
+			# check if the underlying is a short term fixed income position
+			if (grepl("<3Y",x=name)) underlyingHorizon = "<3Y"
+			if (grepl(">3Y",x=name)) underlyingHorizon = ">3Y"
+			
+			# determine the expiry date of the structured product
+			year <- substr(name,1,4)
+			month <- substr(name,5,6)
+			day <- substr(name,7,8)
+			expiryDate = paste(year,month,day,sep="-")
+			
+			security <- new(class(origin),currency=new("Currency",origin@Moneta),name=origin@Nome,id=idAyrton,
+					expiryDate=expiryDate,underlyingHorizon=underlyingHorizon)
+			return(security)	
+		}
+)

@@ -74,7 +74,7 @@ browser()
 	cat(paste("Inp. directory:",inputDir),file=logFile,sep="\n",append=TRUE)
 	cat(paste("Out. directory:",outputDir),file=logFile,sep="\n",append=TRUE)
 	cat("\n",file=logFile,sep="\n",append=TRUE)
-arrivato qui: devo verificare che la funzione checkCheckStringOnPositions funzioni
+# arrivato qui: devo verificare che la funzione checkCheckStringOnPositions funzioni
 	if (is.element("positions",class(po))) {
 		results <- lapply(testSuiteData@checkStrings,checkCheckStringOnPositions,positions,logFile)
 		checkResults <- extractFromList(results,"checkResult")

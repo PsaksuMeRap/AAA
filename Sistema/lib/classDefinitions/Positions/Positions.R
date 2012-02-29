@@ -32,3 +32,15 @@ setMethod("print","Positions",
 			for (i in x@.Data) print(i,width=width)
 		}
 )
+
+setMethod("sum","Positions",
+		function(x) {
+			# x: a variable of class Positions (is a list)
+			
+			balance <- toMoney(amount=0,currency="CHF")
+			for (i in x) {
+				balance <- sum(balance,i)
+			}
+			return(balance)
+		}
+)

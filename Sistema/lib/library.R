@@ -5,16 +5,27 @@
 
 source("./lib/lists.R")
 
+
 source("./lib/repository.R")
 source("./lib/importazioneDBPortfolioGenerale.R") 
 source("./lib/genericFunctions.R")
 source("./lib/riskmanTestSuite.R")
+
 
 source("./lib/classDefinitions/Amount/Amount.R")
 source("./lib/classDefinitions/Currency/Currency.R") 
 source("./lib/classDefinitions/Money/Money.R") 
 source("./lib/classDefinitions/AyrtonPosition/AyrtonPosition.R")
 source("./lib/classDefinitions/AyrtonPositions/AyrtonPositions.R")
+source("./lib/classDefinitions/Constraint/Constraint.R") 
+source("./lib/classDefinitions/Strings/CheckString.R")
+source("./lib/classDefinitions/Strings/ConstraintString.R")
+source("./lib/classDefinitions/Strings/DirectiveString.R")
+source("./lib/classDefinitions/Strings/FactorString.R")
+source("./lib/classDefinitions/Strings/FactorStrings.R")
+source("./lib/classDefinitions/Strings/SelectionString.R")
+source("./lib/classDefinitions/Strings/ParsedFactorString.R")
+
 
 source("./lib/classDefinitions/Security/Bond.R")
 source("./lib/classDefinitions/Security/Equity.R")
@@ -38,12 +49,14 @@ source("./lib/classDefinitions/Security/Fondi_misti.R")
 source("./lib/classDefinitions/Security/Fondi_mercato_monetario.R")
 source("./lib/classDefinitions/Security/Diritti_aumento_capitale_azionario.R")
 
+
 source("./lib/classDefinitions/Id/Id.R")
 source("./lib/classDefinitions/Position/PositionEquity/PositionEquity.R")
 source("./lib/classDefinitions/Position/PositionBond/PositionBond.R")
 source("./lib/classDefinitions/Position/PositionBond/AccruedInterest.R")
 source("./lib/classDefinitions/Positions/Positions.R")
 source("./lib/classDefinitions/Portfolio/Portfolio.R")
+
 
 source("./lib/setMethod/securityFactory/securityFactory.R") 
 source("./lib/setMethod/positionFactory/positionFactory.R")
@@ -52,6 +65,8 @@ source("./lib/setMethod/positionsFactory/completeBondPosition.R")
 source("./lib/setMethod/positionsFactory/matchToPositionBond.R")
 source("./lib/setMethod/positionsFactory/adjustForAccruedInterest.R")
 source("./lib/setMethod/testSuiteFactory/testSuiteFactory.R")
+source("./lib/setMethod/constraintFactory/constraintFactory.R")
+source("./lib/setMethod/selectionCriteriumFactory/selectionCriteriumFactory.R")
 
 source("./lib/setMethod/portfolioFactory/portfolioFactory.R")
 source("./lib/setMethod/portfoliosFactory/portfoliosFactory.R")

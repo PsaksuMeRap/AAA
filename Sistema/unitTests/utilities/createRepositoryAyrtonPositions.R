@@ -154,6 +154,20 @@ createRepositoryAyrtonPositions <- function() {
 	
 	testData$unclassified1 <- x
 	
+	# create a Strutturati_FI security
+	x <- new("AyrtonPosition")
+	x@Cliente <- "pippo3"
+	x@Strumento <- "PS"
+	x@Moneta <- "EUR"
+	x@Saldo <- 150000
+	x@Nome <- "20130521 - <3Y - Floored Floares with Cap 1.75%-4.625% p.a. On CS"
+	x@ValoreMercatoMonetaCHF <- 179299.42998
+	x@ID_AAA <- 98
+	x@ID_strumento <- 49
+	class(x) <- "AyrtonPosition"
+
+	testData$strutturati_FI <- x
+	
 	
 	return(testData)
 }
