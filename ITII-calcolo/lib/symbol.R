@@ -3,6 +3,8 @@
 # Author: ortellic
 ###############################################################################
 
+setClass("Symbol",representation(name="character",power="integer"))
+
 create_symbol <- function(name="a",power=1) {
 	symbol <- list()
 	class(symbol) <- "symbol"
@@ -12,24 +14,30 @@ create_symbol <- function(name="a",power=1) {
 	return(symbol)
 }
 
-"*.symbol" <- function(a,b) {
-	
-	if (a$name==b$name) {
-		a$power=as.integer(a$power+b$power)
-		return(create_symbols(a))
-	}	
-	c <- create_symbols(a)
-	c[[2]] <- b
-	return(sort(c))
-}
 
-"==.symbol" <- function(a,b) {
-	return (identical(a,b))
-}
+setMethod("*",signature(e1="Symbol",e2="Symbol"), function(e1,e2) {			
+			if (e1@name==e2@name) {
+				e1@power=as.integer(e1@power+e2@power)
+				return(e1)
+			}	
+			c <- new("Symbols",list(a))
+			c[[2]] <- b
+			return(sort(c))
+		}
+)
 
-toString <- function(x) UseMethod("toString",x)
 
-toString.symbol <- function(symbol) {
-	if (symbol$power==1) return(symbol$name)
-	return(paste(symbol$name,"^",symbol$power,sep=""))
-}
+setMethod("==",signature(e1="Symbol",e2="Symbol"), function(e1,e2) {
+			return (identical(e1,e2))
+		}
+)
+
+
+setGeneric("toString", function(x) standardGeneric("toString") )
+
+setMethod("toString", "Symbol", function(x) {
+			if (x@power==1) return(x@name)
+			return(paste(x@name,"^",x@power,sep=""))
+		}
+)
+

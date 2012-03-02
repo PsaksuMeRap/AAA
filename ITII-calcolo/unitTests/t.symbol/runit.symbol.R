@@ -8,16 +8,16 @@ test.create_symbol <- function() {
 	
 	# randomVariable <- create_monomio(name="")
 	
-	symbol <- create_symbol()
+	symbol <- new("Symbol",name="a",power=1)
 			
-	checkEquals(symbol$name,"a")
-	checkEquals(symbol$power,1)
-	checkEquals(class(symbol),"symbol")
+	checkEquals(symbol@name,"a")
+	checkEquals(symbol@power,1)
+	checkEquals(class(symbol),"Symbol")
 	
-	symbol <- create_symbol("pippo",12)
+	symbol <- new("Symbol",name="pippo",power=12)
 	
-	checkEquals(symbol$name,"pippo")
-	checkEquals(symbol$power,12)
+	checkEquals(symbol@name,"pippo")
+	checkEquals(symbol@power,12)
 
 }
 
@@ -39,8 +39,8 @@ test.create_symbols <- function() {
 
 test.multiply_two_symbol <- function() {
 	
-	symbol1 <- create_symbol("a",4)
-	symbol2 <- create_symbol("b",2)
+	symbol1 <- new("Symbol",name="a",power=4)
+	symbol2 <- new("Symbol",name="b",power=2)
 	
 	# multiply two different symbols
 	c <- symbol1 * symbol2

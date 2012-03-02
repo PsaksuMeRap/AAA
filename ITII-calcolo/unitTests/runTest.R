@@ -14,6 +14,29 @@ source("./lib/library.R")
 source("./unitTests/testUtilities.R")
 
 ## test globale
+dirs = c("./unitTests/t.symbol"
+)
+testsuite.lists <- defineTestSuite("Test globale",dirs = dirs)
+testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## test globale
 dirs = c("./unitTests/t.lag",
 		"./unitTests/t.monomial",
 		"./unitTests/t.monomialMethods",
