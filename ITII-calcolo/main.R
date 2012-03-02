@@ -9,7 +9,7 @@ library("RUnit")
 
 stringsAsFactors = FALSE
 # setwd("/home/claudio/workspace/AAA/ITII-calcolo/")
-# setwd("\\\\usi/dfs/Utenti/O/ortellic/My Documents/workspace/AAA/ITII-calcolo")
+setwd("\\\\usi/dfs/Utenti/O/ortellic/My Documents/workspace/AAA/ITII-calcolo")
 source("./lib/library.R")
 source("./unitTests/testUtilities.R")
 
@@ -17,7 +17,7 @@ source("./unitTests/testUtilities.R")
 # calcolo di x_t generato da un modello MA(2)
 # x_t = e_t + a1*e_{t-1} + a2*e_{t-2}                 eq. (1)
 
-a1 <- 1
+a1 <- -1
 a2 <- 0.25 # (1-0.5L)^2
 maConstant <- 0
 maCoeff <- c(a1,a2)
@@ -68,7 +68,7 @@ maAbsGarch <- simulate_ma_abs_garch(
 		garchConstant,
 		garchMaCoeff,
 		garchArCoeff,
-		nbObs=10000
+		nbObs=2000000
 )
 
 
@@ -76,18 +76,21 @@ maAbsGarch <- simulate_ma_abs_garch(
 result <- ar(x=maAbsGarch,order.max=2,method="ols",aic=FALSE)
 c$pseudoTrueValues
 
+
 # test con max.Lag=1
-c <- pseudoTrueValues(ma=c(0,1),p=1)
+c <- pseudoTrueValues(ma=c(0,1,a1,a2),p=2)
 fCoefficients <- c$f[,1]
 
 E_u_t.1 <- compute_E_u_t.k(power=1,fCoefficients,bCoefficients)
 
 E_u_t.2 <- compute_E_u_t.k(power=2,fCoefficients,bCoefficients)
+mean(result$resid^2,na.rm=TRUE)
 
 E_u_t.3 <- compute_E_u_t.k(power=3,fCoefficients,bCoefficients)
+mean(result$resid^3,na.rm=TRUE)
 
-
-
+E_u_t.4 <- compute_E_u_t.k(power=4,fCoefficients,bCoefficients)
+mean(result$resid^4,na.rm=TRUE)
 
 
 
