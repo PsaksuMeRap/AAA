@@ -4,4 +4,4 @@
 ###############################################################################
 
 
-setClass("SelectionString",contains="character")
+setClass("ConstraintString",contains="character")

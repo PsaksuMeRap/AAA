@@ -3,5 +3,5 @@
 # Author: claudio
 ###############################################################################
 
-
-setClass("ParsedFactorString",representation(criterium="character",negation="logical",values="vector"))
+setClassUnion("ParsedFactorStringValue", c("vector","ConstraintString"))
+setClass("ParsedFactorString",representation(criterium="character",negation="logical",values="ParsedFactorStringValue"))

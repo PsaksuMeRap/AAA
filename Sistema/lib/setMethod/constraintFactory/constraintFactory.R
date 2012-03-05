@@ -8,6 +8,11 @@
 constraintFactory <- function(constraintString) {
 	# a constraintString with the quantitative constraint to identify
 	# "=0USD" or "> 1.77 EUR" or < 5% 
+	if (class(constraintString)!="ConstraintString") {
+		message <- "constraintFactory requires a ConstraintString!"
+		paste(message,"\nGot",class(constraintString),"instead.")
+		stop(message)
+	}
 	
 	string <- removeStartEndSpaces(unclass(constraintString))
 	

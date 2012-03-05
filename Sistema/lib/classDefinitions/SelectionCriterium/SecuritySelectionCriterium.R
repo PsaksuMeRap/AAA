@@ -4,4 +4,6 @@
 ###############################################################################
 
 
-setClass("SecuritySelectionCriterium",contains="SelectionCriterium")
+setClass("SecuritySelectionCriterium",representation(values="vector",negation="logical"),
+		contains="SelectionCriterium"
+)

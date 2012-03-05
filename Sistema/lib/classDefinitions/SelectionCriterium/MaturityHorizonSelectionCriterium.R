@@ -6,6 +6,8 @@
 
 
 
-setClass("MaturityHorizonSelectionCriterium",contains="SelectionCriterium")
+setClass("MaturityHorizonSelectionCriterium",representation(values="vector",negation="logical"),
+		contains="SelectionCriterium"
+)
 
 

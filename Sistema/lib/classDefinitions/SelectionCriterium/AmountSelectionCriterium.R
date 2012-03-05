@@ -4,6 +4,6 @@
 ###############################################################################
 
 
-setClass("AmountSelectionCriterium",contains="SelectionCriterium")
-
-
+setClass("AmountSelectionCriterium",representation(constraint="Constraint"),
+		contains="SelectionCriterium"
+)

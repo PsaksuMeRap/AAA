@@ -4,7 +4,7 @@
 ###############################################################################
 
 
-setClass("ConstraintString",contains="character")
+setClass("SelectionString",contains="character")
 
 setMethod("split",
 		signature(x = "SelectionString"),

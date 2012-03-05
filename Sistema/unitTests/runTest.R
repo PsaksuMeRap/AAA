@@ -22,13 +22,15 @@ dirs = c(
 		"./unitTests/t.positions",
 		"./unitTests/t.portfolio" ,
 		"./unitTests/t.portfolioFactory", # "./unitTests/t.portfolioFactory",
-		"./unitTests/t.riskmanTestSuite"
+		"./unitTests/t.riskmanTestSuite",
+		"./unitTests/t.strings",
+		"./unitTests/t.constraintFactory"
 		)
 testsuite.lists <- defineTestSuite("Test globale",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
 
 library("RUnit")
-dirs = c("./unitTests/t.portfolioFactory")
-testsuite.lists <- defineTestSuite("positionsFactory",dirs = dirs)
+dirs = c("./unitTests/t.strings")
+testsuite.lists <- defineTestSuite("strings",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
 

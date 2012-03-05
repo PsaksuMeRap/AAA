@@ -5,5 +5,7 @@
 
 
 
-setClass("CurrencySelectionCriterium",contains="SelectionCriterium")
+setClass("CurrencySelectionCriterium",representation(values="vector",negation="logical"),
+		contains="SelectionCriterium"
+)
 
