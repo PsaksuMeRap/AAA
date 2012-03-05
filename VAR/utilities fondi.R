@@ -55,9 +55,11 @@ getFundNavEuroFixedIncome <- function(date) {
 
 getFundNav <- function(date=defaultDate()) {
 
-	getFundNavGlobalEquity(date)
-	getFundNavEuroFixedIncome(date)
-	getFundNavGlobalEconomy(date)
+	r1 <- sapply(date,getFundNavGlobalEquity)
+	print("----------")
+	r2 <- sapply(date,getFundNavEuroFixedIncome)
+	print("----------")	
+	r3 <- sapply(date,getFundNavGlobalEconomy)
 
 }
 

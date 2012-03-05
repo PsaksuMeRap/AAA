@@ -48,12 +48,13 @@ fondi <- c("pippo53","pippo76","pippo210")
 # fondi <- c("pippo53","pippo76")
 # caso data storica
 if (FALSE) {
-	fine <- as.Date("2011-09-13")
+	fine <- as.Date("2012-03-01")
 	dates <- seq(as.Date("2011-01-3"),to=fine,by=7)
 	dates <- c(dates,seq(as.Date("2011-01-4"),to=fine,by=7))
 	dates <- c(dates,seq(as.Date("2011-01-5"),to=fine,by=7))	
 	dates <- c(dates,seq(as.Date("2011-01-6"),to=fine,by=7))
 	dates <- c(dates,seq(as.Date("2011-01-7"),to=fine,by=7))
+	dates <- sort(dates)
 	dates <- as.character(dates); dates <- dates[dates!="2011-01-18"]
 	# togli il 18 gennaio e 19 maggio
 	
