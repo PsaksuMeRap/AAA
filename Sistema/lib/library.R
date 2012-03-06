@@ -48,6 +48,13 @@ source("./lib/classDefinitions/Security/Floating_rate_notes.R")
 source("./lib/classDefinitions/Security/Fondi_misti.R")
 source("./lib/classDefinitions/Security/Fondi_mercato_monetario.R")
 source("./lib/classDefinitions/Security/Diritti_aumento_capitale_azionario.R")
+source("./lib/classDefinitions/SelectionCriterium/SelectionCriterium.R")
+source("./lib/classDefinitions/SelectionCriterium/SecuritySelectionCriterium.R")
+source("./lib/classDefinitions/SelectionCriterium/AmountSelectionCriterium.R")
+source("./lib/classDefinitions/SelectionCriterium/CurrencySelectionCriterium.R")
+source("./lib/classDefinitions/SelectionCriterium/MaturityHorizonSelectionCriterium.R")
+source("./lib/classDefinitions/TestSuite/TestSuite.R")
+source("./lib/classDefinitions/TestSuiteCollection/TestSuiteCollection.R")
 
 
 source("./lib/classDefinitions/Id/Id.R")
@@ -68,5 +75,9 @@ source("./lib/setMethod/testSuiteFactory/testSuiteFactory.R")
 source("./lib/setMethod/constraintFactory/constraintFactory.R")
 source("./lib/setMethod/selectionCriteriumFactory/selectionCriteriumFactory.R")
 
+
 source("./lib/setMethod/portfolioFactory/portfolioFactory.R")
 source("./lib/setMethod/portfoliosFactory/portfoliosFactory.R")
+
+
+source("./lib/setMethod/parser/parser.R")

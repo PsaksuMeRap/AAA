@@ -31,7 +31,8 @@ setMethod("split",
 			if (identical(factor,"amount")) {
 				values <- new("ConstraintString",result[2])
 			} else {
-				values <- removeStartEndSpaces(unlist(strsplit(result[2],",")))
+				# values <- removeStartEndSpaces(unlist(strsplit(result[2],",")))
+				values <- result[[2]]
 			}
 			
 			return(parsedFactorString=new("ParsedFactorString",criterium=factor,

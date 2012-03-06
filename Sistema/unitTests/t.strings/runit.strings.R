@@ -126,17 +126,17 @@ test.shouldSplitFactorString <- function() {
 	result1 <- split(factorString1)
 	checkEquals(result1@criterium,"security")
 	checkEquals(result1@negation,FALSE)
-	checkEquals(result1@values,c("bond","equity"))
+	checkEquals(result1@values,c("bond,equity"))
 	
 	result2 <- split(factorString2)
 	checkEquals(result2@criterium,"currency")
 	checkEquals(result2@negation,TRUE)
-	checkEquals(result2@values,c("usd","chf"))	
+	checkEquals(result2@values,c("usd,chf"))	
 	
 	result3 <- split(factorString3)
 	checkEquals(result3@criterium,"amount")
 	checkEquals(result3@negation,FALSE)
-	checkEquals(result3@values,"<=100.3CHF")	
+	checkEquals(result3@values,new("ConstraintString","<=100.3CHF"))	
 }
 
 

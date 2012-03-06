@@ -63,12 +63,12 @@ test.shouldTestSingleRiskmanCheckFile11 <- function() {
 	politicaInvestimento.df <- repositories$politicaInvestimento$politicaInvestimento.df
 	
 	# extract the portfolios
-	portfolios <- portfoliosFactory(origin,politicaInvestimento.df)
+#	portfolios <- portfoliosFactory(origin,politicaInvestimento.df)
 
-	checkResults <- testSingleRiskmanCheckFile(fileName,inputDir,po=portfolios)
+#	checkResults <- testSingleRiskmanCheckFile(fileName,inputDir,po=portfolios)
 	
-	checkEquals(checkResults,c(FALSE,TRUE,TRUE))
-
+#	checkEquals(checkResults,c(FALSE,TRUE,TRUE))
+checkEquals(FALSE,TRUE)
 	deallocateTestRepositories("equities")
 	deallocateTestRepositories("instruments")
 	deallocateTestRepositories("exchangeRates")	

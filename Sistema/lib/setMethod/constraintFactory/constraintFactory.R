@@ -37,25 +37,25 @@ constraintFactory <- function(constraintString) {
 		stop  = nchar(string)
 		start = stop - 2
 		
-		kind = "absolute"
+		# it is a kind = "absolute" constraint 
 		currency <- substr(string,start,stop)
 		string <- substr(string,1,start-1)
 		amount <- as.numeric(string)
 		money <- toMoney(amount,currency)
 		
-		constraint <- new("Constraint",
-				operator=operator,value=money,kind=kind)
+		constraint <- new("AbsoluteConstraint",
+				operator=operator,value=money)
 		
 		return(constraint)
 	} else {
 		# check for %
 		if (grepl("%$", string)) {
-			kind = "relative"
+			# it is a kind = "relative" constraint
 			string <- substr(string,1,nchar(string)-1)
 			amount <- as.numeric(string)
 			
-			constraint <- new("Constraint",
-					operator=operator,value=amount,kind=kind)
+			constraint <- new("RelativeConstraint",
+					operator=operator,value=amount)
 			
 			return(constraint)
 		} else {

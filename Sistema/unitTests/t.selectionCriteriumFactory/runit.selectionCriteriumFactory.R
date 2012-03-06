@@ -5,53 +5,59 @@
 
 
 test.selectionCriteriumFactory <- function() {
-	
-	selectionCriteriumFactory <- function(parsedFactorString) {
 		
-		if (identical(parsedFactorString@criterium,"amount")) {
-			constraint <- constraintFactory(parsedFactorString@values)
-			selectionCriterium <- new("AmountSelectionCriterium",
-					values=values,
-					negation=negation,
-					constraint=constraint
-			)		
-			
-			return(selectionCriterium)
-		}
-		
-		if (identical(parsedFactorString@criterium,"currency")) {
-			selectionCriterium <- new("CurrencySelectionCriterium",
-					values=parsedFactorString@values,
-					negation=negation
-			)
-			return(selectionCriterium)
-		}
-		
-		if (identical(parsedFactorString@criterium,"maturityHorizon")) {
-			selectionCriterium <- new("MaturityHorizonSelectionCriterium",
-					value=parsedFactorString@values,
-					negation=negation
-			)
-			return(selectionCriterium)
-		}	
-		
-		if (identical(parsedFactorString@criterium,"security")) {
-			selectionCriterium <- new("SecuritySelectionCriterium",
-					values=parsedFactorString@values,
-					negation=negation
-			)
-			return(selectionCriterium)
-		}	
-	}
-	
-	# crea una checkString e verifica i 4
-	checkString = paste(" instrument:bond,equity + currency:JPY,EUR,USD +",
-			"+ amount:<=100.3CHF")
+	# crea una checkString
+	checkString = paste("amount:=10% + currency:JPY,EUR,USD +",
+			"  amount:<=100.3CHF + instrument:xyz")
 	checkString <- new("CheckString",checkString)
 	result <- split(checkString)
 	
-	checkEquals(unclass(result[["constraintString"]]),NA_character_)
-	checkEquals(unclass(result[["selectionString"]]),"instrument:bond & currency:JPY + instrument:bond,equity & currency:usd,chf + amount:<=100.3CHF")
-	checkEquals(unclass(result[["directiveString"]]),NA_character_)
+	# test a security selection criterium	
+	factorString <- new("FactorString","security:bond,equity")
+	parsedFactorString <- split(factorString)
 	
+	SC1 <- selectionCriteriumFactory(parsedFactorString)
+	
+	checkEquals(SC1@values,c("bond","equity"))
+	checkEquals(SC1@negation,FALSE)
+	
+	# test a currency selection criterium	
+	factorString <- new("FactorString","currency!:JPY,EUR,USD")
+	parsedFactorString <- split(factorString)
+	
+	SC1 <- selectionCriteriumFactory(parsedFactorString)
+	
+	checkEquals(SC1@values,c("JPY","EUR","USD"))
+	checkEquals(SC1@negation,TRUE)
+	
+	# test an exception, i.e. non existing selection criterium	
+	factorString <- new("FactorString","ideal:equity")
+	parsedFactorString <- split(factorString)
+	
+	checkException(selectionCriteriumFactory(parsedFactorString))
+	
+	# test an absolute amount selection criterium	
+	factorString <- new("FactorString","amount:<=100.3CHF")
+	parsedFactorString <- split(factorString)
+	
+	SC1 <- selectionCriteriumFactory(parsedFactorString)
+	
+	checkEquals(SC1@constraint,
+			new("AbsoluteConstraint",operator="<=",value=toMoney(100.3,"CHF"))
+	)
+	
+	checkEquals(SC1@negation,FALSE)
+
+	# test a relative amount selection criterium	
+	factorString <- new("FactorString","amount!:=10%")
+	parsedFactorString <- split(factorString)
+	
+	SC1 <- selectionCriteriumFactory(parsedFactorString)
+	
+	checkEquals(SC1@constraint,
+			new("RelativeConstraint",operator="=",value=10)
+	)
+	
+	checkEquals(SC1@negation,TRUE)
+
 }

@@ -17,3 +17,9 @@ setGeneric("divide", fun)
 # the positions are joined and duplicated positions are not removed
 # or summed together
 setGeneric("join",function(x,y,...) standardGeneric("join"))
+
+removeStartEndSpaces <- function(string) {
+	result <- sub("^[[:blank:]]+", "", string)
+	result <- sub("[[:blank:]]+$", "", result)
+	return(result)
+}

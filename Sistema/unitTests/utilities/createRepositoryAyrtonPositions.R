@@ -38,6 +38,21 @@ createRepositoryAyrtonPositions <- function() {
 	
 	testData$equity2 <- x
 	
+	# create a valid equity
+	x <- new("AyrtonPosition")
+	x@Cliente <- "pippo210"
+	x@Strumento <- "A"
+	x@Moneta <- "USD"
+	x@Saldo <- 100
+	x@Nome <- "ISHARES MSCI Indon"
+	x@ValoreMercatoMonetaCHF <- 283354.88
+	x@ID_AAA <- 283354.88
+	x@ID_strumento <- 15
+	
+	class(x) <- "AyrtonPosition"
+	
+	testData$indexCertificate <- x
+	
 	# create a non existing equity
 	x <- new("AyrtonPosition")
 	x@Cliente <- "pippo160"

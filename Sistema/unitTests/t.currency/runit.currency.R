@@ -4,7 +4,7 @@
 ###############################################################################
 
 
-test.shouldRefuseMultipleCurrency <- function() {
+test.shouldFailOnMultipleCurrency <- function() {
 
 	checkException(new("Currency",c("a","b")))
 

@@ -23,6 +23,9 @@ createRepositoryPositions <- function() {
 	# create a valid equity
 	testData$equity2 <- positionFactory(repository$equity2)
 	
+	# create a valid index certificate
+	testData$indexCertificate <- positionFactory(repository$indexCertificate)
+	
 	# create a non existing equity
 	testData$noExists <- positionFactory(repository$noExists)
 	
@@ -48,7 +51,7 @@ createRepositoryPositions <- function() {
 	testData$unclassified1 <- positionFactory(repository$unclassified1)
 	
 	# create a strutturati_FI 
-	testData$strutturati_FI <- positionFactory(testData$strutturati_FI)
+	testData$strutturati_FI <- positionFactory(repository$strutturati_FI)
 	
 	return(testData)
 }
