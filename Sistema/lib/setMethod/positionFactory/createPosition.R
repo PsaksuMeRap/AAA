@@ -8,6 +8,7 @@ setGeneric("createPosition",
 			id <- 10.2
 			quantity <- origin@Saldo
 			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
+			value <- repositories$exchangeRates$exchange(value,security@currency)
 			position <- new("Position",id=id,security=security,
 					quantity=quantity,value=value)
 			
@@ -28,6 +29,7 @@ setMethod("createPosition",signature(security="Equity",origin="AyrtonPosition"),
 			id <- 10.2
 			quantity <- origin@Saldo
 			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
+			value <- repositories$exchangeRates$exchange(value,security@currency)
 			position <- new("PositionEquity",id=id,security=security,
 					quantity=quantity,value=value)
 			
@@ -42,6 +44,7 @@ setMethod("createPosition",signature(security="Bond",origin="AyrtonPosition"),
 			id <- 10.2
 			quantity <- new("NominalValue",amount=new("Amount",origin@Saldo),currency=new("Currency",origin@Moneta))
 			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
+			value <- repositories$exchangeRates$exchange(value,security@currency)
 			accruedInterest <- new("AccruedInterest",toMoney(NA_real_,"CHF"))
 			position <- new("PositionBond",id=id,security=security,
 					quantity=quantity,value=value,accruedInterest=accruedInterest)

@@ -4,12 +4,11 @@
 ###############################################################################
 
 source("./lib/lists.R")
-
+source("./lib/riskmanOptions.R")
 
 source("./lib/repository.R")
 source("./lib/importazioneDBPortfolioGenerale.R") 
 source("./lib/genericFunctions.R")
-source("./lib/riskmanTestSuite.R")
 
 
 source("./lib/classDefinitions/Amount/Amount.R")
@@ -74,6 +73,7 @@ source("./lib/setMethod/positionsFactory/adjustForAccruedInterest.R")
 source("./lib/setMethod/testSuiteFactory/testSuiteFactory.R")
 source("./lib/setMethod/constraintFactory/constraintFactory.R")
 source("./lib/setMethod/selectionCriteriumFactory/selectionCriteriumFactory.R")
+source("./lib/setMethod/check/check.R")
 
 
 source("./lib/setMethod/portfolioFactory/portfolioFactory.R")
@@ -81,3 +81,5 @@ source("./lib/setMethod/portfoliosFactory/portfoliosFactory.R")
 
 
 source("./lib/setMethod/parser/parser.R")
+
+# source("./lib/riskmanTestSuite.R")

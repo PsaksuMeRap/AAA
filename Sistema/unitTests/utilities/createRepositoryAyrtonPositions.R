@@ -38,7 +38,7 @@ createRepositoryAyrtonPositions <- function() {
 	
 	testData$equity2 <- x
 	
-	# create a valid equity
+	# create a valid indexCertificate
 	x <- new("AyrtonPosition")
 	x@Cliente <- "pippo210"
 	x@Strumento <- "A"

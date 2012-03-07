@@ -87,3 +87,64 @@ setMethod("toMoney",signature(amount="numeric",currency="character"),
 			return(new("Money",amount=new("Amount",amount),currency=new("Currency",currency)))
 		}
 )
+
+setMethod(">",signature(e1="Money",e2="Money"),
+		function(e1,e2) {
+			if (!identical(e1@currency,e2@currency)) {
+				# exchange the money in the desired currency
+				e2 <- repositories$exchangeRates$exchange(e2,e1@currency)
+			}
+			# excecute the check
+			return(e1@amount > e2@amount)	
+		}
+)
+
+setMethod(">=",signature(e1="Money",e2="Money"),
+		function(e1,e2) {
+			if (!identical(e1@currency,e2@currency)) {
+				# exchange the money in the desired currency
+				e2 <- repositories$exchangeRates$exchange(e2,e1@currency)
+			}
+			# excecute the check
+			return(e1@amount >= e2@amount)	
+		}
+)
+
+setMethod("<",signature(e1="Money",e2="Money"),
+		function(e1,e2) {
+			if (!identical(e1@currency,e2@currency)) {
+				# exchange the money in the desired currency
+				e2 <- repositories$exchangeRates$exchange(e2,e1@currency)
+			}
+			# excecute the check
+			return(e1@amount < e2@amount)	
+		}
+)
+
+setMethod("<=",signature(e1="Money",e2="Money"),
+		function(e1,e2) {
+			if (!identical(e1@currency,e2@currency)) {
+				# exchange the money in the desired currency
+				e2 <- repositories$exchangeRates$exchange(e2,e1@currency)
+			}
+			# excecute the check
+			return(e1@amount <= e2@amount)	
+		}
+)
+
+setMethod("==",signature(e1="Money",e2="Money"),
+		function(e1,e2) {
+			if (!identical(e1@currency,e2@currency)) {
+				# exchange the money in the desired currency
+				e2 <- repositories$exchangeRates$exchange(e2,e1@currency)
+			}
+			# excecute the check
+			return(abs(e1@amount- e2@amount) < riskmanOptions[["eq.tolerance"]]) 	
+		}
+)
+
+setMethod("!=",signature(e1="Money",e2="Money"),
+		function(e1,e2) {
+			return(!(e1 == e2))
+		}
+)

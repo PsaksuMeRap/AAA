@@ -47,3 +47,18 @@ test.shouldExtractPositions <- function() {
 	checkEquals(result,new("Positions",positions[-2]))
 }
 
+test.shouldSumPositions <- function() {
+	
+	source("./unitTests/utilities/createRepositoryPositions.R")
+	repository <- createRepositoryPositions()
+	
+	# create the positions
+	positions <- list(repository$equity1,repository$equity2,repository$bond1)
+	# equity1 CHF: 88205 CHF, equity2 EUR: 7439.7503136 CHF, bond1 EUR: 124345.632268 CHF,
+	positions <- new("Positions",positions)
+	
+	# test
+	result <- sum(positions)
+	should <- toMoney(88205 + 7439.7503136 + 124345.632268,"CHF")
+	checkEquals(result,should)
+}

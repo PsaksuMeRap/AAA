@@ -105,3 +105,140 @@ test.toMoneyFromAmountAndString <- function() {
 	checkEquals(a,should)
 }
 
+test.shouldBeGreaterThan <- function() {
+	
+	repository <- repositories$exchangeRates
+	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	testRepository <- createExchangeRatesTestRepository() 
+	repositories$exchangeRates <- testRepository
+	
+	money1 <- new("Money",amount=new("Amount",100),currency=new("Currency","CHF"))
+	money2 <- new("Money",amount=new("Amount",20.55),currency=new("Currency","CHF"))
+	money3 <- new("Money",amount=new("Amount",200),currency=new("Currency","USD")) # exchange rate USD-CHF: 0.9627
+	money4 <- new("Money",amount=new("Amount",100),currency=new("Currency","EUR")) # exchange rate EUR-CHF: 1.33853808
+	
+	checkEquals(money1>money2,TRUE)
+	checkEquals(money2>money1,FALSE)
+	checkEquals(money1>money1,FALSE)
+	checkEquals(money1>money3,FALSE)
+	checkEquals(money4>money1,TRUE)
+	checkEquals(money3>money4,TRUE)
+	checkEquals(money4>money4,FALSE)
+	
+	repositories$exchangeRates <- repository
+}
+
+test.shouldBeGreaterOrEqualThan <- function() {
+	
+	repository <- repositories$exchangeRates
+	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	testRepository <- createExchangeRatesTestRepository() 
+	repositories$exchangeRates <- testRepository
+	
+	money1 <- new("Money",amount=new("Amount",100),currency=new("Currency","CHF"))
+	money2 <- new("Money",amount=new("Amount",20.55),currency=new("Currency","CHF"))
+	money3 <- new("Money",amount=new("Amount",200),currency=new("Currency","USD")) # exchange rate USD-CHF: 0.9627
+	money4 <- new("Money",amount=new("Amount",100),currency=new("Currency","EUR")) # exchange rate EUR-CHF: 1.33853808
+	
+	checkEquals(money1>=money2,TRUE)
+	checkEquals(money2>=money1,FALSE)
+	checkEquals(money1>=money1,TRUE)
+	checkEquals(money1>=money3,FALSE)
+	checkEquals(money4>=money1,TRUE)
+	checkEquals(money3>=money4,TRUE)
+	checkEquals(money4>=money4,TRUE)
+	
+	repositories$exchangeRates <- repository
+}
+
+test.shouldBeLessThan <- function() {
+	
+	repository <- repositories$exchangeRates
+	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	testRepository <- createExchangeRatesTestRepository() 
+	repositories$exchangeRates <- testRepository
+	
+	money1 <- new("Money",amount=new("Amount",100),currency=new("Currency","CHF"))
+	money2 <- new("Money",amount=new("Amount",20.55),currency=new("Currency","CHF"))
+	money3 <- new("Money",amount=new("Amount",200),currency=new("Currency","USD")) # exchange rate USD-CHF: 0.9627
+	money4 <- new("Money",amount=new("Amount",100),currency=new("Currency","EUR")) # exchange rate EUR-CHF: 1.33853808
+	
+	checkEquals(money1<money2,FALSE)
+	checkEquals(money2<money1,TRUE)
+	checkEquals(money1<money1,FALSE)
+	checkEquals(money1<money3,TRUE)
+	checkEquals(money4<money1,FALSE)
+	checkEquals(money3<money4,FALSE)
+	checkEquals(money4<money4,FALSE)
+	
+	repositories$exchangeRates <- repository
+}
+
+test.shouldBeLessOrEqualThan <- function() {
+	
+	repository <- repositories$exchangeRates
+	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	testRepository <- createExchangeRatesTestRepository() 
+	repositories$exchangeRates <- testRepository
+	
+	money1 <- new("Money",amount=new("Amount",100),currency=new("Currency","CHF"))
+	money2 <- new("Money",amount=new("Amount",20.55),currency=new("Currency","CHF"))
+	money3 <- new("Money",amount=new("Amount",200),currency=new("Currency","USD")) # exchange rate USD-CHF: 0.9627
+	money4 <- new("Money",amount=new("Amount",100),currency=new("Currency","EUR")) # exchange rate EUR-CHF: 1.33853808
+	
+	checkEquals(money1<=money2,FALSE)
+	checkEquals(money2<=money1,TRUE)
+	checkEquals(money1<=money1,TRUE)
+	checkEquals(money1<=money3,TRUE)
+	checkEquals(money4<=money1,FALSE)
+	checkEquals(money3<=money4,FALSE)
+	checkEquals(money4<=money4,TRUE)
+	
+	repositories$exchangeRates <- repository
+}
+
+test.shouldBeDifferentFrom <- function() {
+	
+	repository <- repositories$exchangeRates
+	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	testRepository <- createExchangeRatesTestRepository() 
+	repositories$exchangeRates <- testRepository
+	
+	money1 <- new("Money",amount=new("Amount",100),currency=new("Currency","CHF"))
+	money2 <- new("Money",amount=new("Amount",20.55),currency=new("Currency","CHF"))
+	money3 <- new("Money",amount=new("Amount",200),currency=new("Currency","USD")) # exchange rate USD-CHF: 0.9627
+	money4 <- new("Money",amount=new("Amount",100),currency=new("Currency","EUR")) # exchange rate EUR-CHF: 1.33853808
+	
+	checkEquals(money1!=money2,TRUE)
+	checkEquals(money2!=money1,TRUE)
+	checkEquals(money1!=money1,FALSE)
+	checkEquals(money1!=money3,TRUE)
+	checkEquals(money4!=money1,TRUE)
+	checkEquals(money3!=money4,TRUE)
+	checkEquals(money4!=money4,FALSE)
+	
+	repositories$exchangeRates <- repository
+}
+
+test.shouldBeEqualTo <- function() {
+	
+	repository <- repositories$exchangeRates
+	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	testRepository <- createExchangeRatesTestRepository() 
+	repositories$exchangeRates <- testRepository
+	
+	money1 <- new("Money",amount=new("Amount",100),currency=new("Currency","CHF"))
+	money2 <- new("Money",amount=new("Amount",20.55),currency=new("Currency","CHF"))
+	money3 <- new("Money",amount=new("Amount",200),currency=new("Currency","USD")) # exchange rate USD-CHF: 0.9627
+	money4 <- new("Money",amount=new("Amount",100),currency=new("Currency","EUR")) # exchange rate EUR-CHF: 1.33853808
+	
+	checkEquals(money1==money2,FALSE)
+	checkEquals(money2==money1,FALSE)
+	checkEquals(money1==money1,TRUE)
+	checkEquals(money1==money3,FALSE)
+	checkEquals(money4==money1,FALSE)
+	checkEquals(money3==money4,FALSE)
+	checkEquals(money4==money4,TRUE)
+	
+	repositories$exchangeRates <- repository
+}

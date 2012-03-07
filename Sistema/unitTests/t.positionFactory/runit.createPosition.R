@@ -98,7 +98,7 @@ test.shouldCreatePositionBond <- function() {
 	checkEquals(bondPosition@id,10.2)
 	checkEquals(bondPosition@accruedInterest@amount,new("Amount",NA_real_))	
 	checkEquals(bondPosition@quantity,new("NominalValue",amount=new("Amount",100000),currency=new("Currency","EUR")))
-	checkEquals(bondPosition@value,toMoney(124345.632268,"CHF"))
+	checkEquals(bondPosition@value,repositories$exchangeRates$exchange(toMoney(124345.632268,"CHF"),new("Currency","EUR")))
 	
 	# restore initial conditions	
 	deallocateTestRepositories("instruments")

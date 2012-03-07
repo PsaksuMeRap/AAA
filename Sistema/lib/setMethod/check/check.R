@@ -4,43 +4,46 @@
 ###############################################################################
 
 
-check <- function(position,criteriumSelection) UseMethod("check",criteriumSelection)
+setGeneric("check",def=function(x,selectionCriterium) standardGeneric("check"))
 
-check.amount <- function(position,criteriumSelection) {
-	operator <- criteriumSelection$criteriumCheck$operator
-	# if criteriumSelection$criteriumCheck$kind=="relative", we assume that 
-	# criteriumSelection$criteriumCheck$value has been previously converted from % to absolute, i.e.
-	# criteriumSelection$criteriumCheck$value is now of class money!
-	
-	# exchange the money in the desired currency
-	currencyTo <- criteriumSelection$criteriumCheck$value$currency
-	money <- repositories$exchangeRates$exchange(position$money,currencyTo)
-	
-	# excecute the check
-	if (operator==">" ) return(money$amount >  criteriumSelection$criteriumCheck$value$amount)
-	if (operator==">=") return(money$amount >= criteriumSelection$criteriumCheck$value$amount)
-	if (operator=="<" ) return(money$amount <  criteriumSelection$criteriumCheck$value$amount)
-	if (operator=="<=") return(money$amount <= criteriumSelection$criteriumCheck$value$amount)
-	if (operator=="!=") return(money$amount != criteriumSelection$criteriumCheck$value$amount)
-	if (operator=="=" ) {
-		if (abs(money$amount-criteriumSelection$criteriumCheck$value$amount) > 0.00001) return(FALSE) else return(TRUE)
-	}
-	stop (paste("Error: invalid operator",operator))
-}
+setMethod("check",signature(x="Position",selectionCriterium="AmountSelectionCriterium"),
+		function(x,selectionCriterium) {
+			operator <- selectionCriterium@constraint@operator
+			# we assume that selectionCriterium$constraint is of class AbsoluteConstraint 
+			# i.e. any RelativeConstraint has been converted from relative (%) to absolute
+			# before beeing passed to this method. The field negation is not considered for
+			# criteria of kind amount.
+			
+			# excecute the check
+			if (operator==">" ) return(x@value >  selectionCriterium@constraint@value)
+			if (operator==">=") return(x@value >= selectionCriterium@constraint@value)
+			if (operator=="<" ) return(x@value <  selectionCriterium@constraint@value)
+			if (operator=="<=") return(x@value <= selectionCriterium@constraint@value)
+			if (operator=="!=") return(x@value != selectionCriterium@constraint@value)
+			if (operator=="=" ) return(x@value == selectionCriterium@constraint@value)
+			stop (paste("Error: invalid operator",operator))
+		}
+)
 
-check.instrument <- function(position,criteriumSelection) {
-	instruments <- criteriumSelection$values
-	instrumentType <- class(position)[1]
-	return(any(is.element(instrumentType,instruments)))
-}
 
-check.currency <- function(position,criteriumSelection) {
-	currencies <- criteriumSelection$values
-	instrumentCurrency <- position$money$currency
-	return(any(is.element(instrumentCurrency,currencies)))
-}
+setMethod("check",signature(x="Position",selectionCriterium="SecuritySelectionCriterium"),
+		function(x,selectionCriterium) {
+			classes <- selectionCriterium@values
+			securityClass <- class(x@security)
+			result <- any(is.element(securityClass,classes))
+			if (selectionCriterium@negation) result <- !result
+			return(result)			
+		}
+)
 
-check.default <- function(position,criteriumSelection) {
-	stop(paste("Error: check for factor",criteriumSelection$factor,"not implemented yet"))
-}
+
+setMethod("check",signature(x="Position",selectionCriterium="CurrencySelectionCriterium"),
+		function(x,selectionCriterium) {
+			currencies <- selectionCriterium@values
+			instrumentCurrency <- unclass(x@security@currency)
+			result <- is.element(instrumentCurrency,currencies)
+			if (selectionCriterium@negation) result <- !result
+			return(result)
+		}
+)
 
