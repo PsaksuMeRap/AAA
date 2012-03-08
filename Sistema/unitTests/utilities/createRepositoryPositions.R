@@ -5,7 +5,7 @@
 
 
 createRepositoryPositions <- function() {
-	
+
 	source("./unitTests/utilities/allocateTestRepositories.R")	
 	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
 	
@@ -40,6 +40,9 @@ createRepositoryPositions <- function() {
 	
 	# create a valid bond (match to proRata1)
 	testData$bond4 <- positionFactory(repository$bond4)
+
+	# create a valid AccruedInterest di Fondi_obbligazionari
+	testData$fondiObbligazionari <- positionFactory(repository$fondiObbligazionari)
 	
 	# create a valid AccruedInterest di Fondi_obbligazionari
 	testData$proRataFondiObbligazionari <- positionFactory(repository$proRataFondiObbligazionari)

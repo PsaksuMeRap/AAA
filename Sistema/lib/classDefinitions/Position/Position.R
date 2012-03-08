@@ -65,3 +65,17 @@ setMethod("print","Position",
 			print(as.character(x,width=width))
 		}
 )
+
+
+setMethod("/",signature(e1="Position",e2="Money"),
+		function(e1,e2) {
+			if (e2@amount==0) {
+				if (e1@value@amount==0) return(NaN)
+				if (e1@value@amount<0) return(-Inf)
+				return(Inf)	
+			}
+			if (identical(e2@currency,e1@value@currency)) return(unclass(e1@value@amount/e2@amount))
+			e2 <- repository$exchange(e2,e1@value@currency)
+			return(unclass(e1@value@amount/e2@amount))
+		}
+)

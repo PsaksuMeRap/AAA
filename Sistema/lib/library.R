@@ -66,6 +66,7 @@ source("./lib/classDefinitions/Portfolio/Portfolio.R")
 
 source("./lib/setMethod/securityFactory/securityFactory.R") 
 source("./lib/setMethod/positionFactory/positionFactory.R")
+source("./lib/setMethod/positionFactory/createPosition.R")
 source("./lib/setMethod/positionsFactory/positionsFactory.R")
 source("./lib/setMethod/positionsFactory/completeBondPosition.R")
 source("./lib/setMethod/positionsFactory/matchToPositionBond.R")

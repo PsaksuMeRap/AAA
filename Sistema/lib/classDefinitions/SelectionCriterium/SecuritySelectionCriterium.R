@@ -4,6 +4,6 @@
 ###############################################################################
 
 
-setClass("SecuritySelectionCriterium",representation(values="character",negation="logical"),
+setClass("SecuritySelectionCriterium",representation(values="character"),
 		contains="SelectionCriterium"
 )

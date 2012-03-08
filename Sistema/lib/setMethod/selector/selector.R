@@ -4,11 +4,7 @@
 ###############################################################################
 
 
-
-setGeneric("selector",def=function(selectionCriterium,positions,...) standardGeneric("selector"))
-
-
-selector <- function(selectionCriterium,positions) {
+selector <- function(selectionCriterium,positions,...) {
 	# apply the function FUNC
 	extract <- lapply(positions,check,selectionCriterium)
 	extract <- unlist(extract)
@@ -16,6 +12,7 @@ selector <- function(selectionCriterium,positions) {
 	return(extract)
 }
 
+setGeneric("selector",def=function(selectionCriterium,positions,...) standardGeneric("selector"))
 
 #setMethod("selector",signature(selectionCriterium="CurrencySelectionCriterium",positions="Positions"),
 #		function(selectionCriterium,positions) {
@@ -30,17 +27,17 @@ selector <- function(selectionCriterium,positions) {
 
 setMethod("selector",signature(selectionCriterium="AmountSelectionCriterium",positions="Positions"),
 		function(selectionCriterium,positions) {
+	
 			if (is(selectionCriterium@constraint,"RelativeConstraint")) {
 				totalValue <- sum(positions)
 				percentageValue <- selectionCriterium@constraint@value/100
 				absoluteConstraint <- new("AbsoluteConstraint",
 						operator=selectionCriterium@constraint@operator,
-						value=toMoney(percentageValue*totalValue@amount,totalValue$currency)
+						value=toMoney(percentageValue*totalValue@amount,totalValue@currency)
 				)
 				selectionCriterium@constraint <- absoluteConstraint
 			}
-			
-			# apply the function FUNC
+		
 			extract <- lapply(positions,check,selectionCriterium)
 			extract <- unlist(extract)
 			
@@ -48,59 +45,63 @@ setMethod("selector",signature(selectionCriterium="AmountSelectionCriterium",pos
 		}
 )
 
+
 setMethod("selector",signature(selectionCriterium="MaturityHorizonSelectionCriterium",positions="Positions"),
 		function(selectionCriterium,positions,...) {
 			# extract the baseDate from the ... arguments
 			x <- list(...)
 			if (length(x)==0) baseDate = Sys.Date() else baseDate=as.Date(x[[1]])
-			
+		
 			FUNC <- function(position,selectionCriterium,baseDate) {
 				
-				values <- selectionCriterium$values
-				
-				# attenzione: poiché una position accruedInterest è anche bond
-				# occorre testare prima accruedInterest
-				if (is.element("accruedInterest",class(position))) {
-					if (values=="<3Y") return(TRUE) else return(FALSE)
+				values <- selectionCriterium@values
+				result <- FALSE				
+				if (is(position@security,"Fondi_mercato_monetario")) {
+					if (identical(values,"<3Y")) result <- TRUE
+					if (selectionCriterium@negation) result <- !result
+					return(result)
 				}
 				
-				if (is.element("Fondi_mercato_monetario",class(position))) {
-					if (values=="<3Y") return(TRUE) else return(FALSE)
-				}
-				
-				if (is.element("bond",class(position))) {
-					bondMaturity <- as.Date(position$getMaturity())
+				if (is(position@security,"Bond")) {
+					bondMaturity <- as.Date(position@security@maturity)
 					maturityInYears <- as.integer(bondMaturity - baseDate)/365
 					if (maturityInYears <= 3) maturityHorizon <- "<3Y"
 					if (maturityInYears > 3) maturityHorizon <- ">3Y"
-					if (maturityHorizon == values[1]) return(TRUE) else return(FALSE)
+					
+					if (identical(maturityHorizon,values)) result <- TRUE
+					if (selectionCriterium@negation) result <- !result
+					return(result)
 				}
 				
-				if (is.element("Fondi_obbligazionari",class(position))) {
-					if (grepl("<3Y",x=position$name)) {
+				if (is(position@security,"Fondi_obbligazionari")) {
+					if (grepl("<3Y",x=position@security@name)) {
 						averageHorizon = "<3Y"
 					} else {
-						if (grepl(">3Y",x=position$name)) {
+						if (grepl(">3Y",x=position@security@name)) {
 							averageHorizon = ">3Y"
 						} else {
-							stop("errore il fondo obbligazionario non ha un indice di durata <3Y o >3Y")
+							message <- paste("Error: the bond fund",position@security@name)
+							message <- paste(message,"\nhas no duration index of type '<3Y' or '>3Y'",sep="")
+							stop(message)
 						}
 					}
 					
-					if (averageHorizon == values[1]) return(TRUE) else return(FALSE)
+					if (identical(averageHorizon,values)) result <- TRUE
+					if (selectionCriterium@negation) result <- !result
+					return(result)
 				}
 				
-				if (is.element("Strutturati_FI",class(position))) {
-					if (position$underlyingHorizon == values[1]) return(TRUE) else return(FALSE)
+				if (is(position@security,"Strutturati_FI")) {
+					if (identical(position@security@underlyingHorizon,values)) result <- TRUE
+					if (selectionCriterium@negation) result <- !result
+					return(result)
 				}		
-				return(NA)
+				return(result)
 			}
-			# apply the function FUNC
-			extract <- lapply(positions$positions,FUN=FUNC,selectionCriterium,baseDate)
-			extract <- unlist(extract)
 			
-			# convert NA to FALSE
-			extract[is.na(extract)] <- FALSE
+			# apply the function FUNC
+			extract <- lapply(positions,FUN=FUNC,selectionCriterium,baseDate)
+			extract <- unlist(extract)
 			
 			return(extract)
 			

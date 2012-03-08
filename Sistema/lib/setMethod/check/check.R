@@ -13,14 +13,39 @@ setMethod("check",signature(x="Position",selectionCriterium="AmountSelectionCrit
 			# i.e. any RelativeConstraint has been converted from relative (%) to absolute
 			# before beeing passed to this method. The field negation is not considered for
 			# criteria of kind amount.
-			
+	
 			# excecute the check
-			if (operator==">" ) return(x@value >  selectionCriterium@constraint@value)
-			if (operator==">=") return(x@value >= selectionCriterium@constraint@value)
-			if (operator=="<" ) return(x@value <  selectionCriterium@constraint@value)
-			if (operator=="<=") return(x@value <= selectionCriterium@constraint@value)
-			if (operator=="!=") return(x@value != selectionCriterium@constraint@value)
-			if (operator=="=" ) return(x@value == selectionCriterium@constraint@value)
+			if (operator==">" ) {
+				result <- x@value > selectionCriterium@constraint@value
+				if (selectionCriterium@negation) result <- !result
+				return(result)
+			}
+			if (operator==">=")  {
+				result <- x@value >= selectionCriterium@constraint@value
+				if (selectionCriterium@negation) result <- !result
+				return(result)
+			}
+			if (operator=="<" )  {
+				result <- x@value < selectionCriterium@constraint@value
+				if (selectionCriterium@negation) result <- !result
+				return(result)
+			}
+			if (operator=="<=")  {
+				result <- x@value <= selectionCriterium@constraint@value
+				if (selectionCriterium@negation) result <- !result
+				return(result)
+			}
+			if (operator=="!=")  {
+				result <- x@value != selectionCriterium@constraint@value
+				if (selectionCriterium@negation) result <- !result
+				return(result)
+			}
+			if (operator=="=" )  {
+				result <- x@value == selectionCriterium@constraint@value
+				if (selectionCriterium@negation) result <- !result
+				return(result)
+			}
+			
 			stop (paste("Error: invalid operator",operator))
 		}
 )
