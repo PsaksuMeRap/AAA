@@ -45,7 +45,8 @@ test.shouldCreateValidPositions <- function() {
 	
 	checkEquals(length(positions),3)
 	checkEquals(positions[[1]]@quantity,15)
-	checkEquals(positions[[2]]@value,toMoney(new("Amount",124345.632268),new("Currency","CHF")))
+	money <- repositories$exchangeRates$exchange(toMoney(124345.632268,"CHF"),new("Currency","EUR"))
+	checkEquals(positions[[2]]@value,money)
 	
 	# restore initial conditions	
 	deallocateTestRepositories("instruments")

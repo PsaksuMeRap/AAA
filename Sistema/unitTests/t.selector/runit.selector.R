@@ -54,6 +54,7 @@ test.shouldSelectPositionsBySecurities <- function() {
 	result <- selector(criterium,positions)
 	checkEquals(result,should)
 
+	if (!is.null(repository)) repositories$exchangeRates <- repository
 }
 
 
@@ -100,6 +101,9 @@ test.shouldSelectPositionsByMaturityHorizon <- function() {
 	result <- selector(criterium,positions)
 	should <- c(FALSE,TRUE,TRUE,FALSE,TRUE)
 	checkEquals(result,should)
+	
+	
+	if (!is.null(repository)) repositories$exchangeRates <- repository
 }
 
 
@@ -161,6 +165,9 @@ test.shouldSelectPositionsByCurrency <- function() {
 	result <- selector(criterium,positions)
 	should <- NULL
 	checkEquals(result,should)
+	
+	
+	if (!is.null(repository)) repositories$exchangeRates <- repository
 }
 
 
@@ -226,7 +233,7 @@ test.shouldSelectPositionsByAmountAbsolute <- function() {
 	checkEquals(result,should)
 	
 	# reset the repository in the original state
-	repositories$exchangeRates <- repository
+	if (!is.null(repository)) repositories$exchangeRates <- repository
 	
 }
 
@@ -251,7 +258,7 @@ test.shouldSelectPositionsByAmountRelative <- function() {
 	positions <- new("Positions",list(p1,p2,p3))
 	
 	total <- sum(positions)
-	#sapply(positions, "/",total) ( the result is 0.1778665 0.2507446 0.5713888 )
+	# sapply(positions,"/",total) #( the result is 0.1778665 0.2507446 0.5713888 )
 	
 
 	# check1: create a relative checkCriterium of type > 
@@ -263,57 +270,94 @@ test.shouldSelectPositionsByAmountRelative <- function() {
 	checkEquals(result,should)
 	
 	# check 2: create a relative checkCriterium of type =
-	percentage <- 100*100.1/0.9627/(97.1+100.1/0.9627+80*1.33853808/0.9627)
-	checkCriterium <- create_criteriumCheck(operator="=",
-			value=percentage,kind="relative")
-	criterium <- create_criteriumSelection(factor="amount",
-			criteriumCheck=checkCriterium)
+	constraint <- new("RelativeConstraint",operator="=",value=100 * (positions[[2]] / total))
+	criterium <- new("AmountSelectionCriterium",constraint=constraint,negation=FALSE)
 	
-	result <- positionsSelector(criterium,positions)
-	posCheck2 <- c(FALSE,TRUE,FALSE)
-	checkEquals(result,posCheck2)
+	result <- selector(criterium,positions)
+	should <- c(FALSE,TRUE,FALSE)
+	checkEquals(result,should)
 	
 	# check 3: create the relative checkCriterium of type >=
-	checkCriterium <- create_criteriumCheck(operator=">=",
-			value=33.2932864433126,kind="relative")
-	criterium <- create_criteriumSelection(factor="amount",
-			criteriumCheck=checkCriterium)
+	constraint <- new("RelativeConstraint",operator=">=",value=100 * (positions[[2]] / total))
+	criterium <- new("AmountSelectionCriterium",constraint=constraint,negation=FALSE)
 	
-	result <- positionsSelector(criterium,positions)
-	posCheck3 <- c(FALSE,TRUE,TRUE)
-	checkEquals(result,posCheck3)
+	result <- selector(criterium,positions)
+	should <- c(FALSE,TRUE,TRUE)
+	checkEquals(result,should)
 	
 	# check 4: create the relative checkCriterium of type < 
-	checkCriterium <- create_criteriumCheck(operator="<",
-			value=33.293286443312,kind="relative")
-	criterium <- create_criteriumSelection(factor="amount",
-			criteriumCheck=checkCriterium)
+	constraint <- new("RelativeConstraint",operator="<",value=100 * (positions[[2]] / total))
+	criterium <- new("AmountSelectionCriterium",constraint=constraint,negation=FALSE)
 	
-	result <- positionsSelector(criterium,positions)
-	posCheck4 <- c(TRUE,FALSE,FALSE)
-	checkEquals(result,posCheck4)
+	result <- selector(criterium,positions)
+	should <- c(TRUE,FALSE,FALSE)
+	checkEquals(result,should)
 	
 	# check 5: create the relative checkCriterium of type <= 
-	checkCriterium <- create_criteriumCheck(operator="<=",
-			value=33.2932864433127,kind="relative")
-	criterium <- create_criteriumSelection(factor="amount",
-			criteriumCheck=checkCriterium)
+	constraint <- new("RelativeConstraint",operator="<=",value=100 * (positions[[2]] / total))
+	criterium <- new("AmountSelectionCriterium",constraint=constraint,negation=FALSE)
 	
-	result <- positionsSelector(criterium,positions)
-	posCheck5 <- c(TRUE,TRUE,FALSE)
-	checkEquals(result,posCheck5)
+	result <- selector(criterium,positions)
+	should <- c(TRUE,TRUE,FALSE)
+	checkEquals(result,should)
 	
 	# check6: create the relative checkCriterium of type !=
-	checkCriterium <- create_criteriumCheck(operator="!=",
-			value=34,kind="relative")
-	criterium <- create_criteriumSelection(factor="amount",
-			criteriumCheck=checkCriterium)
+	constraint <- new("RelativeConstraint",operator="!=",value=100 * (positions[[2]] / total))
+	criterium <- new("AmountSelectionCriterium",constraint=constraint,negation=FALSE)
 	
-	result <- positionsSelector(criterium,positions)
-	posCheck5 <- c(TRUE,TRUE,TRUE)
-	checkEquals(result,posCheck5)
+	result <- selector(criterium,positions)
+	should <- c(TRUE,FALSE,TRUE)
+	checkEquals(result,should)
 	
 	# reset the repository in the original state
-	repositories$exchangeRates <- repository
+	if (!is.null(repository)) repositories$exchangeRates <- repository
 	
+}
+
+
+test.shouldExtractPositions <- function() {
+	
+	# exchange rates required for position initialization
+	# initialize exchange rates
+	repository <- repositories$exchangeRates
+	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	testRepository <- createExchangeRatesTestRepository() 
+	repositories$exchangeRates <- testRepository
+	# exchange rate USD-CHF: 0.9627
+	# exchange rate EUR-CHF: 1.33853808
+	
+	# initialize the position
+	source("./unitTests/utilities/createRepositoryPositions.R")
+	repo <- createRepositoryPositions()
+	
+	p1 <- repo$equity1 # CHF
+	p2 <- repo$bond1 # EUR
+	p3 <- repo$strutturati_FI # EUR
+	p4 <- repo$equity2 # EUR
+	p5 <- repo$fondiObbligazionari # EUR
+	p6 <- repo$indexCertificate # USD
+	positions <- new("Positions",list(p1,p2,p3,p4,p5,p6))
+	# "Equity / CHF / 88'205.00 / Roche Holding Gs"
+	# "Bond / EUR / 92'896.60 / 20130603 - 3.625% Pfizer 03-06-13"
+	# "Strutturati_FI / EUR / 133'951.68 / 20130521 - <3Y - Floored Floares with Cap 1.75%-4.625% p.a. On CS"
+	# "Equity / EUR / 5'558.12 / Kontron AG"
+	# "Fondi_obbligazionari / EUR / 7'694.96 / 20201231 - 0% <3Y - CB-Accent Lux Sicav - Fixed Income EUR 31-12-20"
+	# "Index_certificate / USD / 294'333.52 / ISHARES MSCI Indon"
+	
+	# test1
+	selectionString <- new("SelectionString","security:Equity,Bond & currency!:GBP + security:Index_certificate & amount:>=294333.50USD")
+	should <- new("Positions",list(p1,p2,p4,p6))
+	
+	result <- selector(selectionString,positions)
+	checkEquals(result,should)
+	
+	# test2: with an empty positions
+	should <- new("Positions")
+
+	result <- selector(selectionString,new("Positions"))
+	checkEquals(result,should)
+	
+	
+	# reset the repository in the original state
+	if (!is.null(repository)) repositories$exchangeRates <- repository
 }

@@ -6,6 +6,30 @@
 
 setGeneric("parser",def=function(x,...) standardGeneric("parser"))
 
+
+setMethod("parser",signature(x="CheckString"),
+		function(x){
+			# split the checkString in the 3 components
+			checkString.l <- split(x)
+			
+			# split the selectionString in multiple factorStrings
+			factorStrings.l <- split(checkString.l$selectionString)
+			selectionCriteriaList <- new("selectionCriteriaList",lapply(factorStrings.l,toSelectionCriteria))
+			
+			# construct the parser
+			constraint <- constraintFactory(checkString.l$constraintString)
+			directiveString <- checkString.l$directiveString
+			
+		... arrivato qui
+			setClass("CheckStringParsed",representation(selectionCriteriaList="SelectionCriteriaList",
+							constraint="Constraint",directiveString="DirectiveString"))
+			
+			
+			
+		}
+)
+
+
 setMethod("parser",signature(x="TestSuite"),
 		function(x) {
 			

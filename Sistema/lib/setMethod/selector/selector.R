@@ -4,41 +4,31 @@
 ###############################################################################
 
 
-selector <- function(selectionCriterium,positions,...) {
+selector <- function(x,positions,...) {
 	# apply the function FUNC
-	extract <- lapply(positions,check,selectionCriterium)
+	extract <- lapply(positions,check,x)
 	extract <- unlist(extract)
 	
 	return(extract)
 }
 
-setGeneric("selector",def=function(selectionCriterium,positions,...) standardGeneric("selector"))
-
-#setMethod("selector",signature(selectionCriterium="CurrencySelectionCriterium",positions="Positions"),
-#		function(selectionCriterium,positions) {
-		
-#			extract <- lapply(positions,FUNC,selectionCriterium)
-#			extract <- unlist(extract)
-			
-#			return(extract)
-#		}
-#)
+setGeneric("selector",def=function(x,positions,...) standardGeneric("selector"))
 
 
-setMethod("selector",signature(selectionCriterium="AmountSelectionCriterium",positions="Positions"),
-		function(selectionCriterium,positions) {
+setMethod("selector",signature(x="AmountSelectionCriterium",positions="Positions"),
+		function(x,positions) {
 	
-			if (is(selectionCriterium@constraint,"RelativeConstraint")) {
+			if (is(x@constraint,"RelativeConstraint")) {
 				totalValue <- sum(positions)
-				percentageValue <- selectionCriterium@constraint@value/100
+				percentageValue <- x@constraint@value/100
 				absoluteConstraint <- new("AbsoluteConstraint",
-						operator=selectionCriterium@constraint@operator,
+						operator=x@constraint@operator,
 						value=toMoney(percentageValue*totalValue@amount,totalValue@currency)
 				)
-				selectionCriterium@constraint <- absoluteConstraint
+				x@constraint <- absoluteConstraint
 			}
 		
-			extract <- lapply(positions,check,selectionCriterium)
+			extract <- lapply(positions,check,x)
 			extract <- unlist(extract)
 			
 			return(extract)
@@ -46,19 +36,19 @@ setMethod("selector",signature(selectionCriterium="AmountSelectionCriterium",pos
 )
 
 
-setMethod("selector",signature(selectionCriterium="MaturityHorizonSelectionCriterium",positions="Positions"),
-		function(selectionCriterium,positions,...) {
+setMethod("selector",signature(x="MaturityHorizonSelectionCriterium",positions="Positions"),
+		function(x,positions,...) {
 			# extract the baseDate from the ... arguments
-			x <- list(...)
-			if (length(x)==0) baseDate = Sys.Date() else baseDate=as.Date(x[[1]])
+			y <- list(...)
+			if (length(y)==0) baseDate = Sys.Date() else baseDate=as.Date(y[[1]])
 		
 			FUNC <- function(position,selectionCriterium,baseDate) {
 				
-				values <- selectionCriterium@values
+				values <- x@values
 				result <- FALSE				
 				if (is(position@security,"Fondi_mercato_monetario")) {
 					if (identical(values,"<3Y")) result <- TRUE
-					if (selectionCriterium@negation) result <- !result
+					if (x@negation) result <- !result
 					return(result)
 				}
 				
@@ -69,7 +59,7 @@ setMethod("selector",signature(selectionCriterium="MaturityHorizonSelectionCrite
 					if (maturityInYears > 3) maturityHorizon <- ">3Y"
 					
 					if (identical(maturityHorizon,values)) result <- TRUE
-					if (selectionCriterium@negation) result <- !result
+					if (x@negation) result <- !result
 					return(result)
 				}
 				
@@ -87,23 +77,40 @@ setMethod("selector",signature(selectionCriterium="MaturityHorizonSelectionCrite
 					}
 					
 					if (identical(averageHorizon,values)) result <- TRUE
-					if (selectionCriterium@negation) result <- !result
+					if (x@negation) result <- !result
 					return(result)
 				}
 				
 				if (is(position@security,"Strutturati_FI")) {
 					if (identical(position@security@underlyingHorizon,values)) result <- TRUE
-					if (selectionCriterium@negation) result <- !result
+					if (x@negation) result <- !result
 					return(result)
 				}		
 				return(result)
 			}
 			
 			# apply the function FUNC
-			extract <- lapply(positions,FUN=FUNC,selectionCriterium,baseDate)
+			extract <- lapply(positions,FUN=FUNC,x,baseDate)
 			extract <- unlist(extract)
 			
 			return(extract)
 			
 		}
 )
+
+
+
+setMethod("selector",signature(x="SelectionString",positions="Positions"),
+		function(x,positions) {
+			factorStrings.l <- split(x)
+		
+			selectionCriteriaList <- new("selectionCriteriaList",lapply(factorStrings.l,toSelectionCriteria))
+			toExtract <- filterByCriteriaLogicalOr(selectionCriteriaList,positions)
+			
+			# crea la lista delle posizioni
+			if (any(toExtract)) positionsFiltered <- positions[toExtract] else positionsFiltered <- new("Positions")
+			return(positionsFiltered)
+		}
+)
+
+

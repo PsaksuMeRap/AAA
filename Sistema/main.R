@@ -36,4 +36,3 @@ dati <- new("AyrtonPositions",createOriginData())
 
 politicaInvestimento.df <- repositories$politicaInvestimento$politicaInvestimento.df
 portfolios <- portfoliosFactory(dati,politicaInvestimento.df)
-

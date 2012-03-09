@@ -14,7 +14,22 @@ setMethod("split",
 			
 			factorString.v <- unlist(strsplit(x,"\\&"))
 			factorString.v <- removeStartEndSpaces(factorString.v)
-			factorString.v <- lapply(factorString.v,function(x)return(new("FactorString",x)))
-			return(factorString.v)
+			factorString.l <- lapply(factorString.v,function(x)return(new("FactorString",x)))
+			return(factorString.l)
+		}
+)
+
+
+
+setGeneric("toSelectionCriteria", function(x) standardGeneric("toSelectionCriteria"))
+
+setMethod("toSelectionCriteria",
+		signature(x = "FactorStrings"),
+		function (x) 
+		{
+			factorString.l <- split(x)
+			factorStringParsed.l <- lapply(factorString.l,split)
+			selectionCriterium.l <- sapply(factorStringParsed.l,selectionCriteriumFactory)
+			return(new("SelectionCriteria",selectionCriterium.l))
 		}
 )

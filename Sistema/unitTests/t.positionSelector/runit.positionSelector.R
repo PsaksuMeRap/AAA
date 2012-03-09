@@ -26,8 +26,6 @@ test.shouldCheckPositionByAmount <- function() {
 	parsedFactorString <- split(factorString)
 	selectionCriterium <- selectionCriteriumFactory(parsedFactorString)
 	
-	
-	
 	result <- check(position1,criterium)
 	checkEquals(result,FALSE)
 

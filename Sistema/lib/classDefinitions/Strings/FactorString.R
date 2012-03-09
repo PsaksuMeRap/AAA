@@ -35,7 +35,7 @@ setMethod("split",
 				values <- result[[2]]
 			}
 			
-			return(parsedFactorString=new("ParsedFactorString",criterium=factor,
+			return(factorStringParsed=new("FactorStringParsed",criterium=factor,
 							negation=negation,values=values))
 		}
 )

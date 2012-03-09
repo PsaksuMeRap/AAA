@@ -67,7 +67,7 @@ test.shouldCheckPositionByAmount <- function() {
 	checkEquals(result,TRUE)
 	
 	# reset the repository in the original state
-	repositories$exchangeRates <- repository
+	if (!is.null(repository)) repositories$exchangeRates <- repository
 	
 }
 

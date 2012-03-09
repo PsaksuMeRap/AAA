@@ -14,7 +14,9 @@ setMethod("split",
 			
 			factorStrings.v <- unlist(strsplit(x,"\\+"))
 			factorStrings.v <- removeStartEndSpaces(factorStrings.v)
-			factorStrings.v <- lapply(factorStrings.v,function(y)return(new("FactorStrings",y)))
-			return(factorStrings.v)
+			factorStrings.l <- lapply(factorStrings.v,function(y)return(new("FactorStrings",y)))
+			return(factorStrings.l)
 		}
 )
+
+

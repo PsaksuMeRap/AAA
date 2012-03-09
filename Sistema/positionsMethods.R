@@ -4,54 +4,6 @@
 ###############################################################################
 
 
-filterByCriteriaLogicalAnd <- function(criteria,positions) {
-	# criteria: a list of criteriumSelection
-	# positions: a variable of class positions
-	
-	if (length(positions$positions)==0) return(vector(mode = "logical"))
-	result <- lapply(criteria,positionsSelector,positions)
-	
-	if (length(result)==0) return(result)
-	if (length(result)==1) return(result[[1]])
-	
-	x <- result[[1]]
-	for (r in result[-1]) x <- x & r
-	return(x)
-}
-
-
-filterByCriteriaLogicalOr <- function(unionOfBlocksOfCriteria,positions) {
-	# criteria: a list of criteriumSelection
-	# positions: a variable of class positions
-	
-	if (length(positions$positions)==0) return(vector(mode = "logical"))
-	
-	result <- lapply(unionOfBlocksOfCriteria,filterByCriteriaLogicalAnd,positions)
-	
-	if (length(result)==0) return(result)
-	if (length(result)==1) return(result[[1]])
-	
-	x <- result[[1]]
-	for (r in result[-1]) x <- x | r
-	return(x)
-}
-
-
-
-extractPositionsFromSelectionString <- function(selectionString,positions) {
-
-	# selectionString: a string of type "instrument:bond,equity & currency:USD + amount:>5%"
-	parser <- create_parserSelectionCriteria()
-
-	unionOfBlocksOfCriteria <- parser$splitSelectionString(selectionString)
-#E qui che va modificata la funzione filterByCriteria	
-	result <- filterByCriteriaLogicalOr(unionOfBlocksOfCriteria,positions)
-	
-	# crea la lista delle posizioni
-	positionsFiltered <- create_positions()
-	if (length(positions$positions)>0) lapply(positions$positions[result],positionsFiltered$addPosition)
-	return(positionsFiltered)
-}
 
 checkCheckStringOnPositions <- function(checkString,positions,logFile,refCurrency) {
 	# calcola il valore totale delle posizioni
