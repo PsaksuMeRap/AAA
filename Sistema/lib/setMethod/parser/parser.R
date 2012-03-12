@@ -14,18 +14,16 @@ setMethod("parser",signature(x="CheckString"),
 			
 			# split the selectionString in multiple factorStrings
 			factorStrings.l <- split(checkString.l$selectionString)
-			selectionCriteriaList <- new("selectionCriteriaList",lapply(factorStrings.l,toSelectionCriteria))
+			selectionCriteriaList <- new("SelectionCriteriaList",lapply(factorStrings.l,toSelectionCriteria))
 			
 			# construct the parser
 			constraint <- constraintFactory(checkString.l$constraintString)
 			directiveString <- checkString.l$directiveString
 			
-		... arrivato qui
-			setClass("CheckStringParsed",representation(selectionCriteriaList="SelectionCriteriaList",
-							constraint="Constraint",directiveString="DirectiveString"))
+			checkStringParsed <- new("CheckStringParsed",selectionCriteriaList=selectionCriteriaList,
+							constraint=constraint,directiveString=directiveString)
 			
-			
-			
+			return(checkStringParsed)
 		}
 )
 

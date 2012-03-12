@@ -198,6 +198,19 @@ createRepositoryAyrtonPositions <- function() {
 
 	testData$strutturati_FI <- x
 	
+	# create a Fondi_misti
+	x <- new("AyrtonPosition")
+	x@Cliente <- "pippo84"
+	x@Strumento <- "A"
+	x@Moneta <- "CHF"
+	x@Saldo <- 400
+	x@Nome <- "70-30 UBS Strategy Fund Yield CHF"
+	x@ValoreMercatoMonetaCHF <- 46988
+	x@ID_AAA <- 1476
+	x@ID_strumento <- 26
+	class(x) <- "AyrtonPosition"
+	
+	testData$Fondi_misti <- x	
 	
 	return(testData)
 }

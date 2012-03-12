@@ -52,3 +52,30 @@ setMethod("createPosition",signature(security="Bond",origin="AyrtonPosition"),
 			return(position)
 		}
 )
+
+setMethod("createPosition",signature(security="Fondi_misti",origin="AyrtonPosition"),
+		function(security,origin) {
+			id <- 10.2
+			quantity <- origin@Saldo
+		
+			split1 <- strsplit(security@name," ")
+			split2 <- unlist(strsplit(split1[[1]][1],"-"))
+			errorMessage <- paste("Error when parsing Fondi_misti:",security@name,"\nThe % weights are missing!")
+			
+			if (length(split2)!=2) stop(errorMessage)
+			
+			if (all(grepl("^[0-9]+.*[0-9]*$",split2))) {
+				bondPart <- as.numeric(split2[1])
+				equityPart <- as.numeric(split2[2])
+			} else {
+				stop(errorMessage)
+			}
+				
+			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
+			value <- repositories$exchangeRates$exchange(value,security@currency)
+			position <- new("PositionFondi_misti",id=id,security=security,
+					quantity=quantity,value=value,bondPart=bondPart,equityPart=equityPart)
+			
+			return(position)
+		}
+)

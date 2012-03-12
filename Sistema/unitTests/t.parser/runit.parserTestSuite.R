@@ -3,8 +3,21 @@
 # Author: claudio
 ###############################################################################
 
+test.shouldParseCheckString <- function() {
+	
+	string <- "security:Conto_corrente,bond,Fondi_obbligazionari; >= 75% :: explode:Fondi_misti  "
+	checkString <- new("CheckString",string)
+	result <- parser(checkString)
+	
+	factorString <- new("FactorString","security:Conto_corrente,bond,Fondi_obbligazionari")
+	parsedFactorString <- split(factorString)
+	shouldSelCrit <- selectionCriteriumFactory(parsedFactorString)
+	checkEquals(result@selectionCriteriaList[[1]][[1]],shouldSelCrit)
+	checkEquals(result@constraint,constraintFactory(new("ConstraintString",">= 75%")))
+	checkEquals(result@directiveString,new("DirectiveString","explode:Fondi_misti"))
+}
 
-test.shouldCheckSetParserTestsuiteUtils <- function() {
+test.shouldCreateSetParserTestsuiteUtils <- function() {
 	
 	f <- setParserTestsuiteUtils()
 	

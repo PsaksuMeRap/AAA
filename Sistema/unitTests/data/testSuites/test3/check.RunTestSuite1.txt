@@ -10,7 +10,7 @@ checkListStart:
 
    instrument:bond & currency:CHF ; > 5%  
 currency:USD & instrument:equity ; < 10%
-currency:CHF + instrument:equity,Fondi azionari & currency:EUR ; > 90%  
+currency:CHF + instrument:equity,Fondi_azionari & currency:EUR ; > 90%  
 
 checkListEnd:
 externalSuiteFileName:

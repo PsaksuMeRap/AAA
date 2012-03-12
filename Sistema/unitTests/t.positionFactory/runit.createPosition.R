@@ -103,3 +103,29 @@ test.shouldCreatePositionBond <- function() {
 	# restore initial conditions	
 	deallocateTestRepositories("instruments")
 }
+
+test.shouldCreatePositionFondi_misti<- function() {	
+	
+	# uses a default method
+	source("./unitTests/utilities/allocateTestRepositories.R")	
+	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
+	
+	# create the instrument repository	
+	allocateTestRepositories("instruments")
+	
+	# create the origin
+	repository <- createRepositoryAyrtonPositions()
+	origin <- repository$Fondi_misti
+	
+	fondo_misto <- securityFactory(origin)
+	
+	fondo_misto <- createPosition(fondo_misto,origin)
+	
+	checkEquals(is(fondo_misto)[1],"PositionFondi_misti")
+	checkEquals(fondo_misto@id,10.2)
+	checkEquals(fondo_misto@equityPart,30)
+	checkEquals(fondo_misto@bondPart,70)
+	
+	# restore initial conditions	
+	deallocateTestRepositories("instruments")
+}

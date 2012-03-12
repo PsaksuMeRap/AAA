@@ -104,7 +104,7 @@ setMethod("selector",signature(x="SelectionString",positions="Positions"),
 		function(x,positions) {
 			factorStrings.l <- split(x)
 		
-			selectionCriteriaList <- new("selectionCriteriaList",lapply(factorStrings.l,toSelectionCriteria))
+			selectionCriteriaList <- new("SelectionCriteriaList",lapply(factorStrings.l,toSelectionCriteria))
 			toExtract <- filterByCriteriaLogicalOr(selectionCriteriaList,positions)
 			
 			# crea la lista delle posizioni

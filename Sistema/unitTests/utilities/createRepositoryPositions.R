@@ -56,5 +56,8 @@ createRepositoryPositions <- function() {
 	# create a strutturati_FI 
 	testData$strutturati_FI <- positionFactory(repository$strutturati_FI)
 	
+	# create a Fondi_misti 
+	testData$Fondi_misti <- positionFactory(repository$Fondi_misti)
+	
 	return(testData)
 }
