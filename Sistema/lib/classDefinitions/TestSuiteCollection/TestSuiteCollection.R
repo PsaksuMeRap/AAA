@@ -9,7 +9,7 @@ setClass("TestSuiteCollection",
 				name="character",
 				directories="character",
 				testFileRegexp="character",
-				testSuites="list"
+				testSuitesParsed="list"
 		)
 )
 
@@ -30,7 +30,7 @@ setMethod("initialize", "TestSuiteCollection",
 			
 			.Object@testFileRegexp <- testFileRegexp
 			
-			tmp <- function(fileName,path) {
+			newTestSuiteWrapper <- function(fileName,path) {
 				testSuite <- new("TestSuite",path=path,fileName=fileName)
 				return(testSuite)
 			}
@@ -41,13 +41,13 @@ setMethod("initialize", "TestSuiteCollection",
 					tmpFileList <- list.files(path=path, 
 							pattern=testFileRegexp)				
 					fileList <- c(fileList,tmpFileList)
-					testSuites <- c(testSuites,lapply(fileList,tmp,path=path))
+					testSuites <- c(testSuites,lapply(fileList,newTestSuiteWrapper,path=path))
 				}
 			} else {
 				testSuites <- lapply(fileList,tmp,path=directories[[1]])
 			}
 			
-			.Object@testSuites <- testSuites
+			.Object@testSuitesParsed <- lapply(testSuites,parser)
 			return(.Object)
 		}
 )

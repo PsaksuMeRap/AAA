@@ -17,9 +17,11 @@ test.shouldInitializeTestSuiteCollection <- function() {
 	checkEquals(testSuiteCollection@testFileRegexp,"^check.+\\.txt$")
 	checkEquals(testSuiteCollection@testSuites[[1]]@fileName,"check.RunTestSuite1.txt")
 	
-	checkEquals(testSuiteCollection@testSuites[[2]]@fileName,"check.RunTestSuite1.txt")
-	checkEquals(testSuiteCollection@testSuites[[2]]@path,"./unitTests/data/testSuites/test2")
-	checkEquals(testSuiteCollection@testSuites[[3]]@path,"./unitTests/data/testSuites/test2")
-	checkEquals(testSuiteCollection@testSuites[[5]]@path,"./unitTests/data/testSuites/test3")
-
+	checkEquals(testSuiteCollection@testSuitesParsed[[2]]@fileName,"check.RunTestSuite1.txt")
+	checkEquals(testSuiteCollection@testSuitesParsed[[2]]@path,"./unitTests/data/testSuites/test2")
+	checkEquals(testSuiteCollection@testSuitesParsed[[3]]@path,"./unitTests/data/testSuites/test2")
+	checkEquals(testSuiteCollection@testSuitesParsed[[5]]@path,"./unitTests/data/testSuites/test3")
+	checkEquals(testSuiteCollection@testSuitesParsed[[5]]@fileName,"check.RunTestSuite1.txt")
+	checkEquals(testSuiteCollection@testSuitesParsed[[5]]@checkStrings[1],"instrument:bond & currency:CHF ; > 5%")
+	checkEquals(testSuiteCollection@testSuitesParsed[[5]]@checkStrings[2],"currency:USD & instrument:equity ; < 10%")
 }

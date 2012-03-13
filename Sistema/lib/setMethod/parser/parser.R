@@ -61,7 +61,7 @@ setMethod("parser",signature(x="TestSuite"),
 			
 			configLines <- lapply(configLines,f$parseConfigLine)
 
-			return(new("ParsedTestSuite",x,configLines=unlist(configLines),checkStrings=checkStrings))
+			return(new("TestSuiteParsed",x,configLines=unlist(configLines),checkStrings=checkStrings))
 
 		}
 )

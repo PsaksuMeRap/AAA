@@ -6,5 +6,5 @@
 
 setClass("TestSuite",representation(fileName="character",path="character"))
 
-setClass("ParsedTestSuite",representation(configLines="character",
+setClass("TestSuiteParsed",representation(configLines="character",
 				checkStrings="character"),contains="TestSuite")
