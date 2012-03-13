@@ -23,6 +23,7 @@ createRepositoryAyrtonPositions <- function() {
 
 	testData$equity1 <- x
 	
+	
 	# create a valid equity
 	x <- new("AyrtonPosition")
 	x@Cliente <- "pippo11"
@@ -38,6 +39,7 @@ createRepositoryAyrtonPositions <- function() {
 	
 	testData$equity2 <- x
 	
+	
 	# create a valid indexCertificate
 	x <- new("AyrtonPosition")
 	x@Cliente <- "pippo210"
@@ -52,6 +54,7 @@ createRepositoryAyrtonPositions <- function() {
 	class(x) <- "AyrtonPosition"
 	
 	testData$indexCertificate <- x
+	
 	
 	# create a non existing equity
 	x <- new("AyrtonPosition")
@@ -112,6 +115,7 @@ createRepositoryAyrtonPositions <- function() {
 	
 	testData$bond3 <- x
 	
+	
 	# create a valid bond
 	x <- new("AyrtonPosition")
 	x@Cliente <- "pippo13"
@@ -141,6 +145,7 @@ createRepositoryAyrtonPositions <- function() {
 	
 	testData$fondiObbligazionari <- x
 	
+	
 	# create a valid AccruedInterest di Fondi_obbligazionari
 	x <- new("AyrtonPosition")
 	x@Cliente <- "pippo11"
@@ -154,6 +159,7 @@ createRepositoryAyrtonPositions <- function() {
 	class(x) <- "AyrtonPosition"
 		
 	testData$proRataFondiObbligazionari <- x
+	
 	
 	# create a valid AccruedInterest
 	x <- new("AyrtonPosition")
@@ -184,6 +190,7 @@ createRepositoryAyrtonPositions <- function() {
 	
 	testData$unclassified1 <- x
 	
+	
 	# create a Strutturati_FI security
 	x <- new("AyrtonPosition")
 	x@Cliente <- "pippo3"
@@ -197,6 +204,7 @@ createRepositoryAyrtonPositions <- function() {
 	class(x) <- "AyrtonPosition"
 
 	testData$strutturati_FI <- x
+	
 	
 	# create a Fondi_misti
 	x <- new("AyrtonPosition")
@@ -212,5 +220,50 @@ createRepositoryAyrtonPositions <- function() {
 	
 	testData$Fondi_misti <- x	
 	
+	
+	# create a globalEquity position
+	x <- new("AyrtonPosition")
+	x@Cliente <- "pippo123"
+	x@Strumento <- "A"
+	x@Moneta <- "CHF"
+	x@Saldo <- 2000
+	x@Nome <- "CB-Accent Global Equity Fund Cap B"
+	x@ValoreMercatoMonetaCHF <- 147480
+	x@ID_AAA <- 1701
+	x@ID_strumento <- 14
+	class(x) <- "AyrtonPosition"
+	
+	testData$globalEquity <- x	
+	
+	
+	# create a fixedIncome position
+	x <- new("AyrtonPosition")
+	x@Cliente <- "pippo16"
+	x@Strumento <- "O      "
+	x@Moneta <- "EUR"
+	x@Saldo <- 11000
+	x@Nome <- "CB-Accent Lux Sicav - Fixed Income EUR 31-12-20"
+	x@ValoreMercatoMonetaCHF <- 1686274.5866043
+	x@ID_AAA <- 825
+	x@ID_strumento <- 3
+	class(x) <- "AyrtonPosition"
+	
+	testData$fixedIncome <- x	
+	
+	
+	# create a globalEconomy position
+	x <- new("AyrtonPosition")
+	x@Cliente <- "pippo51"
+	x@Strumento <- "A"
+	x@Moneta <- "CHF"
+	x@Saldo <- 100
+	x@Nome <- "CB-Accent Global Economy"
+	x@ValoreMercatoMonetaCHF <- 9263
+	x@ID_AAA <- 2256
+	x@ID_strumento <- 14
+	class(x) <- "AyrtonPosition"
+	
+	testData$globalEconomy <- x
+
 	return(testData)
 }

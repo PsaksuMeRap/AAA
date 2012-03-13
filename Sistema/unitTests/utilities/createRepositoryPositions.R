@@ -59,5 +59,14 @@ createRepositoryPositions <- function() {
 	# create a Fondi_misti 
 	testData$Fondi_misti <- positionFactory(repository$Fondi_misti)
 	
+	# create a globalEquity 
+	testData$globalEquity <- positionFactory(repository$globalEquity)
+	
+	# create a globalEconomy 
+	testData$globalEconomy <- positionFactory(repository$globalEconomy)
+	
+	# create a fixedIncome 
+	testData$fixedIncome <- positionFactory(repository$fixedIncome)
+	
 	return(testData)
 }

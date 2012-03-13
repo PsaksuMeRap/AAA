@@ -4,48 +4,48 @@
 ###############################################################################
 
 
-selectionCriteriumFactory <- function(parsedFactorString) {
+selectionCriteriumFactory <- function(factorStringParsed) {
 	
-	if (identical(parsedFactorString@criterium,"security")) {
-		values <- unlist(strsplit(parsedFactorString@values,","))
+	if (identical(factorStringParsed@criterium,"security")) {
+		values <- unlist(strsplit(factorStringParsed@values,","))
 		values <- removeStartEndSpaces(values)
 		selectionCriterium <- new("SecuritySelectionCriterium",
 				values=values,
-				negation=parsedFactorString@negation
+				negation=factorStringParsed@negation
 		)
 		return(selectionCriterium)
 	}
 	
-	if (identical(parsedFactorString@criterium,"amount")) {
-		constraint <- constraintFactory(parsedFactorString@values)
+	if (identical(factorStringParsed@criterium,"amount")) {
+		constraint <- constraintFactory(factorStringParsed@values)
 		selectionCriterium <- new("AmountSelectionCriterium",
-				negation=parsedFactorString@negation,
+				negation=factorStringParsed@negation,
 				constraint=constraint
 		)		
 		return(selectionCriterium)
 	}
 	
-	if (identical(parsedFactorString@criterium,"currency")) {
-		values <- unlist(strsplit(parsedFactorString@values,","))
+	if (identical(factorStringParsed@criterium,"currency")) {
+		values <- unlist(strsplit(factorStringParsed@values,","))
 		values <- removeStartEndSpaces(values)
 		selectionCriterium <- new("CurrencySelectionCriterium",
 				values=values,
-				negation=parsedFactorString@negation
+				negation=factorStringParsed@negation
 		)
 		return(selectionCriterium)
 	}
 	
-	if (identical(parsedFactorString@criterium,"maturityHorizon")) {
-		values <- unlist(strsplit(parsedFactorString@values,","))
+	if (identical(factorStringParsed@criterium,"maturityHorizon")) {
+		values <- unlist(strsplit(factorStringParsed@values,","))
 		values <- removeStartEndSpaces(values)
 		selectionCriterium <- new("MaturityHorizonSelectionCriterium",
 				value=values,
-				negation=parsedFactorString@negation
+				negation=factorStringParsed@negation
 		)
 		return(selectionCriterium)
 	}	
 	
-	message <- "Error: invalid parsedFactorString: no method for parsedFactorString of criterium"
-	message <- paste(message," of kind '",parsedFactorString@criterium,"'",sep="")
+	message <- "Error: invalid factorStringParsed: no method for factorStringParsed of criterium"
+	message <- paste(message," of kind '",factorStringParsed@criterium,"'",sep="")
 	stop(message)
 }

@@ -60,9 +60,9 @@ test.divideMoney <- function() {
 	money3 <- new("Money",amount=new("Amount",200),currency=new("Currency","USD")) # exchange rate USD-CHF: 0.9627
 	money4 <- new("Money",amount=new("Amount",100),currency=new("Currency","EUR")) # exchange rate EUR-CHF: 1.33853808
 	
-	checkEquals(divide(money1,money2),new("Amount",4))
-	checkEquals(divide(money1,money3),new("Amount",100/(200*0.9627)))
-	checkEquals(divide(money3,money4),new("Amount",200/(100*1.33853808/0.9627)))
+	checkEquals(money1/money2,4)
+	checkEquals(money1/money3,100/(200*0.9627))
+	checkEquals(money3/money4,200/(100*1.33853808/0.9627))
 	
 	repositories$exchangeRates <- repository
 }

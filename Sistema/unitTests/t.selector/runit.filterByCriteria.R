@@ -29,12 +29,12 @@ test.shouldApplyLogicalAnd <- function() {
 	
 	# create the selectionCriteria	
 	factorString1 <- new("FactorString","security:Bond,Equity")
-	parsedFactorString1 <- split(factorString1)	
-	selectionCriterium1 <- selectionCriteriumFactory(parsedFactorString1)
+	factorStringParsed1 <- split(factorString1)	
+	selectionCriterium1 <- selectionCriteriumFactory(factorStringParsed1)
 	
 	factorString2 <- new("FactorString","currency:CHF")
-	parsedFactorString2 <- split(factorString2)
-	selectionCriterium2 <- selectionCriteriumFactory(parsedFactorString2)	
+	factorStringParsed2 <- split(factorString2)
+	selectionCriterium2 <- selectionCriteriumFactory(factorStringParsed2)	
 	selectionCriteria <- new("SelectionCriteria",list(selectionCriterium1,selectionCriterium2))
 	
 	result <- filterByCriteriaLogicalAnd(selectionCriteria,positions)
@@ -43,12 +43,12 @@ test.shouldApplyLogicalAnd <- function() {
 	
 	# create the selectionCriteria	
 	factorString1 <- new("FactorString","security:Bond,Equity")
-	parsedFactorString1 <- split(factorString1)	
-	selectionCriterium1 <- selectionCriteriumFactory(parsedFactorString1)
+	factorStringParsed1 <- split(factorString1)	
+	selectionCriterium1 <- selectionCriteriumFactory(factorStringParsed1)
 	
 	factorString2 <- new("FactorString","currency:CHF,EUR")
-	parsedFactorString2 <- split(factorString2)
-	selectionCriterium2 <- selectionCriteriumFactory(parsedFactorString2)	
+	factorStringParsed2 <- split(factorString2)
+	selectionCriterium2 <- selectionCriteriumFactory(factorStringParsed2)	
 	selectionCriteria <- new("SelectionCriteria",list(selectionCriterium1,selectionCriterium2))
 	
 	result <- filterByCriteriaLogicalAnd(selectionCriteria,positions)
@@ -91,22 +91,22 @@ test.shouldApplyLogicalOr <- function() {
 	# create the selectionCriteria
 	#selectionCriteria1
 	factorString1 <- new("FactorString","security:Bond,Equity")
-	parsedFactorString1 <- split(factorString1)	
-	selectionCriterium1 <- selectionCriteriumFactory(parsedFactorString1)
+	factorStringParsed1 <- split(factorString1)	
+	selectionCriterium1 <- selectionCriteriumFactory(factorStringParsed1)
 	
 	factorString2 <- new("FactorString","currency:CHF")
-	parsedFactorString2 <- split(factorString2)
-	selectionCriterium2 <- selectionCriteriumFactory(parsedFactorString2)	
+	factorStringParsed2 <- split(factorString2)
+	selectionCriterium2 <- selectionCriteriumFactory(factorStringParsed2)	
 	selectionCriteria1 <- new("SelectionCriteria",list(selectionCriterium1,selectionCriterium2))
 	
 	#selectionCriteria2
 	factorString1 <- new("FactorString","currency:EUR")
-	parsedFactorString1 <- split(factorString1)	
-	selectionCriterium1 <- selectionCriteriumFactory(parsedFactorString1)
+	factorStringParsed1 <- split(factorString1)	
+	selectionCriterium1 <- selectionCriteriumFactory(factorStringParsed1)
 	
 	factorString2 <- new("FactorString","amount:<79EUR")
-	parsedFactorString2 <- split(factorString2)
-	selectionCriterium2 <- selectionCriteriumFactory(parsedFactorString2)	
+	factorStringParsed2 <- split(factorString2)
+	selectionCriterium2 <- selectionCriteriumFactory(factorStringParsed2)	
 	selectionCriteria2 <- new("SelectionCriteria",list(selectionCriterium1,selectionCriterium2))	
 	
 	listOfSelectionCriteria <- list(selectionCriteria1,selectionCriteria2)
@@ -120,12 +120,12 @@ test.shouldApplyLogicalOr <- function() {
 	#test 2: change the second selectionCriterium2 from < to >
 	#selectionCriteria2
 	factorString1 <- new("FactorString","currency:EUR")
-	parsedFactorString1 <- split(factorString1)	
-	selectionCriterium1 <- selectionCriteriumFactory(parsedFactorString1)
+	factorStringParsed1 <- split(factorString1)	
+	selectionCriterium1 <- selectionCriteriumFactory(factorStringParsed1)
 	
 	factorString2 <- new("FactorString","amount:>79EUR")
-	parsedFactorString2 <- split(factorString2)
-	selectionCriterium2 <- selectionCriteriumFactory(parsedFactorString2)	
+	factorStringParsed2 <- split(factorString2)
+	selectionCriterium2 <- selectionCriteriumFactory(factorStringParsed2)	
 	selectionCriteria2 <- new("SelectionCriteria",list(selectionCriterium1,selectionCriterium2))	
 	
 	listOfSelectionCriteria <- list(selectionCriteria1,selectionCriteria2)

@@ -5,7 +5,6 @@
 
 
 selector <- function(x,positions,...) {
-	# apply the function FUNC
 	extract <- lapply(positions,check,x)
 	extract <- unlist(extract)
 	
@@ -114,3 +113,14 @@ setMethod("selector",signature(x="SelectionString",positions="Positions"),
 )
 
 
+
+setMethod("selector",signature(x="SelectionCriteriaList",positions="Positions"),
+		function(x,positions) {
+			
+			toExtract <- filterByCriteriaLogicalOr(x,positions)
+			
+			# crea la lista delle posizioni
+			if (any(toExtract)) positionsFiltered <- positions[toExtract] else positionsFiltered <- new("Positions")
+			return(positionsFiltered)
+		}
+)

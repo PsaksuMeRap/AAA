@@ -20,13 +20,13 @@ setMethod("sum","Money",
 )
 
 
-setMethod("divide","Money",
-		function(x,divisor) {
-			# x: a money
-			# divisor: the money used to divide x
+setMethod("/",signature(e1="Money",e2="Money"),
+		function(e1,e2) {
+			# e1: a money
+			# e2: a meney, the divisor, i.e. the money used to divide e1
 			
-			if (x@currency!=divisor@currency) divisor <- repositories$exchangeRates$exchange(divisor,x@currency)
-			return(x@amount / divisor@amount)
+			if (e1@currency!=e2@currency) e2 <- repositories$exchangeRates$exchange(e2,e1@currency)
+			return(unclass(e1@amount / e2@amount))
 		}
 )
 

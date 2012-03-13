@@ -1,1 +1,1 @@
-instrument:bond & currency:CHF ; > 5%
+security:Bond & currency:CHF ; > 5%

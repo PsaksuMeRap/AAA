@@ -1,6 +1,6 @@
 
 setMethod("apply",
-		signature(X = "DirectiveString",MARGIN="missing",FUN="missing"),
+		signature(X="DirectiveString",MARGIN="missing",FUN="missing"),
 		function (X, positions) {
 			
 			directiveString <- unclass(X)
@@ -23,54 +23,46 @@ setMethod("apply",
 
 
 setMethod("apply",
-		signature(X = "CheckString",MARGIN="missing",FUN="missing"),
-		function(checkString,positions,logFile,refCurrency) {
-			
+		signature(X="CheckString",MARGIN="missing",FUN="missing"),
+		function(X,positions,logFile,refCurrency) {
 			# compute the total value of the positions
 			positionsValue <- sum(positions)		
-			if (!missing(refCurrency)) { 
-				positionsValue <- repositories@exchangeRate@exchange(positionsValue,refCurrency)
-			}
 			
 			# parse the checkString
 			checkStringParsed <- parser(X) 
 			directiveString <- checkStringParsed@directiveString
-			
+			constraint <- checkStringParsed@constraint
+	
 			# utilizza la directiveString
-			if (!is.na(directiveString)) positions <- apply(checkStringParsed@directiveString,positions)
+			if (!is.na(directiveString)) positions <- apply(directiveString,positions)
+		
+			extractedPositions <- selector(checkStringParsed@selectionCriteriaList,positions)
 			
-			extractedPositions <- extractPositionsFromSelectionString(parsed[["selectionString"]],positions)
-			
-			# crea il criterio di selezione per la verifica del vincolo finale
-			criteriumSelection <- create_criteriumSelection(factor="amount",
-					criteriumCheck=parsed[["criteriumCheck"]]
-			)
-			
-			# crea il valore assoluto da verificare se il check è relativo mentre se il tipo
-			# di vincolo è assoluto crea il valore limite percentuale da stampare assieme 
-			# a quello effettivo nel summary
-			if (criteriumSelection$criteriumCheck$kind=="relative") {
-				percentageValue <- criteriumSelection$criteriumCheck$value/100
-				criteriumSelection$criteriumCheck$value <- toMoney(percentageValue*positionsValue$amount,positionsValue$currency)
+			# If the constraint is relative transform it in an absolute constraint. If the
+			# constraint is absolute compute the corresponding % rate to be used in the summary
+			if (is(constraint,"RelativeConstraint"))  {
+				percentageValue <- constraint@value
+				value <- toMoney(positionsValue@amount*percentageValue/100,positionsValue@currency)
+				constraint <- new("AbsoluteConstraint",value=value,operator=constraint@operator)
 			} else {
-				# in questo caso criteriumSelection$criteriumCheck$value è una variabile di tipo money
-				percentageValue <- criteriumSelection$criteriumCheck$value$divide(positionsValue)
+				# compute the percentageValue
+				percentageValue <- (constraint@value / positionsValue) * 100
 			}
-			percentageValue <- paste(formatC(percentageValue*100,digits=2,
-							format="f"),"%",sep="")
 			
+			percentageValue <- paste(formatC(percentageValue,digits=2,format="f"),"%",sep="")
 			
-			if (missing(refCurrency)) extractedPositionsValue <- extractedPositions$sum() else extractedPositionsValue <- extractedPositions$sum(refCurrency)
+			extractedPositionsValue <- sum(extractedPositions)
 			
-			fakePosition <- create_position()
-			fakePosition$create(name="fake",currency=extractedPositionsValue$currency,
-					amount=extractedPositionsValue$amount) 
+			fakePosition <- new("Position",id=-1,quantity=1,value=extractedPositionsValue,security=new("Unclassified"))
 			
-			actualPercentage <- extractedPositionsValue$divide(positionsValue)*100
+			actualPercentage <- (extractedPositionsValue / positionsValue)*100
 			actualPercentage <- paste(formatC(actualPercentage,digits=2,
 							format="f"),"%",sep="")
 			
-			checkResult <- check(fakePosition,criteriumSelection)
+			# create a new selectionCriterium to be used by the check function
+			selectionCriterium <- new("AmountSelectionCriterium",constraint=constraint,negation=FALSE)
+			
+			checkResult <- check(fakePosition,selectionCriterium)
 			result <- list()
 			result$checkString <- checkString
 			result$checkResult <- checkResult
@@ -82,7 +74,7 @@ setMethod("apply",
 				cat(paste("check:",checkResult,"->", checkString),
 						file=logFile,sep="\n",append=TRUE)
 				
-				positionsToBePrinted  <- extractedPositions$toString()
+				positionsToBePrinted  <- toString(extractedPositions)
 				result$positions <- positionsToBePrinted
 				
 				for (p in positionsToBePrinted) {	
@@ -94,7 +86,6 @@ setMethod("apply",
 								"(",actualPercentage,")","\n"),file=logFile,sep="\n",append=TRUE)
 			}
 			
-			# return( checkResult )
 			return( result )
 		}
 )

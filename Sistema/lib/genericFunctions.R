@@ -10,8 +10,8 @@ setGeneric("toString", fun)
 fun <- function(x) standardGeneric("print")
 setGeneric("print", fun)
 
-fun <- function(x,divisor) standardGeneric("divide")
-setGeneric("divide", fun)
+#fun <- function(x,divisor) standardGeneric("divide")
+#setGeneric("divide", fun) trasformata in "/" eliminare!
 
 # join is a generic function used to join Positions or Portfolios
 # the positions are joined and duplicated positions are not removed

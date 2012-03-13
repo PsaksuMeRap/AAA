@@ -22,8 +22,8 @@ test.shouldCheckPositionByAmount <- function() {
 	
 	# check >
 	factorString <- new("FactorString","amount:>100.8623CHF")
-	parsedFactorString <- split(factorString)
-	selectionCriterium <- selectionCriteriumFactory(parsedFactorString)
+	factorStringParsed <- split(factorString)
+	selectionCriterium <- selectionCriteriumFactory(factorStringParsed)
 	
 	result <- check(indexCertificate,selectionCriterium)
 	checkEquals(result,TRUE)
@@ -31,38 +31,38 @@ test.shouldCheckPositionByAmount <- function() {
 	
 	# check <
 	factorString <- new("FactorString","amount:<100.8623CHF")
-	parsedFactorString <- split(factorString)
-	selectionCriterium <- selectionCriteriumFactory(parsedFactorString)
+	factorStringParsed <- split(factorString)
+	selectionCriterium <- selectionCriteriumFactory(factorStringParsed)
 	
 	result <- check(indexCertificate,selectionCriterium)
 	checkEquals(result,FALSE)
 	
 	# check =
 	factorString <- new("FactorString","amount:=294333.520307469  USD")
-	parsedFactorString <- split(factorString)
-	selectionCriterium <- selectionCriteriumFactory(parsedFactorString)
+	factorStringParsed <- split(factorString)
+	selectionCriterium <- selectionCriteriumFactory(factorStringParsed)
 	result <- check(indexCertificate,selectionCriterium)
 	checkEquals(result,TRUE)
 
 	
 	# check >=
 	factorString <- new("FactorString","amount:>=300000.8623CHF")
-	parsedFactorString <- split(factorString)
-	selectionCriterium <- selectionCriteriumFactory(parsedFactorString)
+	factorStringParsed <- split(factorString)
+	selectionCriterium <- selectionCriteriumFactory(factorStringParsed)
 	result <- check(indexCertificate,selectionCriterium)
 	checkEquals(result,FALSE)
 	
 	# check <=
 	factorString <- new("FactorString","amount:<=283354.88 CHF")
-	parsedFactorString <- split(factorString)
-	selectionCriterium <- selectionCriteriumFactory(parsedFactorString)
+	factorStringParsed <- split(factorString)
+	selectionCriterium <- selectionCriteriumFactory(factorStringParsed)
 	result <- check(indexCertificate,selectionCriterium)
 	checkEquals(result,TRUE)
 	
 	# check !=
 	factorString <- new("FactorString","amount:!=283354.89 CHF")
-	parsedFactorString <- split(factorString)
-	selectionCriterium <- selectionCriteriumFactory(parsedFactorString)
+	factorStringParsed <- split(factorString)
+	selectionCriterium <- selectionCriteriumFactory(factorStringParsed)
 	result <- check(indexCertificate,selectionCriterium)
 	checkEquals(result,TRUE)
 	
@@ -79,15 +79,15 @@ test.shouldCheckPositionBySecurity <- function() {
 	
 	# check 1: should recognize equity
 	factorString <- new("FactorString","security:Bond,Equity")
-	parsedFactorString <- split(factorString)
-	selectionCriterium <- selectionCriteriumFactory(parsedFactorString)
+	factorStringParsed <- split(factorString)
+	selectionCriterium <- selectionCriteriumFactory(factorStringParsed)
 	result <- check(equity,selectionCriterium)
 	checkEquals(result,TRUE)
 	
 	# check 2: should not recognize equity
 	factorString <- new("FactorString","security:Option on equity, Bond  ")
-	parsedFactorString <- split(factorString)
-	selectionCriterium <- selectionCriteriumFactory(parsedFactorString)
+	factorStringParsed <- split(factorString)
+	selectionCriterium <- selectionCriteriumFactory(factorStringParsed)
 	result <- check(equity,selectionCriterium)	
 	checkEquals(result,FALSE)	
 	
@@ -101,15 +101,15 @@ test.shouldCheckPositionByCurrency <- function() {
 	
 	# check 1: should recognize equity
 	factorString <- new("FactorString","currency:EUR,CHF")
-	parsedFactorString <- split(factorString)
-	selectionCriterium <- selectionCriteriumFactory(parsedFactorString)
+	factorStringParsed <- split(factorString)
+	selectionCriterium <- selectionCriteriumFactory(factorStringParsed)
 	result <- check(security,selectionCriterium)
 	checkEquals(result,FALSE)
 	
 	# check 2: should not recognize equity
 	factorString <- new("FactorString","currency:EUR,CHF, USD")
-	parsedFactorString <- split(factorString)
-	selectionCriterium <- selectionCriteriumFactory(parsedFactorString)
+	factorStringParsed <- split(factorString)
+	selectionCriterium <- selectionCriteriumFactory(factorStringParsed)
 	result <- check(security,selectionCriterium)	
 	checkEquals(result,TRUE)	
 }

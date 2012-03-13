@@ -23,8 +23,8 @@ test.shouldCheckPositionByAmount <- function() {
 	# check >
 	constraint <- new("AbsoluteConstraint",operator=">",value=toMoney(100.8623,"CHF"))
 	factorString <- new("FactorString","amount:>100.8623CHF")
-	parsedFactorString <- split(factorString)
-	selectionCriterium <- selectionCriteriumFactory(parsedFactorString)
+	factorStringParsed <- split(factorString)
+	selectionCriterium <- selectionCriteriumFactory(factorStringParsed)
 	
 	result <- check(position1,criterium)
 	checkEquals(result,FALSE)
