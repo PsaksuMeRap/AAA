@@ -26,12 +26,12 @@ dirs = c(
 		"./unitTests/t.constraintFactory",
 		"./unitTests/t.parser",
 		"./unitTests/t.check",
-#		"./unitTests/t.testSuiteFactory",
-#		"./unitTests/t.riskmanTestSuite",
+		"./unitTests/t.testSuiteFactory",
+		"./unitTests/t.applyTestSuite",
 		"./unitTests/t.toXXX",
 		"./unitTests/t.selector",
 		"./unitTests/t.explode",
-		"./unitTests/t.apply",
+		"./unitTests/t.Apply",
 		"./unitTests/t.identifyFundsToExplode"
 		)
 testsuite.lists <- defineTestSuite("Test globale",dirs = dirs)

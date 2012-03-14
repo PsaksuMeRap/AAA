@@ -30,7 +30,6 @@ allocateTestRepositories("instruments")
 allocateTestRepositories("politicaInvestimento")
 
 
-
 source("./unitTests/utilities/createOriginData.R")
 dati <- new("AyrtonPositions",createOriginData())
 

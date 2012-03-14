@@ -1,12 +1,12 @@
-check: NA -> instrument:bond & currency:CHF ; > 5%
+check: NA -> security:bond & currency:CHF ; > 5%
 Total: CHF 0 over USD NA (  NA% ) 
 
-check: NA -> instrument:bond & currency:CHF ; > 5%
+check: NA -> security:bond & currency:CHF ; > 5%
 Total: CHF 0 over USD NA (  NA% ) 
 
-check: NA -> instrument:bond & currency:CHF ; > 5%
+check: NA -> security:bond & currency:CHF ; > 5%
 Total: CHF 0 over USD NA (  NA% ) 
 
-check: NA -> instrument:bond & currency:CHF ; > 5%
+check: NA -> security:bond & currency:CHF ; > 5%
 Total: CHF 0 over USD NA (  NA% ) 
 

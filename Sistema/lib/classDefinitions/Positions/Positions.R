@@ -44,3 +44,10 @@ setMethod("sum","Positions",
 			return(balance)
 		}
 )
+
+setMethod("as.character","Positions", 
+		function(x,width=list(empty=TRUE)) {
+			
+			return(sapply(x,as.character,width=width))
+		}
+)

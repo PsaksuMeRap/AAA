@@ -1,9 +1,13 @@
 
-setMethod("apply",
-		signature(X="DirectiveString",MARGIN="missing",FUN="missing"),
-		function (X, positions) {
+
+setGeneric("Apply",def=function(x,...) standardGeneric("Apply"))
+
+
+setMethod("Apply",
+		signature(x="DirectiveString"),
+		function (x, positions) {
 			
-			directiveString <- unclass(X)
+			directiveString <- unclass(x)
 			if (is.na(directiveString)) return(positions)
 			
 			if (directiveString!="explode:Fondi_misti") stop("directiveString other than explode:Fondi_misti not implemented yet.")
@@ -22,14 +26,14 @@ setMethod("apply",
 )
 
 
-setMethod("apply",
-		signature(X="CheckString",MARGIN="missing",FUN="missing"),
-		function(X,positions,logFile,refCurrency) {
+setMethod("Apply",
+		signature(x="CheckString"),
+		function(x,positions,logFile) {
 			# compute the total value of the positions
 			positionsValue <- sum(positions)		
 			
 			# parse the checkString
-			checkStringParsed <- parser(X) 
+			checkStringParsed <- parser(x) 
 			directiveString <- checkStringParsed@directiveString
 			constraint <- checkStringParsed@constraint
 	
@@ -64,25 +68,25 @@ setMethod("apply",
 			
 			checkResult <- check(fakePosition,selectionCriterium)
 			result <- list()
-			result$checkString <- checkString
+			result$checkString <- x
 			result$checkResult <- checkResult
 			result$percentageValue <- percentageValue
 			result$actualPercentage <- actualPercentage
 			
 			if (!missing(logFile)) {
 				
-				cat(paste("check:",checkResult,"->", checkString),
+				cat(paste("check:",checkResult,"->", x),
 						file=logFile,sep="\n",append=TRUE)
 				
-				positionsToBePrinted  <- toString(extractedPositions)
+				positionsToBePrinted  <- as.character(extractedPositions)
 				result$positions <- positionsToBePrinted
 				
 				for (p in positionsToBePrinted) {	
 					cat(paste("      ",p), file=logFile, sep="\n",append=TRUE)
 				}
 				
-				cat(paste("Total:",extractedPositionsValue$toString(), "over", 
-								positionsValue$toString(), 
+				cat(paste("Total:",as.character(extractedPositionsValue), "over", 
+								as.character(positionsValue), 
 								"(",actualPercentage,")","\n"),file=logFile,sep="\n",append=TRUE)
 			}
 			

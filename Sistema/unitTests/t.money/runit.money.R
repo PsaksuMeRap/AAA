@@ -19,13 +19,13 @@ test.createMoney <- function() {
 }
 
 
-test.moneyToString <- function() {
+test.moneyAs.character <- function() {
 	currency = new("Currency","CHF")
 	amount = new("Amount",1105.3)
 	
 	money <- new("Money",amount=amount,currency=currency)
 	
-	checkEquals(toString(money),paste(currency, "1'105.30"))
+	checkEquals(as.character(money),paste(currency, "1'105.30"))
 }
 
 test.sumMoney <- function() {

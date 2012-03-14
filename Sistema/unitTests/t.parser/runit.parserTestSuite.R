@@ -55,9 +55,9 @@ test.shouldCreateSetParserTestsuiteUtils <- function() {
 
 test.shouldParserTestSuite <- function() {
 	fileName <- "testImportTestSuite1.txt"
-	path <- "./unitTests/data"
+	directory <- "./unitTests/data"
 	
-	testSuite <- new("TestSuite",path=path,fileName=fileName)
+	testSuite <- new("TestSuite",directory=directory,fileName=fileName)
 	
 	# check parser 
 	parsedTestSuite <- parser(testSuite)
@@ -71,7 +71,7 @@ test.shouldParserTestSuite <- function() {
 	configLines <- c(should1,should2)	
 	checkEquals(parsedTestSuite@configLines,configLines)
 	
-	checkStrings <- c("instrument:bond & currency:CHF ; > 5%")
-	checkEquals(parsedTestSuite@checkStrings,checkStrings)
+	checkStrings <- c("security:bond & currency:CHF ; > 5%")
+	checkEquals(unclass(parsedTestSuite@checkStrings[[1]]),checkStrings)
 	
 }

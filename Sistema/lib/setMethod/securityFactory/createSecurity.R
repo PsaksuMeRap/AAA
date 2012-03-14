@@ -42,7 +42,7 @@ setMethod("createSecurity",signature(origin="Bond"),
 				paymentDate <- paste(year,month,day,sep="-")
 				
 				if (!grepl(pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}",x=paymentDate,perl=TRUE)) {
-					message <- position$toString()
+					message <- as.character(position)
 					message <- paste("Invalid date parsed",paymentDate,"for security:\n",name,"of type bond")
 					stop(message)
 				}

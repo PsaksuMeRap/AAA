@@ -4,7 +4,7 @@
 ###############################################################################
 
 
-setClass("TestSuite",representation(fileName="character",path="character"))
+setClass("TestSuite",representation(fileName="character",directory="character"))
 
 setClass("TestSuiteParsed",representation(configLines="character",
-				checkStrings="character"),contains="TestSuite")
+				checkStrings="list"),contains="TestSuite")

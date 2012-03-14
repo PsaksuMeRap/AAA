@@ -67,6 +67,7 @@ source("./lib/classDefinitions/Position/PositionFondi_misti/PositionFondi_misti.
 source("./lib/classDefinitions/Position/PositionBond/AccruedInterest.R")
 source("./lib/classDefinitions/Positions/Positions.R")
 source("./lib/classDefinitions/Portfolio/Portfolio.R")
+source("./lib/classDefinitions/Portfolios/Portfolios.R")
 
 source("./lib/setMethod/securityFactory/securityFactory.R") 
 source("./lib/setMethod/positionFactory/positionFactory.R")
@@ -86,8 +87,8 @@ source("./lib/setMethod/portfoliosFactory/portfoliosFactory.R")
 
 source("./lib/setMethod/parser/parser.R")
 source("./lib/setMethod/explode/explode.R")
-source("./lib/setMethod/apply/apply.R")
+source("./lib/setMethod/Apply/Apply.R")
 source("./lib/fundsDB.R")
 source("./lib/identifyFundsToExplode.R")
-
-# source("./lib/riskmanTestSuite.R")
+source("./lib/setMethod/testSuiteFactory/testSuiteFactory.R")
+source("./lib/setMethod/applyTestSuite/applyTestSuite.R")

@@ -7,8 +7,8 @@ testTarget: pippo118,pippo120
 reportTo: claudio.ortelli@usi.ch; info@bacep.com
 outputDir: ../../testEsterniAAA/testSuites/test3
 checkListStart:
-   instrument:bond & currency:CHF ; > 5%  
-amount:>638800USD ; > 10%
-currency:CHF + instrument:equity & currency:EUR ; > 50%  
+   security:Bond & currency:CHF ; > 5%  
+amount:>63880USD ; > 10%
+currency:CHF + security:Equity & currency:EUR ; > 50%  
 checkListEnd:
 externalSuiteFileName:

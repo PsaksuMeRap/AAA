@@ -24,7 +24,7 @@ test.shouldApplyDirectiveString <- function() {
 	positions <- new("Positions",list(p1,p2,p3))
 	directiveString <- new("DirectiveString","explode:Fondi_misti")
 	
-	result <- apply(X=directiveString,positions=positions)
+	result <- Apply(x=directiveString,positions=positions)
 	
 	
 	checkEquals(is(result[[3]]@security,"Fondi_azionari"),TRUE)
@@ -58,7 +58,7 @@ test.shouldFailToApplyDirectiveString <- function() {
 	
 	# Test 1: directiveString="dadd" -> stop
 	directiveString <- new("DirectiveString","dadd")
-	checkException(apply(X=directiveString,positions=positions))
+	checkException(Apply(x=directiveString,positions=positions))
 	
 	
 	# reset the repositories in the original state
@@ -66,36 +66,6 @@ test.shouldFailToApplyDirectiveString <- function() {
 	deallocateTestRepositories("instruments")
 	deallocateTestRepositories("politicaInvestimento")
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 test.shouldapplyOneCheckStringOnPositions <- function() {
@@ -130,7 +100,7 @@ test.shouldapplyOneCheckStringOnPositions <- function() {
 	checkString <- "security:Bond & currency:EUR ; > 30%"
 	checkString <- new("CheckString",checkString)
 	
-	result <- apply(checkString,positions=positions)
+	result <- Apply(checkString,positions=positions)
 	checkEquals(result$checkResult,TRUE)
 	checkEquals(result$percentageValue,"30.00%")
 	
@@ -139,7 +109,7 @@ test.shouldapplyOneCheckStringOnPositions <- function() {
 	checkString <- "security:Bond & currency:CHF ; >= 3000000CHF"
 	checkString <- new("CheckString",checkString)
 	
-	result <- apply(checkString,positions=positions)
+	result <- Apply(checkString,positions=positions)
 	checkEquals(result$checkResult,FALSE)
 	checkEquals(result$actualPercentage,"0.00%")
 	

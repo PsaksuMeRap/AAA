@@ -33,7 +33,7 @@ setMethod("parser",signature(x="TestSuite"),
 			
 			f <- setParserTestsuiteUtils()
 			
-			file <- paste(x@path,x@fileName,sep=.Platform$file.sep)
+			file <- paste(x@directory,x@fileName,sep=.Platform$file.sep)
 			strings <- scan(file=file,quiet=TRUE,
 					what="character",sep="\n")
 			strings <- removeStartEndSpaces(strings)
@@ -57,8 +57,10 @@ setMethod("parser",signature(x="TestSuite"),
 			linesToExtract <- startLineNb:endLineNb
 			checkStrings <- strings[linesToExtract]
 			checkStrings <- checkStrings[-c(1,length(checkStrings))]
-			configLines <- strings[-linesToExtract]
+			newCheckStringWrapper <- function(checkString) return(new("CheckString",checkString))
+			checkStrings <- lapply(checkStrings,newCheckStringWrapper)
 			
+			configLines <- strings[-linesToExtract]
 			configLines <- lapply(configLines,f$parseConfigLine)
 
 			return(new("TestSuiteParsed",x,configLines=unlist(configLines),checkStrings=checkStrings))

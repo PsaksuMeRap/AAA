@@ -29,3 +29,12 @@ setMethod("print","Portfolio",
 			sapply(as(x@.Data,"Positions"),print,width=width)
 		}
 )
+
+setMethod("as.character","Portfolio",
+		function(x,width=list(empty=TRUE)) {
+			strings <- paste("Owner:",x@owner)
+			strings[2] <- paste("Reference currency:",x@referenceCurrency)
+			strings <- c(strings,sapply(as(x@.Data,"Positions"),as.character,width=width))
+			return(strings)
+		}
+)

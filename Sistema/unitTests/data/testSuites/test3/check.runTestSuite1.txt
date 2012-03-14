@@ -3,12 +3,14 @@ creationDate: 2010-11-06
 creator: Claudio Ortelli
 # testSuiteKind: general - specific
 testSuiteKind: specific
-testTarget: pippo53
+testTarget: pippo118
 reportTo: claudio.ortelli@usi.ch; info@bacep.com
-outputDir: ../../testEsterniAAA/testSuites/test1
+outputDir: ../../testEsterniAAA/testSuites/test3
 checkListStart:
-   instrument:bond & currency:CHF ; > 5%  
-currency:USD & instrument:equity ; < 10%
-currency:CHF + instrument:equity & currency:EUR ; > 50%  
+
+   security:bond & currency:CHF ; > 5%  
+currency:USD & security:equity ; < 10%
+currency:CHF + security:equity,Fondi_azionari & currency:EUR ; > 90%  
+
 checkListEnd:
 externalSuiteFileName:

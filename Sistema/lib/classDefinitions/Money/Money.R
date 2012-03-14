@@ -31,7 +31,7 @@ setMethod("/",signature(e1="Money",e2="Money"),
 )
 
 
-setMethod("toString","Money",
+setMethod("as.character","Money",
 		function(x) {
 			# x: a money
 			getAmountWidth <- function(amount) {
@@ -56,7 +56,7 @@ setMethod("toString","Money",
 
 setMethod("print","Money",
 		function(x) {
-			print(toString(x))
+			print(as.character(x))
 		}
 )
 

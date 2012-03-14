@@ -7,7 +7,7 @@ testTarget: pippo5
 reportTo: claudio.ortelli@usi.ch; info@bacep.com
 outputFile:
 checkListStart:
-   instrument:bond & currency:CHF ; > 5%  
-currency:USD & instrument:equity ; < 10%  
+   security:bond & currency:CHF ; > 5%  
+currency:USD & security:equity ; < 10%  
 checkListEnd:
 externalSuiteFileName:
