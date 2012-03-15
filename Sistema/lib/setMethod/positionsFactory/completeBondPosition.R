@@ -16,11 +16,22 @@ completeBondPosition <- function(positionBond,accruedInterestPositions) {
 		stop(message)
 	}
 	matchedAccruedInterest <- accruedInterestPositions[isMatchedAccruedInterest]
-	
-	currency <- "CHF"
+	# compute the value of the accruedInterest
 	amount <- matchedAccruedInterest[[1]]@ValoreMercatoMonetaCHF
-	positionBond@accruedInterest <- new("AccruedInterest",toMoney(amount,currency))
+	value <- toMoney(amount,"CHF")
+	value <- repositories$exchangeRates$exchange(value,positionBond@security@currency)
+	accruedInterest <- new("AccruedInterest",value)
 	
+	# compute the dirty value of the bond
+	dirtyValue <- positionBond@value + accruedInterest
+	positionBond <- new("PositionBond",
+			accruedInterest=accruedInterest,
+			id=positionBond@id,
+			security=positionBond@security,
+			quantity=positionBond@quantity,
+			value=dirtyValue)
+
+
 	return(positionBond)
 }
 

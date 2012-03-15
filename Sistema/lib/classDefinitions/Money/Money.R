@@ -10,12 +10,12 @@ setClass("Money",
 )
 
 
-setMethod("sum","Money",
-		function(x,moneyToAdd) {
-			# x: a money
-			if(x@currency != moneyToAdd@currency) moneyToAdd <- repositories$exchangeRates$exchange(moneyToAdd,x@currency)
-			x@amount <- x@amount + moneyToAdd@amount
-			return(x)
+setMethod("+",signature("Money","Money"),
+		function(e1,e2) {
+			# e1: a money
+			if(e1@currency != e2@currency) e2 <- repositories$exchangeRates$exchange(e2,e1@currency)
+			e1@amount <- e1@amount + e2@amount
+			return(e1)
 		}
 )
 

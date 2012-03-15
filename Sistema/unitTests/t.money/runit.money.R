@@ -28,7 +28,7 @@ test.moneyAs.character <- function() {
 	checkEquals(as.character(money),paste(currency, "1'105.30"))
 }
 
-test.sumMoney <- function() {
+test.MoneyPlusMoney <- function() {
 	
 	repository <- repositories$exchangeRates
 	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
@@ -40,13 +40,14 @@ test.sumMoney <- function() {
 	money3 <- new("Money",amount=new("Amount",200),currency=new("Currency","USD")) # exchange rate USD-CHF: 0.9627
 	money4 <- new("Money",amount=new("Amount",100),currency=new("Currency","EUR")) # exchange rate EUR-CHF: 1.33853808
 	
-	money <- sum(money1,money2); checkEquals(money,new("Money",amount=new("Amount",120.55),currency=new("Currency","CHF")))
-	money <- sum(money1,money3); checkEquals(money,new("Money",amount=new("Amount",100+200*0.9627),currency=new("Currency","CHF")))
-	money <- sum(money3,money1); checkEquals(money,new("Money",amount=new("Amount",200+100/0.9627),currency=new("Currency","USD")))
-	money <- sum(money4,money3); checkEquals(money,new("Money",amount=new("Amount",100+200*0.9627/1.33853808),currency=new("Currency","EUR")))
+	money <- money1+money2; checkEquals(money,new("Money",amount=new("Amount",120.55),currency=new("Currency","CHF")))
+	money <- money1+money3; checkEquals(money,new("Money",amount=new("Amount",100+200*0.9627),currency=new("Currency","CHF")))
+	money <- money3+money1; checkEquals(money,new("Money",amount=new("Amount",200+100/0.9627),currency=new("Currency","USD")))
+	money <- money4+money3; checkEquals(money,new("Money",amount=new("Amount",100+200*0.9627/1.33853808),currency=new("Currency","EUR")))
 	
 	repositories$exchangeRates <- repository
 }
+
 
 test.divideMoney <- function() {
 	

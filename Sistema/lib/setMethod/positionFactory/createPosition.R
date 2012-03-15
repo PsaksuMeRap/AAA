@@ -45,7 +45,7 @@ setMethod("createPosition",signature(security="Bond",origin="AyrtonPosition"),
 			quantity <- new("NominalValue",amount=new("Amount",origin@Saldo),currency=new("Currency",origin@Moneta))
 			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
 			value <- repositories$exchangeRates$exchange(value,security@currency)
-			accruedInterest <- new("AccruedInterest",toMoney(NA_real_,"CHF"))
+			accruedInterest <- new("AccruedInterest",toMoney(NA_real_,security@currency))
 			position <- new("PositionBond",id=id,security=security,
 					quantity=quantity,value=value,accruedInterest=accruedInterest)
 			

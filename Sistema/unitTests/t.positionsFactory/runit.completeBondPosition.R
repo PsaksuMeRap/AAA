@@ -19,7 +19,11 @@ test.shouldCompleteBondPosition <- function() {
 	accruedInterestAyrton <- new("AyrtonPositions",accruedInterestAyrton)
 	
 	result <- completeBondPosition(bond,accruedInterestAyrton)
-	bond@accruedInterest <- new("AccruedInterest",toMoney(accruedInterestAyrton[[1]]@ValoreMercatoMonetaCHF,"CHF"))
+	money <- toMoney(accruedInterestAyrton[[1]]@ValoreMercatoMonetaCHF,"CHF")
+	money <- repositories$exchangeRates$exchange(money,bond@security@currency)
+	
+	bond@accruedInterest <- new("AccruedInterest",money)
+	bond@value <- bond@value + bond@accruedInterest
 	checkEquals(identical(result,bond),TRUE)
 	
 }

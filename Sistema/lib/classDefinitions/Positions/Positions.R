@@ -39,7 +39,7 @@ setMethod("sum","Positions",
 			
 			balance <- toMoney(amount=0,currency="CHF")
 			for (i in x) {
-				balance <- sum(balance,i@value)
+				balance <- balance + i@value
 			}
 			return(balance)
 		}
