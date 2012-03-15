@@ -40,7 +40,7 @@ testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
 
 
 library("RUnit")
-dirs = c("./unitTests/t.selector")
+dirs = c("./unitTests/t.applyTestSuite")
 testsuite.lists <- defineTestSuite("xxx",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
 

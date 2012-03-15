@@ -71,7 +71,7 @@ setMethod("applyTestSuite",signature(x="TestSuiteParsed",po="Positions"),
 	
 			logFile <- file(description=logFile,open="w")
 			cat(paste("Portfolio:",ownerPrintName),file=logFile,sep="\n",append=TRUE)
-			cat(paste("Input file:",fileName),file=logFile,sep="\n",append=TRUE)
+			cat(paste("Input file:",x@fileName),file=logFile,sep="\n",append=TRUE)
 			cat(paste("Inp. directory:",inputDir),file=logFile,sep="\n",append=TRUE)
 			cat(paste("Out. directory:",outputDir),file=logFile,sep="\n",append=TRUE)
 			cat("\n",file=logFile,sep="\n",append=TRUE)
