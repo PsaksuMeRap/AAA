@@ -37,7 +37,7 @@ setMethod("applyTestSuite",signature(x="TestSuiteParsed",po="Portfolios"),
 
 setMethod("applyTestSuite",signature(x="TestSuiteParsed",po="Portfolio"),
 		function(x,po,valuationDate) { 		
-			
+		
 			if (missing(valuationDate)) valuationDate <- Sys.Date()
 			
 			owners <- x@configLines[["testTarget"]]
@@ -46,7 +46,7 @@ setMethod("applyTestSuite",signature(x="TestSuiteParsed",po="Portfolio"),
 			
 			if (po@owner!=owner) stop(paste("Wrong portfolio for owner",owner))
 
-			applyTestSuite(x,as(portfolio,"Positions"),valuationDate)
+			applyTestSuite(x,as(po,"Positions"),valuationDate)
 		}
 )
 
