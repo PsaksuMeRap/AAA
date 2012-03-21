@@ -70,4 +70,39 @@ test.shouldDivedeByAMoney <- function() {
 	money <- toMoney(1,"EUR")
 	result <- p2 / money
 	checkEquals(result,124345.632268/1.33853808)
+	
+	if (!is.null(repository)) repositories$exchangeRates <- repository
+}
+
+test.shouldReweight <- function() {
+	
+	# exchange rates required for position initialization
+	# initialize exchange rates
+	repository <- repositories$exchangeRates
+	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	testRepository <- createExchangeRatesTestRepository() 
+	repositories$exchangeRates <- testRepository
+	# exchange rate USD-CHF: 0.9627
+	# exchange rate EUR-CHF: 1.33853808
+	
+	# initialize the position
+	source("./unitTests/utilities/createRepositoryPositions.R")
+	repo <- createRepositoryPositions()
+	
+	p1 <- repo$equity1 # 88'205 chf 
+	p2 <- repo$bond1 # 92896.6 eur 
+	
+	# test 1
+	p1New <- reweight(p1,0.4)
+	checkEquals(p1New@value,toMoney(88205*0.4,"CHF"))
+	checkEquals(p1New@quantity,p1@quantity*0.4)
+	checkEquals(p1New@security@name,p1@security@name)
+	
+	# test 2
+	p2New <- reweight(p2,0.4)
+	checkEquals(p2New@value,toMoney(p2@value@amount*0.4,"EUR"))
+	checkEquals(p2New@quantity,p2@quantity*0.4)
+	checkEquals(p2New@accruedInterest,p2@accruedInterest*0.4)
+	
+	if (!is.null(repository)) repositories$exchangeRates <- repository
 }

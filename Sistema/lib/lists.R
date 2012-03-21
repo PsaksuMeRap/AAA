@@ -69,10 +69,10 @@ extractSlotFromList <- function(x,fieldName) {
 
 
 filterS4List <- function(x,by,value) {
-	# x: una lista i cui elementi di classe S4,
-	# notati x, sono una classe con il campo x@by
-	# by: il nome del campo su cui applicare il filtro
-	# value: il/i valore/i del campo da filtrare per cui eseguire la selezione
+	# x: a list the element of which are objects of class S4,
+	# denoted by y, having the slot y@by
+	# by: the slot name on which apply the filter
+	# value: the value/s of the slot by on which apply the filter
 	# output: a list, the subset of x with match the value
 	
 	l <- length(x)

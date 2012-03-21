@@ -13,12 +13,6 @@ setMethod("join",signature(x="Positions",y="Positions"),
 		}
 )
 
-setMethod(`[`,signature(x="Positions"),
-		function(x,i,j,...,drop=TRUE) {
-			positions <- x@.Data[i]
-			return(new("Positions",positions))
-		}
-)
 
 setMethod("[",signature(x="Positions"),
 		function(x,i,j,...,drop=TRUE) {
@@ -49,5 +43,12 @@ setMethod("as.character","Positions",
 		function(x,width=list(empty=TRUE)) {
 			
 			return(sapply(x,as.character,width=width))
+		}
+)
+
+setMethod("reweight",signature(x="Positions"),
+		function(x,weight) {
+			positions <- lapply(x,reweight,weight)
+			return(new("Positions",positions))
 		}
 )

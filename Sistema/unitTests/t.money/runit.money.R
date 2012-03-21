@@ -6,6 +6,16 @@
 
 source("./lib/classDefinitions/Money/Money.R")
 
+test.multiplyWithScalar <- function() {
+	currency = new("Currency","CHF")
+	amount = new("Amount",105.3)
+	
+	money <- new("Money",amount=amount,currency=currency)
+	
+	checkEquals(5*money,toMoney(5*105.3,"CHF"))
+	checkEquals(money*5,toMoney(5*105.3,"CHF"))	
+}
+
 test.createMoney <- function() {
 	currency = new("Currency","CHF")
 	amount = new("Amount",105.3)

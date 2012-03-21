@@ -8,6 +8,13 @@ setClass("Portfolio",representation(owner="character",referenceCurrency="Currenc
 		contains="Positions"
 )
 
+setMethod(`[`,signature(x="Portfolio"),
+		function(x,i,j,...,drop=TRUE) {
+			positions <- x@.Data[i]
+			return(new("Positions",positions))
+		}
+)
+
 setMethod("join",signature(x="Portfolio",y="Portfolio"),
 		
 		function(x,y,newOwner,newReferenceCurrency) {
@@ -26,7 +33,8 @@ setMethod("print","Portfolio",
 		function(x,width=list(empty=TRUE)) {
 			print(paste("Owner:",x@owner))
 			print(paste("Reference currency:",x@referenceCurrency))
-			sapply(as(x@.Data,"Positions"),print,width=width)
+			a <- sapply(as(x@.Data,"Positions"),print,width=width)
+			return(invisible())
 		}
 )
 

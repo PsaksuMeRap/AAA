@@ -6,7 +6,7 @@
 setClass("Currency",contains="character",
 		validity=function(object) {
 			if (length(object@.Data)>1) return(paste("Invalid currency length:",object@.Data))
-			allowedCurrencies = c("CHF","EUR","USD","AUD","NOK","GBP","INR","BRL","JPY","CAD","NZD","CHr")
+			allowedCurrencies = c("CHF","EUR","USD","AUD","NOK","GBP","INR","BRL","JPY","CAD","INR","NZD","CHr")
 			if (is.element(object@.Data,allowedCurrencies)) {
 				return(TRUE)
 			} else {

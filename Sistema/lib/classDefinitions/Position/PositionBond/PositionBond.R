@@ -9,3 +9,12 @@ source("./lib/classDefinitions/Position/PositionBond/AccruedInterest.R")
 setClass("PositionBond",representation(accruedInterest="AccruedInterest"),contains="Position")
 
 
+setMethod("reweight",signature(x="PositionBond"),
+		function(x,weight) {
+			position <- x
+			position@value <- x@value * weight
+			position@quantity <- weight * x@quantity
+			position@accruedInterest <- weight * x@accruedInterest 
+			return(position)
+		}
+)

@@ -8,7 +8,7 @@ setGeneric("portfoliosFactory",def=function(positions,...) standardGeneric("port
 
 setMethod("portfoliosFactory",signature(positions="AyrtonPositions"),
 		function(positions,politicaInvestimento.df) {
-			
+		
 			if (missing(politicaInvestimento.df)) {
 				# determina la moneta di riferimento del cliente
 				query = paste("SELECT A.MonetaInvestimento ",
@@ -64,7 +64,7 @@ setMethod("portfoliosFactory",signature(positions="AyrtonPositions"),
 								owner=owner,referenceCurrency=refCurrency)
 				)
 			}
-			portfolios <- lapply(uniqueOwners,createPortfolio,positionsByOwner)
+			portfolios <- new("Portfolios",lapply(uniqueOwners,createPortfolio,positionsByOwner))
 			return(portfolios)
 		}
 )

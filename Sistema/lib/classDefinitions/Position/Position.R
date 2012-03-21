@@ -8,7 +8,8 @@ source("./lib/classDefinitions/Quantity/Quantity.R")
 source("./lib/classDefinitions/Security/Security.R")
 
 # crea la classe virtuale "Position"
-setClass("Position",representation(id="Id",security="Security",quantity="Quantity",value="Money"))
+setClass("Position",representation(id="Id",security="Security",
+				quantity="Quantity",value="Money"))
 
 
 # crea il metodo che formatta e raccoglie i campi da stampare
@@ -69,7 +70,6 @@ setMethod("print","Position",
 
 setMethod("/",signature(e1="Position",e2="Money"),
 		function(e1,e2) {
-repositories$exchangeRates$exchange
 			if (e2@amount==0) {
 				if (e1@value@amount==0) return(NaN)
 				if (e1@value@amount<0) return(-Inf)
@@ -78,5 +78,16 @@ repositories$exchangeRates$exchange
 			if (identical(e2@currency,e1@value@currency)) return(unclass(e1@value@amount/e2@amount))
 			e2 <- repositories$exchangeRates$exchange(e2,e1@value@currency)
 			return(unclass(e1@value@amount/e2@amount))
+		}
+)
+
+setGeneric("reweight",def=function(x,...) standardGeneric("reweight"))
+
+setMethod("reweight",signature(x="Position"),
+		function(x,weight) {
+			position <- x
+			position@value <- x@value * weight
+			position@quantity <- weight * x@quantity
+			return(position)
 		}
 )

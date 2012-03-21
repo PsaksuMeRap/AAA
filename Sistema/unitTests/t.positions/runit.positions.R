@@ -62,3 +62,37 @@ test.shouldSumPositions <- function() {
 	should <- toMoney(88205 + 7439.7503136 + 124345.632268,"CHF")
 	checkEquals(result,should)
 }
+
+test.shouldReweightPositions <- function() {
+	# exchange rates required for position initialization
+	# initialize exchange rates
+	repository <- repositories$exchangeRates
+	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	testRepository <- createExchangeRatesTestRepository() 
+	repositories$exchangeRates <- testRepository
+	# exchange rate USD-CHF: 0.9627
+	# exchange rate EUR-CHF: 1.33853808
+	
+	# initialize the position
+	source("./unitTests/utilities/createRepositoryPositions.R")
+	repo <- createRepositoryPositions()
+	
+	p1 <- repo$equity1 # 88'205 chf 
+	p2 <- repo$bond1 # 92896.6 eur 
+	positions <- new("Positions",list(p1,p2))
+	
+	p <- reweight(positions,0.4)
+	
+	# test 1
+	checkEquals(p[[1]]@value,toMoney(88205*0.4,"CHF"))
+	checkEquals(p[[1]]@quantity,positions[[1]]@quantity*0.4)
+	checkEquals(p[[1]]@security@name,positions[[1]]@security@name)
+	
+	# test 2
+	p2New <- reweight(positions,0.4)
+	checkEquals(p[[2]]@value,toMoney(positions[[2]]@value@amount*0.4,"EUR"))
+	checkEquals(p[[2]]@quantity,positions[[2]]@quantity*0.4)
+	checkEquals(p[[2]]@accruedInterest,positions[[2]]@accruedInterest*0.4)
+	
+	if (!is.null(repository)) repositories$exchangeRates <- repository
+}

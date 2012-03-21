@@ -9,6 +9,21 @@ setClass("Money",
 		prototype(amount=new("Amount",0),currency=new("Currency","CHF"))
 )
 
+setMethod("*",signature("numeric","Money"),
+		function(e1,e2) {
+			# e1: a number
+			e2@amount <- e1*e2@amount
+			return(e2)
+		}
+)
+
+setMethod("*",signature("Money","numeric"),
+		function(e1,e2) {
+			# e1: a Money
+			e1@amount <- e2*e1@amount
+			return(e1)
+		}
+)
 
 setMethod("+",signature("Money","Money"),
 		function(e1,e2) {

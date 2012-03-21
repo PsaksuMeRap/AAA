@@ -32,7 +32,7 @@ dirs = c(
 		"./unitTests/t.selector",
 		"./unitTests/t.explode",
 		"./unitTests/t.Apply",
-		"./unitTests/t.identifyFundsToExplode"
+		"./unitTests/t.identifyPositionsToExplode"
 		)
 testsuite.lists <- defineTestSuite("Test globale",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
