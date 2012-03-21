@@ -5,7 +5,7 @@
 
 
 
-test.shouldExplodePortfolioByFund <- function() {
+test.shouldExplodePositionsByFund <- function() {
 	source("./lib/repository.R")
 	source("./unitTests/utilities/allocateTestRepositories.R")
 	source("./unitTests/utilities/createOriginData.R")
@@ -28,50 +28,37 @@ test.shouldExplodePortfolioByFund <- function() {
 
 	portfolio <- portfoliosFactory(originPippo,politicaInvestimento.df)[[1]]
 	
-	valorePortafoglioPrimaEsplosione <- sum(portfolio)
-	numeroPosizioniPrimaEsplosione <- length(portfolio)
-	
 	# crea il data.frame dei fondi BAC&P e la lista di fundPortfolios
 	fundsDb <- create_fundsDB()
 	originFunds <- filterS4List(origin,by="Cliente",fundsDb[["owner"]])
 	fundPortfolios <- portfoliosFactory(originFunds,politicaInvestimento.df)
 	
 	# ----- Test 1 --------
-	# identify and check CB Fixed Income
+	# identify and check CB Fixed Income (third portfolio in fundPortfolios)
 	fundData <- as.list(fundsDb[3,,drop=FALSE])
-	portfolioExploded <- explodePortfolioByFund(fundData,fundPortfolios,portfolio)
-	checkEquals(sum(portfolioExploded),valorePortafoglioPrimaEsplosione)
-	checkEquals(length(portfolio),88)
+	portfolioPositionsExploded <- explodePositionsByFund(fundData,fundPortfolios,portfolio)
+	checkEquals(is(portfolioPositionsExploded,"Positions"),TRUE)
+	checkEquals(length(fundPortfolios[[3]]),length(portfolioPositionsExploded))
+	checkEquals(sum(portfolio[11]),sum(portfolioPositionsExploded))
+
 	
 	# ----- Test 2 --------
-	cliente <- c("pippo16")
-	portfParser <- create_parserPortfolio()
-	portfolio <- lapply(cliente,portfParser$parse,origin,politicaInvestimento.df)[[1]]
+	cliente <- c("pippo16") # pippo16 has no CB-Accent Global Economy Fund
 	
-	# identify and check CB Global Economy
+	# identify and check CB Global Economy (second portfolio in fundPortfolios)
 	fundData <- as.list(fundsDb[2,,drop=FALSE])
-	explodePortfolioByFund(fundData,fundPortfolios,portfolio)
-	checkEquals(portfolio$value(),valorePortafoglioPrimaEsplosione)
-	checkEquals(length(portfolio$positions$positions),numeroPosizioniPrimaEsplosione)
+	portfolioPositionsExploded <- explodePositionsByFund(fundData,fundPortfolios,portfolio)
+	checkEquals(0,length(portfolioPositionsExploded))
 	
 	
 	# ----- Test 3 --------
 	cliente <- c("pippo16")
-	portfParser <- create_parserPortfolio()
-	portfolio <- lapply(cliente,portfParser$parse,origin,politicaInvestimento.df)[[1]]
 	
 	# identify and check CB Global Equity
 	fundData <- as.list(fundsDb[1,,drop=FALSE])
-	explodePortfolioByFund(fundData,fundPortfolios,portfolio)
-	checkEquals(portfolio$value(),valorePortafoglioPrimaEsplosione)
-	checkEquals(length(portfolio$positions$positions),63)
-	
-	# identify and explode w.r.t. CB Global Equity (previous test) & CB Fixed Income
-	fundData <- as.list(fundsDb[3,,drop=FALSE])
-	explodePortfolioByFund(fundData,fundPortfolios,portfolio)
-	checkEquals(portfolio$value(),valorePortafoglioPrimaEsplosione)
-	checkEquals(length(portfolio$positions$positions),132)	
-	
+	portfolioPositionsExploded <- explodePositionsByFund(fundData,fundPortfolios,portfolio)
+	checkEquals(length(fundPortfolios[[2]]),length(portfolioPositionsExploded))
+	checkEquals(sum(portfolio[12]),sum(portfolioPositionsExploded))
 	
 	# reset the repositories in the original state
 	deallocateTestRepositories("exchangeRates")
@@ -81,3 +68,95 @@ test.shouldExplodePortfolioByFund <- function() {
 	deallocateTestRepositories("fixedIncome")
 }
 
+test.shouldExplodePositionsByFunds <- function() {
+	source("./lib/repository.R")
+	source("./unitTests/utilities/allocateTestRepositories.R")
+	source("./unitTests/utilities/createOriginData.R")
+	
+	origin <- new("AyrtonPositions",createOriginData())
+	
+	# initialize the different repositories
+	allocateTestRepositories("equities")
+	allocateTestRepositories("instruments")
+	allocateTestRepositories("politicaInvestimento")
+	allocateTestRepositories("exchangeRates")
+	allocateTestRepositories("fixedIncome")
+	
+	# initialize the investmentPolicy table used in the portfolio construction in order
+	# to determine the reference currency
+	politicaInvestimento.df <- repositories$politicaInvestimento$politicaInvestimento.df	
+	
+	cliente <- c("pippo16")
+	originPippo <- filterS4List(origin,by="Cliente",cliente)
+	
+	portfolio <- portfoliosFactory(originPippo,politicaInvestimento.df)[[1]]
+	
+	# valorePortafoglioPrimaEsplosione <- sum(portfolio)
+	# numeroPosizioniPrimaEsplosione <- length(portfolio)
+	
+	# crea il data.frame dei fondi BAC&P e la lista di fundPortfolios
+	fundsDb <- create_fundsDB()
+	originFunds <- filterS4List(origin,by="Cliente",fundsDb[["owner"]])
+	fundPortfolios <- portfoliosFactory(originFunds,politicaInvestimento.df)
+		
+	# ----- Test 1 --------
+	# identify and explode w.r.t. CB Global Equity (previous test) & CB Fixed Income
+	fundData <- fundsDb
+	portfolioPositionsExploded <- explodePositionsByFunds(portfolio,fundData,fundPortfolios)
+	checkEquals(sum(portfolio[11])+sum(portfolio[12]),sum(portfolioPositionsExploded))
+	checkEquals(length(portfolioPositionsExploded),length(fundPortfolios[[2]])+length(fundPortfolios[[3]]))	
+	
+	# reset the repositories in the original state
+	deallocateTestRepositories("exchangeRates")
+	deallocateTestRepositories("equities")
+	deallocateTestRepositories("instruments")
+	deallocateTestRepositories("politicaInvestimento")
+	deallocateTestRepositories("fixedIncome")
+}
+
+
+test.shouldexplodePortfolioByFunds <- function() {
+	source("./lib/repository.R")
+	source("./unitTests/utilities/allocateTestRepositories.R")
+	source("./unitTests/utilities/createOriginData.R")
+	
+	origin <- new("AyrtonPositions",createOriginData())
+	
+	# initialize the different repositories
+	allocateTestRepositories("equities")
+	allocateTestRepositories("instruments")
+	allocateTestRepositories("politicaInvestimento")
+	allocateTestRepositories("exchangeRates")
+	allocateTestRepositories("fixedIncome")
+	
+	# initialize the investmentPolicy table used in the portfolio construction in order
+	# to determine the reference currency
+	politicaInvestimento.df <- repositories$politicaInvestimento$politicaInvestimento.df	
+	
+	cliente <- c("pippo16")
+	originPippo <- filterS4List(origin,by="Cliente",cliente)
+	
+	portfolio <- portfoliosFactory(originPippo,politicaInvestimento.df)[[1]]
+	
+	# valorePortafoglioPrimaEsplosione <- sum(portfolio)
+	# numeroPosizioniPrimaEsplosione <- length(portfolio)
+	
+	# crea il data.frame dei fondi BAC&P e la lista di fundPortfolios
+	fundsDb <- create_fundsDB()
+	originFunds <- filterS4List(origin,by="Cliente",fundsDb[["owner"]])
+	fundPortfolios <- portfoliosFactory(originFunds,politicaInvestimento.df)
+	
+	# ----- Test 1 --------
+	# identify and explode w.r.t. CB Global Equity (previous test) & CB Fixed Income
+	fundData <- fundsDb
+	portfolioExploded <- explodePortfolioByFunds(portfolio,fundData,fundPortfolios)
+	checkEquals(sum(portfolioExploded),sum(portfolio))
+	checkEquals(length(portfolioPositionsExploded),length(fundPortfolios[[2]])+length(fundPortfolios[[3]]))	
+	
+	# reset the repositories in the original state
+	deallocateTestRepositories("exchangeRates")
+	deallocateTestRepositories("equities")
+	deallocateTestRepositories("instruments")
+	deallocateTestRepositories("politicaInvestimento")
+	deallocateTestRepositories("fixedIncome")
+}
