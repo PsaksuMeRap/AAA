@@ -32,7 +32,8 @@ dirs = c(
 		"./unitTests/t.selector",
 		"./unitTests/t.explode",
 		"./unitTests/t.Apply",
-		"./unitTests/t.identifyPositionsToExplode"
+		"./unitTests/t.identifyPositionsToExplode",
+		"./unitTests/t.explodePortfolioBy"
 		)
 testsuite.lists <- defineTestSuite("Test globale",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)

@@ -29,23 +29,23 @@ test.shouldIdentifyPositionsToExplode <- function() {
 	fundsDb <- create_fundsDB()
 	
 	# identify GLOBAL EQUITY
-	fundData <- as.list(fundsDb[1,,drop=FALSE])
+	fundData <- fundsDb[[1]]
 	result <- identifyPositionsToExplode(fundData,positions)
 	checkEquals(result,c(FALSE,TRUE,FALSE))
 	
 	# identify FIXED INCOME fund (without accruedInterests)
-	fundData <- as.list(fundsDb[3,,drop=FALSE])
+	fundData <- fundsDb[[3]]
 	result <- identifyPositionsToExplode(fundData,positions)
 	checkEquals(result,c(FALSE,FALSE,TRUE))
 	
 	# identify GLOBAL ECONOMY
-	fundData <- as.list(fundsDb[2,,drop=FALSE])
+	fundData <- fundsDb[[2]]
 	result <- identifyPositionsToExplode(fundData,positions)
 	checkEquals(result,c(TRUE,FALSE,FALSE))
 	
 	# identify nothing
-	fundData <- as.list(fundsDb[1,,drop=FALSE])
-	fundData["id"] <- -13949
+	fundData <- fundsDb[[1]]
+	fundData@id <- -13949
 	result <- identifyPositionsToExplode(fundData,positions)
 	checkEquals(result,c(FALSE,FALSE,FALSE))
 	

@@ -8,17 +8,11 @@ setGeneric("portfoliosFactory",def=function(positions,...) standardGeneric("port
 
 setMethod("portfoliosFactory",signature(positions="AyrtonPositions"),
 		function(positions,politicaInvestimento.df) {
-		
+
 			if (missing(politicaInvestimento.df)) {
-				# determina la moneta di riferimento del cliente
-				query = paste("SELECT A.MonetaInvestimento ",
-						"FROM [Sistema (prova)].dbo.DBPoliticaInvestimento A ",
-						"INNER JOIN [Sistema (prova)].dbo.Clienti_ID B on A.Cliente = B.Cliente "
-				)
+				politicaInvestimento.df <- repositories$politicaInvestimento$politicaInvestimento.df				
 				
-				politicaInvestimento.df <- sqlQuery(db.prezziStoriciVAR,query,as.is=TRUE)
-				
-				if (nrow(refCurrency.df)==0) {
+				if (nrow(politicaInvestimento.df)==0) {
 					message <- "Impossibile determinare la moneta di investimento. La tabella DBPoliticaInvestimento è vuota."
 					message <- paste(message,"Utilizzata moneta di default (CHF) per tutti i portafogli.",sep="\n")
 					tkmessageBox(message=message,icon="error",type="ok")

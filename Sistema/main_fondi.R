@@ -5,12 +5,11 @@
 
 ## -- inizio setup
 rm(list=ls(all=TRUE))
-options(browser="google-chrome")
-options(help_type="html")
+
 
 library("RODBC")
 library("RUnit")
-home <- "/home/claudio/eclipse/Produzione/"
+home <- "/home/claudio/workspace/Produzione/"
 setwd(home)
 
 stringsAsFactors = FALSE
@@ -25,49 +24,49 @@ source("./odbc/connessioni.R")
 
 dati <- importDBPortfolioGenerale()
 
-
 repositories$fixedIncome <- create_repositoryFixedIncome()
 repositories$politicaInvestimento <- create_repositoryPoliticaInvestimento()
 repositories$instruments <- create_repositoryInstruments()
 repositories$exchangeRates <- create_repositoryExchangeRates()
 repositories$equities <- create_repositoryEquities()
 
-checkDirectory <- "/home/claudio/"
+checkDirectory <- "/home/claudio/XP/"
 setwd(checkDirectory)
 ## -- fine procedura controllo - parte generale
 
 
 ## -- avvia la testSuite Fondi Bacep
 fondi <- c("pippo53","pippo76","pippo210")
-# fondi <- c("pippo53","pippo76")
+
 # caso data storica
 if (FALSE) {
-	fine <- as.Date("2012-03-01")
-	dates <- seq(as.Date("2011-01-3"),to=fine,by=7)
-	dates <- c(dates,seq(as.Date("2011-01-4"),to=fine,by=7))
-	dates <- c(dates,seq(as.Date("2011-01-5"),to=fine,by=7))	
-	dates <- c(dates,seq(as.Date("2011-01-6"),to=fine,by=7))
-	dates <- c(dates,seq(as.Date("2011-01-7"),to=fine,by=7))
-	dates <- sort(dates)
-	dates <- as.character(dates); dates <- dates[dates!="2011-01-18"]
+	fine <- as.Date("2011-09-15")
+	dates <- seq(as.Date("2011-09-1"),to=fine,by=7)
+	dates <- c(dates,seq(as.Date("2011-09-2"),to=fine,by=7))
+	dates <- c(dates,seq(as.Date("2011-09-5"),to=fine,by=7))	
+	dates <- c(dates,seq(as.Date("2011-09-6"),to=fine,by=7))
+	dates <- c(dates,seq(as.Date("2011-09-7"),to=fine,by=7))
+	# dates <- as.character(dates); dates <- dates[dates!="2011-01-18"]
 	# togli il 18 gennaio e 19 maggio
 	
-	#dates <- c(as.Date("2011-06-01"),as.Date("2011-06-02"),as.Date("2011-06-03"),as.Date("2011-06-06"))
-    dates <- c(as.Date("2011-03-29"))
-	
+	dates <- c(as.Date("2011-09-14"),as.Date("2011-09-15"),as.Date("2011-09-16"))
+	dates <- c(as.Date("2012-02-07"))
 	for (date in as.character(dates)) {
+		print(date)
+		# controlla che la data sia dopo il "2011-05-31" altrimenti togli il fondo globalEconomy
+		if (as.Date(date) > as.Date("2011-05-31")) fondi <- c("pippo53","pippo76","pippo210") else fondi <- c("pippo53","pippo76")
 		dati <- importDBPortfolioGeneraleByDate(date)
 		repositories$exchangeRates <- create_repositoryExchangeRates(exchangeRatesDate=date)		
 		portfParser <- create_parserPortfolio()
 		portfolios <- lapply(fondi,portfParser$parse,dati)
-		AyrtonTestSuite <- create_riskmanTestSuite(name="Fondi Bacep",dirs="./Bacep")
+		AyrtonTestSuite <- create_riskmanTestSuite(name="Fondi OpenCapital",dirs="./Fondi")
 		results <- importAndRunRiskmanTestSuite(AyrtonTestSuite,portfolios,valuationDate=date)
 	}
 } else {
 	# caso data attuale
 	portfParser <- create_parserPortfolio()
 	portfolios <- lapply(fondi,portfParser$parse,dati)
-	bacepTestSuite <- create_riskmanTestSuite(name="Fondi Bacep",dirs="./Bacep")
+	bacepTestSuite <- create_riskmanTestSuite(name="Fondi OpenCapital",dirs="./Fondi")
 	results <- importAndRunRiskmanTestSuite(bacepTestSuite,portfolios)
 }
 
@@ -77,7 +76,7 @@ if (FALSE) {
 
 ## -- funzioni di utilità
 whoisP <- function(names) {
-	df <- read.csv("/home/claudio/eclipse/Produzione/associazionePippo.csv",header=TRUE,sep=",",
+	df <- read.csv("/home/claudio/workspace/Produzione/associazionePippo.csv",header=TRUE,sep=",",
 			as.is=TRUE)
 	
 	getName <- function(name,df) {isOk <- df[,1]==name;return(df[isOk,2])}
@@ -86,7 +85,7 @@ whoisP <- function(names) {
 }
 
 whois <- function(names) {
-	df <- read.csv("/home/claudio/eclipse/Produzione/associazionePippo.csv",header=TRUE,sep=",",
+	df <- read.csv("/home/claudio/workspace/Produzione/associazionePippo.csv",header=TRUE,sep=",",
 			as.is=TRUE)
 	
 	getName <- function(name,df) {isOk <- df[,2]==name;return(df[isOk,1])}

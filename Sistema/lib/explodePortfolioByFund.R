@@ -28,7 +28,7 @@ explodePositionsByFund <- function(fundData,fundPortfolios,positions) {
 	positionsToExplode <- positions[result]	
 	
 	# identify the fund to use
-	owner <- fundData["owner"]
+	owner <- fundData@owner
 	fundPortfolio <- filterS4List(fundPortfolios,by="owner",value=owner)[[1]]
 	
 	# compute the relative weight of every position w.r.t. the fund NAV
@@ -51,7 +51,7 @@ explodePositionsByFund <- function(fundData,fundPortfolios,positions) {
 explodePositionsByFunds <- function(positions,fundsDb,fundPortfolios) {
 	# create the weighted positions of the funds
 	positions <- unlist(
-			apply(fundsDb,1,explodePositionsByFund,fundPortfolios,positions),
+			lapply(fundsDb,explodePositionsByFund,fundPortfolios,positions),
 			recursive = FALSE)
 
 	return(new("Positions",positions))
@@ -60,21 +60,21 @@ explodePositionsByFunds <- function(positions,fundsDb,fundPortfolios) {
 
 explodePortfolioByFunds <- function(portfolio,fundsDb,fundPortfolios) {	
 	
-	explodedPositions <- explodePositionsByFunds(portfolio,fundsDb,fundPortfolios) 
-browser()	
-	# create the list of vectors of logical values indicating if a portfolio position
+	lengthPortfolio <- length(portfolio)
+	if (lengthPortfolio==0) return(portfolio)
+	
+	
+	# determine which portfolio's positions must be exploded
+	# Step1: create the list of vectors of logical values indicating if a portfolio position
 	# must be exploded
-	toRemove.list <- apply(fundsDb,1,identifyPositionsToExplode,portfolio)
-	
-	# determine which portfolio positions must be exploded
-	toRemove <- rep(length(portfolio),FALSE)
-	for (i in toRemove.list) toRemove <- toRemove | i
-	
-	# remove the original portfolio positions which have been exploded
-	portfolio[toRemove] <- NULL
-	
+	toRemove.l <- lapply(fundsDb,identifyPositionsToExplode,portfolio)
+
+	toRemove <- rep(FALSE,lengthPortfolio)
+	for (remove in toRemove.l) toRemove <- toRemove | remove
+
 	# add the exploded positions to the portfolio
-	portfolio@.Data <- new("Positions",c(portfolio@.Data,positions))
+	explodedPositions <- explodePositionsByFunds(portfolio,fundsDb,fundPortfolios) 
+	portfolio@.Data <- new("Positions",c(portfolio[!toRemove],explodedPositions))
 	return(portfolio)
 }
 

@@ -19,7 +19,7 @@ identifyPositionsToExplode <- function(fundData,positions) {
 		if (is.null(id)) return(FALSE)
 		if (is.na(id))   return(FALSE)
 		
-		return(fundData[["id"]]==id & is(position@security,fundData[["securityClass"]]))
+		return(fundData@id==id & is(position@security,fundData@securityClass))
 	}
 
 	result <- sapply(positions,isFundToExplode,fundData)
