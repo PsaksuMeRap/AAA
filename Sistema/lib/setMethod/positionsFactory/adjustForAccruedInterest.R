@@ -8,13 +8,17 @@ adjustForAccruedInterest <- function(positions,accruedInterestPositions) {
 	# result: a list of positions (is not a variable of class Positions!)
 	# accruedInterestPositions: a list of AyrtonPositions "of type" accruedInterest
 	
-	areBondPositions <- sapply(positions,is,"BondPosition")
-	if (any(areBondPositions)) {
-		# extract the bondPositions
-		bondPositions <- positions[areBondPositions]
+	slotNames <- lapply(positions,slotNames)
+	
+	haveAccruedInterest <- sapply(slotNames,function(x,y)return(is.element(y,x)),"accruedInterest")
+	
+	if (any(haveAccruedInterest)) {
+		# extract the positions having an accruedInterest
+		positionsWithAccruedInterest <- positions[haveAccruedInterest]
+		
 		# complete the slot accruedInterest with the corresponding money amount
-		bondPositions <- lapply(bondPositions,completeBondPosition,accruedInterestPositions)
-		positions[areBondPositions] <- bondPositions
+		positionsWithAccruedInterest <- lapply(positionsWithAccruedInterest,completePositionWithAccruedInterest,accruedInterestPositions)
+		positions[haveAccruedInterest] <- positionsWithAccruedInterest
 	}
 	
 	return(positions)

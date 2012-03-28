@@ -10,15 +10,14 @@ setMethod("positionsFactory",signature(positions="AyrtonPositions"),
 		function(positions) {
 
 			# create the positions
-			result <- lapply(positions,positionFactory)
+			result <- new("Positions",lapply(positions,positionFactory))
 			
 			# return if empty
-			if (length(result)==0) return(new("Positions",result))
+			if (length(result)==0) return(result)
 			
 			# remove the NULL positions coming from the AccruedInterest
 			remove <- sapply(result,is.null)
 			
-
 			if (any(remove)) {
 				# extract the accruedInterest				
 				accruedInterestPositions <- positions[remove]

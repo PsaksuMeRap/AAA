@@ -59,7 +59,11 @@ test.shouldExplodePositionsByFund <- function() {
 	fundData <- fundsDb[[1]]
 	portfolioPositionsExploded <- explodePositionsByFund(fundData,fundPortfolios,portfolio)
 	checkEquals(length(fundPortfolios[[2]]),length(portfolioPositionsExploded))
-	checkEquals(sum(portfolio[12]),sum(portfolioPositionsExploded))
+	
+	# convert the result in the correct currency
+	result <- toMoney(0,currency=portfolio[[12]]@security@currency)
+	result <- result + sum(portfolioPositionsExploded)
+	checkEquals(sum(portfolio[12]),result)
 	
 	# reset the repositories in the original state
 	deallocateTestRepositories("exchangeRates")
@@ -104,7 +108,9 @@ test.shouldExplodePositionsByFunds <- function() {
 	# ----- Test 1 --------
 	# identify and explode w.r.t. CB Global Equity (previous test) & CB Fixed Income
 	portfolioPositionsExploded <- explodePositionsByFunds(portfolio,fundsDb,fundPortfolios)
-	checkEquals(sum(portfolio[11])+sum(portfolio[12]),sum(portfolioPositionsExploded))
+	result <- toMoney(0,currency=portfolio[[12]]@security@currency)
+	result <- result + sum(portfolioPositionsExploded)
+	checkEquals(sum(portfolio[12])+sum(portfolio[11]),result)
 	checkEquals(length(portfolioPositionsExploded),length(fundPortfolios[[2]])+length(fundPortfolios[[3]]))	
 	
 	# reset the repositories in the original state

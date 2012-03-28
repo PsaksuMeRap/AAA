@@ -4,7 +4,7 @@
 ###############################################################################
 
 
-test.shouldCompleteBondPosition <- function() {
+test.shouldcompletePositionWithAccruedInterest <- function() {
 	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
 	source("./unitTests/utilities/createRepositoryPositions.R")	
 	
@@ -18,7 +18,7 @@ test.shouldCompleteBondPosition <- function() {
 	accruedInterestAyrton[[2]] <- repository1$proRataFondiObbligazionari
 	accruedInterestAyrton <- new("AyrtonPositions",accruedInterestAyrton)
 	
-	result <- completeBondPosition(bond,accruedInterestAyrton)
+	result <- completePositionWithAccruedInterest(bond,accruedInterestAyrton)
 	money <- toMoney(accruedInterestAyrton[[1]]@ValoreMercatoMonetaCHF,"CHF")
 	money <- repositories$exchangeRates$exchange(money,bond@security@currency)
 	

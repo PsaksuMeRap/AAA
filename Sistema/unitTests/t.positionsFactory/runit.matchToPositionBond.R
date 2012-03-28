@@ -4,7 +4,7 @@
 ###############################################################################
 
 
-test.shouldMatchToPositionBond <- function() {
+test.shouldMatchPositionToAyrtonPosition <- function() {
 	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
 	source("./unitTests/utilities/createRepositoryPositions.R")	
 	
@@ -15,11 +15,11 @@ test.shouldMatchToPositionBond <- function() {
 	bond <- repository2$bond4
 	accruedInterestAyrton <-  repository1$proRata1
 	
-	checkEquals(matchToPositionBond(accruedInterestAyrton,bond),TRUE)
+	checkEquals(matchPositionToAyrtonPosition(accruedInterestAyrton,bond),TRUE)
 	
 }
 
-test.shouldFailToMatchToPositionBond <- function() {
+test.shouldFailToMatchPositionToAyrtonPosition <- function() {
 	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
 	source("./unitTests/utilities/createRepositoryPositions.R")	
 	
@@ -30,6 +30,6 @@ test.shouldFailToMatchToPositionBond <- function() {
 	bond <- repository2$bond3
 	accruedInterestAyrton <-  repository1$proRata1
 	
-	checkEquals(matchToPositionBond(accruedInterestAyrton,bond),FALSE)
+	checkEquals(matchPositionToAyrtonPosition(accruedInterestAyrton,bond),FALSE)
 	
 }

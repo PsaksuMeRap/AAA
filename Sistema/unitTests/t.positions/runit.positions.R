@@ -96,3 +96,37 @@ test.shouldReweightPositions <- function() {
 	
 	if (!is.null(repository)) repositories$exchangeRates <- repository
 }
+
+test.shouldReplacePositions <- function() {
+	# exchange rates required for position initialization
+	# initialize exchange rates
+	repository <- repositories$exchangeRates
+	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	testRepository <- createExchangeRatesTestRepository() 
+	repositories$exchangeRates <- testRepository
+	# exchange rate USD-CHF: 0.9627
+	# exchange rate EUR-CHF: 1.33853808
+	
+	# initialize the position
+	source("./unitTests/utilities/createRepositoryPositions.R")
+	repo <- createRepositoryPositions()
+	
+	p1 <- repo$equity1
+	p2 <- repo$bond1 
+	p3 <- repo$equity2
+	positions <- new("Positions",list(p1,p2))
+	
+	# test 1
+	positions[2] <- p3 
+	checkEquals(positions[[2]],p3)
+
+	# test 2
+	positions <- new("Positions",list(p1,p2,p3))
+	positions[c(1,3)] <- list(p3,p1) 
+	checkEquals(positions[[1]],p3)
+	checkEquals(positions[[2]],p2)
+	checkEquals(positions[[3]],p1)
+	
+	
+	if (!is.null(repository)) repositories$exchangeRates <- repository
+}

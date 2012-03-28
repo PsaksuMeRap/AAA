@@ -21,6 +21,13 @@ setMethod("[",signature(x="Positions"),
 		}
 )
 
+setMethod("[<-",signature(x="Positions"),
+		function(x,i,value) {
+			x@.Data[i] <- value
+			return(x)
+		}
+)
+
 setMethod("print","Positions",
 		function(x,width=list(empty=TRUE)) {
 			for (i in x@.Data) print(i,width=width)
@@ -31,7 +38,9 @@ setMethod("sum","Positions",
 		function(x) {
 			# x: a variable of class Positions (is a list)
 			
-			balance <- toMoney(amount=0,currency="CHF")
+			if (length(x)==0) return(toMoney(amount=0,currency="CHF"))
+			
+			balance <- toMoney(amount=0,currency=x[[1]]@security@currency)
 			for (i in x) {
 				balance <- balance + i@value
 			}

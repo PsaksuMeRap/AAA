@@ -175,7 +175,6 @@ createRepositoryAyrtonPositions <- function() {
 	
 	testData$proRata1 <- x
 	
-	
 	# create an Unclassified security
 	x <- new("AyrtonPosition")
 	x@Cliente <- "pippo13"
