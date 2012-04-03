@@ -3,30 +3,34 @@
 # Author: claudio
 ###############################################################################
 
+setClass("DsTimeSeries",representation(name="character",
+				dsCode="character",data="numeric"))
 
-create_dsTimeseries <- function(name=NA_character_,
-				dsCode=NA_character_, data=NA) {
-	timeseries <- new.env()
-	class(timeseries) <- "dsTimeseries"
-	
-	timeseries$name <- name
-	timeseries$dsCode <- dsCode
-	timeseries$data <- data
-	
-	timeseries$getStartDate <- function() {
-		return(rownames(timeseries$data)[1])
-	}
-	timeseries$getEndDate <- function() {
-		dates <- rownames(timeseries$data)
-		nbObs <- length(dates)
-		return(dates[nbObs])
-	}
-	
-	return(timeseries)
 
-}
+setGeneric("getStartDate",def=function(x) standardGeneric("getStartDate"))
 
-plot.dsTimeseries <- function(x) {
-	plot(as.Date(rownames(x$data)),x$data[,1],xlab=x$name,type="l",ylab="")
-}
+setMethod("getStartDate",signature(x="DsTimeSeries"),
+		function(x){
+			return(names(x@data)[1])
+		}
+)
+
+setGeneric("getEndDate",def=function(x) standardGeneric("getEndDate"))
+
+setMethod("getEndDate",signature(x="DsTimeSeries"),
+		function(x) {
+			dates <- names(x@data)
+			nbObs <- length(dates)
+			return(dates[nbObs])
+		}
+)
+
+setMethod("plot",
+		signature(x = "DsTimeSeries"),
+		function (x, y, ...) 
+		{
+			plot(as.Date(names(x@data)),x@data,xlab="",type="l",ylab=x@name)
+		}
+)
+
 
