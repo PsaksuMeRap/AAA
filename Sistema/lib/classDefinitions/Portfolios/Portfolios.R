@@ -23,7 +23,7 @@ setMethod("join",signature(x="Portfolio",y="Portfolios"),
 			newPositions <- c(x@.Data,positions)
 			
 			if (missing(newOwner)) {
-				owners <- c(x@owner,extractSlotFromList(y,"owner"))
+				owners <- c(x@owner,extractFromList(y,"owner"))
 				newOwner <- paste(owners,collapse="_")
 			}
 			

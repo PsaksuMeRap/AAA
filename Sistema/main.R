@@ -22,7 +22,5 @@ repositories <- new.env()
 
 source("./lib/library.R")
 
-
-
 ## -- fine setup
 

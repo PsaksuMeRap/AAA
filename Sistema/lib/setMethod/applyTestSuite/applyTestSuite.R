@@ -15,13 +15,13 @@ setMethod("applyTestSuite",signature(x="TestSuiteParsed",po="Portfolios"),
 			owners <- removeStartEndSpaces(unlist(strsplit(owners,",")))
 			owner <- paste(owners,collapse="_")
 			
-			availableOwners <- extractSlotFromList(po,"owner")
+			availableOwners <- extractFromList(po,"owner")
 			available <- is.element(owners,availableOwners)
 			
 			if (any(!available)) stop(paste("No portfolio/s for owner/s",paste(owners[!available],collapse=" & ")))
 			
 			# filter the portfolios
-			portfolios <- filterClassLists(po,"owner",owners)
+			portfolios <- filterLists(po,"owner",owners)
 			
 			if (length(portfolios)==1) {
 				portfolio <- portfolios[[1]]

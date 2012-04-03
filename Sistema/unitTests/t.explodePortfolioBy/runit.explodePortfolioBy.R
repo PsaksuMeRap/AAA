@@ -24,14 +24,14 @@ test.shouldExplodePositionsByFund <- function() {
 	politicaInvestimento.df <- repositories$politicaInvestimento$politicaInvestimento.df	
 	
 	cliente <- c("pippo16")
-	originPippo <- filterS4List(origin,by="Cliente",cliente)
+	originPippo <- filterLists(origin,by="Cliente",cliente)
 
 	portfolio <- portfoliosFactory(originPippo,politicaInvestimento.df)[[1]]
 	
 	# crea il data.frame dei fondi BAC&P e la lista di fundPortfolios
 	fundsDb <- create_fundsDB()
 	fundsDbOwners <- sapply(fundsDb,slot,"owner")	
-	originFunds <- filterS4List(origin,by="Cliente",fundsDbOwners)
+	originFunds <- filterLists(origin,by="Cliente",fundsDbOwners)
 	fundPortfolios <- portfoliosFactory(originFunds,politicaInvestimento.df)
 	
 	# ----- Test 1 --------
@@ -92,7 +92,7 @@ test.shouldExplodePositionsByFunds <- function() {
 	politicaInvestimento.df <- repositories$politicaInvestimento$politicaInvestimento.df	
 	
 	cliente <- c("pippo16")
-	originPippo <- filterS4List(origin,by="Cliente",cliente)
+	originPippo <- filterLists(origin,by="Cliente",cliente)
 	
 	portfolio <- portfoliosFactory(originPippo,politicaInvestimento.df)[[1]]
 	
@@ -102,7 +102,7 @@ test.shouldExplodePositionsByFunds <- function() {
 	# crea il data.frame dei fondi BAC&P e la lista di fundPortfolios
 	fundsDb <- create_fundsDB()
 	fundsDbOwners <- sapply(fundsDb,slot,"owner")
-	originFunds <- filterS4List(origin,by="Cliente",fundsDbOwners)
+	originFunds <- filterLists(origin,by="Cliente",fundsDbOwners)
 	fundPortfolios <- portfoliosFactory(originFunds,politicaInvestimento.df)
 		
 	# ----- Test 1 --------
@@ -141,7 +141,7 @@ test.shouldexplodePortfolioByFunds <- function() {
 	politicaInvestimento.df <- repositories$politicaInvestimento$politicaInvestimento.df	
 	
 	cliente <- c("pippo16")
-	originPippo <- filterS4List(origin,by="Cliente",cliente)
+	originPippo <- filterLists(origin,by="Cliente",cliente)
 	
 	portfolio <- portfoliosFactory(originPippo,politicaInvestimento.df)[[1]]
 	
@@ -151,7 +151,7 @@ test.shouldexplodePortfolioByFunds <- function() {
 	# crea il data.frame dei fondi BAC&P e la lista di fundPortfolios
 	fundsDb <- create_fundsDB()
 	fundsDbOwners <- sapply(fundsDb,slot,"owner")
-	originFunds <- filterS4List(origin,by="Cliente",fundsDbOwners)
+	originFunds <- filterLists(origin,by="Cliente",fundsDbOwners)
 	fundPortfolios <- portfoliosFactory(originFunds,politicaInvestimento.df)
 	
 	# ----- Test 1 --------

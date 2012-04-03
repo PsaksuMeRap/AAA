@@ -58,7 +58,7 @@ if (FALSE) {
 		if (as.Date(date) > as.Date("2011-05-31")) fundsOwners <- c("pippo53","pippo76","pippo210") else fundsOwners <- c("pippo53","pippo76")
 		repositories$exchangeRates <- create_repositoryExchangeRates(exchangeRatesDate=date)
 		dati <- importDBPortfolioGeneraleByDate(date)		
-		fundPortfolios <- filterS4List(dati,"Cliente",value=fundsOwners)
+		fundPortfolios <- filterLists(dati,"Cliente",value=fundsOwners)
 		
 		fundPortfolios <- portfoliosFactory(fundPortfolios)
 
@@ -69,7 +69,7 @@ if (FALSE) {
 } else {
 	# caso data attuale
 	fundsOwners <- c("pippo53","pippo76","pippo210")
-	fundPortfolios <- filterS4List(dati,"Cliente",value=fundsOwners)
+	fundPortfolios <- filterLists(dati,"Cliente",value=fundsOwners)
 	
 	fundPortfolios <- portfoliosFactory(fundPortfolios)
 	

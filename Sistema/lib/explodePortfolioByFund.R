@@ -29,7 +29,7 @@ explodePositionsByFund <- function(fundData,fundPortfolios,positions) {
 	
 	# identify the fund to use
 	owner <- fundData@owner
-	fundPortfolio <- filterS4List(fundPortfolios,by="owner",value=owner)[[1]]
+	fundPortfolio <- filterLists(fundPortfolios,by="owner",value=owner)[[1]]
 	
 	# compute the relative weight of every position w.r.t. the fund NAV
 	fundNav <- sum(fundPortfolio)
