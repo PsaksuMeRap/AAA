@@ -85,6 +85,7 @@ source("./lib/setMethod/selectionCriteriumFactory/selectionCriteriumFactory.R")
 source("./lib/setMethod/check/check.R")
 source("./lib/setMethod/selector/selector.R")
 source("./lib/setMethod/selector/filterByCriteria.R")
+source("./lib/setMethod/idFactory/idFactory.R")
 
 source("./lib/setMethod/portfolioFactory/portfolioFactory.R")
 source("./lib/setMethod/portfoliosFactory/portfoliosFactory.R")
