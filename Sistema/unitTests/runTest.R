@@ -7,6 +7,10 @@
 library("RUnit")
 source("./lib/library.R")
 
+source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+testRepository <- createExchangeRatesTestRepository() 
+repositories$exchangeRates <- testRepository
+
 ## test globale
 dirs = c(
 		"./unitTests/t.lists",
@@ -33,11 +37,26 @@ dirs = c(
 		"./unitTests/t.explode",
 		"./unitTests/t.Apply",
 		"./unitTests/t.identifyPositionsToExplode",
-		"./unitTests/t.explodePortfolioBy"
+		"./unitTests/t.explodePortfolioBy",
+		"./unitTests/t.idAyrton",	
+		"./unitTests/t.idFactory"
 		)
 testsuite.lists <- defineTestSuite("Test globale",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
 warnings()
+
+dirs = c("./unitTests/t.idAyrton")
+testsuite.lists <- defineTestSuite("idAyrton",dirs = dirs)
+testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
+
+warnings()
+
+dirs = c("./unitTests/t.idFactory")
+testsuite.lists <- defineTestSuite("idFactory",dirs = dirs)
+testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
+
+warnings()
+
 
 
 dirs = c("./unitTests/t.lists")

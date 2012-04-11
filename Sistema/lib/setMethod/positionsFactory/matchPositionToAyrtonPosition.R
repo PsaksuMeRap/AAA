@@ -10,7 +10,7 @@ matchPositionToAyrtonPosition <- function(ayrtonPosition,position){
 	# Saldo slots
 
 	return(
-		identical(position@security@id@idAAA,ayrtonPosition@ID_AAA) &
+		identical(position@security@id@idAAA,ayrtonPosition) &
 		identical(position@security@id@idStrumento,ayrtonPosition@ID_strumento) &
 		matchPositionQuantityToAyrtonPosition(position@quantity,ayrtonPosition)
 	)

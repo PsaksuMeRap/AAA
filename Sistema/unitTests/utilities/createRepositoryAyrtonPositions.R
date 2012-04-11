@@ -263,7 +263,8 @@ createRepositoryAyrtonPositions <- function() {
 	class(x) <- "AyrtonPosition"
 	
 	testData$globalEconomy <- x
-	##---------------------
+
+	
 	
 	x <- new("AyrtonPosition")
 	x@Cliente <- 'pippo88'

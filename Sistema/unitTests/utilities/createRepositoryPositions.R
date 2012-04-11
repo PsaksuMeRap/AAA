@@ -68,5 +68,30 @@ createRepositoryPositions <- function() {
 	# create a fixedIncome 
 	testData$fixedIncome <- positionFactory(repository$fixedIncome)
 	
+	
+	testData$Fondi_mercato_monetario1 <- positionFactory(repository$Fondi_mercato_monetario1)
+	
+	testData$Fondi_mercato_monetario2 <- positionFactory(repository$Fondi_mercato_monetario2)
+	
+	testData$Floating_rate_notes1 <- positionFactory(repository$Floating_rate_notes1)
+	
+	testData$Floating_rate_notes2 <- positionFactory(repository$Floating_rate_notes2)
+	
+	testData$Anticipi_fissi1 <- positionFactory(repository$Anticipi_fissi1)
+	
+	testData$Anticipi_fissi2 <- positionFactory(repository$Anticipi_fissi2)
+	
+	testData$Fondi_azionari1 <- positionFactory(repository$Fondi_azionari1)
+	
+	testData$Fondi_azionari2 <- positionFactory(repository$Fondi_azionari2)
+	
+	testData$Index_certificate1 <- positionFactory(repository$Index_certificate1)
+	
+	testData$Index_certificate2 <- positionFactory(repository$Index_certificate2)
+	
+	testData$Opzioni_su_azioni1 <- positionFactory(repository$Opzioni_su_azioni1)
+	
+	testData$Opzioni_su_azioni2 <- positionFactory(repository$Opzioni_su_azioni2)
+	
 	return(testData)
 }

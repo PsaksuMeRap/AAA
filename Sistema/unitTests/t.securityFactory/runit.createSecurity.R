@@ -10,14 +10,13 @@ test.shouldCreateUnclassified <- function() {
 	# create the origin
 	repository <- createRepositoryAyrtonPositions()
 	origin <- repository$equity1
-	class(origin) <- "Unclassified"
+	class(origin) <- "Ayrton_Unclassified"
 	
 	unclassified <- createSecurity(origin)
-	class(unclassified) <- "Unclassified"
 
 	checkEquals(unclassified@name,"Roche Holding Gs")
 	checkEquals(unclassified@currency,new("Currency","CHF"))
-	checkEquals(unclassified@id,new("IdAyrton",idAAA=824,idStrumento=1))
+	checkEquals(unclassified@id,new("IdAyrton",idAAA=new("IdAAA_numeric",824),idStrumento=1))
 	
 }
 
@@ -34,17 +33,17 @@ test.shouldCreateEquity <- function() {
 	# create the origin
 	repository <- createRepositoryAyrtonPositions()
 	origin <- repository$equity1
-	class(origin) <- "Equity"
+	class(origin) <- "Ayrton_Equity"
 	
 	equity <- createSecurity(origin)
 	
 	checkEquals(equity@name,"Roche Holding Gs")
 	checkEquals(equity@currency,new("Currency","CHF"))
-	checkEquals(equity@id,new("IdAyrton",idAAA=824,idStrumento=1))
+	checkEquals(equity@id,new("IdAyrton",idAAA=new("IdAAA_numeric",824),idStrumento=1))
 	
 	# same test but with equity in EUR
 	origin <- repository$equity2
-	class(origin) <- "Equity"
+	class(origin) <- "Ayrton_Equity"
 
 	equity <- createSecurity(origin)
 
@@ -63,12 +62,12 @@ test.shouldCreateBond <- function() {
 	# create the origin
 	repository <- createRepositoryAyrtonPositions()
 	origin <- repository$bond1
-	class(origin) <-  "Bond"
+	class(origin) <-  "Ayrton_Bond"
 
 	bond <- createSecurity(origin)
 	
 	checkEquals(bond@name,"20130603 - 3.625% Pfizer 03-06-13")
-	checkEquals(bond@id,new("IdAyrton",idAAA=1218,idStrumento=2))
+	checkEquals(bond@id,new("IdAyrton",idAAA=new("IdAAA_numeric",1218),idStrumento=2))
 	checkEquals(bond@maturity,"2013-06-03")
 		
 }
@@ -83,7 +82,7 @@ test.shouldNULLForAccruedInterest <- function() {
 	# create the origin
 	repository <- createRepositoryAyrtonPositions()
 	origin <- repository$proRata1
-	class(origin) <- "Bond"
+	class(origin) <- "Ayrton_Bond"
 
 	null <- createSecurity(origin)
 	
@@ -101,7 +100,7 @@ test.shouldCreateStrutturati_FI <- function() {
 	# create the origin
 	repository <- createRepositoryAyrtonPositions()
 	origin <- repository$strutturati_FI
-	class(origin) <- "Strutturati_FI"
+	class(origin) <- "Ayrton_Strutturati_FI"
 	
 	security <- createSecurity(origin)
 	

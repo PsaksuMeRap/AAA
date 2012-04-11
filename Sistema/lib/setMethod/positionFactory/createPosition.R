@@ -26,6 +26,7 @@ setMethod("createPosition",signature(security="NULL",origin="AyrtonPosition"),
 
 setMethod("createPosition",signature(security="Equity",origin="AyrtonPosition"),
 		function(security,origin) {
+
 			id <- 10.2
 			quantity <- origin@Saldo
 			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))

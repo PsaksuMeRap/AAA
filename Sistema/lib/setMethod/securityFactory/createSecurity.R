@@ -9,16 +9,18 @@ createSecurity <- function(origin) UseMethod("createSecurity")
 
 setGeneric("createSecurity",
 		useAsDefault=function(origin) {
+
 			# this is a common slot of all instruments
-			idAyrton <- new("IdAyrton",idAAA=origin@ID_AAA,
-					idStrumento=origin@ID_strumento)
+			idAyrton <- idFactory(origin)
 			
-			security <- new(class(origin),currency=new("Currency",origin@Moneta),name=origin@Nome,id=idAyrton)
+			className <- class(origin)
+			className <- substr(className,start=8,stop=nchar(className))
+			security <- new(className,currency=new("Currency",origin@Moneta),name=origin@Nome,id=idAyrton)
 			return(security)
 		}
 )
 
-setMethod("createSecurity",signature(origin="Bond"),
+setMethod("createSecurity",signature(origin="Ayrton_Bond"),
 		function(origin) {
 			# se si tratta di accrued interest non considerarli ora,
 			# verranno considerati solo nella costruzione delle posizioni
@@ -26,8 +28,7 @@ setMethod("createSecurity",signature(origin="Bond"),
 			if (origin@Strumento=="Oacc") return(NULL)
 			
 			# this is a common slot of all instruments
-			idAyrton <- new("IdAyrton",idAAA=origin@ID_AAA,
-					idStrumento=origin@ID_strumento)
+			idAyrton <- idAyrton <- idFactory(origin)
 			
 			getMaturity <- function() {
 				# extract the maturity
@@ -49,12 +50,13 @@ setMethod("createSecurity",signature(origin="Bond"),
 				return(paymentDate)
 			}
 			
-			security <- new(class(origin),currency=new("Currency",origin@Moneta),name=origin@Nome,id=idAyrton,maturity=getMaturity())
+			className <- substr("Ayrton_Bond",start=8,stop=nchar("Ayrton_Bond"))
+			security <- new(className,currency=new("Currency",origin@Moneta),name=origin@Nome,id=idAyrton,maturity=getMaturity())
 			return(security)	
 		}
 )
 
-setMethod("createSecurity",signature(origin="Fondi_obbligazionari"),
+setMethod("createSecurity",signature(origin="Ayrton_Fondi_obbligazionari"),
 		function(origin) {
 			# se si tratta di accrued interest non considerarli ora,
 			# verranno considerati solo nella costruzione delle posizioni
@@ -66,12 +68,11 @@ setMethod("createSecurity",signature(origin="Fondi_obbligazionari"),
 		}
 )
 
-setMethod("createSecurity",signature(origin="Strutturati_FI"),
+setMethod("createSecurity",signature(origin="Ayrton_Strutturati_FI"),
 		function(origin) {
 			
 			# this is a common slot of all instruments
-			idAyrton <- new("IdAyrton",idAAA=origin@ID_AAA,
-					idStrumento=origin@ID_strumento)
+			idAyrton <- idFactory(origin)
 			
 			# extract the name of the security
 			name <- origin@Nome
@@ -86,7 +87,8 @@ setMethod("createSecurity",signature(origin="Strutturati_FI"),
 			day <- substr(name,7,8)
 			expiryDate = paste(year,month,day,sep="-")
 			
-			security <- new(class(origin),currency=new("Currency",origin@Moneta),name=origin@Nome,id=idAyrton,
+			className <- substr("Ayrton_Strutturati_FI",start=8,stop=nchar("Ayrton_Strutturati_FI"))
+			security <- new(className,currency=new("Currency",origin@Moneta),name=origin@Nome,id=idAyrton,
 					expiryDate=expiryDate,underlyingHorizon=underlyingHorizon)
 			return(security)	
 		}

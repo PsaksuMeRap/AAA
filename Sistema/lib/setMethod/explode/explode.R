@@ -14,7 +14,8 @@ setMethod("explode",signature(position="Position"),
 				# create a security "Fondi_azionari"
 				currency <- position@security@currency
 				name <- paste("Fondo misto:",position@security@name)
-				idAyrton <- new("IdAyrton",idAAA=-1,idStrumento=14)
+				idAAANumeric <- new("IdAAA_numeric",-1)
+				idAyrton <- new("IdAyrton",idAAA=idAAANumeric,idStrumento=14)
 				
 				equityFundSecurity <- new("Fondi_azionari",currency=currency,name=name,id=idAyrton) 
 				
@@ -29,7 +30,8 @@ setMethod("explode",signature(position="Position"),
 				# create a security "Fondi_obbligazionari"
 				currency <- position@security@currency
 				name <- paste("Fondo misto:",position@security@name)
-				idAyrton <- new("IdAyrton",idAAA=-1,idStrumento=3)
+				idAAANumeric <- new("IdAAA_numeric",-1)
+				idAyrton <- new("IdAyrton",idAAA=idAAANumeric,idStrumento=3)
 				
 				bondFundSecurity <- new("Fondi_obbligazionari",currency=currency,name=name,id=idAyrton) 
 				

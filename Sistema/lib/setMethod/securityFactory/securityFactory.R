@@ -9,7 +9,8 @@ setGeneric("securityFactory",def=function(origin,...) standardGeneric("securityF
 
 setMethod("securityFactory",signature(origin="AyrtonPosition"),
 		function(origin,identifyOnly=FALSE) {
-			# define the function use to identify the position type, i.e. Equity, Bond, 
+
+			# define the function used to identify the position type, i.e. Equity, Bond, 
 			# Hedge Fund, ...
 		
 			identifyInstrumentType <- function(origin) {
@@ -34,7 +35,7 @@ setMethod("securityFactory",signature(origin="AyrtonPosition"),
 			securityType <- identifyInstrumentType(origin)
 			if (identifyOnly) return(securityType)
 			
-			class(origin) <- securityType
+			class(origin) <- paste("Ayrton",securityType,sep="_")
 			
 			security <- createSecurity(origin)
 			return(security)

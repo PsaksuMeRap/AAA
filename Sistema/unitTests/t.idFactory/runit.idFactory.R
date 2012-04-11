@@ -12,5 +12,5 @@ test.shouldFailWithNA <- function() {
 	equity1 <- repository$equity1
 	equity1@ID_AAA <-NA_real_
 	
-	
+	checkException(idFactory(equity1))
 }
