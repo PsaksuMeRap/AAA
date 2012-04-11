@@ -60,13 +60,13 @@ createIdAyrton <- function(origin) {
 	## 50,Futures_EQ
 	## 51,Unclassified"
 
-	# check for particular instruments: Conto_corrente, 
-	no_ID_AAA_instruments <- c(40)
-		if (is.na(origin@ID_AAA)) {
 
-			if (!is.element(origin@idStrumento,no_ID_AAA_instruments)) {
+		if (is.na(origin@ID_AAA)) {
+			# check for particular instruments: Conto_corrente, 
+			no_ID_AAA_instruments <- c(40)
+			if (!is.element(origin@ID_strumento,no_ID_AAA_instruments)) {
 				string <- "The following instrument is not implemented or is incomplete:\n"
-				string <- paste(string,"ID_AAA:",origin@ID_AAA,"\nName:",origin@Nome)
+				string <- paste(string,"  ID_strumento: ",origin@ID_strumento,"\n  ID_AAA: ",origin@ID_AAA,"\n  Name: ",origin@Nome,sep="")
 				stop(string)
 			}
 			idAyrton <- new("IdAyrton",
