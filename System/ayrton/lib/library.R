@@ -20,4 +20,7 @@ source("./ayrton/lib/methods/positionFactory/positionFactory.R")
 source("./ayrton/lib/methods/positionsFactory/positionsFactory.R")
 # dipende da AyrtonPosition, da idAyrton e dal metodo idFactory
 source("./ayrton/lib/methods/idFactory/idFactory.R")
-
+# dipende da positionsFactory
+source("./ayrton/lib/methods/portfolioFactory/portfolioFactory.R")
+# dipende da portfolioFactory
+source("./ayrton/lib/methods/portfoliosFactory/portfoliosFactory.R")

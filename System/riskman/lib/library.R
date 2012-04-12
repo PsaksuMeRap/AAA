@@ -28,18 +28,18 @@ source("./riskman/lib/classDefinitions/TestSuite/TestSuite.R")
 source("./riskman/lib/classDefinitions/TestSuiteCollection/TestSuiteCollection.R")
 
 
-source("./riskman/lib/setMethod/constraintFactory/constraintFactory.R")
-source("./riskman/lib/setMethod/selectionCriteriumFactory/selectionCriteriumFactory.R")
-source("./riskman/lib/setMethod/check/check.R")
-source("./riskman/lib/setMethod/selector/selector.R")
-source("./riskman/lib/setMethod/selector/filterByCriteria.R")
+source("./riskman/lib/methods/constraintFactory/constraintFactory.R")
+source("./riskman/lib/methods/selectionCriteriumFactory/selectionCriteriumFactory.R")
+source("./riskman/lib/methods/check/check.R")
+source("./riskman/lib/methods/selector/selector.R")
+source("./riskman/lib/methods/selector/filterByCriteria.R")
 
 
-source("./riskman/lib/setMethod/parser/parser.R")
-source("./riskman/lib/setMethod/Apply/Apply.R")
+source("./riskman/lib/methods/parser/parser.R")
+source("./riskman/lib/methods/Apply/Apply.R")
 
 
-source("./riskman/lib/setMethod/testSuiteFactory/testSuiteFactory.R")
-source("./riskman/lib/setMethod/applyTestSuite/applyTestSuite.R")
+source("./riskman/lib/methods/testSuiteFactory/testSuiteFactory.R")
+source("./riskman/lib/methods/applyTestSuite/applyTestSuite.R")
 
 

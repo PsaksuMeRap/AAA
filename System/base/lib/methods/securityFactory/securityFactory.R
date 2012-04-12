@@ -2,7 +2,7 @@
 # 
 # Author: claudio
 ###############################################################################
- source("./base/lib/setMethod/securityFactory/createSecurity.R")
+ source("./base/lib/methods/securityFactory/createSecurity.R")
 
 
 setGeneric("securityFactory",def=function(origin,...) standardGeneric("securityFactory"))
