@@ -1,0 +1,14 @@
+testSuiteName: test numero 1
+creationDate: 2010-11-06
+creator: Claudio Ortelli
+# testSuiteKind: general - specific
+testSuiteKind: specific
+testTarget: pippo53
+reportTo: claudio.ortelli@usi.ch; info@bacep.com
+outputDir: ../../../testEsterniAAA/testSuites/test2
+checkListStart:
+   security:bond & currency:CHF ; > 5%  
+currency:USD & security:equity ; < 10%
+currency:CHF + security:equity & currency:EUR ; > 50%  
+checkListEnd:
+externalSuiteFileName:
