@@ -10,9 +10,9 @@ library("RUnit")
 library("tcltk")
 
 if(.Platform$OS.type=="windows") {
-	home <- "\\\\usi/dfs/Utenti/O/ortellic/My Documents/workspace/AAA/Sistema"
+	home <- "\\\\usi/dfs/Utenti/O/ortellic/My Documents/workspace/AAA/Sistema/base/"
 } else {
-	home <- "/home/claudio/workspace/AAA/Sistema/"
+	home <- "/home/claudio/workspace/AAA/Sistema/base"
 }
 
 setwd(home)

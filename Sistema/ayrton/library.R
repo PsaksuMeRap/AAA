@@ -21,5 +21,3 @@ source("./ayrton/lib/setMethod/positionsFactory/positionsFactory.R")
 # dipende da AyrtonPosition, da idAyrton e dal metodo idFactory
 source("./ayrton/lib/methods/idFactory/idFactory.R")
 
-
-
