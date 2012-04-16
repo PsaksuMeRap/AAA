@@ -24,30 +24,74 @@ dirs = c(
 		"./unitTests/t.money",
 		"./unitTests/t.securityFactory",
 		"./unitTests/t.positionFactory",
-#		"./unitTests/t.ayrtonPositions",
+		"./unitTests/t.ayrtonPositions",
 		"./unitTests/t.positionsFactory",
 		"./unitTests/t.position",		
 		"./unitTests/t.positions",
 		"./unitTests/t.portfolio" ,
-#		"./unitTests/t.portfolioFactory",
+		"./unitTests/t.portfolioFactory",
+		"./unitTests/t.toXXX",
+		"./unitTests/t.explode",
+		"./unitTests/t.identifyPositionsToExplode",
+		"./unitTests/t.explodePortfolioBy",
+		"./unitTests/t.idAyrton",	
+		"./unitTests/t.idFactory"
+		)
+testsuite.lists <- defineTestSuite("Test globale",dirs = dirs)
+testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
+warnings()
+
+
+
+# the riskman test suites 
+if(.Platform$OS.type=="windows") {
+	home <- "\\\\usi/dfs/Utenti/O/ortellic/My Documents/workspace/AAA/System/riskman/"
+} else {
+	home <- "/home/claudio/workspace/AAA/System/riskman/"
+}
+
+setwd(home)
+
+## test globale
+dirs = c(
+		"./unitTests/t.Apply",
 		"./unitTests/t.strings",
 		"./unitTests/t.constraintFactory",
 		"./unitTests/t.parser",
 		"./unitTests/t.check",
 		"./unitTests/t.testSuiteFactory",
 		"./unitTests/t.applyTestSuite",
-		"./unitTests/t.toXXX",
-		"./unitTests/t.selector",
-		"./unitTests/t.explode",
-#		"./unitTests/t.Apply",
-		"./unitTests/t.identifyPositionsToExplode",
-		"./unitTests/t.explodePortfolioBy",
-#		"./unitTests/t.idAyrton",	
-#		"./unitTests/t.idFactory"
-		)
-testsuite.lists <- defineTestSuite("Test globale",dirs = dirs)
+		"./unitTests/t.selector"
+
+)
+testsuite.lists <- defineTestSuite("Tests riskman",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
 warnings()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 dirs = c("./unitTests/t.idAyrton")
 testsuite.lists <- defineTestSuite("idAyrton",dirs = dirs)
