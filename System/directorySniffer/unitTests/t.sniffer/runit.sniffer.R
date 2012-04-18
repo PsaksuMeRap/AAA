@@ -6,10 +6,22 @@
 
 test.shouldCreateSniffer <- function() {
 	
-	setClass("DirectorySniffer",representation(AbsoluteDirectoryPath="character",
+	setClass("DirectorySniffer",representation(absoluteDirectoryPath="character",
 					newFileNames="character",oldFileNames="character"))
 	
 	
+	directorySniffer <- new("DirectorySniffer",absoluteDirectoryPath="/home/claudio/workspace/AAA/System/directorySniffer/unitTests/inputDirectory/")
 	
-	#list.files
+	directory <- directorySniffer@absoluteDirectoryPath
+	
+	files <- dir(path=directorySniffer@directory)
+	
+	if (length(files>0)) {
+	
+		for (fileName in files) {
+			modificationTime <- file.info(paste(directory,fileName,sep=""))[1,"mtime"]
+			
+		}
+	}
+
 }
