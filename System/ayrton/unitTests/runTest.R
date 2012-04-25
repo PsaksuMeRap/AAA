@@ -11,9 +11,9 @@ if(.Platform$OS.type=="windows") {
 
 setwd(home)
 
-source("./unitTests/utilities/createExchangeRatesTestRepository.R")
-testRepository <- createExchangeRatesTestRepository() 
-repositories$exchangeRates <- testRepository
+#source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+#testRepository <- createExchangeRatesTestRepository() 
+#repositories$exchangeRates <- testRepository
 
 
 ## test globale
@@ -29,11 +29,18 @@ dirs = c(
 		"./unitTests/t.securityFactory"
 )
 
-testsuite.lists <- defineTestSuite("Test globale",dirs = dirs)
+testsuite.lists <- defineTestSuite("Test ayrton",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
 warnings()
 
 
+if(.Platform$OS.type=="windows") {
+	home <- "\\\\usi/dfs/Utenti/O/ortellic/My Documents/workspace/AAA/System/"
+} else {
+	home <- "/home/claudio/workspace/AAA/System/"
+}
+
+setwd(home)
 
 
 
