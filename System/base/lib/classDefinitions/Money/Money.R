@@ -9,6 +9,21 @@ setClass("Money",
 		prototype(amount=new("Amount",0),currency=new("Currency","CHF"))
 )
 
+
+
+setGeneric("exchange",def=function(money,currency) standardGeneric("exchange"))
+
+setMethod("exchange",signature(money="Money",currency="Currency"),
+		function(money,currency) {
+			if (!identical(money@currency,currency)) {
+				# exchange the money in the desired currency
+				money <- repositories$exchangeRates$exchange(money,currency)
+			}
+			# excecute the check
+			return(money)	
+		}
+)
+
 setMethod("*",signature("numeric","Money"),
 		function(e1,e2) {
 			# e1: a number
@@ -28,7 +43,7 @@ setMethod("*",signature("Money","numeric"),
 setMethod("+",signature("Money","Money"),
 		function(e1,e2) {
 			# e1: a money
-			if(e1@currency != e2@currency) e2 <- repositories$exchangeRates$exchange(e2,e1@currency)
+			if(e1@currency != e2@currency) e2 <- exchange(e2,e1@currency)
 			e1@amount <- e1@amount + e2@amount
 			return(e1)
 		}
@@ -40,7 +55,7 @@ setMethod("/",signature(e1="Money",e2="Money"),
 			# e1: a money
 			# e2: a meney, the divisor, i.e. the money used to divide e1
 			
-			if (e1@currency!=e2@currency) e2 <- repositories$exchangeRates$exchange(e2,e1@currency)
+			if (e1@currency!=e2@currency) e2 <- exchange(e2,e1@currency)
 			return(unclass(e1@amount / e2@amount))
 		}
 )
@@ -107,7 +122,7 @@ setMethod(">",signature(e1="Money",e2="Money"),
 		function(e1,e2) {
 			if (!identical(e1@currency,e2@currency)) {
 				# exchange the money in the desired currency
-				e2 <- repositories$exchangeRates$exchange(e2,e1@currency)
+				e2 <- exchange(e2,e1@currency)
 			}
 			# excecute the check
 			return(e1@amount > e2@amount)	
@@ -118,7 +133,7 @@ setMethod(">=",signature(e1="Money",e2="Money"),
 		function(e1,e2) {
 			if (!identical(e1@currency,e2@currency)) {
 				# exchange the money in the desired currency
-				e2 <- repositories$exchangeRates$exchange(e2,e1@currency)
+				e2 <- exchange(e2,e1@currency)
 			}
 			# excecute the check
 			return(e1@amount >= e2@amount)	
@@ -129,7 +144,7 @@ setMethod("<",signature(e1="Money",e2="Money"),
 		function(e1,e2) {
 			if (!identical(e1@currency,e2@currency)) {
 				# exchange the money in the desired currency
-				e2 <- repositories$exchangeRates$exchange(e2,e1@currency)
+				e2 <- exchange(e2,e1@currency)
 			}
 			# excecute the check
 			return(e1@amount < e2@amount)	
@@ -140,7 +155,7 @@ setMethod("<=",signature(e1="Money",e2="Money"),
 		function(e1,e2) {
 			if (!identical(e1@currency,e2@currency)) {
 				# exchange the money in the desired currency
-				e2 <- repositories$exchangeRates$exchange(e2,e1@currency)
+				e2 <- exchange(e2,e1@currency)
 			}
 			# excecute the check
 			return(e1@amount <= e2@amount)	
@@ -151,7 +166,7 @@ setMethod("==",signature(e1="Money",e2="Money"),
 		function(e1,e2) {
 			if (!identical(e1@currency,e2@currency)) {
 				# exchange the money in the desired currency
-				e2 <- repositories$exchangeRates$exchange(e2,e1@currency)
+				e2 <- exchange(e2,e1@currency)
 			}
 			# excecute the check
 			return(abs(e1@amount- e2@amount) < systemOptions[["eq.tolerance"]]) 	
@@ -163,3 +178,4 @@ setMethod("!=",signature(e1="Money",e2="Money"),
 			return(!(e1 == e2))
 		}
 )
+

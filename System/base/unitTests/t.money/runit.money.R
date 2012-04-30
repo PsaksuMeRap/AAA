@@ -28,6 +28,27 @@ test.createMoney <- function() {
 
 }
 
+test.exchange <- function() {
+	repository <- repositories$exchangeRates
+	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	testRepository <- createExchangeRatesTestRepository() 
+	repositories$exchangeRates <- testRepository
+	
+	money1 <- new("Money",amount=new("Amount",100),currency=new("Currency","CHF"))
+	money2 <- new("Money",amount=new("Amount",200),currency=new("Currency","USD")) # exchange rate USD-CHF: 0.9627
+	money3 <- new("Money",amount=new("Amount",100),currency=new("Currency","CHF")) # exchange rate EUR-CHF: 1.33853808
+	
+	money1 <- exchange(money1,new("Currency","CHF"))
+	money2 <- exchange(money2,new("Currency","CHF"))
+	money3 <- exchange(money3,new("Currency","EUR"))
+	
+	checkEquals(money1,new("Money",amount=new("Amount",100),currency=new("Currency","CHF")))
+	checkEquals(money2,new("Money",amount=new("Amount",200*0.9627),currency=new("Currency","CHF")))
+	checkEquals(money3,new("Money",amount=new("Amount",100/1.33853808),currency=new("Currency","EUR")))
+
+	repositories$exchangeRates <- repository
+	
+}
 
 test.moneyAs.character <- function() {
 	currency = new("Currency","CHF")

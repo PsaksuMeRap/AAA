@@ -24,7 +24,7 @@ setMethod("Apply",
 
 setMethod("Apply",
 		signature(x="CheckString"),
-		function(x,positions,logFile) {
+		function(x,positions,logFile,referenceCurrency=new("Currency","CHF")) {
 			# compute the total value of the positions
 			positionsValue <- sum(positions)		
 			
