@@ -31,7 +31,7 @@ setMethod("applyTestSuite",signature(x="TestSuiteParsed",po="Portfolios"),
 						unlist(lapply(portfolios,function(x)return(x@.Data)),recursive=FALSE))
 			}
 			
-			applyTestSuite(x,as(portfolio,"Positions"),valuationDate)
+			applyTestSuite(x,as(portfolio,"Positions"),valuationDate,portfolio@referenceCurrency)
 		}
 )
 
@@ -45,14 +45,13 @@ setMethod("applyTestSuite",signature(x="TestSuiteParsed",po="Portfolio"),
 			owner <- paste(owners,collapse="_")
 			
 			if (po@owner!=owner) stop(paste("Wrong portfolio for owner",owner))
-
-			applyTestSuite(x,as(po,"Positions"),valuationDate)
+			applyTestSuite(x,as(po,"Positions"),valuationDate,po@referenceCurrency)
 		}
 )
 
 setMethod("applyTestSuite",signature(x="TestSuiteParsed",po="Positions"),
-		function(x,po,valuationDate) { 		
-
+		function(x,po,valuationDate,referenceCurrency=new("Currency","CHF")) { 		
+	
 			if (missing(valuationDate)) valuationDate <- Sys.Date()
 			
 			# crea output infos
@@ -77,7 +76,7 @@ setMethod("applyTestSuite",signature(x="TestSuiteParsed",po="Positions"),
 			cat("\n",file=logFile,sep="\n",append=TRUE)
 			
 			# simultaneously apply all the checkStrings on the po
-			results <- lapply(x@checkStrings,Apply,po,logFile)
+			results <- lapply(x@checkStrings,Apply,po,logFile,referenceCurrency)
 
 			checkResults <- extractFromList(results,"checkResult")
 			names(checkResults) <- extractFromList(results,"checkString")
@@ -94,7 +93,7 @@ setMethod("applyTestSuite",signature(x="TestSuiteParsed",po="Positions"),
 			outputDir <- x@configLines[["outputDir"]]
 			logFile <- paste(outputDir,outputFileName,sep="/")
 			
-			
+		
 			logFile <- file(description=logFile,open="w")
 			cat("\n",file=logFile,sep="\n",append=TRUE)
 			cat("Portfolio structure:",file=logFile,sep="\n",append=TRUE)

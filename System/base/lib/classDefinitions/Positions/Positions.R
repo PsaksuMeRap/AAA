@@ -28,19 +28,21 @@ setMethod("[<-",signature(x="Positions"),
 		}
 )
 
-setMethod("print","Positions",
-		function(x,width=list(empty=TRUE)) {
-			for (i in x@.Data) print(i,width=width)
-		}
-)
 
 setMethod("sum","Positions",
-		function(x) {
+		function(x,referenceCurrency) {
 			# x: a variable of class Positions (is a list)
 			
-			if (length(x)==0) return(toMoney(amount=0,currency="CHF"))
+			if (length(x)==0) {
+				if (missing(referenceCurrency)) {
+					return(toMoney(amount=0,currency="CHF"))
+				} else {
+					return(toMoney(amount=0,currency=referenceCurrency))
+				}
+			}
 			
-			balance <- toMoney(amount=0,currency=x[[1]]@security@currency)
+			if (missing(referenceCurrency)) currency <- x[[1]]@security@currency else currency <- referenceCurrency
+			balance <- toMoney(amount=0,currency=currency)
 			for (i in x) {
 				balance <- balance + i@value
 			}
@@ -48,16 +50,62 @@ setMethod("sum","Positions",
 		}
 )
 
-setMethod("as.character","Positions", 
-		function(x,width=list(empty=TRUE)) {
-			
-			return(sapply(x,as.character,width=width))
-		}
-)
-
 setMethod("reweight",signature(x="Positions"),
 		function(x,weight) {
 			positions <- lapply(x,reweight,weight)
 			return(new("Positions",positions))
+		}
+)
+
+setMethod("fieldsAsCharacter","Positions", 
+		function(x,formatWidth=TRUE,referenceCurrency) {
+			if (length(x)==0) return(matrix(ncol=0,nrow=0))
+		
+			if (formatWidth) {
+				if (missing(referenceCurrency)) {
+					fieldsAsCharacter.matrix <- t(sapply(x,fieldsAsCharacter))
+				} else {
+					fieldsAsCharacter.matrix <- t(sapply(x,fieldsAsCharacter,referenceCurrency))			
+				}
+				
+				maxFieldsWidth <- apply(nchar(fieldsAsCharacter.matrix),2,max)
+				
+				for (fieldName in names(maxFieldsWidth)) {
+
+					if (is.element(fieldName,c("amount","referenceCurrencyAmount"))) side <- "left" else side <- "right"
+					fieldsAsCharacter.matrix[,fieldName] <- str_pad(fieldsAsCharacter.matrix[,fieldName],width=maxFieldsWidth[[fieldName]],side=side,pad=" ")
+				}
+				return(fieldsAsCharacter.matrix)
+			} else {
+				if (missing(referenceCurrency)) {
+					return(t(sapply(x,fieldsAsCharacter)))	
+				}	else {
+					return(t(sapply(x,fieldsAsCharacter,referenceCurrency)))
+				}
+			}
+		}
+)
+
+setMethod("as.character","Positions", 
+		function(x,formatWidth=TRUE,referenceCurrency) {
+			if (length(x)==0) return(vector("character",0))
+	
+			if (missing(referenceCurrency)) {
+				tmp <- fieldsAsCharacter(x,formatWidth=formatWidth)
+			} else {
+				tmp <- fieldsAsCharacter(x,formatWidth=formatWidth,referenceCurrency)
+			}
+			result <- sapply(1:nrow(tmp),function(i,tmp){return(paste(tmp[i,],collapse=" / "))},tmp)
+			return(result)
+		}
+)
+
+setMethod("print","Positions",
+		function(x,formatWidth=TRUE,referenceCurrency) {
+			if (missing(referenceCurrency)) {
+				print(as.character(x,formatWidth))
+			} else {
+				print(as.character(x,formatWidth,referenceCurrency))
+			}
 		}
 )

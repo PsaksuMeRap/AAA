@@ -57,9 +57,20 @@ test.shouldSumPositions <- function() {
 	# equity1 CHF: 88205 CHF, equity2 EUR: 7439.7503136 CHF, bond1 EUR: 124345.632268 CHF,
 	positions <- new("Positions",positions)
 	
-	# test
+	# test 1: without referenceCurrency
 	result <- sum(positions)
 	should <- toMoney(88205 + 7439.7503136 + 124345.632268,"CHF")
+	checkEquals(result,should)
+	
+	# test 2: with referenceCurrency
+	result <- sum(positions,new("Currency","EUR"))
+	should <- exchange(toMoney(88205 + 7439.7503136 + 124345.632268,"CHF"),new("Currency","EUR"))
+	checkEquals(result,should)
+	
+	# test 2: with referenceCurrency and empty positions
+	positions <- new("Positions")
+	result <- sum(positions,new("Currency","EUR"))
+	should <- toMoney(amount=0,currency="EUR")
 	checkEquals(result,should)
 }
 
@@ -129,4 +140,92 @@ test.shouldReplacePositions <- function() {
 	
 	
 	if (!is.null(repository)) repositories$exchangeRates <- repository
+}
+
+
+test.shouldFieldsAsCharacter <- function() {
+	
+	# exchange rates required for position initialization
+	# initialize exchange rates
+	repository <- repositories$exchangeRates
+	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	testRepository <- createExchangeRatesTestRepository() 
+	repositories$exchangeRates <- testRepository
+	# exchange rate USD-CHF: 0.9627
+	# exchange rate EUR-CHF: 1.33853808
+	
+	# initialize the position
+	source("./unitTests/utilities/createRepositoryPositions.R")
+	repo <- createRepositoryPositions()
+	
+	# create the positions
+	positions <- list(repo$equity2,repo$bond1)
+	# equity2 EUR: 7439.7503136 CHF, bond1 EUR: 124345.632268 CHF,
+	positions <- new("Positions",positions)
+	
+	# test 1: without referenceCurrency, with formatWidth
+	result <- fieldsAsCharacter(positions)
+	should <- c("Equity","Bond  ")
+	checkEquals(result[,"securityClassName"],should)
+	should <- c(" 5'558.12","92'896.60")
+	checkEquals(result[,"amount"],should)
+	
+	# test 2: without referenceCurrency, without formatWidth
+	result <- fieldsAsCharacter(positions,formatWidth=FALSE)
+	should <- c("Equity","Bond")
+	checkEquals(result[,"securityClassName"],should)
+	should <- c("5'558.12","92'896.60")
+	checkEquals(result[,"amount"],should)
+	
+	# test 3: with referenceCurrency, with formatWidth
+	result <- fieldsAsCharacter(positions,referenceCurrency=new("Currency","USD"))
+	should <- c("  7'728.00","129'163.43")
+	checkEquals(result[,"referenceCurrencyAmount"],should)
+	
+	# test 4: with referenceCurrency, without formatWidth
+	result <- fieldsAsCharacter(positions,formatWidth=FALSE,referenceCurrency=new("Currency","USD"))
+	should <- c("7'728.00","129'163.43")
+	checkEquals(result[,"referenceCurrencyAmount"],should)
+}
+
+test.shouldAs.character <- function() {
+	
+	# exchange rates required for position initialization
+	# initialize exchange rates
+	repository <- repositories$exchangeRates
+	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	testRepository <- createExchangeRatesTestRepository() 
+	repositories$exchangeRates <- testRepository
+	# exchange rate USD-CHF: 0.9627
+	# exchange rate EUR-CHF: 1.33853808
+	
+	# initialize the position
+	source("./unitTests/utilities/createRepositoryPositions.R")
+	repo <- createRepositoryPositions()
+	
+	# create the positions
+	positions <- list(repo$equity2,repo$bond1)
+	# equity2 EUR: 7439.7503136 CHF, bond1 EUR: 124345.632268 CHF,
+	positions <- new("Positions",positions)
+	
+	# test 1: without referenceCurrency, with formatWidth
+	result <- as.character(positions)
+	should <- "Equity / EUR /  5'558.12 / Kontron AG                       "
+	checkEquals(result[[1]],should)
+
+	
+	# test 2: without referenceCurrency, without formatWidth
+	result <- as.character(positions,formatWidth=FALSE)
+	should <- "Equity / EUR / 5'558.12 / Kontron AG"
+	checkEquals(result[[1]],should)
+	
+	# test 3: with referenceCurrency, with formatWidth
+	result <- as.character(positions,referenceCurrency=new("Currency","USD"))
+	should <- "Bond   / EUR / 92'896.60 / 20130603 - 3.625% Pfizer 03-06-13 / USD / 129'163.43"
+	checkEquals(result[[2]],should)
+	
+	# test 4: with referenceCurrency, without formatWidth
+	result <- as.character(positions,formatWidth=FALSE,referenceCurrency=new("Currency","USD"))
+	should <- "Bond / EUR / 92'896.60 / 20130603 - 3.625% Pfizer 03-06-13 / USD / 129'163.43"
+	checkEquals(result[[2]],should)
 }

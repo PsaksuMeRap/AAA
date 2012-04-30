@@ -26,8 +26,8 @@ setMethod("Apply",
 		signature(x="CheckString"),
 		function(x,positions,logFile,referenceCurrency=new("Currency","CHF")) {
 			# compute the total value of the positions
-			positionsValue <- sum(positions)		
-			
+			positionsValue <- sum(positions,referenceCurrency)		
+browser()			
 			# parse the checkString
 			checkStringParsed <- parser(x) 
 			directiveString <- checkStringParsed@directiveString
@@ -51,7 +51,7 @@ setMethod("Apply",
 			
 			percentageValue <- paste(formatC(percentageValue,digits=2,format="f"),"%",sep="")
 			
-			extractedPositionsValue <- sum(extractedPositions)
+			extractedPositionsValue <- sum(extractedPositions,referenceCurrency)
 			
 			fakePosition <- new("Position",id=-1,quantity=1,value=extractedPositionsValue,security=new("Unclassified"))
 			
@@ -74,7 +74,7 @@ setMethod("Apply",
 				cat(paste("check:",checkResult,"->", x),
 						file=logFile,sep="\n",append=TRUE)
 				
-				positionsToBePrinted  <- as.character(extractedPositions)
+				positionsToBePrinted  <- as.character(extractedPositions,formatWidth=TRUE,referenceCurrency=referenceCurrency)
 				result$positions <- positionsToBePrinted
 				
 				for (p in positionsToBePrinted) {	

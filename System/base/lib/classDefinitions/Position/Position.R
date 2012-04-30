@@ -12,62 +12,6 @@ setClass("Position",representation(id="Id",security="Security",
 				quantity="Quantity",value="Money"))
 
 
-# crea il metodo che formatta e raccoglie i campi da stampare
-
-setGeneric("fieldsToPrint",def=function(position,width) standardGeneric("fieldsToPrint"))
-
-setMethod("fieldsToPrint",signature(position="Position"),
-		function(position,width=list(empty=TRUE)) {
-			# this function returns a named list with the formatted strings
-			fields <- list()
-			
-			fields$securityClassName <- is(position@security)[1]
-			fields$currency <- as.character(position@value@currency)
-			
-			# format the security class name
-			if (is.element("securityClassName",names(width))) {
-				nbChar <- nchar(fields$securityClassName)
-				fields$securityClassName <- paste(fields$securityClassName,paste(rep(" ", width[["securityClassName"]] - nbChar),collapse=""),sep="")
-			}
-			
-			if (is.element("amount",names(width))) {	
-				fields$amount <- formatC(position@value@amount,width=width[["amount"]])
-			} else {
-				fields$amount <- formatC(position@value@amount)
-			}
-			fields$name <- position@security@name
-			
-			# il codice sottostante non riguarda la posizione!
-			#if (exists("explodeString",envir=position)) {
-			#	fields$explodeString <- position$explodeString
-			#}
-			
-			return(fields)	
-			
-		}
-)
-
-
-setMethod("as.character","Position", 
-		function(x,width=list(empty=TRUE)) {	
-			if (missing(width)) width=list(empty=TRUE)
-			
-			f <- fieldsToPrint(x,width)
-			
-			string <- paste(f,collapse=" / ")
-			
-			return(string)
-		}
-)
-
-
-setMethod("print","Position",
-		function(x,width=list(empty=TRUE)) {
-			print(as.character(x,width=width))
-		}
-)
-
-
 setMethod("/",signature(e1="Position",e2="Money"),
 		function(e1,e2) {
 			if (e2@amount==0) {
@@ -89,5 +33,86 @@ setMethod("reweight",signature(x="Position"),
 			position@value <- x@value * weight
 			position@quantity <- weight * x@quantity
 			return(position)
+		}
+)
+
+
+# crea il metodo che formatta e raccoglie i campi da stampare
+
+setGeneric("fieldsAsCharacter",def=function(x,...) standardGeneric("fieldsAsCharacter"))
+
+setMethod("fieldsAsCharacter",signature(x="Position"),
+		function(x,referenceCurrency) {
+			# this function returns a named vector with the fields converted to strings
+			fields <- vector(mode="character",length = 4)
+			names(fields) <- c("securityClassName","currency","amount","securityName")
+			
+			fields["securityClassName"] <- is(x@security)[1]
+			fields["currency"] <- as.character(x@value@currency)
+			fields["amount"] <- formatC(x@value@amount)
+			fields["securityName"] <- x@security@name
+			if (!missing(referenceCurrency)) {
+				fields["referenceCurrency"] <- as.character(referenceCurrency)
+				fields["referenceCurrencyAmount"] <- formatC(exchange(x@value,referenceCurrency)@amount)
+			}
+			return(fields)
+		}
+)
+
+#setGeneric("fieldsToPrint",def=function(position,width,...) standardGeneric("fieldsToPrint"))
+
+#setMethod("fieldsToPrint",signature(position="Position"),
+#		function(position,width=list(empty=TRUE),referenceCurrency) {
+#			# this function returns a named list with the formatted strings
+#			fields <- list()
+#			
+#			fields$securityClassName <- is(position@security)[1]
+#			fields$currency <- as.character(position@value@currency)
+#			
+#			# format the security class name
+#			if (is.element("securityClassName",names(width))) {
+#				nbChar <- nchar(fields$securityClassName)
+#				fields$securityClassName <- paste(fields$securityClassName,paste(rep(" ", width[["securityClassName"]] - nbChar),collapse=""),sep="")
+#			}
+#			
+#			if (is.element("amount",names(width))) {	
+#				fields$amount <- formatC(position@value@amount,width=width[["amount"]])
+#			} else {
+#				fields$amount <- formatC(position@value@amount)
+#			}
+#			if (!missing(referenceCurrency)) {
+#				fields$referenceCurrency <- referenceCurrency
+#				fields$amountInReferencecurrency <- formatC(exchange(position@value,referenceCurrency)@amount)
+#			}
+#			fields$name <- position@security@name
+#			
+#			return(fields)	
+#			
+#		}
+#)
+
+
+setMethod("as.character","Position", 
+		function(x,referenceCurrency) {	
+			if (missing(referenceCurrency)) {
+				f <- fieldsAsCharacter(x)				
+			} else {
+				f <- fieldsAsCharacter(x,referenceCurrency)					
+			}
+			
+			string <- paste(f,collapse=" / ")
+			
+			return(string)
+		}
+)
+
+
+setMethod("print","Position",
+		function(x,referenceCurrency) {
+			if (missing(referenceCurrency)) {
+				print(as.character(x))
+			} else {
+				print(as.character(x),referenceCurrency)
+			}
 		}
 )

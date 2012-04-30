@@ -30,12 +30,6 @@ test.selectionCriteriumFactory <- function() {
 	checkEquals(SC1@values,c("JPY","EUR","USD"))
 	checkEquals(SC1@negation,TRUE)
 	
-	# test an exception, i.e. non existing selection criterium	
-	factorString <- new("FactorString","ideal:equity")
-	factorStringParsed <- split(factorString)
-	
-	checkException(selectionCriteriumFactory(factorStringParsed))
-	
 	# test an absolute amount selection criterium	
 	factorString <- new("FactorString","amount:<=100.3CHF")
 	factorStringParsed <- split(factorString)
@@ -60,4 +54,16 @@ test.selectionCriteriumFactory <- function() {
 	
 	checkEquals(SC1@negation,TRUE)
 
+}
+
+
+test.shouldFailWithUnexistingFactor <- function() {
+	
+	
+	# test an exception, i.e. non existing selection criterium	
+	factorString <- new("FactorString","ideal:equity")
+	factorStringParsed <- split(factorString)
+	
+	checkException(selectionCriteriumFactory(factorStringParsed))
+	
 }

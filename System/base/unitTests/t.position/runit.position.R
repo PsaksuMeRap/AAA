@@ -4,40 +4,6 @@
 ###############################################################################
 
 
-test.shouldReturnFieldsToPrint <- function() {
-	# uses a default method
-	source("./unitTests/utilities/createRepositoryPositions.R")
-	repoPosition <- createRepositoryPositions()
-	
-	unclassified <- repoPosition$unclassified1
-	result <- fieldsToPrint(unclassified,list(empty=TRUE))
-	should <- list(securityClassName="Unclassified",
-			currency="CHF",
-			amount="123.55",
-			name="Security not classified")
-	
-	checkEquals(result,should)
-}
-
-test.shouldTransformAs.character <- function() {
-	
-	# uses a default method
-	source("./unitTests/utilities/createRepositoryPositions.R")
-	repoPosition <- createRepositoryPositions()
-	
-	unclassified <- repoPosition$unclassified1
-	result <- as.character(unclassified)
-	
-	checkEquals(result,"Unclassified / CHF / 123.55 / Security not classified")
-	
-	# now check with some width requirements
-	width=list(securityClassName=20,amount=12)
-	result <- as.character(unclassified,width)
-	checkEquals(result,"Unclassified         / CHF /       123.55 / Security not classified")
-	
-}
-
-
 test.shouldDivedeByAMoney <- function() {
 	
 	# exchange rates required for position initialization
@@ -105,4 +71,57 @@ test.shouldReweight <- function() {
 	checkEquals(p2New@accruedInterest,p2@accruedInterest*0.4)
 	
 	if (!is.null(repository)) repositories$exchangeRates <- repository
+}
+
+
+test.shouldFieldsAsCharacter <- function() {
+	
+	# exchange rates required for position initialization
+	# initialize exchange rates
+	repository <- repositories$exchangeRates
+	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	testRepository <- createExchangeRatesTestRepository() 
+	repositories$exchangeRates <- testRepository
+	# exchange rate USD-CHF: 0.9627
+	# exchange rate EUR-CHF: 1.33853808
+	
+	# initialize the position
+	source("./unitTests/utilities/createRepositoryPositions.R")
+	repo <- createRepositoryPositions()
+	
+	p1 <- repo$equity1 # 88'205 chf 
+	p2 <- repo$bond1 # 92896.6 eur 
+	
+	# test 1
+	p1Text <-  fieldsAsCharacter(p1)
+	checkEquals(p1Text[["securityClassName"]],"Equity")
+	checkEquals(p1Text[["currency"]],as.character(p1@security@currency))
+	checkEquals(p1Text[["securityName"]],p1@security@name)
+	
+	# test 2
+	p2Text <- fieldsAsCharacter(p2,referenceCurrency=new("Currency","CHF"))
+	checkEquals(p2Text[["securityClassName"]],"Bond")
+	checkEquals(p2Text[["currency"]],as.character(p2@security@currency))
+	checkEquals(p2Text[["securityName"]],p2@security@name)
+	checkEquals(p2Text[["referenceCurrency"]],"CHF")
+	
+	if (!is.null(repository)) repositories$exchangeRates <- repository
+}
+
+
+test.shouldAs.character <- function() {
+	
+	# uses a default method
+	source("./unitTests/utilities/createRepositoryPositions.R")
+	repoPosition <- createRepositoryPositions()
+	
+	unclassified <- repoPosition$unclassified1
+	result <- as.character(unclassified)
+	
+	checkEquals(result,"Unclassified / CHF / 123.55 / Security not classified")
+	
+	# now check with some reference currency)
+	result <- as.character(unclassified,referenceCurrency=new("Currency","EUR"))
+	checkEquals(result,"Unclassified / CHF / 123.55 / Security not classified / EUR / 92.30")
+	
 }
