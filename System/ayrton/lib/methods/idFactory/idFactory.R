@@ -60,7 +60,9 @@ setMethod("idFactory",signature(origin="AyrtonPosition"),
 			## 48,Strutturati_EQ
 			## 49,Strutturati_FI
 			## 50,Futures_EQ
-			## 51,Unclassified"
+			## 51,ETF_commodities
+			## 52,Credit_linked_note
+			## 53,Unclassified"
 			
 
 			if (is.na(origin@ID_AAA)) {

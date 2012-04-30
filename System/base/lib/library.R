@@ -57,6 +57,7 @@ source("./base/lib/classDefinitions/Security/Depositi_a_termine.R")
 source("./base/lib/classDefinitions/Security/Floating_rate_notes.R")
 source("./base/lib/classDefinitions/Security/Fondi_misti.R")
 source("./base/lib/classDefinitions/Security/Fondi_mercato_monetario.R")
+source("./base/lib/classDefinitions/Security/Credit_linked_note.R")
 source("./base/lib/classDefinitions/Security/Diritti_aumento_capitale_azionario.R")
 
 #source("./base/lib/classDefinitions/SelectionCriterium/SelectionCriterium.R")

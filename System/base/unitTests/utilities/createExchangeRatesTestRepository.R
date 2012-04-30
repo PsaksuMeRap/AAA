@@ -5,6 +5,7 @@
 
 
 createExchangeRatesTestRepository <- function() {
+	source("./lib/repository.R")
 	source("./unitTests/utilities/createExchangeRatesVector.R")
 	
 	rates <- createExchangeRatesVector()

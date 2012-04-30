@@ -3,7 +3,6 @@
 # Author: claudio
 ###############################################################################
 
-
 # import the exchange rates
 if(.Platform$OS.type=="windows") {
 	home <- "\\\\usi/dfs/Utenti/O/ortellic/My Documents/workspace/AAA/System/base/"

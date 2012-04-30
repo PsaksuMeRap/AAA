@@ -10,9 +10,9 @@ library("RUnit")
 library("tcltk")
 
 if(.Platform$OS.type=="windows") {
-	home <- "\\\\usi/dfs/Utenti/O/ortellic/My Documents/workspace/AAA/Sistema"
+	home <- "\\\\usi/dfs/Utenti/O/ortellic/My Documents/workspace/AAA/System/"
 } else {
-	home <- "/home/claudio/workspace/AAA/Sistema/"
+	home <- "/home/claudio/workspace/AAA/System/"
 }
 
 setwd(home)
@@ -20,7 +20,9 @@ setwd(home)
 stringsAsFactors = FALSE
 repositories <- new.env()
 
-source("./lib/library.R")
+source("./base/lib/library.R")
+source("./ayrton/lib/library.R")
+source("./riskman/lib/library.R")
 ## -- fine setup
 
 ## -- inizio procedura controllo - parte generale
@@ -51,7 +53,7 @@ if (FALSE) {
 	# togli il 18 gennaio e 19 maggio
 	
 	dates <- c(as.Date("2011-09-14"),as.Date("2011-09-15"),as.Date("2011-09-16"))
-	dates <- c(as.Date("2012-02-07"))
+	dates <- c(as.Date("2012-04-09"))
 	for (date in as.character(dates)) {
 		print(date)
 		# controlla che la data sia dopo il "2011-05-31" altrimenti togli il fondo globalEconomy
@@ -72,7 +74,6 @@ if (FALSE) {
 	fundPortfolios <- filterLists(dati,"Cliente",value=fundsOwners)
 	
 	fundPortfolios <- portfoliosFactory(fundPortfolios)
-	
 	
 	AyrtonTestSuite <- testSuiteFactory(testSuiteName="Fondi OpenCapital",directories="./FondiNew")
 

@@ -3,4 +3,5 @@
 # Author: claudio
 ###############################################################################
 
-setGeneric("createPosition", def=function(security,origin) standardGeneric("createPosition"))
+setClass("Credit_linked_note",representation(currency="Currency",name="character",id="Id"),contains="Security") 
+

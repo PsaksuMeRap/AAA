@@ -3,6 +3,19 @@
 # Author: claudio
 ###############################################################################
 
+setGeneric("createPosition",
+		useAsDefault=function(security,origin) {
+			id <- 10.2
+			quantity <- origin@Saldo
+			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
+			value <- repositories$exchangeRates$exchange(value,security@currency)
+			position <- new("Position",id=id,security=security,
+					quantity=quantity,value=value)
+			
+			return(position)
+		}
+)
+
 setMethod("createPosition",signature(security="NULL",origin="AyrtonPosition"),
 		function(security,origin) {
 			# if security is of class NULL, i.e. from an AccruedInterest
@@ -91,3 +104,30 @@ setMethod("createPosition",signature(security="Fondi_obbligazionari",origin="Ayr
 		}
 )
 
+#setMethod("createPosition",signature(security="ETF_commodities",origin="AyrtonPosition"),
+#		function(security,origin) {
+#			
+#			id <- 10.2
+#			quantity <- origin@Saldo
+#			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
+#			value <- repositories$exchangeRates$exchange(value,security@currency)
+#			position <- new("ETF_commodities",id=id,security=security,
+#					quantity=quantity,value=value)
+#			
+#			return(position)
+#		}
+#)
+
+#setMethod("createPosition",signature(security="Credit_linked_note",origin="AyrtonPosition"),
+#		function(security,origin) {
+#			
+#			id <- 10.2
+#			quantity <- origin@Saldo
+#			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
+#			value <- repositories$exchangeRates$exchange(value,security@currency)
+#			position <- new("Credit_linked_note",id=id,security=security,
+#					quantity=quantity,value=value)
+#			
+#			return(position)
+#		}
+#)

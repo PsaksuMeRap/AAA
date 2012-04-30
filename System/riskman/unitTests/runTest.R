@@ -3,6 +3,8 @@
 # Author: claudio
 ###############################################################################
 
+source("./riskman/lib/library.R")
+
 if(.Platform$OS.type=="windows") {
 	home <- "\\\\usi/dfs/Utenti/O/ortellic/My Documents/workspace/AAA/System/riskman/"
 } else {
@@ -10,6 +12,7 @@ if(.Platform$OS.type=="windows") {
 }
 
 setwd(home)
+
 
 source("./unitTests/utilities/createExchangeRatesTestRepository.R")
 testRepository <- createExchangeRatesTestRepository() 
