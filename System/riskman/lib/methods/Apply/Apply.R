@@ -27,7 +27,7 @@ setMethod("Apply",
 		function(x,positions,logFile,referenceCurrency=new("Currency","CHF")) {
 			# compute the total value of the positions
 			positionsValue <- sum(positions,referenceCurrency)		
-browser()			
+			
 			# parse the checkString
 			checkStringParsed <- parser(x) 
 			directiveString <- checkStringParsed@directiveString
