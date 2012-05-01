@@ -49,3 +49,34 @@ setMethod("setup",signature(x="MailBox",y="PostOffice"),
 		}
 )
 
+lockMailBox <- function(mailBox,PostOffice) {
+	# verify that the postOffice exists
+	advisorEmail <- mailBox@advisor@email
+	directoriesInPostOffice <- dir(file.path(PostOffice@absolutePath,"postOffice"))
+	if (!is.element("inbox",directoriesInPostOffice)) {
+		message <- paste("The postOffice",file.path(PostOffice@absolutePath,"postOffice"), "is not available.\n")
+		message <- paste(message,"Impossible to lock the mailBox of ",advisorEmail,sep="")
+		stop(message)
+	}
+	directoriesInMailBox <- dir(file.path(PostOffice@absolutePath,"postOffice",mailBox@advisor@folderName))
+	if (!is.element("inbox",directoriesInMailBox)) {
+		message <- paste("The mailBox of",advisorEmail, "is not available.\n")
+		message <- paste(message," Impossible to lock the mailBox of ",advisorEmail,".",sep="")
+		stop(message)
+	}
+	
+	path <- file.path(PostOffice@absolutePath,"postOffice",mailBox@advisor@folderName)
+	# check that the lock is not still in place
+	stillLocked <- file.exists(file.path(path,"lock"))
+	
+	# lock the mailBox if necessary
+	if (!stillLocked) { 
+		created <- file.create(file.path(path,"lock"),showWarnings=FALSE)
+		if (!created) {
+			message <- paste("Impossible to create the lock for the mailBox of ",mailBox@advisor,"\n",sep="")
+			message <- paste(message,"Unrecoverable error. Procedure stopped here!")
+			stop(message)
+		}
+	}
+	
+}
