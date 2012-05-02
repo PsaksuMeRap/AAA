@@ -30,19 +30,28 @@ setMethod("join",signature(x="Portfolio",y="Portfolio"),
 )
 
 setMethod("print","Portfolio",
-		function(x) {
+		function(x,formatWidth=TRUE,withReferenceCurrency=FALSE) {
+
 			print(paste("Owner:",x@owner))
 			print(paste("Reference currency:",x@referenceCurrency))
-			a <- sapply(as(x@.Data,"Positions"),print)
+			if (withReferenceCurrency) {
+				a <- sapply(as(x@.Data,"Positions"),print,formatWidth,referenceCurrency=x@referenceCurrency)
+			} else {
+				a <- sapply(as(x@.Data,"Positions"),print,formatWidth)	
+			}
 			return(invisible())
 		}
 )
 
 setMethod("as.character","Portfolio",
-		function(x,width=list(empty=TRUE)) {
+		function(x,withReferenceCurrency=FALSE) {
 			strings <- paste("Owner:",x@owner)
 			strings[2] <- paste("Reference currency:",x@referenceCurrency)
-			strings <- c(strings,sapply(as(x@.Data,"Positions"),as.character,x@referenceCurrency))
+			if (withReferenceCurrency) {
+				strings <- c(strings,sapply(as(x@.Data,"Positions"),as.character,x@referenceCurrency))
+			} else {
+				strings <- c(strings,sapply(as(x@.Data,"Positions"),as.character))
+			}
 			return(strings)
 		}
 )

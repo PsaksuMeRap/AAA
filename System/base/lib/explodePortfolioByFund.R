@@ -59,7 +59,7 @@ explodePositionsByFunds <- function(positions,fundsDb,fundPortfolios) {
 }
 
 explodePortfolioByFunds <- function(portfolio,fundsDb,fundPortfolios) {	
-	
+
 	lengthPortfolio <- length(portfolio)
 	if (lengthPortfolio==0) return(portfolio)
 	
@@ -73,13 +73,18 @@ explodePortfolioByFunds <- function(portfolio,fundsDb,fundPortfolios) {
 	for (remove in toRemove.l) toRemove <- toRemove | remove
 
 	# add the exploded positions to the portfolio
-	explodedPositions <- explodePositionsByFunds(portfolio,fundsDb,fundPortfolios) 
-	portfolio@.Data <- new("Positions",c(portfolio[!toRemove],explodedPositions))
+	if (any(toRemove)) {
+		explodedPositions <- explodePositionsByFunds(portfolio,fundsDb,fundPortfolios) 
+		portfolio@.Data <- new("Positions",c(portfolio[!toRemove],explodedPositions))
+	}
 	return(portfolio)
 }
 
 
 explodeAllPortfoliosByAllFunds <- function(portfolios) {
 	fundsDb <- create_fundsDB()
-	invisible(lapply(portfolios,explodePortfolioByAllFunds,fundsDb,fundPortfolios=portfolios))
+	fundPortfolios <- filterLists(portfolios,by="owner",value=extractFromList(fundsDb,"owner"))
+	
+	invisible(new("Portfolios",lapply(portfolios,explodePortfolioByFunds,fundsDb,fundPortfolios=fundPortfolios)))
 }
+

@@ -102,10 +102,11 @@ setMethod("as.character","Positions",
 
 setMethod("print","Positions",
 		function(x,formatWidth=TRUE,referenceCurrency) {
+
 			if (missing(referenceCurrency)) {
-				print(as.character(x,formatWidth))
+				print(as.character(x,formatWidth=formatWidth))
 			} else {
-				print(as.character(x,formatWidth,referenceCurrency))
+				print(as.character(x,formatWidth=formatWidth,referenceCurrency))
 			}
 		}
 )

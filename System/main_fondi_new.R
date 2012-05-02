@@ -8,6 +8,7 @@ rm(list=ls(all=TRUE))
 library("RODBC")
 library("RUnit")
 library("tcltk")
+library("stringr")
 
 if(.Platform$OS.type=="windows") {
 	home <- "\\\\usi/dfs/Utenti/O/ortellic/My Documents/workspace/AAA/System/"
@@ -53,7 +54,7 @@ if (FALSE) {
 	# togli il 18 gennaio e 19 maggio
 	
 	dates <- c(as.Date("2011-09-14"),as.Date("2011-09-15"),as.Date("2011-09-16"))
-	dates <- c(as.Date("2012-04-09"))
+	dates <- c("2012-04-13")
 	for (date in as.character(dates)) {
 		print(date)
 		# controlla che la data sia dopo il "2011-05-31" altrimenti togli il fondo globalEconomy

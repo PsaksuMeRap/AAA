@@ -35,9 +35,9 @@ setMethod("join",signature(x="Portfolio",y="Portfolios"),
 
 
 setMethod("print","Portfolios",
-		function(x,width=list(empty=TRUE)) {
+		function(x,formatWidth=TRUE,withReferenceCurrency=FALSE) {
 			for (portfolio in x) {
-				print(portfolio,width=width)
+				print(portfolio,formatWidth=formatWidth,withReferenceCurrency)
 				print("")
 			}
 		}

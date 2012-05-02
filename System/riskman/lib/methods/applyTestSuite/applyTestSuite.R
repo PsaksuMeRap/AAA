@@ -51,7 +51,7 @@ setMethod("applyTestSuite",signature(x="TestSuiteParsed",po="Portfolio"),
 
 setMethod("applyTestSuite",signature(x="TestSuiteParsed",po="Positions"),
 		function(x,po,valuationDate,referenceCurrency=new("Currency","CHF")) { 		
-	
+browser()
 			if (missing(valuationDate)) valuationDate <- Sys.Date()
 			
 			# crea output infos
