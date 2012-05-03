@@ -4,7 +4,7 @@
 ###############################################################################
 
 test.shouldFailOnLockNoPostOffice <- function() {
-	absolutePath <- file.path(getwd(),"adviceManagement","unitTests","directories")
+	absolutePath <- file.path(getwd(),,"unitTests","directories")
 	postOffice <- new("PostOffice",absolutePath=absolutePath)
 	
 	advisor <- new("Advisor",name="testAdvisor1",folderName="testAdvisor1",email="claudio.ortelli@usi.ch")
@@ -15,7 +15,7 @@ test.shouldFailOnLockNoPostOffice <- function() {
 
 
 test.shouldFailOnLockNoPostOffice <- function() {
-	absolutePath <- file.path(getwd(),"adviceManagement","unitTests","directories")
+	absolutePath <- file.path(getwd(),"unitTests","directories")
 	postOffice <- new("PostOffice",absolutePath=absolutePath)
 	setup(postOffice)
 	
@@ -24,12 +24,16 @@ test.shouldFailOnLockNoPostOffice <- function() {
 	
 	checkException(lockMailBox(mailBox,postOffice))
 	
-	unlink(file.path(absolutePath,"postOffice"),recursive=TRUE)
+	# remove the directory postOffice
+	tmp <- getwd()
+	setwd(absolutePath)
+	unlink("postOffice",recursive=TRUE)
+	setwd(tmp)
 }
 
 test.shouldFailOnNoPermissions <- function() {
 	
-	absolutePath <- file.path(getwd(),"adviceManagement","unitTests","directories")
+	absolutePath <- file.path(getwd(),"unitTests","directories")
 	postOffice <- new("PostOffice",absolutePath=absolutePath)
 	setup(postOffice)
 	
@@ -38,19 +42,23 @@ test.shouldFailOnNoPermissions <- function() {
 	setup(x=mailBox,y=postOffice)
 	
 	# change the permissions 
-	Sys.chmod(paths=file.path(absolutePath,"postOffice","testAdvisor1"), mode = "0222", use_umask=TRUE)
+	Sys.chmod(paths=file.path(absolutePath,"postOffice","testAdvisor1"), mode = "0200", use_umask=FALSE)
 	checkException(lockMailBox(mailBox,postOffice))
 		
 	# restore previous situation
 	Sys.chmod(paths=file.path(absolutePath,"postOffice","testAdvisor1"), mode = "0775", use_umask=TRUE)
-	unlink(file.path(absolutePath,"postOffice"),recursive=TRUE)
+	tmp <- getwd()
+	setwd(absolutePath)
+	unlink("postOffice",recursive=TRUE)
+	setwd(tmp)
+	
 	
 }
 
 
 test.shouldFailOnNoPermissions <- function() {
 	
-	absolutePath <- file.path(getwd(),"adviceManagement","unitTests","directories")
+	absolutePath <- file.path(getwd(),"unitTests","directories")
 	postOffice <- new("PostOffice",absolutePath=absolutePath)
 	setup(postOffice)
 	
@@ -64,6 +72,10 @@ test.shouldFailOnNoPermissions <- function() {
 	checkEquals(fileExists,TRUE)
 	
 	# restore previous situation
-	unlink(file.path(absolutePath,"postOffice"),recursive=TRUE)
+	tmp <- getwd()
+	setwd(absolutePath)
+	unlink("postOffice",recursive=TRUE)
+	setwd(tmp)
+	
 	
 }

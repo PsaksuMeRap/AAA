@@ -14,6 +14,7 @@ setGeneric("setup",def=function(x,y,...) standardGeneric("setup"))
 
 setMethod("setup",signature(x="PostOffice",y="missing"),
 		definition=function(x) {
+
 			# verify that the postOffice does not exists
 			listOfDirectories <- dir(path=x@absolutePath)
 			if (is.element("postOffice",listOfDirectories)) {

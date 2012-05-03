@@ -4,9 +4,9 @@
 ###############################################################################
 
 if(.Platform$OS.type=="windows") {
-	home <- "\\\\usi/dfs/Utenti/O/ortellic/My Documents/workspace/AAA/System/adviceManagement/"
+	home <- "\\\\usi/dfs/Utenti/O/ortellic/My Documents/workspace/AAA/System/base/"
 } else {
-	home <- "/home/claudio/workspace/AAA/System/adviceManagement/"
+	home <- "/home/claudio/workspace/AAA/System/base/"
 }
 
 setwd(home)
@@ -14,6 +14,14 @@ setwd(home)
 source("./unitTests/utilities/createExchangeRatesTestRepository.R")
 testRepository <- createExchangeRatesTestRepository() 
 repositories$exchangeRates <- testRepository
+
+if(.Platform$OS.type=="windows") {
+	home <- "\\\\usi/dfs/Utenti/O/ortellic/My Documents/workspace/AAA/System/adviceManagement/"
+} else {
+	home <- "/home/claudio/workspace/AAA/System/adviceManagement/"
+}
+
+setwd(home)
 
 ## test globale
 dirs = c(
