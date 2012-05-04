@@ -77,7 +77,11 @@ lockMailBox <- function(mailBox,PostOffice) {
 			message <- paste("Impossible to create the lock for the mailBox of ",advisorEmail,"\n",sep="")
 			message <- paste(message,"Unrecoverable error. Procedure stopped here!")
 			stop(message)
+		} else {
+			return(TRUE)
 		}
+	} else {
+		return(FALSE)
 	}
 	
 }
