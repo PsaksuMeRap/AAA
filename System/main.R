@@ -10,14 +10,6 @@ library("RUnit")
 library("tcltk")
 library("stringr")
 
-if(.Platform$OS.type=="windows") {
-	home <- "\\\\usi/dfs/Utenti/O/ortellic/My Documents/workspace/AAA/System/"
-} else {
-	home <- "/home/claudio/workspace/AAA/System/"
-}
-
-setwd(home)
-
 stringsAsFactors = FALSE
 repositories <- new.env()
 

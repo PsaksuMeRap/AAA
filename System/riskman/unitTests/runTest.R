@@ -5,18 +5,16 @@
 
 source("./riskman/lib/library.R")
 
-if(.Platform$OS.type=="windows") {
-	home <- "\\\\usi/dfs/Utenti/O/ortellic/My Documents/workspace/AAA/System/riskman/"
-} else {
-	home <- "/home/claudio/workspace/AAA/System/riskman/"
-}
 
-setwd(home)
-
+# set the working directory to base
+mySetwd("base")
 
 source("./unitTests/utilities/createExchangeRatesTestRepository.R")
 testRepository <- createExchangeRatesTestRepository() 
 repositories$exchangeRates <- testRepository
+
+# set the working directory to riskman
+mySetwd("riskman")
 
 ## test directories
 dirs = c(
@@ -36,10 +34,5 @@ testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
 warnings()
 
 
-if(.Platform$OS.type=="windows") {
-	home <- "\\\\usi/dfs/Utenti/O/ortellic/My Documents/workspace/AAA/System/"
-} else {
-	home <- "/home/claudio/workspace/AAA/System/"
-}
-
-setwd(home)
+# set the working directory to System
+mySetwd()

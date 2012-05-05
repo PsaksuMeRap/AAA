@@ -18,3 +18,19 @@ removeStartEndSpaces <- function(string) {
 	result <- sub("[[:blank:]]+$", "", result)
 	return(result)
 }
+
+mySetwd <- function(directory) {
+	if(.Platform$OS.type=="windows") {
+		home <- "\\\\usi/dfs/Utenti/O/ortellic/My Documents/workspace/AAA/System/"
+	} else {
+		home <- "/home/claudio/workspace/AAA/System/"
+	}
+	if(missing(directory)) {
+		setwd(home)
+		path <- home
+	} else {
+		path <- file.path(home,directory)
+		setwd(path)
+	}
+	return(invisible(path))
+}
