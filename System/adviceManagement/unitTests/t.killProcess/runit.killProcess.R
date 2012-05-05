@@ -11,22 +11,28 @@ test.shouldKillRunningRbatchProcess <- function() {
 	# the kill command executed
 	
 	directory <- file.path(getwd(),"unitTests","t.killProcess")
+	directory <- file.path(getwd(),"adviceManagement","unitTests","t.killProcess")
 	fileName <- file.path(directory,"stop")
-	
-	# start the batch R file
-	
-	# identify the PID
 	
 	# create the file "stop"
 	tmp <- getwd()
 	setwd(directory)
 	
-	file.create()
+	# start the batch R file
+	system("R --no-save < batch.R", wait=FALSE)
+	
+	# identify the PID
+	pidOfR <- system("pidof R",intern=TRUE)
+	Sys.sleep(6)
+	
+	# create the file "stop"
+	file.create("stop")
 	setwd(tmp)
 	
-	# kill the process
+	Sys.sleep(6)
 	
 	# verify the success of the kill
+	NewPidOfR <- system("pidof R",intern=TRUE,)
 	
 	#remove the stop file
 }
