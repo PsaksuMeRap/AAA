@@ -22,8 +22,12 @@ get_PID <- function(imageName) {
 	} else {
 		if (missing(imageName)) imageName <- "R"
 
-		PIDs <- system(paste("pidof",imageName),intern=FALSE,wait=TRUE)
-		if (PIDs==1) return(numeric(0)) else return(PIDs) 
+		PIDs <- system(paste("pidof",imageName),intern=TRUE,wait=TRUE)
+		
+		if (length(PIDs)==0) return(numeric(0))
+		PIDs <- as.integer(unlist(strsplit(PIDs,split=" ")))
+		
+		return(PIDs) 
 		
 	}
 	
