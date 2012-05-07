@@ -25,6 +25,7 @@ setMethod("Apply",
 setMethod("Apply",
 		signature(x="CheckString"),
 		function(x,positions,logFile,referenceCurrency=new("Currency","CHF")) {
+
 			# compute the total value of the positions
 			positionsValue <- sum(positions,referenceCurrency)		
 			
@@ -34,7 +35,7 @@ setMethod("Apply",
 			constraint <- checkStringParsed@constraint
 	
 			# utilizza la directiveString
-			if (!is.na(directiveString)) positions <- apply(directiveString,positions)
+			if (!is.na(directiveString)) positions <- Apply(directiveString,positions)
 		
 			extractedPositions <- selector(checkStringParsed@selectionCriteriaList,positions)
 			

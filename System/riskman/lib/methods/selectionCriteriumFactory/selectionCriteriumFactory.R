@@ -38,8 +38,9 @@ selectionCriteriumFactory <- function(factorStringParsed) {
 	if (identical(factorStringParsed@criterium,"maturityHorizon")) {
 		values <- unlist(strsplit(factorStringParsed@values,","))
 		values <- removeStartEndSpaces(values)
+
 		selectionCriterium <- new("MaturityHorizonSelectionCriterium",
-				value=values,
+				values=values,
 				negation=factorStringParsed@negation
 		)
 		return(selectionCriterium)

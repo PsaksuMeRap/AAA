@@ -29,8 +29,6 @@ source("./riskman/lib/library.R")
 ## -- inizio procedura controllo - parte generale
 source("./odbc/connessioni.R")
 
-dati <- importDBPortfolioGenerale()
-
 repositories$politicaInvestimento <- create_repositoryPoliticaInvestimento()
 repositories$instruments <- create_repositoryInstruments()
 repositories$exchangeRates <- create_repositoryExchangeRates()
@@ -41,6 +39,7 @@ setwd(checkDirectory)
 
 
 ## -- inizializza la testSuite clienti privati
+
 
 clienti <- c(
 		"pippo3",
@@ -115,6 +114,7 @@ if (FALSE) {
 	
 	dates <- c(as.Date("2011-09-14"),as.Date("2011-09-15"),as.Date("2011-09-16"))
 	dates <- c("2012-04-13")
+	date <- dates
 	for (date in as.character(dates)) {
 		print(date)
 		# controlla che la data sia dopo il "2011-05-31" altrimenti togli il fondo globalEconomy

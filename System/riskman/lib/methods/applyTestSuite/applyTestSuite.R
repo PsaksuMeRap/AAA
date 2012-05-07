@@ -8,7 +8,7 @@ setGeneric("applyTestSuite",def=function(x,po,...) standardGeneric("applyTestSui
 
 setMethod("applyTestSuite",signature(x="TestSuiteParsed",po="Portfolios"),
 		function(x,po,valuationDate) { 		
-			
+
 			if (missing(valuationDate)) valuationDate <- Sys.Date()
 			
 			owners <- x@configLines[["testTarget"]]
@@ -31,13 +31,13 @@ setMethod("applyTestSuite",signature(x="TestSuiteParsed",po="Portfolios"),
 						unlist(lapply(portfolios,function(x)return(x@.Data)),recursive=FALSE))
 			}
 			
-			applyTestSuite(x,as(portfolio,"Positions"),valuationDate,portfolio@referenceCurrency)
+			applyTestSuite(x,portfolio,valuationDate)
 		}
 )
 
 setMethod("applyTestSuite",signature(x="TestSuiteParsed",po="Portfolio"),
 		function(x,po,valuationDate) { 		
-		
+	
 			if (missing(valuationDate)) valuationDate <- Sys.Date()
 			
 			owners <- x@configLines[["testTarget"]]
@@ -51,7 +51,7 @@ setMethod("applyTestSuite",signature(x="TestSuiteParsed",po="Portfolio"),
 
 setMethod("applyTestSuite",signature(x="TestSuiteParsed",po="Positions"),
 		function(x,po,valuationDate,referenceCurrency=new("Currency","CHF")) { 		
-browser()
+
 			if (missing(valuationDate)) valuationDate <- Sys.Date()
 			
 			# crea output infos
