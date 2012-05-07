@@ -17,24 +17,31 @@ test.shouldKillRunningRbatchProcess <- function() {
 	setwd(directory)
 	
 	# start the batch R file
-	system("R --no-save < batch.R", wait=FALSE)
-	
+	if(.Platform$OS.type=="windows") {
+		system("R.exe --no-save < batch.R", wait=FALSE)
+	} else {
+		system("R --no-save < batch.R", wait=FALSE)
+	}
 	# identify the PID
-	pidOfR <- system("pidof R",intern=TRUE)
+	pidOfR <- get_PID()
+	checkEquals(pidOfR>1,TRUE)
 	Sys.sleep(6)
 	
 	# create the file "stop"
 	file.create("stop")
-	setwd(tmp)
 	
-	Sys.sleep(6)
+	Sys.sleep(3)
 	
 	# verify the success of the kill
-	newPidOfR <- system("pidof R",intern=FALSE,wait=TRUE)
+	newPidOfR <- get_PID()
 	
-	checkEquals(newPidOfR,1)
+	checkEquals(newPidOfR,numeric(0))
 	#remove the stop file
-	system("rm stop")
+	file.remove("stop")
+	file.remove("logFile")
+	
+	# restore the origina working directory
+	setwd(tmp)
 }
 
 

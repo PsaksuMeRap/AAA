@@ -6,9 +6,10 @@
 continue <- TRUE
 logFile <- file(description="logFile",open="w")
 while(continue) {
-	Sys.sleep(5)
+	x <- 2
+	Sys.sleep(x)
 	continue <- !file.exists("stop")
-	cat("No stop. Wait 5 seconds more ... ",sep="\n",append=TRUE,file=logFile)
+	cat(paste("No stop. Wait",x,"seconds more ... "),sep="\n",append=TRUE,file=logFile)
 }
 cat("Stop current R session! ",sep="\n",append=TRUE,file=logFile)
-quit(save="no"
+quit(save="no")

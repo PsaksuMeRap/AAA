@@ -20,16 +20,16 @@ removeStartEndSpaces <- function(string) {
 }
 
 mySetwd <- function(directory) {
-	if(.Platform$OS.type=="windows") {
-		home <- "\\\\usi/dfs/Utenti/O/ortellic/My Documents/workspace/AAA/System/"
-	} else {
-		home <- "/home/claudio/workspace/AAA/System/"
-	}
+	#if(.Platform$OS.type=="windows") {
+		#home <- "\\\\usi/dfs/Utenti/O/ortellic/My Documents/workspace/AAA/System/"
+	#} else {
+	#	home <- "/home/claudio/workspace/AAA/System/"
+	#}
 	if(missing(directory)) {
-		setwd(home)
-		path <- home
+		setwd(systemOptions[["RUnitHome"]])
+		path <- systemOptions[["RUnitHome"]]
 	} else {
-		path <- file.path(home,directory)
+		path <- file.path(systemOptions[["RUnitHome"]],directory)
 		setwd(path)
 	}
 	return(invisible(path))
