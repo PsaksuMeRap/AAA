@@ -1,0 +1,13 @@
+adviceMan makes use of sendEmail, a simple program wich
+allows to send e-mail. It has been downloaded from
+http://caspian.dotconf.net/menu/Software/SendEmail/#download
+and installed to
+
+C:\Program Files\sendEmail
+
+Its folder has been added to the PATH variable of the system.
+
+Esempio:
+sendEmail -f claudio.ortelli@usi.ch -t claudio.ortelli@gmail.com 
+-m "funziona ... se è ben configurato" -u "test1 di connessione" 
+-s mail.usi.ch -xu utente -xp x83_9U2Q -a file.txt
