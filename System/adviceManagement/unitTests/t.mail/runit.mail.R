@@ -51,3 +51,26 @@ test.shouldSendEmailWithAttachment <- function() {
 	
 	setwd(tmp)
 }
+
+test.shouldAsCharacterMail <- function() {
+	mail <- new("Mail")
+	mail@from <- "claudio.ortelli@usi.ch"
+	mail@to <- "claudio.ortelli@gmail.com"
+	mail@subject <- "Test di trasmissione da R"
+	mail@message <- "Questo è un test di trasmissione da R con allegati."
+	mail@server <- "mail.usi.ch"
+	mail@attachments <- c("file1.txt","file2_da_allegare.R")
+	
+	string <- paste("from:",mail@from)
+	string[2] <- paste("to:",mail@to)
+	string[3] <- paste("subject:",mail@subject)
+	string[4] <- paste("message:",mail@message)
+	string[5] <- paste("attachments:",mail@attachments[1])
+	string[6] <- paste("attachments:",mail@attachments[2])
+	
+	should <- paste(string,collapse="\n")
+	result <- as.character(mail)
+	
+	checkEquals(result,should)
+	
+}

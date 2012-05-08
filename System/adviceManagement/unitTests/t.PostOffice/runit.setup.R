@@ -12,7 +12,7 @@ test.shouldSetupPostOffice <- function() {
 	setup(postOffice)
 	
 	checkEquals(dir(path=absolutePath),"postOffice")
-	checkEquals(dir(file.path(absolutePath,"postOffice")),c("inbox","outbox","sent"))
+	checkEquals(dir(file.path(absolutePath,"postOffice")),c("inbox","outbox","sent","trash"))
 	
 	# remove the directory postOffice
 	tmp <- getwd()

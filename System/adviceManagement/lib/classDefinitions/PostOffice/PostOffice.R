@@ -25,6 +25,7 @@ setMethod("setup",signature(x="PostOffice",y="missing"),
 				dir.create(file.path(x@absolutePath,"postOffice","inbox"))
 				dir.create(file.path(x@absolutePath,"postOffice","outbox"))
 				dir.create(file.path(x@absolutePath,"postOffice","sent"))
+				dir.create(file.path(x@absolutePath,"postOffice","trash"))
 				return(invisible())
 			}
 		}
@@ -42,8 +43,7 @@ setMethod("setup",signature(x="MailBox",y="PostOffice"),
 				# create the necessary directories
 				path <- file.path(y@absolutePath,"postOffice",x@advisor@folderName)
 				dir.create(path)
-				dir.create(file.path(path,"inbox"))
-				dir.create(file.path(path,"outbox"))
+				dir.create(file.path(path,"pending"))
 				dir.create(file.path(path,"sent"))
 				return(invisible())
 			}
