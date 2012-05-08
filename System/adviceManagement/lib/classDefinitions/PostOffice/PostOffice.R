@@ -19,13 +19,13 @@ setMethod("setup",signature(x="PostOffice",y="missing"),
 			listOfDirectories <- dir(path=x@absolutePath)
 			if (is.element("postOffice",listOfDirectories)) {
 				# we then assume that the postOffice has still been created
-				return() 
+				return(invisible()) 
 			} else {
 				dir.create(file.path(x@absolutePath,"postOffice"))
 				dir.create(file.path(x@absolutePath,"postOffice","inbox"))
 				dir.create(file.path(x@absolutePath,"postOffice","outbox"))
 				dir.create(file.path(x@absolutePath,"postOffice","sent"))
-				return()
+				return(invisible())
 			}
 		}
 )
@@ -45,7 +45,7 @@ setMethod("setup",signature(x="MailBox",y="PostOffice"),
 				dir.create(file.path(path,"inbox"))
 				dir.create(file.path(path,"outbox"))
 				dir.create(file.path(path,"sent"))
-				return()
+				return(invisible())
 			}
 		}
 )

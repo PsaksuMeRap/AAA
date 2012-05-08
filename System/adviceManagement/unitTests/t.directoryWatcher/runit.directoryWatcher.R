@@ -15,11 +15,9 @@ test.shouldWatchDirectory <- function() {
 		return(isEmpty)
 	}
 
-
 	while(isDirectoryEmpty()) {
 		Sys.sleep(5)
 	}
-	
-	
+
 }
 
