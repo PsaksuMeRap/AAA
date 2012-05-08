@@ -24,7 +24,7 @@ test.shouldKillRunningRbatchProcess <- function() {
 	}
 	# identify the PID
 	pidOfR <- get_PID()
-	checkEquals(pidOfR>1,TRUE)
+	
 	Sys.sleep(6)
 	
 	# create the file "stop"
