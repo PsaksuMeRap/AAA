@@ -25,7 +25,8 @@ sendEMail <- function(mail) {
 			"-m",shQuote(mail@message),
 			"-s",mail@server,
 			"-xu ortellic",
-			"-xp tega=01"
+			"-xp tega=01",
+			"-o message-charset=utf-8"
 	)
 	
 	if (length(mail@attachments)>0) {
