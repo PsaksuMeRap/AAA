@@ -74,7 +74,7 @@ test.shouldFailOnExistingLock <- function() {
 	
 	# create the lock and try to relock the directory
 	isCreated <- file.create(file.path(absolutePath,"postOffice","testAdvisor1","lock"),showWarnings=FALSE)
-	checkEquals(lockMailBox(mailBox,postOffice),FALSE)
+	checkException(lockMailBox(mailBox,postOffice))
 	
 	# restore previous situation
 	tmp <- getwd()

@@ -34,7 +34,7 @@ get_PID <- function(imageName) {
 }
 
 getNew_PIDs <- function(PIDs,existing_PIDs) {
-	browser()
+
 	if (length(PIDs)==0) return(numeric(0))
 	existing <- is.element(PIDs,existing_PIDs) 
 	return(PIDs[!existing])

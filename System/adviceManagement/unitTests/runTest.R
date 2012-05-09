@@ -20,8 +20,9 @@ mySetwd("adviceManagement")
 ## test globale
 dirs = c(
 		"./unitTests/t.PostOffice",
-		"./unitTests/t.sendStopToRProcess"#,
-		#"./unitTests/t.mail"
+		"./unitTests/t.sendStopToRProcess",
+		"./unitTests/t.detectRprocesses",
+		"./unitTests/t.mail"
 		)
 testsuite.lists <- defineTestSuite("Test adviceManagement",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
