@@ -8,6 +8,8 @@ library("RUnit")
 library("tcltk")
 library("stringr")
 
+# import the library
+source(file.path(getwd(),"adviceManagement","lib","library.R"))
 # set the name of the process
 name <- "main"
 # set the root directory
@@ -21,10 +23,6 @@ advisors <- new("Advisors")
 advisors@.Data[["GhidossiGlobalEquity"]] <- new("Advisor",name="GhidossiGlobalEquity",folderName="GhidossiGlobalEquity",email="reto.ghidossi@opencapital.ch")
 advisors@.Data[["MaggiDynamic"]] <- new("Advisor",name="MaggiDynamic",folderName="MaggiDynamic",email="maggi.sandro@")
 
-logger <- function(message) {
-	cat(paste(Sys.time()," from ",name,": ",message,"\n",sep=""))
-}
-
 
 # create the log file
 sink(file="riskman_log.txt")
@@ -36,6 +34,7 @@ logger("PostOffice created.")
 
 # check that no R processes are running and identify the PID of this program
 PID <- get_PID(imageName="Rterm.exe")
+PID <- get_PID(imageName="eclipse.exe")
 if (length(PID)>1) {
 	msg <- "Please close all running R/Rterm processes before starting a new one!"
 	ok <- tkmessageBox(message=msg,icon="warning",type="ok")
@@ -53,14 +52,15 @@ activeOrders <- data.frame(name="main",startTime=Sys.time(),fileName="",orderNam
 # start monitoring input and output directories
 
 existingFiles <- list.files(path=file.path(rootDir,"postOffice","input"))
-processedFiles <- list.files(path=file.path(rootDir,"postOffice","outbox"))
 
-T <- sys.time()+240
+T <- Sys.time()+240
 while(Sys.time()<T) {
+print("sleep 10 seconds")
 	sleepTime <- 10
 	if (length(existingFiles>0)) {
 		# sort the files
 		existingFiles <- sort(existingFiles)
+		
 		# log the arrival of the new files
 		msg <- "The following files have arrived:\n"
 		for (fileName in existingFiles) {
@@ -69,8 +69,11 @@ while(Sys.time()<T) {
 		logger(msg)
 		
 		for (fileName in existingFiles) {
+			#identify messageTye between: newAdvice,adviceConfirmation,preComplianceResult,postComplianceResult
+			messageType <- messageFactory(fileName)
+			
 			# identify the advisor (filename="yyyy-mm-dd hh:mm nome.csv")
-			messageFrom <- substring(fileName,17,nchar(fileName)-4)
+			messageFrom <- messageType[["From"]]
 			
 			# check if the corresponding mailBox is available
 			mailBoxExists <- is.element(messageFrom,postOffice@mailBoxes)
@@ -170,9 +173,29 @@ while(Sys.time()<T) {
 		}
 		logger(msg)
 		
+		postProcessing <- function(fileName) {
+			# is the pre-compliance ok?
+			if (isPrecomplianceOk) {
+				lockOnNewOrder(fileName)
+				# send e-mail ok
+				
+				# cp result in a specified folder for user
+				# mv from outbox and archive the result
+					
+			
+				# log actions
+			} else {
+				# send e-mail with attachment & warning
+				# log it
+				
+				
+			}
+		}
 		
-		
-		
+		for (fileName in processedFiles) {
+			postProcessing(fileName)
+			
+		}
 		
 		
 		
@@ -180,7 +203,7 @@ while(Sys.time()<T) {
 		
 		sleepTime <- sleepTime - 5
 	}
-	logger("sleep",sleepTime,"seconds ...")
+	logger(paste("sleep",sleepTime,"seconds ..."))
 	Sys.sleep(sleepTime)
 }
 

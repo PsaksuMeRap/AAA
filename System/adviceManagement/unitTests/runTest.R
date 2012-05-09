@@ -3,6 +3,9 @@
 # Author: claudio
 ###############################################################################
 
+# set the rootDir of System
+rootDir <- getwd()
+
 # set the working directory to base and import the exchangeRates
 mySetwd("base")
 
@@ -12,6 +15,7 @@ repositories$exchangeRates <- testRepository
 
 # set the working directory to adviceManagement
 mySetwd("adviceManagement")
+
 
 ## test globale
 dirs = c(
