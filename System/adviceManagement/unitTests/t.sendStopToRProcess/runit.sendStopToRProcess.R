@@ -22,20 +22,22 @@ test.shouldKillRunningRbatchProcess <- function() {
 	#} else {
 		system("R CMD BATCH --slave --no-restore-history --no-timing --no-save batch.R", wait=FALSE)
 	#}
-	# identify the PID
-	pidOfR <- get_PID()
 	
-	Sys.sleep(5)
+	Sys.sleep(2.5)
+	# identify the PID
+	if (.Platform$OS.type=="windows") pidOfR <- get_PID("Rterm.exe") else pidOfR <- get_PID("R")
+	
+	checkEquals(length(pidOfR)>0,TRUE)
 	
 	# create the file "stop"
 	file.create("stop")
 	
-	Sys.sleep(4)
+	Sys.sleep(7)
 	
-	# verify the success of the kill
-	newPidOfR <- get_PID()
-
+	# verify the success of the stop
+	if (.Platform$OS.type=="windows") newPidOfR <- get_PID("Rterm.exe") else newPidOfR <- get_PID("R")
 	checkEquals(newPidOfR,numeric(0))
+	
 	#remove the stop file
 	file.remove("stop")
 	file.remove("logFile")

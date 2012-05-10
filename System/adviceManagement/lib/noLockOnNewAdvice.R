@@ -53,13 +53,14 @@ noLockOnNewAdvice <- function(message) {
 	currentWorkingDirectory <- getwd()
 	
 	setwd(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib"))
-	
+
 	system(command,wait=FALSE)
 	
 	# restore the working directory
 	setwd(currentWorkingDirectory)
 	
 	logger(paste("Started BATCH process for file",fileName,"from",messageFrom))
-	return(get_PID("Rterm.exe"))
+	Sys.sleep(0.30)
+	if (.Platform$OS.type=="windows") return(get_PID("Rterm.exe")) else return(get_PID("R"))
 }
 
