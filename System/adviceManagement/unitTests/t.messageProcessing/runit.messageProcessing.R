@@ -8,13 +8,13 @@ test.shouldProcessNewAdviceMessage <- function() {
 	testRootDir <- file.path(rootDir,"adviceManagement","unitTests","directories")
 
 	advisors <- new("Advisors")
-	advisors@.Data[["GhidossiGlobalEquity"]] <- new("Advisor",name="GhidossiGlobalEquity",folderName="GhidossiGlobalEquity",email="reto.ghidossi@opencapital.ch")
+	advisors[["GhidossiGlobalEquity"]] <- new("Advisor",name="GhidossiGlobalEquity",folderName="GhidossiGlobalEquity",email="reto.ghidossi@opencapital.ch")
 	
 	postOffice <- new("PostOffice",absolutePath=testRootDir)
 	setup(postOffice)
 	
 	fileName <- "2012-05-09_11-48-16_GhidossiGlobalEquity_newAdvice.csv"
-	message <- messageFactory(fileName)
+	message <- messageFactory(fileName,advisors)
 
 
 	setGeneric("messageProcessing", def=function(message) standardGeneric("messageProcessing"))

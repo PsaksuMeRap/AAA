@@ -5,13 +5,13 @@
 
 
 test.shouldSetupPostOffice <- function() {
-	# we must be in "System/adviceManagement" in order for the test to run
-	absolutePath <- file.path(getwd(),"unitTests","directories")
+
+	absolutePath <- systemOptions[["homeDir"]]
 	postOffice <- new("PostOffice",absolutePath=absolutePath)
 		
 	setup(postOffice)
 	
-	checkEquals(dir(path=absolutePath),"postOffice")
+	checkEquals(dir(path=absolutePath),c("archive","postOffice"))
 	checkEquals(dir(file.path(absolutePath,"postOffice")),c("inbox","outbox","sent","trash"))
 	
 	# remove the directory postOffice
@@ -23,7 +23,7 @@ test.shouldSetupPostOffice <- function() {
 
 test.shouldSetupMailBox <- function() {
 	
-	absolutePath <- file.path(getwd(),"unitTests","directories")
+	absolutePath <- systemOptions[["homeDir"]]
 	postOffice <- new("PostOffice",absolutePath=absolutePath)
 	setup(postOffice)
 	
@@ -33,11 +33,11 @@ test.shouldSetupMailBox <- function() {
 	
 	setup(x=mailBox,y=postOffice)
 	
-	directoriesInPostOffice <- dir(path=file.path(absolutePath,"postOffice"))
+	directoriesInPostOffice <- dir(path=file.path(systemOptions[["homeDir"]],"postOffice"))
 	checkEquals(is.element(advisor@folderName,directoriesInPostOffice),TRUE)
 	
 	tmp <- getwd()
-	setwd(absolutePath)
+	setwd(systemOptions[["homeDir"]])
 	unlink("postOffice",recursive=TRUE)
 	setwd(tmp)
 }

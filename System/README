@@ -1,3 +1,7 @@
+Necessario mettere nella variabile di sistema PATH il percorso
+al file eseguibile R.exe e Rgui.exe
+
+
 adviceMan makes use of sendEmail, a simple program wich
 allows to send e-mail. It has been downloaded from
 http://caspian.dotconf.net/menu/Software/SendEmail/#download
@@ -11,3 +15,6 @@ Esempio:
 sendEmail -f claudio.ortelli@usi.ch -t claudio.ortelli@gmail.com 
 -m "funziona ... se è ben configurato" -u "test1 di connessione" 
 -s mail.usi.ch -xu utente -xp x83_9U2Q -a file.txt
+
+Necessario mettere nella variabile di sistema PATH il percorso
+alla cartella dell'eseguibile

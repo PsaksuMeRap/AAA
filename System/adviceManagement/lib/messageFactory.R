@@ -4,7 +4,7 @@
 ###############################################################################
 
 
-messageFactory <- function(fileName) {
+messageFactory <- function(fileName,advisors) {
 	# identify the main part of the fileName and the extension
 	step1 <- strsplit(fileName,"\\.")
 	mainPart <- step1[[1]][1]
@@ -13,13 +13,22 @@ messageFactory <- function(fileName) {
 	# identify the date, time, person name, fund and message type
 	step2 <- c(extension,strsplit(mainPart,"_")[[1]],fileName)
 	step2 <- as.list(step2)
+	names(step2) <- c("fileExtension","date","time","from","messageType","fileName")
 	
-	if (step2[[5]]=="newAdvice") tmp <- new("NewAdvice",step2)
-	if (step2[[5]]=="adviceConfirmation") tmp <- new("AdviceConfirmation",step2)
-	if (step2[[5]]=="preComplianceResult") tmp <- new("PreComplianceResult",step2)
-	if (step2[[5]]=="postComplianceResult") tmp <- new("PostComplianceResult",step2)
-	
-	names(tmp@.Data) <- c("fileExtension","date","time","from","messageType","fileName")
-	
-	return(tmp)
+	advisor <- advisors[[step2[["from"]]]]
+	message <- new("Message",advisor=advisor,step2)
+	messageType <- step2[["messageType"]]
+	if (messageType =="newAdvice") {
+		return(new("NewAdvice",message))
+	}
+	if (messageType =="adviceConfirmation") {
+		return(new("AdviceConfirmation",message))
+	}	
+	if (messageType =="preComplianceResult") {
+		return(new("PreComplianceResult",message))
+	}	
+	if (messageType =="postComplianceResult") {
+		return(new("PostComplianceResult",message))
+	}	
+
 }

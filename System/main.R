@@ -14,7 +14,7 @@ stringsAsFactors = FALSE
 repositories <- new.env()
 
 source("./base/lib/library.R")
-systemOptions[["RUnitHome"]] <- getwd()
+systemOptions[["sourceCodeDir"]] <- getwd()
 
 ## -- fine setup 
 

@@ -4,4 +4,4 @@
 ###############################################################################
 
 
-setClass("Advisors",contains="list")
+setClass("Advisors",contains="namedList")

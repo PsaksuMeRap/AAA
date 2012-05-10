@@ -6,7 +6,7 @@
 continue <- TRUE
 logFile <- file(description="logFile",open="w")
 while(continue) {
-	x <- 2
+	x <- 1
 	Sys.sleep(x)
 	continue <- !file.exists("stop")
 	cat(paste("No stop. Wait",x,"seconds more ... "),sep="\n",append=TRUE,file=logFile)

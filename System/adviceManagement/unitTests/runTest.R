@@ -3,30 +3,53 @@
 # Author: claudio
 ###############################################################################
 
-# set the rootDir of System
-rootDir <- getwd()
+rm(list=ls(all=TRUE))
+
+library("RODBC")
+library("RUnit")
+library("tcltk")
+library("stringr")
+
+stringsAsFactors = FALSE
+
+source("./base/lib/library.R")
+
+# set the directory where the source code is installed (i.e. folders adviceManagement, ayrton, base, riskman)
+sourceCodeDir <- getwd()
+systemOptions[["sourceCodeDir"]] <- sourceCodeDir
+
+# set the homeDir, i.e. the directory where the postBox must be installed
+homeDir <- file.path(sourceCodeDir,"adviceManagement","unitTests","directories")
+systemOptions[["homeDir"]] <- homeDir
+
+# import the adviceManagement library
+source(file.path(sourceCodeDir,"adviceManagement","lib","library.R"))
 
 # set the working directory to base and import the exchangeRates
 mySetwd("base")
 
 source("./unitTests/utilities/createExchangeRatesTestRepository.R")
 testRepository <- createExchangeRatesTestRepository() 
+repositories <- new.env()
 repositories$exchangeRates <- testRepository
 
-# set the working directory to adviceManagement
-mySetwd("adviceManagement")
+# set the working directory to sourceCodeDir
+mySetwd()
 
 
 ## test globale
 dirs = c(
-		"./unitTests/t.PostOffice",
-		"./unitTests/t.sendStopToRProcess",
-		"./unitTests/t.detectRprocesses",
-		"./unitTests/t.mail"
+		"./adviceManagement/unitTests/t.PostOffice",
+		"./adviceManagement/unitTests/t.sendStopToRProcess",
+		"./adviceManagement/unitTests/t.detectRprocesses",
+		"./adviceManagement/unitTests/t.messageFactory",
+		"./adviceManagement/unitTests/t.noLockOnNewAdvice"
+		#"./adviceManagement/unitTests/t.mail"
 		)
 testsuite.lists <- defineTestSuite("Test adviceManagement",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
 warnings()
+
 
 # restore System working directory
 # set the working directory to adviceManagement

@@ -2,33 +2,45 @@
 # 
 # Author: Claudio
 ###############################################################################
+rm(list=ls(all=TRUE))
 
 library("RODBC")
 library("RUnit")
 library("tcltk")
 library("stringr")
 
-# import the library
-source(file.path(getwd(),"adviceManagement","lib","library.R"))
+stringsAsFactors = FALSE
+
+source("./base/lib/library.R")
+
+# set the directory where the source code is installed (i.e. folders adviceManagement, ayrton, base, riskman)
+sourceCodeDir <- getwd()
+
+# import the adviceManagement library
+source(file.path(sourceCodeDir,"adviceManagement","lib","library.R"))
+
 # set the name of the process
 name <- "main"
+
 # set the root directory
-rootDir <- "c:/riskman"
-setwd(rootDir)
+## homeDir <- "c:/riskman"
+homeDir <- file.path(sourceCodeDir,"adviceManagement","unitTests","directories")
+setwd(homeDir)
+
 # set the sleeping time in seconds
 sleepTime <- 10
 
 # define the adivisors
 advisors <- new("Advisors")
-advisors@.Data[["GhidossiGlobalEquity"]] <- new("Advisor",name="GhidossiGlobalEquity",folderName="GhidossiGlobalEquity",email="reto.ghidossi@opencapital.ch")
-advisors@.Data[["MaggiDynamic"]] <- new("Advisor",name="MaggiDynamic",folderName="MaggiDynamic",email="maggi.sandro@")
+advisors[["GhidossiGlobalEquity"]] <- new("Advisor",name="GhidossiGlobalEquity",folderName="GhidossiGlobalEquity",email="reto.ghidossi@opencapital.ch")
+advisors[["MaggiDynamic"]] <- new("Advisor",name="MaggiDynamic",folderName="MaggiDynamic",email="maggi.sandro@")
 
 
 # create the log file
 sink(file="riskman_log.txt")
 
 # inizializza PostOffice
-postOffice <- new("PostOffice",absolutePath=rootDir)
+postOffice <- new("PostOffice",absolutePath=homeDir)
 setup(postOffice)
 logger("PostOffice created.")
 
@@ -51,7 +63,7 @@ activeOrders <- data.frame(name="main",startTime=Sys.time(),fileName="",orderNam
 
 # start monitoring input and output directories
 
-existingFiles <- list.files(path=file.path(rootDir,"postOffice","input"))
+existingFiles <- list.files(path=file.path(homeDir,"postOffice","input"))
 
 T <- Sys.time()+240
 while(Sys.time()<T) {
@@ -70,7 +82,7 @@ print("sleep 10 seconds")
 		
 		for (fileName in existingFiles) {
 			#identify messageTye between: newAdvice,adviceConfirmation,preComplianceResult,postComplianceResult
-			messageType <- messageFactory(fileName)
+			messageType <- messageFactory(fileName,advisors)
 			
 			# identify the advisor (filename="yyyy-mm-dd hh:mm nome.csv")
 			messageFrom <- messageType[["From"]]
@@ -82,67 +94,14 @@ print("sleep 10 seconds")
 			
 			if (mailBoxExists) {
 				# is the mailbox locked? 
-				isLocked <- file.exists(file.path(rootDir,"postOffice",messageFrom,"lock"))
+				isLocked <- file.exists(file.path(homeDir,"postOffice",messageFrom,"lock"))
 				# if locked send an e-mail and move the file into the removed folder
 				# and log the actions
 				if (isLocked) {
-					logger(paste("lock detected for orders from",messageFrom))
-					# send e-mail
-					x <- advisors[[messageFrom]]
-					mail <- new("Mail",
-							from="claudio.ortelli@usi.ch",
-							to=x@email,
-							subject="Order refused",
-							message=paste("Your advice '",filename,"' has been deleted because of a pending order.\nPlease resend a new advice after execution and confirmation of the current one.",sep="")
-					)
-					sendEmail(mail)
-					logger(paste("Mail sent:\n",as.character(mail),sep=""))
-					
-					# move file (da migliorare: file non devono essere sovrascritti
-					fileFrom <- file.path(rootDir,"postOffice","inbox",fileName) 
-					fileTo <- file.path(rootDir,"postOffice","trash",fileName)
-					copyOk <- file.copy(fileFrom,fileTo)
-					
-					if (copyOk) {
-						logger(paste("File",fileName,"successfully copied to postOffice/trash"))
-						removeOk <- file.remove(fileFrom)
-						if (removedOk) {
-							logger(paste("file",fileFrom,"removed"))
-						} else {
-							logger(paste("error: impossible to remove file",fileFrom))
-							# send e-mail to system administrator for manual remove
-						}
-					}
+adadf
 				} else {
 					# if the file is not locked move the advice in the outbox and start processing
-					logger(paste("no lock detected for orders from",messageFrom))
-					# send e-mail
-					x <- advisors[[messageFrom]]
-					mail <- new("Mail",
-							from="claudio.ortelli@usi.ch",
-							to=x@email,
-							subject="Processing order",
-							message=paste("Your advice '",filename,"' is being processed",sep="")
-					)
-					sendEmail(mail)
-					logger(paste("Mail sent:\n",as.character(mail),sep=""))
-					
-					# move file (da migliorare: file non devono essere sovrascritti
-					fileFrom <- file.path(rootDir,"postOffice","inbox",fileName) 
-					fileTo <- file.path(rootDir,"postOffice",messageFrom,"pending",fileName)
-					copyOk <- file.copy(fileFrom,fileTo)
-					
-					if (copyOk) {
-						logger(paste("File to process",fileName,"successfully copied to outbox"))
-						removeOk <- file.remove(fileFrom)
-						if (removedOk) {
-							logger(paste("file",fileFrom,"removed"))
-						} else {
-							logger(paste("error: impossible to remove file",fileFrom))
-							# send e-mail to system administrator for manual remove
-						}
-					}
-					# start batch process for processing
+					PID <- noLockOnNewAdvice(message)
 				}
 			} else { 
 				# if the mailBox does not exists create the mailbox and

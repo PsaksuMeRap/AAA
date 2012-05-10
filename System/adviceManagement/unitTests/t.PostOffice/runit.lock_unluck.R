@@ -4,8 +4,8 @@
 ###############################################################################
 
 test.shouldLockFailOnNoPostOffice <- function() {
-	absolutePath <- file.path(getwd(),"unitTests","directories")
-	postOffice <- new("PostOffice",absolutePath=absolutePath)
+
+	postOffice <- new("PostOffice",absolutePath=systemOptions[["homeDir"]])
 	
 	advisor <- new("Advisor",name="testAdvisor1",folderName="testAdvisor1",email="claudio.ortelli@usi.ch")
 	mailBox <- new("MailBox",advisor=advisor)
@@ -15,8 +15,7 @@ test.shouldLockFailOnNoPostOffice <- function() {
 
 
 test.shouldLockFailOnNoMailBox <- function() {
-	absolutePath <- file.path(getwd(),"unitTests","directories")
-	postOffice <- new("PostOffice",absolutePath=absolutePath)
+	postOffice <- new("PostOffice",absolutePath=systemOptions[["homeDir"]])
 	setup(postOffice)
 	
 	advisor <- new("Advisor",name="testAdvisor1",folderName="testAdvisor1",email="claudio.ortelli@usi.ch")
@@ -26,15 +25,14 @@ test.shouldLockFailOnNoMailBox <- function() {
 	
 	# remove the directory postOffice
 	tmp <- getwd()
-	setwd(absolutePath)
+	setwd(systemOptions[["homeDir"]])
 	unlink("postOffice",recursive=TRUE)
 	setwd(tmp)
 }
 
 test.shouldFailOnNoPermissions <- function() {
 	
-	absolutePath <- file.path(getwd(),"unitTests","directories")
-	postOffice <- new("PostOffice",absolutePath=absolutePath)
+	postOffice <- new("PostOffice",absolutePath=systemOptions[["homeDir"]])
 	setup(postOffice)
 	
 	advisor <- new("Advisor",name="testAdvisor1",folderName="testAdvisor1",email="claudio.ortelli@usi.ch")
@@ -47,16 +45,16 @@ test.shouldFailOnNoPermissions <- function() {
 		checkEquals(TRUE,TRUE)
 	} else {
 		# change the permissions 
-		Sys.chmod(paths=file.path(absolutePath,"postOffice","testAdvisor1"), mode = "0555", use_umask=FALSE)
+		Sys.chmod(paths=file.path(systemOptions[["homeDir"]],"postOffice","testAdvisor1"), mode = "0555", use_umask=FALSE)
 		
 		checkException(lockMailBox(mailBox,postOffice))
 		# restore previous file permissions
-		Sys.chmod(paths=file.path(absolutePath,"postOffice","testAdvisor1"), use_umask=TRUE)
+		Sys.chmod(paths=file.path(systemOptions[["homeDir"]],"postOffice","testAdvisor1"), use_umask=TRUE)
 	}
 	
 	# restore previous situation
 	tmp <- getwd()
-	setwd(absolutePath)
+	setwd(systemOptions[["homeDir"]])
 	unlink("postOffice",recursive=TRUE)
 	setwd(tmp)
 }
@@ -64,8 +62,7 @@ test.shouldFailOnNoPermissions <- function() {
 
 test.shouldFailOnExistingLock <- function() {
 	
-	absolutePath <- file.path(getwd(),"unitTests","directories")
-	postOffice <- new("PostOffice",absolutePath=absolutePath)
+	postOffice <- new("PostOffice",absolutePath=systemOptions[["homeDir"]])
 	setup(postOffice)
 	
 	advisor <- new("Advisor",name="testAdvisor1",folderName="testAdvisor1",email="claudio.ortelli@usi.ch")
@@ -73,12 +70,12 @@ test.shouldFailOnExistingLock <- function() {
 	setup(x=mailBox,y=postOffice)
 	
 	# create the lock and try to relock the directory
-	isCreated <- file.create(file.path(absolutePath,"postOffice","testAdvisor1","lock"),showWarnings=FALSE)
+	isCreated <- file.create(file.path(systemOptions[["homeDir"]],"postOffice","testAdvisor1","lock"),showWarnings=FALSE)
 	checkException(lockMailBox(mailBox,postOffice))
 	
 	# restore previous situation
 	tmp <- getwd()
-	setwd(absolutePath)
+	setwd(systemOptions[["homeDir"]])
 	unlink("postOffice",recursive=TRUE)
 	setwd(tmp)
 	

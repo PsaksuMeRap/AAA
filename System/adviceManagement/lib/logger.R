@@ -4,7 +4,7 @@
 ###############################################################################
 
 
-logger <- function(message) {
+logger <- function(message,processName="main") {
 	cat(paste(Sys.time()," from ",processName,": ",message,"\n",sep=""))
 }
 
