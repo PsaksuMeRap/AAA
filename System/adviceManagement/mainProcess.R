@@ -23,8 +23,8 @@ source(file.path(sourceCodeDir,"adviceManagement","lib","library.R"))
 name <- "main"
 
 # set the root directory
-## homeDir <- "c:/riskman"
-homeDir <- file.path(sourceCodeDir,"adviceManagement","unitTests","directories")
+if (.Platform$OS.type=="windows") homeDir <- "c:/riskman" else homeDir <- file.path(sourceCodeDir,"adviceManagement","unitTests","directories")
+
 setwd(homeDir)
 
 # set the sleeping time in seconds
@@ -67,7 +67,7 @@ existingFiles <- list.files(path=file.path(homeDir,"postOffice","input"))
 
 T <- Sys.time()+240
 while(Sys.time()<T) {
-print("sleep 10 seconds")
+
 	sleepTime <- 10
 	if (length(existingFiles>0)) {
 		# sort the files
@@ -84,43 +84,35 @@ print("sleep 10 seconds")
 			#identify messageTye between: newAdvice,adviceConfirmation,preComplianceResult,postComplianceResult
 			messageType <- messageFactory(fileName,advisors)
 			
-			# identify the advisor (filename="yyyy-mm-dd hh:mm nome.csv")
+			# identify the advisor (filename="2012-05-09_14-22-24_GhidossiGlobalEquity_newAdvice.csv")
 			messageFrom <- messageType[["From"]]
 			
 			# check if the corresponding mailBox is available
 			mailBoxExists <- is.element(messageFrom,postOffice@mailBoxes)
 			
-			# if exists the mailbox check for a lock
-			
-			if (mailBoxExists) {
-				# is the mailbox locked? 
-				isLocked <- file.exists(file.path(homeDir,"postOffice",messageFrom,"lock"))
-				# if locked send an e-mail and move the file into the removed folder
-				# and log the actions
-				if (isLocked) {
-adadf
-				} else {
-					# if the file is not locked move the advice in the outbox and start processing
-					PID <- noLockOnNewAdvice(message)
-				}
-			} else { 
+			if (!mailBoxExists) {
 				# if the mailBox does not exists create the mailbox and
-				# start the pre-compliance check
 				postOffice@mailBoxes[length(postOffice@mailBoxes)+1] <- messageFrom
 				mailbox <- new("MailBox",advisor=advisors[[messageFrom]])
 				setup(x=mailbox,y=postOffice)
 				logger(paste("created mailBox for advisor",messageFrom))
-				
-				# start pre-compliance
-				
-				logger("pre-compliance for file",fileName,"started")
-				
-				
 			}
+			
+			# is the mailbox locked? 
+			isLocked <- file.exists(file.path(homeDir,"postOffice",messageFrom,"lock"))
+			
+			# if locked send an e-mail and move the file into the removed folder. Log all actions
+			if (isLocked) {
+				isOk <- isLockOnNewAdvice(message)
+			} else {
+				# if the file is not locked move the advice in the mailbox_xxx/pending and start processing
+				PID <- noLockOnNewAdvice(message)
+			}
+
 			sleepTime <- sleepTime - 5
 		} # end for (fileName in existingFiles)
 		
-	}
+	} # fine if (length(existingFiles>0))
 	
 	if (length(processedFiles>0)) {
 		# sort the files

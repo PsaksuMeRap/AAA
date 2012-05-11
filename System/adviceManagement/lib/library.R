@@ -3,6 +3,7 @@
 # Author: claudio
 ###############################################################################
 
+source("./adviceManagement/lib/archive.R")
 source("./adviceManagement/lib/logger.R") 
 source("./adviceManagement/lib/classDefinitions/Mail/Mail.R")
 source("./adviceManagement/lib/classDefinitions/Advisor/Advisor.R")
@@ -12,3 +13,5 @@ source("./adviceManagement/lib/messageFactory.R")
 source("./adviceManagement/lib/get_PID.R") 
 source("./adviceManagement/lib/classDefinitions/PostOffice/PostOffice.R") 
 source("./adviceManagement/lib/noLockOnNewAdvice.R") 
+source("./adviceManagement/lib/isLockOnNewAdvice.R")
+source("./adviceManagement/lib/methods/messageProcessing.R")

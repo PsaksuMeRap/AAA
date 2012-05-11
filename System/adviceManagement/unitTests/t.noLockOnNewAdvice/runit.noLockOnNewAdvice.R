@@ -15,7 +15,7 @@ test.shouldNoLockOnNewAdvice <- function() {
 	postOffice <- new("PostOffice",absolutePath=systemOptions[["homeDir"]])
 	setup(postOffice)
 	
-	# copy incoming message
+	# copy the simulated incoming message 
 	from <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","files","2012-05-09_14-22-24_GhidossiGlobalEquity_newAdvice.csv")
 	to <- file.path(systemOptions[["homeDir"]],"postOffice","inbox")
 	file.copy(from,to)

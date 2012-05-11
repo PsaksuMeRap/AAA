@@ -20,7 +20,7 @@ systemOptions[["sourceCodeDir"]] <- sourceCodeDir
 
 # set the homeDir, i.e. the directory where the postBox must be installed
 homeDir <- file.path(sourceCodeDir,"adviceManagement","unitTests","directories")
-systemOptions[["homeDir"]] <- homeDir
+systemOptions[["homeDir"]] <- "c:/riskman"
 
 # import the adviceManagement library
 source(file.path(sourceCodeDir,"adviceManagement","lib","library.R"))
@@ -39,11 +39,13 @@ mySetwd()
 
 ## test globale
 dirs = c(
+		"./adviceManagement/unitTests/t.archive",
 		"./adviceManagement/unitTests/t.PostOffice",
 		"./adviceManagement/unitTests/t.sendStopToRProcess",
 		"./adviceManagement/unitTests/t.detectRprocesses",
 		"./adviceManagement/unitTests/t.messageFactory",
-		"./adviceManagement/unitTests/t.noLockOnNewAdvice"
+		"./adviceManagement/unitTests/t.noLockOnNewAdvice",
+		"./adviceManagement/unitTests/t.isLockOnNewAdvice"		
 		#"./adviceManagement/unitTests/t.mail"
 		)
 testsuite.lists <- defineTestSuite("Test adviceManagement",dirs = dirs)

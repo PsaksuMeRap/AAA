@@ -8,13 +8,16 @@ messageFactory <- function(fileName,advisors) {
 	# identify the main part of the fileName and the extension
 	step1 <- strsplit(fileName,"\\.")
 	mainPart <- step1[[1]][1]
-	extension <- step1[[1]][2]
+	fileExtension <- step1[[1]][2]
 
 	# identify the date, time, person name, fund and message type
-	step2 <- c(extension,strsplit(mainPart,"_")[[1]],fileName)
+	step2 <- c(fileName,fileExtension,strsplit(mainPart,"_")[[1]],)
 	step2 <- as.list(step2)
-	names(step2) <- c("fileExtension","date","time","from","messageType","fileName")
-	
+	if (is.element(step2[[6]],c("preComplianceResult","postComplianceResult"))) {
+		names(step2) <- c("fileName","fileExtension","date","time","from","messageType")
+	} else {
+		names(step2) <- c("fileName","fileExtension","date","time","from","messageType","testResult")
+	}
 	advisor <- advisors[[step2[["from"]]]]
 	message <- new("Message",advisor=advisor,step2)
 	messageType <- step2[["messageType"]]

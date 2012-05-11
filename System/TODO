@@ -1,6 +1,25 @@
-fare una prova di R batch file che
-viene poi identificato e killato
+newAdvice -> genera un preComplianceResult:
+	- risultato negativo: 
+		a) sendEmail, 
+		b) move newAdvice and preComplianceResult da pending a archive/processed/rejected, 
+		c) rimuovi il lock
+	+ risultato positivo:
+		a) Mantieni il lock
+		b) invia e-mail
+		c) lascia il newAdvice nel pending
+		d) sposta il preCompliance nel pending
+		e) registra nella coda del processo main che stai attendendo il file di conferma eseguito
 
-fare una prova di un R batch file
-che si auto spegne dopo l'inserimento
-del file stop nella sua directory
+
+adviceConfirmation 
+	a) sposta l'adviceConfirmation nel pending e lancia BATCH che esegue b)
+	b) esegui controllo e riconciliazione posizioni
+		+ se risultato del controllo positivo
+			-> genera un postComplianceResult:
+				- risultato negativo:
+				a) sendEmail, 
+				b) move newAdvice, preComplianceResult da pending a archive/processed/rejected,
+				c) move adviceConfirmation e postComplianceResult
+				c) rimuovi il lock
+				
+					
