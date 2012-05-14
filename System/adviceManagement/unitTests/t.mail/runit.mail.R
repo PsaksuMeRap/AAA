@@ -38,7 +38,7 @@ test.shouldSendEmailWithAttachment <- function() {
 	mail@attachments <- c("file1.txt","file2_da_allegare.R")
 
 	tmp <- getwd()
-	mySetwd(file.path("adviceManagement","unitTests","t.mail"))
+	mySetwd(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.mail"))
 	source("secrets.R")
 	
 	mail@username <- username

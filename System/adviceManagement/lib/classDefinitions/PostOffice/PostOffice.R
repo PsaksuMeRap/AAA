@@ -23,9 +23,9 @@ setMethod("setup",signature(x="PostOffice",y="missing"),
 			} else {
 				dir.create(file.path(x@absolutePath,"postOffice"))
 				dir.create(file.path(x@absolutePath,"postOffice","inbox"))
-				dir.create(file.path(x@absolutePath,"postOffice","outbox"))
-				dir.create(file.path(x@absolutePath,"postOffice","sent"))
-				dir.create(file.path(x@absolutePath,"postOffice","trash"))
+				dir.create(file.path(x@absolutePath,"postOffice","pending"))
+				#dir.create(file.path(x@absolutePath,"postOffice","sent"))
+				#dir.create(file.path(x@absolutePath,"postOffice","trash"))
 				return(invisible())
 			}
 		}
@@ -44,7 +44,7 @@ setMethod("setup",signature(x="MailBox",y="PostOffice"),
 				path <- file.path(y@absolutePath,"postOffice",x@advisor@folderName)
 				dir.create(path)
 				dir.create(file.path(path,"pending"))
-				dir.create(file.path(path,"sent"))
+				# dir.create(file.path(path,"sent"))
 				return(invisible())
 			}
 		}

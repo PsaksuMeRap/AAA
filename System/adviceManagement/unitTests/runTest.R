@@ -39,13 +39,15 @@ mySetwd()
 
 ## test globale
 dirs = c(
+		"./adviceManagement/unitTests/t.fileMove",
 		"./adviceManagement/unitTests/t.archive",
 		"./adviceManagement/unitTests/t.PostOffice",
 		"./adviceManagement/unitTests/t.sendStopToRProcess",
 		"./adviceManagement/unitTests/t.detectRprocesses",
 		"./adviceManagement/unitTests/t.messageFactory",
 		"./adviceManagement/unitTests/t.noLockOnNewAdvice",
-		"./adviceManagement/unitTests/t.isLockOnNewAdvice"		
+		"./adviceManagement/unitTests/t.isLockOnNewAdvice",
+		"./adviceManagement/unitTests/t.lock_unlock"
 		#"./adviceManagement/unitTests/t.mail"
 		)
 testsuite.lists <- defineTestSuite("Test adviceManagement",dirs = dirs)

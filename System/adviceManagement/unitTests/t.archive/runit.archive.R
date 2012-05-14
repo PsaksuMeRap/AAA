@@ -20,6 +20,7 @@ test.shouldCreateArchive <- function() {
 	checkEquals(is.element("./archive/processed",directories),TRUE)
 	checkEquals(is.element("./archive/processed/accepted",directories),TRUE)
 	checkEquals(is.element("./archive/processed/rejected",directories),TRUE)
-
+	
+	unlink("./archive",recursive=TRUE)
 	setwd(oldWorkingDirectory)
 }

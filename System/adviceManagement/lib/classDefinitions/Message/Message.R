@@ -5,9 +5,18 @@
 
 
 setClass("Message",representation(advisor="Advisor"),contains="namedList")
+
+# the namedList contains the following fields:
+# "fileName","fileExtension","date","time","from","messageType","testResult"
+# "testResult" is optional, only for messages of type "preComplianceResult" and "postComplianceResult" 
+
 setClass("AdviceConfirmation",contains="Message")
 setClass("NewAdvice",contains="Message")
 setClass("PreComplianceResult",contains="Message")
 setClass("PostComplianceResult",contains="Message")
 
 
+getMessageDate_time_from <- function(message) {
+	string <- paste(message[["date"]],message[["time"]],message[["from"]],sep="_")
+	return(string)
+}
