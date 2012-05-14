@@ -15,7 +15,7 @@ isLockOnNewAdvice <- function(message) {
 	mail <- new("Mail",
 			from="claudio.ortelli@usi.ch",
 			to=message@advisor@email,
-			subject="Order refused",
+			subject="Advice refused",
 			message=paste("Your advice '",fileName,"' has been deleted because of a pending order.\nPlease resend a new advice after execution and confirmation of the current one.",sep="")
 	)
 	sendEMail(mail)

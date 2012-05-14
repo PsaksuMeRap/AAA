@@ -60,3 +60,31 @@ setMethod("as.character","Mail",
 		}
 )
 
+
+sendEmail_preComplianceResult <- function(message) {
+	workdir <- getwd()
+	setwd(file.path(systemOptions[["homeDir"]],"postOffice",message@advisor@folderName,"pending"))
+
+	newAdviceFileName <- paste(paste(getMessageDate_time_from(message),"newAdvice",sep="_"),message[["fileExtension"]],sep=".")
+	
+	if (message[["testResult"]]=="no") {
+		stringMessage <- paste("Your advice '",newAdviceFileName,"' has been rejected because of a negative pre-compliance.\n",sep="")
+		subject <- "Advice rejected"
+	} else {
+		stringMessage <- paste("Your advice '",newAdviceFileName,"' has been accepted.\n",sep="")
+		subject <- "Advice accepted"
+	}
+	
+	# sendEmail
+	mail <- new("Mail",
+			from="claudio.ortelli@usi.ch",
+			to=message@advisor@email,
+			subject=subject,
+			message=stringMessage,
+			attachments=message[["fileName"]]
+	)
+	resultMessage <- sendEMail(mail)
+	logger(paste("Mail sent:\n",as.character(mail),sep=""))
+	setwd(workdir)
+	return(resultMessage)
+}

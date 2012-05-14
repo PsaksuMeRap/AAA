@@ -47,8 +47,9 @@ dirs = c(
 		"./adviceManagement/unitTests/t.messageFactory",
 		"./adviceManagement/unitTests/t.noLockOnNewAdvice",
 		"./adviceManagement/unitTests/t.isLockOnNewAdvice",
-		"./adviceManagement/unitTests/t.lock_unlock"
-		#"./adviceManagement/unitTests/t.mail"
+		"./adviceManagement/unitTests/t.lock_unlock",
+		"./adviceManagement/unitTests/t.messageProcessing",
+		"./adviceManagement/unitTests/t.mail"
 		)
 testsuite.lists <- defineTestSuite("Test adviceManagement",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)

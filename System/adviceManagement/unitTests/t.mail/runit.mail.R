@@ -38,7 +38,7 @@ test.shouldSendEmailWithAttachment <- function() {
 	mail@attachments <- c("file1.txt","file2_da_allegare.R")
 
 	tmp <- getwd()
-	mySetwd(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.mail"))
+	setwd(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.mail"))
 	source("secrets.R")
 	
 	mail@username <- username
@@ -46,7 +46,6 @@ test.shouldSendEmailWithAttachment <- function() {
 	rm(username,password,inherits=TRUE)
 	
 	result <- sendEMail(mail)
-	# result <- "Email was sent successfully!"
 	checkEquals(result,"Email was sent successfully!")
 	
 	setwd(tmp)
