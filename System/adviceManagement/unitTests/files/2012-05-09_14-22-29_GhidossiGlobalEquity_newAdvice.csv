@@ -1,11 +1,1 @@
-Symbol,Name,P Close,Date,
-INX.XX,S&P 500,1390.78,41017,
-Symbol,Name,P Close,Expiry,Date
-SPM12.CM,InvFormat,InvFormat,InvFormat,-
-SPU12.CM,InvFormat,InvFormat,InvFormat,-
-SPZ12.CM,InvFormat,InvFormat,InvFormat,-
-SPH13.CM,InvFormat,InvFormat,InvFormat,-
-SPM13.CM,InvFormat,InvFormat,InvFormat,-
-SPU13.CM,InvFormat,InvFormat,InvFormat,-
-SPZ13.CM,InvFormat,InvFormat,InvFormat,-
-SPH14.CM,InvFormat,InvFormat,InvFormat,1390.78
+

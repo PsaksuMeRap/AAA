@@ -20,7 +20,7 @@ test.shouldProcessPreComplianceResultMessageNo <- function() {
 	create_archive(systemOptions[["homeDir"]])
 	
 	# identify a new order
-	fileName <- "2012-05-09_11-48-16_GhidossiGlobalEquity_preComplianceResult_no.csv"
+	fileName <- "2012-05-09_14-22-24_GhidossiGlobalEquity_preComplianceResult_no.csv"
 	
 	# define the adivisors
 	advisors <- new("Advisors")
@@ -120,7 +120,7 @@ test.shouldProcessPreComplianceResultMessageOk <- function() {
 	create_archive(systemOptions[["homeDir"]])
 	
 	# identify a new order
-	fileName <- "2012-05-09_11-48-16_GhidossiGlobalEquity_preComplianceResult_ok.csv"
+	fileName <- "2012-05-09_14-22-24_GhidossiGlobalEquity_preComplianceResult_ok.csv"
 	
 	# define the adivisors
 	advisors <- new("Advisors")

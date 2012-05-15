@@ -23,7 +23,7 @@ homeDir <- file.path(sourceCodeDir,"adviceManagement","unitTests","directories")
 systemOptions[["homeDir"]] <- "c:/riskman"
 
 # import the adviceManagement library
-source(file.path(sourceCodeDir,"adviceManagement","lib","library.R"))
+#source(file.path(sourceCodeDir,"adviceManagement","lib","library.R"))
 
 # set the working directory to base and import the exchangeRates
 mySetwd("base")
@@ -49,7 +49,8 @@ dirs = c(
 		"./adviceManagement/unitTests/t.isLockOnNewAdvice",
 		"./adviceManagement/unitTests/t.lock_unlock",
 		"./adviceManagement/unitTests/t.messageProcessing",
-		"./adviceManagement/unitTests/t.mail"
+		"./adviceManagement/unitTests/t.mail",
+		"./adviceManagement/unitTests/t.tradeFactory"
 		)
 testsuite.lists <- defineTestSuite("Test adviceManagement",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
@@ -60,4 +61,14 @@ warnings()
 # set the working directory to adviceManagement
 mySetwd()
 
+
+
+
+## test messageFactory
+dirs = c(
+		"./adviceManagement/unitTests/t.messageFactory"
+)
+testsuite.lists <- defineTestSuite("Test adviceManagement",dirs = dirs)
+testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
+warnings()
 

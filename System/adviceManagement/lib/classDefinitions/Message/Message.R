@@ -10,8 +10,8 @@ setClass("Message",representation(advisor="Advisor"),contains="namedList")
 # "fileName","fileExtension","date","time","from","messageType","testResult"
 # "testResult" is optional, only for messages of type "preComplianceResult" and "postComplianceResult" 
 
-setClass("AdviceConfirmation",contains="Message")
-setClass("NewAdvice",contains="Message")
+setClass("Confirmation",representation(trades="Trades"),contains="Message")
+setClass("NewAdvice",representation(trades="Trades"),contains="Message")
 setClass("PreComplianceResult",contains="Message")
 setClass("PostComplianceResult",contains="Message")
 

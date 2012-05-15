@@ -4,7 +4,7 @@
 ###############################################################################
 
 
-messageFactory <- function(fileName,advisors) {
+messageFactory <- function(fileName,directory,advisors) {
 	# identify the main part of the fileName and the extension
 
 	step1 <- strsplit(fileName,"\\.")
@@ -22,16 +22,18 @@ messageFactory <- function(fileName,advisors) {
 	advisor <- advisors[[step2[["from"]]]]
 	message <- new("Message",advisor=advisor,step2)
 	messageType <- step2[["messageType"]]
-	if (messageType =="newAdvice") {
-		return(new("NewAdvice",message))
+	if (messageType == "newAdvice") {
+		trades <- tradesFactory(fileName,directory)
+		return(new("NewAdvice",trades=trades,message))
 	}
-	if (messageType =="adviceConfirmation") {
-		return(new("AdviceConfirmation",message))
+	if (messageType == "confirmation") {
+		trades <- tradesFactory(fileName,directory)
+		return(new("Confirmation",trades=trades,message))
 	}	
-	if (messageType =="preComplianceResult") {
+	if (messageType == "preComplianceResult") {
 		return(new("PreComplianceResult",message))
 	}	
-	if (messageType =="postComplianceResult") {
+	if (messageType == "postComplianceResult") {
 		return(new("PostComplianceResult",message))
 	}	
 

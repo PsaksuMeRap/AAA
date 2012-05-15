@@ -8,7 +8,7 @@ test.shoudLock <- function() {
 	workingDirectory <- getwd()
 	
 	# identify a new order
-	fileName <- "2012-05-09_11-48-16_GhidossiGlobalEquity_newAdvice.csv"
+	fileName <- "2012-05-09_14-22-24_GhidossiGlobalEquity_newAdvice.csv"
 	
 	# define the adivisors
 	advisors <- new("Advisors")
@@ -43,7 +43,7 @@ test.shoudUnLock <- function() {
 	workingDirectory <- getwd()
 	
 	# identify a new order
-	fileName <- "2012-05-09_11-48-16_GhidossiGlobalEquity_newAdvice.csv"
+	fileName <- "2012-05-09_14-22-24_GhidossiGlobalEquity_newAdvice.csv"
 	
 	# define the adivisors
 	advisors <- new("Advisors")
