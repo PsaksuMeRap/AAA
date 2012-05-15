@@ -13,6 +13,8 @@ args=(commandArgs(TRUE))
 ## Then cycle through each element of the list and evaluate the expressions.
 eval(parse(text=args[[1]]))
 
+# create the message
+messageFactory(fileName)
 
 topWindow <- tktoplevel()
 tktitle(topWindow) <- messageFrom

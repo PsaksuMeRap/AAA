@@ -9,7 +9,8 @@ test.shoudLock <- function() {
 	
 	# identify a new order
 	fileName <- "2012-05-09_14-22-24_GhidossiGlobalEquity_newAdvice.csv"
-	
+	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","files")
+			
 	# define the adivisors
 	advisors <- new("Advisors")
 	advisors[["GhidossiGlobalEquity"]] <- new("Advisor",name="GhidossiGlobalEquity",folderName="GhidossiGlobalEquity",email="reto.ghidossi@opencapital.ch")
@@ -24,7 +25,7 @@ test.shoudLock <- function() {
 	setup(x=mailBox,y=postOffice)
 	
 	# identify the messageType
-	message <- messageFactory(fileName,advisors)
+	message <- messageFactory(fileName,directory,advisors)
 	
 	# lock
 	ok <- lock(message)
@@ -44,6 +45,7 @@ test.shoudUnLock <- function() {
 	
 	# identify a new order
 	fileName <- "2012-05-09_14-22-24_GhidossiGlobalEquity_newAdvice.csv"
+	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","files")
 	
 	# define the adivisors
 	advisors <- new("Advisors")
@@ -59,7 +61,7 @@ test.shoudUnLock <- function() {
 	setup(x=mailBox,y=postOffice)
 	
 	# identify the messageType
-	message <- messageFactory(fileName,advisors)
+	message <- messageFactory(fileName,directory,advisors)
 	
 	# create the lock (previously tested)
 	ok <- lock(message)

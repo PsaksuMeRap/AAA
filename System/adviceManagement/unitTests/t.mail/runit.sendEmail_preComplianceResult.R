@@ -8,6 +8,7 @@ test.shouldSendPreComplianceResultNo <- function() {
 	
 	# identify a new order
 	fileName <- "2012-05-09_14-22-24_GhidossiGlobalEquity_preComplianceResult_no.csv"
+	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","files")
 	
 	# define the adivisors
 	advisors <- new("Advisors")
@@ -23,7 +24,7 @@ test.shouldSendPreComplianceResultNo <- function() {
 	setup(x=mailBox,y=postOffice)
 	
 	# identify the messageType
-	message <- messageFactory(fileName,advisors)
+	message <- messageFactory(fileName,directory,advisors)
 	
 	# create the message on the disk
 	ok <- file.create(file.path(systemOptions[["homeDir"]],"postOffice",advisors[["GhidossiGlobalEquity"]]@folderName,"pending",message[["fileName"]])) 
@@ -45,6 +46,7 @@ test.shouldSendPreComplianceResultOk <- function() {
 	
 	# identify a new order
 	fileName <- "2012-05-09_14-22-24_GhidossiGlobalEquity_preComplianceResult_ok.csv"
+	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","files")
 	
 	# define the adivisors
 	advisors <- new("Advisors")
@@ -60,7 +62,7 @@ test.shouldSendPreComplianceResultOk <- function() {
 	setup(x=mailBox,y=postOffice)
 	
 	# identify the messageType
-	message <- messageFactory(fileName,advisors)
+	message <- messageFactory(fileName,directory,advisors)
 	
 	# create the message on the disk
 	ok <- file.create(file.path(systemOptions[["homeDir"]],"postOffice",advisors[["GhidossiGlobalEquity"]]@folderName,"pending",message[["fileName"]])) 

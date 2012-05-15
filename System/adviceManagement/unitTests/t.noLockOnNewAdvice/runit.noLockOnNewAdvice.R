@@ -27,7 +27,9 @@ test.shouldNoLockOnNewAdvice <- function() {
 	setup(x=mailbox,y=postOffice)
 
 	fileName <- "2012-05-09_14-22-24_GhidossiGlobalEquity_newAdvice.csv"
-	message <- messageFactory(fileName,advisors)
+	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","files")
+	
+	message <- messageFactory(fileName,directory,advisors)
 	
 	# run the test				
 	allPID <- noLockOnNewAdvice(message)

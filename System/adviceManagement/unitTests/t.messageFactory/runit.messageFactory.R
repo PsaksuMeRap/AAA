@@ -47,13 +47,14 @@ test.shouldCreateMessage <- function() {
 test.shouldTestGetMessageDate_time_from <- function() {
 	# identify a new order
 	fileName <- "2012-05-09_14-22-24_GhidossiGlobalEquity_newAdvice.csv"
+	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","files")
 	
 	# define the adivisors
 	advisors <- new("Advisors")
 	advisors[["GhidossiGlobalEquity"]] <- new("Advisor",name="GhidossiGlobalEquity",folderName="GhidossiGlobalEquity",email="reto.ghidossi@opencapital.ch")
 	advisors[["MaggiDynamic"]] <- new("Advisor",name="MaggiDynamic",folderName="MaggiDynamic",email="maggi.sandro@")
 	
-	message <- messageFactory(fileName,advisors)
+	message <- messageFactory(fileName,directory,advisors)
 	
 	string <- getMessageDate_time_from(message)
 	checkEquals(string,"2012-05-09_14-22-24_GhidossiGlobalEquity")

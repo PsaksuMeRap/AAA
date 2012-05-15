@@ -45,9 +45,9 @@ noLockOnNewAdvice <- function(message) {
 	# command <- "c:\\Progra~1\\R\\R-2.14.2\\bin\\R CMD BATCH --slave --no-restore-history --no-timing --no-save "
 	
 	# define the name of the file to process and costruct the command
-	filetoExecute <- "newOrderProcessing.R"
+	fileToExecute <- "newOrderProcessing.R"
 	command <- "R CMD BATCH --slave --no-restore-history --no-timing --no-save "
-	command <- paste(command,"\"--args messageFrom='",messageFrom,"'\" ",filetoExecute,sep="")
+	command <- paste(command,"\"--args messageFrom='",messageFrom,"'\" ",fileToExecute,sep="")
 	
 	# save the current working directory
 	currentWorkingDirectory <- getwd()

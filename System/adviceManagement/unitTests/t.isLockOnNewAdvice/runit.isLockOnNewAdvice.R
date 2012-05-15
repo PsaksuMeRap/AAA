@@ -29,7 +29,8 @@ test.shouldRunIsLockOnNewAdvice <- function(message) {
 	setup(x=mailbox,y=postOffice)
 	
 	fileName <- "2012-05-09_14-22-24_GhidossiGlobalEquity_newAdvice.csv"
-	message <- messageFactory(fileName,advisors)
+	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","files")
+	message <- messageFactory(fileName,directory,advisors)
 	
 	# lock the GhidossiGlobalEquity mailBox
 	isOk <- file.create(file.path(systemOptions[["homeDir"]],"postOffice","GhidossiGlobalEquity","lock"))

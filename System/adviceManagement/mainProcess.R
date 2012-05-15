@@ -63,7 +63,7 @@ activeOrders <- data.frame(name="main",startTime=Sys.time(),fileName="",orderNam
 
 # start monitoring input and output directories
 
-existingFiles <- list.files(path=file.path(homeDir,"postOffice","input"))
+existingFiles <- list.files(path=file.path(homeDir,"postOffice","inbox"))
 
 T <- Sys.time()+240
 while(Sys.time()<T) {
@@ -82,6 +82,7 @@ while(Sys.time()<T) {
 		
 		for (fileName in existingFiles) {
 			#identify messageTye between: newAdvice,adviceConfirmation,preComplianceResult,postComplianceResult
+			directory <- file.path(systemOptions[["homeDir"]],"postOffice","inbox")
 			messageType <- messageFactory(fileName,advisors)
 			
 			# identify the advisor (filename="2012-05-09_14-22-24_GhidossiGlobalEquity_newAdvice.csv")
