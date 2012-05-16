@@ -10,14 +10,7 @@ source("./ayrton/lib/library.R")
 #repositories$exchangeRates <- testRepository
 
 
-
-if(.Platform$OS.type=="windows") {
-	home <- "\\\\usi/dfs/Utenti/O/ortellic/My Documents/workspace/AAA/System/ayrton/"
-} else {
-	home <- "/home/claudio/workspace/AAA/System/ayrton/"
-}
-
-setwd(home)
+mySetwd("ayrton")
 
 ## test globale
 dirs = c(
@@ -37,13 +30,7 @@ testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
 warnings()
 
 
-if(.Platform$OS.type=="windows") {
-	home <- "\\\\usi/dfs/Utenti/O/ortellic/My Documents/workspace/AAA/System/"
-} else {
-	home <- "/home/claudio/workspace/AAA/System/"
-}
-
-setwd(home)
+mySetwd()
 
 
 
