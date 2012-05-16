@@ -4,6 +4,15 @@
 ###############################################################################
 
 
-politicaInvestimento <- new.env()
-class(politicaInvestimento) <- "repositoryPoliticaInvestimento"
-politicaInvestimento.df <- data.frame(ID=character(0),MonetaInvestimento=character(0))
+# create the ID and MonetaInvestimento vectors to populate the data.frame
+ID <- c("fixedIncome","globalEquity","globalEconomy","dynamicMultistrategy")
+MonetaInvestimento <- c("EUR","CHF","CHF","EUR")
+
+# create the data.frame
+politicaInvestimento.df <- data.frame(ID=ID,MonetaInvestimento=MonetaInvestimento)
+
+# create the instrument repository		
+politicaInvestimento <- create_repositoryPoliticaInvestimento(politicaInvestimento.df=politicaInvestimento.df) 
+
+# assegna i repositories
+assign("politicaInvestimento",politicaInvestimento,envir=repositories)

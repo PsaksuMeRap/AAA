@@ -33,9 +33,12 @@ portfolio <- loadPortfolio(message@advisor@portfolioName)
 
 dati <- importDBPortfolioGenerale()
 
-repositories$politicaInvestimento <- create_repositoryPoliticaInvestimento() 
-# data.frame(ID="globalEquity",MonetaInvestimento="CHF") un data.frame con ID (pippoxy) e politicaInvestimento EUR
-repositories$instruments <- create_repositoryInstruments() # ok, prendi da csv
+# source the repositoryPoliticaInvestimento
+source(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","repositoryPoliticaInvestimento.R"))
+
+# source the instrument repository
+source(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","repositoryInstruments.R"))
+
 repositories$exchangeRates <- create_repositoryExchangeRates()
 
 # copy the checkFile into the pre-compliance input/output folder
