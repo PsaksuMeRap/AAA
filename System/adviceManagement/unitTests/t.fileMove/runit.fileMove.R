@@ -9,6 +9,7 @@ test.fileMove <- function() {
 	workingDirectory <- getwd()
 	setwd(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.fileMove"))
 	
+	dir.create("./testDirectory")
 	ok <- file.create("./testDirectory/test.txt")
 		
 	fromDirectory <- file.path(getwd(),"testDirectory")
@@ -19,6 +20,7 @@ test.fileMove <- function() {
 	
 	checkEquals(exists,FALSE)
 	
-	if(exists) file.remove("./testDirectory/test.txt")
+	unlink("./testDirectory",recursive=TRUE)
+	
 	setwd(workingDirectory)
 }

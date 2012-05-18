@@ -5,7 +5,15 @@
 
 
 test.shouldProcessNewAdviceMessage <- function() {
-
+	# load the files, create the corresponding trades
+	# verify completeness of the fields
+	# load/update Bloomberg fields
+	# create fake positions
+	# load portfolio
+	# add fake positions to portfolio
+	# execute check
+	
+	
 
 }
 
@@ -20,8 +28,8 @@ test.shouldProcessPreComplianceResultMessageNo <- function() {
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","files")
 	
 	# define the adivisors
-	advisors[["GhidossiGlobalEquity"]] <- new("Advisor",name="GhidossiGlobalEquity",folderName="GhidossiGlobalEquity",email="claudio.ortelli@gmail.com")
 	advisors <- new("Advisors")
+	advisors[["GhidossiGlobalEquity"]] <- new("Advisor",name="GhidossiGlobalEquity",folderName="GhidossiGlobalEquity",email="claudio.ortelli@gmail.com")
 	
 	# create the postOffice
 	absolutePath <- systemOptions[["homeDir"]]
@@ -35,11 +43,15 @@ test.shouldProcessPreComplianceResultMessageNo <- function() {
 	# identify the messageType
 	message <- messageFactory(fileName,directory,advisors)
 	
+	# create the newAdviceFileName who generated fileName
+	newAdviceFileName <- paste(paste(getMessageDate_time_from(message),"newAdvice",sep="_"),message[["fileExtension"]],sep=".")
+	
 	# lock
 	ok <- lock(message)
 	
 	# create file
 	ok <- file.create(file.path(systemOptions[["homeDir"]],"postOffice",advisors[["GhidossiGlobalEquity"]]@folderName,"pending",message[["fileName"]])) 
+	ok <- file.create(file.path(systemOptions[["homeDir"]],"postOffice",advisors[["GhidossiGlobalEquity"]]@folderName,"pending",newAdviceFileName)) 
 	
 	messageProcessing(message)
 	exists <- file.exists(file.path(systemOptions[["homeDir"]],"archive","processed","rejected",message[["fileName"]]))
@@ -125,7 +137,7 @@ test.shouldProcessConfirmationMessage <- function() {
 	setMethod("messageProcessing",signature(message="Confirmation"),
 			function(message) {
 				# this method assumes that the confirmation file has been moved
-				# from postOffice/inbox to postOffice/mailBox/pending folder
+				# from postOffice/inbox to postOffice/mailBox_xyz/pending folder
 				
 				# update the portfolio
 				# a) carica l'ultimo portafoglio in database yyyy-mm-dd_hh-mm-ss_nomePortafoglio
@@ -140,6 +152,7 @@ test.shouldProcessConfirmationMessage <- function() {
 	
 	)
 	
+	checkEquals(1,0)
 	
 	# clean
 	unlink(file.path(systemOptions[["homeDir"]],"postOffice"),recursive=TRUE)	

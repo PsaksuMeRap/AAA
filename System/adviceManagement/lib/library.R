@@ -6,7 +6,7 @@
 source("./adviceManagement/lib/archive.R")
 source("./adviceManagement/lib/logger.R") 
 source("./adviceManagement/lib/lock_unlock.R")
-source("./adviceManagement/lib/file.remove.R") 
+source("./adviceManagement/lib/file.move.R") 
 source("./adviceManagement/lib/classDefinitions/Mail/Mail.R")
 source("./adviceManagement/lib/isLockOnNewAdvice.R")
 source("./adviceManagement/lib/classDefinitions/Advisor/Advisor.R")

@@ -16,10 +16,10 @@ setMethod("messageProcessing",signature(message="PreComplianceResult"),
 				
 				newAdviceFileName <- paste(paste(getMessageDate_time_from(message),"newAdvice",sep="_"),message[["fileExtension"]],sep=".")
 				
-				#a) sendEmail
+				# a) sendEmail
 				result <- sendEmail_preComplianceResult(message)
 				
-				#b) move newAdvice da mailBox/pending a archive/processed/rejected,
+				# b) move newAdvice from mailBox/pending to archive/processed/rejected,
 				fromDir <- file.path(systemOptions[["homeDir"]],"postOffice",message@advisor@folderName,"pending")
 				toDir <- file.path(systemOptions[["homeDir"]],"archive","processed","rejected")
 				ok <- file.move(newAdviceFileName,fromDir,toDir)
@@ -30,7 +30,7 @@ setMethod("messageProcessing",signature(message="PreComplianceResult"),
 				}
 				logger(messageString)					
 				
-				#c) move PreComplianceResult da postOffice/pending a archive/processed/rejected 
+				#c) move PreComplianceResult da postOffice/pending a archive/processed/rejected
 				ok <- file.move(message[["fileName"]],fromDir,toDir)
 				if (ok) {
 					messageString <- paste("file",message[["fileName"]],"successfully moved to the pending folder")

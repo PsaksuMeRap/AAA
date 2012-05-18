@@ -16,8 +16,8 @@ test.shouldCreateTrade <- function() {
 	
 	trade <- tradeFactory(trade.l)
 	
-	checkEquals(trade@dateTime,as.POSIXct(trade.l[["dateTime"]], format = "%Y-%m-%d_%H-%M-%S"))
-	checkEquals(trade@owner,trade.l[["owner"]])
-	checkEquals(trade@securityID,trade.l[["securityID"]])
-	checkEquals(trade@exchange,trade.l[["exchange"]])
+	checkEquals(trade[["dateTime"]],trade.l[["dateTime"]])
+	checkEquals(trade$owner,trade.l[["owner"]])
+	checkEquals(trade$securityID,trade.l[["securityID"]])
+	checkEquals(trade$exchange,trade.l[["exchange"]])
 }

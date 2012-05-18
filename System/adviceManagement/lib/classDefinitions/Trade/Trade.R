@@ -4,5 +4,5 @@
 ###############################################################################
 
 
-setClass("Trade",representation(dateTime="POSIXct",owner="character",securityID="character",exchange="character"))
+setClass("Trade",contains="namedList")
 

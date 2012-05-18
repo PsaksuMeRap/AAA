@@ -1,0 +1,4 @@
+Loading Tcl/Tk interface ... done
+Error in args[[2]] : subscript out of bounds
+Calls: eval -> parse
+Execution halted
