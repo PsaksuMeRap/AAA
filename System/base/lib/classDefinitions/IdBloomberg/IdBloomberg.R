@@ -4,5 +4,6 @@
 ###############################################################################
 
 
-# crea la classe Id come classe virtuale contenente "numeric" 
-setClassUnion("Id","numeric")
+setClass("IdBloomberg",contains="character")
+
+setIs("IdBloomberg","Id")

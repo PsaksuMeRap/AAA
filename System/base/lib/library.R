@@ -15,6 +15,7 @@ source("./base/lib/classDefinitions/Amount/Amount.R")
 source("./base/lib/classDefinitions/Currency/Currency.R") 
 source("./base/lib/classDefinitions/Money/Money.R")
 source("./base/lib/classDefinitions/Id/Id.R")
+source("./base/lib/classDefinitions/IdBloomberg/IdBloomberg.R")
 source("./base/lib/classDefinitions/Quantity/Quantity.R")
 
 # source("./base/lib/classDefinitions/IdAyrton/IdAyrton.R")
