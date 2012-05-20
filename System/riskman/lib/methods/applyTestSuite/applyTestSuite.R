@@ -66,6 +66,7 @@ setMethod("applyTestSuite",signature(x="TestSuiteParsed",po="Positions"),
 			
 			outputDir <- x@configLines[["outputDir"]]
 			inputDir  <- x@directory
+			# open the logFile
 			logFile <- paste(outputDir,outputFileName,sep=.Platform$file.sep)
 	
 			logFile <- file(description=logFile,open="w")
@@ -75,9 +76,14 @@ setMethod("applyTestSuite",signature(x="TestSuiteParsed",po="Positions"),
 			cat(paste("Out. directory:",outputDir),file=logFile,sep="\n",append=TRUE)
 			cat("\n",file=logFile,sep="\n",append=TRUE)
 			
+			# open the tmpLogfile where 
+			tmpLogFileName <- paste(outputDir,"tmpLog.txt",sep=.Platform$file.sep)
+			tmpLogFile <- file(description=tmpLogFileName,open="w")
 			# simultaneously apply all the checkStrings on the po
-			results <- lapply(x@checkStrings,Apply,po,logFile,referenceCurrency)
-
+			results <- lapply(x@checkStrings,Apply,po,tmpLogFile,referenceCurrency)
+			# close the tmpLogFile
+			close(tmpLogFile)
+			
 			checkResults <- extractFromList(results,"checkResult")
 			names(checkResults) <- extractFromList(results,"checkString")
 			
@@ -86,7 +92,15 @@ setMethod("applyTestSuite",signature(x="TestSuiteParsed",po="Positions"),
 			summary <- paste(checkResults,": ", names(checkResults)," (actual ",results.actualPercentage,")",sep="",collapse="\n")
 			cat("Summary:",file=logFile,sep="\n",append=TRUE)
 			cat(summary,file=logFile,sep="\n",append=TRUE)
+			cat("",file=logFile,sep="\n\n",append=TRUE)
+			
+			inputConnection <- file(description=tmpLogFileName,open="r")
+			while (length(input<-readLines(inputConnection, n=1000)) > 0) {
+				writeLines(text=input, con=logFile)
+			}
 			close(logFile)
+			close(tmpLogFile)
+			unlink(tmpLogFileName)
 			
 			# print the portfolio to a file
 			outputFileName <- paste("Portafoglio_",ownerPrintName,"_",valuationDate,".log",sep="")
