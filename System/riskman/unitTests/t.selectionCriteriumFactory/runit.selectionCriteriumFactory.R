@@ -60,11 +60,8 @@ test.selectionCriteriumFactory <- function() {
 	
 	SC1 <- selectionCriteriumFactory(factorStringParsed)
 	
-	checkEquals(SC1@constraint,
-			new("MaturityHorizonSelectionCriterium",values=">3Y",negation=FALSE)
-	)
-	
-	checkEquals(SC1@negation,TRUE)
+	checkEquals(SC1@values,">3Y")
+	checkEquals(SC1@negation,FALSE)
 }
 
 
