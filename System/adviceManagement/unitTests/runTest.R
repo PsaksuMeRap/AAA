@@ -36,6 +36,8 @@ repositories$exchangeRates <- testRepository
 # set the working directory to sourceCodeDir
 mySetwd()
 
+# source the test advisors
+source("./adviceManagement/unitTests/advisors.R")
 
 ## test globale
 dirs = c(
@@ -51,7 +53,8 @@ dirs = c(
 		"./adviceManagement/unitTests/t.messageProcessing",
 		"./adviceManagement/unitTests/t.mail",
 		"./adviceManagement/unitTests/t.tradeFactory",
-		"./adviceManagement/unitTests/t.tradeToPositionFactory"
+		"./adviceManagement/unitTests/t.tradeToPositionFactory",
+		"./adviceManagement/unitTests/t.loadLastPortfolio"
 		)
 testsuite.lists <- defineTestSuite("Test adviceManagement",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)

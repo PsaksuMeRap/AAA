@@ -5,8 +5,10 @@
 
 
 advisors <- new("Advisors")
-advisors[["GhidossiGlobalEquity"]]   <- new("Advisor",name="Ghidossi Reto",folderName="GhidossiGlobalEquity",email="claudio.ortelli@gmail.com")
-#advisors[["GhidossiGlobalEquity"]]  <- new("Advisor",name="Ghidossi Reto",folderName="GhidossiGlobalEquity",email="reto.ghidossi@opencapital.ch")
-#advisors[["GhidossiGlobalEconomy"]] <- new("Advisor",name="Ghidossi Reto",folderName="GhidossiGlobalEconomy",email="claudio.ortelli@gmail.com")
-#advisors[["MaggiDynamic"]]          <- new("Advisor",name="Maggi Sandro", folderName="MaggiDynamic",email="claudio.ortelli@gmail.com")
+advisors[["GhidossiFixedIncome"]]   <- new("Advisor",name="Ghidossi Reto",folderName="GhidossiFixedIncome",  email="reto.ghidossi@opencapital.ch")
+advisors[["GhidossiGlobalEquity"]]  <- new("Advisor",name="Ghidossi Reto",folderName="GhidossiGlobalEquity", email="reto.ghidossi@opencapital.ch")
+advisors[["GhidossiGlobalEconomy"]] <- new("Advisor",name="Ghidossi Reto",folderName="GhidossiGlobalEconomy",email="reto.ghidossi@opencapital.ch")
+advisors[["MaggiDynamicMulti"]]     <- new("Advisor",name="Maggi Sandro", folderName="MaggiDynamicMulti",    email="sandro.maggi@opencapital.ch")
+
+
 
