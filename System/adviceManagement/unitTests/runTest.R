@@ -53,7 +53,7 @@ dirs = c(
 		"./adviceManagement/unitTests/t.messageProcessing",
 		"./adviceManagement/unitTests/t.mail",
 		"./adviceManagement/unitTests/t.tradeFactory",
-		"./adviceManagement/unitTests/t.tradeToPositionFactory",
+		"./adviceManagement/unitTests/t.tradeToSecurityFactory",
 		"./adviceManagement/unitTests/t.loadLastPortfolio"
 		)
 testsuite.lists <- defineTestSuite("Test adviceManagement",dirs = dirs)

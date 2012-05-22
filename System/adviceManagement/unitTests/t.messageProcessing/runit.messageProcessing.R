@@ -140,7 +140,7 @@ test.shouldProcessConfirmationMessage <- function() {
 				# from postOffice/inbox to postOffice/mailBox_xyz/pending folder
 				
 				# update the portfolio
-				# a) carica l'ultimo portafoglio in database yyyy-mm-dd_hh-mm-ss_nomePortafoglio
+				# a) carica l'ultimo portafoglio in database yyyy-mm-dd_hh-mm-ss_portafoglio.RData
 				# b) aggiorna il portafoglio
 				# c) salva il nuovo portafoglio nel db
 			
