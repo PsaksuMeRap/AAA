@@ -54,8 +54,10 @@ dirs = c(
 		"./adviceManagement/unitTests/t.mail",
 		"./adviceManagement/unitTests/t.tradeFactory",
 		"./adviceManagement/unitTests/t.tradeToSecurityFactory",
-		"./adviceManagement/unitTests/t.loadLastPortfolio"
-		)
+		"./adviceManagement/unitTests/t.loadLastPortfolio",
+		"./adviceManagement/unitTests/t.bloombergData"
+
+				)
 testsuite.lists <- defineTestSuite("Test adviceManagement",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
 warnings()
