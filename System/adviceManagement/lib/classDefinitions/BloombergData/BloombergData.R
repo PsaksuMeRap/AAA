@@ -23,10 +23,24 @@ setMethod("add",signature("BloombergDataEntry","BloombergData"),
 		}
 )
 
+
 setMethod("add",signature("BloombergDataEntry","BloombergDataEntry"),
 		function(x,y) {
 			# x: a BloombergDataEntry
 			# y: a BloombergDataEntry
+			
+			blData <- new("BloombergData")
+			blData <- add(x,blData)
+			blData <- add(y,blData)
+			
+			return(blData)
+		}
+)
+
+setMethod("add",signature("BloombergData","BloombergData"),
+		function(x,y) {
+			# x: a BloombergData
+			# y: a BloombergData
 			
 			# 1: identify common elements
 			
@@ -46,5 +60,14 @@ setMethod("add",signature("BloombergDataEntry","BloombergDataEntry"),
 			x <- c(x,y)
 
 			return(x)
+		}
+)
+
+setMethod("as.character",signature("BloombergDataEntry"),
+		function(x) {
+			# x: a BloombergData
+						
+			string <- paste(x@blId,x@fieldId,x@value,x@dateLastUpdate,sep=" / ")
+			return(string)
 		}
 )

@@ -13,6 +13,7 @@ source("./adviceManagement/lib/classDefinitions/Mail/Mail.R")
 source("./adviceManagement/lib/isLockOnNewAdvice.R")
 
 source("./adviceManagement/lib/classDefinitions/BloombergData/BloombergData.R")
+source("./adviceManagement/lib/classDefinitions/BloombergRequestHandler/BloombergRequestHandler.R")
 source("./adviceManagement/lib/classDefinitions/Advisor/Advisor.R")
 source("./adviceManagement/lib/classDefinitions/Advisors/Advisors.R")
 source("./adviceManagement/lib/classDefinitions/Trade/Trade.R")
