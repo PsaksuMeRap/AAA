@@ -24,14 +24,14 @@ test.shouldCreateMessage <- function() {
 	checkEquals(result[["fileName"]],"2012-05-09_14-22-24_GhidossiGlobalEquity_newAdvice.csv")
 	checkEquals(result@advisor,advisors[["GhidossiGlobalEquity"]])
 	checkEquals(is(result,"NewAdvice"),TRUE)
-	checkEquals(result@trades[[1]]@securityID,"RocheGA")
+	checkEquals(result@trades[[1]]$securityID,"RocheGA")
 	
 	
 	
 	fileName <- "2012-05-09_14-22-24_GhidossiGlobalEquity_confirmation.csv"
 	result <- messageFactory(fileName,directory,advisors)
 	checkEquals(is(result,"Confirmation"),TRUE)
-	checkEquals(result@trades[[2]]@securityID,"SMI")
+	checkEquals(result@trades[[2]]$securityID,"SMI")
 	
 	fileName <- "2012-05-09_14-22-24_GhidossiGlobalEquity_preComplianceResult_1.csv"
 	result <- messageFactory(fileName,directory,advisors)

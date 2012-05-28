@@ -53,8 +53,8 @@ test.shouldAddBlDataEntryToBlData <- function() {
 	blDataEntry <- new("BloombergDataEntry",blId="UBSN VX Equity",fieldId="ID_ISIN",value="CH0024899483",dateLastUpdate=Sys.time())
 	blData <- add(blDataEntry,blData)
 	checkEquals(length(blData),2)
-	checkEquals(blData[["USBN VX Equity__ID_ISIN"]]@value,"CH0024899483")
-	isTrue <- blData[["USBN VX Equity__ID_ISIN"]]@dateLastUpdate > blData[["NOVN VX Equity__ID_ISIN"]]@dateLastUpdate
+	checkEquals(blData[["UBSN VX Equity__ID_ISIN"]]@value,"CH0024899483")
+	isTrue <- blData[["UBSN VX Equity__ID_ISIN"]]@dateLastUpdate > blData[["NOVN VX Equity__ID_ISIN"]]@dateLastUpdate
 	checkEquals(isTrue,TRUE)
 }
 

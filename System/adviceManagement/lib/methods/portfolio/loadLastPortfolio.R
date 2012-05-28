@@ -5,11 +5,11 @@
 
 
 loadLastPortfolio <- function(directory) {
-	# dateTime <- format(Sys.time(),format="%Y-%m-%d_%H-%M-%S")
-	
+	# dateTime <- format(Sys.time(),format="%Y-%mpaste("No portfolio files in directory\n",directory,sep="")-%d_%H-%M-%S")
+
 	# get the file names in directory ending with ".RData"
-	files <- list.files(path=directory,pattern="portfolio.RData$")
-	if (length(files)==0) stop(paste("No portfolio files in directory\n",directory,sep=""))
+	files <- list.files(path=directory,pattern="portfolio.RData$",full.name=TRUE)
+	if (length(files)==0) stop()
 	
 	# sort the file names in ascending order 
 	files <- sort(files)

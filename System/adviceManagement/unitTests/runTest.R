@@ -12,15 +12,14 @@ library("stringr")
 
 stringsAsFactors = FALSE
 
+# this variable is used to indicate that we are running a testsuite
+isTest <- TRUE
+
 source("./base/lib/library.R")
 
 # set the directory where the source code is installed (i.e. folders adviceManagement, ayrton, base, riskman)
 sourceCodeDir <- getwd()
 systemOptions[["sourceCodeDir"]] <- sourceCodeDir
-
-# set the homeDir, i.e. the directory where the postBox must be installed
-homeDir <- file.path(sourceCodeDir,"adviceManagement","unitTests","directories")
-systemOptions[["homeDir"]] <- "c:/riskman"
 
 # import the adviceManagement library
 #source(file.path(sourceCodeDir,"adviceManagement","lib","library.R"))
@@ -47,14 +46,15 @@ dirs = c(
 		"./adviceManagement/unitTests/t.sendStopToRProcess",
 		"./adviceManagement/unitTests/t.detectRprocesses",
 		"./adviceManagement/unitTests/t.messageFactory",
-		"./adviceManagement/unitTests/t.noLockOnNewAdvice",
+		# "./adviceManagement/unitTests/t.noLockOnNewAdvice",
 		"./adviceManagement/unitTests/t.isLockOnNewAdvice",
 		"./adviceManagement/unitTests/t.lock_unlock",
 		"./adviceManagement/unitTests/t.messageProcessing",
 		"./adviceManagement/unitTests/t.mail",
 		"./adviceManagement/unitTests/t.tradeFactory",
-		"./adviceManagement/unitTests/t.tradeToSecurityFactory",
+		# "./adviceManagement/unitTests/t.tradeToSecurityFactory",
 		"./adviceManagement/unitTests/t.loadLastPortfolio",
+		"./adviceManagement/unitTests/t.saveLastObject",
 		"./adviceManagement/unitTests/t.bloombergData",
 		"./adviceManagement/unitTests/t.bloombergRequestHandler"
 	)
