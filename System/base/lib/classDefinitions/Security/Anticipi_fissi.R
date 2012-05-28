@@ -4,5 +4,5 @@
 ###############################################################################
 
 
-setClass("Anticipi_fissi",representation(currency="Currency",name="character",id="Id"),contains="Security") 
+setClass("Anticipi_fissi",representation(currency="Currency",name="character",id="Id",maturity="character"),contains="Security") 
 

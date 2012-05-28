@@ -328,6 +328,19 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 6
 	class(x) <- "AyrtonPosition"
+	testData$Anticipi_fissiAccrual1 <- x
+	##---------------------
+	
+	x <- new("AyrtonPosition")
+	x@Cliente <- 'pippo47'
+	x@Strumento <- 'M'
+	x@Moneta <- 'CHF'
+	x@Saldo <- 0.001
+	x@Nome <- 'Anticipo fisso 01-04-09/02-04-12 Ipoteca tasso fisso 115.000 CHF 2.05%'
+	x@ValoreMercatoMonetaCHF <- 0.001
+	x@ID_AAA <- NA_real_
+	x@ID_strumento <- 6
+	class(x) <- "AyrtonPosition"
 	testData$Anticipi_fissi1 <- x
 	##---------------------
 	
