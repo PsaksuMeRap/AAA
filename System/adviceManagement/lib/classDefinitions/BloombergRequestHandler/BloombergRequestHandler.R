@@ -23,14 +23,14 @@ create_BloombergRequestHandler <- function() {
 		fieldId <- extractFromList(blRequestHandler[["requests"]],"fieldId")
 		
 		# excecute request by blId
-		blData <- new("BlommbergData")
+		blData <- new("BloombergData")
 		conn <- blpConnect()
 		for (security in unique(blId)) {
 			ok <- blId == security
 			result <- bdp(conn, securities=security, fields=fieldId[ok])
 			for (field in fieldId[ok]) {
 				blData <- add(new("BloombergDataEntry",blId=security,fieldId=field,
-								value=result[security,field],dateLastUpdate=Sys.time()))
+								value=result[security,field],dateLastUpdate=Sys.time()),blData)
 			}
 		}
 		blpDisconnect(conn)

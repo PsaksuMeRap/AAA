@@ -20,7 +20,7 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_strumento <- 1
 	
 	class(x) <- "AyrtonPosition"
-
+	A_equity1 <- x
 	testData$equity1 <- x
 	
 	
@@ -36,7 +36,7 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_strumento <- 1
 	
 	class(x) <- "AyrtonPosition"
-	
+	A_equity2 <- x
 	testData$equity2 <- x
 	
 	
@@ -53,6 +53,7 @@ createRepositoryAyrtonPositions <- function() {
 	
 	class(x) <- "AyrtonPosition"
 	
+	A_indexCertificate <- x
 	testData$indexCertificate <- x
 	
 	
@@ -67,7 +68,7 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- 100020202
 	x@ID_strumento <- 1
 	class(x) <- "AyrtonPosition"
-	
+	A_noExists <- x	
 	testData$noExists <- x
 	
 	
@@ -82,7 +83,8 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- 1218
 	x@ID_strumento <- 2
 	class(x) <- "AyrtonPosition"
-	
+
+	A_bond1 <- x
 	testData$bond1 <- x
 	
 	
@@ -97,7 +99,8 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- 1976
 	x@ID_strumento <- 2
 	class(x) <- "AyrtonPosition"
-	
+
+	A_bond2 <- x
 	testData$bond2 <- x
 	
 	
@@ -112,7 +115,8 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- 1967
 	x@ID_strumento <- 2
 	class(x) <- "AyrtonPosition"
-	
+
+	A_bond3 <- x
 	testData$bond3 <- x
 	
 	
@@ -127,7 +131,8 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- 1073
 	x@ID_strumento <- 2
 	class(x) <- "AyrtonPosition"
-	
+
+	A_bond4 <- x
 	testData$bond4 <- x
 	
 	
@@ -142,7 +147,8 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- 825
 	x@ID_strumento <- 3
 	class(x) <- "AyrtonPosition"
-	
+
+	A_fondiObbligazionari <- x
 	testData$fondiObbligazionari <- x
 	
 	
@@ -157,7 +163,8 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- 825
 	x@ID_strumento <- 3
 	class(x) <- "AyrtonPosition"
-		
+
+	A_proRataFondiObbligazionari <- x
 	testData$proRataFondiObbligazionari <- x
 	
 	
@@ -172,7 +179,7 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- 1073
 	x@ID_strumento <- 2
 	class(x) <- "AyrtonPosition"
-	
+	A_proRata1 <- x
 	testData$proRata1 <- x
 	
 	# create an Unclassified security
@@ -187,6 +194,7 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_strumento <- 53
 	class(x) <- "AyrtonPosition"
 	
+	A_unclassified1 <- x
 	testData$unclassified1 <- x
 	
 	
@@ -201,7 +209,8 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- 98
 	x@ID_strumento <- 49
 	class(x) <- "AyrtonPosition"
-
+	
+	A_strutturati_FI <- x
 	testData$strutturati_FI <- x
 	
 	
@@ -216,7 +225,7 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- 1476
 	x@ID_strumento <- 26
 	class(x) <- "AyrtonPosition"
-	
+	A_Fondi_misti <- x	
 	testData$Fondi_misti <- x	
 	
 	
@@ -232,6 +241,7 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_strumento <- 14
 	class(x) <- "AyrtonPosition"
 	
+	A_globalEquity <- x	
 	testData$globalEquity <- x	
 	
 	
@@ -247,6 +257,7 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_strumento <- 3
 	class(x) <- "AyrtonPosition"
 	
+	A_fixedIncome <- x
 	testData$fixedIncome <- x	
 	##---------------------
 	
@@ -262,9 +273,9 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_strumento <- 14
 	class(x) <- "AyrtonPosition"
 	
+	A_globalEconomy  <- x
 	testData$globalEconomy <- x
 
-	
 	
 	x <- new("AyrtonPosition")
 	x@Cliente <- 'pippo88'
@@ -276,6 +287,8 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- 469
 	x@ID_strumento <- 4
 	class(x) <- "AyrtonPosition"
+
+	A_Fondi_mercato_monetario1  <- x
 	testData$Fondi_mercato_monetario1 <- x
 	##---------------------
 	
@@ -289,6 +302,8 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- 162
 	x@ID_strumento <- 4
 	class(x) <- "AyrtonPosition"
+
+	A_Fondi_mercato_monetario2  <- x
 	testData$Fondi_mercato_monetario2 <- x
 	##---------------------
 	
@@ -302,6 +317,8 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- 1060
 	x@ID_strumento <- 5
 	class(x) <- "AyrtonPosition"
+
+	A_Floating_rate_notes1  <- x
 	testData$Floating_rate_notes1 <- x
 	##---------------------
 	
@@ -315,6 +332,8 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- 1060
 	x@ID_strumento <- 5
 	class(x) <- "AyrtonPosition"
+
+	A_Floating_rate_notes2  <- x
 	testData$Floating_rate_notes2 <- x
 	##---------------------
 	
@@ -328,6 +347,8 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 6
 	class(x) <- "AyrtonPosition"
+
+	A_Anticipi_fissiAccrual1  <- x
 	testData$Anticipi_fissiAccrual1 <- x
 	##---------------------
 	
@@ -341,6 +362,8 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 6
 	class(x) <- "AyrtonPosition"
+
+	A_Anticipi_fissi1  <- x
 	testData$Anticipi_fissi1 <- x
 	##---------------------
 	
@@ -354,7 +377,39 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 6
 	class(x) <- "AyrtonPosition"
+
+	A_Anticipi_fissi2  <- x
 	testData$Anticipi_fissi2 <- x
+	##---------------------
+	
+	x <- new("AyrtonPosition")
+	x@Cliente <- 'pippo47'
+	x@Strumento <- 'Macc'
+	x@Moneta <- 'CHF'
+	x@Saldo <- 0
+	x@Nome <- 'Deposito singolo 01-04-09/02-04-12 deposito a termine al 2.05% Pro-rata'
+	x@ValoreMercatoMonetaCHF <- 5.84250046813395e-05
+	x@ID_AAA <- NA_real_
+	x@ID_strumento <- 7
+	class(x) <- "AyrtonPosition"
+	
+	A_Deposito_a_termine_acc1  <- x
+	testData$Deposito_a_termine_acc1 <- x
+	##---------------------
+	
+	x <- new("AyrtonPosition")
+	x@Cliente <- 'pippo47'
+	x@Strumento <- 'M'
+	x@Moneta <- 'CHF'
+	x@Saldo <- 0.001
+	x@Nome <- 'Deposito singolo 01-04-09/02-04-12 deposito a termine al 2.05%'
+	x@ValoreMercatoMonetaCHF <- 0.001
+	x@ID_AAA <- NA_real_
+	x@ID_strumento <- 7
+	class(x) <- "AyrtonPosition"
+	
+	A_Deposito_a_termine1  <- x
+	testData$Deposito_a_termine1 <- x
 	##---------------------
 	
 	x <- new("AyrtonPosition")
@@ -367,6 +422,8 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- 1840
 	x@ID_strumento <- 14
 	class(x) <- "AyrtonPosition"
+
+	A_Fondi_azionari1 <- x
 	testData$Fondi_azionari1 <- x
 	##---------------------
 	
@@ -380,6 +437,8 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- 1701
 	x@ID_strumento <- 14
 	class(x) <- "AyrtonPosition"
+
+	A_Fondi_azionari2 <- x	
 	testData$Fondi_azionari2 <- x
 	##---------------------
 	
@@ -393,6 +452,8 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- 2272
 	x@ID_strumento <- 15
 	class(x) <- "AyrtonPosition"
+
+	A_Index_certificate1 <- x
 	testData$Index_certificate1 <- x
 	##---------------------
 	
@@ -406,6 +467,8 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- 2273
 	x@ID_strumento <- 15
 	class(x) <- "AyrtonPosition"
+
+	A_Index_certificate2 <- x	
 	testData$Index_certificate2 <- x
 	##---------------------
 	
@@ -419,6 +482,8 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 18
 	class(x) <- "AyrtonPosition"
+
+	A_Opzioni_su_azioni1 <- x	
 	testData$Opzioni_su_azioni1 <- x
 	##---------------------
 	
@@ -432,6 +497,8 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 18
 	class(x) <- "AyrtonPosition"
+
+	A_Opzioni_su_azioni1 <- x		
 	testData$Opzioni_su_azioni2 <- x
 	##---------------------
 	
@@ -446,6 +513,8 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 50
 	class(x) <- "AyrtonPosition"
+
+	A_Futures_EQ1 <- x
 	testData$Futures_EQ1 <- x
 	##---------------------
 	
@@ -460,6 +529,8 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 21
 	class(x) <- "AyrtonPosition"
+
+	A_Metalli_preziosi1 <- x
 	testData$Metalli_preziosi1 <- x
 	##---------------------
 	
@@ -473,6 +544,8 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 22
 	class(x) <- "AyrtonPosition"
+
+	A_FX_Forward1 <- x
 	testData$FX_Forward1 <- x
 	##---------------------
 	
@@ -486,6 +559,8 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- 1884
 	x@ID_strumento <- 25
 	class(x) <- "AyrtonPosition"
+
+	A_Fondi_immobiliari1 <- x
 	testData$Fondi_immobiliari1 <- x
 	##---------------------
 	
@@ -499,6 +574,8 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- 2422
 	x@ID_strumento <- 30
 	class(x) <- "AyrtonPosition"
+
+	A_Diritti_aumento_capitale_azionario1 <- x
 	testData$Diritti_aumento_capitale_azionario1 <- x
 	##---------------------
 	
@@ -512,6 +589,8 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 40
 	class(x) <- "AyrtonPosition"
+
+	A_Conto_corrente1 <- x
 	testData$Conto_corrente1 <- x
 	##---------------------
 	
@@ -525,6 +604,8 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 40
 	class(x) <- "AyrtonPosition"
+
+	A_Conto_corrente2 <- x
 	testData$Conto_corrente2 <- x
 	##---------------------
 	
@@ -538,6 +619,8 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- 1869
 	x@ID_strumento <- 44
 	class(x) <- "AyrtonPosition"
+
+	A_Fondi_Hedge1 <- x
 	testData$Fondi_Hedge1 <- x
 	##---------------------
 	
@@ -551,6 +634,8 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- 1953
 	x@ID_strumento <- 44
 	class(x) <- "AyrtonPosition"
+
+	A_Fondi_Hedge2 <- x
 	testData$Fondi_Hedge2 <- x
 	##---------------------
 	
@@ -564,6 +649,8 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- 2277
 	x@ID_strumento <- 45
 	class(x) <- "AyrtonPosition"
+
+	A_ETF_equity1 <- x
 	testData$ETF_equity1 <- x
 	##---------------------
 	
@@ -577,6 +664,8 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- 2278
 	x@ID_strumento <- 45
 	class(x) <- "AyrtonPosition"
+
+	A_ETF_equity2 <- x
 	testData$ETF_equity2 <- x
 	##---------------------
 	
@@ -590,7 +679,9 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- 119
 	x@ID_strumento <- 48
 	class(x) <- "AyrtonPosition"
-	testData$Strutturati_EQ <- x
+
+	A_Strutturati_EQ1 <- x	
+	testData$Strutturati_EQ1 <- x
 	##---------------------
 	
 	x <- new("AyrtonPosition")
@@ -603,7 +694,9 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- 121
 	x@ID_strumento <- 48
 	class(x) <- "AyrtonPosition"
-	testData$Strutturati_EQ <- x
+
+	A_Strutturati_EQ2 <- x	
+	testData$Strutturati_EQ2 <- x
 	##---------------------
 	
 	x <- new("AyrtonPosition")
@@ -616,11 +709,13 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- 98
 	x@ID_strumento <- 49
 	class(x) <- "AyrtonPosition"
+
+	A_Strutturati_FI1 <- x	
 	testData$Strutturati_FI1 <- x
 	##---------------------
 	
 
-		x <- new("AyrtonPosition")
+	x <- new("AyrtonPosition")
 	x@Cliente <- 'pippo210'
 	x@Strumento <- 'F'
 	x@Moneta <- 'CHF'
@@ -631,6 +726,8 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_strumento <- 50
 	x@Saldo <- -25
 	class(x) <- "AyrtonPosition"
+
+	A_Futures_EQ1 <- x
 	testData$Futures_EQ1 <- x
 	##---------------------
 	
@@ -645,6 +742,8 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- 2430
 	x@ID_strumento <- 51
 	class(x) <- "AyrtonPosition"
+
+	A_ETF_commodities <- x
 	testData$ETF_commodities <- x
 	##---------------------
 	
@@ -659,6 +758,8 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- 169
 	x@ID_strumento <- 52
 	class(x) <- "AyrtonPosition"
+
+	A_Credit_linked_note <- x
 	testData$Credit_linked_note <- x
 	##---------------------
 	

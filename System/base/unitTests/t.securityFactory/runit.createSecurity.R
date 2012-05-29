@@ -72,22 +72,38 @@ test.shouldCreateBond <- function() {
 		
 }
 
-test.shoulCreateTimeDeposit <- function() {
-	# this is valid for Anticipi fissi and depositi a termine
+test.shouldCreateAnticipoFisso <- function() {
+	# this is valid for Anticipi fissi
+	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
 	
 	# create the origin
 	repository <- createRepositoryAyrtonPositions()
 	origin <- repository$Anticipi_fissi1
-	class(origin) <- "Anticipi_fissi"
+	class(origin) <- "Ayrton_Anticipi_fissi"
 	
 	anticipiFissi <- createSecurity(origin)
-	checkEquals(anticipiFissi@name,"20130603 - 3.625% Pfizer 03-06-13")
-	checkEquals(anticipiFissi@id,new("IdAyrton",idAAA=new("IdAAA_numeric",1218),idStrumento=2))
-	checkEquals(anticipiFissi@maturity,"2013-06-03")
-	
+	checkEquals(anticipiFissi@name,"Anticipo fisso 01-04-09/02-04-12 Ipoteca tasso fisso 115.000 CHF 2.05%")
+	checkEquals(anticipiFissi@id,new("IdAyrton",idAAA=new("IdAAA_string","Anticipo fisso 01-04-09/02-04-12 Ipoteca tasso fisso 115.000 CHF 2.05%"),idStrumento=6))
+	checkEquals(anticipiFissi@maturity,"2012-04-02")
 	
 }
 
+
+test.shouldCreateTimeDeposit <- function() {
+	# this is valid for time deposits. The procedure is identical to that of Anticipi_fissi
+	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
+	
+	# create the origin
+	repository <- createRepositoryAyrtonPositions()
+	origin <- repository$Deposito_a_termine1
+	class(origin) <- "Ayrton_Depositi_a_termine"
+	
+	depositoAtermine <- createSecurity(origin)
+	checkEquals(depositoAtermine@name,"Deposito singolo 01-04-09/02-04-12 deposito a termine al 2.05%")
+	checkEquals(depositoAtermine@id,new("IdAyrton",idAAA=new("IdAAA_string","Deposito singolo 01-04-09/02-04-12 deposito a termine al 2.05%"),idStrumento=7))
+	checkEquals(depositoAtermine@maturity,"2012-04-02")
+	
+}
 
 
 test.shouldNULLForAccruedInterest <- function() {

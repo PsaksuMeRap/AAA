@@ -42,9 +42,9 @@ setMethod("setup",signature(x="MailBox",y="PostOffice"),
 			} else {
 				# create the necessary directories
 				path <- file.path(y@absolutePath,"postOffice",x@advisor@folderName)
+				if (file.exists(path)) return(invisible())
 				dir.create(path)
 				dir.create(file.path(path,"pending"))
-				# dir.create(file.path(path,"sent"))
 				return(invisible())
 			}
 		}

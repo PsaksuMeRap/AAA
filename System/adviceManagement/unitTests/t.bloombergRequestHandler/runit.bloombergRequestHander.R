@@ -15,7 +15,7 @@ test.shuldCollectBloombergRequest <- function() {
 	checkEquals(length(blRequestHandler[["requests"]]),3)
 	checkEquals(blRequestHandler[["requests"]][[2]]$blId,"UBSN VX Equity")
 	checkEquals(blRequestHandler[["requests"]][[2]]$fieldId,"PX_LAST")
-	checkEquals(blRequestHandler[["requests"]][[1]]$requestDateTime < Sys.time(),TRUE)
+	checkEquals(blRequestHandler[["requests"]][[1]]$requestDateTime-Sys.time()<=0,TRUE)
 }
 
 
@@ -31,15 +31,17 @@ test.shuldExecuteBloombergRequestCollection <- function() {
 	blRequestHandler$collect("UHR VX Equity","NAME")
 	
 	if (!is.element("package:Rbloomberg",search())) {
+		library("Rbbg")
 		checkEquals(TRUE,TRUE)
 	} else {
-		
+		library("Rbbg")
 		blData <- blRequestHandler[["execute"]]()
 		checkEquals(length(blData),4)
-		checkEquals(blData[["UBSN VX Equity__ID_ISIN"]][["blId"]],"UBSN VX Equity")
-		checkEquals(blData[["UBSN VX Equity__ID_ISIN"]][["fieldId"]],"ID_ISIN")
-		checkEquals(blData[["UBSN VX Equity__ID_ISIN"]][["value"]],"")
-		checkEquals(blData[["UBSN VX Equity__ID_ISIN"]][["dateLastUpdate"]]-Sys.time()<0,TRUE)
+		checkEquals(blData[["UBSN VX Equity__ID_ISIN"]]@blId,"UBSN VX Equity")
+		checkEquals(blData[["UBSN VX Equity__ID_ISIN"]]@fieldId,"ID_ISIN")
+		checkEquals(blData[["UBSN VX Equity__ID_ISIN"]]@value,"CH0024899483")
+		checkEquals(blData[["UBSN VX Equity__ID_ISIN"]]@dateLastUpdate-Sys.time()<0,TRUE)
+		checkEquals(blRequestHandler[["requests"]],list())
 	}
 }
 

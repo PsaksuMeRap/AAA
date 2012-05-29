@@ -9,6 +9,7 @@ library("RODBC")
 library("RUnit")
 library("tcltk")
 library("stringr")
+library("Rbbg")
 
 stringsAsFactors = FALSE
 
@@ -20,9 +21,6 @@ source("./base/lib/library.R")
 # set the directory where the source code is installed (i.e. folders adviceManagement, ayrton, base, riskman)
 sourceCodeDir <- getwd()
 systemOptions[["sourceCodeDir"]] <- sourceCodeDir
-
-# import the adviceManagement library
-#source(file.path(sourceCodeDir,"adviceManagement","lib","library.R"))
 
 # set the working directory to base and import the exchangeRates
 mySetwd("base")
