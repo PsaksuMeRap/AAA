@@ -98,8 +98,14 @@ createRepositoryPositions <- function() {
 	Floating_rate_notes2 <- positionFactory(repository$Floating_rate_notes2)
 	testData$Floating_rate_notes2 <- positionFactory(repository$Floating_rate_notes2)
 	
+	Anticipi_fissiAccrual1 <- positionFactory(repository$Anticipi_fissiAccrual1)
+	testData$Anticipi_fissiAccrual1 <- positionFactory(repository$Anticipi_fissiAccrual1)
+	
 	Anticipi_fissi1 <- positionFactory(repository$Anticipi_fissi1)
 	testData$Anticipi_fissi1 <- positionFactory(repository$Anticipi_fissi1)
+	
+	Anticipi_fissiAccrual2 <- positionFactory(repository$Anticipi_fissiAccrual2)
+	testData$Anticipi_fissiAccrual2 <- positionFactory(repository$Anticipi_fissiAccrual2)
 	
 	Anticipi_fissi2 <- positionFactory(repository$Anticipi_fissi2)
 	testData$Anticipi_fissi2 <- positionFactory(repository$Anticipi_fissi2)
@@ -122,20 +128,12 @@ createRepositoryPositions <- function() {
 	Opzioni_su_azioni2 <- positionFactory(repository$Opzioni_su_azioni2)
 	testData$Opzioni_su_azioni2 <- positionFactory(repository$Opzioni_su_azioni2)
 	
-	Anticipi_fissiAccrual1 <- positionFactory(repository$Anticipi_fissiAccrual1)
-	testData$Anticipi_fissiAccrual1 <- positionFactory(repository$Anticipi_fissiAccrual1)
-
-	Anticipi_fissi1 <- positionFactory(repository$Anticipi_fissi1)
-	testData$Anticipi_fissi1 <- positionFactory(repository$Anticipi_fissi1)
-	
-	Anticipi_fissi2 <- positionFactory(repository$Anticipi_fissi2)
-	testData$Anticipi_fissi2 <- positionFactory(repository$Anticipi_fissi2)	
 	
 	Deposito_a_termine_acc1 <- positionFactory(repository$Deposito_a_termine_acc1)
 	testData$Deposito_a_termine_acc1 <- positionFactory(repository$Deposito_a_termine_acc1)	
 	
-	Deposito_a_termine <- positionFactory(repository$Deposito_a_termine)
-	testData$Deposito_a_termine <- positionFactory(repository$Deposito_a_termine)
+	Deposito_a_termine1 <- positionFactory(repository$Deposito_a_termine1)
+	testData$Deposito_a_termine1 <- positionFactory(repository$Deposito_a_termine1)
 	
 	return(testData)
 }

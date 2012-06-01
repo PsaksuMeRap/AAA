@@ -341,9 +341,9 @@ createRepositoryAyrtonPositions <- function() {
 	x@Cliente <- 'pippo47'
 	x@Strumento <- 'Macc'
 	x@Moneta <- 'CHF'
-	x@Saldo <- 0
+	x@Saldo <- 1.0
 	x@Nome <- 'Anticipo fisso 01-04-09/02-04-12 Ipoteca tasso fisso 115.000 CHF 2.05% Pro-rata'
-	x@ValoreMercatoMonetaCHF <- 5.84250046813395e-05
+	x@ValoreMercatoMonetaCHF <- 0.01
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 6
 	class(x) <- "AyrtonPosition"
@@ -356,9 +356,9 @@ createRepositoryAyrtonPositions <- function() {
 	x@Cliente <- 'pippo47'
 	x@Strumento <- 'M'
 	x@Moneta <- 'CHF'
-	x@Saldo <- 0.001
+	x@Saldo <- 1.0
 	x@Nome <- 'Anticipo fisso 01-04-09/02-04-12 Ipoteca tasso fisso 115.000 CHF 2.05%'
-	x@ValoreMercatoMonetaCHF <- 0.001
+	x@ValoreMercatoMonetaCHF <- 1.0
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 6
 	class(x) <- "AyrtonPosition"
@@ -369,9 +369,24 @@ createRepositoryAyrtonPositions <- function() {
 	
 	x <- new("AyrtonPosition")
 	x@Cliente <- 'pippo131'
+	x@Strumento <- 'Macc'
+	x@Moneta <- 'CHF'
+	x@Saldo <- 15.50
+	x@Nome <- 'Anticipo fisso 20-12-11/14-02-12 Novers 0.65% Pro-rata'
+	x@ValoreMercatoMonetaCHF <- 0.15
+	x@ID_AAA <- NA_real_
+	x@ID_strumento <- 6
+	class(x) <- "AyrtonPosition"
+	
+	A_Anticipi_fissiAccrual2  <- x
+	testData$Anticipi_fissiAccrual2 <- x
+	##---------------------
+	
+	x <- new("AyrtonPosition")
+	x@Cliente <- 'pippo131'
 	x@Strumento <- 'M'
 	x@Moneta <- 'CHF'
-	x@Saldo <- -1e+05
+	x@Saldo <- 15.50
 	x@Nome <- 'Anticipo fisso 20-12-11/14-02-12 Novers 0.65%'
 	x@ValoreMercatoMonetaCHF <- -1e+05
 	x@ID_AAA <- NA_real_
@@ -386,9 +401,9 @@ createRepositoryAyrtonPositions <- function() {
 	x@Cliente <- 'pippo47'
 	x@Strumento <- 'Macc'
 	x@Moneta <- 'CHF'
-	x@Saldo <- 0
+	x@Saldo <- 23.30
 	x@Nome <- 'Deposito singolo 01-04-09/02-04-12 deposito a termine al 2.05% Pro-rata'
-	x@ValoreMercatoMonetaCHF <- 5.84250046813395e-05
+	x@ValoreMercatoMonetaCHF <- 0.75
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 7
 	class(x) <- "AyrtonPosition"
@@ -401,9 +416,9 @@ createRepositoryAyrtonPositions <- function() {
 	x@Cliente <- 'pippo47'
 	x@Strumento <- 'M'
 	x@Moneta <- 'CHF'
-	x@Saldo <- 0.001
+	x@Saldo <- 23.30
 	x@Nome <- 'Deposito singolo 01-04-09/02-04-12 deposito a termine al 2.05%'
-	x@ValoreMercatoMonetaCHF <- 0.001
+	x@ValoreMercatoMonetaCHF <- 1.0
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 7
 	class(x) <- "AyrtonPosition"

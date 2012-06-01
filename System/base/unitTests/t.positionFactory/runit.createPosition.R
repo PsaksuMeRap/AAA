@@ -104,6 +104,34 @@ test.shouldCreatePositionBond <- function() {
 	deallocateTestRepositories("instruments")
 }
 
+test.shouldCreatePositionAnticipiFissi <- function() {	
+	
+	# uses a default method
+	source("./unitTests/utilities/allocateTestRepositories.R")	
+	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
+	
+	# create the instrument repository	
+	allocateTestRepositories("instruments")
+	
+	# create the origin
+	repository <- createRepositoryAyrtonPositions()
+	origin <- repository$Anticipi_fissi1
+	
+	anticipiFissiSecurity <- securityFactory(origin)
+	
+	anticipiFissiPosition <- createPosition(anticipiFissiSecurity,origin)
+	
+	checkEquals(FALSE,TRUE)
+	checkEquals(is(bondPosition)[1],"PositionBond")
+	checkEquals(bondPosition@id,10.2)
+	checkEquals(bondPosition@accruedInterest@amount,new("Amount",NA_real_))	
+	checkEquals(bondPosition@quantity,new("NominalValue",amount=new("Amount",100000),currency=new("Currency","EUR")))
+	checkEquals(bondPosition@value,repositories$exchangeRates$exchange(toMoney(124345.632268,"CHF"),new("Currency","EUR")))
+	
+	# restore initial conditions	
+	deallocateTestRepositories("instruments")
+}
+
 test.shouldCreatePositionFondi_misti<- function() {	
 	
 	# uses a default method

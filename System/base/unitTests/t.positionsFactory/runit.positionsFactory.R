@@ -97,7 +97,11 @@ test.shouldAdjustForAccruedInterestBond <- function() {
 	origin1 <- repository$proRata1
 	origin2 <- repository$bond4
 	origin3 <- repository$unclassified1
-	origins <- new("AyrtonPositions",list(origin1,origin2,origin3))
+	arigin4 <- repository$A_Deposito_a_termine_acc1
+	arigin5 <- repository$A_Deposito_a_termine
+	arigin6 <- repository$Anticipi_fissiAccrual1
+	arigin7 <- repository$Anticipi_fissi1
+	origins <- new("AyrtonPositions",list(origin1,origin2,origin3,origin4,origin5,origin6,origin7))
 	
 	# create positions
 	positions <- positionsFactory(origins)

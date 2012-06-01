@@ -9,11 +9,17 @@ matchPositionToAyrtonPosition <- function(ayrtonPosition,position){
 	# of class money with respect to the fields ID_AAA, ID_strumento and 
 	# Saldo slots
 
-	return(
-		identical(position@security@id@idAAA,ayrtonPosition) &
-		identical(position@security@id@idStrumento,ayrtonPosition@ID_strumento) &
-		matchPositionQuantityToAyrtonPosition(position@quantity,ayrtonPosition)
-	)
+	if (is.element(ayrtonPosition@ID_strumento,c(6,7))) {
+		# The instrument is Anticipi_fissi
+		# identify the instrument by name
+		lenghtName <- nchar(ayrtonPosition@Nome)
+		nameWithoutProRata <- substr(ayrtonPosition@Nome,1,lengthName-9)
+		if (ayrtonPosition@Nome == nameWithoutProRata) return(TRUE) else return(FALSE)
+	}	
+	
+	return(identical(position@security@id@idAAA,ayrtonPosition) &
+			identical(position@security@id@idStrumento,ayrtonPosition@ID_strumento) &
+			matchPositionQuantityToAyrtonPosition(position@quantity,ayrtonPosition))
 }
 
 setGeneric("matchPositionQuantityToAyrtonPosition",def=function(positionQuantity,ayrtonPosition) standardGeneric("matchPositionQuantityToAyrtonPosition"))

@@ -1,0 +1,11 @@
+1) modificare SecurityFactory ed aggiungere in base alla provenienza, ad 
+esempio AAA, il metodo createSecurity corrispondente. Se lo strumento 
+non è già nella lista strumenti, allora è necessario modificare 
+anche in securityFactory la funzione identifyInstrumentType sempre nel 
+medesimo pacchetto (AAA ad esempio)(se necessario, normalmente è richiesto 
+solo di aggiungere il nome dello strumento nel DBInstruments). 
+
+2) Devi creare il metodo in base al source della posizione: se è AAA 
+allora aggiungere in ayrton il metodo createPosition appropriato.
+3) Se porta interessi aggiungere metodo ayrton o quel che l'è in
+adjustForAccruedInterest in positionsFactory

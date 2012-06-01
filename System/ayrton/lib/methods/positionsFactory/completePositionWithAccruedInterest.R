@@ -23,7 +23,7 @@ completePositionWithAccruedInterest <- function(positionWithAcc,accruedInterestP
 	value <- repositories$exchangeRates$exchange(value,positionWithAcc@security@currency)
 	accruedInterest <- new("AccruedInterest",value)
 	
-	# compute the dirty value of the bond
+	# compute the dirty value of the bond / anticipo_fisso / time deposit
 	dirtyValue <- positionWithAcc@value + accruedInterest
 	positionWithAcc@value <- dirtyValue
 	positionWithAcc@accruedInterest <- accruedInterest
