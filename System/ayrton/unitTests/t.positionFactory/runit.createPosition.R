@@ -6,12 +6,14 @@
 test.shouldCreateUnclassifiedPosition <- function() {	
 	
 	# uses a default method
+	mySetwd("base")
 	source("./unitTests/utilities/allocateTestRepositories.R")	
 	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
 	
 	# create the instrument repository	
 	allocateTestRepositories("instruments")
-
+	mySetwd()
+	
 	# create the origin
 	repository <- createRepositoryAyrtonPositions()
 	origin <- repository$unclassified1
@@ -31,11 +33,13 @@ test.shouldCreateUnclassifiedPosition <- function() {
 test.shouldBeNullPositionFromAccruedInterest <- function() {	
 	
 	# uses a default method
+	mySetwd("base")
 	source("./unitTests/utilities/allocateTestRepositories.R")	
 	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
 	
 	# create the instrument repository	
 	allocateTestRepositories("instruments")
+	mySetwd()
 	
 	# create the origin
 	repository <- createRepositoryAyrtonPositions()
@@ -54,11 +58,13 @@ test.shouldBeNullPositionFromAccruedInterest <- function() {
 test.shouldCreatePositionEquity <- function() {	
 	
 	# uses a default method
+	mySetwd("base")
 	source("./unitTests/utilities/allocateTestRepositories.R")	
 	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
 	
 	# create the instrument repository	
 	allocateTestRepositories("instruments")
+	mySetwd()
 	
 	# create the origin
 	repository <- createRepositoryAyrtonPositions()
@@ -80,11 +86,13 @@ test.shouldCreatePositionEquity <- function() {
 test.shouldCreatePositionBond <- function() {	
 	
 	# uses a default method
+	mySetwd("base")
 	source("./unitTests/utilities/allocateTestRepositories.R")	
 	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
 	
 	# create the instrument repository	
 	allocateTestRepositories("instruments")
+	mySetwd()
 	
 	# create the origin
 	repository <- createRepositoryAyrtonPositions()
@@ -104,14 +112,44 @@ test.shouldCreatePositionBond <- function() {
 	deallocateTestRepositories("instruments")
 }
 
-test.shouldCreatePositionFondi_misti<- function() {	
+test.shouldCreatePositionAnticipiFissi <- function() {	
 	
 	# uses a default method
+	mySetwd("base")
 	source("./unitTests/utilities/allocateTestRepositories.R")	
 	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
 	
 	# create the instrument repository	
 	allocateTestRepositories("instruments")
+	mySetwd()
+	# create the origin
+	repository <- createRepositoryAyrtonPositions()
+	origin <- repository$Anticipi_fissi1
+	
+	anticipiFissiSecurity <- securityFactory(origin)
+	
+	anticipiFissiPosition <- createPosition(anticipiFissiSecurity,origin)
+	
+	checkEquals(FALSE,TRUE)
+	checkEquals(is(anticipiFissiPosition)[1],"PositionAnticipi_fissi")
+	checkEquals(anticipiFissiPosition@id,10.2)
+	checkEquals(anticipiFissiPosition@accruedInterest@amount,new("Amount",NA_real_))	
+	checkEquals(anticipiFissiPosition@quantity,new("NominalValue",new("Money",amount=new("Amount",1),currency=new("Currency","CHF"))))
+	
+	# restore initial conditions	
+	deallocateTestRepositories("instruments")
+}
+
+test.shouldCreatePositionFondi_misti<- function() {	
+	
+	# uses a default method
+	mySetwd("base")
+	source("./unitTests/utilities/allocateTestRepositories.R")	
+	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
+	
+	# create the instrument repository	
+	allocateTestRepositories("instruments")
+	mySetwd()
 	
 	# create the origin
 	repository <- createRepositoryAyrtonPositions()

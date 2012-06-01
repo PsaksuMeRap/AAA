@@ -5,11 +5,6 @@
 
 source("./ayrton/lib/library.R")
 
-#source("./unitTests/utilities/createExchangeRatesTestRepository.R")
-#testRepository <- createExchangeRatesTestRepository() 
-#repositories$exchangeRates <- testRepository
-
-
 mySetwd("ayrton")
 
 ## test globale

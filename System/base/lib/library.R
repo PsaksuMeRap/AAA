@@ -74,6 +74,7 @@ source("./base/lib/classDefinitions/FundRecord/FundRecord.R")
 
 
 source("./base/lib/classDefinitions/Position/Position.R")
+source("./base/lib/classDefinitions/Position/PositionAnticipi_fissi.R")
 source("./base/lib/classDefinitions/Position/PositionEquity/PositionEquity.R")
 source("./base/lib/classDefinitions/Position/PositionBond/PositionBond.R")
 source("./base/lib/classDefinitions/Position/PositionFondi_misti/PositionFondi_misti.R")
