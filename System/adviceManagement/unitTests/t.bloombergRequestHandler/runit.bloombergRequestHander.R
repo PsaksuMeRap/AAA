@@ -31,7 +31,6 @@ test.shuldExecuteBloombergRequestCollection <- function() {
 	blRequestHandler$collect("UHR VX Equity","NAME")
 	
 	if (!is.element("package:Rbloomberg",search())) {
-		library("Rbbg")
 		checkEquals(TRUE,TRUE)
 	} else {
 		library("Rbbg")
