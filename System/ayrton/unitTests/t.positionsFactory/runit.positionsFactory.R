@@ -82,7 +82,10 @@ test.shouldRemoveAccruedInterest <- function() {
 	
 }
 
-test.shouldAdjustForAccruedInterestBond <- function() {
+test.shouldAdjustForAccruedInterest <- function() {
+	# this test should verify the correct account of the
+	# accrued interest for bond, Anticipi_fissi and 
+	# depositi_a_termine
 	
 	# uses a default method
 	source("./unitTests/utilities/allocateTestRepositories.R")	
@@ -97,10 +100,10 @@ test.shouldAdjustForAccruedInterestBond <- function() {
 	origin1 <- repository$proRata1
 	origin2 <- repository$bond4
 	origin3 <- repository$unclassified1
-	arigin4 <- repository$A_Deposito_a_termine_acc1
-	arigin5 <- repository$A_Deposito_a_termine
-	arigin6 <- repository$Anticipi_fissiAccrual1
-	arigin7 <- repository$Anticipi_fissi1
+	origin4 <- repository$Deposito_a_termine_acc1
+	origin5 <- repository$Deposito_a_termine
+	origin6 <- repository$Anticipi_fissiAccrual1
+	origin7 <- repository$Anticipi_fissi1
 	origins <- new("AyrtonPositions",list(origin1,origin2,origin3,origin4,origin5,origin6,origin7))
 	
 	# create positions

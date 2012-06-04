@@ -130,7 +130,6 @@ test.shouldCreatePositionAnticipiFissi <- function() {
 	
 	anticipiFissiPosition <- createPosition(anticipiFissiSecurity,origin)
 	
-	checkEquals(FALSE,TRUE)
 	checkEquals(is(anticipiFissiPosition)[1],"PositionAnticipi_fissi")
 	checkEquals(anticipiFissiPosition@id,10.2)
 	checkEquals(anticipiFissiPosition@accruedInterest@amount,new("Amount",NA_real_))	
