@@ -8,14 +8,14 @@ test.shouldApplyDirectiveString <- function() {
 	# exchange rates required for position initialization
 	# initialize exchange rates
 	repository <- repositories$exchangeRates
-	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
 	testRepository <- createExchangeRatesTestRepository() 
 	repositories$exchangeRates <- testRepository
 	# exchange rate USD-CHF: 0.9627
 	# exchange rate EUR-CHF: 1.33853808
 	
 	# initialize the position
-	source("./unitTests/utilities/createRepositoryPositions.R")
+	source("./base/unitTests/utilities/createRepositoryPositions.R")
 	repo <- createRepositoryPositions()
 	
 	p1 <- repo$Fondi_misti # CHF
@@ -40,14 +40,14 @@ test.shouldFailToApplyDirectiveString <- function() {
 	# exchange rates required for position initialization
 	# initialize exchange rates
 	repository <- repositories$exchangeRates
-	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
 	testRepository <- createExchangeRatesTestRepository() 
 	repositories$exchangeRates <- testRepository
 	# exchange rate USD-CHF: 0.9627
 	# exchange rate EUR-CHF: 1.33853808
 	
 	# initialize the position
-	source("./unitTests/utilities/createRepositoryPositions.R")
+	source("./base/unitTests/utilities/createRepositoryPositions.R")
 	repo <- createRepositoryPositions()
 	
 	p1 <- repo$Fondi_misti # CHF
@@ -72,14 +72,14 @@ test.shouldapplyOneCheckStringOnPositions <- function() {
 	# exchange rates required for position initialization
 	# initialize exchange rates
 	repository <- repositories$exchangeRates
-	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
 	testRepository <- createExchangeRatesTestRepository() 
 	repositories$exchangeRates <- testRepository
 	# exchange rate USD-CHF: 0.9627
 	# exchange rate EUR-CHF: 1.33853808
 	
 	# initialize the position
-	source("./unitTests/utilities/createRepositoryPositions.R")
+	source("./base/unitTests/utilities/createRepositoryPositions.R")
 	repo <- createRepositoryPositions()
 	
 	p1 <- repo$equity1
@@ -90,7 +90,7 @@ test.shouldapplyOneCheckStringOnPositions <- function() {
 	
 	
 	# Test 1
-	checkString <- scan(file="./unitTests/data/criteriSelezionePerPortafoglioTest.txt",
+	checkString <- scan(file="./riskman/unitTests/data/criteriSelezionePerPortafoglioTest.txt",
 			what="character",sep="\n",quiet = TRUE)
 	
 	checkEquals(checkString,"security:Bond & currency:CHF ; > 5%")

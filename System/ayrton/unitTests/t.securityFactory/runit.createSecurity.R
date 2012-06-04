@@ -5,7 +5,7 @@
 
 test.shouldCreateUnclassified <- function() {
 	# uses a default method
-	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
+	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
 	
 	# create the origin
 	repository <- createRepositoryAyrtonPositions()
@@ -23,8 +23,8 @@ test.shouldCreateUnclassified <- function() {
 
 test.shouldCreateEquity <- function() {
 	# uses a default method
-	source("./unitTests/utilities/allocateTestRepositories.R")	
-	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
+	source("./base/unitTests/utilities/allocateTestRepositories.R")	
+	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
 	
 	# create the equity repository and instrument repository
 	allocateTestRepositories("equities")	
@@ -57,7 +57,7 @@ test.shouldCreateEquity <- function() {
 
 test.shouldCreateBond <- function() {
 	
-	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
+	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
 	
 	# create the origin
 	repository <- createRepositoryAyrtonPositions()
@@ -74,7 +74,7 @@ test.shouldCreateBond <- function() {
 
 test.shouldNULLForAccruedInterest <- function() {
 	
-	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
+	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
 	
 	# create the equity repository and instrument repository
 	allocateTestRepositories("instruments")	
@@ -92,7 +92,7 @@ test.shouldNULLForAccruedInterest <- function() {
 
 test.shouldCreateStrutturati_FI <- function() {
 	
-	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
+	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
 	
 	# create the equity repository and instrument repository
 	allocateTestRepositories("instruments")	

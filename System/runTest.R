@@ -4,13 +4,13 @@
 ###############################################################################
 
 # import the exchange rates
-setwd(file.path(systemOptions[["sourceCodeDir"]],"base"))
+# setwd(file.path(systemOptions[["sourceCodeDir"]],"base"))
 
-source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
 testRepository <- createExchangeRatesTestRepository() 
 repositories$exchangeRates <- testRepository
 
-setwd(systemOptions[["sourceCodeDir"]])
+# setwd(systemOptions[["sourceCodeDir"]])
 
 # execute the test of the base
 source("./base/unitTests/runTest.R")

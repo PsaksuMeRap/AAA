@@ -29,7 +29,7 @@ test.shouldJoinTwoPositions <- function() {
 
 test.shouldExtractPositions <- function() {
 	
-	source("./unitTests/utilities/createRepositoryPositions.R")
+	source("./base/unitTests/utilities/createRepositoryPositions.R")
 	repository <- createRepositoryPositions()
 	
 	# create the positions
@@ -49,7 +49,7 @@ test.shouldExtractPositions <- function() {
 
 test.shouldSumPositions <- function() {
 	
-	source("./unitTests/utilities/createRepositoryPositions.R")
+	source("./base/unitTests/utilities/createRepositoryPositions.R")
 	repository <- createRepositoryPositions()
 	
 	# create the positions
@@ -78,14 +78,14 @@ test.shouldReweightPositions <- function() {
 	# exchange rates required for position initialization
 	# initialize exchange rates
 	repository <- repositories$exchangeRates
-	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
 	testRepository <- createExchangeRatesTestRepository() 
 	repositories$exchangeRates <- testRepository
 	# exchange rate USD-CHF: 0.9627
 	# exchange rate EUR-CHF: 1.33853808
 	
 	# initialize the position
-	source("./unitTests/utilities/createRepositoryPositions.R")
+	source("./base/unitTests/utilities/createRepositoryPositions.R")
 	repo <- createRepositoryPositions()
 	
 	p1 <- repo$equity1 # 88'205 chf 
@@ -112,14 +112,14 @@ test.shouldReplacePositions <- function() {
 	# exchange rates required for position initialization
 	# initialize exchange rates
 	repository <- repositories$exchangeRates
-	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
 	testRepository <- createExchangeRatesTestRepository() 
 	repositories$exchangeRates <- testRepository
 	# exchange rate USD-CHF: 0.9627
 	# exchange rate EUR-CHF: 1.33853808
 	
 	# initialize the position
-	source("./unitTests/utilities/createRepositoryPositions.R")
+	source("./base/unitTests/utilities/createRepositoryPositions.R")
 	repo <- createRepositoryPositions()
 	
 	p1 <- repo$equity1
@@ -148,14 +148,14 @@ test.shouldFieldsAsCharacter <- function() {
 	# exchange rates required for position initialization
 	# initialize exchange rates
 	repository <- repositories$exchangeRates
-	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
 	testRepository <- createExchangeRatesTestRepository() 
 	repositories$exchangeRates <- testRepository
 	# exchange rate USD-CHF: 0.9627
 	# exchange rate EUR-CHF: 1.33853808
 	
 	# initialize the position
-	source("./unitTests/utilities/createRepositoryPositions.R")
+	source("./base/unitTests/utilities/createRepositoryPositions.R")
 	repo <- createRepositoryPositions()
 	
 	# create the positions
@@ -193,14 +193,14 @@ test.shouldAs.character <- function() {
 	# exchange rates required for position initialization
 	# initialize exchange rates
 	repository <- repositories$exchangeRates
-	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
 	testRepository <- createExchangeRatesTestRepository() 
 	repositories$exchangeRates <- testRepository
 	# exchange rate USD-CHF: 0.9627
 	# exchange rate EUR-CHF: 1.33853808
 	
 	# initialize the position
-	source("./unitTests/utilities/createRepositoryPositions.R")
+	source("./base/unitTests/utilities/createRepositoryPositions.R")
 	repo <- createRepositoryPositions()
 	
 	# create the positions

@@ -7,14 +7,14 @@ test.shouldCheckPositionByAmount <- function() {
 	
 	# initialize exchange rates
 	repository <- repositories$exchangeRates
-	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
 	testRepository <- createExchangeRatesTestRepository() 
 	repositories$exchangeRates <- testRepository
 	# exchange rate USD-CHF: 0.9627
 	# exchange rate EUR-CHF: 1.33853808
 	
 	# initialize the position
-	source("./unitTests/utilities/createRepositoryPositions.R")
+	source("./base/unitTests/utilities/createRepositoryPositions.R")
 	repo <- createRepositoryPositions()
 	indexCertificate <- repo$indexCertificate
 	
@@ -73,7 +73,7 @@ test.shouldCheckPositionByAmount <- function() {
 
 test.shouldCheckPositionBySecurity <- function() {
 	# initialize the position
-	source("./unitTests/utilities/createRepositoryPositions.R")
+	source("./base/unitTests/utilities/createRepositoryPositions.R")
 	repo <- createRepositoryPositions()
 	equity <- repo$equity1
 	
@@ -95,7 +95,7 @@ test.shouldCheckPositionBySecurity <- function() {
 
 test.shouldCheckPositionByCurrency <- function() {
 	# initialize the position
-	source("./unitTests/utilities/createRepositoryPositions.R")
+	source("./base/unitTests/utilities/createRepositoryPositions.R")
 	repo <- createRepositoryPositions()
 	security <- repo$indexCertificate
 	

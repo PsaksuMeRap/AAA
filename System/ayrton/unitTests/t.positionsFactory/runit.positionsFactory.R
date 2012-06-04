@@ -6,7 +6,7 @@
 
 test.shouldCreateEmpyPositions <- function() {
 	# uses a default method
-	source("./unitTests/utilities/allocateTestRepositories.R")
+	source("./base/unitTests/utilities/allocateTestRepositories.R")
 	
 	# create the instrument repository	
 	allocateTestRepositories("instruments")
@@ -27,8 +27,8 @@ test.shouldCreateEmpyPositions <- function() {
 
 test.shouldCreateValidPositions <- function() {
 	# uses a default method
-	source("./unitTests/utilities/allocateTestRepositories.R")	
-	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
+	source("./base/unitTests/utilities/allocateTestRepositories.R")	
+	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
 	
 	# create the instrument repository	
 	allocateTestRepositories("instruments")
@@ -55,8 +55,8 @@ test.shouldCreateValidPositions <- function() {
 test.shouldRemoveAccruedInterest <- function() {
 	
 	# uses a default method
-	source("./unitTests/utilities/allocateTestRepositories.R")	
-	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
+	source("./base/unitTests/utilities/allocateTestRepositories.R")	
+	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
 	
 	# create the instrument repository	
 	allocateTestRepositories("instruments")
@@ -88,8 +88,8 @@ test.shouldAdjustForAccruedInterest <- function() {
 	# depositi_a_termine
 	
 	# uses a default method
-	source("./unitTests/utilities/allocateTestRepositories.R")	
-	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
+	source("./base/unitTests/utilities/allocateTestRepositories.R")	
+	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
 	
 	# create the instrument repository	
 	allocateTestRepositories("instruments")
@@ -108,6 +108,12 @@ test.shouldAdjustForAccruedInterest <- function() {
 	
 	# create positions
 	positions <- positionsFactory(origins)
+	
+	# test for bond
+	shouldValue <- toMoney(origin2@ValoreMercatoMonetaCHF+origin1@ValoreMercatoMonetaCHF,"CHF")
+	checkEquals(positions[[1]]@value,shouldValue)
+
+	# test for Anticipi_fissi
 	shouldValue <- toMoney(origin2@ValoreMercatoMonetaCHF+origin1@ValoreMercatoMonetaCHF,"CHF")
 	checkEquals(positions[[1]]@value,shouldValue)
 
@@ -119,8 +125,8 @@ test.shouldAdjustForAccruedInterest <- function() {
 test.shouldAdjustForAccruedInterestFondiObbligazionariOC <- function() {
 	
 	# uses a default method
-	source("./unitTests/utilities/allocateTestRepositories.R")	
-	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
+	source("./base/unitTests/utilities/allocateTestRepositories.R")	
+	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
 	
 	# create the instrument repository	
 	allocateTestRepositories("instruments")

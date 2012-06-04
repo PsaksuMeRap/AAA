@@ -5,7 +5,7 @@
 
 
 test.shouldCreateAyrtonPositions <- function() {
-	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
+	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
 	repository <- createRepositoryAyrtonPositions()
 	positions <- list(repository$equity1,repository$equity2,repository$bond1)
 	
@@ -16,7 +16,7 @@ test.shouldCreateAyrtonPositions <- function() {
 
 test.shouldExtractAyrtonPositions <- function() {
 	
-	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
+	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
 	repository <- createRepositoryAyrtonPositions()
 	
 	# create the Positions

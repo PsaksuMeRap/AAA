@@ -5,7 +5,7 @@
 
 test.shouldImportTestSuiteConfigLines <- function() {
 	testSuiteName <- "Test"
-	directories <- "./unitTests/data"
+	directories <- "./riskman/unitTests/data"
 	fileName="testImportTestSuite2.txt"
 
 	testSuiteCollection <- testSuiteFactory(testSuiteName,directories,fileName)
@@ -35,14 +35,14 @@ test.shouldApplyTestSuite_test1_1 <- function() {
 	# exchange rates required for position initialization
 	# initialize exchange rates
 	repository <- repositories$exchangeRates
-	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
 	testRepository <- createExchangeRatesTestRepository() 
 	repositories$exchangeRates <- testRepository
 	# exchange rate USD-CHF: 0.9627
 	# exchange rate EUR-CHF: 1.33853808
 	
 	# create the positions 
-	source("./unitTests/utilities/createRepositoryPositions.R")
+	source("./base/unitTests/utilities/createRepositoryPositions.R")
 	repo <- createRepositoryPositions()
 	
 	p1 <- repo$equity1 # Equity / CHF / 88'205.00 / Roche Holding Gs
@@ -52,7 +52,7 @@ test.shouldApplyTestSuite_test1_1 <- function() {
 	positions <- new("Positions",list(p1,p2,p3))
 	
 	testSuiteName <- "test1_1"
-	directories <- "./unitTests/data/testSuites/test1"
+	directories <- "./riskman/unitTests/data/testSuites/test1"
 	fileName <- "check.runTestSuite1.txt"
 	#security:Bond & currency:CHF ; > 5%  
 	#currency:USD & security:Equity ; < 10%
@@ -91,14 +91,14 @@ test.shouldTestSingleRiskmanCheckFileAggregated <- function() {
 	# exchange rates required for position initialization
 	# initialize exchange rates
 	repository <- repositories$exchangeRates
-	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
 	testRepository <- createExchangeRatesTestRepository() 
 	repositories$exchangeRates <- testRepository
 	# exchange rate USD-CHF: 0.9627
 	# exchange rate EUR-CHF: 1.33853808
 	
 	# create the positions 
-	source("./unitTests/utilities/createRepositoryPositions.R")
+	source("./base/unitTests/utilities/createRepositoryPositions.R")
 	repo <- createRepositoryPositions()
 	
 	# create portfolio 1
@@ -126,7 +126,7 @@ test.shouldTestSingleRiskmanCheckFileAggregated <- function() {
 	
 	# define the testSuite parameters
 	testSuiteName <- "test3"
-	directories <- "./unitTests/data/testSuites/test3"
+	directories <- "./riskman/unitTests/data/testSuites/test3"
 	fileName <- "check.runTestSuite3.txt"
 	testSuiteCollection <- testSuiteFactory(testSuiteName,directories,fileName)
 	testSuiteParsed <- testSuiteCollection@testSuitesParsed[[1]]
@@ -152,14 +152,14 @@ test.shouldFailSingleRiskmanCheckFileAggregated <- function() {
 	# exchange rates required for position initialization
 	# initialize exchange rates
 	repository <- repositories$exchangeRates
-	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
 	testRepository <- createExchangeRatesTestRepository() 
 	repositories$exchangeRates <- testRepository
 	# exchange rate USD-CHF: 0.9627
 	# exchange rate EUR-CHF: 1.33853808
 	
 	# create the positions 
-	source("./unitTests/utilities/createRepositoryPositions.R")
+	source("./base/unitTests/utilities/createRepositoryPositions.R")
 	repo <- createRepositoryPositions()
 	
 	# create portfolio 1
@@ -187,7 +187,7 @@ test.shouldFailSingleRiskmanCheckFileAggregated <- function() {
 	
 	# define the testSuite parameters
 	testSuiteName <- "test3"
-	directories <- "./unitTests/data/testSuites/test3"
+	directories <- "./riskman/unitTests/data/testSuites/test3"
 	fileName <- "check.runTestSuite3.txt"
 	testSuiteCollection <- testSuiteFactory(testSuiteName,directories,fileName)
 	testSuiteParsed <- testSuiteCollection@testSuitesParsed[[1]]

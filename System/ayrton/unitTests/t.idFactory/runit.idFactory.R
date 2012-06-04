@@ -6,7 +6,7 @@
 
 test.shouldFailWithNA <- function() {
 	
-	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
+	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
 	# create the origin
 	repository <- createRepositoryAyrtonPositions()
 	equity1 <- repository$equity1

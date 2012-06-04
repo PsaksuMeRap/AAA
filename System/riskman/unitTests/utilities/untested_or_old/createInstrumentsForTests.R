@@ -5,7 +5,7 @@
 
 
 create_equityTestPositions <- function() {
-	source("./unitTests/utilities/allocateTestRepositories.R")
+	source("./base/unitTests/utilities/allocateTestRepositories.R")
 	
 	
 	allocateTestRepositories("equities")
@@ -61,7 +61,7 @@ create_equityTestPositions <- function() {
 
 
 create_ETF_equityTestPositions <- function() {
-	source("./unitTests/utilities/allocateTestRepositories.R")
+	source("./base/unitTests/utilities/allocateTestRepositories.R")
 	
 	# crea positions
 	positions.l <- list()

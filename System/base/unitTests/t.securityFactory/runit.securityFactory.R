@@ -23,7 +23,7 @@ test.shouldIdentifyAyrtonInstrument <- function() {
 }
 
 test.shouldFailToIdentifyAyrtonInstrument <- function() {
-	source("./unitTests/utilities/allocateTestRepositories.R")
+	source("./base/unitTests/utilities/allocateTestRepositories.R")
 	
 	# create the equity repository and instrument repository
 	allocateTestRepositories("instruments")

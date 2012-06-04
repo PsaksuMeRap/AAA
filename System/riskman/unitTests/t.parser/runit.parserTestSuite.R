@@ -55,7 +55,7 @@ test.shouldCreateSetParserTestsuiteUtils <- function() {
 
 test.shouldParserTestSuite <- function() {
 	fileName <- "testImportTestSuite1.txt"
-	directory <- "./unitTests/data"
+	directory <- "./riskman/unitTests/data"
 	
 	testSuite <- new("TestSuite",directory=directory,fileName=fileName)
 	

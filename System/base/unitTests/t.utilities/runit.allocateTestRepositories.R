@@ -6,7 +6,7 @@
 
 
 test.shouldAllocateTestExchangeRates <- function() {
-	source("./unitTests/utilities/allocateTestRepositories.R")
+	source("./base/unitTests/utilities/allocateTestRepositories.R")
 	
 	allocateTestRepositories("exchangeRates")
 	
@@ -18,7 +18,7 @@ test.shouldAllocateTestExchangeRates <- function() {
 
 
 test.shouldAllocateTestInstruments <- function() {
-	source("./unitTests/utilities/allocateTestRepositories.R")
+	source("./base/unitTests/utilities/allocateTestRepositories.R")
 	
 	allocateTestRepositories("instruments")
 	
@@ -29,7 +29,7 @@ test.shouldAllocateTestInstruments <- function() {
 }
 
 test.shouldAllocateTestPoliticaInvestimento <- function() {
-	source("./unitTests/utilities/allocateTestRepositories.R")
+	source("./base/unitTests/utilities/allocateTestRepositories.R")
 	
 	allocateTestRepositories("politicaInvestimento")
 	

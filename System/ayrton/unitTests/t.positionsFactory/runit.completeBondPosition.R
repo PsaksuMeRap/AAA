@@ -5,8 +5,8 @@
 
 
 test.shouldcompletePositionWithAccruedInterest <- function() {
-	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
-	source("./unitTests/utilities/createRepositoryPositions.R")	
+	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
+	source("./base/unitTests/utilities/createRepositoryPositions.R")	
 	
 	# create the origins
 	repository1 <- createRepositoryAyrtonPositions()

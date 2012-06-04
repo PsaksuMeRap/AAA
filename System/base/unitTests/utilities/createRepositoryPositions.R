@@ -6,8 +6,8 @@
 
 createRepositoryPositions <- function() {
 
-	source("./unitTests/utilities/allocateTestRepositories.R")	
-	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
+	source("./base/unitTests/utilities/allocateTestRepositories.R")	
+	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
 	
 	# create the instrument repository	
 	allocateTestRepositories("instruments")

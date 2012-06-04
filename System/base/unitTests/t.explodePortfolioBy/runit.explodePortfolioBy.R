@@ -6,9 +6,9 @@
 
 
 test.shouldExplodePositionsByFund <- function() {
-	source("./lib/repository.R")
-	source("./unitTests/utilities/allocateTestRepositories.R")
-	source("./unitTests/utilities/createOriginData.R")
+	source("./base/lib/repository.R")
+	source("./base/unitTests/utilities/allocateTestRepositories.R")
+	source("./base/unitTests/utilities/createOriginData.R")
 	
 	origin <- new("AyrtonPositions",createOriginData())
 
@@ -74,9 +74,9 @@ test.shouldExplodePositionsByFund <- function() {
 }
 
 test.shouldExplodePositionsByFunds <- function() {
-	source("./lib/repository.R")
-	source("./unitTests/utilities/allocateTestRepositories.R")
-	source("./unitTests/utilities/createOriginData.R")
+	source("./base/lib/repository.R")
+	source("./base/unitTests/utilities/allocateTestRepositories.R")
+	source("./base/unitTests/utilities/createOriginData.R")
 	
 	origin <- new("AyrtonPositions",createOriginData())
 	
@@ -123,9 +123,9 @@ test.shouldExplodePositionsByFunds <- function() {
 
 
 test.shouldexplodePortfolioByFunds <- function() {
-	source("./lib/repository.R")
-	source("./unitTests/utilities/allocateTestRepositories.R")
-	source("./unitTests/utilities/createOriginData.R")
+	source("./base/lib/repository.R")
+	source("./base/unitTests/utilities/allocateTestRepositories.R")
+	source("./base/unitTests/utilities/createOriginData.R")
 	
 	origin <- new("AyrtonPositions",createOriginData())
 	

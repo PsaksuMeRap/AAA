@@ -5,7 +5,7 @@
 
 
 createExchangeRatesVector <- function() {
-	rates.df <- read.csv(file="./unitTests/data/repositoryExchangeRates.csv",
+	rates.df <- read.csv(file="./base/unitTests/data/repositoryExchangeRates.csv",
 			header=TRUE,stringsAsFactors=FALSE)
 	rates <- rates.df[,"CHFPar"]
 	names(rates) <- rates.df[,"Moneta"]

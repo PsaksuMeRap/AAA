@@ -3,7 +3,7 @@
 # Author: claudio
 ###############################################################################
 
-.setUp <- function(){source("./lib/lists.R")}
+.setUp <- function(){source("./base/lib/lists.R")}
 
 test.shouldFilterEmptylist <- function() {
 	

@@ -6,10 +6,10 @@
 
 test.shouldMatchIdAAA_string <- function() {
 	
-	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
+	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
 	repositoryAyrtonPositions <- createRepositoryAyrtonPositions()
 	
-	source("./unitTests/utilities/createRepositoryPositions.R")
+	source("./base/unitTests/utilities/createRepositoryPositions.R")
 	repository <- createRepositoryPositions()
 	
 	# test1: a correct match 
@@ -42,10 +42,10 @@ test.shouldMatchIdAAA_string <- function() {
 }
 
 test.shouldMatchIdAAA_numeric <- function() {
-	source("./unitTests/utilities/createRepositoryAyrtonPositions.R")
+	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
 	repositoryAyrtonPositions <- createRepositoryAyrtonPositions()
 	
-	source("./unitTests/utilities/createRepositoryPositions.R")
+	source("./base/unitTests/utilities/createRepositoryPositions.R")
 	repository <- createRepositoryPositions()
 	
 	# test1

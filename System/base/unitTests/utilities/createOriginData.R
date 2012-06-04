@@ -14,7 +14,7 @@ createOriginData <- function() {
 		return(ayrtonPosition)
 	}
 	
-	dati.df <- read.csv("./unitTests/data/origin.csv",
+	dati.df <- read.csv("./base/unitTests/data/origin.csv",
 			header=TRUE,stringsAsFactors=FALSE)
 	
 	if (nrow(dati.df)==0) return(origin=new("AyrtonPositions",positions=list()))

@@ -5,7 +5,7 @@
 
 
 createFixedIncomeDataFrame <- function() {
-	FixedIncome.df <- read.csv(file="./unitTests/data/repositoryFixedIncome.csv",
+	FixedIncome.df <- read.csv(file="./base/unitTests/data/repositoryFixedIncome.csv",
 			header=TRUE,stringsAsFactors=FALSE)
 	return(FixedIncome.df)
 }

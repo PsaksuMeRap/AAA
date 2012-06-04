@@ -41,7 +41,7 @@ downloadExchangeRatesFromBloomberg <- function() {
 #	rm(file,rates.df)
 #}
 
-# source("./unitTests/utilities/createExchangeRatesVector.R")
+# source("./base/unitTests/utilities/createExchangeRatesVector.R")
 rates <- downloadExchangeRatesFromBloomberg()
 rm(downloadExchangeRatesFromBloomberg)
 

@@ -9,14 +9,14 @@ test.shouldApplyLogicalAnd <- function() {
 	# exchange rates required for position initialization
 	# initialize exchange rates
 	repository <- repositories$exchangeRates
-	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
 	testRepository <- createExchangeRatesTestRepository() 
 	repositories$exchangeRates <- testRepository
 	# exchange rate USD-CHF: 0.9627
 	# exchange rate EUR-CHF: 1.33853808
 	
 	# initialize the position
-	source("./unitTests/utilities/createRepositoryPositions.R")
+	source("./base/unitTests/utilities/createRepositoryPositions.R")
 	repo <- createRepositoryPositions()
 	
 	p1 <- repo$equity1
@@ -70,14 +70,14 @@ test.shouldApplyLogicalOr <- function() {
 	# exchange rates required for position initialization
 	# initialize exchange rates
 	repository <- repositories$exchangeRates
-	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
 	testRepository <- createExchangeRatesTestRepository() 
 	repositories$exchangeRates <- testRepository
 	# exchange rate USD-CHF: 0.9627
 	# exchange rate EUR-CHF: 1.33853808
 	
 	# initialize the position
-	source("./unitTests/utilities/createRepositoryPositions.R")
+	source("./base/unitTests/utilities/createRepositoryPositions.R")
 	repo <- createRepositoryPositions()
 	
 	p1 <- repo$equity1

@@ -5,7 +5,7 @@ creator: Claudio Ortelli
 testSuiteKind: specific
 testTarget: pippo118,pippo120
 reportTo: claudio.ortelli@usi.ch; info@bacep.com
-outputDir: ../../../testEsterniAAA/testSuites/test3
+outputDir: ../../testEsterniAAA/testSuites/test3
 checkListStart:
    security:Bond & currency:CHF ; > 5%  
 amount:>63880USD ; > 10%

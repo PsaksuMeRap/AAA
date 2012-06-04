@@ -7,7 +7,7 @@ allocateTestRepositories <- function(repoName) {
 		
 	if (repoName=="instruments") {
 		# create the data 
-		source("./unitTests/utilities/createInstrumentsDataFrame.R")
+		source("./base/unitTests/utilities/createInstrumentsDataFrame.R")
 		instruments.df <- createInstrumentsDataFrame()
 		
 		# create the instrument repository
@@ -25,7 +25,7 @@ allocateTestRepositories <- function(repoName) {
 	if (repoName=="exchangeRates") {
 		
 		# create the data for the instrument repository
-		source("./unitTests/utilities/createExchangeRatesVector.R")
+		source("./base/unitTests/utilities/createExchangeRatesVector.R")
 		rates <- createExchangeRatesVector()
 		
 		# create the instrument repository		
@@ -43,7 +43,7 @@ allocateTestRepositories <- function(repoName) {
 	if (repoName=="politicaInvestimento") {
 		
 		# create the data for the instrument repository
-		source("./unitTests/utilities/createPoliticaInvestimentoDataFrame.R")
+		source("./base/unitTests/utilities/createPoliticaInvestimentoDataFrame.R")
 		politicaInvestimento.df <- createPoliticaInvestimentoDataFrame()
 		
 		# create the instrument repository		

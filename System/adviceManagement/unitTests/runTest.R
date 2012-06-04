@@ -25,7 +25,7 @@ systemOptions[["sourceCodeDir"]] <- sourceCodeDir
 # set the working directory to base and import the exchangeRates
 mySetwd("base")
 
-source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
 testRepository <- createExchangeRatesTestRepository() 
 repositories <- new.env()
 repositories$exchangeRates <- testRepository

@@ -4,7 +4,7 @@
 ###############################################################################
 
 
-source("./lib/classDefinitions/Money/Money.R")
+source("./base/lib/classDefinitions/Money/Money.R")
 
 test.multiplyWithScalar <- function() {
 	currency = new("Currency","CHF")
@@ -30,7 +30,7 @@ test.createMoney <- function() {
 
 test.exchange <- function() {
 	repository <- repositories$exchangeRates
-	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
 	testRepository <- createExchangeRatesTestRepository() 
 	repositories$exchangeRates <- testRepository
 	
@@ -62,7 +62,7 @@ test.moneyAs.character <- function() {
 test.MoneyPlusMoney <- function() {
 	
 	repository <- repositories$exchangeRates
-	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
 	testRepository <- createExchangeRatesTestRepository() 
 	repositories$exchangeRates <- testRepository
 	
@@ -83,7 +83,7 @@ test.MoneyPlusMoney <- function() {
 test.divideMoney <- function() {
 	
 	repository <- repositories$exchangeRates
-	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
 	testRepository <- createExchangeRatesTestRepository() 
 	repositories$exchangeRates <- testRepository
 	
@@ -140,7 +140,7 @@ test.toMoneyFromAmountAndString <- function() {
 test.shouldBeGreaterThan <- function() {
 	
 	repository <- repositories$exchangeRates
-	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
 	testRepository <- createExchangeRatesTestRepository() 
 	repositories$exchangeRates <- testRepository
 	
@@ -163,7 +163,7 @@ test.shouldBeGreaterThan <- function() {
 test.shouldBeGreaterOrEqualThan <- function() {
 	
 	repository <- repositories$exchangeRates
-	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
 	testRepository <- createExchangeRatesTestRepository() 
 	repositories$exchangeRates <- testRepository
 	
@@ -186,7 +186,7 @@ test.shouldBeGreaterOrEqualThan <- function() {
 test.shouldBeLessThan <- function() {
 	
 	repository <- repositories$exchangeRates
-	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
 	testRepository <- createExchangeRatesTestRepository() 
 	repositories$exchangeRates <- testRepository
 	
@@ -209,7 +209,7 @@ test.shouldBeLessThan <- function() {
 test.shouldBeLessOrEqualThan <- function() {
 	
 	repository <- repositories$exchangeRates
-	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
 	testRepository <- createExchangeRatesTestRepository() 
 	repositories$exchangeRates <- testRepository
 	
@@ -232,7 +232,7 @@ test.shouldBeLessOrEqualThan <- function() {
 test.shouldBeDifferentFrom <- function() {
 	
 	repository <- repositories$exchangeRates
-	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
 	testRepository <- createExchangeRatesTestRepository() 
 	repositories$exchangeRates <- testRepository
 	
@@ -255,7 +255,7 @@ test.shouldBeDifferentFrom <- function() {
 test.shouldBeEqualTo <- function() {
 	
 	repository <- repositories$exchangeRates
-	source("./unitTests/utilities/createExchangeRatesTestRepository.R")
+	source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
 	testRepository <- createExchangeRatesTestRepository() 
 	repositories$exchangeRates <- testRepository
 	

@@ -7,8 +7,8 @@
 
 
 test.shouldReweightPositions <- function() {
-	source("./lib/repository.R")
-	source("./unitTests/utilities/allocateTestRepositories.R")
+	source("./base/lib/repository.R")
+	source("./base/unitTests/utilities/allocateTestRepositories.R")
 	
 	nomi <- c("Cliente","Strumento","Moneta","Saldo","NumeroValore",
 			"Nome","PrezzoMedio","PrezzoMercato","ValorePosizione",
@@ -97,9 +97,9 @@ test.shouldReweightPositions <- function() {
 
 
 test.shouldExplodePortfolioByFund <- function() {
-	source("./lib/repository.R")
-	source("./unitTests/utilities/allocateTestRepositories.R")
-	source("./unitTests/utilities/createOriginData.R")
+	source("./base/lib/repository.R")
+	source("./base/unitTests/utilities/allocateTestRepositories.R")
+	source("./base/unitTests/utilities/createOriginData.R")
 	
 	origin <- createOriginData()
 
@@ -170,9 +170,9 @@ test.shouldExplodePortfolioByFund <- function() {
 }
 
 test.shouldExplodePortfolioByAllFunds <- function() {
-	source("./lib/repository.R")
-	source("./unitTests/utilities/allocateTestRepositories.R")
-	source("./unitTests/utilities/createOriginData.R")
+	source("./base/lib/repository.R")
+	source("./base/unitTests/utilities/allocateTestRepositories.R")
+	source("./base/unitTests/utilities/createOriginData.R")
 	
 	origin <- createOriginData()
 	
@@ -211,9 +211,9 @@ test.shouldExplodePortfolioByAllFunds <- function() {
 }
 
 test.shouldExplodeAllPortfoliosByAllFunds <- function() {
-	source("./lib/repository.R")
-	source("./unitTests/utilities/allocateTestRepositories.R")
-	source("./unitTests/utilities/createOriginData.R")
+	source("./base/lib/repository.R")
+	source("./base/unitTests/utilities/allocateTestRepositories.R")
+	source("./base/unitTests/utilities/createOriginData.R")
 	
 	origin <- createOriginData()
 	

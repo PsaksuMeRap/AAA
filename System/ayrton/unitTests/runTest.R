@@ -5,27 +5,25 @@
 
 source("./ayrton/lib/library.R")
 
-mySetwd("ayrton")
+# mySetwd("ayrton")
 
 ## test globale
 dirs = c(
-		"./unitTests/t.ayrtonPositions",
-		"./unitTests/t.explode",				
-		"./unitTests/t.idAyrton",		
-		"./unitTests/t.idFactory",
-		"./unitTests/t.portfolioFactory",
-		"./unitTests/t.portfoliosFactory",
-		"./unitTests/t.positionFactory",
-		"./unitTests/t.positionsFactory",
-		"./unitTests/t.securityFactory"
+		"./ayrton/unitTests/t.ayrtonPositions",
+		"./ayrton/unitTests/t.explode",				
+		"./ayrton/unitTests/t.idAyrton",		
+		"./ayrton/unitTests/t.idFactory",
+		"./ayrton/unitTests/t.portfolioFactory",
+		"./ayrton/unitTests/t.portfoliosFactory",
+		"./ayrton/unitTests/t.positionFactory",
+		"./ayrton/unitTests/t.positionsFactory",
+		"./ayrton/unitTests/t.securityFactory"
 )
 
 testsuite.lists <- defineTestSuite("Test ayrton",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
 warnings()
-
-
-mySetwd()
+# mySetwd()
 
 
 
