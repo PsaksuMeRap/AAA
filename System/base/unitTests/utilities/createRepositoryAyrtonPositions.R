@@ -341,9 +341,9 @@ createRepositoryAyrtonPositions <- function() {
 	x@Cliente <- 'pippo47'
 	x@Strumento <- 'Macc'
 	x@Moneta <- 'CHF'
-	x@Saldo <- 1.0
+	x@Saldo <- -1.0
 	x@Nome <- 'Anticipo fisso 01-04-09/02-04-12 Ipoteca tasso fisso 115.000 CHF 2.05% Pro-rata'
-	x@ValoreMercatoMonetaCHF <- 0.01
+	x@ValoreMercatoMonetaCHF <- -0.01
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 6
 	class(x) <- "AyrtonPosition"
@@ -356,9 +356,9 @@ createRepositoryAyrtonPositions <- function() {
 	x@Cliente <- 'pippo47'
 	x@Strumento <- 'M'
 	x@Moneta <- 'CHF'
-	x@Saldo <- 1.0
+	x@Saldo <- -1.0
 	x@Nome <- 'Anticipo fisso 01-04-09/02-04-12 Ipoteca tasso fisso 115.000 CHF 2.05%'
-	x@ValoreMercatoMonetaCHF <- 1.0
+	x@ValoreMercatoMonetaCHF <- -1.0
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 6
 	class(x) <- "AyrtonPosition"
@@ -371,9 +371,9 @@ createRepositoryAyrtonPositions <- function() {
 	x@Cliente <- 'pippo131'
 	x@Strumento <- 'Macc'
 	x@Moneta <- 'CHF'
-	x@Saldo <- 15.50
+	x@Saldo <- -15.50
 	x@Nome <- 'Anticipo fisso 20-12-11/14-02-12 Novers 0.65% Pro-rata'
-	x@ValoreMercatoMonetaCHF <- 0.15
+	x@ValoreMercatoMonetaCHF <- -0.15
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 6
 	class(x) <- "AyrtonPosition"
@@ -386,9 +386,9 @@ createRepositoryAyrtonPositions <- function() {
 	x@Cliente <- 'pippo131'
 	x@Strumento <- 'M'
 	x@Moneta <- 'CHF'
-	x@Saldo <- 15.50
+	x@Saldo <- -15.50
 	x@Nome <- 'Anticipo fisso 20-12-11/14-02-12 Novers 0.65%'
-	x@ValoreMercatoMonetaCHF <- -1e+05
+	x@ValoreMercatoMonetaCHF <- -15.50
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 6
 	class(x) <- "AyrtonPosition"

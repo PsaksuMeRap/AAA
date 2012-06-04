@@ -45,7 +45,7 @@ setMethod("createSecurity",signature(origin="Ayrton_Anticipi_fissi"),
 			# se si tratta di accrued interest non considerarli ora,
 			# verranno considerati solo nella costruzione delle posizioni
 			
-			if (origin@Strumento=="Oacc") return(NULL)
+			if (origin@Strumento=="Macc") return(NULL)
 			
 			# this is a common slot of all instruments
 			idAyrton <- idAyrton <- idFactory(origin)
@@ -79,7 +79,7 @@ setMethod("createSecurity",signature(origin="Ayrton_Depositi_a_termine"),
 			# se si tratta di accrued interest non considerarli ora,
 			# verranno considerati solo nella costruzione delle posizioni
 			
-			if (origin@Strumento=="Oacc") return(NULL)
+			if (origin@Strumento=="Macc") return(NULL)
 			
 			# this is a common slot of all instruments
 			idAyrton <- idAyrton <- idFactory(origin)

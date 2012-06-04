@@ -101,10 +101,10 @@ test.shouldAdjustForAccruedInterest <- function() {
 	origin2 <- repository$bond4
 	origin3 <- repository$unclassified1
 	origin4 <- repository$Deposito_a_termine_acc1
-	origin5 <- repository$Deposito_a_termine
+	origin5 <- repository$Deposito_a_termine1
 	origin6 <- repository$Anticipi_fissiAccrual1
 	origin7 <- repository$Anticipi_fissi1
-	origins <- new("AyrtonPositions",list(origin1,origin2,origin3,origin4,origin5,origin6,origin7))
+	origins <- new("AyrtonPositions",list(origin1,origin2,origin3,origin4,origin5,origin6,origin7))	
 	
 	# create positions
 	positions <- positionsFactory(origins)
@@ -113,9 +113,13 @@ test.shouldAdjustForAccruedInterest <- function() {
 	shouldValue <- toMoney(origin2@ValoreMercatoMonetaCHF+origin1@ValoreMercatoMonetaCHF,"CHF")
 	checkEquals(positions[[1]]@value,shouldValue)
 
+	# test for Depositi_a_termine
+	shouldValue <- toMoney(origin4@ValoreMercatoMonetaCHF+origin5@ValoreMercatoMonetaCHF,"CHF")
+	checkEquals(positions[[3]]@value,shouldValue)	
+	
 	# test for Anticipi_fissi
-	shouldValue <- toMoney(origin2@ValoreMercatoMonetaCHF+origin1@ValoreMercatoMonetaCHF,"CHF")
-	checkEquals(positions[[1]]@value,shouldValue)
+	shouldValue <- toMoney(origin6@ValoreMercatoMonetaCHF+origin7@ValoreMercatoMonetaCHF,"CHF")
+	checkEquals(positions[[4]]@value,shouldValue)
 
 	# restore initial conditions	
 	deallocateTestRepositories("instruments")

@@ -5,9 +5,9 @@
 
 source("./ayrton/lib/methods/positionsFactory/completePositionWithAccruedInterest.R")
 
-adjustForAccruedInterest <- function(positions,accruedInterestPositions) {
+adjustForAccruedInterest <- function(positions,accPositions) {
 	# result: a list of positions (is not a variable of class Positions!)
-	# accruedInterestPositions: a list of AyrtonPositions "of type" accruedInterest
+	# accPositions: a list of AyrtonPositions of "type" accruedInterest
 	
 	slotNames <- lapply(positions,slotNames)
 	
@@ -18,7 +18,7 @@ adjustForAccruedInterest <- function(positions,accruedInterestPositions) {
 		positionsWithAccruedInterest <- positions[haveAccruedInterest]
 		
 		# complete the slot accruedInterest with the corresponding money amount
-		positionsWithAccruedInterest <- lapply(positionsWithAccruedInterest,completePositionWithAccruedInterest,accruedInterestPositions)
+		positionsWithAccruedInterest <- lapply(positionsWithAccruedInterest,completePositionWithAccruedInterest,accPositions)
 		positions[haveAccruedInterest] <- positionsWithAccruedInterest
 	}
 	
