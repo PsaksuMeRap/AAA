@@ -22,16 +22,10 @@ source("./base/lib/library.R")
 sourceCodeDir <- getwd()
 systemOptions[["sourceCodeDir"]] <- sourceCodeDir
 
-# set the working directory to base and import the exchangeRates
-mySetwd("base")
-
 source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
 testRepository <- createExchangeRatesTestRepository() 
 repositories <- new.env()
 repositories$exchangeRates <- testRepository
-
-# set the working directory to sourceCodeDir
-mySetwd()
 
 # source the test advisors
 source("./adviceManagement/unitTests/advisors.R")
@@ -50,7 +44,7 @@ dirs = c(
 		"./adviceManagement/unitTests/t.messageProcessing",
 		"./adviceManagement/unitTests/t.mail",
 		"./adviceManagement/unitTests/t.tradeFactory",
-		# "./adviceManagement/unitTests/t.tradeToSecurityFactory",
+	 	"./adviceManagement/unitTests/t.tradeToSecurityFactoryStep1",
 		"./adviceManagement/unitTests/t.loadLastPortfolio",
 		"./adviceManagement/unitTests/t.saveLastObject",
 		"./adviceManagement/unitTests/t.bloombergData",
@@ -66,11 +60,9 @@ warnings()
 mySetwd()
 
 
-
-
 ## test messageFactory
 dirs = c(
-		"./adviceManagement/unitTests/t.messageFactory"
+		"./adviceManagement/unitTests/t.tradeToSecurityFactoryStep1"
 )
 testsuite.lists <- defineTestSuite("Test adviceManagement",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)

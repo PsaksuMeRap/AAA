@@ -1,9 +1,0 @@
-Portfolio,Buy_Sell,Id_Bloomberg,Security_name,Currency,Security_type,Quantity,ISIN_Ticker,Price,Order_type,Amount,Broker,Limit_price,Limit_date,Comments
-GLOBAL ECONOMY,Buy,UBSN VX Equity,UBS AG-REG,CHF,Equity,100,CH0024899483,11.08,Limited,1108,UBS,,41052,Trans. Azionaria
-GLOBAL ECONOMY,Sell,NOVN VX Equity,NOVARTIS AG-REG,CHF,Equity,100,CH0012005267,49.49,Market,4949,UBS,,41052,Trans. Azionaria
-GLOBAL ECONOMY,Buy,SMM2 Index,SWISS MKT IX FUTR Jun12,CHF,Future index,5,#N/A N/A,5864,Care,293200,UBS,,41052,Trans. Futuro indice azionario
-GLOBAL ECONOMY,Buy,eurchf curncy,EUR-CHF X-RATE,EUR,FX,500000,#N/A N Ap,1.201,,600500,UBS,,41052,
-GLOBAL ECONOMY,Buy,nesnvx 2 08/05/13 corp,NESTLE FINANCE INTL LTD,CHF,Bond,200000,CH0049524041,102.184,Limited,204368,UBS,100.15,41052,Tras. Obbligazionaria
-GLOBAL ECONOMY,Buy,eib 01/09/15 corp,EUROPEAN INVESTMENT BANK,EUR,Bond,250000,XS0439139998,100.322,Market,250805,UBS,,41052,Tras. Obbligazionaria
-GLOBAL ECONOMY,Buy,nedwbk 4 03/12/13 corp,NEDER WATERSCHAPSBANK,EUR,Bond,250000,XS0163939753,102.76,Market,256900,UBS,,41052,Tras. Obbligazionaria
-GLOBAL ECONOMY,Buy to open,nesn sw 06/15/12 c55 equity,June 12 Calls on NESN VX,chf,Option,100,#N/A N Ap,0.63,Market,63,UBS,,41052,Acquisto Opzioni(manca size opt)

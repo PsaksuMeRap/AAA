@@ -1,0 +1,92 @@
+# TODO: Add comment
+# 
+# Author: Claudio
+###############################################################################
+
+setGeneric("tradeToPositionFactory",def=function(newSecurity,trade) standardGeneric("tradeToPositionFactory"))
+
+setMethod("tradeToPositionFactory",signature(newSecurity="Equity"),
+		function(newSecurity,trade) {
+			
+			price <- ...
+			trade$Quantity ...
+			
+			return(list())
+		}
+)
+
+
+tradeToPositionFactory <- function(newSecurity,trade) {
+
+	if (securityType=="Future index") {
+		currency <- new("Currency",trade$Currency)
+		name <- trade$Security_name
+		id=new("IdBloomberg",trade$Id_Bloomberg)
+		
+		# collect the ticker of the underlying
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"OPT_UNDL_TICKER")
+		# collect the delivery date
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"FUT_DLV_DT_FIRST")
+		# collect the last price
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"LAST_PRICE")
+		
+		newSecurity <- new("Futures_EQ",currency=currency,name=name,id=id,underlying=new("IndexEquity")) 
+		return(newSecurity)
+	}
+	
+	if (securityType=="Bond") {
+		currency <- new("Currency",trade$Currency)
+		name <- trade$Security_name
+		id=new("IdBloomberg",trade$Id_Bloomberg)
+		
+		# collect the last price (clean)
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"LAST_PRICE")
+		
+		# collect the accrued interest (%) to be added to the clean price
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"INT_ACC")
+		
+		# collect the rating
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"RTG_SP")	
+		
+		# collect the maturity
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"MATURITY")	
+		
+		newSecurity <- new("Bond",currency=currency,name=name,id=id) 
+		return(newSecurity)
+	}
+	
+	if (securityType=="FX Spot") {
+		
+		currency <- new("Currency",trade$Currency)
+
+		name <- paste(toupper(trade$Currency),tolower(trade$Currency),sep="-")
+		id=new("IdBloomberg",trade$Id_Bloomberg)
+		
+		# collect the last price (clean)
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"LAST_PRICE")
+		
+		newSecurity <- new("Conto_corrente",currency=currency,name=name,id=id) 
+		return(newSecurity)
+	}
+	
+	if (securityType=="Option Equity") {
+		
+		currency <- new("Currency",trade$Currency)
+		
+		name <- trade$Security_name
+		id=new("IdBloomberg",trade$Id_Bloomberg)
+		
+		# collect the ticker of the underlying
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"OPT_UNDL_TICKER")
+		# collect the expiration date
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"OPT_EXPIRE_DT")
+		# collect the strike price
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"OPT_STRIKE_PX")
+		# collect the last price
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"LAST_PRICE")
+		
+		newSecurity <- new("Opzioni_su_azioni",currency=currency,name=name,id=id,underlying=new("Equity")) 
+		return(newSecurity)
+	}
+	
+}
