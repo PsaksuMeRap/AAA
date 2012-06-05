@@ -44,7 +44,7 @@ dirs = c(
 		"./adviceManagement/unitTests/t.messageProcessing",
 		"./adviceManagement/unitTests/t.mail",
 		"./adviceManagement/unitTests/t.tradeFactory",
-	 	"./adviceManagement/unitTests/t.tradeToSecurityFactoryStep1",
+	 	"./adviceManagement/unitTests/t.tradeToSecurityFactory",
 		"./adviceManagement/unitTests/t.loadLastPortfolio",
 		"./adviceManagement/unitTests/t.saveLastObject",
 		"./adviceManagement/unitTests/t.bloombergData",

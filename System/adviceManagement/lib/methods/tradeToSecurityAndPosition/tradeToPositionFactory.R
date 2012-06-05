@@ -9,7 +9,11 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Equity"),
 		function(newSecurity,trade) {
 			
 			price <- ...
-			trade$Quantity ...
+			quantity <- trade$Quantity
+			
+			# crea la classe virtuale "Position"
+			setClass("Position",representation(id="Id",security="Security",
+							quantity="Quantity",value="Money"))
 			
 			return(list())
 		}
