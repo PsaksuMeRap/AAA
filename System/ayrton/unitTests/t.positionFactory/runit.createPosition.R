@@ -128,7 +128,33 @@ test.shouldCreatePositionAnticipiFissi <- function() {
 	checkEquals(is(anticipiFissiPosition)[1],"PositionAnticipi_fissi")
 	checkEquals(anticipiFissiPosition@id,10.2)
 	checkEquals(anticipiFissiPosition@accruedInterest@amount,new("Amount",NA_real_))	
-	checkEquals(anticipiFissiPosition@quantity,new("NominalValue",new("Money",amount=new("Amount",1),currency=new("Currency","CHF"))))
+	checkEquals(anticipiFissiPosition@quantity,new("NominalValue",new("Money",amount=new("Amount",-1),currency=new("Currency","CHF"))))
+	
+	# restore initial conditions	
+	deallocateTestRepositories("instruments")
+}
+
+test.shouldCreatePositionDepositiAtermine <- function() {	
+	
+	# uses a default method
+	source("./base/unitTests/utilities/allocateTestRepositories.R")	
+	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
+	
+	# create the instrument repository	
+	allocateTestRepositories("instruments")
+	mySetwd()
+	# create the origin
+	repository <- createRepositoryAyrtonPositions()
+	origin <- repository$Deposito_a_termine1
+	
+	depositoAtermine <- securityFactory(origin)
+	
+	depositoAtermine <- createPosition(depositoAtermine,origin)
+	
+	checkEquals(is(depositoAtermine)[1],"PositionDepositi_a_termine")
+	checkEquals(depositoAtermine@id,10.2)
+	checkEquals(depositoAtermine@accruedInterest@amount,new("Amount",NA_real_))	
+	checkEquals(depositoAtermine@quantity,new("NominalValue",new("Money",amount=new("Amount",1),currency=new("Currency","CHF"))))
 	
 	# restore initial conditions	
 	deallocateTestRepositories("instruments")

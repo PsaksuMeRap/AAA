@@ -6,8 +6,8 @@
 
 test.shouldConvertEquityTradeToSecurity <- function() {
 	# set the fileName from which to import trades
-	fileName <- "newAdvice.csv"
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToPositionFactory") 
+	fileName <- "equityTrade.csv"
+	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
 	# import trades
 	trades <- tradesFactory(fileName,directory)
@@ -20,14 +20,14 @@ test.shouldConvertEquityTradeToSecurity <- function() {
 
 test.shouldConvertFuturesOnIndexTradeToSecurity <- function() {
 	# set the fileName from which to import trades
-	fileName <- "newAdvice.csv"
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToPositionFactory") 
+	fileName <- "futureEquityIndexTrade.csv"
+	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
 	# import trades
 	trades <- tradesFactory(fileName,directory)
-	trade <- trades[[3]]
+	trade <- trades[[1]]
 	
 	newSecurity <- tradeToSecurityFactory(trade)	
-	checkEquals(class(newSecurity)[[1]],"Equity")
+	checkEquals(class(newSecurity)[[1]],"Future_EQ")
 	
 }

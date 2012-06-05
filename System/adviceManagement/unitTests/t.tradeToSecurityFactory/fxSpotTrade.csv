@@ -1,0 +1,2 @@
+Portfolio,Buy_Sell,Id_Bloomberg,Security_name,Currency,Security_type,Quantity,ISIN_Ticker,Price,Order_type,Amount,Broker,Limit_price,Limit_date,Comments
+GLOBAL ECONOMY,Buy,eurchf curncy,EUR-CHF X-RATE,EUR,FX,500000,#N/A N Ap,1.201,,600500,UBS,,41052,

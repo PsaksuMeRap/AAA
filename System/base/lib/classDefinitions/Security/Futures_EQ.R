@@ -4,5 +4,5 @@
 ###############################################################################
 
 
-setClass("Futures_EQ",representation(currency="Currency",name="character",id="Id"),contains="Security") 
+setClass("Futures_EQ",representation(currency="Currency",name="character",id="Id",underlying="Underlying"),contains="Security") 
 

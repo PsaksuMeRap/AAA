@@ -1,0 +1,2 @@
+Portfolio,Buy_Sell,Id_Bloomberg,Security_name,Currency,Security_type,Quantity,ISIN_Ticker,Price,Order_type,Amount,Broker,Limit_price,Limit_date,Comments
+GLOBAL ECONOMY,Buy to open,nesn sw 06/15/12 c55 equity,June 12 Calls on NESN VX,chf,Option,100,#N/A N Ap,0.63,Market,63,UBS,,41052,Acquisto Opzioni(manca size opt)

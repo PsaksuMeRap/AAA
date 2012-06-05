@@ -401,7 +401,7 @@ createRepositoryAyrtonPositions <- function() {
 	x@Cliente <- 'pippo47'
 	x@Strumento <- 'Macc'
 	x@Moneta <- 'CHF'
-	x@Saldo <- 23.30
+	x@Saldo <- 1.0
 	x@Nome <- 'Deposito singolo 01-04-09/02-04-12 deposito a termine al 2.05% Pro-rata'
 	x@ValoreMercatoMonetaCHF <- 0.75
 	x@ID_AAA <- NA_real_
@@ -416,7 +416,7 @@ createRepositoryAyrtonPositions <- function() {
 	x@Cliente <- 'pippo47'
 	x@Strumento <- 'M'
 	x@Moneta <- 'CHF'
-	x@Saldo <- 23.30
+	x@Saldo <- 1.0
 	x@Nome <- 'Deposito singolo 01-04-09/02-04-12 deposito a termine al 2.05%'
 	x@ValoreMercatoMonetaCHF <- 1.0
 	x@ID_AAA <- NA_real_
