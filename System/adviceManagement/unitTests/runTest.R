@@ -9,7 +9,10 @@ library("RODBC")
 library("RUnit")
 library("tcltk")
 library("stringr")
-library("Rbbg")
+
+if(.Platform$OS.type=="windows") {
+	library("Rbbg")
+}
 
 stringsAsFactors = FALSE
 
@@ -62,7 +65,7 @@ mySetwd()
 
 ## test messageFactory
 dirs = c(
-		"./adviceManagement/unitTests/t.tradeToSecurityFactoryStep1"
+		"./adviceManagement/unitTests/t.tradeToSecurityFactory"
 )
 testsuite.lists <- defineTestSuite("Test adviceManagement",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)

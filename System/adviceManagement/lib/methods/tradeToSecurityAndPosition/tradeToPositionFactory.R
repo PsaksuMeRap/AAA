@@ -3,19 +3,36 @@
 # Author: Claudio
 ###############################################################################
 
-setGeneric("tradeToPositionFactory",def=function(newSecurity,trade) standardGeneric("tradeToPositionFactory"))
+setGeneric("tradeToPositionFactory",def=function(newSecurity,trade,blData) standardGeneric("tradeToPositionFactory"))
 
 setMethod("tradeToPositionFactory",signature(newSecurity="Equity"),
-		function(newSecurity,trade) {
+		function(newSecurity,trade,blData) {
+			priceId <- paste(trade$Id_Bloomberg,"LAST_PRICE",sep="__")
+			price <- blData[[priceId]]@value
+					
+			quantity <- trade$Quantity
+
+			# crea la classe virtuale "PositionEquity"
+			equityPositions <- new("PositionEquity",id=new("IdBloomberg",trade$Id_Bloomberg),security=newSecurity,
+							quantity=quantity,value=toMoney(quantity*price,newSecurity@currency))
 			
-			price <- ...
+			return(equityPositions)
+		}
+)
+
+
+setMethod("tradeToPositionFactory",signature(newSecurity="PositionFutures_EQ"),
+		function(newSecurity,trade,blData) {
+			priceId <- paste(trade$Id_Bloomberg,"LAST_PRICE",sep="__")
+			price <- blData[[priceId]]@value
+			
 			quantity <- trade$Quantity
 			
 			# crea la classe virtuale "Position"
-			setClass("Position",representation(id="Id",security="Security",
-							quantity="Quantity",value="Money"))
+			equityPositions <- new("PositionEquity",id=new("IdBloomberg",trade$Id_Bloomberg),security=newSecurity,
+					quantity=quantity,value=toMoney(quantity*price,newSecurity@currency))
 			
-			return(list())
+			return(equityPositions)
 		}
 )
 
@@ -33,6 +50,8 @@ tradeToPositionFactory <- function(newSecurity,trade) {
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"FUT_DLV_DT_FIRST")
 		# collect the last price
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"LAST_PRICE")
+		# collect the future tick value
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"FUT_TICK_VALUE")
 		
 		newSecurity <- new("Futures_EQ",currency=currency,name=name,id=id,underlying=new("IndexEquity")) 
 		return(newSecurity)

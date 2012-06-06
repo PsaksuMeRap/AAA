@@ -3,7 +3,7 @@
 # Author: Claudio
 ###############################################################################
 
-tradeToSecurityFactoryStep1 <- function(trade) {
+tradeToSecurityFactory <- function(trade,blRequestHandler) {
 	# determine the security type
 	securityType <- trade$Security_type
 	
@@ -13,7 +13,7 @@ tradeToSecurityFactoryStep1 <- function(trade) {
 		id=new("IdBloomberg",trade$Id_Bloomberg)
 		
 		# collect the last price
-		blRequestHandler[["collect"]](trade$Id_Bloomberg,"PX_LAST")
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"LAST_PRICE")
 		
 		newSecurity <- new("Equity",currency=currency,name=name,id=id) 
 		return(newSecurity)		

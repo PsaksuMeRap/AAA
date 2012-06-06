@@ -5,6 +5,12 @@
 
 
 test.shouldConvertEquityTradeToPosition <- function() {
+	
+	# create the BloombergData
+	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
+	source(file.path(directory,"createRepositoryBloombergData.R"))
+	blData <- createRepositoryBloombergData()
+	
 	# set the fileName from which to import trades
 	fileName <- "equityTrade.csv"
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
@@ -13,26 +19,43 @@ test.shouldConvertEquityTradeToPosition <- function() {
 	trades <- tradesFactory(fileName,directory)
 	trade <- trades[[1]]
 	
-	newSecurity <- tradeToSecurityFactory(trade)
+	# create the blRequestHandler required from tradeToSecurityFactory
+	blRequestHandler <- create_BloombergRequestHandler()
 	
-	newPosition <- tradeToPositionFactory(newSecurity,trade)
+	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)
 	
-	checkEquals(class(newSecurity)[[1]],"Equity")
-
+	newPosition <- tradeToPositionFactory(newSecurity,trade,blData)
+	
+	checkEquals(class(newPosition)[[1]],"PositionEquity")
+	checkEquals(class(newPosition@id)[[1]],"IdBloomberg")
+	checkEquals(newPosition@value,toMoney(100*11.08,"CHF"))
+	
 }
 
 test.shouldConvertFuturesOnIndexTradeToSecurity <- function() {
+	# create the BloombergData
+	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
+	source(file.path(directory,"createRepositoryBloombergData.R"))
+	blData <- createRepositoryBloombergData()
+	
 	# set the fileName from which to import trades
 	fileName <- "futureEquityIndexTrade.csv"
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
-	blRequestHandler <<- create_BloombergRequestHandler()
 	
 	# import trades
 	trades <- tradesFactory(fileName,directory)
 	trade <- trades[[1]]
 	
-	newSecurity <- tradeToSecurityFactory(trade)	
-	checkEquals(class(newSecurity)[[1]],"Futures_EQ")
+	# create the blRequestHandler required from tradeToSecurityFactory
+	blRequestHandler <- create_BloombergRequestHandler()
+	
+	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)
+	
+	newPosition <- tradeToPositionFactory(newSecurity,trade,blData)
+	
+	checkEquals(class(newPosition)[[1]],"PositionFutures_EQ")
+	checkEquals(class(newPosition@id)[[1]],"IdBloomberg")
+	checkEquals(newPosition@value,toMoney(100*11.08,"CHF"))
 	
 }
 

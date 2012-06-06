@@ -4,7 +4,7 @@
 ###############################################################################
 
 
-tradeFactory <- function(trade.l) { 
+tradeFactory <- function(trade.l) {
 	trade <- new("Trade",trade.l)
 	return(trade)
 }
