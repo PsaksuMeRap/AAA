@@ -54,6 +54,41 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Futures_EQ"),
 		}
 )
 
+
+setMethod("tradeToPositionFactory",signature(newSecurity="Bond"),
+		function(newSecurity,trade,blData) {
+			
+			# get the last price
+			priceId <- paste(trade$Id_Bloomberg,"LAST_PRICE",sep="__")
+			price <- blData[[priceId]]@value
+			
+			# get the value of the accrued interest
+			accruedInterestId <- paste(trade$Id_Bloomberg,"INT_ACC",sep="__")
+			accruedInterest <- new("AccruedInterest",toMoney(blData[[accruedInterestId]]@value,newSecurity@currency))
+			
+			# get the Standard and Poors rating
+			spRatingId <- paste(trade$Id_Bloomberg,"RTG_SP",sep="__")
+			spRating <- blData[[spRatingId]]@value
+			
+			# get the maturity date
+			maturityId <- paste(trade$Id_Bloomberg,"MATURITY",sep="__")
+			maturity <- blData[[deliveryDateId]]@value
+			
+			quantity <- new("NominalValue",amount=new("Amount",trade$Quantity),currency=newSecurity@currency)
+			
+			# update the newSecurity
+			newSecurity@maturity <- maturity
+						
+			# crea la classe virtuale "PositionBond"
+			bondPosition <- new("PositionBond",spRating=spRating,accruedInterest=accruedInterest,id=new("IdBloomberg",trade$Id_Bloomberg),security=newSecurity,
+					quantity=quantity,value=toMoney(quantity*price*valueOnePoint,newSecurity@currency))
+			
+			return(bondPosition)
+		}
+)
+
+
+
 setMethod("tradeToPositionFactory",signature(newSecurity="Conto_corrente"),
 		function(newSecurity,trade,blData) {
 			

@@ -6,7 +6,7 @@
 source("./base/lib/classDefinitions/Position/PositionBond/AccruedInterest.R")
 
 # crea la classe virtuale "Position"
-setClass("PositionBond",representation(accruedInterest="AccruedInterest"),contains="Position")
+setClass("PositionBond",representation(accruedInterest="AccruedInterest",spRating="character"),contains="Position")
 
 
 setMethod("reweight",signature(x="PositionBond"),
