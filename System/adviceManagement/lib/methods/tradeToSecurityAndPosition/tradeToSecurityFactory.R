@@ -6,7 +6,7 @@
 tradeToSecurityFactory <- function(trade,blRequestHandler) {
 	# determine the security type
 	securityType <- trade$Security_type
-	
+
 	if (securityType=="Equity") {
 		currency <- new("Currency",trade$Currency)
 		name <- trade$Security_name
@@ -25,7 +25,7 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 		id=new("IdBloomberg",trade$Id_Bloomberg)
 		
 		# collect the ticker of the underlying
-		blRequestHandler[["collect"]](trade$Id_Bloomberg,"OPT_UNDL_TICKER")
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"UNDL_SPOT_TICKER")
 		# collect the delivery date
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"FUT_DLV_DT_FIRST")
 		# collect the last price
@@ -40,16 +40,16 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 		name <- trade$Security_name
 		id=new("IdBloomberg",trade$Id_Bloomberg)
 		
-		# collect the last price (clean)
+		# collect the last price (clean) 102.284
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"LAST_PRICE")
 		
-		# collect the accrued interest (%) to be added to the clean price
+		# collect the accrued interest (%) to be added to the clean price 1.7
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"INT_ACC")
 		
-		# collect the rating
+		# collect the rating AA
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"RTG_SP")	
 		
-		# collect the maturity
+		# collect the maturity 05/08/2013
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"MATURITY")	
 		
 		newSecurity <- new("Bond",currency=currency,name=name,id=id) 
@@ -63,7 +63,7 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 		name <- paste(toupper(trade$Currency),tolower(trade$Currency),sep="-")
 		id=new("IdBloomberg",trade$Id_Bloomberg)
 		
-		# collect the last price (clean)
+		# collect the last price (clean) 1200071
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"LAST_PRICE")
 		
 		newSecurity <- new("Conto_corrente",currency=currency,name=name,id=id) 
@@ -77,13 +77,13 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 		name <- trade$Security_name
 		id=new("IdBloomberg",trade$Id_Bloomberg)
 		
-		# collect the ticker of the underlying
+		# collect the ticker of the underlying NESN VX
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"OPT_UNDL_TICKER")
-		# collect the expiration date
+		# collect the expiration date 06/05/2012
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"OPT_EXPIRE_DT")
-		# collect the strike price
+		# collect the strike price 55
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"OPT_STRIKE_PX")
-		# collect the last price
+		# collect the last price 0.16
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"LAST_PRICE")
 		
 		newSecurity <- new("Opzioni_su_azioni",currency=currency,name=name,id=id,underlying=new("Equity")) 

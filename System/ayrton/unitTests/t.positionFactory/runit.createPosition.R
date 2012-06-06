@@ -186,3 +186,30 @@ test.shouldCreatePositionFondi_misti<- function() {
 	# restore initial conditions	
 	deallocateTestRepositories("instruments")
 }
+
+test.shouldCreatePositionConto_corrente<- function() {	
+	
+	# uses a default method
+	source("./base/unitTests/utilities/allocateTestRepositories.R")	
+	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
+	
+	# create the instrument repository	
+	allocateTestRepositories("instruments")
+	mySetwd()
+	
+	# create the origin
+	repository <- createRepositoryAyrtonPositions()
+	origin <- repository$Conto_corrente2
+	
+	cc <- securityFactory(origin)
+	
+	cc <- createPosition(cc,origin)
+	
+	checkEquals(is(cc)[1],"PositionConto_corrente")
+	checkEquals(cc@id,10.2)
+	checkEquals(cc@quantity,1.0)
+	checkEquals(cc@value,repositories$exchangeRates$exchange(toMoney(39416.1310068511,"CHF"),new("Currency","EUR")))
+	
+	# restore initial conditions	
+	deallocateTestRepositories("instruments")
+}

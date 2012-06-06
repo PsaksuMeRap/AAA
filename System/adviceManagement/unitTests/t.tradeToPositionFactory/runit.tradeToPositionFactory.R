@@ -55,52 +55,78 @@ test.shouldConvertFuturesOnIndexTradeToSecurity <- function() {
 	
 	checkEquals(class(newPosition)[[1]],"PositionFutures_EQ")
 	checkEquals(class(newPosition@id)[[1]],"IdBloomberg")
-	checkEquals(newPosition@value,toMoney(100*11.08,"CHF"))
+	checkEquals(newPosition@value,toMoney(5864*10*5,"CHF"))
 	
 }
 
-
-test.shouldConvertBondTradeToSecurity <- function() {
-	# set the fileName from which to import trades
-	fileName <- "bondTrade.csv"
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
-	blRequestHandler <<- create_BloombergRequestHandler()
+test.shouldConvertFXSpotTradeToSecurity <- function() {
+	# create the BloombergData
+	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
+	source(file.path(directory,"createRepositoryBloombergData.R"))
+	blData <- createRepositoryBloombergData()
 	
-	# import trades
-	trades <- tradesFactory(fileName,directory)
-	trade <- trades[[1]]
-	
-	newSecurity <- tradeToSecurityFactory(trade)	
-	checkEquals(class(newSecurity)[[1]],"Bond")	
-	
-}
-
-test.shouldConvertFxSpotToSecurity <- function() {
 	# set the fileName from which to import trades
 	fileName <- "fxSpotTrade.csv"
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
-	blRequestHandler <<- create_BloombergRequestHandler()
 	
 	# import trades
 	trades <- tradesFactory(fileName,directory)
 	trade <- trades[[1]]
 	
-	newSecurity <- tradeToSecurityFactory(trade)	
-	checkEquals(class(newSecurity)[[1]],"Conto_corrente")	
+	# create the blRequestHandler required from tradeToSecurityFactory
+	blRequestHandler <- create_BloombergRequestHandler()
+	
+	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)
+	
+	newPosition <- tradeToPositionFactory(newSecurity,trade,blData)
+	
+	checkEquals(class(newPosition)[[1]],"PositionFutures_EQ")
+	checkEquals(class(newPosition@id)[[1]],"IdBloomberg")
+	checkEquals(newPosition@value,toMoney(5864*10*5,"CHF"))
 	
 }
 
-test.shouldConvertOptionEquityToSecurity <- function() {
+#test.shouldConvertBondTradeToSecurity <- function() {
 	# set the fileName from which to import trades
-	fileName <- "OptionEquityTrade.csv"
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
-	blRequestHandler <<- create_BloombergRequestHandler()
+#	fileName <- "bondTrade.csv"
+#	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+#	blRequestHandler <<- create_BloombergRequestHandler()
 	
 	# import trades
-	trades <- tradesFactory(fileName,directory)
-	trade <- trades[[1]]
+#	trades <- tradesFactory(fileName,directory)
+#	trade <- trades[[1]]
 	
-	newSecurity <- tradeToSecurityFactory(trade)	
-	checkEquals(class(newSecurity)[[1]],"Opzioni_su_azioni")	
+#	newSecurity <- tradeToSecurityFactory(trade)	
+#	checkEquals(class(newSecurity)[[1]],"Bond")	
 	
-}
+#}
+
+#test.shouldConvertFxSpotToSecurity <- function() {
+	# set the fileName from which to import trades
+#	fileName <- "fxSpotTrade.csv"
+#	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+#	blRequestHandler <<- create_BloombergRequestHandler()
+	
+	# import trades
+#	trades <- tradesFactory(fileName,directory)
+#	trade <- trades[[1]]
+	
+#	newSecurity <- tradeToSecurityFactory(trade)	
+#	checkEquals(class(newSecurity)[[1]],"Conto_corrente")	
+	
+#}
+
+#test.shouldConvertOptionEquityToSecurity <- function() {
+	# set the fileName from which to import trades
+#	fileName <- "OptionEquityTrade.csv"
+#	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+#	blRequestHandler <<- create_BloombergRequestHandler()
+	
+	# import trades
+#	trades <- tradesFactory(fileName,directory)
+#	trade <- trades[[1]]
+	
+#	newSecurity <- tradeToSecurityFactory(trade)	
+#	checkEquals(class(newSecurity)[[1]],"Opzioni_su_azioni")	
+	
+#}
