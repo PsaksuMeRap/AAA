@@ -7,6 +7,7 @@
 
 setGeneric("securityFactory",def=function(origin,...) standardGeneric("securityFactory"))
 
+# Per ogni nuova classe di origin occorre creare un metodo securityFactory corrispondente
 #setMethod("securityFactory",signature(origin="AyrtonPosition"),
 #		function(origin,identifyOnly=FALSE) {
 #
@@ -30,16 +31,6 @@ setGeneric("securityFactory",def=function(origin,...) standardGeneric("securityF
 #				}
 #				return(securityType)
 #			}
-#			
-#			# identify the security Type according to Ayrton classification
-#			securityType <- identifyInstrumentType(origin)
-#			if (identifyOnly) return(securityType)
-#			
-#			class(origin) <- paste("Ayrton",securityType,sep="_")
-#			
-#			security <- createSecurity(origin)
-#			return(security)
-#		}
 #)
 
 

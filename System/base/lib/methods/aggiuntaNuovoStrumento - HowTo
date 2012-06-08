@@ -1,11 +1,15 @@
-1) modificare SecurityFactory ed aggiungere in base alla provenienza, ad 
-esempio AAA, il metodo createSecurity corrispondente. Se lo strumento 
-non è già nella lista strumenti, allora è necessario modificare 
-anche in securityFactory la funzione identifyInstrumentType sempre nel 
-medesimo pacchetto (AAA ad esempio)(se necessario, normalmente è richiesto 
-solo di aggiungere il nome dello strumento nel DBInstruments). 
+1) modificare il pacchetto in base -> lib/methods/securityFactory ed aggiungere il nuovo metodo
+createSecurity  per la nuova classe di origin, ora implementata unicamente origin di classe
+AAA.
 
-2) Devi creare il metodo in base al source della posizione: se è AAA 
-allora aggiungere in ayrton il metodo createPosition appropriato.
-3) Se porta interessi aggiungere metodo ayrton o quel che l'è in
-adjustForAccruedInterest in positionsFactory
+2) nel paccetto ayrton (o nel nuovo pacchetto) se lo strumento non è già nella lista strumenti, 
+allora è necessario modificare in lib/methods/securityFactory la funzione identifyInstrumentType 
+(se necessario, normalmente è richiesto solo di aggiungere il nome dello strumento nel 
+DBInstruments). 
+
+3) Aggiungere in ayrton lib/methods/positionFactory/createPosition.R il metodo createPosition 
+appropriato alla nuova security.
+
+4) Se porta interessi modificare se necessario in ayrton in lib/methods/positionFactory 
+adjustForAccruedInterest e funzioni correlate quali completePositionWithAccruedInterest.
+PositionsFactory.R esegue poi l'aggiustamento chiamando adjustForAccruedInterest. 
