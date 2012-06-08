@@ -81,7 +81,7 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Bond"),
 						
 			# crea la classe virtuale "PositionBond"
 			bondPosition <- new("PositionBond",spRating=spRating,accruedInterest=accruedInterest,id=new("IdBloomberg",trade$Id_Bloomberg),security=newSecurity,
-					quantity=quantity,value=toMoney(quantity*price*valueOnePoint,newSecurity@currency))
+					quantity=quantity,value=price*quantity)
 			
 			return(bondPosition)
 		}
