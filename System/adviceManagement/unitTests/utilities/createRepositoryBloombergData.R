@@ -25,11 +25,11 @@ createRepositoryBloombergData <- function() {
 	blData <- add(blDataEntryFutureEquityIndex4,blData)
 	
 	# create the BloombergData for FX Spot
-	blDataEntryFXSpot <- new("BloombergDataEntry",blId="EURCHF Curncy",fieldId="LAST_PRICE",value=1.20072,dateLastUpdate=Sys.time())
+	blDataEntryFXSpot <- new("BloombergDataEntry",blId="eurchf curncy",fieldId="LAST_PRICE",value=1.20072,dateLastUpdate=Sys.time())
 	blData <- add(blDataEntryFXSpot,blData)
 	
 	# create the BloombergData for Bond
-	blDataEntryBond1 <- new("BloombergDataEntry",blId="eib 01/09/15 corp",fieldId="LAST_PRICE",value=102.284,dateLastUpdate=Sys.time())
+	blDataEntryBond1 <- new("BloombergDataEntry",blId="eib 01/09/15 corp",fieldId="LAST_PRICE",value=100.322,dateLastUpdate=Sys.time())
 	blDataEntryBond2 <- new("BloombergDataEntry",blId="eib 01/09/15 corp",fieldId="INT_ACC",value=1.7,dateLastUpdate=Sys.time())
 	blDataEntryBond3 <- new("BloombergDataEntry",blId="eib 01/09/15 corp",fieldId="RTG_SP",value="AA",dateLastUpdate=Sys.time())
 	blDataEntryBond4 <- new("BloombergDataEntry",blId="eib 01/09/15 corp",fieldId="MATURITY",value="05/08/2013",dateLastUpdate=Sys.time())
@@ -40,16 +40,20 @@ createRepositoryBloombergData <- function() {
 	blData <- add(blDataEntryBond4,blData)
 	
 	
-	# create the BloombergData for Bond
+	# create the BloombergData for opzioni_su_azioni
 	blDataEntryOption1 <- new("BloombergDataEntry",blId="nesn sw 06/15/12 c55 equity",fieldId="LAST_PRICE",value=0.16,dateLastUpdate=Sys.time())
 	blDataEntryOption2 <- new("BloombergDataEntry",blId="nesn sw 06/15/12 c55 equity",fieldId="OPT_UNDL_TICKER",value="NESN VX",dateLastUpdate=Sys.time())
-	blDataEntryOption3 <- new("BloombergDataEntry",blId="nesn sw 06/15/12 c55 equity",fieldId="OPT_EXPIRE_DT",value="06/05/2012",dateLastUpdate=Sys.time())
+	blDataEntryOption3 <- new("BloombergDataEntry",blId="nesn sw 06/15/12 c55 equity",fieldId="OPT_EXPIRE_DT",value="06/15/2012",dateLastUpdate=Sys.time())
 	blDataEntryOption4 <- new("BloombergDataEntry",blId="nesn sw 06/15/12 c55 equity",fieldId="OPT_STRIKE_PX",value=55,dateLastUpdate=Sys.time())
+	blDataEntryOption5 <- new("BloombergDataEntry",blId="nesn sw 06/15/12 c55 equity",fieldId="OPT_TYPE",value="c",dateLastUpdate=Sys.time())
+	blDataEntryOption6 <- new("BloombergDataEntry",blId="nesn sw 06/15/12 c55 equity",fieldId="OPT_CONT_SIZE",value=100,dateLastUpdate=Sys.time())
 	
 	blData <- add(blDataEntryOption1,blData)
 	blData <- add(blDataEntryOption2,blData)
 	blData <- add(blDataEntryOption3,blData)
 	blData <- add(blDataEntryOption4,blData)
+	blData <- add(blDataEntryOption5,blData)
+	blData <- add(blDataEntryOption6,blData)
 	
 	return(blData)
 	

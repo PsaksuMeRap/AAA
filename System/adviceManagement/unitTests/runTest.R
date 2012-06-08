@@ -11,7 +11,7 @@ library("tcltk")
 library("stringr")
 
 if(.Platform$OS.type=="windows") {
-	library("Rbbg")
+#	library("Rbbg")
 }
 
 stringsAsFactors = FALSE

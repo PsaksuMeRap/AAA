@@ -79,12 +79,17 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 		
 		# collect the ticker of the underlying NESN VX
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"OPT_UNDL_TICKER")
-		# collect the expiration date 06/05/2012
+		# collect the expiry date 06/05/2012
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"OPT_EXPIRE_DT")
 		# collect the strike price 55
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"OPT_STRIKE_PX")
 		# collect the last price 0.16
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"LAST_PRICE")
+		# collect the option type c
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"OPT_TYPE")
+		# collect the option contract size 	100
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"OPT_CONT_SIZE")
+	
 		
 		newSecurity <- new("Opzioni_su_azioni",currency=currency,name=name,id=id,underlying=new("Equity")) 
 		return(newSecurity)

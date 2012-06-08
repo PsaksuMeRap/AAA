@@ -11,7 +11,6 @@
 setClass("Position",representation(id="Id",security="Security",
 				quantity="Quantity",value="Money"))
 
-
 setMethod("/",signature(e1="Position",e2="Money"),
 		function(e1,e2) {
 			if (e2@amount==0) {
@@ -38,7 +37,6 @@ setMethod("reweight",signature(x="Position"),
 
 
 # crea il metodo che formatta e raccoglie i campi da stampare
-
 setGeneric("fieldsAsCharacter",def=function(x,...) standardGeneric("fieldsAsCharacter"))
 
 setMethod("fieldsAsCharacter",signature(x="Position"),

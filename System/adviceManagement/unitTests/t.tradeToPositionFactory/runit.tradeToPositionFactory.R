@@ -59,6 +59,33 @@ test.shouldConvertFuturesOnIndexTradeToSecurity <- function() {
 	
 }
 
+test.shouldConvertBondTradeToSecurity <- function() {
+	# create the BloombergData
+	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
+	source(file.path(directory,"createRepositoryBloombergData.R"))
+	blData <- createRepositoryBloombergData()
+	
+	# set the fileName from which to import trades
+	fileName <- "bondTrade.csv"
+	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+	
+	# import trades
+	trades <- tradesFactory(fileName,directory)
+	trade <- trades[[2]]
+	
+	# create the blRequestHandler required from tradeToSecurityFactory
+	blRequestHandler <- create_BloombergRequestHandler()
+	
+	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)
+	
+	newPosition <- tradeToPositionFactory(newSecurity,trade,blData)
+	
+	checkEquals(class(newPosition)[[1]],"PositionBond")
+	checkEquals(class(newPosition@id)[[1]],"IdBloomberg")
+	checkEquals(newPosition@value,toMoney(0.01*(trade$Price+1.7)*trade$Quantity,"EUR"))
+	checkEquals(newPosition@accruedInterest,as(toMoney(0.017*trade$Quantity,"EUR"),"AccruedInterest"))
+}
+
 test.shouldConvertFXSpotTradeToSecurity <- function() {
 	# create the BloombergData
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
@@ -80,53 +107,40 @@ test.shouldConvertFXSpotTradeToSecurity <- function() {
 	
 	newPosition <- tradeToPositionFactory(newSecurity,trade,blData)
 	
-	checkEquals(class(newPosition)[[1]],"PositionFutures_EQ")
+	checkEquals(class(newPosition)[[1]],"PositionConto_corrente")
 	checkEquals(class(newPosition@id)[[1]],"IdBloomberg")
 	checkEquals(newPosition@value,toMoney(5864*10*5,"CHF"))
 	
 }
 
-#test.shouldConvertBondTradeToSecurity <- function() {
+test.shouldConvertOptionOnEquityToSecurity <- function() {
+	# create the BloombergData
+	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
+	source(file.path(directory,"createRepositoryBloombergData.R"))
+	blData <- createRepositoryBloombergData()
+	
 	# set the fileName from which to import trades
-#	fileName <- "bondTrade.csv"
-#	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
-#	blRequestHandler <<- create_BloombergRequestHandler()
+	fileName <- "optionEquityTrade.csv"
+	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
 	# import trades
-#	trades <- tradesFactory(fileName,directory)
-#	trade <- trades[[1]]
+	trades <- tradesFactory(fileName,directory)
+	trade <- trades[[1]]
 	
-#	newSecurity <- tradeToSecurityFactory(trade)	
-#	checkEquals(class(newSecurity)[[1]],"Bond")	
+	# create the blRequestHandler required from tradeToSecurityFactory
+	blRequestHandler <- create_BloombergRequestHandler()
 	
-#}
+	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)
+	
+	newPosition <- tradeToPositionFactory(newSecurity,trade,blData)
+	
+	checkEquals(class(newPosition)[[1]],"PositionOpzioni_su_azioni")
+	checkEquals(class(newPosition@id)[[1]],"IdBloomberg")
+	checkEquals(newPosition@value,toMoney(0.16*100*100,"CHF"))
+	checkEquals(newPosition@contractSize,100)
+	checkEquals(newPosition@security@strike,55)
+	checkEquals(newPosition@security@expiryDate,"06/15/2012")
+}
 
-#test.shouldConvertFxSpotToSecurity <- function() {
-	# set the fileName from which to import trades
-#	fileName <- "fxSpotTrade.csv"
-#	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
-#	blRequestHandler <<- create_BloombergRequestHandler()
-	
-	# import trades
-#	trades <- tradesFactory(fileName,directory)
-#	trade <- trades[[1]]
-	
-#	newSecurity <- tradeToSecurityFactory(trade)	
-#	checkEquals(class(newSecurity)[[1]],"Conto_corrente")	
-	
-#}
 
-#test.shouldConvertOptionEquityToSecurity <- function() {
-	# set the fileName from which to import trades
-#	fileName <- "OptionEquityTrade.csv"
-#	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
-#	blRequestHandler <<- create_BloombergRequestHandler()
-	
-	# import trades
-#	trades <- tradesFactory(fileName,directory)
-#	trade <- trades[[1]]
-	
-#	newSecurity <- tradeToSecurityFactory(trade)	
-#	checkEquals(class(newSecurity)[[1]],"Opzioni_su_azioni")	
-	
-#}
+

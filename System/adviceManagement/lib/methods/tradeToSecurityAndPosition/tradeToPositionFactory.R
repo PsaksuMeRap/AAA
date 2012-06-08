@@ -10,7 +10,7 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Equity"),
 			priceId <- paste(trade$Id_Bloomberg,"LAST_PRICE",sep="__")
 			price <- blData[[priceId]]@value
 					
-			quantity <- trade$Quantity
+			quantity <- sign(trade)*trade$Quantity
 
 			# crea la classe virtuale "PositionEquity"
 			equityPositions <- new("PositionEquity",id=new("IdBloomberg",trade$Id_Bloomberg),security=newSecurity,
@@ -40,7 +40,7 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Futures_EQ"),
 			deliveryDateId <- paste(trade$Id_Bloomberg,"FUT_DLV_DT_FIRST",sep="__")
 			deliveryDate <- blData[[deliveryDateId]]@value	
 			
-			quantity <- trade$Quantity
+			quantity <- sign(trade)*trade$Quantity
 			
 			# update the newSecurity
 			newSecurity@deliveryDate <- deliveryDate
@@ -63,8 +63,9 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Bond"),
 			price <- blData[[priceId]]@value
 			
 			# get the value of the accrued interest
-			accruedInterestId <- paste(trade$Id_Bloomberg,"INT_ACC",sep="__")
-			accruedInterest <- new("AccruedInterest",toMoney(blData[[accruedInterestId]]@value,newSecurity@currency))
+			accInterestId <- paste(trade$Id_Bloomberg,"INT_ACC",sep="__")
+			accInterest <- new("AccruedInterest",toMoney(trade$Quantity*blData[[accInterestId]]@value/100,newSecurity@currency))
+			accInterestPercentage <- blData[[accInterestId]]@value
 			
 			# get the Standard and Poors rating
 			spRatingId <- paste(trade$Id_Bloomberg,"RTG_SP",sep="__")
@@ -72,16 +73,18 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Bond"),
 			
 			# get the maturity date
 			maturityId <- paste(trade$Id_Bloomberg,"MATURITY",sep="__")
-			maturity <- blData[[deliveryDateId]]@value
+			maturity <- blData[[maturityId]]@value
 			
-			quantity <- new("NominalValue",amount=new("Amount",trade$Quantity),currency=newSecurity@currency)
+			quantity <- new("NominalValue",amount=new("Amount",sign(trade)*trade$Quantity),currency=newSecurity@currency)
 			
 			# update the newSecurity
 			newSecurity@maturity <- maturity
-						
+					
 			# crea la classe virtuale "PositionBond"
-			bondPosition <- new("PositionBond",spRating=spRating,accruedInterest=accruedInterest,id=new("IdBloomberg",trade$Id_Bloomberg),security=newSecurity,
-					quantity=quantity,value=price*quantity)
+			value <- (0.01*(price+accInterestPercentage))*quantity
+			value <- as(value,"Money")
+			bondPosition <- new("PositionBond",spRating=spRating,accruedInterest=accInterest,id=new("IdBloomberg",trade$Id_Bloomberg),security=newSecurity,
+					quantity=quantity,value=value)
 			
 			return(bondPosition)
 		}
@@ -93,17 +96,17 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Conto_corrente"),
 		function(newSecurity,trade,blData) {
 			
 			securityType <- trade$Security_type
-			
+		
 			if (securityType=="FX Spot") {
 				
 				blFxCorrectionFactor <- function(IdBloomberg) {
 					return(1.0)
 				}
-				
+			
 				priceId <- paste(trade$Id_Bloomberg,"LAST_PRICE",sep="__")
 				price <- blData[[priceId]]@value * blFxCorrectionFactor(trade$Id_Bloomberg)
 				
-				quantity <- 1.0
+				quantity <- sign(trade)*1.0
 				
 				# crea la classe virtuale "PositionConto_corrente"
 				conto_correntePosition <- new("PositionConto_corrente",id=new("IdBloomberg",trade$Id_Bloomberg),security=newSecurity,
@@ -113,3 +116,47 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Conto_corrente"),
 			}
 		}
 )
+
+setMethod("tradeToPositionFactory",signature(newSecurity="Opzioni_su_azioni"),
+		function(newSecurity,trade,blData) {
+
+			# get the underlying ticker
+			underlyingId <- paste(trade$Id_Bloomberg,"OPT_UNDL_TICKER",sep="__")
+			underlying <- blData[[underlyingId]]@value
+			
+			# get the expiry date
+			expiryDateId <- paste(trade$Id_Bloomberg,"OPT_EXPIRE_DT",sep="__")
+			expiryDate <- blData[[expiryDateId]]@value
+			
+			# get the last price
+			priceId <- paste(trade$Id_Bloomberg,"LAST_PRICE",sep="__")
+			price <- blData[[priceId]]@value
+			
+			# get the strike price
+			strikeId <- paste(trade$Id_Bloomberg,"OPT_STRIKE_PX",sep="__")
+			strike <- blData[[strikeId]]@value	
+			
+			# get the option type
+			optionTypeId <- paste(trade$Id_Bloomberg,"OPT_TYPE",sep="__")
+			optionType <- blData[[optionTypeId]]@value
+			
+			# get the option contract size
+			contractSizeId <- paste(trade$Id_Bloomberg,"OPT_CONT_SIZE",sep="__")
+			contractSize <- blData[[contractSizeId]]@value
+			
+			quantity <- sign(trade)*trade$Quantity
+		
+			# update the newSecurity
+			newSecurity@expiryDate <- expiryDate
+			newSecurity@underlying <- new("IndexEquity",name=underlying,id=new("IdBloomberg",underlying))
+			newSecurity@strike <- strike
+			newSecurity@optionType <- optionType
+			
+			# crea la classe virtuale "PositionOpzioni_su_azioni"
+			OptionOnEquityPosition <- new("PositionOpzioni_su_azioni",id=new("IdBloomberg",trade$Id_Bloomberg),security=newSecurity,
+					contractSize=contractSize,quantity=quantity,value=toMoney(quantity*contractSize*price,newSecurity@currency))
+			
+			return(OptionOnEquityPosition)
+		}
+)
+
