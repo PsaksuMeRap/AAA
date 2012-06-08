@@ -3,6 +3,40 @@
 # Author: claudio
 ###############################################################################
 
+setMethod("createSecurity",signature(origin="Ayrton_Futures_EQ"),
+		function(origin) {
+			
+			# this is a common slot of all instruments
+			idAyrton <- idFactory(origin)
+			
+			className <- class(origin)
+			className <- substr(className,start=8,stop=nchar(className))
+			underlying <- new("Equity")
+			
+			
+			# the following slot is empty: deliveryDate="character"
+			security <- new(className,currency=new("Currency",origin@Moneta),name=origin@Nome,id=idAyrton,
+					underlying=underlying)
+			return(security)
+		}
+)
+
+setMethod("createSecurity",signature(origin="Ayrton_Opzioni_su_azioni"),
+		function(origin) {
+			
+			# this is a common slot of all instruments
+			idAyrton <- idFactory(origin)
+			
+			className <- class(origin)
+			className <- substr(className,start=8,stop=nchar(className))
+			underlying <- new("Equity")
+			# the following two slots are empty: expiryDate="character",strike="numeric"
+			security <- new(className,currency=new("Currency",origin@Moneta),name=origin@Nome,id=idAyrton,
+					underlying=underlying)
+			return(security)
+		}
+)
+
 
 setMethod("createSecurity",signature(origin="Ayrton_Bond"),
 		function(origin) {

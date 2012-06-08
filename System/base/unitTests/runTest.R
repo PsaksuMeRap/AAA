@@ -16,7 +16,6 @@ dirs = c(
 		"./base/unitTests/t.repositories/runit.repositoryExchangeRates",
 		"./base/unitTests/t.currency",
 		"./base/unitTests/t.money",
-		"./base/unitTests/t.securityFactory",
 		"./base/unitTests/t.position",
 		"./base/unitTests/t.positions",
 		"./base/unitTests/t.portfolio" ,
