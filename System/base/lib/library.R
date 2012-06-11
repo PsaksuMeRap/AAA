@@ -46,6 +46,7 @@ source("./base/lib/classDefinitions/Security/Diritti_aumento_capitale_azionario.
 source("./base/lib/classDefinitions/Underlying/Underlying.R")
 source("./base/lib/classDefinitions/Security/Futures_EQ.R")
 source("./base/lib/classDefinitions/Security/Opzioni_su_azioni.R")
+source("./base/lib/classDefinitions/Security/Opzioni_su_divise.R")
 
 source("./base/lib/classDefinitions/FundDB/FundDB.R")
 source("./base/lib/classDefinitions/FundRecord/FundRecord.R")
@@ -61,6 +62,7 @@ source("./base/lib/classDefinitions/Position/PositionFondiObbligazionariOC/Posit
 source("./base/lib/classDefinitions/Position/PositionFutures_EQ.R")
 source("./base/lib/classDefinitions/Position/PositionConto_corrente.R")
 source("./base/lib/classDefinitions/Position/PositionOpzioni_su_azioni.R")
+source("./base/lib/classDefinitions/Position/PositionOpzioni_su_valute.R")
 
 source("./base/lib/classDefinitions/Positions/Positions.R")
 source("./base/lib/classDefinitions/Portfolio/Portfolio.R")

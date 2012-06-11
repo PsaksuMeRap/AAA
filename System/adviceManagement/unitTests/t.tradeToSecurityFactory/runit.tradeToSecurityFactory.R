@@ -79,3 +79,18 @@ test.shouldConvertOptionEquityToSecurity <- function() {
 	checkEquals(class(newSecurity)[[1]],"Opzioni_su_azioni")	
 	
 }
+
+test.shouldConvertOptionFxToSecurity <- function() {
+	# set the fileName from which to import trades
+	fileName <- "optionFxTrade.csv"
+	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+	blRequestHandler <- create_BloombergRequestHandler()
+	
+	# import trades
+	trades <- tradesFactory(fileName,directory)
+	trade <- trades[[1]]
+	
+	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)	
+	checkEquals(class(newSecurity)[[1]],"Opzioni_su_divise")	
+	
+}
