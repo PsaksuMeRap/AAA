@@ -19,6 +19,7 @@ test.shouldGetNoPID <- function() {
 test.shouldGetEclipsePID <- function() {
 	# "should" should be updated every time the eclipse environment is restarted
 	# for this reason we don't test exact equality
+	DEACTIVATED("Deactivated test because no eclipse process when lounching eclipse from icon")
 	if(.Platform$OS.type=="windows") {
 		imageName <- "eclipse.exe"
 	} else {

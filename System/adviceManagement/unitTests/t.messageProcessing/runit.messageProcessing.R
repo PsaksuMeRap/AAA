@@ -13,8 +13,6 @@ test.shouldProcessNewAdviceMessage <- function() {
 	# add fake positions to portfolio
 	# execute check
 	
-	
-
 }
 
 

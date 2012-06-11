@@ -9,7 +9,7 @@ test.shouldSendEmailWithoutAttachment <- function() {
 	mail@from <- "claudio.ortelli@usi.ch"
 	mail@to <- "claudio.ortelli@gmail.com"
 	mail@subject <- "Test email da R"
-	mail@message <- "Questo è un test di trasmissione da R senza allegato."
+	mail@message <- "Questo e' un test di trasmissione da R senza allegato."
 	mail@server <- "mail.usi.ch"
 
 	tmp <- getwd()
@@ -56,7 +56,7 @@ test.shouldAsCharacterMail <- function() {
 	mail@from <- "claudio.ortelli@usi.ch"
 	mail@to <- "claudio.ortelli@gmail.com"
 	mail@subject <- "Test di trasmissione da R"
-	mail@message <- "Questo Ã¨ un test di trasmissione da R con allegati."
+	mail@message <- "Questo e' un test di trasmissione da R con allegati."
 	mail@server <- "mail.usi.ch"
 	mail@attachments <- c("file1.txt","file2_da_allegare.R")
 	
