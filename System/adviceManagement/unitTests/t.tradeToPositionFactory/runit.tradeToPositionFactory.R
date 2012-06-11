@@ -32,7 +32,7 @@ test.shouldConvertEquityTradeToPosition <- function() {
 	
 }
 
-test.shouldConvertFuturesOnIndexTradeToSecurity <- function() {
+test.shouldConvertFuturesOnIndexTradeToPosition <- function() {
 	# create the BloombergData
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
 	source(file.path(directory,"createRepositoryBloombergData.R"))
@@ -59,7 +59,7 @@ test.shouldConvertFuturesOnIndexTradeToSecurity <- function() {
 	
 }
 
-test.shouldConvertBondTradeToSecurity <- function() {
+test.shouldConvertBondTradeToPosition <- function() {
 	# create the BloombergData
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
 	source(file.path(directory,"createRepositoryBloombergData.R"))
@@ -86,7 +86,7 @@ test.shouldConvertBondTradeToSecurity <- function() {
 	checkEquals(newPosition@accruedInterest,as(toMoney(0.017*trade$Quantity,"EUR"),"AccruedInterest"))
 }
 
-test.shouldConvertFXSpotTradeToSecurity <- function() {
+test.shouldConvertFXSpotTradeToPosition <- function() {
 	# create the BloombergData
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
 	source(file.path(directory,"createRepositoryBloombergData.R"))
@@ -109,11 +109,11 @@ test.shouldConvertFXSpotTradeToSecurity <- function() {
 	
 	checkEquals(class(newPosition)[[1]],"PositionConto_corrente")
 	checkEquals(class(newPosition@id)[[1]],"IdBloomberg")
-	checkEquals(newPosition@value,toMoney(5864*10*5,"CHF"))
-	
+	# checkEquals(newPosition@value,toMoney(5864*10*5,"CHF"))
+	checkEquals(newPosition@value,toMoney(50000,"EUR"))
 }
 
-test.shouldConvertOptionOnEquityToSecurity <- function() {
+test.shouldConvertOptionOnEquityToPosition <- function() {
 	# create the BloombergData
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
 	source(file.path(directory,"createRepositoryBloombergData.R"))
