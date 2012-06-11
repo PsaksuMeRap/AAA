@@ -45,7 +45,7 @@ createRepositoryBloombergData <- function() {
 	blDataEntryOption2 <- new("BloombergDataEntry",blId="nesn sw 06/15/12 c55 equity",fieldId="OPT_UNDL_TICKER",value="NESN VX",dateLastUpdate=Sys.time())
 	blDataEntryOption3 <- new("BloombergDataEntry",blId="nesn sw 06/15/12 c55 equity",fieldId="OPT_EXPIRE_DT",value="06/15/2012",dateLastUpdate=Sys.time())
 	blDataEntryOption4 <- new("BloombergDataEntry",blId="nesn sw 06/15/12 c55 equity",fieldId="OPT_STRIKE_PX",value=55,dateLastUpdate=Sys.time())
-	blDataEntryOption5 <- new("BloombergDataEntry",blId="nesn sw 06/15/12 c55 equity",fieldId="OPT_TYPE",value="c",dateLastUpdate=Sys.time())
+	blDataEntryOption5 <- new("BloombergDataEntry",blId="nesn sw 06/15/12 c55 equity",fieldId="OPT_PUT_CALL",value="Call",dateLastUpdate=Sys.time())
 	blDataEntryOption6 <- new("BloombergDataEntry",blId="nesn sw 06/15/12 c55 equity",fieldId="OPT_CONT_SIZE",value=100,dateLastUpdate=Sys.time())
 	
 	blData <- add(blDataEntryOption1,blData)

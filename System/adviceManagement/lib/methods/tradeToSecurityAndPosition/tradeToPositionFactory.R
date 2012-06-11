@@ -137,7 +137,7 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Opzioni_su_azioni"),
 			strike <- blData[[strikeId]]@value	
 			
 			# get the option type
-			optionTypeId <- paste(trade$Id_Bloomberg,"OPT_TYPE",sep="__")
+			optionTypeId <- paste(trade$Id_Bloomberg,"OPT_PUT_CALL",sep="__")
 			optionType <- blData[[optionTypeId]]@value
 			
 			# get the option contract size
@@ -160,3 +160,18 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Opzioni_su_azioni"),
 		}
 )
 
+setMethod("tradeToPositionFactory",signature(newSecurity="Opzioni_su_divise"),
+		function(newSecurity,trade,blData) {
+			
+			quantity <- trade$Quantity
+			value <- trade$Amount
+	
+			# crea la classe virtuale "PositionOpzioni_su_divise"
+			OptionOnFxPosition <- new("PositionOpzioni_su_divise",id=new("IdCharacter",trade$Security_name),security=newSecurity,
+					contractSize=1.0,quantity=quantity,value=toMoney(value,newSecurity@currency))
+
+			
+			
+			return(OptionOnFxPosition)
+		}
+)

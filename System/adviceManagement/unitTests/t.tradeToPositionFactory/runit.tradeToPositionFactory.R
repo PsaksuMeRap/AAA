@@ -143,4 +143,30 @@ test.shouldConvertOptionOnEquityToPosition <- function() {
 }
 
 
+test.shouldConvertOptionOFxToPosition <- function() {
+	# create the BloombergData
+	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
+	source(file.path(directory,"createRepositoryBloombergData.R"))
+	blData <- createRepositoryBloombergData()
+	
+	# set the fileName from which to import trades
+	fileName <- "optionFxTrade.csv"
+	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+	
+	# import trades
+	trades <- tradesFactory(fileName,directory)
+	trade <- trades[[1]]
+	
+	# create the blRequestHandler required from tradeToSecurityFactory
+	blRequestHandler <- create_BloombergRequestHandler()
+	
+	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)
+	
+	newPosition <- tradeToPositionFactory(newSecurity,trade,blData)
+	
+	checkEquals(class(newPosition)[[1]],"PositionOpzioni_su_divise")
+	checkEquals(class(newPosition@id)[[1]],"IdCharacter")
+	checkEquals(newPosition@value,toMoney(trade$Amount,"EUR"))
+	checkEquals(newPosition@contractSize,1)
+}
 

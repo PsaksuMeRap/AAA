@@ -3,6 +3,32 @@
 # Author: Claudio
 ###############################################################################
 
+parseOptionFxName <- function(name) {
+	tmp <- strsplit(name,"\\s+")[[1]]
+	
+	# identify the two currencies codes
+	currencyCodes <- tmp[1]
+	
+	# identify the maturity
+	expiryDate <- tmp[2]
+	monthAndDay <- substr(expiryDate,1,5)
+	twoDigitsYear <- substr(expiryDate,7,8)
+	expiryDate <- paste(substr(expiryDate,1,6),"20",twoDigitsYear,sep="")
+	
+	# identify the option type
+	optionType <- substr(tmp[3],1,1)
+	if (optionType=="c") {
+		optionType <- "Call" 
+	} else {
+		optionType <- "Put" 
+	}
+	
+	# identify the strike
+	strike <- as.numeric(substr(tmp[3],2,nchar(tmp[3])))
+	
+	return(list(name=name,expiryDate=expiryDate,optionType=optionType,strike=strike))
+}
+
 tradeToSecurityFactory <- function(trade,blRequestHandler) {
 	# determine the security type
 	securityType <- trade$Security_type
@@ -92,6 +118,20 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 	
 		
 		newSecurity <- new("Opzioni_su_azioni",currency=currency,name=name,id=id,underlying=new("Equity")) 
+		return(newSecurity)
+	}
+	
+	if (securityType=="Option FX") {
+		
+		currency <- new("Currency",trade$Currency)
+		
+		name <- trade$Security_name
+		id=new("IdCharacter",name)		
+		
+		info <- parseOptionFxName(name)
+			
+		newSecurity <- new("Opzioni_su_divise",currency=currency,name=name,id=id,underlying=currency,
+				expiryDate=info[["expiryDate"]],optionType=info[["optionType"]],strike=info[["strike"]]) 
 		return(newSecurity)
 	}
 	

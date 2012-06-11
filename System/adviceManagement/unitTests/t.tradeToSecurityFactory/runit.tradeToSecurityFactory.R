@@ -80,6 +80,20 @@ test.shouldConvertOptionEquityToSecurity <- function() {
 	
 }
 
+
+test.shouldParseOptionFxName <- function() {
+	
+	name <- "eurchf  09/13/12 c1.2000"
+	
+	result <- parseOptionFxName(name)
+	
+	checkEquals(result[["name"]],"eurchf  09/13/12 c1.2000")
+	checkEquals(result[["expiryDate"]],"09/13/2012")
+	checkEquals(result[["optionType"]],"Call")
+	checkEquals(result[["strike"]],1.2)
+}
+
+
 test.shouldConvertOptionFxToSecurity <- function() {
 	# set the fileName from which to import trades
 	fileName <- "optionFxTrade.csv"
@@ -92,5 +106,9 @@ test.shouldConvertOptionFxToSecurity <- function() {
 	
 	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)	
 	checkEquals(class(newSecurity)[[1]],"Opzioni_su_divise")	
+	checkEquals(newSecurity@expiryDate,"09/13/2012")
+	checkEquals(newSecurity@optionType,"Call")
+	checkEquals(newSecurity@strike,1.2)
+	checkEquals(newSecurity@name,"eurchf  09/13/12 c1.2000")
 	
 }
