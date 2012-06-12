@@ -4,6 +4,5 @@
 ###############################################################################
 
 
-setClass("IdBloomberg",contains="character")
+setClass("IdBloomberg",contains="IdCharacter")
 
-setIs("IdBloomberg","Id")

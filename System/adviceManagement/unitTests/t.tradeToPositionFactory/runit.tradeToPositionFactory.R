@@ -113,7 +113,7 @@ test.shouldConvertFXSpotTradeToPosition <- function() {
 	checkEquals(newPosition@value,toMoney(500000,"EUR"))
 }
 
-test.shouldConvertOptionOnEquityToPosition <- function() {
+test.shouldConvertOptionOnEquityTradeToPosition <- function() {
 	# create the BloombergData
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
 	source(file.path(directory,"createRepositoryBloombergData.R"))
@@ -143,7 +143,7 @@ test.shouldConvertOptionOnEquityToPosition <- function() {
 }
 
 
-test.shouldConvertOptionOFxToPosition <- function() {
+test.shouldConvertOptionOnFxTradeToPosition <- function() {
 	# create the BloombergData
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
 	source(file.path(directory,"createRepositoryBloombergData.R"))
@@ -166,7 +166,33 @@ test.shouldConvertOptionOFxToPosition <- function() {
 	
 	checkEquals(class(newPosition)[[1]],"PositionOpzioni_su_divise")
 	checkEquals(class(newPosition@id)[[1]],"IdCharacter")
+	checkEquals(newPosition@quantity,toMoney(trade$Quantity,"EUR"))
 	checkEquals(newPosition@value,toMoney(trade$Amount,"EUR"))
 	checkEquals(newPosition@contractSize,1)
+}
+
+test.shouldConvertForwardOnFxTradeToPosition <- function() {
+	# create the BloombergData
+	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
+	source(file.path(directory,"createRepositoryBloombergData.R"))
+	blData <- createRepositoryBloombergData()
+	
+	# set the fileName from which to import trades
+	fileName <- "fxForwardTrade.csv"
+	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+	
+	# import trades
+	trades <- tradesFactory(fileName,directory)
+	trade <- trades[[1]]
+	
+	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)
+	
+	newPosition <- tradeToPositionFactory(newSecurity,trade,blData)
+	
+	checkEquals(class(newPosition)[[1]],"PositionFX_Forward")
+	checkEquals(class(newPosition@id)[[1]],"IdCharacter")
+	checkEquals(newPosition@quantity,toMoney(trade$Quantity,"EUR"))
+	checkEquals(newPosition@value,toMoney(trade$Amount,"CHF"))
+	
 }
 

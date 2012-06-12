@@ -50,7 +50,7 @@ test.shouldConvertBondTradeToSecurity <- function() {
 	
 }
 
-test.shouldConvertFxSpotToSecurity <- function() {
+test.shouldConvertFxSpotTradeToSecurity <- function() {
 	# set the fileName from which to import trades
 	fileName <- "fxSpotTrade.csv"
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
@@ -65,7 +65,7 @@ test.shouldConvertFxSpotToSecurity <- function() {
 	
 }
 
-test.shouldConvertOptionEquityToSecurity <- function() {
+test.shouldConvertOptionEquityTradeToSecurity <- function() {
 	# set the fileName from which to import trades
 	fileName <- "optionEquityTrade.csv"
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
@@ -94,7 +94,7 @@ test.shouldParseOptionFxName <- function() {
 }
 
 
-test.shouldConvertOptionFxToSecurity <- function() {
+test.shouldConvertOptionFxTradeToSecurity <- function() {
 	# set the fileName from which to import trades
 	fileName <- "optionFxTrade.csv"
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
@@ -110,5 +110,35 @@ test.shouldConvertOptionFxToSecurity <- function() {
 	checkEquals(newSecurity@optionType,"Call")
 	checkEquals(newSecurity@strike,1.2)
 	checkEquals(newSecurity@name,"eurchf  09/13/12 c1.2000")
+	
+}
+
+
+test.shouldParseOptionFxForwardName <- function() {
+	
+	name <- "eurchf 08/27/12"	
+	info <- parseOptionFxForwardName(name)
+	checkEquals(info[[1]],"EURCHF")
+	checkEquals(info[[2]],"08/27/2012")
+	
+}
+
+
+test.shouldConvertFxForwardTradeToSecurity <- function() {
+	# set the fileName from which to import trades
+	fileName <- "fxForwardTrade.csv"
+	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+	blRequestHandler <- create_BloombergRequestHandler()
+	
+	# import trades
+	trades <- tradesFactory(fileName,directory)
+	trade <- trades[[1]]
+	
+	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)	
+	checkEquals(class(newSecurity)[[1]],"FX_Forward")	
+	checkEquals(newSecurity@name,"EURCHF 08/27/2012")
+	
+	# trade$Currency <- "USD"
+	# newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)
 	
 }

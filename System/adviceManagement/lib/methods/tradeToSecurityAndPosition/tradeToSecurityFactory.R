@@ -9,7 +9,7 @@ parseOptionFxName <- function(name) {
 	# identify the two currencies codes
 	currencyCodes <- tmp[1]
 	
-	# identify the maturity
+	# identify the expiryDate
 	expiryDate <- tmp[2]
 	monthAndDay <- substr(expiryDate,1,5)
 	twoDigitsYear <- substr(expiryDate,7,8)
@@ -27,6 +27,26 @@ parseOptionFxName <- function(name) {
 	strike <- as.numeric(substr(tmp[3],2,nchar(tmp[3])))
 	
 	return(list(name=name,expiryDate=expiryDate,optionType=optionType,strike=strike))
+}
+
+parseFxForwardName <- function(name) {
+	tmp <- strsplit(name,"\\s+")[[1]]
+	
+	# identify the two currencies codes, the underlying and the 
+	# numeraire
+	
+	currencyCodes <- toupper(tmp[1])
+	underlying <- substr(currencyCodes,1,3)
+	numeraire <- substr(currencyCodes,4,6)
+	
+	# identify the settlementDate
+	settlementDate <- tmp[2]
+	monthAndDay <- substr(settlementDate,1,5)
+	twoDigitsYear <- substr(settlementDate,7,8)
+	settlementDate <- paste(substr(settlementDate,1,6),"20",twoDigitsYear,sep="")
+	
+	return(list(currencyCodes=currencyCodes,underlying=underlying,
+					numeraire=numeraire,settlementDate=settlementDate))
 }
 
 tradeToSecurityFactory <- function(trade,blRequestHandler) {
@@ -132,6 +152,33 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 			
 		newSecurity <- new("Opzioni_su_divise",currency=currency,name=name,id=id,underlying=currency,
 				expiryDate=info[["expiryDate"]],optionType=info[["optionType"]],strike=info[["strike"]]) 
+		return(newSecurity)
+	}
+	
+	if (securityType=="FX Forward") {
+		
+		info <- parseFxForwardName(trade$Security_name)
+		
+		# currency is the currency used to express the price of x units of
+		# the underlying. We use the bloomberg convention, i.e. usdeur means
+		# the price in eur of 1 unit of usd and sekusd the price of 100 sek in
+		# usd
+	
+		if (info[["underlying"]]!=trade$Currency) {
+			message <- paste("Error in trade ",trade$Id_Bloomberg,".\n\n",
+					"The currency used for the Quantity field is ",trade$Currency,".\n",
+					"It should be ",info[["underlying"]],sep="")
+			tkmessageBox(message=message,icon="error",type="ok")
+		}
+		
+		currency <- new("Currency",info[["numeraire"]])
+		underlying <- new("Currency",info[["underlying"]])
+		
+		name <- paste(info$currencyCodes,info$settlementDate)
+		id=new("IdCharacter",name)
+		
+		newSecurity <- new("FX_Forward",currency=currency,underlying=underlying,name=name,id=id)
+		
 		return(newSecurity)
 	}
 	

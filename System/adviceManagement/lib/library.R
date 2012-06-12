@@ -21,6 +21,7 @@ source("./adviceManagement/lib/classDefinitions/Advisor/Advisor.R")
 source("./adviceManagement/lib/classDefinitions/Advisors/Advisors.R")
 source("./adviceManagement/lib/classDefinitions/Trade/Trade.R")
 source("./adviceManagement/lib/classDefinitions/Trades/Trades.R")
+source("./adviceManagement/lib/classDefinitions/IdBloomberg/IdBloomberg.R")
 
 source("./adviceManagement/lib/tradeFactory.R")
 source("./adviceManagement/lib/tradesFactory.R")
