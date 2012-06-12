@@ -164,19 +164,18 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 		# usd
 	
 		if (info[["underlying"]]!=trade$Currency) {
-			message <- paste("Error in trade ",trade$Id_Bloomberg,".\n\n",
-					"The currency used for the Quantity field is ",trade$Currency,".\n",
+			message <- paste("Error in trade ",trade$Id_Bloomberg,". \n\n",
+					"The currency used for the Quantity field is ",trade$Currency,". \n",
 					"It should be ",info[["underlying"]],sep="")
 			tkmessageBox(message=message,icon="error",type="ok")
 		}
 		
 		currency <- new("Currency",info[["numeraire"]])
-		underlying <- new("Currency",info[["underlying"]])
 		
 		name <- paste(info$currencyCodes,info$settlementDate)
 		id=new("IdCharacter",name)
 		
-		newSecurity <- new("FX_Forward",currency=currency,underlying=underlying,name=name,id=id)
+		newSecurity <- new("FX_Forward",currency=currency,name=name,id=id)
 		
 		return(newSecurity)
 	}

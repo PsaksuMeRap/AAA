@@ -202,7 +202,8 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Opzioni_su_divise"),
 			# in the xxxyyy mnemonic, (xxx is the iso code of the first currency and yyy
 			# the iso code of the second currency)
 			
-			quantity <- toMoney(trade$Quantity,newSecurity@currency)
+			info <- parseFxForwardName(trade$Security_name)
+			quantity <- toMoney(trade$Quantity,info[["underlying"]])
 			
 			# for options on fx we define the price to be equal to value of the position, i.e.
 			# the amount
@@ -221,11 +222,13 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Opzioni_su_divise"),
 setMethod("tradeToPositionFactory",signature(newSecurity="FX_Forward"),
 		function(newSecurity,trade,blData) {
 			
+			info <- parseFxForwardName(trade$Security_name)
+			
 			# for fx forwards we define the quantity to be the quantity of the first currency
 			# in the xxxyyy mnemonic, (xxx is the iso code of the first currency and yyy
 			# the iso code of the second currency)
 			
-			quantity <- toMoney(trade$Quantity,newSecurity@underlying)
+			quantity <- toMoney(trade$Quantity,info[["underlying"]])
 			
 			# for fx forwards we use the same convention as the bloomberg spot price. 
 			# The forward price of eurchf will be the price of 1 unit of EUR in CHF

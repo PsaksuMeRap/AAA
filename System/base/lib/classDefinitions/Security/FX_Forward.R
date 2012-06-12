@@ -4,5 +4,5 @@
 ###############################################################################
 
 
-setClass("FX_Forward",representation(currency="Currency",underlying="Underlying",name="character",id="Id"),contains="Security") 
+setClass("FX_Forward",representation(currency="Currency",name="character",id="Id"),contains="Security") 
 

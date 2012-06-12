@@ -118,7 +118,7 @@ test.shouldConvertFXSpotTradeToPosition <- function() {
 	
 	checkEquals(class(positions[[1]])[[1]],"PositionConto_corrente")
 	checkEquals(class(positions[[2]])[[1]],"PositionConto_corrente")
-	checkEquals(class(newPosition@id)[[1]],"IdBloomberg")
+	checkEquals(class(positions[[1]]@id)[[1]],"IdBloomberg")
 	checkEquals(positions[[1]]@value,toMoney(500000,"EUR"))
 	checkEquals(positions[[2]]@value,toMoney(500000 * 1.201,"CHF"))
 	
