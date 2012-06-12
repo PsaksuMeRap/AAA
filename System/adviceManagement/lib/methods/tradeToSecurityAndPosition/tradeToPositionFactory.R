@@ -12,7 +12,7 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Equity"),
 					
 			quantity <- sign(trade)*trade$Quantity
 
-			# crea la classe virtuale "PositionEquity"
+			# create the class "PositionEquity"
 			equityPositions <- new("PositionEquity",id=new("IdBloomberg",trade$Id_Bloomberg),security=newSecurity,
 							quantity=quantity,value=toMoney(quantity*price,newSecurity@currency))
 			
@@ -46,7 +46,7 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Futures_EQ"),
 			newSecurity@deliveryDate <- deliveryDate
 			newSecurity@underlying <- new("IndexEquity",name=underlying,id=new("IdBloomberg",underlying))
 	
-			# crea la classe virtuale "PositionFutures_EQ"
+			# create the class "PositionFutures_EQ"
 			futureEquityIndexPosition <- new("PositionFutures_EQ",valueOnePoint=valueOnePoint,id=new("IdBloomberg",trade$Id_Bloomberg),security=newSecurity,
 					quantity=quantity,value=toMoney(quantity*price*valueOnePoint,newSecurity@currency))
 			
@@ -80,7 +80,7 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Bond"),
 			# update the newSecurity
 			newSecurity@maturity <- maturity
 					
-			# crea la classe virtuale "PositionBond"
+			# create the class "PositionBond"
 			value <- (0.01*(price+accInterestPercentage))*quantity
 			value <- as(value,"Money")
 			bondPosition <- new("PositionBond",spRating=spRating,accruedInterest=accInterest,id=new("IdBloomberg",trade$Id_Bloomberg),security=newSecurity,
@@ -90,6 +90,19 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Bond"),
 		}
 )
 
+
+parseFxSpotId_Bloomberg <- function(IdBloomberg) {
+	tmp <- strsplit(IdBloomberg,"\\s+")[[1]]
+	
+	# identify the two currencies codes, the underlying and the 
+	# numeraire
+	
+	currencyCodes <- toupper(tmp[1])
+	underlying <- substr(currencyCodes,1,3)
+	numeraire <- substr(currencyCodes,4,6)
+	
+	return(list(underlying=underlying,numeraire=numeraire))
+}
 
 
 setMethod("tradeToPositionFactory",signature(newSecurity="Conto_corrente"),
@@ -106,13 +119,35 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Conto_corrente"),
 				priceId <- paste(trade$Id_Bloomberg,"LAST_PRICE",sep="__")
 				price <- blData[[priceId]]@value * blFxCorrectionFactor(trade$Id_Bloomberg)
 				
-				quantity <- 1.0
+				# we create two conto_corrente positions with respect the "xxxyyy curncy" spot trade.
+				# the first conto_corrente contains the amount in currency "xxx" while the second the 
+				# corresponding amount in "yyy" currency.
+				# the amount in currency "xxx" can be extracted directly from the trade$quantity field
 				
-				# crea la classe virtuale "PositionConto_corrente"
-				conto_correntePosition <- new("PositionConto_corrente",id=new("IdBloomberg",trade$Id_Bloomberg),security=newSecurity,
-						quantity=quantity,value=toMoney(trade$Quantity,newSecurity@currency))
+				# create the class "PositionConto_corrente"
+				info <- parseFxSpotId_Bloomberg(trade$Id_Bloomberg)
 				
-				return(conto_correntePosition)
+				# the underlying currency first
+				currency <- new("Currency",info[["underlying"]])
+				id <- new("IdBloomberg",paste(currency,tolower(currency),sep="-"))
+				name <- paste(id,trade$Id_Bloomberg)
+				newSecurity <- new("Conto_corrente",currency=currency,name=name,id=id) 
+				conto_corrente_xxx <- new("PositionConto_corrente",id=new("IdBloomberg",id),security=newSecurity,
+						quantity=1.0,value=toMoney(trade$Quantity,newSecurity@currency))
+				
+				# the numeraire currency then
+				currency <- new("Currency",info[["numeraire"]])
+				id <- new("IdBloomberg",paste(currency,tolower(currency),sep="-"))
+				name <- paste(id,trade$Id_Bloomberg)
+				newSecurity <- new("Conto_corrente",currency=currency,name=name,id=id) 
+				conto_corrente_yyy <- new("PositionConto_corrente",id=new("IdBloomberg",id),security=newSecurity,
+						quantity=1.0,value=toMoney(trade$Quantity*price,currency))
+				
+				# create a list of positions
+				positions <- new("Positions")
+				positions[1] <- conto_corrente_xxx
+				positions[2] <- conto_corrente_yyy
+				return(positions)
 			}
 		}
 )
@@ -152,7 +187,7 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Opzioni_su_azioni"),
 			newSecurity@strike <- strike
 			newSecurity@optionType <- optionType
 			
-			# crea la classe virtuale "PositionOpzioni_su_azioni"
+			# create the class "PositionOpzioni_su_azioni"
 			OptionOnEquityPosition <- new("PositionOpzioni_su_azioni",id=new("IdBloomberg",trade$Id_Bloomberg),security=newSecurity,
 					contractSize=contractSize,quantity=quantity,value=toMoney(quantity*contractSize*price,newSecurity@currency))
 			
@@ -173,13 +208,13 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Opzioni_su_divise"),
 			# the amount
 			value <- trade$Amount
 	
-			# crea la classe virtuale "PositionOpzioni_su_divise"
-			OptionOnFxPosition <- new("PositionOpzioni_su_divise",id=new("IdCharacter",trade$Security_name),security=newSecurity,
+			# create the class "PositionOpzioni_su_divise"
+			optionOnFxPosition <- new("PositionOpzioni_su_divise",id=new("IdCharacter",trade$Security_name),security=newSecurity,
 					contractSize=1.0,quantity=quantity,value=toMoney(value,newSecurity@currency))
 
 			
 			
-			return(OptionOnFxPosition)
+			return(optionOnFxPosition)
 		}
 )
 
@@ -198,7 +233,7 @@ setMethod("tradeToPositionFactory",signature(newSecurity="FX_Forward"),
 			
 			value <- toMoney(trade$Amount,newSecurity@currency) 
 			
-			# crea la classe virtuale "PositionFX_forward"
+			# create the class "PositionFX_forward"
 			forwardOnFxPosition <- new("PositionFX_Forward",id=newSecurity@id,security=newSecurity,
 					quantity=quantity,value=value)
 			

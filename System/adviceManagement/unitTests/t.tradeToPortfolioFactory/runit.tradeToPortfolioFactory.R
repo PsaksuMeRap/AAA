@@ -4,7 +4,7 @@
 ###############################################################################
 
 
-test.shouldConvertEquityTradeToPosition <- function() {
+test.shouldConvertEquityTradeToPortfolioPositions <- function() {
 	
 	# create the BloombergData
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
@@ -26,13 +26,13 @@ test.shouldConvertEquityTradeToPosition <- function() {
 	
 	newPosition <- tradeToPositionFactory(newSecurity,trade,blData)
 	
-	checkEquals(class(newPosition)[[1]],"PositionEquity")
-	checkEquals(class(newPosition@id)[[1]],"IdBloomberg")
-	checkEquals(newPosition@value,toMoney(100*11.08,"CHF"))
+	positions <- tradeToPortfolioFactory(newPosition)
+	
+	checkEquals(sum(positions),toMoney(0,positions[[1]]@security@currency))
 	
 }
 
-test.shouldConvertFuturesOnIndexTradeToPosition <- function() {
+test.shouldConvertFuturesOnIndexTradeToPortfolioPositions <- function() {
 	# create the BloombergData
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
 	source(file.path(directory,"createRepositoryBloombergData.R"))
@@ -53,13 +53,13 @@ test.shouldConvertFuturesOnIndexTradeToPosition <- function() {
 	
 	newPosition <- tradeToPositionFactory(newSecurity,trade,blData)
 	
-	checkEquals(class(newPosition)[[1]],"PositionFutures_EQ")
-	checkEquals(class(newPosition@id)[[1]],"IdBloomberg")
-	checkEquals(newPosition@value,toMoney(5864*10*5,"CHF"))
+	positions <- tradeToPortfolioFactory(newPosition)
+	
+	checkEquals(sum(positions),toMoney(0,positions[[1]]@security@currency))
 	
 }
 
-test.shouldConvertBondTradeToPosition <- function() {
+test.shouldConvertBondTradeToPortfolioPositions <- function() {
 	# create the BloombergData
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
 	source(file.path(directory,"createRepositoryBloombergData.R"))
@@ -80,22 +80,13 @@ test.shouldConvertBondTradeToPosition <- function() {
 	
 	newPosition <- tradeToPositionFactory(newSecurity,trade,blData)
 	
-	checkEquals(class(newPosition)[[1]],"PositionBond")
-	checkEquals(class(newPosition@id)[[1]],"IdBloomberg")
-	checkEquals(newPosition@value,toMoney(0.01*(trade$Price+1.7)*trade$Quantity,"EUR"))
-	checkEquals(newPosition@accruedInterest,as(toMoney(0.017*trade$Quantity,"EUR"),"AccruedInterest"))
+	positions <- tradeToPortfolioFactory(newPosition)
+	
+	checkEquals(sum(positions),toMoney(0,positions[[1]]@security@currency))
+
 }
 
-test.shouldParseFxSpotId_Bloomberg <- function() {
-	Id_Bloomberg <- "usdchf curncy"
-	result <- parseFxSpotId_Bloomberg(Id_Bloomberg)
-
-	checkEquals(result[["underlying"]],"USD")	
-	checkEquals(result[["numeraire"]],"CHF")
-}
-
-
-test.shouldConvertFXSpotTradeToPosition <- function() {
+test.shouldConvertFXSpotTradeToPortfolioPositions <- function() {
 	# create the BloombergData
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
 	source(file.path(directory,"createRepositoryBloombergData.R"))
@@ -115,16 +106,13 @@ test.shouldConvertFXSpotTradeToPosition <- function() {
 	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)
 	
 	positions <- tradeToPositionFactory(newSecurity,trade,blData)
+	result <- tradeToPortfolioFactory(positions,trade)
 	
-	checkEquals(class(positions[[1]])[[1]],"PositionConto_corrente")
-	checkEquals(class(positions[[2]])[[1]],"PositionConto_corrente")
-	checkEquals(class(newPosition@id)[[1]],"IdBloomberg")
-	checkEquals(positions[[1]]@value,toMoney(500000,"EUR"))
-	checkEquals(positions[[2]]@value,toMoney(500000 * 1.201,"CHF"))
-	
+	checkEquals(positions,result)
+	checkEquals(positions[[1]]@value@amount,result[[2]]@value@amount/1.201)
 }
 
-test.shouldConvertOptionOnEquityTradeToPosition <- function() {
+test.shouldConvertOptionOnEquityTradeToPortfolioPositions <- function() {
 	# create the BloombergData
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
 	source(file.path(directory,"createRepositoryBloombergData.R"))
@@ -145,16 +133,14 @@ test.shouldConvertOptionOnEquityTradeToPosition <- function() {
 	
 	newPosition <- tradeToPositionFactory(newSecurity,trade,blData)
 	
-	checkEquals(class(newPosition)[[1]],"PositionOpzioni_su_azioni")
-	checkEquals(class(newPosition@id)[[1]],"IdBloomberg")
-	checkEquals(newPosition@value,toMoney(0.16*100*100,"CHF"))
-	checkEquals(newPosition@contractSize,100)
-	checkEquals(newPosition@security@strike,55)
-	checkEquals(newPosition@security@expiryDate,"06/15/2012")
+	positions <- tradeToPortfolioFactory(newPosition)
+	
+	checkEquals(sum(positions),toMoney(0,positions[[1]]@security@currency))
+	
 }
 
 
-test.shouldConvertOptionOnFxTradeToPosition <- function() {
+test.shouldConvertOptionOnFxTradeToPortfolioPositions <- function() {
 	# create the BloombergData
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
 	source(file.path(directory,"createRepositoryBloombergData.R"))
@@ -175,14 +161,12 @@ test.shouldConvertOptionOnFxTradeToPosition <- function() {
 	
 	newPosition <- tradeToPositionFactory(newSecurity,trade,blData)
 	
-	checkEquals(class(newPosition)[[1]],"PositionOpzioni_su_divise")
-	checkEquals(class(newPosition@id)[[1]],"IdCharacter")
-	checkEquals(newPosition@quantity,toMoney(trade$Quantity,"EUR"))
-	checkEquals(newPosition@value,toMoney(trade$Amount,"EUR"))
-	checkEquals(newPosition@contractSize,1)
+	positions <- tradeToPortfolioFactory(newPosition)
+	
+	checkEquals(sum(positions),toMoney(0,positions[[1]]@security@currency))
 }
 
-test.shouldConvertForwardOnFxTradeToPosition <- function() {
+test.shouldConvertForwardOnFxTradeToPortfolioPositions <- function() {
 	# create the BloombergData
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
 	source(file.path(directory,"createRepositoryBloombergData.R"))
@@ -200,10 +184,9 @@ test.shouldConvertForwardOnFxTradeToPosition <- function() {
 	
 	newPosition <- tradeToPositionFactory(newSecurity,trade,blData)
 	
-	checkEquals(class(newPosition)[[1]],"PositionFX_Forward")
-	checkEquals(class(newPosition@id)[[1]],"IdCharacter")
-	checkEquals(newPosition@quantity,toMoney(trade$Quantity,"EUR"))
-	checkEquals(newPosition@value,toMoney(trade$Amount,"CHF"))
+	positions <- tradeToPortfolioFactory(newPosition)
+	
+	checkEquals(sum(positions),toMoney(0,positions[[1]]@security@currency))
 	
 }
 

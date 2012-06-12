@@ -2,7 +2,6 @@
 # 
 # Author: Claudio
 ###############################################################################
-
 parseOptionFxName <- function(name) {
 	tmp <- strsplit(name,"\\s+")[[1]]
 	
