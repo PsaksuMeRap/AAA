@@ -66,11 +66,11 @@ setMethod("tradeToPortfolioFactory",signature(position="PositionBond"),
 setMethod("tradeToPortfolioFactory",signature(position="Positions"),
 		function(position,trade) {
 			
-			securityType <- trade$Security_type
+			#securityType <- trade$Security_type
 		
-			if (securityType=="FX Spot") {
+			#if (securityType=="FX Spot") {
 				return(position)
-			}
+			#}
 		}
 )
 
@@ -114,28 +114,3 @@ setMethod("tradeToPortfolioFactory",signature(position="PositionOpzioni_su_divis
 		}
 )
 
-setMethod("tradeToPortfolioFactory",signature(newSecurity="PositionFX_Forward"),
-		function(newSecurity,trade,blData) {
-			
-			# for fx forwards we define the quantity to be the quantity of the first currency
-			# in the xxxyyy mnemonic, (xxx is the iso code of the first currency and yyy
-			# the iso code of the second currency)
-			
-			quantity <- toMoney(trade$Quantity,newSecurity@underlying)
-			
-			# for fx forwards we use the same convention as the bloomberg spot price. 
-			# The forward price of eurusd will be the price of 1 unit of EUR in USD
-			# and sekchf will be the price of 100 sek in chf
-			# the value is the
-			
-			value <- toMoney(trade$Amount,newSecurity@currency) 
-			
-			# crea la classe virtuale "PositionFX_forward"
-			forwardOnFxPosition <- new("PositionFX_Forward",id=newSecurity@id,security=newSecurity,
-					quantity=quantity,value=value)
-			
-			
-			
-			return(forwardOnFxPosition)
-		}
-)

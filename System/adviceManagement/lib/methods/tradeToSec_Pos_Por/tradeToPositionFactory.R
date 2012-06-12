@@ -224,24 +224,37 @@ setMethod("tradeToPositionFactory",signature(newSecurity="FX_Forward"),
 			
 			info <- parseFxForwardName(trade$Security_name)
 			
-			# for fx forwards we define the quantity to be the quantity of the first currency
+			# for fx forwards we define the quantity to be the quantity bought or sold of the first currency
 			# in the xxxyyy mnemonic, (xxx is the iso code of the first currency and yyy
 			# the iso code of the second currency)
-			
-			quantity <- toMoney(trade$Quantity,info[["underlying"]])
-			
 			# for fx forwards we use the same convention as the bloomberg spot price. 
 			# The forward price of eurchf will be the price of 1 unit of EUR in CHF
 			# and sekchf will be the price of 100 sek in chf
 			
-			value <- toMoney(trade$Amount,newSecurity@currency) 
+			quantity <- toMoney(sign(trade)*trade$Quantity,info[["underlying"]])
+					
+			# the underlying currency first
+			currency <- new("Currency",info[["underlying"]])
+			date <- format(strptime(info[["settlementDate"]],format="%m/%d/%Y"),"%d-%m-%Y")
+			name <- paste(as.character(quantity),"value date",date)
+			id <- new("IdCharacter",paste(name," ",trade$Price," ",info[["numeraire"]],"/",info[["underlying"]],sep=""))
+			securityLeg1 <- new("FX_Forward",currency=currency,name=name,id=id) 
 			
-			# create the class "PositionFX_forward"
-			forwardOnFxPosition <- new("PositionFX_Forward",id=newSecurity@id,security=newSecurity,
-					quantity=quantity,value=value)
+			positionLeg1 <- new("PositionFX_Forward",id=id,security=securityLeg1,
+					quantity=quantity,value=quantity)
 			
+			# then the numeraire currency
+			currency <- new("Currency",info[["numeraire"]])
+			quantity <- (-1*trade$Price)*quantity
+			name <- paste(as.character(quantity),"value date",date)
+			securityLeg2 <- new("FX_Forward",currency=currency,name=name,id=id) 
+			positionLeg2 <- new("PositionFX_Forward",id=id,security=securityLeg2,
+					quantity=quantity,value=quantity)
 			
-			
-			return(forwardOnFxPosition)
+			# create a list of positions
+			positions <- new("Positions")
+			positions[1] <- positionLeg1
+			positions[2] <- positionLeg2
+			return(positions)
 		}
 )
