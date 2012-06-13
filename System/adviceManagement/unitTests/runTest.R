@@ -66,7 +66,9 @@ mySetwd()
 
 ## test messageFactory
 dirs = c(
-		"./adviceManagement/unitTests/t.tradeToPositionFactory"
+		"./adviceManagement/unitTests/t.tradeToSecurityFactory",
+		"./adviceManagement/unitTests/t.tradeToPositionFactory",
+		"./adviceManagement/unitTests/t.tradeToPortfolioFactory"
 )
 testsuite.lists <- defineTestSuite("Test adviceManagement",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)

@@ -7,6 +7,8 @@ parseOptionFxName <- function(name) {
 	
 	# identify the two currencies codes
 	currencyCodes <- tmp[1]
+	underlying <- toupper(substr(currencyCodes,1,3))
+	numeraire <- toupper(substr(currencyCodes,4,6))
 	
 	# identify the expiryDate
 	expiryDate <- tmp[2]
@@ -25,7 +27,8 @@ parseOptionFxName <- function(name) {
 	# identify the strike
 	strike <- as.numeric(substr(tmp[3],2,nchar(tmp[3])))
 	
-	return(list(name=name,expiryDate=expiryDate,optionType=optionType,strike=strike))
+	return(list(name=name,expiryDate=expiryDate,optionType=optionType,
+					strike=strike,underlying=underlying,numeraire=numeraire))
 }
 
 parseFxForwardName <- function(name) {
@@ -35,8 +38,8 @@ parseFxForwardName <- function(name) {
 	# numeraire
 	
 	currencyCodes <- toupper(tmp[1])
-	underlying <- substr(currencyCodes,1,3)
-	numeraire <- substr(currencyCodes,4,6)
+	underlying <- toupper(substr(currencyCodes,1,3))
+	numeraire <- toupper(substr(currencyCodes,4,6))
 	
 	# identify the settlementDate
 	settlementDate <- tmp[2]
@@ -142,12 +145,15 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 	
 	if (securityType=="Option FX") {
 		
+		# il nome della security andrebbe modificato in quanto non dovrebbe contenere
+		# informazioni sulla posizione
 		currency <- new("Currency",trade$Currency)
 		
 		name <- trade$Security_name
-		id=new("IdCharacter",name)		
-		
+				
 		info <- parseOptionFxName(name)
+		
+		id=new("IdCharacter",name)
 			
 		newSecurity <- new("Opzioni_su_divise",currency=currency,name=name,id=id,underlying=currency,
 				expiryDate=info[["expiryDate"]],optionType=info[["optionType"]],strike=info[["strike"]]) 

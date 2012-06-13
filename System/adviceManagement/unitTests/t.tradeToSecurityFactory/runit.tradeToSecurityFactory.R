@@ -91,6 +91,8 @@ test.shouldParseOptionFxName <- function() {
 	checkEquals(result[["expiryDate"]],"09/13/2012")
 	checkEquals(result[["optionType"]],"Call")
 	checkEquals(result[["strike"]],1.2)
+	checkEquals(result[["underlying"]],"EUR")
+	checkEquals(result[["numeraire"]],"CHF")
 }
 
 
@@ -114,13 +116,14 @@ test.shouldConvertOptionFxTradeToSecurity <- function() {
 }
 
 
-test.shouldParseOptionFxForwardName <- function() {
+test.shouldParseFxForwardName <- function() {
 	
 	name <- "eurchf 08/27/12"	
-	info <- parseOptionFxForwardName(name)
-	checkEquals(info[[1]],"EURCHF")
-	checkEquals(info[[2]],"08/27/2012")
-	
+	info <- parseFxForwardName(name)
+	checkEquals(info[["currencyCodes"]],"EURCHF")
+	checkEquals(info[["settlementDate"]],"08/27/2012")
+	checkEquals(info[["underlying"]],"EUR")
+	checkEquals(info[["numeraire"]],"CHF")
 }
 
 

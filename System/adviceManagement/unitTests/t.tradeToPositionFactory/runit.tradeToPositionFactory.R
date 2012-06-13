@@ -120,7 +120,7 @@ test.shouldConvertFXSpotTradeToPosition <- function() {
 	checkEquals(class(positions[[2]])[[1]],"PositionConto_corrente")
 	checkEquals(class(positions[[1]]@id)[[1]],"IdBloomberg")
 	checkEquals(positions[[1]]@value,toMoney(500000,"EUR"))
-	checkEquals(positions[[2]]@value,toMoney(500000 * 1.201,"CHF"))
+	checkEquals(positions[[2]]@value,toMoney(500000 * -1.201,"CHF"))
 	
 }
 
@@ -178,7 +178,7 @@ test.shouldConvertOptionOnFxTradeToPosition <- function() {
 	checkEquals(class(newPosition)[[1]],"PositionOpzioni_su_divise")
 	checkEquals(class(newPosition@id)[[1]],"IdCharacter")
 	checkEquals(newPosition@quantity,toMoney(trade$Quantity,"EUR"))
-	checkEquals(newPosition@value,toMoney(trade$Amount,"EUR"))
+	checkEquals(newPosition@value,toMoney(as.numeric(trade$Amount),"CHF"))
 	checkEquals(newPosition@contractSize,1)
 }
 
@@ -198,12 +198,20 @@ test.shouldConvertForwardOnFxTradeToPosition <- function() {
 	
 	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)
 	
-	newPosition <- tradeToPositionFactory(newSecurity,trade,blData)
+	positions <- tradeToPositionFactory(newSecurity,trade,blData)
 	
-	checkEquals(class(newPosition)[[1]],"PositionFX_Forward")
-	checkEquals(class(newPosition@id)[[1]],"IdCharacter")
-	checkEquals(newPosition@quantity,toMoney(trade$Quantity,"EUR"))
-	checkEquals(newPosition@value,toMoney(trade$Amount,"CHF"))
+	checkEquals(class(positions)[[1]],"Positions")
+	# check the first leg, the "underlying" leg
+	checkEquals(class(positions[[1]])[[1]],"PositionFX_Forward")
+	checkEquals(class(positions[[1]]@id)[[1]],"IdCharacter")
+	checkEquals(as.character(positions[[1]]@id),"future_fx valuta 27-08-2012 EURCHF 1.1998 EUR 1'000'000.00 leg EUR")
+	checkEquals(positions[[1]]@quantity,toMoney(trade$Quantity,"EUR"))
+
+	# check the first leg, the "numeraire" leg
+	checkEquals(class(positions[[2]])[[1]],"PositionFX_Forward")
+	checkEquals(class(positions[[2]]@id)[[1]],"IdCharacter")
+	checkEquals(as.character(positions[[2]]@id),"future_fx valuta 27-08-2012 EURCHF 1.1998 EUR 1'000'000.00 leg CHF")
+	checkEquals(positions[[2]]@quantity,toMoney(-trade$Quantity*1.1998,"CHF"))
 	
 }
 

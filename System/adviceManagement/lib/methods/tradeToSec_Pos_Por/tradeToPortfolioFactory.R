@@ -97,10 +97,6 @@ setMethod("tradeToPortfolioFactory",signature(position="PositionOpzioni_su_divis
 			
 			positions <- new("Positions")
 			positions[1] <- position			
-			
-			quantity <- toMoney(trade$Quantity,newSecurity@currency)
-			
-			value <- trade$Amount
 	
 			# create the cash flow associated with this trade
 			id <- paste(position@security@currency,"-",tolower(position@security@currency),sep="")

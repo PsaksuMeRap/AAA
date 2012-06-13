@@ -133,7 +133,7 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Conto_corrente"),
 				name <- paste(id,trade$Id_Bloomberg)
 				newSecurity <- new("Conto_corrente",currency=currency,name=name,id=id) 
 				conto_corrente_xxx <- new("PositionConto_corrente",id=new("IdBloomberg",id),security=newSecurity,
-						quantity=1.0,value=toMoney(trade$Quantity,newSecurity@currency))
+						quantity=1.0,value=toMoney(sign(trade)*trade$Quantity,currency))
 				
 				# the numeraire currency then
 				currency <- new("Currency",info[["numeraire"]])
@@ -141,7 +141,7 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Conto_corrente"),
 				name <- paste(id,trade$Id_Bloomberg)
 				newSecurity <- new("Conto_corrente",currency=currency,name=name,id=id) 
 				conto_corrente_yyy <- new("PositionConto_corrente",id=new("IdBloomberg",id),security=newSecurity,
-						quantity=1.0,value=toMoney(trade$Quantity*price,currency))
+						quantity=1.0,value=toMoney(-sign(trade)*trade$Quantity*price,currency))
 				
 				# create a list of positions
 				positions <- new("Positions")
@@ -203,18 +203,23 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Opzioni_su_divise"),
 			# the iso code of the second currency)
 			
 			info <- parseFxForwardName(trade$Security_name)
-			quantity <- toMoney(trade$Quantity,info[["underlying"]])
+			expiryDate <- format(strptime(info[["expiryDate"]],format="%m/%d/%Y"),"%d-%m-%Y")
+			
+			
+			quantity <- toMoney(sign(trade)*trade$Quantity,info[["underlying"]])
 			
 			# for options on fx we define the price to be equal to value of the position, i.e.
-			# the amount
-			value <- trade$Amount
-	
+			# the amount, where by convenction the amount must be specified w.r.t. the "numeraire" 
+			# currency, i.e. the yyy currency in the xxxyyy Bloomberg notation
+			value <- toMoney(sign(trade)*trade$Amount,info[["numeraire"]])
+			id <- paste(info[["optionType"]]," ",expiryDate,"Strike"," ",
+					info[["strike"]]," ",as.character(quantity)," (Premio ",
+					as.character(value),")",sep="")
+			
 			# create the class "PositionOpzioni_su_divise"
-			optionOnFxPosition <- new("PositionOpzioni_su_divise",id=new("IdCharacter",trade$Security_name),security=newSecurity,
-					contractSize=1.0,quantity=quantity,value=toMoney(value,newSecurity@currency))
+			optionOnFxPosition <- new("PositionOpzioni_su_divise",id=new("IdCharacter",id),security=newSecurity,
+					contractSize=1.0,quantity=quantity,value=value)
 
-			
-			
 			return(optionOnFxPosition)
 		}
 )
@@ -236,8 +241,10 @@ setMethod("tradeToPositionFactory",signature(newSecurity="FX_Forward"),
 			# the underlying currency first
 			currency <- new("Currency",info[["underlying"]])
 			date <- format(strptime(info[["settlementDate"]],format="%m/%d/%Y"),"%d-%m-%Y")
-			name <- paste(as.character(quantity),"value date",date)
-			id <- new("IdCharacter",paste(name," ",trade$Price," ",info[["numeraire"]],"/",info[["underlying"]],sep=""))
+			# name <- paste(as.character(quantity),"value date",date)
+			name <- paste("future_fx valuta ",date," ",info[["currencyCodes"]]," ",trade$Price," ",
+							as.character(quantity)," leg ",info[["underlying"]],sep="")
+			id <- new("IdCharacter",name)
 			securityLeg1 <- new("FX_Forward",currency=currency,name=name,id=id) 
 			
 			positionLeg1 <- new("PositionFX_Forward",id=id,security=securityLeg1,
@@ -245,8 +252,11 @@ setMethod("tradeToPositionFactory",signature(newSecurity="FX_Forward"),
 			
 			# then the numeraire currency
 			currency <- new("Currency",info[["numeraire"]])
-			quantity <- (-1*trade$Price)*quantity
-			name <- paste(as.character(quantity),"value date",date)
+			name <- paste("future_fx valuta ",date," ",info[["currencyCodes"]]," ",trade$Price," ",
+					as.character(quantity)," leg ",info[["numeraire"]],sep="")
+			id <- new("IdCharacter",name)
+			quantity <- toMoney((-1*trade$Price)*quantity@amount,info[["numeraire"]])
+			# name <- paste(as.character(quantity),"valuta",date)
 			securityLeg2 <- new("FX_Forward",currency=currency,name=name,id=id) 
 			positionLeg2 <- new("PositionFX_Forward",id=id,security=securityLeg2,
 					quantity=quantity,value=quantity)
