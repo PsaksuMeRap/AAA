@@ -156,7 +156,7 @@ create_repositoryExchangeRates <- function(exchangeRatesDate) {
 		# CHF, i.e. EUR = 1.20 CHF (in the Bloomberg convention EURCHF)
 		
 		names <- names(values)
-		
+	
 		areNewer <- repository$lastUpdateDateTime[names] < dateTimes[names]
 		if (any(areNewer)) {
 			repository$lastUpdateDateTime[names[areNewer]] <- dateTimes[names[areNewer]]
