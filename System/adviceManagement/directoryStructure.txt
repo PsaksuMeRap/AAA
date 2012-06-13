@@ -1,0 +1,41 @@
+
+
+C:\riskman
+	- archive : cartella contenente i messaggi eliminati e processati
+		
+		- deleted : consigli eliminati prima del loro processamento
+		
+		- processed : consigli processati
+		
+			- accepted : consigli processati ed accettati per l'esecuzione
+			
+			- rejected : consigli processati e respinti
+
+
+	- log : cartella dei log
+
+	
+	- postOffice : cartella contenente i messaggi in ingresso ed in elaborazione
+
+		- inbox : cartella contenente i messaggi non ancora rilevati per l'elaborazione
+
+		- pending : cartella contenente i messaggi in elaborazione
+
+		- ghidossiGlobalEconomy : cartella contenente i messaggi relativi al 
+								  GestoreEportafoglio. Questa cartella e' utilizzata per 
+								  definire il lock (un file vuoto scritto qui)
+
+			- pending : cartella contenente i messaggi in elaborazione
+
+
+	- data : cartella contenente i portafogli, i cambi ed
+
+		- portfolios : cartella contenenti i portafogli
+
+			- globalEconomy : cartella contenente i portafogli di globalEconomy
+
+			- globalEquity : cartella contenente i portafogli di globalEquity
+
+		- exchangeRates : cartella contenente i cambi
+		
+				

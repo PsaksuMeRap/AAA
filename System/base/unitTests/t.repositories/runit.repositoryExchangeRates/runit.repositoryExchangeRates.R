@@ -49,3 +49,32 @@ test.exchange <- function() {
 	checkEquals(result@currency,currencyTo)
 
 }
+
+test.update <- function() {
+	source("./base/lib/repository.R")
+	source("./base/unitTests/utilities/createExchangeRatesVector.R")
+	
+	rates <- createExchangeRatesVector()
+	repo <- create_testRepositoryExchangeRates(rates)
+	
+	# create values vector
+	Sys.sleep(1)
+	
+	values <- c(1.05,0.80)
+	names(values) <- c("EUR","USD")
+	updateDateTime <- c(Sys.time(),Sys.time())
+	Sys.sleep(1)
+	updateDateTime[2] <- Sys.time()
+	
+	ZAR <- repo$rates[["ZAR"]]
+	
+	names(updateDateTime) <- names(values)
+
+	result <- repo$update(values,updateDateTime)
+
+	checkEquals(result,TRUE)	
+	checkEquals(repo$rates[["EUR"]],1.05)
+	checkEquals(repo$rates[["USD"]],0.80)
+	checkEquals(repo$rates[["ZAR"]],ZAR)
+
+}

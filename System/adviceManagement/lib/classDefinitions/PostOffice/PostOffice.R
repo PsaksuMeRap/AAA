@@ -24,8 +24,6 @@ setMethod("setup",signature(x="PostOffice",y="missing"),
 				dir.create(file.path(x@absolutePath,"postOffice"))
 				dir.create(file.path(x@absolutePath,"postOffice","inbox"))
 				dir.create(file.path(x@absolutePath,"postOffice","pending"))
-				#dir.create(file.path(x@absolutePath,"postOffice","sent"))
-				#dir.create(file.path(x@absolutePath,"postOffice","trash"))
 				return(invisible())
 			}
 		}

@@ -122,7 +122,13 @@ create_repositoryExchangeRates <- function(exchangeRatesDate) {
 	
 	repository$rates <- rates.df[,"CHFPar"]
 	names(repository$rates) <- rates.df[,"Moneta"]
-	rm(rates.df)		
+	
+	# create the lastUpdate wich is a vector of date-time 
+	dateTime <- if(missing(exchangeRatesDate)) Sys.time() else as.POSIXt(exchangeRatesDate)
+	repository$lastUpdateDateTime <- rep(dateTime,nrow(rates.df))
+	names(repository$lastUpdateDateTime) <- rates.df[,"Moneta"]
+	
+	rm(rates.df,dateTime)		
 	
 	repository$exchange <- function(money,toCurrency) {
 		# money: an Object of class Money containing the amount to be converted
@@ -145,6 +151,22 @@ create_repositoryExchangeRates <- function(exchangeRatesDate) {
 		return(result)
 	}
 	
+	repository$update <- function(values,dateTimes) {
+		# values is a named vector with exchange rates defined with respect to
+		# CHF, i.e. EUR = 1.20 CHF (in the Bloomberg convention EURCHF)
+		
+		names <- names(values)
+		
+		areNewer <- repository$lastUpdateDateTime[names] < dateTimes[names]
+		if (any(areNewer)) {
+			repository$lastUpdateDateTime[names[areNewer]] <- dateTimes[names[areNewer]]
+			repository$rates[names[areNewer]] <- values[names[areNewer]]		
+			return(TRUE)
+		} else {
+			return(FALSE)
+		}
+	}
+	
 	return(repository)
 }
 
@@ -156,6 +178,13 @@ create_testRepositoryExchangeRates <- function(exchangeRates.v) {
 	class(repository) <- "repositoryExchangeRates"
 	
 	repository$rates <- exchangeRates.v
+	
+	# create the lastUpdate wich is a vector of date-time 
+	dateTime <-  Sys.time() 
+	repository$lastUpdateDateTime <- rep(dateTime,length(repository$rates))
+	names(repository$lastUpdateDateTime) <- names(repository$rates)
+	
+	rm(dateTime)		
 	
 	repository$exchange <- function(money,toCurrency) {
 		# money: an Object of class Money containing the amount to be converted
@@ -176,6 +205,22 @@ create_testRepositoryExchangeRates <- function(exchangeRates.v) {
 		result <- new("Money",amount=amount * repository$rates[[fromCurrency]] / repository$rates[[toCurrency]],
 				currency=toCurrency)
 		return(result)
+	}
+	
+	repository$update <- function(values,dateTimes) {
+		# values is a named vector with exchange rates defined with respect to
+		# CHF, i.e. EUR = 1.20 CHF (in the Bloomberg convention EURCHF)
+		
+		names <- names(values)
+		
+		areNewer <- repository$lastUpdateDateTime[names] < dateTimes[names]
+		if (any(areNewer)) {
+			repository$lastUpdateDateTime[names[areNewer]] <- dateTimes[names[areNewer]]
+			repository$rates[names[areNewer]] <- values[names[areNewer]]		
+			return(TRUE)
+		} else {
+			return(FALSE)
+		}
 	}
 	
 	return(repository)

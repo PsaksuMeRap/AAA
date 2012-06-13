@@ -17,6 +17,9 @@ downloadExchangeRatesFromBloomberg <- function() {
 	# download the rates
 	rates.df <- bdp(conn,currenciesBlb,"PX_LAST")
 	
+	# set the updateTime
+	lastUpdateDateTime <- Sys.time() 
+			
 	# disconnect from Bloomberg
 	blpDisconnect(conn)
 	
@@ -24,34 +27,27 @@ downloadExchangeRatesFromBloomberg <- function() {
 	rates <- rates.df[,"PX_LAST"]
 	names(rates) <- currencies
 	
+	lastUpdateDateTime <- rep(lastUpdateDateTime,length(rates))
+	names(lastUpdateDateTime) <- currencies
+	
 	# adjust 
 	divideBYHundred <- c("JPY","SEK","NOK")
 	rates[divideBYHundred] <- rates[divideBYHundred] / 100
 	rates["IDR"] <- rates["IDR"] / 10000
 	
+	return(list(rates=rates,lastUpdateDateTime=lastUpdateDateTime))
 }
 
-#if (!bloombergExchangeRates) {
-	# if it is not possible to access bloomber use the exchange rates in the file
-	# System/data/repositoryExchangeRates.csv
-#	file <- file.path(systemOptions[["sourceCodeDir"]],"data","repositoryExchangeRates.csv")
-#	rates.df <- read.csv(file=file,header=TRUE,stringsAsFactors=FALSE)
-#	rates <- rates.df[,"CHFPar"]
-#	names(rates) <- rates.df[,"Moneta"]
-#	rm(file,rates.df)
-#}
-
 # source("./base/unitTests/utilities/createExchangeRatesVector.R")
-rates <- downloadExchangeRatesFromBloomberg()
+data <- downloadExchangeRatesFromBloomberg()
+
 rm(downloadExchangeRatesFromBloomberg)
 
 # create the exchangeRates repository		
-exchangeRates <- create_testRepositoryExchangeRates(rates)
-rm(rates)
+updated <- repositories$exchangeRates$update(data$rates,data$lastUpdateDateTime)
+rm(data)
 
-# assign the repository	
-assign("exchangeRates",exchangeRates,envir=repositories)
-
-rm(exchangeRates)
-
+directoryExchangeRates <- file.path(systemOptions[["homeDir"]],"data","exchangeRates")
+if (updated) saveLastObject(repositories$exchangeRates,"exchangeRates",directoryExchangeRates)
+rm(update,directoryExchangeRates)
 

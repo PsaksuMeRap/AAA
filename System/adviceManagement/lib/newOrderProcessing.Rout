@@ -1,4 +1,5 @@
 Loading Tcl/Tk interface ... done
-Error in args[[2]] : subscript out of bounds
-Calls: eval -> parse
-Execution halted
+Creating a generic function for 'formatC' from package 'base' in the global environment
+Creating a generic function for 'identical' from package 'base' in the global environment
+Creating a generic function for 'split' from package 'base' in the global environment
+<Tcl> ok 
