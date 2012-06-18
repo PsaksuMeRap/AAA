@@ -40,4 +40,6 @@ C:\riskman
 
 		- exchangeRates : cartella contenente i cambi
 		
+		- instruments : the csv file with the AAA instruments (DBStrumenti)
+		
 				

@@ -9,7 +9,7 @@ loadLastPortfolio <- function(directory) {
 
 	# get the file names in directory ending with ".RData"
 	files <- list.files(path=directory,pattern="portfolio.RData$",full.name=TRUE)
-	if (length(files)==0) stop()
+	if (length(files)==0) stop("No portfolios to load!")
 	
 	# sort the file names in ascending order 
 	files <- sort(files)
@@ -20,3 +20,17 @@ loadLastPortfolio <- function(directory) {
 	return(portfolio)
 }
 
+loadPortfolio <- function(portfolioName="portfolio.RData",directory,portfolioId) {
+	# the portfolio file name, default is "portfolio.RData"
+	# portfolioId is for example "globalEquity"
+	# the directory path without the portfolioId
+	
+	if (missing(directory)) directory <- file.path(systemOptions[["homeDir"]],"data","portfolios")
+	if (!missing(portfolioId)) directory <- file.path(directory,portfolioId)
+	
+	
+	# load the last one
+	load(file.path(directory,portfolioName))
+	
+	return(portfolio)
+}

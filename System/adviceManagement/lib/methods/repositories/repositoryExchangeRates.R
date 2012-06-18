@@ -53,3 +53,18 @@ directoryExchangeRates <- file.path(systemOptions[["homeDir"]],"data","exchangeR
 if (updated) saveLastObject(repositories$exchangeRates,"exchangeRates.RData",directoryExchangeRates)
 rm(update,directoryExchangeRates)
 
+
+load_repositoryExchangeRate <- function(saveIfNewer=FALSE,directory=file.path(systemOptions[["homeDir"]],"data","exchangeRates"),
+		fileName="exchangeRates.RData") {
+	
+	file <- file.path(systemOptions[["homeDir"]],"data","exchangeRates","exchangeRates.RData")
+	tmpEnvir <- new.env()
+	load(file,envir=tmpEnvir)
+	
+	updated <- repositories$exchangeRates$update(data$rates,data$lastUpdateDateTime)
+
+	if (update & saveIfNewer) saveLastObject(object=repositories$exchangeRates,fileName=fileName,
+				directory=directory)
+	
+}
+
