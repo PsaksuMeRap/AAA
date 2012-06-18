@@ -32,9 +32,11 @@ C:\riskman
 
 		- portfolios : cartella contenenti i portafogli
 
-			- globalEconomy : cartella contenente i portafogli di globalEconomy
+			- globalEconomy : cartella contenente i portafogli del globalEconomy
 
-			- globalEquity : cartella contenente i portafogli di globalEquity
+			- globalEquity : cartella contenente i portafogli del globalEquity
+			
+			- fixedIncome : cartella contenente i portafoglii del fixedIncome
 
 		- exchangeRates : cartella contenente i cambi
 		
