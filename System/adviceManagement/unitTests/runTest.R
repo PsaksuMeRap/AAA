@@ -11,6 +11,7 @@ library("tcltk")
 library("stringr")
 
 if(.Platform$OS.type=="windows") {
+	library("rJava")
 	library("Rbbg")
 }
 
@@ -18,12 +19,15 @@ stringsAsFactors = FALSE
 
 # this variable is used to indicate that we are running a testsuite
 isTest <- TRUE
+repositories <- new.env()
 
 source("./base/lib/library.R")
-
 # set the directory where the source code is installed (i.e. folders adviceManagement, ayrton, base, riskman)
 sourceCodeDir <- getwd()
 systemOptions[["sourceCodeDir"]] <- sourceCodeDir
+source("./adviceManagement/lib/library.R")
+
+
 
 source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
 testRepository <- createExchangeRatesTestRepository() 

@@ -3,10 +3,10 @@
 # Author: Claudio
 ###############################################################################
 
-downloadExchangeRatesFromBloomberg <- function() {
+downloadExchangeRatesFromBloomberg <- function(currencies) {
 	# create the list of currencies
-	currencies <- c("AUD","BRL","CAD","DKK","EUR","GBP","IDR",
-			"JPY","MXN","NOK","NZD","PLN","SEK","SGD","TRY","USD","ZAR")
+	if (missing(currencies)) currencies <- c("AUD","BRL","CAD","DKK","EUR","GBP","IDR",
+				"JPY","MXN","NOK","NZD","PLN","SEK","SGD","TRY","USD","ZAR")
 	
 	# create the Bloomberg currency ID vis a vis CHF
 	currenciesBlb <- paste(currencies,"CHF Curncy",sep="")
@@ -38,21 +38,26 @@ downloadExchangeRatesFromBloomberg <- function() {
 	return(list(rates=rates,lastUpdateDateTime=lastUpdateDateTime))
 }
 
-# source("./base/unitTests/utilities/createExchangeRatesVector.R")
-data <- downloadExchangeRatesFromBloomberg()
-
-rm(downloadExchangeRatesFromBloomberg)
-
-# create the exchangeRates repository		
-updated <- repositories$exchangeRates$update(data$rates,data$lastUpdateDateTime)
-rm(data)
-
-directoryExchangeRates <- file.path(systemOptions[["homeDir"]],"data","exchangeRates")
-# directoryExchangeRates <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","files","exchangeRates")
-
-if (updated) saveLastObject(repositories$exchangeRates,"exchangeRates.RData",directoryExchangeRates)
-rm(update,directoryExchangeRates)
-
+updateFromBloomberg_exchangeRatesRepository <- function(currencies,saveIfNewer=FALSE) {
+	
+	if (missing(currencies)) currencies <- c("AUD","BRL","CAD","DKK","EUR","GBP","IDR",
+				"JPY","MXN","NOK","NZD","PLN","SEK","SGD","TRY","USD","ZAR")
+	
+	data <- downloadExchangeRatesFromBloomberg(currencies)
+	
+	rm(downloadExchangeRatesFromBloomberg)
+	
+	# create the exchangeRates repository		
+	updated <- repositories$exchangeRates$update(data$rates,data$lastUpdateDateTime)
+	rm(data)
+	
+	directoryExchangeRates <- file.path(systemOptions[["homeDir"]],"data","exchangeRates")
+	# directoryExchangeRates <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","files","exchangeRates")
+	
+	if (updated & saveIfNewer) saveLastObject(repositories$exchangeRates,"exchangeRates.RData",directoryExchangeRates)
+	rm(update,directoryExchangeRates)
+	
+}
 
 load_repositoryExchangeRate <- function(saveIfNewer=FALSE,directory=file.path(systemOptions[["homeDir"]],"data","exchangeRates"),
 		fileName="exchangeRates.RData") {
