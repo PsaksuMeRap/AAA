@@ -61,13 +61,16 @@ updateFromBloomberg_exchangeRatesRepository <- function(currencies,saveIfNewer=F
 
 load_repositoryExchangeRate <- function(saveIfNewer=FALSE,directory=file.path(systemOptions[["homeDir"]],"data","exchangeRates"),
 		fileName="exchangeRates.RData") {
-	
+browser()	
 	file <- file.path(systemOptions[["homeDir"]],"data","exchangeRates","exchangeRates.RData")
 	tmpEnvir <- new.env()
 	load(file,envir=tmpEnvir)
 	
-	updated <- repositories$exchangeRates$update(data$rates,data$lastUpdateDateTime)
-
+	if (exists(exchangeRates,where=repositories,inherits=FALSE)) {
+		updated <- repositories$exchangeRates$update(data$rates,data$lastUpdateDateTime)
+	} else {
+		assign("exchangeRates",tmpEnvir$exchangeRates,pos=repositories)
+	}
 	if (update & saveIfNewer) saveLastObject(object=repositories$exchangeRates,fileName=fileName,
 				directory=directory)
 	

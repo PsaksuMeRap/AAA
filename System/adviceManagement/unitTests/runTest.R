@@ -5,7 +5,6 @@
 
 rm(list=ls(all=TRUE))
 
-library("RODBC")
 library("RUnit")
 library("tcltk")
 library("stringr")
@@ -39,6 +38,7 @@ source("./adviceManagement/unitTests/advisors.R")
 
 ## test globale
 dirs = c(
+		"./adviceManagement/unitTests/t.logger",
 		"./adviceManagement/unitTests/t.fileMove",
 		"./adviceManagement/unitTests/t.archive",
 		"./adviceManagement/unitTests/t.PostOffice",

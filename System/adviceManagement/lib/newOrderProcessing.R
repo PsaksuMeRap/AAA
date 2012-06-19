@@ -3,50 +3,63 @@
 # Author: Claudio
 ############################################################################
 
-
-library("tcltk")
-
 ## First read in the arguments listed at the command line
 args=commandArgs(trailingOnly = TRUE)
 
-## args is now a list of character vectors
-## Then cycle through each element of the list and evaluate the expressions.
-eval(parse(text=args[[1]])) # this is the fileName of the message
-eval(parse(text=args[[2]])) # this is the sourceCodeDir variable
+# if it is a test (lengtht(args)==0) then set test values
+if (length(args)==0) {
+	sourceCodeDir <- getwd()
+	fileName <- "2012-06-19_14-27-47_GhidossiGlobalEconomy_newAdvice.csv"
+} else {	
+	## args is now a list of character vectors
+	## Then cycle through each element of the list and evaluate the expressions.
+	eval(parse(text=args[[1]])) # this is the fileName of the message
+	eval(parse(text=args[[2]])) # this is the sourceCodeDir variable
+}
 
 setwd(sourceCodeDir)
+
 source(file.path(sourceCodeDir,"adviceManagement","lib","initialSetup.R"))
 
-saveLastObject(args,fileName,directory="C:/Users/Claudio/workspace/AAA/System")
+# load the adviceManagement code
+source(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","library.R"))
 
+logFileName <- create_logger(fileType="newAdvice")
 # load the advisors
+logger("Loading Advisors list ...")
 source(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","advisors.R"))
- 
-# extract the folderName and construct the directory path
+
+
+# extract the folderName and construct the directory path where the
+# message is waiting for processing
 directory <- strsplit(fileName,"_")[[1]][3]
 directory <- file.path(systemOptions[["homeDir"]],"postOffice",directory,"pending")
 
-message <- paste(systemOptions[["homeDir"]],systemOptions[["sourceCodeDir"]],sep="\n")
-tkmessageBox(message=message,type="ok")
-quit(save="no")
-
 # create the message
+logger(paste("Creating message for",file.path(directory,fileName),"..."))
 message <- messageFactory(fileName,directory,advisors)
+
 
 ## -- inizio procedura controllo - parte generale
 # import the portfolio
-	# create the path to the portfolio directory
-directoryPortfolio <- file.path(systemOptions[["homeDir"]],"data","portfolios",message@advisor@portfolioName)
+# create the path to the portfolio directory
+directoryPortfolio <- file.path(systemOptions[["homeDir"]],"data","portfolios",message@advisor@folderName)
+logger(paste("Loading portfolio from",directoryPortfolio,"..."))
 portfolio <- loadPortfolio(directoryPortfolio)
 
 # source the repositoryPoliticaInvestimento
-source(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","repositoryPoliticaInvestimento.R"))
+logger(paste("Loading repositoryPoliticaInvetimento ..."))
+source(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","methods","repositories","repositoryPoliticaInvestimento.R"))
 
 # source the instrument repository
-source(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","repositoryInstruments.R"))
+logger(paste("Loading repositoryInstruments ..."))
+source(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","methods","repositories","repositoryInstruments.R"))
 
-repositories$exchangeRates <- create_repositoryExchangeRates()
+# source the instrument repository
+logger(paste("Loading repositoryEchangeRates ..."))
+load_repositoryExchangeRate()
 
+sink()
 # copy the checkFile into the pre-compliance input/output folder
 checkDirectory <- file.path(systemOptions[["homeDir"]],"postOffice",directory,"pending")
 ok <- dir.create(checkDirectory)

@@ -9,7 +9,16 @@ library("RUnit")
 library("tcltk")
 library("stringr")
 
+if(.Platform$OS.type=="windows") {
+	library("rJava")
+	library("Rbbg")
+}
+
+
 stringsAsFactors = FALSE
+
+# create the repositories environment
+repositories <- new.env()
 
 source("./base/lib/library.R")
 
