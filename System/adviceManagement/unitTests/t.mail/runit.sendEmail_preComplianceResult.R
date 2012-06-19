@@ -8,7 +8,7 @@ test.shouldSendPreComplianceResultNo <- function() {
 	
 	# identify a new order
 	fileName <- "2012-05-09_14-22-24_GhidossiGlobalEquity_preComplianceResult_no.csv"
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","files")
+	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.mail")
 	
 	# define the adivisors
 	advisors <- new("Advisors")
@@ -46,7 +46,7 @@ test.shouldSendPreComplianceResultOk <- function() {
 	
 	# identify a new order
 	fileName <- "2012-05-09_14-22-24_GhidossiGlobalEquity_preComplianceResult_ok.csv"
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","files")
+	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.mail")
 	
 	# define the adivisors
 	advisors <- new("Advisors")

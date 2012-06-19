@@ -9,7 +9,7 @@ test.shoudLock <- function() {
 	
 	# identify a new order
 	fileName <- "2012-05-09_14-22-24_GhidossiGlobalEquity_newAdvice.csv"
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","files")
+	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.lock_unlock")
 			
 	# define the adivisors
 	advisors <- new("Advisors")
@@ -45,7 +45,7 @@ test.shoudUnLock <- function() {
 	
 	# identify a new order
 	fileName <- "2012-05-09_14-22-24_GhidossiGlobalEquity_newAdvice.csv"
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","files")
+	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.lock_unlock")
 	
 	# define the adivisors
 	advisors <- new("Advisors")

@@ -23,7 +23,7 @@ test.shouldProcessPreComplianceResultMessageNo <- function() {
 	
 	# identify a new order
 	fileName <- "2012-05-09_14-22-24_GhidossiGlobalEquity_preComplianceResult_no.csv"
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","files")
+	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.messageProcessing")
 	
 	# define the adivisors
 	advisors <- new("Advisors")
@@ -69,7 +69,7 @@ test.shouldProcessPreComplianceResultMessageOk <- function() {
 	
 	# identify a new order
 	fileName <- "2012-05-09_14-22-24_GhidossiGlobalEquity_preComplianceResult_ok.csv"
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","files")
+	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.messageProcessing")
 	
 	# define the adivisors
 	advisors <- new("Advisors")
@@ -121,7 +121,7 @@ test.shouldProcessConfirmationMessage <- function() {
 	
 	# copy the confirmation message
 	fileName <- "2012-05-09_14-22-24_GhidossiGlobalEquity_confirmation.csv"
-	fromDir <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","files")
+	fromDir <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.messageProcessing")
 	toDir <- file.path(systemOptions[["homeDir"]],"postOffice",advisors[["GhidossiGlobalEquity"]]@folderName,"pending")
 	toFile <- file.path(toDir,fileName)
 	

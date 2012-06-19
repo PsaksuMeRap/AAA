@@ -25,10 +25,13 @@ C:\riskman
 								  GestoreEportafoglio. Questa cartella e' utilizzata per 
 								  definire il lock (un file vuoto scritto qui)
 
-			- pending : cartella contenente i messaggi in elaborazione
+			- pending : cartella contenente i messaggi in elaborazione, i risultati delle
+			            verifiche, ecc.
 
 
-	- data : cartella contenente i portafogli, i cambi ed
+	- data : cartella contenente i portafogli, i cambi, i checkFiles, ...
+	
+		- checkFiles : cartella contenente le specifiche per i test
 
 		- portfolios : cartella contenenti i portafogli
 

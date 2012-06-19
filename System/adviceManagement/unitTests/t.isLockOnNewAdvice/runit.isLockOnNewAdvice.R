@@ -18,7 +18,7 @@ test.shouldRunIsLockOnNewAdvice <- function(message) {
 	setup(postOffice)
 	
 	# copy incoming message
-	from <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","files","2012-05-09_14-22-24_GhidossiGlobalEquity_newAdvice.csv")
+	from <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.isLockOnNewAdvice","2012-05-09_14-22-24_GhidossiGlobalEquity_newAdvice.csv")
 	to <- file.path(systemOptions[["homeDir"]],"postOffice","inbox")
 	isOk <- file.copy(from,to)
 	
@@ -29,7 +29,7 @@ test.shouldRunIsLockOnNewAdvice <- function(message) {
 	setup(x=mailbox,y=postOffice)
 	
 	fileName <- "2012-05-09_14-22-24_GhidossiGlobalEquity_newAdvice.csv"
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","files")
+	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.isLockOnNewAdvice")
 	message <- messageFactory(fileName,directory,advisors)
 	
 	# lock the GhidossiGlobalEquity mailBox

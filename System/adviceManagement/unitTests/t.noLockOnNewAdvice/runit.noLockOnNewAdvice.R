@@ -16,7 +16,7 @@ test.shouldNoLockOnNewAdvice <- function() {
 	setup(postOffice)
 	
 	# copy the simulated incoming message 
-	from <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","files","2012-05-09_14-22-24_GhidossiGlobalEquity_newAdvice.csv")
+	from <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.noLockOnNewAdvice","2012-05-09_14-22-24_GhidossiGlobalEquity_newAdvice.csv")
 	to <- file.path(systemOptions[["homeDir"]],"postOffice","inbox")
 	file.copy(from,to)
 	
@@ -27,7 +27,7 @@ test.shouldNoLockOnNewAdvice <- function() {
 	setup(x=mailbox,y=postOffice)
 
 	fileName <- "2012-05-09_14-22-24_GhidossiGlobalEquity_newAdvice.csv"
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","files")
+	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.noLockOnNewAdvice")
 	
 	message <- messageFactory(fileName,directory,advisors)
 	

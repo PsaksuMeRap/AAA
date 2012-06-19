@@ -11,7 +11,7 @@ test.shouldSetupPostOffice <- function() {
 		
 	setup(postOffice)
 	
-	checkEquals(dir(path=absolutePath),c("postOffice"))
+	checkEquals(is.element("postOffice",dir(path=absolutePath)),TRUE)
 	checkEquals(dir(file.path(absolutePath,"postOffice")),c("inbox","pending"))
 	
 	# remove the directory postOffice

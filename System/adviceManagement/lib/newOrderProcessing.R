@@ -48,9 +48,9 @@ source(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","repo
 repositories$exchangeRates <- create_repositoryExchangeRates()
 
 # copy the checkFile into the pre-compliance input/output folder
-checkDirectory <- file.path(systemOptions[["homeDir"]],"postOffice",directory,"pending","pre-compliance")
+checkDirectory <- file.path(systemOptions[["homeDir"]],"postOffice",directory,"pending")
 ok <- dir.create(checkDirectory)
-fileFrom <- file.path() 
+fileFrom <- file.path(systemOptions[["homeDir"]],) 
 fileTo <- file.path()
 ok <- file.copy(from=fileFrom,to=fileTo)
 

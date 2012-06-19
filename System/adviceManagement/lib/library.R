@@ -11,7 +11,7 @@ source("./adviceManagement/lib/file.move.R")
 
 source("./adviceManagement/lib/methods/repositories/repositoryExchangeRates.R") 
 source("./adviceManagement/lib/methods/repositories/repositoryInstruments.R") 
-source("./adviceManagement/lib/methods/repositories/repositoryPoliticaInvetimento.R") 
+source("./adviceManagement/lib/methods/repositories/repositoryPoliticaInvestimento.R") 
 
 source("./adviceManagement/lib/methods/portfolio/loadLastPortfolio.R")
 source("./adviceManagement/lib/methods/tradeToSec_Pos_Por/tradeToSecurityFactory.R")
