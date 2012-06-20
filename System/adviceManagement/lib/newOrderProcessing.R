@@ -43,9 +43,9 @@ message <- messageFactory(fileName,directory,advisors)
 ## -- inizio procedura controllo - parte generale
 # import the portfolio
 # create the path to the portfolio directory
-directoryPortfolio <- file.path(systemOptions[["homeDir"]],"data","portfolios",message@advisor@folderName)
+# directoryPortfolio <- file.path(systemOptions[["homeDir"]],"data","portfolios",message@advisor@folderName)
 logger(paste("Loading portfolio from",directoryPortfolio,"..."))
-portfolio <- loadPortfolio(directoryPortfolio)
+portfolio <- loadPortfolio(portfolioId=message@advisor@folderName)
 
 # source the repositoryPoliticaInvestimento
 logger(paste("Loading repositoryPoliticaInvetimento ..."))
@@ -56,16 +56,19 @@ logger(paste("Loading repositoryInstruments ..."))
 source(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","methods","repositories","repositoryInstruments.R"))
 
 # source the instrument repository
-logger(paste("Loading repositoryEchangeRates ..."))
 load_repositoryExchangeRate()
+logger(paste("Loading repositoryEchangeRates ..."))
+
+# copy the checkFile into the pre-compliance input/output folder
+logger(paste("Copying check file for",message@advisor@folderName,"..."))
+checkDirectory <- file.path(systemOptions[["homeDir"]],"postOffice",message@advisor@folderName,"pending")
+fileFrom <- file.path(systemOptions[["homeDir"]],"data","checkFiles",message@advisor@folderName,"check.txt") 
+fileTo <- file.path(checkDirectory,"check.txt")
+ok <- file.copy(from=fileFrom,to=fileTo)
+
 
 sink()
-# copy the checkFile into the pre-compliance input/output folder
-checkDirectory <- file.path(systemOptions[["homeDir"]],"postOffice",directory,"pending")
-ok <- dir.create(checkDirectory)
-fileFrom <- file.path(systemOptions[["homeDir"]],) 
-fileTo <- file.path()
-ok <- file.copy(from=fileFrom,to=fileTo)
+
 
 # set the working directory to the checkDirectory
 setwd(checkDirectory)
