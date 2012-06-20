@@ -1,0 +1,4 @@
+Portfolio,Buy_Sell,Id_Bloomberg,Security_name,Currency,Security_type,Quantity,ISIN_Ticker,Price,Order_type,Amount,Broker,Limit_price,Limit_date,Comments
+GLOBAL ECONOMY,Buy,eib 01/09/15 corp,EUROPEAN INVESTMENT BANK,EUR,Bond,250000,XS0439139998,100.322,Market,250805,UBS,,41052,Tras. Obbligazionaria
+GLOBAL ECONOMY,Buy,UBSN VX Equity,UBS AG-REG,CHF,Equity,100,CH0024899483,11.08,Limited,1108,UBS,,41052,Trans. Azionaria
+GLOBAL ECONOMY,Buy,eurchf curncy,EUR-CHF X-RATE,EUR,FX Spot,500000,#N/A N Ap,1.201,,600500,UBS,,41052,

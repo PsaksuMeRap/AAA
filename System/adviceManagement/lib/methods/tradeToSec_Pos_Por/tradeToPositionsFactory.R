@@ -3,10 +3,10 @@
 # Author: Claudio
 ###############################################################################
 
-setGeneric("tradeToPortfolioFactory",def=function(position,trade) standardGeneric("tradeToPortfolioFactory"))
+setGeneric("tradeToPositionsFactory",def=function(position,trade) standardGeneric("tradeToPositionsFactory"))
 
-setMethod("tradeToPortfolioFactory",signature(position="PositionEquity"),
-		function(position) {
+setMethod("tradeToPositionsFactory",signature(position="PositionEquity"),
+		function(position,trade) {
 			positions <- new("Positions")
 			positions[1] <- position
 			
@@ -24,8 +24,8 @@ setMethod("tradeToPortfolioFactory",signature(position="PositionEquity"),
 )
 
 
-setMethod("tradeToPortfolioFactory",signature(position="PositionFutures_EQ"),
-		function(position) {
+setMethod("tradeToPositionsFactory",signature(position="PositionFutures_EQ"),
+		function(position,trade) {
 			positions <- new("Positions")
 			positions[1] <- position
 			
@@ -43,8 +43,8 @@ setMethod("tradeToPortfolioFactory",signature(position="PositionFutures_EQ"),
 )
 
 
-setMethod("tradeToPortfolioFactory",signature(position="PositionBond"),
-		function(position) {
+setMethod("tradeToPositionsFactory",signature(position="PositionBond"),
+		function(position,trade) {
 			
 			positions <- new("Positions")
 			positions[1] <- position
@@ -63,19 +63,14 @@ setMethod("tradeToPortfolioFactory",signature(position="PositionBond"),
 
 
 
-setMethod("tradeToPortfolioFactory",signature(position="Positions"),
+setMethod("tradeToPositionsFactory",signature(position="Positions"),
 		function(position,trade) {
-			
-			#securityType <- trade$Security_type
-		
-			#if (securityType=="FX Spot") {
 				return(position)
-			#}
 		}
 )
 
-setMethod("tradeToPortfolioFactory",signature(position="PositionOpzioni_su_azioni"),
-		function(position) {
+setMethod("tradeToPositionsFactory",signature(position="PositionOpzioni_su_azioni"),
+		function(position,trade) {
 			positions <- new("Positions")
 			positions[1] <- position
 						
@@ -92,8 +87,8 @@ setMethod("tradeToPortfolioFactory",signature(position="PositionOpzioni_su_azion
 		}
 )
 
-setMethod("tradeToPortfolioFactory",signature(position="PositionOpzioni_su_divise"),
-		function(position) {
+setMethod("tradeToPositionsFactory",signature(position="PositionOpzioni_su_divise"),
+		function(position,trade) {
 			
 			positions <- new("Positions")
 			positions[1] <- position			

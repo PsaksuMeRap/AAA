@@ -39,14 +39,6 @@ directory <- file.path(systemOptions[["homeDir"]],"postOffice",directory,"pendin
 logger(paste("Creating message for",file.path(directory,fileName),"..."))
 message <- messageFactory(fileName,directory,advisors)
 
-
-## -- inizio procedura controllo - parte generale
-# import the portfolio
-# create the path to the portfolio directory
-# directoryPortfolio <- file.path(systemOptions[["homeDir"]],"data","portfolios",message@advisor@folderName)
-logger(paste("Loading portfolio from",directoryPortfolio,"..."))
-portfolio <- loadPortfolio(portfolioId=message@advisor@folderName)
-
 # source the repositoryPoliticaInvestimento
 logger(paste("Loading repositoryPoliticaInvetimento ..."))
 source(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","methods","repositories","repositoryPoliticaInvestimento.R"))
@@ -59,31 +51,32 @@ source(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","meth
 load_repositoryExchangeRate()
 logger(paste("Loading repositoryEchangeRates ..."))
 
+# define the checkDirectory, i.e. the directory containing the checkFile, the desired trades and
+# the output result
+checkDirectory <- file.path(systemOptions[["homeDir"]],"postOffice",message@advisor@folderName,"pending")
+
+# import the portfolio
+# create the path to the portfolio directory
+logger(paste("Loading portfolio",message@advisor@folderName,"..."))
+portfolio <- loadPortfolio(portfolioId=message@advisor@folderName)
+
+# import the desired trades
+
 # copy the checkFile into the pre-compliance input/output folder
 logger(paste("Copying check file for",message@advisor@folderName,"..."))
-checkDirectory <- file.path(systemOptions[["homeDir"]],"postOffice",message@advisor@folderName,"pending")
 fileFrom <- file.path(systemOptions[["homeDir"]],"data","checkFiles",message@advisor@folderName,"check.txt") 
 fileTo <- file.path(checkDirectory,"check.txt")
 ok <- file.copy(from=fileFrom,to=fileTo)
 
-
-sink()
-
-
 # set the working directory to the checkDirectory
 setwd(checkDirectory)
 ## -- fine procedura controllo - parte generale
+sink()
 
 ## -- inizio procedura di controllo parte specifica
-repositories$exchangeRates <- create_repositoryExchangeRates(exchangeRatesDate=date)
-dati <- importDBPortfolioGeneraleByDate(date)		
-fundPortfolios <- filterLists(dati,"Cliente",value=fundsOwners)
+testSuite <- testSuiteFactory(testSuiteName=message@advisor@folderName,directories="./")
 
-fundPortfolios <- portfoliosFactory(fundPortfolios)
-
-AyrtonTestSuite <- testSuiteFactory(testSuiteName="Fondi OpenCapital",directories="./FondiNew")
-
-results <- lapply(AyrtonTestSuite@testSuitesParsed,applyTestSuite,fundPortfolios,date)
+result <- applyTestSuite(testSuite@testSuitesParsed,portfolio)
 
 ## -- fine procedura di controllo parte specifica
 

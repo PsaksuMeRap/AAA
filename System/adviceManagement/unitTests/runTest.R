@@ -53,6 +53,7 @@ dirs = c(
 		"./adviceManagement/unitTests/t.tradeFactory",
 	 	"./adviceManagement/unitTests/t.tradeToSecurityFactory",
 		"./adviceManagement/unitTests/t.tradeToPositionFactory",
+		"./adviceManagement/unitTests/t.tradeToPositionsFactory",
 		"./adviceManagement/unitTests/t.loadLastPortfolio",
 		"./adviceManagement/unitTests/t.saveLastObject"
 		#"./adviceManagement/unitTests/t.bloombergData",
@@ -72,7 +73,7 @@ mySetwd()
 dirs = c(
 		"./adviceManagement/unitTests/t.tradeToSecurityFactory",
 		"./adviceManagement/unitTests/t.tradeToPositionFactory",
-		"./adviceManagement/unitTests/t.tradeToPortfolioFactory"
+		"./adviceManagement/unitTests/t.tradeToPositionsFactory"
 )
 testsuite.lists <- defineTestSuite("Test adviceManagement",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)

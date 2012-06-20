@@ -26,7 +26,7 @@ test.shouldConvertEquityTradeToPortfolioPositions <- function() {
 	
 	newPosition <- tradeToPositionFactory(newSecurity,trade,blData)
 	
-	positions <- tradeToPortfolioFactory(newPosition)
+	positions <- tradeToPositionsFactory(newPosition,trade)
 	
 	checkEquals(sum(positions),toMoney(0,positions[[1]]@security@currency))
 	
@@ -53,7 +53,7 @@ test.shouldConvertFuturesOnIndexTradeToPortfolioPositions <- function() {
 	
 	newPosition <- tradeToPositionFactory(newSecurity,trade,blData)
 	
-	positions <- tradeToPortfolioFactory(newPosition)
+	positions <- tradeToPositionsFactory(newPosition,trade)
 	
 	checkEquals(sum(positions),toMoney(0,positions[[1]]@security@currency))
 	
@@ -80,7 +80,7 @@ test.shouldConvertBondTradeToPortfolioPositions <- function() {
 	
 	newPosition <- tradeToPositionFactory(newSecurity,trade,blData)
 	
-	positions <- tradeToPortfolioFactory(newPosition)
+	positions <- tradeToPositionsFactory(newPosition,trade)
 	
 	checkEquals(sum(positions),toMoney(0,positions[[1]]@security@currency))
 
@@ -106,7 +106,7 @@ test.shouldConvertFXSpotTradeToPortfolioPositions <- function() {
 	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)
 	
 	positions <- tradeToPositionFactory(newSecurity,trade,blData)
-	result <- tradeToPortfolioFactory(positions,trade)
+	result <- tradeToPositionsFactory(positions,trade)
 	
 	checkEquals(positions,result)
 	checkEquals(positions[[1]]@value@amount,result[[2]]@value@amount/(-1.201))
@@ -133,7 +133,7 @@ test.shouldConvertOptionOnEquityTradeToPortfolioPositions <- function() {
 	
 	newPosition <- tradeToPositionFactory(newSecurity,trade,blData)
 	
-	positions <- tradeToPortfolioFactory(newPosition)
+	positions <- tradeToPositionsFactory(newPosition,trade)
 	
 	checkEquals(sum(positions),toMoney(0,positions[[1]]@security@currency))
 	
@@ -161,7 +161,7 @@ test.shouldConvertOptionOnFxTradeToPortfolioPositions <- function() {
 	
 	newPosition <- tradeToPositionFactory(newSecurity,trade,blData)
 	
-	positions <- tradeToPortfolioFactory(newPosition)
+	positions <- tradeToPositionsFactory(newPosition,trade)
 	
 	checkEquals(sum(positions),toMoney(0,positions[[1]]@security@currency))
 }
@@ -183,7 +183,7 @@ test.shouldConvertForwardOnFxTradeToPortfolioPositions <- function() {
 	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)
 	
 	positions <- tradeToPositionFactory(newSecurity,trade,blData)
-	result <- tradeToPortfolioFactory(positions,trade)
+	result <- tradeToPositionsFactory(positions,trade)
 	
 	checkEquals(positions,result)
 	checkEquals(positions[[1]]@value@amount,result[[2]]@value@amount/(-1.1998))
