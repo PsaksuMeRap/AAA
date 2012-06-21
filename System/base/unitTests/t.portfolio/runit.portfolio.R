@@ -62,6 +62,27 @@ test.shuldJoinTwoPortfolios <- function() {
 	checkEquals(result@referenceCurrency,refCur)
 }
 
+test.shuldAddPositionsToPortfolio <- function() {
+	
+	positions1 <- new("Positions",list(1,"uno"))
+	positions2 <- new("Positions",list(2,"due"))
+	
+	refCur <- new("Currency","USD")
+		
+	portfolio <- new("Portfolio",owner="Reto",referenceCurrency=refCur,positions1)
+	positions <- new("Positions",positions2)
+	
+	# check 1: with a non empty positions
+	result <- portfolio + positions
+	checkEquals(result@owner,"Reto")
+	checkEquals(result@.Data,list(1,"uno",2,"due"))
+	checkEquals(result@referenceCurrency,refCur) 
+	
+	positions <- new("Positions")
+	result <- portfolio + positions
+	checkEquals(result,portfolio)
+}
+
 test.shuldCountNumberPositionsInPortfolio <- function() {
 	
 	p1 <- new("Positions",list(1,"uno","mammamia"))

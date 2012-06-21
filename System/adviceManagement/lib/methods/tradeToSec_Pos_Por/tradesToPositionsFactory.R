@@ -4,7 +4,7 @@
 ###############################################################################
 
 
-tradesToPositionsFactory <- function(file) {
+tradesToPositionsFactory <- function(fileName,directory) {
 	# create the blRequestHandler required from tradeToSecurityFactory
 	# (a bloomberg repository must exists!)
 	blRequestHandler <- create_BloombergRequestHandler()

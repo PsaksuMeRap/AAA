@@ -9,7 +9,7 @@ test.shouldCreateTrade <- function() {
 	
 	trade.l <- list(
 			dateTime="2012-05-09_15-30-22",
-			owner="Ghidossi",
+			owner="Ortelli",
 			securityID="RocheGA",
 			exchange="SWX")
 	

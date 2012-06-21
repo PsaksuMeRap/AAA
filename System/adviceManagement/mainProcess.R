@@ -32,7 +32,7 @@ sleepTime <- 10
 
 # define the adivisors
 advisors <- new("Advisors")
-advisors[["GhidossiGlobalEquity"]] <- new("Advisor",name="GhidossiGlobalEquity",folderName="GhidossiGlobalEquity",email="reto.ghidossi@opencapital.ch")
+advisors[["Ortelli_globalEquity"]] <- new("Advisor",name="Ortelli_globalEquity",folderName="Ortelli_globalEquity",email="reto.ghidossi@opencapital.ch")
 advisors[["MaggiDynamic"]] <- new("Advisor",name="MaggiDynamic",folderName="MaggiDynamic",email="maggi.sandro@")
 
 
@@ -85,7 +85,7 @@ while(Sys.time()<T) {
 			directory <- file.path(systemOptions[["homeDir"]],"postOffice","inbox")
 			messageType <- messageFactory(fileName,advisors)
 			
-			# identify the advisor (filename="2012-05-09_14-22-24_GhidossiGlobalEquity_newAdvice.csv")
+			# identify the advisor (filename="2012-05-09_14-22-24_Ortelli_globalEquity_newAdvice.csv")
 			messageFrom <- messageType[["From"]]
 			
 			# check if the corresponding mailBox is available

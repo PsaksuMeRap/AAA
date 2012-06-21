@@ -11,14 +11,14 @@ test.shouldRunIsLockOnNewAdvice <- function(message) {
 	create_archive(systemOptions[["homeDir"]])
 	
 	advisors <- new("Advisors")
-	advisors[["GhidossiGlobalEquity"]] <- new("Advisor",name="GhidossiGlobalEquity",folderName="GhidossiGlobalEquity",email="claudio.ortelli@gmail.com")
+	advisors[["Ortelli"]] <- new("Advisor",name="Ortelli Claudio",folderName="Ortelli",email="claudio.ortelli@usi.ch")
 	
 	#create postOffice
 	postOffice <- new("PostOffice",absolutePath=systemOptions[["homeDir"]])
 	setup(postOffice)
 	
 	# copy incoming message
-	from <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.isLockOnNewAdvice","2012-05-09_14-22-24_GhidossiGlobalEquity_newAdvice.csv")
+	from <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.isLockOnNewAdvice","2012-05-09_14-22-24_Ortelli_globalEquity_newAdvice.csv")
 	to <- file.path(systemOptions[["homeDir"]],"postOffice","inbox")
 	isOk <- file.copy(from,to)
 	
@@ -28,12 +28,12 @@ test.shouldRunIsLockOnNewAdvice <- function(message) {
 	mailbox <- new("MailBox",advisor=advisors[[messageFrom]])
 	setup(x=mailbox,y=postOffice)
 	
-	fileName <- "2012-05-09_14-22-24_GhidossiGlobalEquity_newAdvice.csv"
+	fileName <- "2012-05-09_14-22-24_Ortelli_globalEquity_newAdvice.csv"
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.isLockOnNewAdvice")
 	message <- messageFactory(fileName,directory,advisors)
 	
-	# lock the GhidossiGlobalEquity mailBox
-	isOk <- file.create(file.path(systemOptions[["homeDir"]],"postOffice","GhidossiGlobalEquity","lock"))
+	# lock the Ortelli_globalEquity mailBox
+	isOk <- file.create(file.path(systemOptions[["homeDir"]],"postOffice","Ortelli_globalEquity","lock"))
 	# run the test				
 	
 	result <- isLockOnNewAdvice(message)

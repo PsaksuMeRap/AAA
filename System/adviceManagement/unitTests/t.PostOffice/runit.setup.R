@@ -6,13 +6,11 @@
 
 test.shouldSetupPostOffice <- function() {
 
-	absolutePath <- systemOptions[["homeDir"]]
-	postOffice <- new("PostOffice",absolutePath=absolutePath)
-		
+	postOffice <- new("PostOffice",absolutePath=systemOptions[["homeDir"]])
 	setup(postOffice)
 	
 	checkEquals(is.element("postOffice",dir(path=absolutePath)),TRUE)
-	checkEquals(dir(file.path(absolutePath,"postOffice")),c("inbox","pending"))
+	checkEquals(dir(file.path(absolutePath,"postOffice")),c("inbox"))
 	
 	# remove the directory postOffice
 	tmp <- getwd()
@@ -23,21 +21,19 @@ test.shouldSetupPostOffice <- function() {
 
 test.shouldSetupMailBox <- function() {
 	
-	absolutePath <- systemOptions[["homeDir"]]
-	postOffice <- new("PostOffice",absolutePath=absolutePath)
+	postOffice <- new("PostOffice",absolutePath=systemOptions[["homeDir"]])
 	setup(postOffice)
 	
-	advisor <- new("Advisor",name="testAdvisor1",folderName="testAdvisor1",email="claudio.ortelli@usi.ch")
-	mailBox <- new("MailBox",advisor=advisor)
-	
+	mailBox <- new("MailBox",name="Test",folderName="blabla")
 	
 	setup(x=mailBox,y=postOffice)
 	
-	directoriesInPostOffice <- dir(path=file.path(systemOptions[["homeDir"]],"postOffice"))
-	checkEquals(is.element(advisor@folderName,directoriesInPostOffice),TRUE)
+	directories <- dir(path=file.path(systemOptions[["homeDir"]],"postOffice"))
+	checkEquals(is.element(mailBox@folderName,directories),TRUE)
 	
-	tmp <- getwd()
-	setwd(systemOptions[["homeDir"]])
+	directories <- dir(path=file.path(systemOptions[["homeDir"]],"postOffice",mailBox@folderName))
+	checkEquals(is.element("pending",directories),TRUE)
+	
 	unlink("postOffice",recursive=TRUE)
-	setwd(tmp)
+
 }

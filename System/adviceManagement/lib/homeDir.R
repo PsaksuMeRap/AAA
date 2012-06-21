@@ -5,7 +5,7 @@
 
 
 if(.Platform$OS.type=="windows") {
-	homeDir <- "c:/riskman"
+	homeDir <- "C:/riskman"
 } else {
 	homeDir <- "/home/claudio/riskman"
 }

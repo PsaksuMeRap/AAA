@@ -21,14 +21,23 @@ C:\riskman
 
 		- pending : cartella contenente i messaggi in elaborazione
 
-		- ghidossiGlobalEconomy : cartella contenente i messaggi relativi al 
-								  GestoreEportafoglio. Questa cartella e' utilizzata per 
-								  definire il lock (un file vuoto scritto qui)
+		- globalEquity : cartella contenente i messaggi relativi al 
+						 portafoglio. Questa cartella e' utilizzata per 
+						 definire il lock (un file vuoto scritto qui)
 
 			- pending : cartella contenente i messaggi in elaborazione, i risultati delle
 			            verifiche, ecc.
 
+		- globalEconomy : cartella contenente i messaggi relativi al 
+						  portafoglio. Questa cartella e' utilizzata per 
+						  definire il lock (un file vuoto scritto qui)
 
+			- pending : cartella contenente i messaggi in elaborazione, i risultati delle
+			            verifiche, ecc.
+
+		- ecc. 
+		
+		           
 	- data : cartella contenente i portafogli, i cambi, i checkFiles, ...
 	
 		- checkFiles : cartella contenente le specifiche per i test

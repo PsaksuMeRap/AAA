@@ -7,12 +7,12 @@
 test.shouldSendPreComplianceResultNo <- function() {
 	
 	# identify a new order
-	fileName <- "2012-05-09_14-22-24_GhidossiGlobalEquity_preComplianceResult_no.csv"
+	fileName <- "2012-05-09_14-22-24_Ortelli_globalEquity_preComplianceResult_no.csv"
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.mail")
 	
 	# define the adivisors
 	advisors <- new("Advisors")
-	advisors[["GhidossiGlobalEquity"]] <- new("Advisor",name="GhidossiGlobalEquity",folderName="GhidossiGlobalEquity",email="claudio.ortelli@gmail.com")
+	advisors[["Ortelli_globalEquity"]] <- new("Advisor",name="Ortelli_globalEquity",folderName="Ortelli_globalEquity",email="claudio.ortelli@gmail.com")
 	
 	# create the postOffice
 	absolutePath <- systemOptions[["homeDir"]]
@@ -20,14 +20,14 @@ test.shouldSendPreComplianceResultNo <- function() {
 	setup(postOffice)
 	
 	# create the mailBox
-	mailBox <- new("MailBox",advisor=advisors[["GhidossiGlobalEquity"]])
+	mailBox <- new("MailBox",advisor=advisors[["Ortelli_globalEquity"]])
 	setup(x=mailBox,y=postOffice)
 	
 	# identify the messageType
 	message <- messageFactory(fileName,directory,advisors)
 	
 	# create the message on the disk
-	ok <- file.create(file.path(systemOptions[["homeDir"]],"postOffice",advisors[["GhidossiGlobalEquity"]]@folderName,"pending",message[["fileName"]])) 
+	ok <- file.create(file.path(systemOptions[["homeDir"]],"postOffice",advisors[["Ortelli_globalEquity"]]@folderName,"pending",message[["fileName"]])) 
 	
 	newAdviceFileName <- paste(paste(getMessageDate_time_from(message),"newAdvice","_"),message[["fileExtension"]],sep=".")
 	stringMessage <- paste("Your advice '",newAdviceFileName,"' has been rejected because of a negative pre-compliance.\n",sep="")
@@ -45,12 +45,12 @@ test.shouldSendPreComplianceResultNo <- function() {
 test.shouldSendPreComplianceResultOk <- function() {
 	
 	# identify a new order
-	fileName <- "2012-05-09_14-22-24_GhidossiGlobalEquity_preComplianceResult_ok.csv"
+	fileName <- "2012-05-09_14-22-24_Ortelli_globalEquity_preComplianceResult_ok.csv"
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.mail")
 	
 	# define the adivisors
 	advisors <- new("Advisors")
-	advisors[["GhidossiGlobalEquity"]] <- new("Advisor",name="GhidossiGlobalEquity",folderName="GhidossiGlobalEquity",email="claudio.ortelli@gmail.com")
+	advisors[["Ortelli_globalEquity"]] <- new("Advisor",name="Ortelli_globalEquity",folderName="Ortelli_globalEquity",email="claudio.ortelli@gmail.com")
 	
 	# create the postOffice
 	absolutePath <- systemOptions[["homeDir"]]
@@ -58,14 +58,14 @@ test.shouldSendPreComplianceResultOk <- function() {
 	setup(postOffice)
 	
 	# create the mailBox
-	mailBox <- new("MailBox",advisor=advisors[["GhidossiGlobalEquity"]])
+	mailBox <- new("MailBox",advisor=advisors[["Ortelli_globalEquity"]])
 	setup(x=mailBox,y=postOffice)
 	
 	# identify the messageType
 	message <- messageFactory(fileName,directory,advisors)
 	
 	# create the message on the disk
-	ok <- file.create(file.path(systemOptions[["homeDir"]],"postOffice",advisors[["GhidossiGlobalEquity"]]@folderName,"pending",message[["fileName"]])) 
+	ok <- file.create(file.path(systemOptions[["homeDir"]],"postOffice",advisors[["Ortelli_globalEquity"]]@folderName,"pending",message[["fileName"]])) 
 	
 	newAdviceFileName <- paste(paste(getMessageDate_time_from(message),"newAdvice","_"),message[["fileExtension"]],sep=".")
 	stringMessage <- paste("Your advice '",newAdviceFileName,"' has been accepted for execution.\n",sep="")

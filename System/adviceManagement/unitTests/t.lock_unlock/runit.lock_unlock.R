@@ -8,12 +8,12 @@ test.shoudLock <- function() {
 	workingDirectory <- getwd()
 	
 	# identify a new order
-	fileName <- "2012-05-09_14-22-24_GhidossiGlobalEquity_newAdvice.csv"
+	fileName <- "2012-05-09_14-22-24_Ortelli_globalEquity_newAdvice.csv"
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.lock_unlock")
 			
 	# define the adivisors
 	advisors <- new("Advisors")
-	advisors[["GhidossiGlobalEquity"]] <- new("Advisor",name="GhidossiGlobalEquity",folderName="GhidossiGlobalEquity",email="reto.ghidossi@opencapital.ch")
+	advisors[["Ortelli"]] <- new("Advisor",name="Ortelli Claudio",folderName="Ortelli",email="claudio.ortelli@usi.ch")
 	
 	# create the postOffice
 	absolutePath <- systemOptions[["homeDir"]]
@@ -21,7 +21,7 @@ test.shoudLock <- function() {
 	setup(postOffice)
 	
 	# create the mailBox
-	mailBox <- new("MailBox",advisor=advisors[["GhidossiGlobalEquity"]])
+	mailBox <- new("MailBox",advisor=advisors[["Ortelli_globalEquity"]])
 	setup(x=mailBox,y=postOffice)
 	
 	# identify the messageType
@@ -44,12 +44,12 @@ test.shoudUnLock <- function() {
 	workingDirectory <- getwd()
 	
 	# identify a new order
-	fileName <- "2012-05-09_14-22-24_GhidossiGlobalEquity_newAdvice.csv"
+	fileName <- "2012-05-09_14-22-24_Ortelli_globalEquity_newAdvice.csv"
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.lock_unlock")
 	
 	# define the adivisors
 	advisors <- new("Advisors")
-	advisors[["GhidossiGlobalEquity"]] <- new("Advisor",name="GhidossiGlobalEquity",folderName="GhidossiGlobalEquity",email="reto.ghidossi@opencapital.ch")
+	advisors[["Ortelli"]] <- new("Advisor",name="Ortelli Claudio",folderName="Ortelli",email="claudio.ortelli@usi.ch")
 	
 	# create the postOffice
 	absolutePath <- systemOptions[["homeDir"]]
@@ -57,7 +57,7 @@ test.shoudUnLock <- function() {
 	setup(postOffice)
 	
 	# create the mailBox
-	mailBox <- new("MailBox",advisor=advisors[["GhidossiGlobalEquity"]])
+	mailBox <- new("MailBox",advisor=advisors[["Ortelli_globalEquity"]])
 	setup(x=mailBox,y=postOffice)
 	
 	# identify the messageType

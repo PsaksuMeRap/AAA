@@ -22,12 +22,12 @@ test.shouldProcessPreComplianceResultMessageNo <- function() {
 	create_archive(systemOptions[["homeDir"]])
 	
 	# identify a new order
-	fileName <- "2012-05-09_14-22-24_GhidossiGlobalEquity_preComplianceResult_no.csv"
+	fileName <- "2012-05-09_14-22-24_Ortelli_globalEquity_preComplianceResult_no.csv"
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.messageProcessing")
 	
 	# define the adivisors
 	advisors <- new("Advisors")
-	advisors[["GhidossiGlobalEquity"]] <- new("Advisor",name="GhidossiGlobalEquity",folderName="GhidossiGlobalEquity",email="claudio.ortelli@gmail.com")
+	advisors[["Ortelli_globalEquity"]] <- new("Advisor",name="Ortelli_globalEquity",folderName="Ortelli_globalEquity",email="claudio.ortelli@gmail.com")
 	
 	# create the postOffice
 	absolutePath <- systemOptions[["homeDir"]]
@@ -35,7 +35,7 @@ test.shouldProcessPreComplianceResultMessageNo <- function() {
 	setup(postOffice)
 	
 	# create the mailBox
-	mailBox <- new("MailBox",advisor=advisors[["GhidossiGlobalEquity"]])
+	mailBox <- new("MailBox",advisor=advisors[["Ortelli_globalEquity"]])
 	setup(x=mailBox,y=postOffice)
 	
 	# identify the messageType
@@ -48,8 +48,8 @@ test.shouldProcessPreComplianceResultMessageNo <- function() {
 	ok <- lock(message)
 	
 	# create file
-	ok <- file.create(file.path(systemOptions[["homeDir"]],"postOffice",advisors[["GhidossiGlobalEquity"]]@folderName,"pending",message[["fileName"]])) 
-	ok <- file.create(file.path(systemOptions[["homeDir"]],"postOffice",advisors[["GhidossiGlobalEquity"]]@folderName,"pending",newAdviceFileName)) 
+	ok <- file.create(file.path(systemOptions[["homeDir"]],"postOffice",advisors[["Ortelli_globalEquity"]]@folderName,"pending",message[["fileName"]])) 
+	ok <- file.create(file.path(systemOptions[["homeDir"]],"postOffice",advisors[["Ortelli_globalEquity"]]@folderName,"pending",newAdviceFileName)) 
 	
 	messageProcessing(message)
 	exists <- file.exists(file.path(systemOptions[["homeDir"]],"archive","processed","rejected",message[["fileName"]]))
@@ -68,12 +68,12 @@ test.shouldProcessPreComplianceResultMessageOk <- function() {
 	create_archive(systemOptions[["homeDir"]])
 	
 	# identify a new order
-	fileName <- "2012-05-09_14-22-24_GhidossiGlobalEquity_preComplianceResult_ok.csv"
+	fileName <- "2012-05-09_14-22-24_Ortelli_globalEquity_preComplianceResult_ok.csv"
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.messageProcessing")
 	
 	# define the adivisors
 	advisors <- new("Advisors")
-	advisors[["GhidossiGlobalEquity"]] <- new("Advisor",name="GhidossiGlobalEquity",folderName="GhidossiGlobalEquity",email="claudio.ortelli@gmail.com")
+	advisors[["Ortelli_globalEquity"]] <- new("Advisor",name="Ortelli_globalEquity",folderName="Ortelli_globalEquity",email="claudio.ortelli@gmail.com")
 	
 	# create the postOffice
 	absolutePath <- systemOptions[["homeDir"]]
@@ -81,7 +81,7 @@ test.shouldProcessPreComplianceResultMessageOk <- function() {
 	setup(postOffice)
 	
 	# create the mailBox
-	mailBox <- new("MailBox",advisor=advisors[["GhidossiGlobalEquity"]])
+	mailBox <- new("MailBox",advisor=advisors[["Ortelli_globalEquity"]])
 	setup(x=mailBox,y=postOffice)
 	
 	# identify the messageType
@@ -90,12 +90,12 @@ test.shouldProcessPreComplianceResultMessageOk <- function() {
 	# lock
 	ok <- lock(message)
 	
-	ok <- file.create(file.path(systemOptions[["homeDir"]],"postOffice",advisors[["GhidossiGlobalEquity"]]@folderName,"pending",message[["fileName"]])) 
+	ok <- file.create(file.path(systemOptions[["homeDir"]],"postOffice",advisors[["Ortelli_globalEquity"]]@folderName,"pending",message[["fileName"]])) 
 	
 	messageProcessing(message)
 	exists <- file.exists(file.path(systemOptions[["homeDir"]],"archive","processed","rejected",message[["fileName"]]))
 	checkEquals(exists,FALSE)
-	exists <- file.exists(file.path(systemOptions[["homeDir"]],"postOffice",advisors[["GhidossiGlobalEquity"]]@folderName,"pending",message[["fileName"]]))
+	exists <- file.exists(file.path(systemOptions[["homeDir"]],"postOffice",advisors[["Ortelli_globalEquity"]]@folderName,"pending",message[["fileName"]]))
 	checkEquals(exists,TRUE)
 	
 	# clean
@@ -108,7 +108,7 @@ test.shouldProcessPreComplianceResultMessageOk <- function() {
 test.shouldProcessConfirmationMessage <- function() {
 	# define the adivisors
 	advisors <- new("Advisors")
-	advisors[["GhidossiGlobalEquity"]] <- new("Advisor",name="GhidossiGlobalEquity",folderName="GhidossiGlobalEquity",email="claudio.ortelli@gmail.com")
+	advisors[["Ortelli_globalEquity"]] <- new("Advisor",name="Ortelli_globalEquity",folderName="Ortelli_globalEquity",email="claudio.ortelli@gmail.com")
 	
 	# create the postOffice
 	absolutePath <- systemOptions[["homeDir"]]
@@ -116,13 +116,13 @@ test.shouldProcessConfirmationMessage <- function() {
 	setup(postOffice)
 	
 	# create the mailBox
-	mailBox <- new("MailBox",advisor=advisors[["GhidossiGlobalEquity"]])
+	mailBox <- new("MailBox",advisor=advisors[["Ortelli_globalEquity"]])
 	setup(x=mailBox,y=postOffice)
 	
 	# copy the confirmation message
-	fileName <- "2012-05-09_14-22-24_GhidossiGlobalEquity_confirmation.csv"
+	fileName <- "2012-05-09_14-22-24_Ortelli_globalEquity_confirmation.csv"
 	fromDir <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.messageProcessing")
-	toDir <- file.path(systemOptions[["homeDir"]],"postOffice",advisors[["GhidossiGlobalEquity"]]@folderName,"pending")
+	toDir <- file.path(systemOptions[["homeDir"]],"postOffice",advisors[["Ortelli_globalEquity"]]@folderName,"pending")
 	toFile <- file.path(toDir,fileName)
 	
 	# identify the messageType

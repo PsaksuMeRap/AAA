@@ -15,6 +15,18 @@ setMethod(`[`,signature(x="Portfolio"),
 		}
 )
 
+setMethod("+",signature("Portfolio","Positions"),
+		function(e1,e2) {
+			nbNewPositions <- length(e2)
+			
+			if (nbNewPositions==0) return(portfolio)
+
+			portfolio <- new("Portfolio",owner=e1@owner,
+					referenceCurrency=e1@referenceCurrency,join(e1,e2))
+			return(portfolio)
+		}
+)
+
 setMethod("join",signature(x="Portfolio",y="Portfolio"),
 		
 		function(x,y,newOwner,newReferenceCurrency) {

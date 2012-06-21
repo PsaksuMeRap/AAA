@@ -15,9 +15,9 @@ messageFactory <- function(fileName,directory,advisors) {
 	step2 <- c(fileName,fileExtension,strsplit(mainPart,"_")[[1]])
 	step2 <- as.list(step2)
 	if (is.element(step2[[6]],c("preComplianceResult","postComplianceResult"))) {
-		names(step2) <- c("fileName","fileExtension","date","time","from","messageType","testResult")
+		names(step2) <- c("fileName","fileExtension","date","time","from","portfolio","messageType","testResult")
 	} else {
-		names(step2) <- c("fileName","fileExtension","date","time","from","messageType")
+		names(step2) <- c("fileName","fileExtension","date","time","from","portfolio","messageType")
 	}
 	advisor <- advisors[[step2[["from"]]]]
 	message <- new("Message",advisor=advisor,step2)

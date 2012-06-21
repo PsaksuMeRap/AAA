@@ -3,10 +3,10 @@
 # Author: claudio
 ###############################################################################
 
-setClass("MailBox",representation(inbox="character",outbox="character",sent="character",advisor="Advisor"),
-		prototype=list(inbox=character(0),outbox=character(0),sent="character(0)"))
+setClass("MailBox",representation(name="character",folderName="character"))
 
-setClass("PostOffice",representation(absolutePath="character",mailBoxes="list"))
+setClass("PostOffice",representation(absolutePath="character",mailBoxes="list"),
+		prototype=list(inbox=character(0),pending=character(0)))
 
 
 setGeneric("setup",def=function(x,y,...) standardGeneric("setup"))
@@ -23,7 +23,7 @@ setMethod("setup",signature(x="PostOffice",y="missing"),
 			} else {
 				dir.create(file.path(x@absolutePath,"postOffice"))
 				dir.create(file.path(x@absolutePath,"postOffice","inbox"))
-				dir.create(file.path(x@absolutePath,"postOffice","pending"))
+				# dir.create(file.path(x@absolutePath,"postOffice","pending"))
 				return(invisible())
 			}
 		}
@@ -39,7 +39,7 @@ setMethod("setup",signature(x="MailBox",y="PostOffice"),
 				stop(message)
 			} else {
 				# create the necessary directories
-				path <- file.path(y@absolutePath,"postOffice",x@advisor@folderName)
+				path <- file.path(y@absolutePath,"postOffice",x@folderName)
 				if (file.exists(path)) return(invisible())
 				dir.create(path)
 				dir.create(file.path(path,"pending"))
@@ -50,21 +50,21 @@ setMethod("setup",signature(x="MailBox",y="PostOffice"),
 
 lockMailBox <- function(mailBox,PostOffice) {
 	# verify that the postOffice exists
-	advisorEmail <- mailBox@advisor@email
-	directoriesInPostOffice <- dir(file.path(PostOffice@absolutePath,"postOffice"))
-	if (!is.element("inbox",directoriesInPostOffice)) {
+
+	postOfficeExists <- file.exists(file.path(PostOffice@absolutePath,"postOffice"))
+	if (!postOfficeExists) {
 		message <- paste("The postOffice",file.path(PostOffice@absolutePath,"postOffice"), "is not available.\n")
-		message <- paste(message," Impossible to lock the mailBox of ",advisorEmail,sep="")
+		message <- paste(message," Impossible to lock the mailBox of ",mailBox@name,sep="")
 		stop(message)
 	}
-	directoriesInMailBox <- dir(file.path(PostOffice@absolutePath,"postOffice",mailBox@advisor@folderName))
-	if (!is.element("inbox",directoriesInMailBox)) {
-		message <- paste("The mailBox of",advisorEmail, "is not available.\n")
-		message <- paste(message," Impossible to lock the mailBox of ",advisorEmail,".",sep="")
+	directoriesInPostOffice <- dir(file.path(PostOffice@absolutePath,"postOffice"))
+	if (!is.element(mailBox@folderName,directoriesInPostOffice)) {
+		message <- paste("The mailBox of",mailBox@name, "is not available.\n")
+		message <- paste(message," Impossible to lock the mailBox of ",mailBox@name,".",sep="")
 		stop(message)
 	}
 	
-	path <- file.path(PostOffice@absolutePath,"postOffice",mailBox@advisor@folderName)
+	path <- file.path(PostOffice@absolutePath,"postOffice",mailBox@folderName)
 	# check that the lock is not still in place
 	stillLocked <- file.exists(file.path(path,"lock"))
 
@@ -72,7 +72,7 @@ lockMailBox <- function(mailBox,PostOffice) {
 	if (!stillLocked) { 
 		created <- file.create(file.path(path,"lock"),showWarnings=FALSE)
 		if (!created) {
-			message <- paste("Impossible to create the lock for the mailBox of ",advisorEmail,"\n",sep="")
+			message <- paste("Impossible to create the lock for the mailBox of ",mailBox@name,"\n",sep="")
 			message <- paste(message,"Unrecoverable error. Procedure stopped here!")
 			stop(message)
 		} else {

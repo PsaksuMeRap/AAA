@@ -9,13 +9,15 @@ args=commandArgs(trailingOnly = TRUE)
 # if it is a test (lengtht(args)==0) then set test values
 if (length(args)==0) {
 	sourceCodeDir <- getwd()
-	fileName <- "2012-06-19_14-27-47_GhidossiGlobalEconomy_newAdvice.csv"
+	fileName <- "2012-06-19_14-27-47_Ortelli_globalEconomy_newAdvice.csv"
 } else {	
 	## args is now a list of character vectors
 	## Then cycle through each element of the list and evaluate the expressions.
 	eval(parse(text=args[[1]])) # this is the fileName of the message
 	eval(parse(text=args[[2]])) # this is the sourceCodeDir variable
 }
+
+csvTradesFileName <- fileName
 
 setwd(sourceCodeDir)
 
@@ -28,7 +30,6 @@ logFileName <- create_logger(fileType="newAdvice")
 # load the advisors
 logger("Loading Advisors list ...")
 source(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","advisors.R"))
-
 
 # extract the folderName and construct the directory path where the
 # message is waiting for processing
@@ -51,8 +52,8 @@ source(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","meth
 load_repositoryExchangeRate()
 logger(paste("Loading repositoryEchangeRates ..."))
 
-# define the checkDirectory, i.e. the directory containing the checkFile, the desired trades and
-# the output result
+# define the checkDirectory, i.e. the directory containing the checkFile, the csv file with
+# the desired trades and the output result
 checkDirectory <- file.path(systemOptions[["homeDir"]],"postOffice",message@advisor@folderName,"pending")
 
 # import the portfolio
@@ -60,7 +61,13 @@ checkDirectory <- file.path(systemOptions[["homeDir"]],"postOffice",message@advi
 logger(paste("Loading portfolio",message@advisor@folderName,"..."))
 portfolio <- loadPortfolio(portfolioId=message@advisor@folderName)
 
-# import the desired trades
+# import the desired trades and the corresponding cash movements as new positions
+logger(paste("Loading desired trades",message@advisor@folderName,"..."))
+positionsFromTrades <- tradesToPositionsFactory(csvTradesFileName,checkDirectory)
+portfolio <- portfolio + positionsFromTrades
+message <- paste("Imported positions from desired trades:\n")
+positionsStrings <- paste(as.character(positions),collapse="\n")
+logger(paste(message,positionsStrings,sep="\n"))
 
 # copy the checkFile into the pre-compliance input/output folder
 logger(paste("Copying check file for",message@advisor@folderName,"..."))
@@ -71,7 +78,7 @@ ok <- file.copy(from=fileFrom,to=fileTo)
 # set the working directory to the checkDirectory
 setwd(checkDirectory)
 ## -- fine procedura controllo - parte generale
-sink()
+
 
 ## -- inizio procedura di controllo parte specifica
 testSuite <- testSuiteFactory(testSuiteName=message@advisor@folderName,directories="./")
@@ -79,7 +86,7 @@ testSuite <- testSuiteFactory(testSuiteName=message@advisor@folderName,directori
 result <- applyTestSuite(testSuite@testSuitesParsed,portfolio)
 
 ## -- fine procedura di controllo parte specifica
-
+sink()
 topWindow <- tktoplevel()
 tktitle(topWindow) <- messageFrom
 
