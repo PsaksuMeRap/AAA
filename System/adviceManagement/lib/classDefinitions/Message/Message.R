@@ -17,6 +17,6 @@ setClass("PostComplianceResult",contains="Message")
 
 
 getMessageDate_time_from <- function(message) {
-	string <- paste(message[["date"]],message[["time"]],message[["from"]],sep="_")
+	string <- paste(message[["date"]],message[["time"]],message[["from"]],message[["portfolioName"]],sep="_")
 	return(string)
 }

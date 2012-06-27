@@ -6,11 +6,6 @@
 
 test.shouldNoLockOnNewAdvice <- function() {
 	
-	originalWorkingDirectory <- getwd()
-	
-	advisors <- new("Advisors")
-	advisors[["Ortelli_globalEquity"]] <- new("Advisor",name="Ortelli_globalEquity",folderName="Ortelli_globalEquity",email="claudio.ortelli@gmail.com")
-	
 	#create postOffice
 	postOffice <- new("PostOffice",absolutePath=systemOptions[["homeDir"]])
 	setup(postOffice)
@@ -19,17 +14,18 @@ test.shouldNoLockOnNewAdvice <- function() {
 	from <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.noLockOnNewAdvice","2012-05-09_14-22-24_Ortelli_globalEquity_newAdvice.csv")
 	to <- file.path(systemOptions[["homeDir"]],"postOffice","inbox")
 	file.copy(from,to)
-	
-	messageFrom <- advisors[[1]]@name
-	
-	postOffice@mailBoxes[length(postOffice@mailBoxes)+1] <- messageFrom
-	mailbox <- new("MailBox",advisor=advisors[[messageFrom]])
-	setup(x=mailbox,y=postOffice)
 
 	fileName <- "2012-05-09_14-22-24_Ortelli_globalEquity_newAdvice.csv"
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.noLockOnNewAdvice")
 	
 	message <- messageFactory(fileName,directory,advisors)
+	
+	messageFrom <- advisors[[1]]@name
+	
+	postOffice@mailBoxes[length(postOffice@mailBoxes)+1] <- messageFrom
+	mailbox <- new("MailBox",folderName=message[["portfolioName"]])
+	setup(x=mailbox,y=postOffice)
+	
 	
 	# run the test				
 	allPID <- noLockOnNewAdvice(message)
@@ -37,6 +33,5 @@ test.shouldNoLockOnNewAdvice <- function() {
 	
 	unlink(file.path(systemOptions[["homeDir"]],"postOffice"),recursive=TRUE)
 	
-	setwd(originalWorkingDirectory)
 	
 }

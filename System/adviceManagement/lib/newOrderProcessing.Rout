@@ -2,4 +2,9 @@ Loading Tcl/Tk interface ... done
 Creating a generic function for 'formatC' from package 'base' in the global environment
 Creating a generic function for 'identical' from package 'base' in the global environment
 Creating a generic function for 'split' from package 'base' in the global environment
-<Tcl> ok 
+Error in file(file, "rt") : cannot open the connection
+Calls: messageFactory -> tradesFactory -> read.csv -> read.table -> file
+In addition: Warning message:
+In file(file, "rt") :
+  cannot open file 'C:/riskman/postOffice/Ortelli/pending/2012-05-09_14-22-24_Ortelli_globalEquity_newAdvice.csv': No such file or directory
+Execution halted

@@ -58,7 +58,7 @@ test.shouldFailOnExistingLock <- function() {
 	
 	# create the lock and try to relock the directory
 	isCreated <- file.create(file.path(systemOptions[["homeDir"]],"postOffice","blabla","lock"),showWarnings=FALSE)
-	checkException(lockMailBox(mailBox,postOffice))
+	checkEquals(lockMailBox(mailBox,postOffice),!isCreated)
 	
 	unlink(file.path(systemOptions[["homeDir"]],"postOffice"),recursive=TRUE)
 }

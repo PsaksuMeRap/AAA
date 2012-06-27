@@ -6,7 +6,7 @@
 
 test.shouldImportTradesFromCsv <- function() {
 	
-	fileName <- "2012-05-09_14-22-24_OrtelliGlobalEconomy_newAdvice.csv"
+	fileName <- "2012-05-09_14-22-24_Ortelli_globalEconomy_newAdvice.csv"
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeFactory") 
 	
 	trades <- tradesFactory(fileName,directory)

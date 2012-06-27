@@ -51,6 +51,7 @@ test.shouldSendEmailWithAttachment <- function() {
 	setwd(tmp)
 }
 
+
 test.shouldAsCharacterMail <- function() {
 	mail <- new("Mail")
 	mail@from <- "claudio.ortelli@usi.ch"

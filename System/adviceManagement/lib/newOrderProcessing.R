@@ -54,15 +54,15 @@ logger(paste("Loading repositoryEchangeRates ..."))
 
 # define the checkDirectory, i.e. the directory containing the checkFile, the csv file with
 # the desired trades and the output result
-checkDirectory <- file.path(systemOptions[["homeDir"]],"postOffice",message@advisor@folderName,"pending")
+checkDirectory <- file.path(systemOptions[["homeDir"]],"postOffice",message[["portfolioName"]],"pending")
 
 # import the portfolio
 # create the path to the portfolio directory
-logger(paste("Loading portfolio",message@advisor@folderName,"..."))
-portfolio <- loadPortfolio(portfolioId=message@advisor@folderName)
+logger(paste("Loading portfolio",message[["portfolioName"]],"..."))
+portfolio <- loadPortfolio(portfolioId=message[["portfolioName"]])
 
 # import the desired trades and the corresponding cash movements as new positions
-logger(paste("Loading desired trades",message@advisor@folderName,"..."))
+logger(paste("Loading desired trades",message[["portfolioName"]],"..."))
 positionsFromTrades <- tradesToPositionsFactory(csvTradesFileName,checkDirectory)
 portfolio <- portfolio + positionsFromTrades
 message <- paste("Imported positions from desired trades:\n")
@@ -70,8 +70,8 @@ positionsStrings <- paste(as.character(positions),collapse="\n")
 logger(paste(message,positionsStrings,sep="\n"))
 
 # copy the checkFile into the pre-compliance input/output folder
-logger(paste("Copying check file for",message@advisor@folderName,"..."))
-fileFrom <- file.path(systemOptions[["homeDir"]],"data","checkFiles",message@advisor@folderName,"check.txt") 
+logger(paste("Copying check file for",message[["portfolioName"]],"..."))
+fileFrom <- file.path(systemOptions[["homeDir"]],"data","checkFiles",message[["portfolioName"]],"check.txt") 
 fileTo <- file.path(checkDirectory,"check.txt")
 ok <- file.copy(from=fileFrom,to=fileTo)
 
@@ -81,7 +81,7 @@ setwd(checkDirectory)
 
 
 ## -- inizio procedura di controllo parte specifica
-testSuite <- testSuiteFactory(testSuiteName=message@advisor@folderName,directories="./")
+testSuite <- testSuiteFactory(testSuiteName=message[["portfolioName"]],directories="./")
 
 result <- applyTestSuite(testSuite@testSuitesParsed,portfolio)
 

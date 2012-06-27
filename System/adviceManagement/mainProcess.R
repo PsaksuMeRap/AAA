@@ -31,10 +31,8 @@ setwd(homeDir)
 sleepTime <- 10
 
 # define the adivisors
-advisors <- new("Advisors")
-advisors[["Ortelli_globalEquity"]] <- new("Advisor",name="Ortelli_globalEquity",folderName="Ortelli_globalEquity",email="reto.ghidossi@opencapital.ch")
-advisors[["MaggiDynamic"]] <- new("Advisor",name="MaggiDynamic",folderName="MaggiDynamic",email="maggi.sandro@")
-
+# source the test advisors
+source("./adviceManagement/lib/advisors.R")
 
 # create the log file
 sink(file="riskman_log.txt")

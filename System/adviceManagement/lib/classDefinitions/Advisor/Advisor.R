@@ -4,5 +4,5 @@
 ###############################################################################
 
 
-setClass("Advisor",representation(name="character",folderName="character",email="character"))
+setClass("Advisor",representation(name="character",shortName="character",email="character"))
 

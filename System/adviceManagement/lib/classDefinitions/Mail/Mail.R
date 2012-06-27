@@ -18,14 +18,17 @@ setClass("Mail",
 )
 
 sendEMail <- function(mail) {
+	
+	source(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","secrets.R"))
+	
 	command <- paste("sendEmail",
 			"-f",mail@from,
 			"-t",mail@to,
 			"-u",shQuote(mail@subject),
 			"-m",shQuote(mail@message),
-			"-s mail.usi.ch",
-			"-xu ortellic",
-			"-xp tega=01"
+			"-s mail.opencapital.ch",
+			"-xu",username,
+			"-xp",password
 	)
 	
 	if (length(mail@attachments)>0) {
@@ -34,13 +37,15 @@ sendEMail <- function(mail) {
 	
 	
 	result <- system(command,intern=TRUE,wait=TRUE)
+	
 	# check that the e-mail was sent successfully
 	# nchar(result)<28 means an error occured
-	nbChar <- nchar(result)
+	nbChar <- nchar(result[1])
 	if (nbChar<28) return(result)
-	subStringToCheck <- substr(result,nbChar-28+1,nbChar)
+	subStringToCheck <- substr(result[1],nbChar-28+1,nbChar)
+
 	isOk <- subStringToCheck == "Email was sent successfully!"
-	if (isOk) return(subStringToCheck) else return(result)
+	if (length(isOk)==1 & isOk[1]) return(subStringToCheck) else return(result)
 }
 
 setMethod("as.character","Mail", 
@@ -63,7 +68,7 @@ setMethod("as.character","Mail",
 
 sendEmail_preComplianceResult <- function(message) {
 	workdir <- getwd()
-	setwd(file.path(systemOptions[["homeDir"]],"postOffice",message@advisor@folderName,"pending"))
+	setwd(file.path(systemOptions[["homeDir"]],"postOffice",message[["portfolioName"]],"pending"))
 
 	newAdviceFileName <- paste(paste(getMessageDate_time_from(message),"newAdvice",sep="_"),message[["fileExtension"]],sep=".")
 	

@@ -20,7 +20,7 @@ setMethod("messageProcessing",signature(message="PreComplianceResult"),
 				result <- sendEmail_preComplianceResult(message)
 				
 				# b) move newAdvice from mailBox/pending to archive/processed/rejected,
-				fromDir <- file.path(systemOptions[["homeDir"]],"postOffice",message@advisor@folderName,"pending")
+				fromDir <- file.path(systemOptions[["homeDir"]],"postOffice",message[["portfolioName"]],"pending")
 				toDir <- file.path(systemOptions[["homeDir"]],"archive","processed","rejected")
 				ok <- file.move(newAdviceFileName,fromDir,toDir)
 				if (ok) {
@@ -42,11 +42,11 @@ setMethod("messageProcessing",signature(message="PreComplianceResult"),
 				#d) show pop up
 				messageString <- paste("Advice '",newAdviceFileName,"' \nhas been rejected because of a negative pre-compliance.\n",sep="") 
 				ok <- tkmessageBox(message=messageString,icon="warning")
-				logger(paste("message:\n", messageString,"\nhas been read from user",sep=""))
+				logger(paste("The message: ", messageString,"\nhas been read from user",sep=""))
 				
 				#e) rimuovi il lock
 				ok <- unlock(message)
-				logger(paste("lock removed from postOffice/",message@advisor@folderName,sep=""))
+				logger(paste("lock removed from postOffice/",message[["portfolioName"]],sep=""))
 				return()
 			}
 			
@@ -61,7 +61,7 @@ setMethod("messageProcessing",signature(message="PreComplianceResult"),
 				newAdviceFileName <- paste(paste(getMessageDate_time_from(message),"newAdvice",sep="_"),message[["fileExtension"]],sep=".")
 				messageString <- paste("Advice '",newAdviceFileName,"' \nsatisfies pre-compliance requirements.\n",sep="") 
 				ok <- tkmessageBox(message=messageString,icon="warning")
-				logger(paste("message:\n", messageString,"\nhas been read from user",sep=""))
+				logger(paste("The message: ", messageString,"\nhas been read from user",sep=""))
 				return()
 			}
 		}

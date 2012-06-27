@@ -34,18 +34,19 @@ repositories <- new.env()
 repositories$exchangeRates <- testRepository
 
 # source the test advisors
-source("./adviceManagement/unitTests/advisors.R")
+source("./adviceManagement/unitTests/t.advisors/advisors.R")
 
 ## test globale
 dirs = c(
 		"./adviceManagement/unitTests/t.logger",
 		"./adviceManagement/unitTests/t.fileMove",
 		"./adviceManagement/unitTests/t.archive",
-		"./adviceManagement/unitTests/t.PostOffice",
+		"./adviceManagement/unitTests/t.postOffice",
+		"./adviceManagement/unitTests/t.mailBox",
 		"./adviceManagement/unitTests/t.sendStopToRProcess",
 		"./adviceManagement/unitTests/t.detectRprocesses",
 		"./adviceManagement/unitTests/t.messageFactory",
-		# "./adviceManagement/unitTests/t.noLockOnNewAdvice",
+		 "./adviceManagement/unitTests/t.noLockOnNewAdvice",
 		"./adviceManagement/unitTests/t.isLockOnNewAdvice",
 		"./adviceManagement/unitTests/t.lock_unlock",
 		"./adviceManagement/unitTests/t.messageProcessing",
@@ -72,7 +73,7 @@ mySetwd()
 
 ## test messageFactory
 dirs = c(
-		"./adviceManagement/unitTests/t.PostOffice"
+		"./adviceManagement/unitTests/t.postOffice"
 )
 testsuite.lists <- defineTestSuite("Test adviceManagement",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)

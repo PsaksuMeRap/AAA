@@ -6,14 +6,14 @@
 
 
 lock <- function(message) {
-	file <- file.path(systemOptions[["homeDir"]],"postOffice",message@advisor@folderName,"lock")
+	file <- file.path(systemOptions[["homeDir"]],"postOffice",message[["portfolioName"]],"lock")
 	ok <- file.create(file)
 	return(ok)
 }
 
 
 unlock <- function(message) {
-	file <- file.path(systemOptions[["homeDir"]],"postOffice",message@advisor@folderName,"lock")
+	file <- file.path(systemOptions[["homeDir"]],"postOffice",message[["portfolioName"]],"lock")
 	ok <- file.remove(file)
 	return(ok)
 }
