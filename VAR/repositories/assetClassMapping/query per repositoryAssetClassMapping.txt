@@ -1,5 +1,0 @@
-SELECT     TOP 100 PERCENT ID_strumento, ID_AAA, Strumento, Moneta, Nome, NumeroValore
-FROM         dbo.DBPortfolioGenerale
-WHERE     (Cliente IN ('CB-ACC GLOBAL EQ', 'EUR FIXED INCOME', 'CB-ACC GLOBAL Econ'))
-ORDER BY Strumento, Nome
-

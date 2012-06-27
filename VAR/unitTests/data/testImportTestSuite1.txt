@@ -1,7 +1,0 @@
-testSuiteName: test importazione di una testSuite
-
-# testSuiteKind: general - specific
-checkListStart:
-instrument:bond & currency:CHF ; > 5%
-checkListEnd:
-externalSuiteFileName:
