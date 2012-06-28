@@ -134,7 +134,7 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 		# collect the last price 0.16
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"LAST_PRICE")
 		# collect the option type c
-		blRequestHandler[["collect"]](trade$Id_Bloomberg,"OPT_TYPE")
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"OPT_PUT_CALL")
 		# collect the option contract size 	100
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"OPT_CONT_SIZE")
 	

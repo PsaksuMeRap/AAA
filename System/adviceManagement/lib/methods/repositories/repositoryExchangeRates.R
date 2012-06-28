@@ -6,7 +6,7 @@
 downloadExchangeRatesFromBloomberg <- function(currencies) {
 	# create the list of currencies
 	if (missing(currencies)) currencies <- c("AUD","BRL","CAD","DKK","EUR","GBP","IDR",
-				"JPY","MXN","NOK","NZD","PLN","SEK","SGD","TRY","USD","ZAR")
+				"INR","JPY","MXN","NOK","NZD","PLN","SEK","SGD","TRY","USD","ZAR")
 	
 	# create the Bloomberg currency ID vis a vis CHF
 	currenciesBlb <- paste(currencies,"CHF Curncy",sep="")
@@ -31,7 +31,7 @@ downloadExchangeRatesFromBloomberg <- function(currencies) {
 	names(lastUpdateDateTime) <- currencies
 	
 	# adjust 
-	divideBYHundred <- c("JPY","SEK","NOK")
+	divideBYHundred <- c("JPY","DKK","SEK","NOK")
 	rates[divideBYHundred] <- rates[divideBYHundred] / 100
 	rates["IDR"] <- rates["IDR"] / 10000
 	
@@ -41,11 +41,9 @@ downloadExchangeRatesFromBloomberg <- function(currencies) {
 updateFromBloomberg_exchangeRatesRepository <- function(currencies,saveIfNewer=FALSE) {
 	
 	if (missing(currencies)) currencies <- c("AUD","BRL","CAD","DKK","EUR","GBP","IDR",
-				"JPY","MXN","NOK","NZD","PLN","SEK","SGD","TRY","USD","ZAR")
+				"INR","JPY","MXN","NOK","NZD","PLN","SEK","SGD","TRY","USD","ZAR")
 	
 	data <- downloadExchangeRatesFromBloomberg(currencies)
-	
-	rm(downloadExchangeRatesFromBloomberg)
 	
 	# create the exchangeRates repository		
 	updated <- repositories$exchangeRates$update(data$rates,data$lastUpdateDateTime)
@@ -55,7 +53,7 @@ updateFromBloomberg_exchangeRatesRepository <- function(currencies,saveIfNewer=F
 	# directoryExchangeRates <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","files","exchangeRates")
 	
 	if (updated & saveIfNewer) saveLastObject(repositories$exchangeRates,"exchangeRates.RData",directoryExchangeRates)
-	rm(update,directoryExchangeRates)
+	rm(updated,directoryExchangeRates)
 	
 }
 

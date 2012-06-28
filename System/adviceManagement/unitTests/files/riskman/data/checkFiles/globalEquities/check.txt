@@ -5,7 +5,7 @@ creator: Claudio Ortelli
 testSuiteKind: specific
 testTarget: pippo53
 reportTo: claudio.ortelli@usi.ch; info@bacep.com
-outputDir: ./FondiNew
+outputDir: ./
 checkListStart:
 
 # verifica che i contratti a termine in EUR siano solo a titolo di copertura

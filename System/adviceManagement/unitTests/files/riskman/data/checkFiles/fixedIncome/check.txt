@@ -5,7 +5,7 @@ creator: Claudio Ortelli
 testSuiteKind: specific
 testTarget: pippo76
 reportTo: claudio.ortelli@usi.ch; info@bacep.com
-outputDir: ./FondiNew
+outputDir: ./
 checkListStart:
 
 # 1) verifica che gli strumenti investibili siano quelli indicati e non ce ne siano altri non ammessi

@@ -15,3 +15,10 @@ if (exists("isTest") & .Platform$OS.type!="windows") {
 
 # the number of minutes necessary before a bloomberg data is considered
 systemOptions[["bloombergUpdateInterval"]] <- as.difftime(240, units = "mins")
+
+
+if (.Platform$OS.type=="windows") {
+	systemOptions[["R_ZIPCMD"]] <- "C:/Rtools/bin/zip.exe"
+} else {
+	systemOptions[["R_ZIPCMD"]] <- "./"
+}

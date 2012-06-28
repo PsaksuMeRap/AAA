@@ -14,13 +14,12 @@ if(.Platform$OS.type=="windows") {
 	library("Rbbg")
 }
 
-
 stringsAsFactors = FALSE
 
 # create the repositories environment
 repositories <- new.env()
 
-source("./base/lib/library.R")
+if (length(args)>0) source("./base/lib/library.R")
 
 # set the directory where the source code is installed (i.e. folders adviceManagement, ayrton, base, riskman)
 systemOptions[["sourceCodeDir"]] <- sourceCodeDir

@@ -5,7 +5,7 @@ creator: Claudio Ortelli
 testSuiteKind: specific
 testTarget: pippo210
 reportTo: claudio.ortelli@usi.ch; info@bacep.com
-outputDir: ./FondiNew
+outputDir: ./
 checkListStart:
 # 1) verifica che il fondo sia investito almeno il 50% in CHF
 currency!:CHF ; <=50%
