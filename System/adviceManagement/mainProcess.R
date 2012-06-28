@@ -86,19 +86,22 @@ while(Sys.time()<T) {
 			# identify the advisor (filename="2012-05-09_14-22-24_Ortelli_globalEquity_newAdvice.csv")
 			messageFrom <- messageType[["From"]]
 			
+			# identify the involved portfolio
+			portfolioName <- messageType[["portfolioName"]]
+			
 			# check if the corresponding mailBox is available
-			mailBoxExists <- is.element(messageFrom,postOffice@mailBoxes)
+			mailBoxExists <- is.element(portfolioName,postOffice@mailBoxes)
 			
 			if (!mailBoxExists) {
 				# if the mailBox does not exists create the mailbox and
-				postOffice@mailBoxes[length(postOffice@mailBoxes)+1] <- messageFrom
-				mailbox <- new("MailBox",advisor=advisors[[messageFrom]])
+				postOffice@mailBoxes[length(postOffice@mailBoxes)+1] <- paste(messageFrom,portfolioName,sep="_")
+				mailbox <- new("MailBox",folderName=portfolioName)
 				setup(x=mailbox,y=postOffice)
-				logger(paste("created mailBox for advisor",messageFrom))
+				logger(paste("created mailBox for portfolio",portfolioName,"from",messageFrom))
 			}
 			
 			# is the mailbox locked? 
-			isLocked <- file.exists(file.path(homeDir,"postOffice",messageFrom,"lock"))
+			isLocked <- file.exists(file.path(homeDir,"postOffice",portfolioName,"lock"))
 			
 			# if locked send an e-mail and move the file into the removed folder. Log all actions
 			if (isLocked) {

@@ -8,6 +8,7 @@ noLockOnNewAdvice <- function(message) {
 	
 	messageFrom <- message[["from"]]
 	fileName <- message[["fileName"]]
+	portfolioName <- message[["portfolioName"]]
 	
 	# if the file is not locked move the advice in the outbox and start processing
 	logger(paste("no lock detected for orders from",messageFrom))
@@ -24,7 +25,7 @@ noLockOnNewAdvice <- function(message) {
 	
 	# move file (da migliorare: file non devono essere sovrascritti)
 	fileFrom <- file.path(systemOptions[["homeDir"]],"postOffice","inbox",fileName) 
-	fileTo <- file.path(systemOptions[["homeDir"]],"postOffice",messageFrom,"pending",fileName)
+	fileTo <- file.path(systemOptions[["homeDir"]],"postOffice",portfolioName,"pending",fileName)
 	copyOk <- file.copy(fileFrom,fileTo)
 	
 	if (copyOk) {
@@ -38,8 +39,8 @@ noLockOnNewAdvice <- function(message) {
 		}
 	}
 	
-	lockFile <- file.create(file.path(systemOptions[["homeDir"]],"postOffice",messageFrom,"lock"))
-	logger(paste("successfully locked mailBox of",messageFrom))
+	lockFile <- file.create(file.path(systemOptions[["homeDir"]],"postOffice",portfolioName,"lock"))
+	logger(paste("successfully locked mailBox of",portfolioName))
 	
 	# start batch process for processing
 	# command <- "c:\\Progra~1\\R\\R-2.14.2\\bin\\R CMD BATCH --slave --no-restore-history --no-timing --no-save "
@@ -60,7 +61,7 @@ noLockOnNewAdvice <- function(message) {
 	# restore the working directory
 	setwd(currentWorkingDirectory)
 	
-	logger(paste("Started BATCH process for file",fileName,"from",messageFrom))
+	logger(paste("Started BATCH process for file",fileName,"from",portfolioName))
 	Sys.sleep(0.30)
 	if (.Platform$OS.type=="windows") return(get_PID("Rterm.exe")) else return(get_PID("R"))
 }
