@@ -9,7 +9,7 @@ test.shouldCreateMessage <- function() {
 	fileName <- "2012-05-09_14-22-24_Ortelli_globalEquity_newAdvice.csv"
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.messageFactory")
 	
-	result <- messageFactory(fileName,directory,advisors)
+	result <- messageFactory(fileName,directory)
 	
 	checkEquals(result[["fileExtension"]],"csv")
 	checkEquals(result[["date"]],"2012-05-09")
@@ -24,16 +24,16 @@ test.shouldCreateMessage <- function() {
 	
 
 	fileName <- "2012-05-09_14-22-24_Ortelli_globalEquity_confirmation.csv"
-	result <- messageFactory(fileName,directory,advisors)
+	result <- messageFactory(fileName,directory)
 	checkEquals(is(result,"Confirmation"),TRUE)
 	checkEquals(result@trades[[2]]$securityID,"SMI")
 	
 	fileName <- "2012-05-09_14-22-24_Ortelli_globalEquity_preComplianceResult_1.csv"
-	result <- messageFactory(fileName,directory,advisors)
+	result <- messageFactory(fileName,directory)
 	checkEquals(is(result,"PreComplianceResult"),TRUE)
 	
 	fileName <- "2012-05-09_14-22-24_Ortelli_globalEquity_postComplianceResult_0.csv"
-	result <- messageFactory(fileName,directory,advisors)
+	result <- messageFactory(fileName,directory)
 	checkEquals(is(result,"PostComplianceResult"),TRUE)
 	
 }
@@ -44,19 +44,9 @@ test.shouldTestGetMessageDate_time_from <- function() {
 	fileName <- "2012-05-09_14-22-24_Ortelli_globalEquity_newAdvice.csv"
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.messageFactory")
 	
-	message <- messageFactory(fileName,directory,advisors)
+	message <- messageFactory(fileName,directory)
 	
 	string <- getMessageDate_time_from(message)
 	checkEquals(string,"2012-05-09_14-22-24_Ortelli_globalEquity")
-	
-}
-
-test.shouldFailWithInvalidAdisor <- function() {
-	# identify a new order
-	fileName <- "2012-05-09_14-22-24_Xxxx_globalEquity_newAdvice.csv"
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.messageFactory")
-	
-	checkException(messageFactory(fileName,directory,advisors))
-	
 	
 }

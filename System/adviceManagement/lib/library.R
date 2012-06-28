@@ -32,6 +32,8 @@ source("./adviceManagement/lib/classDefinitions/IdBloomberg/IdBloomberg.R")
 
 source("./adviceManagement/lib/tradeFactory.R")
 source("./adviceManagement/lib/tradesFactory.R")
+source("./adviceManagement/lib/classDefinitions/MessageFileName/MessageFileName.R")
+source("./adviceManagement/lib/messageFileNameFactory.R") 
 source("./adviceManagement/lib/classDefinitions/Message/Message.R")
 source("./adviceManagement/lib/messageFactory.R") 
 source("./adviceManagement/lib/get_PID.R") 

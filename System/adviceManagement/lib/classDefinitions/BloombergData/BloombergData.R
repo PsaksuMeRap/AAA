@@ -71,3 +71,18 @@ setMethod("as.character",signature("BloombergDataEntry"),
 			return(string)
 		}
 )
+
+setMethod("print",signature("BloombergDataEntry"),
+		function(x) {
+			
+			print(as.character(x))
+		}
+)
+
+setMethod("print",signature("BloombergData"),
+		function(x) {
+			
+			result <- lapply(x,print)
+			return(invisible())
+		}
+)

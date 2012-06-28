@@ -4,7 +4,7 @@
 ###############################################################################
 
 
-setClass("Message",representation(advisor="Advisor"),contains="namedList")
+setClass("Message",representation(advisor="Advisor"),contains="MessageFileName")
 
 # the namedList contains the following fields:
 # "fileName","fileExtension","date","time","from","messageType","testResult"

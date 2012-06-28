@@ -40,6 +40,8 @@ C:\riskman
 		           
 	- data : cartella contenente i portafogli, i cambi, i checkFiles, ...
 	
+		- bloomberg : cartella contenente i dati di bloomberg
+	
 		- checkFiles : cartella contenente le specifiche per i test
 
 		- portfolios : cartella contenenti i portafogli

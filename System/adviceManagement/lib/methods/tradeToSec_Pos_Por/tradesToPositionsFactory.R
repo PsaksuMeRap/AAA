@@ -9,17 +9,33 @@ tradesToPositionsFactory <- function(fileName,directory) {
 	# (a bloomberg repository must exists!)
 	blRequestHandler <- create_BloombergRequestHandler()
 	
-	# import trades
-	trades <- tradesFactory(fileName,directory)
+	# create the message information with trades
+	message <- messageFactory(fileName,directory)
+
+	# create the corresponding securities and fill the blRequestHandler
+	securities <- lapply(message@trades,tradeToSecurityFactory,blRequestHandler)
+	
+	# update the bloombergData repository
+	blData <- repositories$bloombergData
+	blData <- blRequestHandler[["execute"]](blData)
+	
+	if (!identical(repositories$bloombergData,blData)) {
+		# update the local repository
+		assign("bloombergData",blData,pos=repositories)
+		# save it to data/bloomberg directory
+		directory <- file.path(systemOptions[["homeDir"]],"data","bloomberg",message[["portfolioName"]])
+		saveLastObject(blData,"bloombergData.RData",directory)
+	}
+	
 	positions <- new("Positions")
-	nbPositions <- 0
-	for (trade in trades) {	
-		security <- tradeToSecurityFactory(trade,blRequestHandler)
-		positionTmp <- tradeToPositionFactory(security,trade,blData)
-		positionsTmp <- tradeToPositionsFactory(positionTmp,trade)
+	positionsIndex <- 0
+	
+	for (index in 1:length(securities)) {
+		positionTmp <- tradeToPositionFactory(securities[[index]],message@trades[[index]],blData)
+		positionsTmp <- tradeToPositionsFactory(positionTmp,trade[[index]])
 		nbNewPositions <- length(positionsTmp)
-		positions[(nbPositions+1):(nbPositions+nbNewPositions)] <- positionsTmp
-		nbPositions <- nbPositions + nbNewPositions
+		positions[(positionsIndex+1):(positionsIndex+nbNewPositions)] <- positionsTmp
+		positionsIndex <- positionsIndex + nbNewPositions
 	}
 	return (positions)
 }
