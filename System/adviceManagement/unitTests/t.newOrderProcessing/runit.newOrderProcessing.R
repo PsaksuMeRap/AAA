@@ -10,6 +10,9 @@ test.shouldProcessOrder <- function() {
 	to <- file.path(systemOptions[["homeDir"]])
 	isOk <- file.copy(from,to,recursive=TRUE)
 	
+	# setup the archive
+	create_archive(systemOptions[["homeDir"]])
+					
 	# setup the directories and messages	
 	postOffice <- new("PostOffice",absolutePath=systemOptions[["homeDir"]])
 	setup(postOffice)
@@ -27,6 +30,26 @@ test.shouldProcessOrder <- function() {
 		source(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","newOrderProcessing.R"))
 	}
 	
+	test()
+	
+	# check the
+	file <- list.files(file.path(systemOptions[["homeDir"]],"log"))
+	checkEquals(file,"2012-06-19_14-27-47_Ortelli_globalEconomy_newAdvice.log")
+	
+	file <- list.files(file.path(systemOptions[["homeDir"]],"postOffice","inbox"))
+	checkEquals(file,"2012-06-19_14-27-47_Ortelli_globalEconomy_preComplianceResult_1.zip")	
+	
+	file <- list.files(file.path(systemOptions[["homeDir"]],"postOffice","globalEconomy"))
+	checkEquals(file,"pending")	
+	
+	file <- list.files(file.path(systemOptions[["homeDir"]],"postOffice","globalEconomy","pending"))
+	checkEquals(file,character(0))	
+	
+	file <- list.files(file.path(systemOptions[["homeDir"]],"archive","processed","accepted"))
+	checkEquals(file,"2012-06-19_14-27-47_Ortelli_globalEconomy_preComplianceResult_1.zip")
+	
+	unlink(file.path(systemOptions[["homeDir"]],"archive"),recursive=TRUE)
+	unlink(file.path(systemOptions[["homeDir"]],"log"),recursive=TRUE)
 	unlink(file.path(systemOptions[["homeDir"]],"data"),recursive=TRUE)
 	unlink(file.path(systemOptions[["homeDir"]],"postOffice"),recursive=TRUE)
 }

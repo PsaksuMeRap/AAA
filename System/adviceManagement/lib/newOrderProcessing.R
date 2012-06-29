@@ -9,7 +9,7 @@ args=commandArgs(trailingOnly = TRUE)
 # if it is a test (lengtht(args)==0) then set test values
 if (length(args)==0) {
 	sourceCodeDir <- getwd()
-	# fileName <- "2012-06-19_14-27-47_Ortelli_globalEconomy_newAdvice.csv"
+	fileName <- "2012-06-19_14-27-47_Ortelli_globalEconomy_newAdvice.csv"
 } else {	
 	## args is now a list of character vectors
 	## Then cycle through each element of the list and evaluate the expressions.
@@ -26,7 +26,7 @@ source(file.path(sourceCodeDir,"adviceManagement","lib","initialSetup.R"))
 # load the adviceManagement code
 if (length(args)>0) source(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","library.R"))
 
-logFileName <- create_logger(fileType="newAdvice")
+logFileName <- create_logger(csvFileName=csvTradesFileName)
 # load the advisors
 logger("Loading Advisors list ...")
 source(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","advisors.R"))
@@ -62,6 +62,7 @@ logger(paste("Loading portfolio",message[["portfolioName"]],"..."))
 portfolio <- loadPortfolio(portfolioId=message[["portfolioName"]])
 
 # import the bloomberg repository
+logger("Loading the bloomberg data file ...")
 bloombergDataFile <- file.path(systemOptions[["homeDir"]],"data","bloomberg",message[["portfolioName"]],"bloombergData.RData")
 load(bloombergDataFile,envir=repositories)
 repositories$bloombergData <- repositories$object
@@ -71,7 +72,7 @@ rm("object",pos=repositories)
 logger(paste("Loading desired trades",message[["portfolioName"]],"..."))
 positionsFromTrades <- tradesToPositionsFactory(csvTradesFileName,checkDirectory)
 portfolio <- portfolio + positionsFromTrades
-textMessage <- paste("Imported positions from desired trades:\n")
+textMessage <- paste("Imported positions from desired trades:")
 positionsStrings <- paste(as.character(positionsFromTrades),collapse="\n")
 logger(paste(textMessage,positionsStrings,sep="\n"))
 
@@ -89,23 +90,45 @@ setwd(checkDirectory)
 ## -- inizio procedura di controllo parte specifica
 testSuite <- testSuiteFactory(testSuiteName=message[["portfolioName"]],directories="./",fileName="check.txt")
 
-result <- applyTestSuite(testSuite@testSuitesParsed[[1]],portfolio)
-
-if (all(result)) {
+testResults <- applyTestSuite(testSuite@testSuitesParsed[[1]],portfolio)
+testResult <- all(testResults)
+if (testResult) {
 	logger(paste("Check terminated. All constraints are ok."))
 } else {
-	logger(paste("Check detected. Some constraints are violated"))
+	logger(paste("Check detected. Some constraints are violated:\n",paste(testResults,collapse=" - ")))
 }
 
 # zip all results in a single file
-Sys.setenv(R_ZIPCMD=systemOptions[["R_ZIPCMD"]])
-zipfile <- file.path(systemOptions[["homeDir"]],"postOffice",message[["portfolioName"]],
-		paste("output_check",message[["portfolioName"]],sep="_"))
-filesToZip <- list.files(path=file.path(systemOptions[["homeDir"]],"postOffice",
-				message[["portfolioName"]],"pending"),full.names=TRUE)
-zip(zipfile,files=filesToZip)
+logger("compressing result files ...")
+zipToDir <- file.path(systemOptions[["homeDir"]],"postOffice",message[["portfolioName"]])
+zipFromDir <- file.path(systemOptions[["homeDir"]],"postOffice",message[["portfolioName"]],"pending")
+zipFullFileName <- zipResults(message,all(testResult),zipFromDir,zipToDir)
+
+# remove all results from the pending directory
+logger("Removing result files ...")
+isOk <- file.remove(list.files(zipFromDir,full.names=TRUE))
+
+# copy the result in the archive
+logger("Archiving compressed result files ...")
+if (testResult) {
+	to <- file.path(systemOptions[["homeDir"]],"archive","processed","accepted")
+} else {
+	to <- file.path(systemOptions[["homeDir"]],"archive","processed","rejected")
+}
+file.copy(zipFullFileName,to)
+
+# copy the zip file into the postOffice/inbox folder
+logger("Copying result in the postOffice/inbox folder ...")
+to <- file.path(systemOptions[["homeDir"]],"postOffice","inbox")
+file.copy(zipFullFileName,to)
+
+# remove compressed file
+logger(paste("Removing compressed archive from the postOffice/",message[["portfolioName"]],
+				" directory",sep=""))
+file.remove(zipFullFileName)
 
 ## -- fine procedura di controllo parte specifica
 sink()
+setwd(systemOptions[["sourceCodeDir"]])
 # messageText <- paste("Order from",message[["from"]],"for portfolio",message[["portfolioName"]],"terminated.")
 # tkmessageBox(message=messageText,type="ok",icon="info")

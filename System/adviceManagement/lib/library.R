@@ -8,6 +8,7 @@ source("./adviceManagement/lib/archive.R")
 source("./adviceManagement/lib/logger.R") 
 source("./adviceManagement/lib/lock_unlock.R")
 source("./adviceManagement/lib/file.move.R")
+source("./adviceManagement/lib/zipResults.R")
 
 source("./adviceManagement/lib/methods/repositories/repositoryExchangeRates.R") 
 source("./adviceManagement/lib/methods/repositories/repositoryInstruments.R") 

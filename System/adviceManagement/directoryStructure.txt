@@ -1,4 +1,6 @@
-
+name conventions:
+fileName: the file name only of a file
+fullFileName: the (absolute) path and the file name of a file
 
 C:\riskman
 	- archive : cartella contenente i messaggi eliminati e processati

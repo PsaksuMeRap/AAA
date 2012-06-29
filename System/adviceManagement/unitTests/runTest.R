@@ -59,8 +59,10 @@ dirs = c(
 		"./adviceManagement/unitTests/t.loadLastPortfolio",
 		"./adviceManagement/unitTests/t.saveLastObject",
 		"./adviceManagement/unitTests/t.bloombergData",
-		"./adviceManagement/unitTests/t.bloombergRequestHandler"
+		"./adviceManagement/unitTests/t.bloombergRequestHandler",
+		"./adviceManagement/unitTests/t.zipResults"
 		#"./adviceManagement/unitTests/t.tradesToPositionsFactory"
+		#"./adviceManagement/unitTests/t.newOrderProcessing"
 	)
 testsuite.lists <- defineTestSuite("Test adviceManagement",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
