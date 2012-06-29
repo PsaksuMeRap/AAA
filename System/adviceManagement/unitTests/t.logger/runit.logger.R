@@ -6,7 +6,7 @@
 
 test.shouldCreateLogger <- function() {
 	directory <- file.path(systemOptions[["homeDir"]],"log")
-	fileName <- create_logger(csvFileName="newAdvice.csv")
+	fileName <- create_logger(fileName="newAdvice.csv")
 	
 	fileExists <- file.exists(fileName)
 	

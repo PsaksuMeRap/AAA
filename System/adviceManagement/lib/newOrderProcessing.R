@@ -10,23 +10,26 @@ args=commandArgs(trailingOnly = TRUE)
 if (length(args)==0) {
 	sourceCodeDir <- getwd()
 	fileName <- "2012-06-19_14-27-47_Ortelli_globalEconomy_newAdvice.csv"
+	homeDir <- "C:/riskman"
 } else {	
 	## args is now a list of character vectors
 	## Then cycle through each element of the list and evaluate the expressions.
 	eval(parse(text=args[[1]])) # this is the fileName of the message
 	eval(parse(text=args[[2]])) # this is the sourceCodeDir variable
+	eval(parse(text=args[[3]])) # this is the homeDir variable
 }
 
 csvTradesFileName <- fileName
-
+sink("pippo.txt")
 setwd(sourceCodeDir)
+getwd()
 
 source(file.path(sourceCodeDir,"adviceManagement","lib","initialSetup.R"))
 
 # load the adviceManagement code
 if (length(args)>0) source(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","library.R"))
 
-logFileName <- create_logger(csvFileName=csvTradesFileName)
+logFileName <- create_logger(fileName=csvTradesFileName)
 # load the advisors
 logger("Loading Advisors list ...")
 source(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","advisors.R"))

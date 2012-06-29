@@ -3,7 +3,7 @@
 # Author: claudio
 ###############################################################################
 
-setClass("PostOffice",representation(absolutePath="character",mailBoxes="list"),
+setClass("PostOffice",representation(absolutePath="character"),
 		prototype=list(inbox=character(0),pending=character(0)))
 
 

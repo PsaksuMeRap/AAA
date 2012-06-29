@@ -1,72 +1,68 @@
-# TODO: Add comment
-# 
-# Author: Claudio
-###############################################################################
-rm(list=ls(all=TRUE))
 
-library("RODBC")
-library("RUnit")
-library("tcltk")
-library("stringr")
+# library("tcltk")
+# library("stringr")
 
-stringsAsFactors = FALSE
+# if(.Platform$OS.type=="windows") {
+#	library("rJava")
+# 	library("Rbbg")
+# }
 
-source("./base/lib/library.R")
-
-# set the directory where the source code is installed (i.e. folders adviceManagement, ayrton, base, riskman)
-sourceCodeDir <- getwd()
-
-# import the adviceManagement library
-source(file.path(sourceCodeDir,"adviceManagement","lib","library.R"))
-
-# set the name of the process
-name <- "main"
-
-# set the root directory
-if (.Platform$OS.type=="windows") homeDir <- "c:/riskman" else homeDir <- file.path(sourceCodeDir,"adviceManagement","unitTests","directories")
-
-setwd(homeDir)
+source("./adviceManagement/lib/initialSetup.R")
 
 # set the sleeping time in seconds
 sleepTime <- 10
 
-# define the adivisors
-# source the test advisors
-source("./adviceManagement/lib/advisors.R")
+# set the homeDir variable
+homeDir <- systemOptions[["homeDir"]]
 
 # create the log file
-sink(file="riskman_log.txt")
+logFileName <- paste(format(Sys.time(),"%Y-%m-%d_%H-%M-%S"),"riskman_log.txt",sep="_")
+invisible(create_logger(fileName=logFileName))
 
-# inizializza PostOffice
+# create the PostOffice
+logger("Initializing PostOffice ...")
 postOffice <- new("PostOffice",absolutePath=homeDir)
 setup(postOffice)
-logger("PostOffice created.")
+loggerDone()
+
+# setup the archive
+logger("Initializing archive ...")
+create_archive(systemOptions[["homeDir"]])
+loggerDone()
+
+# setup the data directory
+logger("Initializing the data directory ...")
+from <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","files","riskman","data")
+to <- file.path(systemOptions[["homeDir"]])
+isOk <- file.copy(from,to,recursive=TRUE)
+loggerDone()
 
 # check that no R processes are running and identify the PID of this program
-PID <- get_PID(imageName="Rterm.exe")
 PID <- get_PID(imageName="eclipse.exe")
+#PID <- get_PID(imageName="Rterm.exe")
+PID <- get_PID(imageName="Rgui.exe")
 if (length(PID)>1) {
 	msg <- "Please close all running R/Rterm processes before starting a new one!"
 	ok <- tkmessageBox(message=msg,icon="warning",type="ok")
-	logger("Multiple Rterm processes detected. Stop this application ...")
+	logger("Multiple Rterm processes detected. The program will close.")
 	# remove the postOffice
-	logger("Removing postOffice")
+	logger("Removing postOffice ...")
 	unlink("postOffice",recursive=TRUE)
-	logger("postOffice removed")
+	loggerDone()
 	quit(save="no")
 }
 
 # create the data.frame with the activeOrders
 activeOrders <- data.frame(name="main",startTime=Sys.time(),fileName="",orderName="",PID=PID)
 
-# start monitoring input and output directories
+# start monitoring input directory
 
-existingFiles <- list.files(path=file.path(homeDir,"postOffice","inbox"))
-
-T <- Sys.time()+240
+T <- Sys.time()+500
 while(Sys.time()<T) {
-
-	sleepTime <- 10
+	logger("Looking for new files ...")
+	existingFiles <- list.files(path=file.path(homeDir,"postOffice","inbox"))
+	loggerDone()
+	
 	if (length(existingFiles>0)) {
 		# sort the files
 		existingFiles <- sort(existingFiles)
@@ -76,89 +72,75 @@ while(Sys.time()<T) {
 		for (fileName in existingFiles) {
 			msg <- paste(msg,"- ",fileName,"\n",sep="")
 		}
-		logger(msg)
+		logger(msg,noOk="\n")
 		
 		for (fileName in existingFiles) {
 			#identify messageTye between: newAdvice,adviceConfirmation,preComplianceResult,postComplianceResult
 			directory <- file.path(systemOptions[["homeDir"]],"postOffice","inbox")
-			messageType <- messageFactory(fileName,advisors)
+			message <- messageFactory(fileName,directory)
 			
 			# identify the advisor (filename="2012-05-09_14-22-24_Ortelli_globalEquity_newAdvice.csv")
-			messageFrom <- messageType[["From"]]
+			messageFrom <- message[["from"]]
 			
 			# identify the involved portfolio
-			portfolioName <- messageType[["portfolioName"]]
+			portfolioName <- message[["portfolioName"]]
 			
-			# check if the corresponding mailBox is available
-			mailBoxExists <- is.element(portfolioName,postOffice@mailBoxes)
-			
-			if (!mailBoxExists) {
-				# if the mailBox does not exists create the mailbox and
-				postOffice@mailBoxes[length(postOffice@mailBoxes)+1] <- paste(messageFrom,portfolioName,sep="_")
-				mailbox <- new("MailBox",folderName=portfolioName)
-				setup(x=mailbox,y=postOffice)
-				logger(paste("created mailBox for portfolio",portfolioName,"from",messageFrom))
+			if (is.element(message[["messageType"]],c("newAdvice","adviceConfirmation"))) {
+				# check if the corresponding mailBox is available
+				mailBoxExists <- is.element(portfolioName, dir(file.path(postOffice@absolutePath,"postOffice")))
+				
+				if (!mailBoxExists) {
+					# if the mailBox does not exists create the mailbox
+					logger(paste("Creating mailBox for portfolio",portfolioName,"from",messageFrom,"..."))
+					mailbox <- new("MailBox",folderName=portfolioName)
+					setup(x=mailbox,y=postOffice)
+					loggerDone()
+				}
+				
+				# is the mailbox locked? 
+				isLocked <- file.exists(file.path(homeDir,"postOffice",portfolioName,"lock"))
+				
+				# if locked send an e-mail and move the file into the removed folder. Log all actions
+				if (isLocked) {
+					isOk <- isLockOnNewAdvice(message)
+				} else {
+					# if the file is not locked move the advice in the mailbox_xxx/pending and start processing
+					PID <- noLockOnNewAdvice(message)
+				}
 			}
 			
-			# is the mailbox locked? 
-			isLocked <- file.exists(file.path(homeDir,"postOffice",portfolioName,"lock"))
-			
-			# if locked send an e-mail and move the file into the removed folder. Log all actions
-			if (isLocked) {
-				isOk <- isLockOnNewAdvice(message)
-			} else {
-				# if the file is not locked move the advice in the mailbox_xxx/pending and start processing
-				PID <- noLockOnNewAdvice(message)
+			if (is.element(message[["messageType"]],c("preComplianceResult","postComplianceResult"))) {
+				postProcessing <- function(fileName) {
+					# is the pre-compliance ok?
+					if (isPrecomplianceOk) {
+						lockOnNewOrder(fileName)
+						# send e-mail ok
+						
+						# cp result in a specified folder for user
+						# mv from outbox and archive the result
+						
+						
+						# log actions
+					} else {
+						# send e-mail with attachment & warning
+						# log it
+						
+						
+					}
+				}
+				
+				for (fileName in processedFiles) {
+					postProcessing(fileName)
+					
+				}
 			}
-
-			sleepTime <- sleepTime - 5
 		} # end for (fileName in existingFiles)
 		
-	} # fine if (length(existingFiles>0))
+	} # end if (length(existingFiles>0))
 	
-	if (length(processedFiles>0)) {
-		# sort the files
-		processedFiles <- sort(processedFiles)
-		# log the arrival of the new processed files
-		msg <- "The following output files are available:\n"
-		for (fileName in processedFiles) {
-			msg <- paste(msg,"- ",fileName,"\n",sep="")
-		}
-		logger(msg)
-		
-		postProcessing <- function(fileName) {
-			# is the pre-compliance ok?
-			if (isPrecomplianceOk) {
-				lockOnNewOrder(fileName)
-				# send e-mail ok
-				
-				# cp result in a specified folder for user
-				# mv from outbox and archive the result
-					
-			
-				# log actions
-			} else {
-				# send e-mail with attachment & warning
-				# log it
-				
-				
-			}
-		}
-		
-		for (fileName in processedFiles) {
-			postProcessing(fileName)
-			
-		}
-		
-		
-		
-		
-		
-		sleepTime <- sleepTime - 5
-	}
-	logger(paste("sleep",sleepTime,"seconds ..."))
+	logger(paste("Sleep",sleepTime,"seconds ..."))
 	Sys.sleep(sleepTime)
+	loggerDone()
 }
 
-# terminate the output
-sink()
+

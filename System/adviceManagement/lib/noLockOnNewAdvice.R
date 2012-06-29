@@ -11,17 +11,19 @@ noLockOnNewAdvice <- function(message) {
 	portfolioName <- message[["portfolioName"]]
 	
 	# if the file is not locked move the advice in the outbox and start processing
-	logger(paste("no lock detected for orders from",messageFrom))
+	logger(paste("no lock detected for orders for",portfolioName,"from",messageFrom),noOk="\n")
 	
 	# send an e-mail
+	
 	mail <- new("Mail",
 			from="claudio.ortelli@usi.ch",
 			to=message@advisor@email,
 			subject="Processing order",
 			message=paste("Your advice '",fileName,"' is being processed",sep="")
 	)
+	logger(paste("\nSending e-mail:\n",as.character(mail),sep=""))
 	sendEMail(mail)
-	logger(paste("\nMail sent:\n",as.character(mail),sep=""))
+	loggerDone("\n [ok]\n\n")
 	
 	# move file (da migliorare: file non devono essere sovrascritti)
 	fileFrom <- file.path(systemOptions[["homeDir"]],"postOffice","inbox",fileName) 
@@ -29,34 +31,39 @@ noLockOnNewAdvice <- function(message) {
 	copyOk <- file.copy(fileFrom,fileTo)
 	
 	if (copyOk) {
-		logger(paste("File to process",fileName,"successfully copied to outbox"))
+		logger(paste("File ",fileName," successfully moved to",portfolioName,"/pending",sep=""))
+		logger("Removing incoming file ...")
 		removeOk <- file.remove(fileFrom)
 		if (removeOk) {
-			logger(paste("file",fileFrom,"removed"))
+			loggerDone()
 		} else {
-			logger(paste("error: impossible to remove file",fileFrom))
+			logger(paste("Error: impossible to remove file",fileFrom))
 			# send e-mail to system administrator for manual remove
 		}
 	}
 	
+	logger(paste("Locking mailBox of",portfolioName,"..."))
 	lockFile <- file.create(file.path(systemOptions[["homeDir"]],"postOffice",portfolioName,"lock"))
-	logger(paste("successfully locked mailBox of",portfolioName))
+	if (lockFile) loggerDone() else logger("Error: impossible to lock the mailbox ... why?")
 	
 	# start batch process for processing
 	# command <- "c:\\Progra~1\\R\\R-2.14.2\\bin\\R CMD BATCH --slave --no-restore-history --no-timing --no-save "
 	
 	# define the name of the file to process and costruct the command
-	fileToExecute <- "newOrderProcessing.R"
+	fullFileNameToExecute <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","newOrderProcessing.R")
 	command <- "R CMD BATCH --slave --no-restore-history --no-timing --no-save "
-	command <- paste(command,"\"--args fileName='",fileName,"' sourceCodeDir='",
-			systemOptions[["sourceCodeDir"]],"'\" ",fileToExecute,sep="")
+	command <- paste(command,"\"--args fileName='",fileName,
+			"' sourceCodeDir='",systemOptions[["sourceCodeDir"]],
+			"' homeDir='"       ,systemOptions[["homeDir"]],"'\" ",
+			fullFileNameToExecute," out.txt",sep="")
 	
 	# save the current working directory
 	currentWorkingDirectory <- getwd()
 	
-	setwd(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib"))
-
+	setwd(file.path(systemOptions[["homeDir"]],"postOffice",portfolioName,"pending"))
+	logger(paste("Launching system command",command))
 	system(command,wait=FALSE)
+	loggerDone()
 	
 	# restore the working directory
 	setwd(currentWorkingDirectory)

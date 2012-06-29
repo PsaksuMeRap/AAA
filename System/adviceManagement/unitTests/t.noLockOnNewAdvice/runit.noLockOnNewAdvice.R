@@ -22,7 +22,6 @@ test.shouldNoLockOnNewAdvice <- function() {
 	
 	messageFrom <- advisors[[1]]@name
 	
-	postOffice@mailBoxes[length(postOffice@mailBoxes)+1] <- messageFrom
 	mailbox <- new("MailBox",folderName=message[["portfolioName"]])
 	setup(x=mailbox,y=postOffice)
 	
