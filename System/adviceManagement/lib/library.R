@@ -21,7 +21,6 @@ source("./adviceManagement/lib/methods/tradeToSec_Pos_Por/tradeToPositionsFactor
 source("./adviceManagement/lib/methods/tradeToSec_Pos_Por/tradesToPositionsFactory.R")
 source("./adviceManagement/lib/saveLastObject.R")
 source("./adviceManagement/lib/classDefinitions/Mail/Mail.R")
-source("./adviceManagement/lib/isLockOnNewAdvice.R")
 
 source("./adviceManagement/lib/classDefinitions/BloombergData/BloombergData.R")
 source("./adviceManagement/lib/classDefinitions/BloombergRequestHandler/BloombergRequestHandler.R")

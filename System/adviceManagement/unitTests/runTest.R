@@ -46,8 +46,8 @@ dirs = c(
 		"./adviceManagement/unitTests/t.sendStopToRProcess",
 		"./adviceManagement/unitTests/t.detectRprocesses",
 		"./adviceManagement/unitTests/t.messageFactory",
-		 "./adviceManagement/unitTests/t.noLockOnNewAdvice",
-		"./adviceManagement/unitTests/t.isLockOnNewAdvice",
+		"./adviceManagement/unitTests/t.newAdviceNoLock",
+		"./adviceManagement/unitTests/t.newAdviceWithLock",
 		"./adviceManagement/unitTests/t.lock_unlock",
 		"./adviceManagement/unitTests/t.mainMessageProcessing",
 		"./adviceManagement/unitTests/t.mail",
@@ -62,7 +62,7 @@ dirs = c(
 		"./adviceManagement/unitTests/t.bloombergRequestHandler",
 		"./adviceManagement/unitTests/t.zipResults"
 		#"./adviceManagement/unitTests/t.tradesToPositionsFactory"
-		#"./adviceManagement/unitTests/t.newOrderProcessing"
+		#"./adviceManagement/unitTests/t.subNewOrderProcessing"
 	)
 testsuite.lists <- defineTestSuite("Test adviceManagement",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)

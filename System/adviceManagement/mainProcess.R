@@ -1,6 +1,8 @@
 
-# create the log file
+# import the code for the creation of the log file
 source(file.path(sourceCodeDir,"adviceManagement","lib","logger.R"))
+
+# create the log file
 logFileName <- paste(format(Sys.time(),"%Y-%m-%d_%H-%M-%S"),"riskman_log.txt",sep="_")
 invisible(create_logger(fileName=logFileName,directory=file.path(homeDir,"log")))
 logger("Logger successfully created.\n")
@@ -52,7 +54,7 @@ activeOrders <- data.frame(name="main",startTime=Sys.time(),fileName="",orderNam
 
 # start monitoring input directory
 
-T <- Sys.time()+500
+T <- Sys.time()+120
 while(Sys.time()<T) {
 	logger("Looking for new files ...")
 	existingFiles <- list.files(path=file.path(systemOptions[["homeDir"]],"postOffice","inbox"))
@@ -89,4 +91,5 @@ while(Sys.time()<T) {
 	loggerDone()
 }
 
+sink()
 

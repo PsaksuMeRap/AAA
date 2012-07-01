@@ -5,7 +5,7 @@
 
 
 
-noLockOnNewAdvice <- function(message) {
+newAdviceNoLock <- function(message) {
 	
 	messageFrom <- message[["from"]]
 	fileName <- message[["fileName"]]
@@ -51,7 +51,7 @@ noLockOnNewAdvice <- function(message) {
 	# command <- "c:\\Progra~1\\R\\R-2.14.2\\bin\\R CMD BATCH --slave --no-restore-history --no-timing --no-save "
 	
 	# define the name of the file to process and costruct the command
-	fullFileNameToExecute <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","newOrderProcessing.R")
+	fullFileNameToExecute <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","subNewOrderProcessing.R")
 	command <- "R CMD BATCH --slave --no-restore-history --no-timing --no-save "
 	command <- paste(command,"\"--args fileName='",fileName,
 			"' sourceCodeDir='",systemOptions[["sourceCodeDir"]],

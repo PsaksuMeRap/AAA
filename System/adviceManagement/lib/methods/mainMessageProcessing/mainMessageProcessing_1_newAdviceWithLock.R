@@ -4,7 +4,7 @@
 ###############################################################################
 
 
-isLockOnNewAdvice <- function(message) {
+newAdviceWithLock <- function(message) {
 	
 	rootDir <- systemOptions[["homeDir"]]
 	fileName <- message[["fileName"]]

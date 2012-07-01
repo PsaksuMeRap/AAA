@@ -13,7 +13,11 @@ tradesToPositionsFactory <- function(fileName,directory) {
 	message <- messageFactory(fileName,directory)
 
 	# create the corresponding securities and fill the blRequestHandler
-	securities <- lapply(message@trades,tradeToSecurityFactory,blRequestHandler)
+	if (length(message@trades)>0) {
+		securities <- lapply(message@trades,tradeToSecurityFactory,blRequestHandler)
+	} else {
+		return(new("Positions"))
+	}
 	
 	# update the bloombergData repository
 	blData <- repositories$bloombergData

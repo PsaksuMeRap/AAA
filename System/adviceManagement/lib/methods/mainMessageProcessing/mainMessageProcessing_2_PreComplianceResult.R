@@ -65,28 +65,3 @@ setMethod("mainMessageProcessing",signature(message="PreComplianceResult"),
 		}
 )
 
-if (is.element(message[["messageType"]],c("preComplianceResult","postComplianceResult"))) {
-	postProcessing <- function(fileName) {
-		# is the pre-compliance ok?
-		if (isPrecomplianceOk) {
-			lockOnNewOrder(fileName)
-			# send e-mail ok
-			
-			# cp result in a specified folder for user
-			# mv from outbox and archive the result
-			
-			
-			# log actions
-		} else {
-			# send e-mail with attachment & warning
-			# log it
-			
-			
-		}
-	}
-	
-	for (fileName in processedFiles) {
-		postProcessing(fileName)
-		
-	}
-}

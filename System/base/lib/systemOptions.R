@@ -15,5 +15,5 @@ systemOptions[["bloombergUpdateInterval"]] <- as.difftime(240, units = "mins")
 if (.Platform$OS.type=="windows") {
 	systemOptions[["R_ZIPCMD"]] <- "C:/Rtools/bin/zip.exe"
 } else {
-	systemOptions[["R_ZIPCMD"]] <- "./"
+	systemOptions[["R_ZIPCMD"]] <- "/usr/bin/zip"
 }

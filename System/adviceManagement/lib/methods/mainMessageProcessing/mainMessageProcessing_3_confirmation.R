@@ -5,7 +5,7 @@
 
 
 
-setMethod("mainMessageProcessing",signature(message="NewAdvice"),
+setMethod("mainMessageProcessing",signature(message="Confirmation"),
 		function(message) {
 		
 		}

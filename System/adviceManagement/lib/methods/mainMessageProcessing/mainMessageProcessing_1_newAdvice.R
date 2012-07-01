@@ -30,10 +30,10 @@ setMethod("mainMessageProcessing",signature(message="NewAdvice"),
 				
 				# if locked send an e-mail and move the file into the removed folder
 				if (isLocked) {
-					isOk <- mainMessageProcessing_1_newAdviceWithLock(message)
+					isOk <- newAdviceWithLock(message)
 				} else {
 					# if the file is not locked move the advice in the mailbox_xxx/pending and start processing
-					PID <- mainMessageProcessing_1_newAdviceNoLock(message)
+					PID <- newAdviceNoLock(message)
 				}
 			}
 		}
