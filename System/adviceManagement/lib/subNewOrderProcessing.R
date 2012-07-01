@@ -33,7 +33,7 @@ if (length(args)==0) {
 
 # create the log file
 source(file.path(sourceCodeDir,"adviceManagement","lib","logger.R"))
-logFileName <- paste(format(Sys.time(),"%Y-%m-%d_%H-%M-%S"),"newOrderProcessing",fileName,sep="_")
+logFileName <- paste(format(Sys.time(),"%Y-%m-%d_%H-%M-%S"),"processing",fileName,sep="_")
 invisible(create_logger(fileName=logFileName,directory=file.path(homeDir,"log")))
 logger("Logger successfully created.\n")
 logger(fileName)

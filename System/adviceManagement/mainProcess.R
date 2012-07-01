@@ -54,7 +54,7 @@ activeOrders <- data.frame(name="main",startTime=Sys.time(),fileName="",orderNam
 
 # start monitoring input directory
 
-T <- Sys.time()+120
+T <- Sys.time()+60
 while(Sys.time()<T) {
 	logger("Looking for new files ...")
 	existingFiles <- list.files(path=file.path(systemOptions[["homeDir"]],"postOffice","inbox"))

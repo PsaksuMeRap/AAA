@@ -26,9 +26,9 @@ sendEMail <- function(mail) {
 			"-t",mail@to,
 			"-u",shQuote(mail@subject),
 			"-m",shQuote(mail@message),
-			"-s mail.opencapital.ch",
-			"-xu",username,
-			"-xp",password
+			"-s",.secrets[["Riskmanager"]][["server"]],
+			"-xu",.secrets[["Riskmanager"]][["username"]],
+			"-xp",.secrets[["Riskmanager"]][["password"]]
 	)
 	
 	if (length(mail@attachments)>0) {
@@ -67,29 +67,39 @@ setMethod("as.character","Mail",
 
 
 sendEmail_preComplianceResult <- function(message) {
-	workdir <- getwd()
-	setwd(file.path(systemOptions[["homeDir"]],"postOffice",message[["portfolioName"]],"pending"))
-
-	newAdviceFileName <- paste(paste(getMessageDate_time_from(message),"newAdvice",sep="_"),message[["fileExtension"]],sep=".")
 	
-	if (message[["testResult"]]=="no") {
-		stringMessage <- paste("Your advice '",newAdviceFileName,"' has been rejected because of a negative pre-compliance.\n",sep="")
-		subject <- "Advice rejected"
+	isTestOk <- message[["testResult"]] == "1"
+	
+	if (isTestOk) {
+		setwd(file.path(systemOptions[["homeDir"]],"archive","processed","accepted"))
 	} else {
-		stringMessage <- paste("Your advice '",newAdviceFileName,"' has been accepted.\n",sep="")
-		subject <- "Advice accepted"
+		setwd(file.path(systemOptions[["homeDir"]],"archive","processed","rejected"))
+	}
+	
+	newAdviceFileName <- paste(paste(getMessageDate_time_from(message),
+					message[["from"]],message[["portfolioName"]],"newAdvice",sep="_"),
+			"csv",sep=".")
+	
+	if (isTestOk) {
+		stringMessage <- paste("Your advice '",newAdviceFileName,"' has been accepted.\n",
+				"See attached zip file for more information.",sep="")
+		subject <- "New advice accepted"
+	} else {
+		stringMessage <- paste("Your advice '",newAdviceFileName,"' has been rejected because of a negative pre-compliance.\n",
+				"see attached zip file for more information.",sep="")
+		subject <- "New advice rejected"
 	}
 	
 	# sendEmail
 	mail <- new("Mail",
-			from="claudio.ortelli@usi.ch",
+			from=.secrets[["Riskmanager"]][["username"]],
 			to=message@advisor@email,
 			subject=subject,
 			message=stringMessage,
 			attachments=message[["fileName"]]
 	)
 	resultMessage <- sendEMail(mail)
-	logger(paste("Mail sent:\n",as.character(mail),sep=""))
-	setwd(workdir)
+	
+	setwd(systemOptions[["homeDir"]])
 	return(resultMessage)
 }

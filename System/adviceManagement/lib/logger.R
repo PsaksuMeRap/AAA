@@ -25,8 +25,8 @@ create_logger <- function(fileName,directory=file.path(systemOptions[["homeDir"]
 }
 
 
-logger <- function(message,processName="main",noOk="") {
-	cat(paste("\n",Sys.time()," from ",processName,": ",message,noOk,sep=""))
+logger <- function(message,noOk="") {
+	cat(paste("\n",Sys.time(),": ",message,noOk,sep=""))
 }
 
 loggerDone <- function(x=" [ok]\n") {

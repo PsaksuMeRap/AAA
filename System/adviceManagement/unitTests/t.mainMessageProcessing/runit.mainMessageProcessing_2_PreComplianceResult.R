@@ -4,39 +4,37 @@
 ###############################################################################
 
 
-test.shouldProcessPreComplianceResultMessageNo <- function() {
+test.shouldProcessPreComplianceResult_1 <- function() {
 	
 	# create the archive
 	create_archive(systemOptions[["homeDir"]])
 	
 	# identify a new order
-	fileName <- "2012-05-09_14-22-24_Ortelli_globalEquity_preComplianceResult_no.csv"
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.messageProcessing")
+	fileName <- "2012-06-19_14-27-47_Ortelli_globalEconomy_preComplianceResult_1.zip"
+	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.mainMessageProcessing")
+	fullFileNameFrom <- file.path(directory,fileName)
 	
 	# create the postOffice
 	absolutePath <- systemOptions[["homeDir"]]
 	postOffice <- new("PostOffice",absolutePath=absolutePath)
 	setup(postOffice)
 
-	# identify the messageType
-	message <- messageFactory(fileName,directory,advisors)	
-
-	# create the mailBox
-	mailBox <- new("MailBox",folderName=message[["portfolioName"]])
+	mailBox <- new("MailBox",folderName="globalEconomy")
 	setup(x=mailBox,y=postOffice)
 	
+	# identify the messageType
+	message <- messageFactory(fileName,directory)
 
-	# create the newAdviceFileName who generated fileName
-	newAdviceFileName <- paste(paste(getMessageDate_time_from(message),"newAdvice",sep="_"),message[["fileExtension"]],sep=".")
-	
 	# lock
 	ok <- lock(message)
 	
 	# create file
-	ok <- file.create(file.path(systemOptions[["homeDir"]],"postOffice",message[["portfolioName"]],"pending",message[["fileName"]])) 
-	ok <- file.create(file.path(systemOptions[["homeDir"]],"postOffice",message[["portfolioName"]],"pending",newAdviceFileName)) 
+	fullFileNameTo <- file.path(systemOptions[["homeDir"]],"postOffice","inbox",message[["fileName"]]) 
+	isOk <- file.copy(fullFileNameFrom,fullFileNameTo)
+	fullFileNameTo <- file.path(systemOptions[["homeDir"]],"archive","processed","accepted",message[["fileName"]]) 
+	isOk <- file.copy(fullFileNameFrom,fullFileNameTo)
 	
-	messageProcessing(message)
+	mainMessageProcessing(message)
 	exists <- file.exists(file.path(systemOptions[["homeDir"]],"archive","processed","rejected",message[["fileName"]]))
 	checkEquals(exists,TRUE)
 	

@@ -32,7 +32,7 @@ newAdviceNoLock <- function(message) {
 	copyOk <- file.copy(fileFrom,fileTo)
 	
 	if (copyOk) {
-		logger(paste("File ",fileName," successfully moved to",portfolioName,"/pending",sep=""))
+		logger(paste("File ",fileName," successfully moved to ",portfolioName,"/pending",sep=""))
 		logger("Removing incoming file ...")
 		removeOk <- file.remove(fileFrom)
 		if (removeOk) {
