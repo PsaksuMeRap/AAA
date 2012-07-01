@@ -5,7 +5,7 @@
 
 
 get_PID <- function(imageName) {
-	if(.Platform$OS.type=="windows") {
+	if (.Platform$OS.type=="windows") {
 		if (missing(imageName)) imageName <- "R.exe"
 		output <- system(paste("tasklist.exe /fi \"imagename eq",imageName,"\""),intern=TRUE)
 		if (output[[1]]=="INFO: No tasks are running which match the specified criteria.") {

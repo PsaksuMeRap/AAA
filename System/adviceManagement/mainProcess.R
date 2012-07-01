@@ -1,27 +1,21 @@
 
-# library("tcltk")
-# library("stringr")
+# create the log file
+source(file.path(sourceCodeDir,"adviceManagement","lib","logger.R"))
+logFileName <- paste(format(Sys.time(),"%Y-%m-%d_%H-%M-%S"),"riskman_log.txt",sep="_")
+invisible(create_logger(fileName=logFileName,directory=file.path(homeDir,"log")))
+logger("Logger successfully created.\n")
 
-# if(.Platform$OS.type=="windows") {
-#	library("rJava")
-# 	library("Rbbg")
-# }
-
-source("./adviceManagement/lib/initialSetup.R")
+# source the code
+logger("Starting initialSetup ...")
+source(file.path(sourceCodeDir,"adviceManagement","lib","initialSetup.R"))
+loggerDone()
 
 # set the sleeping time in seconds
 sleepTime <- 10
 
-# set the homeDir variable
-homeDir <- systemOptions[["homeDir"]]
-
-# create the log file
-logFileName <- paste(format(Sys.time(),"%Y-%m-%d_%H-%M-%S"),"riskman_log.txt",sep="_")
-invisible(create_logger(fileName=logFileName))
-
 # create the PostOffice
 logger("Initializing PostOffice ...")
-postOffice <- new("PostOffice",absolutePath=homeDir)
+postOffice <- new("PostOffice",absolutePath=systemOptions[["homeDir"]])
 setup(postOffice)
 loggerDone()
 
@@ -38,9 +32,10 @@ isOk <- file.copy(from,to,recursive=TRUE)
 loggerDone()
 
 # check that no R processes are running and identify the PID of this program
-PID <- get_PID(imageName="eclipse.exe")
+#PID <- get_PID(imageName="eclipse.exe")
 #PID <- get_PID(imageName="Rterm.exe")
-PID <- get_PID(imageName="Rgui.exe")
+#PID <- get_PID(imageName="Rgui.exe")
+PID <- get_PID(imageName="eclipse")
 if (length(PID)>1) {
 	msg <- "Please close all running R/Rterm processes before starting a new one!"
 	ok <- tkmessageBox(message=msg,icon="warning",type="ok")
@@ -60,7 +55,7 @@ activeOrders <- data.frame(name="main",startTime=Sys.time(),fileName="",orderNam
 T <- Sys.time()+500
 while(Sys.time()<T) {
 	logger("Looking for new files ...")
-	existingFiles <- list.files(path=file.path(homeDir,"postOffice","inbox"))
+	existingFiles <- list.files(path=file.path(systemOptions[["homeDir"]],"postOffice","inbox"))
 	loggerDone()
 	
 	if (length(existingFiles>0)) {
@@ -77,63 +72,14 @@ while(Sys.time()<T) {
 		for (fileName in existingFiles) {
 			#identify messageTye between: newAdvice,adviceConfirmation,preComplianceResult,postComplianceResult
 			directory <- file.path(systemOptions[["homeDir"]],"postOffice","inbox")
+			logger(paste("Construct and identify message",fileName,"..."))
 			message <- messageFactory(fileName,directory)
+			loggerDone()
 			
-			# identify the advisor (filename="2012-05-09_14-22-24_Ortelli_globalEquity_newAdvice.csv")
-			messageFrom <- message[["from"]]
+			# process the message
+			logger(paste("Process message",fileName))
+			mainMessageProcessing(message)
 			
-			# identify the involved portfolio
-			portfolioName <- message[["portfolioName"]]
-			
-			if (is.element(message[["messageType"]],c("newAdvice","adviceConfirmation"))) {
-				# check if the corresponding mailBox is available
-				mailBoxExists <- is.element(portfolioName, dir(file.path(postOffice@absolutePath,"postOffice")))
-				
-				if (!mailBoxExists) {
-					# if the mailBox does not exists create the mailbox
-					logger(paste("Creating mailBox for portfolio",portfolioName,"from",messageFrom,"..."))
-					mailbox <- new("MailBox",folderName=portfolioName)
-					setup(x=mailbox,y=postOffice)
-					loggerDone()
-				}
-				
-				# is the mailbox locked? 
-				isLocked <- file.exists(file.path(homeDir,"postOffice",portfolioName,"lock"))
-				
-				# if locked send an e-mail and move the file into the removed folder. Log all actions
-				if (isLocked) {
-					isOk <- isLockOnNewAdvice(message)
-				} else {
-					# if the file is not locked move the advice in the mailbox_xxx/pending and start processing
-					PID <- noLockOnNewAdvice(message)
-				}
-			}
-			
-			if (is.element(message[["messageType"]],c("preComplianceResult","postComplianceResult"))) {
-				postProcessing <- function(fileName) {
-					# is the pre-compliance ok?
-					if (isPrecomplianceOk) {
-						lockOnNewOrder(fileName)
-						# send e-mail ok
-						
-						# cp result in a specified folder for user
-						# mv from outbox and archive the result
-						
-						
-						# log actions
-					} else {
-						# send e-mail with attachment & warning
-						# log it
-						
-						
-					}
-				}
-				
-				for (fileName in processedFiles) {
-					postProcessing(fileName)
-					
-				}
-			}
 		} # end for (fileName in existingFiles)
 		
 	} # end if (length(existingFiles>0))

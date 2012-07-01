@@ -3,8 +3,8 @@
 # Author: claudio
 ###############################################################################
 
-source("./base/lib/lists.R")
 source("./base/lib/systemOptions.R")
+source("./base/lib/lists.R")
 
 source("./base/lib/repository.R")
 source("./base/lib/importazioneDBPortfolioGenerale.R") 
@@ -86,6 +86,6 @@ source("./base/lib/identifyPositionsToExplode.R")
 
 source("./base/lib/explodePortfolioByFund.R")
 
-source("./ayrton/lib/library.R")
-source("./riskman/lib/library.R")
+# source("./ayrton/lib/library.R")
+# source("./riskman/lib/library.R")
 # source("./adviceManagement/lib/library.R")

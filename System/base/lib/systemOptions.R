@@ -3,19 +3,14 @@
 # Author: claudio
 ###############################################################################
 systemOptions <- list()
-
 systemOptions[["eq.tolerance"]] <- 10^-6
 systemOptions[["allowedCurrencies"]] <- c("CHF","EUR","USD","AUD","NOK","GBP","INR","BRL","JPY","CAD","INR","NZD","CHr")
 
-if (exists("isTest") & .Platform$OS.type!="windows") {
-	systemOptions[["homeDir"]] <- "/home/claudio/riskman"
-} else {
-	systemOptions[["homeDir"]] <- "c:/riskman"
-}
+systemOptions[["homeDir"]] <- homeDir
+systemOptions[["sourceCodeDir"]] <- sourceCodeDir
 
 # the number of minutes necessary before a bloomberg data is considered
 systemOptions[["bloombergUpdateInterval"]] <- as.difftime(240, units = "mins")
-
 
 if (.Platform$OS.type=="windows") {
 	systemOptions[["R_ZIPCMD"]] <- "C:/Rtools/bin/zip.exe"

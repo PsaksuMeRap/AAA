@@ -49,7 +49,7 @@ dirs = c(
 		 "./adviceManagement/unitTests/t.noLockOnNewAdvice",
 		"./adviceManagement/unitTests/t.isLockOnNewAdvice",
 		"./adviceManagement/unitTests/t.lock_unlock",
-		"./adviceManagement/unitTests/t.messageProcessing",
+		"./adviceManagement/unitTests/t.mainMessageProcessing",
 		"./adviceManagement/unitTests/t.mail",
 		"./adviceManagement/unitTests/t.tradeFactory",
 	 	"./adviceManagement/unitTests/t.tradeToSecurityFactory",

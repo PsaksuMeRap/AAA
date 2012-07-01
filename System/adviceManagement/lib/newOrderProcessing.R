@@ -10,7 +10,7 @@ args=commandArgs(trailingOnly = TRUE)
 if (length(args)==0) {
 	sourceCodeDir <- getwd()
 	fileName <- "2012-06-19_14-27-47_Ortelli_globalEconomy_newAdvice.csv"
-	homeDir <- "C:/riskman"
+	if (.Platform$OS.type=="windows") homeDir <- "C:/riskman" else homeDir <- "/home/claudio/riskman"
 } else {	
 	## args is now a list of character vectors
 	## Then cycle through each element of the list and evaluate the expressions.
@@ -19,41 +19,51 @@ if (length(args)==0) {
 	eval(parse(text=args[[3]])) # this is the homeDir variable
 }
 
-csvTradesFileName <- fileName
-sink("pippo.txt")
+# create the log file
+source(file.path(sourceCodeDir,"adviceManagement","lib","logger.R"))
+logFileName <- paste(format(Sys.time(),"%Y-%m-%d_%H-%M-%S"),"newOrderProcessing",fileName,sep="_")
+invisible(create_logger(fileName=logFileName,directory=file.path(homeDir,"log")))
+logger("Logger successfully created.\n")
+logger(fileName)
+
+# set the working directory to sourceCodeDir
+logger("Change working directory to sourceCodeDir ...")
 setwd(sourceCodeDir)
-getwd()
+loggerDone()
 
+# source the code
+logger("Starting initialSetup ...")
 source(file.path(sourceCodeDir,"adviceManagement","lib","initialSetup.R"))
+# loggerDone not required
 
-# load the adviceManagement code
-if (length(args)>0) source(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","library.R"))
-
-logFileName <- create_logger(fileName=csvTradesFileName)
-# load the advisors
-logger("Loading Advisors list ...")
-source(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","advisors.R"))
+csvTradesFileName <- fileName
 
 # extract the portfolioName and construct the directory path where the
 # message is waiting for processing
+logger("Creating directory containing message ...")
 directory <- strsplit(fileName,"_")[[1]][4]
 directory <- file.path(systemOptions[["homeDir"]],"postOffice",directory,"pending")
+loggerDone()
 
 # create the message
 logger(paste("Creating message for",file.path(directory,fileName),"..."))
 message <- messageFactory(fileName,directory)
+loggerDone()
 
 # source the repositoryPoliticaInvestimento
 logger(paste("Loading repositoryPoliticaInvestimento ..."))
 source(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","methods","repositories","repositoryPoliticaInvestimento.R"))
+loggerDone()
 
 # source the instrument repository
 logger(paste("Loading repositoryInstruments ..."))
 source(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","methods","repositories","repositoryInstruments.R"))
+loggerDone()
 
-# source the instrument repository
-load_repositoryExchangeRate()
+# source the exchangerates repository
 logger(paste("Loading repositoryEchangeRates ..."))
+load_repositoryExchangeRate()
+loggerDone()
 
 # define the checkDirectory, i.e. the directory containing the checkFile, the csv file with
 # the desired trades and the output result
@@ -63,6 +73,7 @@ checkDirectory <- file.path(systemOptions[["homeDir"]],"postOffice",message[["po
 # create the path to the portfolio directory
 logger(paste("Loading portfolio",message[["portfolioName"]],"..."))
 portfolio <- loadPortfolio(portfolioId=message[["portfolioName"]])
+loggerDone()
 
 # import the bloomberg repository
 logger("Loading the bloomberg data file ...")
@@ -72,7 +83,7 @@ repositories$bloombergData <- repositories$object
 rm("object",pos=repositories)
 
 # import the desired trades and the corresponding cash movements as new positions
-logger(paste("Loading desired trades",message[["portfolioName"]],"..."))
+logger(paste("Create position from trades for portfolio",message[["portfolioName"]],"..."))
 positionsFromTrades <- tradesToPositionsFactory(csvTradesFileName,checkDirectory)
 portfolio <- portfolio + positionsFromTrades
 textMessage <- paste("Imported positions from desired trades:")
