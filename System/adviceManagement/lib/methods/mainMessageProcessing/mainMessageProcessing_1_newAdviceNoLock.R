@@ -17,7 +17,7 @@ newAdviceNoLock <- function(message) {
 	# send an e-mail
 	
 	mail <- new("Mail",
-			from="claudio.ortelli@usi.ch",
+			from=.secrets[["Riskmanager"]][["emailAddress"]],
 			to=message@advisor@email,
 			subject="Processing order",
 			message=paste("Your advice '",fileName,"' is being processed",sep="")

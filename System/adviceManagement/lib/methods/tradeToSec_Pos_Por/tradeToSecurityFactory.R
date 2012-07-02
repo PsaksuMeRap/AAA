@@ -78,6 +78,8 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"FUT_DLV_DT_FIRST")
 		# collect the last price
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"LAST_PRICE")
+		# collect the value of one point
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"FUT_VAL_PT")
 		
 		newSecurity <- new("Futures_EQ",currency=currency,name=name,id=id,underlying=new("IndexEquity")) 
 		return(newSecurity)

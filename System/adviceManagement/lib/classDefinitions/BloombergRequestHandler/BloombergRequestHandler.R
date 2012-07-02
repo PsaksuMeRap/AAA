@@ -36,7 +36,8 @@ create_BloombergRequestHandler <- function() {
 			if (length(blRequestHandler[["requests"]])==0) return(blData)
 
 		} else {
-			# remove the data entries having a value not older than systemOptions[["bloombergUpdateInterval"]] seconds
+			# remove from the current request all data entries having a value not older 
+			# than systemOptions[["bloombergUpdateInterval"]] seconds
 			if (length(blRequestHandler[["requests"]])==0) return(blData)
 			
 			isToRemove <- sapply(blRequestHandler[["requests"]],blRequestHandler[["isToRemove"]],blData,USE.NAMES=FALSE)
@@ -55,8 +56,9 @@ create_BloombergRequestHandler <- function() {
 			ok <- blId == security
 			result <- bdp(conn, securities=security, fields=fieldId[ok])
 			for (field in fieldId[ok]) {
+				if (field=="FUT_VAL_PT") value <- as.numeric(result[security,field]) else value <- result[security,field]
 				blData <- add(new("BloombergDataEntry",blId=security,fieldId=field,
-								value=result[security,field],dateLastUpdate=Sys.time()),blData)
+								value=value,dateLastUpdate=Sys.time()),blData)
 			}
 		}
 		blpDisconnect(conn)

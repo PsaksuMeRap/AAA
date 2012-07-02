@@ -33,28 +33,9 @@ to <- file.path(systemOptions[["homeDir"]])
 isOk <- file.copy(from,to,recursive=TRUE)
 loggerDone()
 
-# check that no R processes are running and identify the PID of this program
-#PID <- get_PID(imageName="eclipse.exe")
-#PID <- get_PID(imageName="Rterm.exe")
-#PID <- get_PID(imageName="Rgui.exe")
-PID <- get_PID(imageName="eclipse")
-if (length(PID)>1) {
-	msg <- "Please close all running R/Rterm processes before starting a new one!"
-	ok <- tkmessageBox(message=msg,icon="warning",type="ok")
-	logger("Multiple Rterm processes detected. The program will close.")
-	# remove the postOffice
-	logger("Removing postOffice ...")
-	unlink("postOffice",recursive=TRUE)
-	loggerDone()
-	quit(save="no")
-}
-
-# create the data.frame with the activeOrders
-activeOrders <- data.frame(name="main",startTime=Sys.time(),fileName="",orderName="",PID=PID)
-
 # start monitoring input directory
 
-T <- Sys.time()+60
+T <- Sys.time()+360
 while(Sys.time()<T) {
 	logger("Looking for new files ...")
 	existingFiles <- list.files(path=file.path(systemOptions[["homeDir"]],"postOffice","inbox"))

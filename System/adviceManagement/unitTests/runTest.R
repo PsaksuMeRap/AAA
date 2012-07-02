@@ -19,14 +19,21 @@ stringsAsFactors = FALSE
 # this variable is used to indicate that we are running a testsuite
 isTest <- TRUE
 repositories <- new.env()
+if (.Platform$OS.type=="windows") {
+	homeDir <- "C:/riskman" 
+} else {
+	homeDir <- "/home/claudio/riskman"
+}
 
-source("./base/lib/library.R")
 # set the directory where the source code is installed (i.e. folders adviceManagement, ayrton, base, riskman)
 sourceCodeDir <- getwd()
+
+source("./base/lib/library.R")
+source("./ayrton/lib/library.R")
+source("./riskman/lib/library.R")
+
 systemOptions[["sourceCodeDir"]] <- sourceCodeDir
 source("./adviceManagement/lib/library.R")
-
-
 
 source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
 testRepository <- createExchangeRatesTestRepository() 
