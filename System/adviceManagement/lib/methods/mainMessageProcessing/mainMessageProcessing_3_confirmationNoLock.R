@@ -4,42 +4,44 @@
 ###############################################################################
 
 
-isLockOnNewAdvice <- function(message) {
+confirmationNoLock <- function(message) {
 	
 	rootDir <- systemOptions[["homeDir"]]
 	fileName <- message[["fileName"]]
 	
-	logger(paste("lock detected for order",fileName, "from",message[["from"]]))
+	logger(paste("No lock detected for order",fileName, "from",message[["from"]]))
 	
 	# send an e-mail
 	mail <- new("Mail",
 			from=.secrets[["Riskmanager"]][["emailAddress"]],
 			to=message@advisor@email,
 			subject="Advice refused",
-			message=paste("Your advice '",fileName,"' has been deleted because of a pending order.\nPlease resend a new advice after execution and confirmation of the current one.",sep="")
+			message=paste("Your confirmation '",fileName,"' has been deleted because of no pending order.\nPlease send a new advice first.",sep="")
 	)
 	sendEMail(mail)
 	logger(paste("Mail sent:\n",as.character(mail),sep=""))
-
-	# move file in the archive/delete folder (da migliorare: file non devono essere sovrascritti)
+	
+	# move file in the archive/delete folder
 	fileFrom <- file.path(rootDir,"postOffice","inbox",fileName) 
 	fileTo <- file.path(rootDir,"archive","deleted",fileName)
+	logger(paste("Copying file",fileName,"to directory archive/deleted ... "))
 	copyOk <- file.copy(fileFrom,fileTo)
+	cat(copyOk)
 	
 	if (copyOk) {
-		logger(paste("File",fileName,"successfully copied to directory archive/deleted"))
+		logger(paste("Removing",fileFrom,"... "))
 		removedOk <- file.remove(fileFrom)
+		cat(removeOk)
 		if (removedOk) {
-			logger(paste("file",fileFrom,"successfully moved to directory archive/deleted"))
 			return(0)
 		} else {
-			logger(paste("error: impossible to remove file",fileFrom))
+			logger(paste("Error: impossible to remove file",fileFrom))
 			# send e-mail to system administrator for manual remove
 			mail <- new("Mail",
 					from=.secrets[["Riskmanager"]][["emailAddress"]],
 					to=message@advisor@email,
 					subject="Serious error",
-					message=paste("Impossible to remove the incoming advice '",fileName,"'.\nA manual intervention is required.\nThe file must be removed to the ./archive/deleted folder",sep="")
+					message=paste("Impossible to remove the incoming confirmation '",fileName,"'.\nA manual intervention is required.\nThe file must be removed from the ./archive/deleted folder",sep="")
 			)
 			sendEMail(mail)
 			logger(paste("Mail sent:\n",as.character(mail),sep=""))
@@ -52,7 +54,7 @@ isLockOnNewAdvice <- function(message) {
 				from=.secrets[["Riskmanager"]][["emailAddress"]],
 				to=message@advisor@email,
 				subject="Serious error",
-				message=paste("Impossible to copy the incoming advice '",fileName,"' to archive/deleted.\nA manual intervention is required.",sep="")
+				message=paste("Impossible to copy the incoming confirmation '",fileName,"' to archive/deleted.\nA manual intervention is required.",sep="")
 		)
 		sendEMail(mail)
 		logger(paste("Mail sent:\n",as.character(mail),sep=""))

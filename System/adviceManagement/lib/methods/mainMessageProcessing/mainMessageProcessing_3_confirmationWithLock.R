@@ -5,28 +5,27 @@
 
 
 
-newAdviceNoLock <- function(message) {
+confirmationWithLock <- function(message) {
 	
 	messageFrom <- message[["from"]]
 	fileName <- message[["fileName"]]
 	portfolioName <- message[["portfolioName"]]
 	
-	# if the file is not locked move the advice in the pending folder and start processing
-	logger(paste("No lock detected for newAdvice of",portfolioName,"from",messageFrom),noOk="\n")
+	# if the file is locked move the advice in the pending folder and start processing
+	logger(paste("Lock detected for confirmation of",portfolioName,"from",messageFrom),noOk="\n")
 	
 	# send an e-mail
-	
 	mail <- new("Mail",
 			from=.secrets[["Riskmanager"]][["emailAddress"]],
 			to=message@advisor@email,
 			subject="Processing order",
-			message=paste("Your advice '",fileName,"' is being processed",sep="")
+			message=paste("Your confirmation '",fileName,"' is being processed",sep="")
 	)
 	logger(paste("\nSending e-mail:\n",as.character(mail),sep=""))
 	sendEMail(mail)
 	loggerDone("\n [ok]\n\n")
 	
-	# move file (da migliorare: file non devono essere sovrascritti)
+	# move file
 	fileFrom <- file.path(systemOptions[["homeDir"]],"postOffice","inbox",fileName) 
 	fileTo <- file.path(systemOptions[["homeDir"]],"postOffice",portfolioName,"pending",fileName)
 	copyOk <- file.copy(fileFrom,fileTo)
@@ -51,7 +50,7 @@ newAdviceNoLock <- function(message) {
 	# command <- "c:\\Progra~1\\R\\R-2.14.2\\bin\\R CMD BATCH --slave --no-restore-history --no-timing --no-save "
 	
 	# define the name of the file to process and costruct the command
-	fullFileNameToExecute <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","subNewAdviceProcessing.R")
+	fullFileNameToExecute <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","subConfirmationProcessing.R")
 	command <- "R CMD BATCH --slave --no-restore-history --no-timing --no-save "
 	command <- paste(command,"\"--args fileName='",fileName,
 			"' sourceCodeDir='",systemOptions[["sourceCodeDir"]],

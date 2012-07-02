@@ -22,12 +22,12 @@ test.shouldProcessOrder <- function() {
 	
 	# copy the file with the new orders
 	fileName <- "2012-06-19_14-27-47_Ortelli_globalEconomy_newAdvice.csv"
-	from <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.subNewOrderProcessing",fileName)
+	from <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.subNewAdviceProcessing",fileName)
 	to <- file.path(systemOptions[["homeDir"]],"postOffice","globalEconomy","pending",fileName)
 	isOk <- file.copy(from,to)
 	
 	test <- function() {
-		source(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","subNewOrderProcessing.R"))
+		source(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","subNewAdviceProcessing.R"))
 	}
 	
 	setwd(systemOptions[["sourceCodeDir"]])

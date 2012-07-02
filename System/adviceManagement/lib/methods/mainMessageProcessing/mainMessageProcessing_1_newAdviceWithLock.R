@@ -9,7 +9,7 @@ newAdviceWithLock <- function(message) {
 	rootDir <- systemOptions[["homeDir"]]
 	fileName <- message[["fileName"]]
 	
-	logger(paste("lock detected for order",fileName, "from",message[["from"]]))
+	logger(paste("Lock detected for order",fileName, "from",message[["from"]]))
 	
 	# send an e-mail
 	mail <- new("Mail",
@@ -30,14 +30,14 @@ newAdviceWithLock <- function(message) {
 		logger(paste("File",fileName,"successfully copied to directory archive/deleted"))
 		removedOk <- file.remove(fileFrom)
 		if (removedOk) {
-			logger(paste("file",fileFrom,"successfully moved to directory archive/deleted"))
+			logger(paste("File",fileFrom,"successfully moved to directory archive/deleted"))
 			return(0)
 		} else {
 			logger(paste("error: impossible to remove file",fileFrom))
 			# send e-mail to system administrator for manual remove
 			mail <- new("Mail",
-					from="claudio.ortelli@usi.ch",
-					to="claudio.ortelli@usi.ch",
+					from=.secrets[["Riskmanager"]][["emailAddress"]],
+					to=message@advisor@email,
 					subject="Serious error",
 					message=paste("Impossible to remove the incoming advice '",fileName,"'.\nA manual intervention is required.\nThe file must be removed to the ./archive/deleted folder",sep="")
 			)
@@ -49,8 +49,8 @@ newAdviceWithLock <- function(message) {
 		logger(paste("Error: impossible to copy the file '",fileName,"' to ./archive/deleted.\n A manual intervention is required.\nThe file must be moved to the ./archive/deleted folder",sep=""))
 		# send e-mail to system administrator for manual remove
 		mail <- new("Mail",
-				from="claudio.ortelli@usi.ch",
-				to="claudio.ortelli@usi.ch",
+				from=.secrets[["Riskmanager"]][["emailAddress"]],
+				to=message@advisor@email,
 				subject="Serious error",
 				message=paste("Impossible to copy the incoming advice '",fileName,"' to archive/deleted.\nA manual intervention is required.",sep="")
 		)
