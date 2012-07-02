@@ -17,3 +17,4 @@ if (.Platform$OS.type=="windows") {
 } else {
 	systemOptions[["R_ZIPCMD"]] <- "/usr/bin/zip"
 }
+Sys.setenv(R_ZIPCMD=systemOptions[["R_ZIPCMD"]])

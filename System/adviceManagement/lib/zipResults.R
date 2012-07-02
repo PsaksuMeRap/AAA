@@ -15,7 +15,7 @@ zipResults <- function(message,testResult,fromDir,toDir) {
 	fileName <- paste(fileName,"zip",sep=".")
 	
 	# zip all results in a single file
-	Sys.setenv(R_ZIPCMD=systemOptions[["R_ZIPCMD"]])
+	
 	zipfile <- file.path(toDir,fileName)
 	filesToZip <- list.files(fromDir,full.names=TRUE)
 	zip(zipfile,files=filesToZip,flags="-jr9X")
