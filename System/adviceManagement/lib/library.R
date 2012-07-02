@@ -3,7 +3,7 @@
 # Author: claudio
 ###############################################################################
 
-
+source("./adviceManagement/lib/secrets.R")
 source("./adviceManagement/lib/archive.R")
 source("./adviceManagement/lib/logger.R") 
 source("./adviceManagement/lib/lock_unlock.R")
