@@ -5,9 +5,9 @@
 
 
 
-tradesFactory <- function(fileName,directory) {
-	file <- file.path(directory,fileName)
-	csvTrades <- read.csv(file,as.is=TRUE)
+tradesFactory <- function(messageFileName,directory) {
+	fullFileName <- file.path(directory,messageFileName[["fileName"]])
+	csvTrades <- read.csv(fullFileName,as.is=TRUE)
 	
 	nbRows <- dim(csvTrades)[[1]]
 	if (nbRows==0) return(new("Trades")) 
