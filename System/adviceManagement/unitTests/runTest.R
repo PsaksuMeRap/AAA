@@ -3,8 +3,6 @@
 # Author: claudio
 ###############################################################################
 
-rm(list=ls(all=TRUE))
-
 library("RUnit")
 library("tcltk")
 library("stringr")
@@ -20,7 +18,7 @@ stringsAsFactors = FALSE
 isTest <- TRUE
 repositories <- new.env()
 if (.Platform$OS.type=="windows") {
-	homeDir <- "C:/riskman" 
+	homeDir <- "C:/riskman"
 } else {
 	homeDir <- "/home/claudio/riskman"
 }
