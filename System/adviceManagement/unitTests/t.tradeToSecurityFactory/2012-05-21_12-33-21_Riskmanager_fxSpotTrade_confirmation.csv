@@ -1,0 +1,2 @@
+Portfolio,Buy_Sell,Id_Bloomberg,Security_name,Currency,Security_type,UBS_Sec_type,Quantity,ISIN_Ticker,Price,Order_type,Amount,Broker,,Security_name,Confirmed_quantity,Confirmed_price,Value_date
+GLOBAL ECONOMY,Buy,eurchf curncy,EUR-CHF X-RATE,EUR,FX Spot,,500000,,1.20132,,600660,Other,,EUR-CHF X-RATE,500000,1.20132,00-01-1900

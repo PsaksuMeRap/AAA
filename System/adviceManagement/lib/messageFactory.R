@@ -13,11 +13,11 @@ messageFactory <- function(fileName,directory) {
 	message <- new("Message",advisor=advisor,messageFileName)
 	messageType <- messageFileName[["messageType"]]
 	if (messageType == "newAdvice") {
-		trades <- tradesFactory(fileName,directory)
+		trades <- tradesFactory(messageFileName,directory)
 		return(new("NewAdvice",trades=trades,message))
 	}
 	if (messageType == "confirmation") {
-		trades <- tradesFactory(fileName,directory)
+		trades <- tradesFactory(messageFileName,directory)
 		return(new("Confirmation",trades=trades,message))
 	}	
 	if (messageType == "preComplianceResult") {
@@ -25,6 +25,5 @@ messageFactory <- function(fileName,directory) {
 	}	
 	if (messageType == "postComplianceResult") {
 		return(new("PostComplianceResult",message))
-	}	
-
+	}
 }

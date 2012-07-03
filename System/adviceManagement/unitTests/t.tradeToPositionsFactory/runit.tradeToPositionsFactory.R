@@ -12,7 +12,7 @@ test.shouldConvertEquityTradeToPortfolioPositions <- function() {
 	blData <- createRepositoryBloombergData()
 	
 	# set the fileName from which to import trades
-	fileName <- "equityTrade.csv"
+	fileName <- "2012-05-09_14-22-24_Ortelli_equityTrade_newAdvice.csv"
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
 	# import trades
@@ -39,7 +39,7 @@ test.shouldConvertFuturesOnIndexTradeToPortfolioPositions <- function() {
 	blData <- createRepositoryBloombergData()
 	
 	# set the fileName from which to import trades
-	fileName <- "futureEquityIndexTrade.csv"
+	fileName <- "2012-05-09_14-22-24_Ortelli_futureEquityIndexTrade_newAdvice.csv"
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
 	# import trades
@@ -66,7 +66,7 @@ test.shouldConvertBondTradeToPortfolioPositions <- function() {
 	blData <- createRepositoryBloombergData()
 	
 	# set the fileName from which to import trades
-	fileName <- "bondTrade.csv"
+	fileName <- "2012-05-09_14-22-24_Ortelli_bondTrade_newAdvice.csv"
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
 	# import trades
@@ -93,7 +93,7 @@ test.shouldConvertFXSpotTradeToPortfolioPositions <- function() {
 	blData <- createRepositoryBloombergData()
 	
 	# set the fileName from which to import trades
-	fileName <- "fxSpotTrade.csv"
+	fileName <- "2012-05-09_14-22-24_Ortelli_fxSpotTrade_newAdvice.csv"
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
 	# import trades
@@ -119,7 +119,7 @@ test.shouldConvertOptionOnEquityTradeToPortfolioPositions <- function() {
 	blData <- createRepositoryBloombergData()
 	
 	# set the fileName from which to import trades
-	fileName <- "optionEquityTrade.csv"
+	fileName <- "2012-05-09_14-22-24_Ortelli_optionEquityTrade_newAdvice.csv"
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
 	# import trades
@@ -147,7 +147,7 @@ test.shouldConvertOptionOnFxTradeToPortfolioPositions <- function() {
 	blData <- createRepositoryBloombergData()
 	
 	# set the fileName from which to import trades
-	fileName <- "optionFxTrade.csv"
+	fileName <- "2012-05-09_14-22-24_Ortelli_optionFxTrade_newAdvice.csv"
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
 	# import trades
@@ -173,7 +173,7 @@ test.shouldConvertForwardOnFxTradeToPortfolioPositions <- function() {
 	blData <- createRepositoryBloombergData()
 	
 	# set the fileName from which to import trades
-	fileName <- "fxForwardTrade.csv"
+	fileName <- "2012-05-09_14-22-24_Ortelli_fxForwardTrade_newAdvice.csv"
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
 	# import trades

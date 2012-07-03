@@ -7,11 +7,17 @@ setGeneric("tradeToPositionFactory",def=function(newSecurity,trade,blData) stand
 
 setMethod("tradeToPositionFactory",signature(newSecurity="Equity"),
 		function(newSecurity,trade,blData) {
-			priceId <- paste(trade$Id_Bloomberg,"LAST_PRICE",sep="__")
-			price <- blData[[priceId]]@value
-					
-			quantity <- sign(trade)*trade$Quantity
-
+			
+			if (is.null(trade$Confirmed_quantity)) {
+				priceId <- paste(trade$Id_Bloomberg,"LAST_PRICE",sep="__")
+				price <- blData[[priceId]]@value
+				
+				quantity <- sign(trade)*trade$Quantity
+			} else {
+				price <- trade$Confirmed_price
+				quantity <- sign(trade)*trade$Confirmed_quantity
+			}
+			
 			# create the class "PositionEquity"
 			equityPositions <- new("PositionEquity",id=new("IdBloomberg",trade$Id_Bloomberg),security=newSecurity,
 							quantity=quantity,value=toMoney(quantity*price,newSecurity@currency))
@@ -24,10 +30,16 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Equity"),
 setMethod("tradeToPositionFactory",signature(newSecurity="Futures_EQ"),
 		function(newSecurity,trade,blData) {
 		
-			# get the last price
-			priceId <- paste(trade$Id_Bloomberg,"LAST_PRICE",sep="__")
-			price <- blData[[priceId]]@value
-		
+			if (is.null(trade$Confirmed_quantity)) {
+				# get the last price
+				priceId <- paste(trade$Id_Bloomberg,"LAST_PRICE",sep="__")
+				price <- blData[[priceId]]@value
+				quantity <- sign(trade)*trade$Quantity
+			} else {
+				price <- trade$Confirmed_price
+				quantity <- sign(trade)*trade$Confirmed_quantity			
+			}
+			
 			# get the value of 1 pt
 			ptId <- paste(trade$Id_Bloomberg,"FUT_VAL_PT",sep="__")
 			valueOnePoint <- blData[[ptId]]@value
@@ -38,9 +50,7 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Futures_EQ"),
 			
 			# get the delivery date
 			deliveryDateId <- paste(trade$Id_Bloomberg,"FUT_DLV_DT_FIRST",sep="__")
-			deliveryDate <- blData[[deliveryDateId]]@value	
-			
-			quantity <- sign(trade)*trade$Quantity
+			deliveryDate <- blData[[deliveryDateId]]@value
 			
 			# update the newSecurity
 			newSecurity@deliveryDate <- deliveryDate
@@ -58,10 +68,16 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Futures_EQ"),
 setMethod("tradeToPositionFactory",signature(newSecurity="Bond"),
 		function(newSecurity,trade,blData) {
 			
-			# get the last price
-			priceId <- paste(trade$Id_Bloomberg,"LAST_PRICE",sep="__")
-			price <- blData[[priceId]]@value
-			
+			if (is.null(trade$Confirmed_quantity)) {
+				# get the last price
+				priceId <- paste(trade$Id_Bloomberg,"LAST_PRICE",sep="__")
+				price <- blData[[priceId]]@value
+				quantity <- new("NominalValue",amount=new("Amount",sign(trade)*trade$Quantity),currency=newSecurity@currency)
+			} else {
+				price <- trade$Confirmed_price
+				quantity <- new("NominalValue",amount=new("Amount",sign(trade)*trade$Confirmed_quantity),currency=newSecurity@currency)			
+			}
+				
 			# get the value of the accrued interest
 			accInterestId <- paste(trade$Id_Bloomberg,"INT_ACC",sep="__")
 			accInterest <- new("AccruedInterest",toMoney(trade$Quantity*blData[[accInterestId]]@value/100,newSecurity@currency))
@@ -74,8 +90,6 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Bond"),
 			# get the maturity date
 			maturityId <- paste(trade$Id_Bloomberg,"MATURITY",sep="__")
 			maturity <- blData[[maturityId]]@value
-			
-			quantity <- new("NominalValue",amount=new("Amount",sign(trade)*trade$Quantity),currency=newSecurity@currency)
 			
 			# update the newSecurity
 			newSecurity@maturity <- maturity
@@ -116,9 +130,16 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Conto_corrente"),
 					return(1.0)
 				}
 			
-				priceId <- paste(trade$Id_Bloomberg,"LAST_PRICE",sep="__")
-				price <- blData[[priceId]]@value * blFxCorrectionFactor(trade$Id_Bloomberg)
-				
+				if (is.null(trade$Confirmed_quantity)) {
+					# get the last price
+					priceId <- paste(trade$Id_Bloomberg,"LAST_PRICE",sep="__")
+					price <- blData[[priceId]]@value * blFxCorrectionFactor(trade$Id_Bloomberg)
+					tradeQuantity <- trade$Quantity
+				} else {
+					price <- trade$Confirmed_price
+					tradeQuantity <- trade$Confirmed_quantity			
+				}
+					
 				# we create two conto_corrente positions with respect the "xxxyyy curncy" spot trade.
 				# the first conto_corrente contains the amount in currency "xxx" while the second the 
 				# corresponding amount in "yyy" currency.
@@ -133,7 +154,7 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Conto_corrente"),
 				name <- paste(id,trade$Id_Bloomberg)
 				newSecurity <- new("Conto_corrente",currency=currency,name=name,id=id) 
 				conto_corrente_xxx <- new("PositionConto_corrente",id=new("IdBloomberg",id),security=newSecurity,
-						quantity=1.0,value=toMoney(sign(trade)*trade$Quantity,currency))
+						quantity=1.0,value=toMoney(sign(trade)*tradeQuantity,currency))
 				
 				# the numeraire currency then
 				currency <- new("Currency",info[["numeraire"]])
@@ -141,7 +162,7 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Conto_corrente"),
 				name <- paste(id,trade$Id_Bloomberg)
 				newSecurity <- new("Conto_corrente",currency=currency,name=name,id=id) 
 				conto_corrente_yyy <- new("PositionConto_corrente",id=new("IdBloomberg",id),security=newSecurity,
-						quantity=1.0,value=toMoney(-sign(trade)*trade$Quantity*price,currency))
+						quantity=1.0,value=toMoney(-sign(trade)*tradeQuantity*price,currency))
 				
 				# create a list of positions
 				positions <- new("Positions")
@@ -154,6 +175,16 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Conto_corrente"),
 
 setMethod("tradeToPositionFactory",signature(newSecurity="Opzioni_su_azioni"),
 		function(newSecurity,trade,blData) {
+	
+			if (is.null(trade$Confirmed_quantity)) {
+				# get the last price
+				priceId <- paste(trade$Id_Bloomberg,"LAST_PRICE",sep="__")
+				price <- blData[[priceId]]@value
+				quantity <- sign(trade)*trade$Quantity
+			} else {
+				price <- trade$Confirmed_price
+				quantity <- trade$Confirmed_quantity			
+			}
 
 			# get the underlying ticker
 			underlyingId <- paste(trade$Id_Bloomberg,"OPT_UNDL_TICKER",sep="__")
@@ -162,10 +193,6 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Opzioni_su_azioni"),
 			# get the expiry date
 			expiryDateId <- paste(trade$Id_Bloomberg,"OPT_EXPIRE_DT",sep="__")
 			expiryDate <- blData[[expiryDateId]]@value
-			
-			# get the last price
-			priceId <- paste(trade$Id_Bloomberg,"LAST_PRICE",sep="__")
-			price <- blData[[priceId]]@value
 			
 			# get the strike price
 			strikeId <- paste(trade$Id_Bloomberg,"OPT_STRIKE_PX",sep="__")
@@ -179,8 +206,6 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Opzioni_su_azioni"),
 			contractSizeId <- paste(trade$Id_Bloomberg,"OPT_CONT_SIZE",sep="__")
 			contractSize <- blData[[contractSizeId]]@value
 			
-			quantity <- sign(trade)*trade$Quantity
-		
 			# update the newSecurity
 			newSecurity@expiryDate <- expiryDate
 			newSecurity@underlying <- new("IndexEquity",name=underlying,id=new("IdBloomberg",underlying))
@@ -205,17 +230,21 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Opzioni_su_divise"),
 			info <- parseFxForwardName(trade$Security_name)
 			expiryDate <- format(strptime(info[["expiryDate"]],format="%m/%d/%Y"),"%d-%m-%Y")
 			
-			
-			quantity <- toMoney(sign(trade)*trade$Quantity,info[["underlying"]])
+			if (is.null(trade$Confirmed_quantity)) {
+				value <- toMoney(sign(trade)*trade$Price,info[["numeraire"]])
+				quantity <- toMoney(sign(trade)*trade$Quantity,info[["underlying"]])
+			} else {
+				value <- toMoney(sign(trade)*trade$Confirmed_price,info[["numeraire"]])
+				quantity <- toMoney(sign(trade)*trade$Confirmed_quantity,info[["underlying"]])			
+			}
 			
 			# for options on fx we define the price to be equal to value of the position, i.e.
 			# the amount, where by convenction the amount must be specified w.r.t. the "numeraire" 
 			# currency, i.e. the yyy currency in the xxxyyy Bloomberg notation
-			value <- toMoney(sign(trade)*trade$Amount,info[["numeraire"]])
 			id <- paste(info[["optionType"]]," ",expiryDate,"Strike"," ",
 					info[["strike"]]," ",as.character(quantity)," (Premio ",
 					as.character(value),")",sep="")
-			
+
 			# create the class "PositionOpzioni_su_divise"
 			optionOnFxPosition <- new("PositionOpzioni_su_divise",id=new("IdCharacter",id),security=newSecurity,
 					contractSize=1.0,quantity=quantity,value=value)
@@ -236,7 +265,15 @@ setMethod("tradeToPositionFactory",signature(newSecurity="FX_Forward"),
 			# The forward price of eurchf will be the price of 1 unit of EUR in CHF
 			# and sekchf will be the price of 100 sek in chf
 			
-			quantity <- toMoney(sign(trade)*trade$Quantity,info[["underlying"]])
+			
+			if (is.null(trade$Confirmed_quantity)) {
+				# get the last price
+				price <- trade$Price
+				quantity <- toMoney(sign(trade)*trade$Quantity,info[["underlying"]])
+			} else {
+				price <- trade$Confirmed_price
+				quantity <- toMoney(sign(trade)*trade$Confirmed_quantity,info[["underlying"]])			
+			}
 					
 			# the underlying currency first
 			currency <- new("Currency",info[["underlying"]])
@@ -255,7 +292,8 @@ setMethod("tradeToPositionFactory",signature(newSecurity="FX_Forward"),
 			name <- paste("future_fx valuta ",date," ",info[["currencyCodes"]]," ",trade$Price," ",
 					as.character(quantity)," leg ",info[["numeraire"]],sep="")
 			id <- new("IdCharacter",name)
-			quantity <- toMoney((-1*trade$Price)*quantity@amount,info[["numeraire"]])
+			quantity <- toMoney((-1*price)*quantity@amount,info[["numeraire"]])
+			
 			# name <- paste(as.character(quantity),"valuta",date)
 			securityLeg2 <- new("FX_Forward",currency=currency,name=name,id=id) 
 			positionLeg2 <- new("PositionFX_Forward",id=id,security=securityLeg2,

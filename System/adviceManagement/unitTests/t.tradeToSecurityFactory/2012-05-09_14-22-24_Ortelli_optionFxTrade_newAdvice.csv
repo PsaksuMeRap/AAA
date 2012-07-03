@@ -1,0 +1,2 @@
+Portfolio,Buy_Sell,Id_Bloomberg,Security_name,Currency,Security_type,UBS_Sec_type,Quantity,ISIN_Ticker,Price,Order_type,Amount,Broker,Limit_price,Limit_date
+GLOBAL ECONOMY,Buy to open,eurchf  09/13/12 c1.2000,eurchf  09/13/12 c1.2000,EUR,Option FX,,1000000,,10628.09635,Care,10628.09635,UBS,12751.59,41071

@@ -9,7 +9,9 @@ test.shouldImportTradesFromCsv <- function() {
 	fileName <- "2012-05-09_14-22-24_Ortelli_globalEconomy_newAdvice.csv"
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeFactory") 
 	
-	trades <- tradesFactory(fileName,directory)
+	messageFileName <- messageFileNameFactory(fileName)
+	
+	trades <- tradesFactory(messageFileName,directory)
 	
 	checkEquals(trades[[1]]$Portfolio,"GLOBAL ECONOMY")
 	checkEquals(trades[[2]]$Buy.Sell,"Sell")
@@ -22,7 +24,7 @@ test.shouldImportEmptyTradeCsv <- function() {
 	fileName <- "2012-05-09_14-22-29_Ortelli_globalEquity_confirmation.csv"
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeFactory") 
 
-	trades <- tradesFactory(fileName,directory)
+	trades <- tradesFactory(messageFileName,directory)
 	
 	checkEquals(length(trades),0)
 }

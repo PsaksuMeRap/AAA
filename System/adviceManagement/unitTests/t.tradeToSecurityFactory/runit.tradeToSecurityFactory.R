@@ -6,12 +6,14 @@
 
 test.shouldConvertEquityTradeToSecurity <- function() {
 	# set the fileName from which to import trades
-	fileName <- "equityTrade.csv"
+	fileName <- "2012-05-09_14-22-24_Ortelli_equityTrade_newAdvice.csv"
+	messageFileName <- messageFileNameFactory(fileName)
+	
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	blRequestHandler <- create_BloombergRequestHandler()
 	
 	# import trades
-	trades <- tradesFactory(fileName,directory)
+	trades <- tradesFactory(messageFileName,directory)
 	trade <- trades[[1]]
 	
 	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)	
@@ -21,12 +23,13 @@ test.shouldConvertEquityTradeToSecurity <- function() {
 
 test.shouldConvertFuturesOnIndexTradeToSecurity <- function() {
 	# set the fileName from which to import trades
-	fileName <- "futureEquityIndexTrade.csv"
+	fileName <- "2012-05-09_14-22-24_Ortelli_futureEquityIndexTrade_newAdvice.csv"
+	messageFileName <- messageFileNameFactory(fileName)
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	blRequestHandler <- create_BloombergRequestHandler()
 	
 	# import trades
-	trades <- tradesFactory(fileName,directory)
+	trades <- tradesFactory(messageFileName,directory)
 	trade <- trades[[1]]
 	
 	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)	
@@ -37,12 +40,13 @@ test.shouldConvertFuturesOnIndexTradeToSecurity <- function() {
 
 test.shouldConvertBondTradeToSecurity <- function() {
 	# set the fileName from which to import trades
-	fileName <- "bondTrade.csv"
+	fileName <- "2012-05-09_14-22-24_Ortelli_bondTrade_newAdvice.csv"
+	messageFileName <- messageFileNameFactory(fileName)
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	blRequestHandler <- create_BloombergRequestHandler()
 	
 	# import trades
-	trades <- tradesFactory(fileName,directory)
+	trades <- tradesFactory(messageFileName,directory)
 	trade <- trades[[1]]
 	
 	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)	
@@ -52,12 +56,13 @@ test.shouldConvertBondTradeToSecurity <- function() {
 
 test.shouldConvertFxSpotTradeToSecurity <- function() {
 	# set the fileName from which to import trades
-	fileName <- "fxSpotTrade.csv"
+	fileName <- "2012-05-09_14-22-24_Ortelli_fxSpotTrade_newAdvice.csv"
+	messageFileName <- messageFileNameFactory(fileName)
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	blRequestHandler <- create_BloombergRequestHandler()
 	
 	# import trades
-	trades <- tradesFactory(fileName,directory)
+	trades <- tradesFactory(messageFileName,directory)
 	trade <- trades[[1]]
 	
 	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)	
@@ -67,12 +72,13 @@ test.shouldConvertFxSpotTradeToSecurity <- function() {
 
 test.shouldConvertOptionEquityTradeToSecurity <- function() {
 	# set the fileName from which to import trades
-	fileName <- "optionEquityTrade.csv"
+	fileName <- "2012-05-09_14-22-24_Ortelli_optionEquityTrade_newAdvice.csv"
+	messageFileName <- messageFileNameFactory(fileName)
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	blRequestHandler <- create_BloombergRequestHandler()
 	
 	# import trades
-	trades <- tradesFactory(fileName,directory)
+	trades <- tradesFactory(messageFileName,directory)
 	trade <- trades[[1]]
 	
 	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)	
@@ -98,12 +104,13 @@ test.shouldParseOptionFxName <- function() {
 
 test.shouldConvertOptionFxTradeToSecurity <- function() {
 	# set the fileName from which to import trades
-	fileName <- "optionFxTrade.csv"
+	fileName <- "2012-05-09_14-22-24_Ortelli_optionFxTrade_newAdvice.csv"
+	messageFileName <- messageFileNameFactory(fileName)
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	blRequestHandler <- create_BloombergRequestHandler()
 	
 	# import trades
-	trades <- tradesFactory(fileName,directory)
+	trades <- tradesFactory(messageFileName,directory)
 	trade <- trades[[1]]
 	
 	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)	
@@ -129,12 +136,13 @@ test.shouldParseFxForwardName <- function() {
 
 test.shouldConvertFxForwardTradeToSecurity <- function() {
 	# set the fileName from which to import trades
-	fileName <- "fxForwardTrade.csv"
+	fileName <- "2012-05-09_14-22-24_Ortelli_fxForwardTrade_newAdvice.csv"
+	messageFileName <- messageFileNameFactory(fileName)
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	blRequestHandler <- create_BloombergRequestHandler()
 	
 	# import trades
-	trades <- tradesFactory(fileName,directory)
+	trades <- tradesFactory(messageFileName,directory)
 	trade <- trades[[1]]
 	
 	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)	

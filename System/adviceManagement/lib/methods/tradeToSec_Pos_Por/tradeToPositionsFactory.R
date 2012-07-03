@@ -65,7 +65,9 @@ setMethod("tradeToPositionsFactory",signature(position="PositionBond"),
 
 setMethod("tradeToPositionsFactory",signature(position="Positions"),
 		function(position,trade) {
-				return(position)
+			# when the position is of class Positions (i.e. for fxForward) no
+			# change is required
+			return(position)
 		}
 )
 
