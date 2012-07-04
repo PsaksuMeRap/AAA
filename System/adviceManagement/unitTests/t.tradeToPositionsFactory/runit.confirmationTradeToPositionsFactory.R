@@ -30,7 +30,8 @@ test.shouldConvertEquityTradeToPortfolioPositions <- function() {
 	positions <- tradeToPositionsFactory(newPosition,trade)
 	
 	checkEquals(sum(positions),toMoney(0,positions[[1]]@security@currency))
-	
+	checkEquals(positions[[1]]@quantity,100000)
+	checkEquals(as.numeric(positions[[1]]@value@amount),1200000)
 }
 
 test.shouldConvertFuturesOnIndexTradeToPortfolioPositions <- function() {
@@ -40,7 +41,7 @@ test.shouldConvertFuturesOnIndexTradeToPortfolioPositions <- function() {
 	blData <- createRepositoryBloombergData()
 	
 	# set the fileName from which to import trades
-	fileName <- "2012-05-09_14-22-24_Ortelli_futureEquityIndexTrade_newAdvice.csv"
+	fileName <- "2012-05-21_12-33-21_Riskmanager_futureEquityIndexTrade_confirmation.csv"
 	messageFileName <- messageFileNameFactory(fileName)
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
@@ -57,8 +58,8 @@ test.shouldConvertFuturesOnIndexTradeToPortfolioPositions <- function() {
 	
 	positions <- tradeToPositionsFactory(newPosition,trade)
 	
-	checkEquals(sum(positions),toMoney(0,positions[[1]]@security@currency))
-	
+	checkEquals(positions[[1]]@value,toMoney(10*50*5000,positions[[1]]@security@currency))
+	checkEquals(positions[[2]]@value,toMoney(-10*50*6000,positions[[2]]@security@currency))
 }
 
 test.shouldConvertBondTradeToPortfolioPositions <- function() {
@@ -68,7 +69,7 @@ test.shouldConvertBondTradeToPortfolioPositions <- function() {
 	blData <- createRepositoryBloombergData()
 	
 	# set the fileName from which to import trades
-	fileName <- "2012-05-09_14-22-24_Ortelli_bondTrade_newAdvice.csv"
+	fileName <- "2012-05-21_12-33-21_Riskmanager_bondTrade_confirmation.csv"
 	messageFileName <- messageFileNameFactory(fileName)
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
@@ -86,6 +87,10 @@ test.shouldConvertBondTradeToPortfolioPositions <- function() {
 	positions <- tradeToPositionsFactory(newPosition,trade)
 	
 	checkEquals(sum(positions),toMoney(0,positions[[1]]@security@currency))
+	nominalValue <- 250000
+	accruedInterests <- 1.7
+	price <- 105
+	checkEquals(positions[[1]]@value,toMoney(nominalValue*(price+accruedInterests)/100,positions[[1]]@security@currency))
 
 }
 
@@ -96,7 +101,7 @@ test.shouldConvertFXSpotTradeToPortfolioPositions <- function() {
 	blData <- createRepositoryBloombergData()
 	
 	# set the fileName from which to import trades
-	fileName <- "2012-05-09_14-22-24_Ortelli_fxSpotTrade_newAdvice.csv"
+	fileName <- "2012-05-21_12-33-21_Riskmanager_fxSpotTrade_confirmation.csv"
 	messageFileName <- messageFileNameFactory(fileName)
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
@@ -113,7 +118,7 @@ test.shouldConvertFXSpotTradeToPortfolioPositions <- function() {
 	result <- tradeToPositionsFactory(positions,trade)
 	
 	checkEquals(positions,result)
-	checkEquals(positions[[1]]@value@amount,result[[2]]@value@amount/(-1.201))
+	checkEquals(positions[[1]]@value@amount,result[[2]]@value@amount/(-1.5))
 }
 
 test.shouldConvertOptionOnEquityTradeToPortfolioPositions <- function() {
@@ -123,7 +128,7 @@ test.shouldConvertOptionOnEquityTradeToPortfolioPositions <- function() {
 	blData <- createRepositoryBloombergData()
 	
 	# set the fileName from which to import trades
-	fileName <- "2012-05-09_14-22-24_Ortelli_optionEquityTrade_newAdvice.csv"
+	fileName <- "2012-05-21_12-33-21_Riskmanager_optionEquityTrade_confirmation.csv"
 	messageFileName <- messageFileNameFactory(fileName)
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
@@ -141,7 +146,7 @@ test.shouldConvertOptionOnEquityTradeToPortfolioPositions <- function() {
 	positions <- tradeToPositionsFactory(newPosition,trade)
 	
 	checkEquals(sum(positions),toMoney(0,positions[[1]]@security@currency))
-	
+	checkEquals(positions[[1]]@value,toMoney(100*100*1.20,positions[[1]]@security@currency))
 }
 
 
@@ -152,7 +157,7 @@ test.shouldConvertOptionOnFxTradeToPortfolioPositions <- function() {
 	blData <- createRepositoryBloombergData()
 	
 	# set the fileName from which to import trades
-	fileName <- "2012-05-09_14-22-24_Ortelli_optionFxTrade_newAdvice.csv"
+	fileName <- "2012-05-21_12-33-21_Riskmanager_optionFxTrade_confirmation.csv"
 	messageFileName <- messageFileNameFactory(fileName)
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
@@ -170,6 +175,7 @@ test.shouldConvertOptionOnFxTradeToPortfolioPositions <- function() {
 	positions <- tradeToPositionsFactory(newPosition,trade)
 	
 	checkEquals(sum(positions),toMoney(0,positions[[1]]@security@currency))
+	checkEquals(positions[[1]]@value,toMoney(1000000*0.01,positions[[1]]@security@currency))
 }
 
 test.shouldConvertForwardOnFxTradeToPortfolioPositions <- function() {
@@ -179,7 +185,7 @@ test.shouldConvertForwardOnFxTradeToPortfolioPositions <- function() {
 	blData <- createRepositoryBloombergData()
 	
 	# set the fileName from which to import trades
-	fileName <- "2012-05-09_14-22-24_Ortelli_fxForwardTrade_newAdvice.csv"
+	fileName <- "2012-05-21_12-33-21_Riskmanager_fxForwardTrade_confirmation.csv"
 	messageFileName <- messageFileNameFactory(fileName)
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
@@ -193,7 +199,7 @@ test.shouldConvertForwardOnFxTradeToPortfolioPositions <- function() {
 	result <- tradeToPositionsFactory(positions,trade)
 	
 	checkEquals(positions,result)
-	checkEquals(positions[[1]]@value@amount,result[[2]]@value@amount/(-1.1998))
+	checkEquals(positions[[1]]@value@amount,result[[2]]@value@amount/(-1.5))
 	
 }
 

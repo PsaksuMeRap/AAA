@@ -71,6 +71,8 @@ while(Sys.time()<T) {
 	Sys.sleep(sleepTime)
 	loggerDone()
 }
-)
+
 sink()
 print("Aggiusta blFxCorrectionFactor!")
+print("In base importa i futuri tenendo conto del delivery date e price come in adviceManagement")
+print("Aggiusta calcolo prezzo opzioni su FX quando moneta NOK,SEK, ...")

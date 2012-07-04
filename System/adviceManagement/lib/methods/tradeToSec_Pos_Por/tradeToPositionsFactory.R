@@ -35,7 +35,7 @@ setMethod("tradeToPositionsFactory",signature(position="PositionFutures_EQ"),
 			
 			security <- new("Conto_corrente",currency=position@security@currency,name=name,id=new("IdCharacter",id))
 			positions[2] <- new("PositionConto_corrente",id=security@id,security=security,
-					quantity=1,value= -1 * position@value)
+					quantity=1,value= (-1 * position@valueOnePoint * as.numeric(position@quantity))*position@security@deliveryPrice )
 			
 			return(positions)
 			

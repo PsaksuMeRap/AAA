@@ -15,6 +15,7 @@ parseOptionFxName <- function(name) {
 	monthAndDay <- substr(expiryDate,1,5)
 	twoDigitsYear <- substr(expiryDate,7,8)
 	expiryDate <- paste(substr(expiryDate,1,6),"20",twoDigitsYear,sep="")
+	expiryDate <- format(strptime(expiryDate,format="%m/%d/%Y"),"%d-%m-%Y")
 	
 	# identify the option type
 	optionType <- substr(tmp[3],1,1)
@@ -41,14 +42,14 @@ parseFxForwardName <- function(name) {
 	underlying <- toupper(substr(currencyCodes,1,3))
 	numeraire <- toupper(substr(currencyCodes,4,6))
 	
-	# identify the settlementDate
-	settlementDate <- tmp[2]
-	monthAndDay <- substr(settlementDate,1,5)
-	twoDigitsYear <- substr(settlementDate,7,8)
-	settlementDate <- paste(substr(settlementDate,1,6),"20",twoDigitsYear,sep="")
+	# identify the deliveryDate
+	deliveryDate <- tmp[2]
+	monthAndDay <- substr(deliveryDate,1,5)
+	twoDigitsYear <- substr(deliveryDate,7,8)
+	deliveryDate <- paste(substr(deliveryDate,1,6),"20",twoDigitsYear,sep="")
 	
 	return(list(currencyCodes=currencyCodes,underlying=underlying,
-					numeraire=numeraire,settlementDate=settlementDate))
+					numeraire=numeraire,deliveryDate=deliveryDate))
 }
 
 tradeToSecurityFactory <- function(trade,blRequestHandler) {
@@ -155,9 +156,14 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 				
 		info <- parseOptionFxName(name)
 		
+		# the strike is expressed as the value of 1 unit of the first currency (the underlying) 
+		# w.r.t. the second currency (the numeraire). 
+		# For underlying as NOK or SEK it is the value of 100 NOK in the second currency.
+	
+		underlying = new("Currency",info[["underlying"]])
 		id=new("IdCharacter",name)
 			
-		newSecurity <- new("Opzioni_su_divise",currency=currency,name=name,id=id,underlying=currency,
+		newSecurity <- new("Opzioni_su_divise",currency=currency,name=name,id=id,underlying=underlying,
 				expiryDate=info[["expiryDate"]],optionType=info[["optionType"]],strike=info[["strike"]]) 
 		return(newSecurity)
 	}
@@ -180,7 +186,7 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 		
 		currency <- new("Currency",info[["numeraire"]])
 		
-		name <- paste(info$currencyCodes,info$settlementDate)
+		name <- paste(info$currencyCodes,info$deliveryDate)
 		id=new("IdCharacter",name)
 		
 		newSecurity <- new("FX_Forward",currency=currency,name=name,id=id)

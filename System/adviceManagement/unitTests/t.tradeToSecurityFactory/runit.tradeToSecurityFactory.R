@@ -128,7 +128,7 @@ test.shouldParseFxForwardName <- function() {
 	name <- "eurchf 08/27/12"	
 	info <- parseFxForwardName(name)
 	checkEquals(info[["currencyCodes"]],"EURCHF")
-	checkEquals(info[["settlementDate"]],"08/27/2012")
+	checkEquals(info[["deliveryDate"]],"08/27/2012")
 	checkEquals(info[["underlying"]],"EUR")
 	checkEquals(info[["numeraire"]],"CHF")
 }
