@@ -11,12 +11,14 @@ library("tcltk")
 library("stringr")
 
 if(.Platform$OS.type=="windows") {
-	home <- "\\\\usi/dfs/Utenti/O/ortellic/My Documents/workspace/AAA/System/"
+	homeDir <- "\\\\usi/dfs/Utenti/O/ortellic/My Documents/workspace/AAA/System/"
 } else {
-	home <- "/home/claudio/workspace/AAA/System/"
+	homeDir <- "/home/claudio/workspace/AAA/System/"
 }
 
-setwd(home)
+
+
+setwd(homeDir)
 
 repositories <- new.env()
 
@@ -73,7 +75,6 @@ clienti <- c(
 		"pippo102",
 		"pippo104",
 		"pippo110",
-		"pippo116",
 		"pippo120",
 		"pippo121",
 		"pippo123",
