@@ -6,8 +6,6 @@
 
 test.shouldNewAdviceWithLock <- function(message) {
 	
-	#originalWorkingDirectory <- getwd()
-	
 	create_archive(systemOptions[["homeDir"]])
 	
 	#create postOffice
@@ -23,9 +21,7 @@ test.shouldNewAdviceWithLock <- function(message) {
 	to <- file.path(systemOptions[["homeDir"]],"postOffice","inbox")
 	isOk <- file.copy(from,to)
 	
-	message <- messageFactory(fileName,directory,advisors)	
-	
-	messageFrom <- advisors[[1]]@name
+	message <- messageFactory(fileName,directory)	
 	
 	mailbox <- new("MailBox",name=message[["portfolioName"]],
 			folderName=message[["portfolioName"]])
@@ -41,6 +37,6 @@ test.shouldNewAdviceWithLock <- function(message) {
 	
 	unlink(file.path(systemOptions[["homeDir"]],"postOffice"),recursive=TRUE)
 	unlink(file.path(systemOptions[["homeDir"]],"archive"),recursive=TRUE)
-	#setwd(originalWorkingDirectory)
+
 	
 }

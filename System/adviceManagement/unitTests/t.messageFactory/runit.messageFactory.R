@@ -7,10 +7,9 @@
 test.shouldCreateMessage <- function() {
 	# identify a new order
 	fileName <- "2012-05-09_14-22-24_Ortelli_globalEquity_newAdvice.csv"
-	messageFileName <- messageFileNameFactory(fileName)
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.messageFactory")
 	
-	result <- messageFactory(messageFileName,directory)
+	result <- messageFactory(fileName,directory)
 	
 	checkEquals(result[["fileExtension"]],"csv")
 	checkEquals(result[["date"]],"2012-05-09")
@@ -25,18 +24,18 @@ test.shouldCreateMessage <- function() {
 	
 	fileName <- "2012-05-09_14-22-24_Ortelli_globalEquity_confirmation.csv"
 	messageFileName <- messageFileNameFactory(fileName)
-	result <- messageFactory(messageFileName,directory)
+	result <- messageFactory(fileName,directory)
 	checkEquals(is(result,"Confirmation"),TRUE)
 	checkEquals(result@trades[[2]]$securityID,"SMI")
 	
 	fileName <- "2012-05-09_14-22-24_Ortelli_globalEquity_preComplianceResult_1.csv"
 	messageFileName <- messageFileNameFactory(fileName)
-	result <- messageFactory(messageFileName,directory)
+	result <- messageFactory(fileName,directory)
 	checkEquals(is(result,"PreComplianceResult"),TRUE)
 	
 	fileName <- "2012-05-09_14-22-24_Ortelli_globalEquity_postComplianceResult_0.csv"
 	messageFileName <- messageFileNameFactory(fileName)
-	result <- messageFactory(messageFileName,directory)
+	result <- messageFactory(fileName,directory)
 	checkEquals(is(result,"PostComplianceResult"),TRUE)
 	
 }
@@ -45,10 +44,9 @@ test.shouldCreateMessage <- function() {
 test.shouldTestGetMessageDate_time_from <- function() {
 	# identify a new order
 	fileName <- "2012-05-09_14-22-24_Ortelli_globalEquity_newAdvice.csv"
-	messageFileName <- messageFileNameFactory(fileName)
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.messageFactory")
 	
-	message <- messageFactory(messageFileName,directory)
+	message <- messageFactory(fileName,directory)
 	
 	string <- getMessageDate_time_from(message)
 	checkEquals(string,"2012-05-09_14-22-24_Ortelli_globalEquity")

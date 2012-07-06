@@ -162,9 +162,10 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 	
 		underlying = new("Currency",info[["underlying"]])
 		id=new("IdCharacter",name)
-			
+		
+		expiryDateYYYMMDD <- format(strptime(info[["expiryDate"]],format="%d-%m-%Y"),"%Y-%m-%d") 
 		newSecurity <- new("Opzioni_su_divise",currency=currency,name=name,id=id,underlying=underlying,
-				expiryDate=info[["expiryDate"]],optionType=info[["optionType"]],strike=info[["strike"]]) 
+				expiryDate=expiryDateYYYMMDD,optionType=info[["optionType"]],strike=info[["strike"]]) 
 		return(newSecurity)
 	}
 	

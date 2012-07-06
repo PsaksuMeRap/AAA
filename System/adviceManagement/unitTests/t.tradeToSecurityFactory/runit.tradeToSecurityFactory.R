@@ -94,7 +94,7 @@ test.shouldParseOptionFxName <- function() {
 	result <- parseOptionFxName(name)
 	
 	checkEquals(result[["name"]],"eurchf  09/13/12 c1.2000")
-	checkEquals(result[["expiryDate"]],"09/13/2012")
+	checkEquals(result[["expiryDate"]],"13-09-2012")
 	checkEquals(result[["optionType"]],"Call")
 	checkEquals(result[["strike"]],1.2)
 	checkEquals(result[["underlying"]],"EUR")
@@ -115,7 +115,7 @@ test.shouldConvertOptionFxTradeToSecurity <- function() {
 	
 	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)	
 	checkEquals(class(newSecurity)[[1]],"Opzioni_su_divise")	
-	checkEquals(newSecurity@expiryDate,"09/13/2012")
+	checkEquals(newSecurity@expiryDate,"2012-09-13")
 	checkEquals(newSecurity@optionType,"Call")
 	checkEquals(newSecurity@strike,1.2)
 	checkEquals(newSecurity@name,"eurchf  09/13/12 c1.2000")

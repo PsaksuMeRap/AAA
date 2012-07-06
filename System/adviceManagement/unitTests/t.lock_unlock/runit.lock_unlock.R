@@ -17,7 +17,7 @@ test.shoudLock <- function() {
 	setup(postOffice)
 
 	# identify the messageType
-	message <- messageFactory(fileName,directory,advisors)	
+	message <- messageFactory(fileName,directory)
 	
 	# create the mailBox
 	mailBox <- new("MailBox",folderName=message[["portfolioName"]])
@@ -49,7 +49,7 @@ test.shoudUnLock <- function() {
 	setup(postOffice)
 	
 	# identify the messageType
-	message <- messageFactory(fileName,directory,advisors)
+	message <- messageFactory(fileName,directory)
 	
 	# create the mailBox
 	mailBox <- new("MailBox",folderName=message[["portfolioName"]])

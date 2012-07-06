@@ -54,7 +54,7 @@ dirs = c(
 		"./adviceManagement/unitTests/t.newAdviceNoLock",
 		"./adviceManagement/unitTests/t.newAdviceWithLock",
 		"./adviceManagement/unitTests/t.lock_unlock",
-		"./adviceManagement/unitTests/t.mainMessageProcessing",
+		#"./adviceManagement/unitTests/t.mainMessageProcessing",
 		"./adviceManagement/unitTests/t.mail",
 		"./adviceManagement/unitTests/t.tradeFactory",
 	 	"./adviceManagement/unitTests/t.tradeToSecurityFactory",
@@ -65,9 +65,9 @@ dirs = c(
 		"./adviceManagement/unitTests/t.saveLastObject",
 		"./adviceManagement/unitTests/t.bloombergData",
 		"./adviceManagement/unitTests/t.bloombergRequestHandler",
-		"./adviceManagement/unitTests/t.zipResults"
-		#"./adviceManagement/unitTests/t.tradesToPositionsFactory"
-		#"./adviceManagement/unitTests/t.subNewAdviceProcessing"
+		"./adviceManagement/unitTests/t.zipResults",
+		"./adviceManagement/unitTests/t.tradesToPositionsFactory",
+		"./adviceManagement/unitTests/t.subNewAdviceProcessing"
 	)
 testsuite.lists <- defineTestSuite("Test adviceManagement",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
@@ -81,9 +81,66 @@ mySetwd()
 
 ## test messageFactory
 dirs = c(
-		"./adviceManagement/unitTests/t.messageFactory"
+		"./adviceManagement/unitTests/t.tradeToPositionFactory")
+testsuite.lists <- defineTestSuite("Test adviceManagement",dirs = dirs)
+testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
+warnings()
+
+
+
+
+
+## test messageFactory
+dirs = c(
+		"./adviceManagement/unitTests/t.lock_unlock")
+testsuite.lists <- defineTestSuite("Test adviceManagement",dirs = dirs)
+testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
+warnings()
+
+
+## test messageFactory
+dirs = c(
+		"./adviceManagement/unitTests/t.newAdviceWithLock"
 )
 testsuite.lists <- defineTestSuite("Test adviceManagement",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
 warnings()
 
+
+## test messageFactory
+dirs = c(
+		"./adviceManagement/unitTests/t.postOffice"
+)
+testsuite.lists <- defineTestSuite("Test adviceManagement",dirs = dirs)
+testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
+warnings()
+
+
+
+
+
+## test messageFactory
+dirs = c(
+		"./adviceManagement/unitTests/t.archive"
+)
+testsuite.lists <- defineTestSuite("Test adviceManagement",dirs = dirs)
+testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
+warnings()
+
+
+## test messageFactory
+dirs = c(
+		"./adviceManagement/unitTests/t.logger"
+)
+testsuite.lists <- defineTestSuite("Test adviceManagement",dirs = dirs)
+testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
+warnings()
+
+
+## test messageFactory
+dirs = c(
+		"./adviceManagement/unitTests/t.fileMove"
+)
+testsuite.lists <- defineTestSuite("Test adviceManagement",dirs = dirs)
+testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
+warnings()

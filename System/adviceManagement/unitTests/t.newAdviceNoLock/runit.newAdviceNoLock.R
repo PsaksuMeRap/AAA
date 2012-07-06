@@ -18,7 +18,7 @@ test.shouldNewAdviceWithoutLock <- function() {
 	fileName <- "2012-05-09_14-22-24_Ortelli_globalEquity_newAdvice.csv"
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.noLockOnNewAdvice")
 	
-	message <- messageFactory(fileName,directory,advisors)
+	message <- messageFactory(fileName,directory)
 	
 	messageFrom <- advisors[[1]]@name
 	

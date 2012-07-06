@@ -34,8 +34,6 @@ setMethod("mainMessageProcessing",signature(message="Confirmation"),
 				# if the file is not locked send an e-mail and move the file into the removed folder
 				isOk <- confirmationNoLock(message)
 			}
-			
-			
 		}
 )
 

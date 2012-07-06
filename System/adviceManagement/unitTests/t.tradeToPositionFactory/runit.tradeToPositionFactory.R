@@ -12,7 +12,7 @@ test.shouldConvertEquityTradeToPosition <- function() {
 	blData <- createRepositoryBloombergData()
 	
 	# set the fileName from which to import trades
-	fileName <- "2012-05-09_14-22-24_Ortelli_bondTrade_newAdvice.csv"
+	fileName <- "2012-05-09_14-22-24_Ortelli_equityTrade_newAdvice.csv"
 	messageFileName <- messageFileNameFactory(fileName)
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	

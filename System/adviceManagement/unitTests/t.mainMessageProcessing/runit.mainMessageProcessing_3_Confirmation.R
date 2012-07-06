@@ -16,18 +16,18 @@ test.shouldProcessConfirmationMessage <- function() {
 	
 	# copy the confirmation message
 	fileName <- "2012-05-09_14-22-24_Ortelli_globalEquity_confirmation.csv"
-	fromDir <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.messageProcessing")
+	fromDir <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.mainMessageProcessing")
 	toDir <- file.path(systemOptions[["homeDir"]],"postOffice","globalEquity","pending")
-	toFile <- file.path(toDir,fileName)
+	fullFileNameTo <- file.path(toDir,fileName)
 	
 	# identify the messageType
-	ok <- file.copy(from=file.path(fromDir,fileName),to=toFile)
-	message <- messageFactory(fileName,toDir,advisors)
+	ok <- file.copy(from=file.path(fromDir,fileName),to=fullFileNameTo)
+	message <- messageFactory(fileName,toDir)
 	
 	# lock
 	ok <- lock(message)
 	
-	setMethod("messageProcessing",signature(message="Confirmation"),
+	setMethod("mainMessageProcessing",signature(message="Confirmation"),
 			function(message) {
 				# this method assumes that the confirmation file has been moved
 				# from postOffice/inbox to postOffice/mailBox_xyz/pending folder

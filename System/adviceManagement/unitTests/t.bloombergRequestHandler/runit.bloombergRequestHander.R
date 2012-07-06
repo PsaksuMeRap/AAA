@@ -23,14 +23,14 @@ test.shuldExecuteBloombergRequestCollection <- function() {
 	
 	blRequestHandler <- create_BloombergRequestHandler()
 	
-	checkEquals(blRequestHandler[["execute"]](),list())
+	checkEquals(blRequestHandler[["execute"]](),new("BloombergData"))
 	
 	blRequestHandler$collect("NOVN VX Equity","ID_ISIN")
 	blRequestHandler$collect("UBSN VX Equity","ID_ISIN")
 	blRequestHandler$collect("UBSN VX Equity","NAME")
 	blRequestHandler$collect("UHR VX Equity","NAME")
 	
-	if (!is.element("package:Rbloomberg",search())) {
+	if (!is.element("package:Rbbg",search())) {
 		checkEquals(TRUE,TRUE)
 	} else {
 		library("Rbbg")

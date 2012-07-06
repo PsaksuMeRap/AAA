@@ -7,7 +7,7 @@ setGeneric("tradeToPositionFactory",def=function(newSecurity,trade,blData) stand
 
 setMethod("tradeToPositionFactory",signature(newSecurity="Equity"),
 		function(newSecurity,trade,blData) {
-			
+		
 			if (is.null(trade$Confirmed_quantity)) {
 				priceId <- paste(trade$Id_Bloomberg,"LAST_PRICE",sep="__")
 				price <- blData[[priceId]]@value
@@ -231,7 +231,7 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Opzioni_su_divise"),
 			# for options on fx we define the quantity to be the quantity of the first currency
 			# in the xxxyyy mnemonic, (xxx is the iso code of the first currency and yyy
 			# the iso code of the second currency)
-			
+browser()			
 			underlying <- newSecurity@underlying
 			
 			if (is.null(trade$Confirmed_quantity)) {
