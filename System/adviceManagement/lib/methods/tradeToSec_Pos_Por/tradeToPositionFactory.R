@@ -231,11 +231,11 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Opzioni_su_divise"),
 			# for options on fx we define the quantity to be the quantity of the first currency
 			# in the xxxyyy mnemonic, (xxx is the iso code of the first currency and yyy
 			# the iso code of the second currency)
-browser()			
+			
 			underlying <- newSecurity@underlying
 			
 			if (is.null(trade$Confirmed_quantity)) {
-				price <- trade$price
+				price <- trade$Price
 				quantity <- toMoney(sign(trade)*trade$Quantity,underlying)
 			} else {
 				price <- trade$Confirmed_price
