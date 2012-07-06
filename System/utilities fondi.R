@@ -8,7 +8,7 @@ options(browser="firefox")
 options(help_type="html")
 
 library("RODBC")
-home <- "/home/claudio/workspace/AAA/VAR/"
+home <- "/home/claudio/workspace/AAA/System/"
 setwd(home)
 
 stringsAsFactors = FALSE
@@ -71,5 +71,10 @@ defaultDate <- function() {
 	return(Sys.Date()-1)
 }
 
-getFundNav("2011-11-21")
 
+fine <- as.Date("2012-06-29")
+dates <- seq(as.Date("2012-05-21"),to=fine,by="day")
+for (i in 1:length(dates)) if (!is.element(weekdays(dates[[i]]),c("Saturday","Sunday"))) {print("new-date\n");getFundNav(dates[[i]])}
+
+
+getFundNav("2012-04-20")
