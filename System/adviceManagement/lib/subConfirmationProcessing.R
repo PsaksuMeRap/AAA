@@ -9,7 +9,7 @@ args=commandArgs(trailingOnly = TRUE)
 # if it is a test (lengtht(args)==0) then set test values
 if (length(args)==0) {
 	sourceCodeDir <- getwd()
-	fileName <- "2012-06-19_14-27-47_Ortelli_globalEconomy_newAdvice.csv"
+	csvTradesFileName <- "2012-05-21_12-33-21_Riskmanager_globalEconomy_confirmation.csv"
 	if (.Platform$OS.type=="windows") homeDir <- "C:/riskman" else homeDir <- "/home/claudio/riskman"
 } else {	
 	## args is now a list of character vectors
@@ -41,10 +41,15 @@ positionsStrings <- paste(as.character(positionsFromTrades),collapse="\n")
 logger(paste(textMessage,positionsStrings,sep="\n"))
 
 # copy the checkFile into the pre-compliance input/output folder
-logger(paste("Copying check file for",message[["portfolioName"]],"..."))
+logger(paste("Copying check file for",message[["portfolioName"]],"in",checkDirectory,"..."))
 fileFrom <- file.path(systemOptions[["homeDir"]],"data","checkFiles",message[["portfolioName"]],"check.txt") 
 fileTo <- file.path(checkDirectory,"check.txt")
 ok <- file.copy(from=fileFrom,to=fileTo)
+if (!ok) {
+	logger(paste("Error when copying check.txt in",checkDirectory,"!"))
+	loggerDone()
+	return(0)
+}
 loggerDone()
 
 # set the working directory to the checkDirectory

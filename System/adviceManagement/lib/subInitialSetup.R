@@ -5,10 +5,9 @@
 
 # create the log file
 source(file.path(sourceCodeDir,"adviceManagement","lib","logger.R"))
-logFileName <- paste(format(Sys.time(),"%Y-%m-%d_%H-%M-%S"),"processing",fileName,sep="_")
+logFileName <- paste(format(Sys.time(),"%Y-%m-%d_%H-%M-%S"),"processing",csvTradesFileName,sep="_")
 invisible(create_logger(fileName=logFileName,directory=file.path(homeDir,"log")))
 logger("Logger successfully created.\n")
-logger(fileName)
 
 # set the working directory to sourceCodeDir
 logger("Change working directory to sourceCodeDir ...")
@@ -20,17 +19,15 @@ logger("Starting initialSetup ...")
 source(file.path(sourceCodeDir,"adviceManagement","lib","initialSetup.R"))
 # loggerDone not required
 
-csvTradesFileName <- fileName
-
 # extract the portfolioName and construct the directory path where the
 # message is waiting for processing
 
-pendingDirectory <- strsplit(fileName,"_")[[1]][4]
+pendingDirectory <- strsplit(csvTradesFileName,"_")[[1]][4]
 pendingDirectory <- file.path(systemOptions[["homeDir"]],"postOffice",pendingDirectory,"pending")
 
 # create the message
-logger(paste("Creating message for",fileName, "in",pendingDirectory,"..."))
-message <- messageFactory(fileName,pendingDirectory)
+logger(paste("Creating message for",csvTradesFileName, "in",pendingDirectory,"..."))
+message <- messageFactory(csvTradesFileName,pendingDirectory)
 loggerDone()
 
 # source the repositoryPoliticaInvestimento

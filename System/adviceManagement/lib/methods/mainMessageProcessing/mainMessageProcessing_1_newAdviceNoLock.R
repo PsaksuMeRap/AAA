@@ -8,31 +8,30 @@
 newAdviceNoLock <- function(message) {
 	
 	messageFrom <- message[["from"]]
-	fileName <- message[["fileName"]]
+	csvTradesFileName <- message[["fileName"]]
 	portfolioName <- message[["portfolioName"]]
 	
 	# if the file is not locked move the advice in the pending folder and start processing
 	logger(paste("No lock detected for newAdvice of",portfolioName,"from",messageFrom),noOk="\n")
 	
 	# send an e-mail
-	
 	mail <- new("Mail",
 			from=.secrets[["Riskmanager"]][["emailAddress"]],
 			to=message@advisor@email,
 			subject="Processing order",
-			message=paste("Your advice '",fileName,"' is being processed",sep="")
+			message=paste("Your advice '",csvTradesFileName,"' is being processed",sep="")
 	)
 	logger(paste("\nSending e-mail:\n",as.character(mail),sep=""))
 	sendEMail(mail)
 	loggerDone("\n [ok]\n\n")
 	
-	# move file (da migliorare: file non devono essere sovrascritti)
-	fileFrom <- file.path(systemOptions[["homeDir"]],"postOffice","inbox",fileName) 
-	fileTo <- file.path(systemOptions[["homeDir"]],"postOffice",portfolioName,"pending",fileName)
+	# move csvTradesFileName (da migliorare: file non devono essere sovrascritti)
+	fileFrom <- file.path(systemOptions[["homeDir"]],"postOffice","inbox",csvTradesFileName) 
+	fileTo <- file.path(systemOptions[["homeDir"]],"postOffice",portfolioName,"pending",csvTradesFileName)
 	copyOk <- file.copy(fileFrom,fileTo)
 	
 	if (copyOk) {
-		logger(paste("File ",fileName," successfully moved to ",portfolioName,"/pending",sep=""))
+		logger(paste("File ",csvTradesFileName," successfully moved to ",portfolioName,"/pending",sep=""))
 		logger("Removing incoming file ...")
 		removeOk <- file.remove(fileFrom)
 		if (removeOk) {
@@ -41,6 +40,20 @@ newAdviceNoLock <- function(message) {
 			logger(paste("Error: impossible to remove file",fileFrom))
 			# send e-mail to system administrator for manual remove
 		}
+	} else {
+		logger(paste("Error: impossible to copy ",csvTradesFileName," to ",portfolioName,"/pending. Sending warning e-mail ...",sep=""))
+		# send an e-mail
+		mail <- new("Mail",
+				from=.secrets[["Riskmanager"]][["emailAddress"]],
+				to=message@advisor@email,
+				subject="Processing order",
+				message=paste("Error when copying file'",csvTradesFileName,"' in the pending folder",sep="")
+		)
+		logger(paste("\nSending e-mail:\n",as.character(mail),sep=""))
+		sendEMail(mail)
+		loggerDone("\n [ok]\n\n")
+		
+		return(0)
 	}
 	
 	logger(paste("Locking mailBox of",portfolioName,"..."))
@@ -53,7 +66,7 @@ newAdviceNoLock <- function(message) {
 	# define the name of the file to process and costruct the command
 	fullFileNameToExecute <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","subNewAdviceProcessing.R")
 	command <- "R CMD BATCH --slave --no-restore-history --no-timing --no-save "
-	command <- paste(command,"\"--args fileName='",fileName,
+	command <- paste(command,"\"--args csvTradesFileName='",csvTradesFileName,
 			"' sourceCodeDir='",systemOptions[["sourceCodeDir"]],
 			"' homeDir='"       ,systemOptions[["homeDir"]],"'\" ",
 			fullFileNameToExecute," out.txt",sep="")
@@ -69,7 +82,7 @@ newAdviceNoLock <- function(message) {
 	# restore the working directory
 	setwd(currentWorkingDirectory)
 	
-	logger(paste("Started BATCH process for",fileName))
+	logger(paste("Started BATCH process for",csvTradesFileName))
 	Sys.sleep(0.30)
 	if (.Platform$OS.type=="windows") return(get_PID("Rterm.exe")) else return(get_PID("R"))
 }

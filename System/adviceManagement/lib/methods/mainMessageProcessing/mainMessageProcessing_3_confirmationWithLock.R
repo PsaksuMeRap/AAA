@@ -52,7 +52,7 @@ confirmationWithLock <- function(message) {
 	# define the name of the file to process and costruct the command
 	fullFileNameToExecute <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","subConfirmationProcessing.R")
 	command <- "R CMD BATCH --slave --no-restore-history --no-timing --no-save "
-	command <- paste(command,"\"--args fileName='",fileName,
+	command <- paste(command,"\"--args csvFileName='",fileName,
 			"' sourceCodeDir='",systemOptions[["sourceCodeDir"]],
 			"' homeDir='"       ,systemOptions[["homeDir"]],"'\" ",
 			fullFileNameToExecute," out.txt",sep="")
