@@ -14,7 +14,7 @@ create_archive <- function(rootDir) {
 		return()
 	}
 	
-	deleteDirectory <- file.path(rootDir,"archive","delete")
+	deleteDirectory <- file.path(rootDir,"archive","deleted")
 	if (!file.exists(deleteDirectory)) {
 		isOk <- dir.create(deleteDirectory)
 	}

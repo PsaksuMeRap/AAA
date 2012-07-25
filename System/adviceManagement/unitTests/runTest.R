@@ -43,19 +43,19 @@ source("./adviceManagement/unitTests/t.advisors/advisors.R")
 
 ## test globale
 dirs = c(
-		"./adviceManagement/unitTests/t.logger",
-		"./adviceManagement/unitTests/t.fileMove",
 		"./adviceManagement/unitTests/t.archive",
-		"./adviceManagement/unitTests/t.postOffice",
-		"./adviceManagement/unitTests/t.mailBox",
-		"./adviceManagement/unitTests/t.sendStopToRProcess",
 		"./adviceManagement/unitTests/t.detectRprocesses",
-		"./adviceManagement/unitTests/t.messageFactory",
-		"./adviceManagement/unitTests/t.newAdviceNoLock",
-		"./adviceManagement/unitTests/t.newAdviceWithLock",
+		"./adviceManagement/unitTests/t.fileMove",
+		"./adviceManagement/unitTests/t.logger",
 		"./adviceManagement/unitTests/t.lock_unlock",
-		#"./adviceManagement/unitTests/t.mainMessageProcessing",
 		"./adviceManagement/unitTests/t.mail",
+		"./adviceManagement/unitTests/t.mailBox",	
+		"./adviceManagement/unitTests/t.messageFactory",
+		 "./adviceManagement/unitTests/t.newAdviceNoLock",
+		"./adviceManagement/unitTests/t.newAdviceWithLock",
+		"./adviceManagement/unitTests/t.postOffice",
+		"./adviceManagement/unitTests/t.sendStopToRProcess",
+		##"./adviceManagement/unitTests/t.mainMessageProcessing",
 		"./adviceManagement/unitTests/t.tradeFactory",
 	 	"./adviceManagement/unitTests/t.tradeToSecurityFactory",
 		"./adviceManagement/unitTests/t.tradeToPositionFactory",
@@ -66,9 +66,9 @@ dirs = c(
 		"./adviceManagement/unitTests/t.bloombergData",
 		"./adviceManagement/unitTests/t.bloombergRequestHandler",
 		"./adviceManagement/unitTests/t.zipResults",
-		"./adviceManagement/unitTests/t.tradesToPositionsFactory",
 		"./adviceManagement/unitTests/t.subNewAdviceProcessing"
 	)
+
 testsuite.lists <- defineTestSuite("Test adviceManagement",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
 warnings()
@@ -80,19 +80,15 @@ mySetwd()
 
 
 ## test messageFactory
-dirs = c(
-		"./adviceManagement/unitTests/t.tradeToPositionFactory")
+dirs = c("./adviceManagement/unitTests/t.newAdviceNoLock")
 testsuite.lists <- defineTestSuite("Test adviceManagement",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
 warnings()
 
 
 
-
-
-## test messageFactory
-dirs = c(
-		"./adviceManagement/unitTests/t.lock_unlock")
+## test 
+dirs = c("./adviceManagement/unitTests/t.subNewAdviceProcessing")
 testsuite.lists <- defineTestSuite("Test adviceManagement",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
 warnings()

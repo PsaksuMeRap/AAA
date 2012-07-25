@@ -26,11 +26,11 @@ csvTradesFileName <- fileName
 # message is waiting for processing
 
 pendingDirectory <- strsplit(fileName,"_")[[1]][4]
-pendingDdirectory <- file.path(systemOptions[["homeDir"]],"postOffice",pendingDdirectory,"pending")
+pendingDirectory <- file.path(systemOptions[["homeDir"]],"postOffice",pendingDirectory,"pending")
 
 # create the message
-logger(paste("Creating message for",fileName, "in",pendingDdirectory,"..."))
-message <- messageFactory(fileName,pendingDdirectory)
+logger(paste("Creating message for",fileName, "in",pendingDirectory,"..."))
+message <- messageFactory(fileName,pendingDirectory)
 loggerDone()
 
 # source the repositoryPoliticaInvestimento

@@ -33,9 +33,11 @@ test.shouldProcessOrder <- function() {
 	setwd(systemOptions[["sourceCodeDir"]])
 	test()
 	
+	setwd(systemOptions[["sourceCodeDir"]])
+	
 	# check the
 	file <- list.files(file.path(systemOptions[["homeDir"]],"log"))
-	checkEquals(substr(file,40,nchar(file)),"2012-06-19_14-27-47_Ortelli_globalEconomy_newAdvice_log.txt")
+	checkEquals(substr(file,32,nchar(file)),"2012-06-19_14-27-47_Ortelli_globalEconomy_newAdvice_log.txt")
 	
 	file <- list.files(file.path(systemOptions[["homeDir"]],"postOffice","inbox"))
 	checkEquals(file,"2012-06-19_14-27-47_Ortelli_globalEconomy_preComplianceResult_1.zip")	

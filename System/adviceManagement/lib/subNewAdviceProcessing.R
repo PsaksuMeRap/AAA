@@ -30,7 +30,7 @@ if (length(args)==0) {
 	}
 }
 
-source(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","subInitialSetup.R"))
+source(file.path(sourceCodeDir,"adviceManagement","lib","subInitialSetup.R"))
 
 # import the desired trades and the corresponding cash movements as new positions
 logger(paste("Create position from trades for portfolio",message[["portfolioName"]],"..."))

@@ -21,7 +21,7 @@ newAdviceWithLock <- function(message) {
 	sendEMail(mail)
 	logger(paste("Mail sent:\n",as.character(mail),sep=""))
 	
-	# move file in the archive/delete folder (da migliorare: file non devono essere sovrascritti)
+	# move file in the archive/deleted folder (da migliorare: file non devono essere sovrascritti)
 	fileFrom <- file.path(rootDir,"postOffice","inbox",fileName) 
 	fileTo <- file.path(rootDir,"archive","deleted",fileName)
 	copyOk <- file.copy(fileFrom,fileTo)

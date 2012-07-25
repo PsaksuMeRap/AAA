@@ -21,7 +21,7 @@ confirmationNoLock <- function(message) {
 	sendEMail(mail)
 	logger(paste("Mail sent:\n",as.character(mail),sep=""))
 	
-	# move file in the archive/delete folder
+	# move file in the archive/deleted folder
 	fileFrom <- file.path(rootDir,"postOffice","inbox",fileName) 
 	fileTo <- file.path(rootDir,"archive","deleted",fileName)
 	logger(paste("Copying file",fileName,"to directory archive/deleted ... "))
