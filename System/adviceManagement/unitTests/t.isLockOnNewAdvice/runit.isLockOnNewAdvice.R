@@ -16,7 +16,7 @@ test.shouldRunIsLockOnNewAdvice <- function(message) {
 	
 	# define the file
 	fileName <- "2012-05-09_14-22-24_Ortelli_globalEquity_newAdvice.csv"
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.isLockOnNewAdvice")
+	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.newAdviceWithLock")
 	
 	# copy incoming message	
 	from <- file.path(directory,fileName)

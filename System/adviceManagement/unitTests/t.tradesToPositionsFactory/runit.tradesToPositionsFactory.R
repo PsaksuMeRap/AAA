@@ -5,6 +5,12 @@
 
 
 test.shouldCreatePositionsFromTrades <- function() {
+	
+	# copy the data directory
+	dirToCopy <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","files","riskman","data")
+	to <- file.path(systemOptions[["homeDir"]])
+	file.copy(from=dirToCopy,to=to,recursive=TRUE)
+	
 	# create the BloombergData
 
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
@@ -21,9 +27,16 @@ test.shouldCreatePositionsFromTrades <- function() {
 	checkEquals(as.character(positions[[3]]@id),"UBSN VX Equity")
 	
 	rm("bloombergData",pos=repositories)
+	unlink(file.path(systemOptions[["homeDir"]],"data"),recursive=TRUE)
 }
 
 test.shouldCreateLongPositionsFromTrades <- function() {
+	
+	# copy the data directory
+	dirToCopy <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","files","riskman","data")
+	to <- file.path(systemOptions[["homeDir"]])
+	file.copy(from=dirToCopy,to=to,recursive=TRUE)
+	
 	# create the BloombergData
 	
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
@@ -36,13 +49,20 @@ test.shouldCreateLongPositionsFromTrades <- function() {
 	
 	positions <- tradesToPositionsFactory(fileName,directory)
 	
-	checkEquals(length(positions),6)
-	checkEquals(as.character(positions[[3]]@id),"UBSN VX Equity")
+	checkEquals(length(positions),18)
+	checkEquals(as.character(positions[[1]]@id),"UBSN VX Equity")
 	
 	rm("bloombergData",pos=repositories)
+	unlink(file.path(systemOptions[["homeDir"]],"data"),recursive=TRUE)
 }
 
 test.shouldCreateEmptyPositionsFromEmptyTrades <- function() {
+	
+	# copy the data directory
+	dirToCopy <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","files","riskman","data")
+	to <- file.path(systemOptions[["homeDir"]])
+	file.copy(from=dirToCopy,to=to,recursive=TRUE)
+	
 	# create the BloombergData
 	
 	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
@@ -58,6 +78,7 @@ test.shouldCreateEmptyPositionsFromEmptyTrades <- function() {
 	checkEquals(length(positions),0)
 	
 	rm("bloombergData",pos=repositories)
+	unlink(file.path(systemOptions[["homeDir"]],"data"),recursive=TRUE)
 }
 
 #xx <- function() {

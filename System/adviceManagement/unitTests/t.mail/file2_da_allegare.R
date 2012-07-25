@@ -3,6 +3,6 @@
 # Author: Claudio
 ###############################################################################
 
-Questo Ã¨ un finto file di R da allegare.
+Questo è un finto file di R da allegare.
 
 

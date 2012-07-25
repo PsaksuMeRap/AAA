@@ -37,6 +37,7 @@ test.shouldSendPreComplianceResultNo <- function() {
 	# clean
 	unlink(file.path(systemOptions[["homeDir"]],"postOffice"),recursive=TRUE)
 	unlink(file.path(systemOptions[["homeDir"]],"archive"),recursive=TRUE)
+	setwd(systemOptions[["sourceCodeDir"]])
 }
 
 
@@ -71,4 +72,6 @@ test.shouldSendPreComplianceResultOk <- function() {
 	# clean
 	unlink(file.path(systemOptions[["homeDir"]],"postOffice"),recursive=TRUE)
 	unlink(file.path(systemOptions[["homeDir"]],"archive"),recursive=TRUE)
+	setwd(systemOptions[["sourceCodeDir"]])
+	
 }

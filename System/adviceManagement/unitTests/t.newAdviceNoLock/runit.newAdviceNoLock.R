@@ -6,6 +6,8 @@
 
 test.shouldNewAdviceWithoutLock <- function() {
 	
+	create_archive(systemOptions[["homeDir"]])
+	
 	#create postOffice
 	postOffice <- new("PostOffice",absolutePath=systemOptions[["homeDir"]])
 	setup(postOffice)
@@ -20,8 +22,6 @@ test.shouldNewAdviceWithoutLock <- function() {
 	
 	message <- messageFactory(fileName,directory)
 	
-	messageFrom <- advisors[[1]]@name
-	
 	mailbox <- new("MailBox",folderName=message[["portfolioName"]])
 	setup(x=mailbox,y=postOffice)
 	
@@ -31,6 +31,6 @@ test.shouldNewAdviceWithoutLock <- function() {
 	checkEquals(length(allPID)>0,TRUE)
 	
 	unlink(file.path(systemOptions[["homeDir"]],"postOffice"),recursive=TRUE)
-	
+	unlink(file.path(systemOptions[["homeDir"]],"archive"),recursive=TRUE)
 	
 }
