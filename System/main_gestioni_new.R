@@ -10,15 +10,16 @@ library("RUnit")
 library("tcltk")
 library("stringr")
 
+
 if(.Platform$OS.type=="windows") {
-	homeDir <- "\\\\usi/dfs/Utenti/O/ortellic/My Documents/workspace/AAA/System/"
+	sourceCodeDir <- "\\\\usi/dfs/Utenti/O/ortellic/My Documents/workspace/AAA/System/"
+	homeDir <- sourceCodeDir
 } else {
-	homeDir <- "/home/claudio/workspace/AAA/System/"
+	sourceCodeDir <- "/home/claudio/workspace/AAA/System/"
+	homeDir <- sourceCodeDir
 }
 
-
-
-setwd(homeDir)
+setwd(sourceCodeDir)
 
 repositories <- new.env()
 
@@ -113,7 +114,7 @@ if (FALSE) {
 	# togli il 18 gennaio e 19 maggio
 	
 	dates <- c(as.Date("2011-09-14"),as.Date("2011-09-15"),as.Date("2011-09-16"))
-	dates <- c("2012-04-13")
+	dates <- c("2012-07-11")
 	date <- dates
 	for (date in as.character(dates)) {
 		print(date)

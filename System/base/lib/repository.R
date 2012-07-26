@@ -124,7 +124,7 @@ create_repositoryExchangeRates <- function(exchangeRatesDate) {
 	names(repository$rates) <- rates.df[,"Moneta"]
 	
 	# create the lastUpdate wich is a vector of date-time 
-	dateTime <- if(missing(exchangeRatesDate)) Sys.time() else as.POSIXt(exchangeRatesDate)
+	dateTime <- if(missing(exchangeRatesDate)) Sys.time() else as.POSIXlt(exchangeRatesDate)
 	repository$lastUpdateDateTime <- rep(dateTime,nrow(rates.df))
 	names(repository$lastUpdateDateTime) <- rates.df[,"Moneta"]
 	
