@@ -56,7 +56,7 @@ dirs = c(
 		"./adviceManagement/unitTests/t.newAdviceWithLock",
 		"./adviceManagement/unitTests/t.postOffice",
 		"./adviceManagement/unitTests/t.sendStopToRProcess",
-		##"./adviceManagement/unitTests/t.mainMessageProcessing",
+		"./adviceManagement/unitTests/t.mainMessageProcessing",
 		"./adviceManagement/unitTests/t.tradeFactory",
 	 	"./adviceManagement/unitTests/t.tradeToSecurityFactory",
 		"./adviceManagement/unitTests/t.tradeToPositionFactory",
@@ -80,7 +80,7 @@ mySetwd()
 
 
 ## test messageFactory
-dirs = c("./adviceManagement/unitTests/t.subNewAdviceProcessing")
+dirs = c("./adviceManagement/unitTests/t.mainMessageProcessing")
 testsuite.lists <- defineTestSuite("Test adviceManagement",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
 warnings()

@@ -4,4 +4,4 @@
 ###############################################################################
 
 
-setGeneric("mainMessageProcessing",def=function(message) standardGeneric("mainMessageProcessing"))
+setGeneric("mainMessageProcessing",def=function(message,...) standardGeneric("mainMessageProcessing"))

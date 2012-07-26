@@ -5,7 +5,7 @@
 
 
 setMethod("mainMessageProcessing",signature(message="NewAdvice"),
-		function(message) {
+		function(message,postOffice) {
 			# identify the advisor (filename="2012-05-09_14-22-24_Ortelli_globalEquity_newAdvice.csv")
 			messageFrom <- message[["from"]]
 			
@@ -30,7 +30,7 @@ setMethod("mainMessageProcessing",signature(message="NewAdvice"),
 			if (isLocked) {
 				isOk <- newAdviceWithLock(message)
 			} else {
-				# if the file is not locked move the advice in the mailbox_xxx/pending and start processing
+				# if the file is not locked start processing
 				PID <- newAdviceNoLock(message)
 			}
 		}
