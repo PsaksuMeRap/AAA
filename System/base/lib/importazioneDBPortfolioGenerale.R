@@ -34,7 +34,7 @@ importDBPortfolioGeneraleByDate <- function(fetchDate) {
 	connection <- odbcConnect("prezzi_storici_azioni_VAR",.utente,.password)
 	query = paste("SELECT B.ID, A.* FROM [Performance_TW].dbo.Valori_storici_portafogli_disaggregati A ",
 			"INNER JOIN [Sistema (prova)].dbo.Clienti_ID B ON A.Cliente=B.Cliente ",
-			"WHERE A.data='",fetchDate,"'")
+			"WHERE A.data='",fetchDate,"'",sep="")
 	
 	DBPortfolioGenerale.df <- sqlQuery(connection,query,as.is=TRUE)
 	
@@ -49,7 +49,7 @@ importDBPortfolioGeneraleByDate <- function(fetchDate) {
 		return(ayrtonPosition)
 	}
 	
-	if (nrow(DBPortfolioGenerale.df)==0) return(origin=new("AyrtonPositions",positions=list()))
+	if (nrow(DBPortfolioGenerale.df)==0) return(origin=new("AyrtonPositions"))
 	origin <- lapply(1:nrow(DBPortfolioGenerale.df),getRow,DBPortfolioGenerale.df)
 	return(origin=new("AyrtonPositions",origin))
 	return(origin)

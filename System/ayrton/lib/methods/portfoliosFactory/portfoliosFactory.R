@@ -6,6 +6,8 @@
 setMethod("portfoliosFactory",signature(positions="AyrtonPositions"),
 		function(positions,politicaInvestimento.df) {
 			
+			if (length(positions)==0) return(new("Portfolios"))
+			
 			if (missing(politicaInvestimento.df)) {
 				politicaInvestimento.df <- repositories$politicaInvestimento$politicaInvestimento.df				
 				

@@ -30,7 +30,7 @@ filterLists <- function(x,by,values) {
 	
 	l <- length(x)
 	
-	if (l==0) return(list())
+	if (l==0) return(x)
 	
 	areOkFinal <- rep(FALSE,length(l))	
 	

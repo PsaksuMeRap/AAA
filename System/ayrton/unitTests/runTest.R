@@ -3,9 +3,31 @@
 # Author: claudio
 ###############################################################################
 
+rm(list=ls(all=TRUE))
+
+library("RODBC")
+library("RUnit")
+library("tcltk")
+library("stringr")
+
+stringsAsFactors = FALSE
+repositories <- new.env()
+
+if (.Platform$OS.type=="windows") {	
+	homeDir <- "C:/riskman"
+} else {
+	homeDir <- "/home/claudio/riskman"
+}
+
+sourceCodeDir <- getwd()
+
+source("./base/lib/library.R")
 source("./ayrton/lib/library.R")
 
-# mySetwd("ayrton")
+source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
+testRepository <- createExchangeRatesTestRepository() 
+repositories$exchangeRates <- testRepository
+
 
 ## test globale
 dirs = c(
@@ -23,9 +45,5 @@ dirs = c(
 testsuite.lists <- defineTestSuite("Test ayrton",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
 warnings()
-# mySetwd()
 
 
-
-
-		

@@ -13,8 +13,16 @@ library("stringr")
 stringsAsFactors = FALSE
 repositories <- new.env()
 
+if (.Platform$OS.type=="windows") {
+	homeDir <- "C:/riskman"
+} else {
+	homeDir <- "/home/claudio/riskman"
+}
+
 source("./base/lib/library.R")
 systemOptions[["sourceCodeDir"]] <- getwd()
 
 ## -- fine setup 
+
+
 

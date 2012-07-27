@@ -3,18 +3,33 @@
 # Author: claudio
 ###############################################################################
 
+rm(list=ls(all=TRUE))
+
+library("RODBC")
+library("RUnit")
+library("tcltk")
+library("stringr")
+
+stringsAsFactors = FALSE
+repositories <- new.env()
+
+if (.Platform$OS.type=="windows") {	
+	homeDir <- "C:/riskman"
+} else {
+	homeDir <- "/home/claudio/riskman"
+}
+
+sourceCodeDir <- getwd()
+
+source("./base/lib/library.R")
+source("./ayrton/lib/library.R")
 source("./riskman/lib/library.R")
 
-
-# set the working directory to base
-# mySetwd("base")
 
 source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
 testRepository <- createExchangeRatesTestRepository() 
 repositories$exchangeRates <- testRepository
 
-# set the working directory to riskman
-# mySetwd("riskman")
 
 ## test directories
 dirs = c(
@@ -29,10 +44,9 @@ dirs = c(
 		"./riskman/unitTests/t.selectionCriteriumFactory"
 
 )
+
 testsuite.lists <- defineTestSuite("Tests riskman",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
 warnings()
 
 
-# set the working directory to System
-# mySetwd()

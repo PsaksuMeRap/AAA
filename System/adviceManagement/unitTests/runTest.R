@@ -14,9 +14,8 @@ if(.Platform$OS.type=="windows") {
 
 stringsAsFactors = FALSE
 
-# this variable is used to indicate that we are running a testsuite
-isTest <- TRUE
 repositories <- new.env()
+
 if (.Platform$OS.type=="windows") {
 	homeDir <- "C:/riskman"
 } else {
