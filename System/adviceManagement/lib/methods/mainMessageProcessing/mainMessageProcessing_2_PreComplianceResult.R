@@ -6,8 +6,9 @@
 
 setMethod("mainMessageProcessing",signature(message="PreComplianceResult"),
 		function(message) {
-			# this method assumes that the preComplianceResult file has been moved
-			# from postOffice/portfolio/pending to postOffice/incoming folder
+			# this method assumes that the preComplianceResult file has been 
+			# 1) moved from postOffice/portfolio/pending to postOffice/incoming folder
+			# 2) copied to the archive/processed/accepted or rejected folder
 			
 			# remove the file in the postOffice/incoming folder
 			fullFileName <- file.path(systemOptions[["homeDir"]],"postOffice","inbox",message[["fileName"]])
@@ -20,8 +21,8 @@ setMethod("mainMessageProcessing",signature(message="PreComplianceResult"),
 			loggerDone(paste(result,"\n"))
 			
 			# remove the lock
-			logger(paste("Removing lock for portfolio",message[["portfolioName"]],"... "))
-			cat(unlock(message))
+			# logger(paste("Removing lock for portfolio",message[["portfolioName"]],"... "))
+			# cat(unlock(message))
 			
 			# show pop up
 			if (message[["testResult"]]=="0") {
@@ -36,6 +37,6 @@ setMethod("mainMessageProcessing",signature(message="PreComplianceResult"),
 
 			logger(paste("The following message:\n\n", messageString,"\nhas been read from user",sep=""))
 			
-			return()
+			return(as.numeric(message[["testResult"]]))
 		}
 )

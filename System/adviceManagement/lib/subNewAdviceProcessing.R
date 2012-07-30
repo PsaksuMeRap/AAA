@@ -41,7 +41,7 @@ positionsStrings <- paste(as.character(positionsFromTrades),collapse="\n")
 logger(paste(textMessage,positionsStrings,sep="\n"))
 
 # copy the checkFile into the pre-compliance input/output folder
-logger(paste("Copying check file for",message[["portfolioName"]],"..."))
+logger(paste("Copying check file for",message[["portfolioName"]],"in",checkDirectory,"..."))
 fileFrom <- file.path(systemOptions[["homeDir"]],"data","checkFiles",message[["portfolioName"]],"check.txt") 
 fileTo <- file.path(checkDirectory,"check.txt")
 ok <- file.copy(from=fileFrom,to=fileTo)

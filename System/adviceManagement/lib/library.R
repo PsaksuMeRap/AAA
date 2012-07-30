@@ -45,5 +45,7 @@ source("./adviceManagement/lib/methods/mainMessageProcessing/mainMessageProcessi
 source("./adviceManagement/lib/methods/mainMessageProcessing/mainMessageProcessing_1_newAdvice.R")
 source("./adviceManagement/lib/methods/mainMessageProcessing/mainMessageProcessing_2_PreComplianceResult.R")
 source("./adviceManagement/lib/methods/mainMessageProcessing/mainMessageProcessing_3_confirmation.R")
+source("./adviceManagement/lib/methods/mainMessageProcessing/mainMessageProcessing_3_confirmationNoLock.R")
+source("./adviceManagement/lib/methods/mainMessageProcessing/mainMessageProcessing_3_confirmationWithLock.R")
 source("./adviceManagement/lib/methods/mainMessageProcessing/mainMessageProcessing_4_PostComplianceResult.R")
 

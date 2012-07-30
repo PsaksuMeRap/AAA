@@ -103,3 +103,43 @@ sendEmail_preComplianceResult <- function(message) {
 	setwd(systemOptions[["homeDir"]])
 	return(resultMessage)
 }
+
+
+sendEmail_postComplianceResult <- function(message) {
+	
+	isTestOk <- message[["testResult"]] == "1"
+	
+	if (isTestOk) {
+		setwd(file.path(systemOptions[["homeDir"]],"archive","processed","accepted"))
+	} else {
+		setwd(file.path(systemOptions[["homeDir"]],"archive","processed","rejected"))
+	}
+	
+	confirmationFileName <- paste(paste(getMessageDate_time_from(message),
+					message[["from"]],message[["portfolioName"]],"confirmation",sep="_"),
+			"csv",sep=".")
+	
+	if (isTestOk) {
+		stringMessage <- paste("Your advice '",confirmationFileName,"' has been accepted.\n",
+				"See attached zip file for more information.",sep="")
+		subject <- "Confirmation advice accepted"
+	} else {
+		stringMessage <- paste("Your advice '",confirmationFileName,"' has been rejected because of a negative post-compliance.\n",
+				"You have to rebalance the portfolio in order to fulfill all constraints and investment limits.\n",
+				"See the attached zip file for more information.",sep="")
+		subject <- "Confirmation advice rejected"
+	}
+	
+	# sendEmail
+	mail <- new("Mail",
+			from=.secrets[["Riskmanager"]][["username"]],
+			to=message@advisor@email,
+			subject=subject,
+			message=stringMessage,
+			attachments=message[["fileName"]]
+	)
+	resultMessage <- sendEMail(mail)
+	
+	setwd(systemOptions[["homeDir"]])
+	return(resultMessage)
+}

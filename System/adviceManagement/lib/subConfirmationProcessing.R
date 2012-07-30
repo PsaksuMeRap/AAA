@@ -30,7 +30,7 @@ if (length(args)==0) {
 	}
 }
 
-source(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","subInitialSetup.R"))
+source(file.path(sourceCodeDir,"adviceManagement","lib","subInitialSetup.R"))
 
 # import the desired trades and the corresponding cash movements as new positions
 logger(paste("Create position from trades for portfolio",message[["portfolioName"]],"..."))
@@ -39,6 +39,13 @@ portfolio <- portfolio + positionsFromTrades
 textMessage <- paste("Imported positions from desired trades:")
 positionsStrings <- paste(as.character(positionsFromTrades),collapse="\n")
 logger(paste(textMessage,positionsStrings,sep="\n"))
+
+# save the portfolio
+logger(paste("Saving the portfolio in the data/portfolios directory ..."))
+directory <- file.path(systemOptions[["homeDir"]],"data","portfolios",message[["portfolioName"]])
+saveLastObject(portfolio,"portfolio.RData",directory)
+loggerDone()
+
 
 # copy the checkFile into the pre-compliance input/output folder
 logger(paste("Copying check file for",message[["portfolioName"]],"in",checkDirectory,"..."))

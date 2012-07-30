@@ -15,8 +15,8 @@ confirmationNoLock <- function(message) {
 	mail <- new("Mail",
 			from=.secrets[["Riskmanager"]][["emailAddress"]],
 			to=message@advisor@email,
-			subject="Advice refused",
-			message=paste("Your confirmation '",fileName,"' has been deleted because of no pending order.\nPlease send a new advice first.",sep="")
+			subject="Confirmation advice refused",
+			message=paste("Your confirmation '",fileName,"' has been deleted because of no pending order.\nPlease send a new advice first or contact the riskmanager.",sep="")
 	)
 	sendEMail(mail)
 	logger(paste("Mail sent:\n",as.character(mail),sep=""))
@@ -31,7 +31,7 @@ confirmationNoLock <- function(message) {
 	if (copyOk) {
 		logger(paste("Removing",fileFrom,"... "))
 		removedOk <- file.remove(fileFrom)
-		cat(removeOk)
+		cat(removedOk)
 		if (removedOk) {
 			return(0)
 		} else {

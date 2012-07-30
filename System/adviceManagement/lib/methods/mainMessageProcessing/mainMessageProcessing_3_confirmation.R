@@ -31,7 +31,7 @@ setMethod("mainMessageProcessing",signature(message="Confirmation"),
 			if (isLocked) {
 				PID <- confirmationWithLock(message)
 			} else {
-				# if the file is not locked send an e-mail and move the file into the removed folder
+				# if the file is not locked send an e-mail and move the file into the rejected folder
 				isOk <- confirmationNoLock(message)
 			}
 		}
