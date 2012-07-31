@@ -49,7 +49,6 @@ dirs = c(
 		"./adviceManagement/unitTests/t.confirmationWithLock",
 		"./adviceManagement/unitTests/t.detectRprocesses",
 		"./adviceManagement/unitTests/t.fileMove",
-		"./adviceManagement/unitTests/t.isLockOnNewAdvice",
 		"./adviceManagement/unitTests/t.logger",
 		"./adviceManagement/unitTests/t.loadPortfolio",
 		"./adviceManagement/unitTests/t.lock_unlock",

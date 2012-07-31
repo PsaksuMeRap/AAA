@@ -6,7 +6,7 @@
 
 
 setMethod("mainMessageProcessing",signature(message="Confirmation"),
-		function(message) {
+		function(message,postOffice) {
 			# identify the advisor (filename="2012-05-09_14-22-24_Ortelli_globalEquity_newAdvice.csv")
 			messageFrom <- message[["from"]]
 			

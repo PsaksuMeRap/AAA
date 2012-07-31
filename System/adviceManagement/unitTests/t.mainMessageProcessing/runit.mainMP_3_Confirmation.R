@@ -3,7 +3,7 @@
 # Author: Claudio
 ###############################################################################
 
-test.shouldProcessConfirmationMessageWithoutLock <- function() {
+test.shouldProcessConfirmationMessageNoLock <- function() {
 
 	# copy the data directory
 	from <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","files","riskman","data")
@@ -31,8 +31,8 @@ test.shouldProcessConfirmationMessageWithoutLock <- function() {
 			folderName=message[["portfolioName"]])
 	setup(x=mailbox,y=postOffice)
 		
-	# run the test				
-	mainMessageProcessing(message)
+	# run the test					
+	mainMessageProcessing(message,postOffice)
 		
 	checkEquals(file.exists(file.path(systemOptions[["homeDir"]],"archive","deleted","2012-05-09_14-22-24_Ortelli_globalEquity_confirmation.csv")),TRUE)
 	

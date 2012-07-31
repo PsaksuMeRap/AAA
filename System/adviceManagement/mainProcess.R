@@ -60,8 +60,8 @@ while(Sys.time()<T) {
 			loggerDone()
 			
 			# process the message
-			logger(paste("Process message",fileName))
-			mainMessageProcessing(message)
+			logger(paste("Process message",fileName))			
+			mainMessageProcessing(message,postOffice)
 			
 		} # end for (fileName in existingFiles)
 		

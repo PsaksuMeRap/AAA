@@ -39,6 +39,7 @@ test.shouldProcessPreComplianceResult_1 <- function() {
 	ok <- lock(message)
 	
 	result <- mainMessageProcessing(message)
+	
 	checkEquals(result,1)
 	
 	directory <- file.path(systemOptions[["homeDir"]],"postOffice","inbox")

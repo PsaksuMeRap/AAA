@@ -3,7 +3,6 @@
 # Author: Claudio
 ###############################################################################
 
-
 setClass("Mail",
 		representation(
 				from="character",
@@ -65,10 +64,11 @@ setMethod("as.character","Mail",
 		}
 )
 
-
 sendEmail_preComplianceResult <- function(message) {
 	
 	isTestOk <- message[["testResult"]] == "1"
+	
+	workingDirectoryOrig <- getwd()
 	
 	if (isTestOk) {
 		setwd(file.path(systemOptions[["homeDir"]],"archive","processed","accepted"))
@@ -100,14 +100,15 @@ sendEmail_preComplianceResult <- function(message) {
 	)
 	resultMessage <- sendEMail(mail)
 	
-	setwd(systemOptions[["homeDir"]])
+	setwd(workingDirectoryOrig)
 	return(resultMessage)
 }
-
 
 sendEmail_postComplianceResult <- function(message) {
 	
 	isTestOk <- message[["testResult"]] == "1"
+	
+	workingDirectoryOrig <- getwd()
 	
 	if (isTestOk) {
 		setwd(file.path(systemOptions[["homeDir"]],"archive","processed","accepted"))
@@ -140,6 +141,6 @@ sendEmail_postComplianceResult <- function(message) {
 	)
 	resultMessage <- sendEMail(mail)
 	
-	setwd(systemOptions[["homeDir"]])
+	setwd(workingDirectoryOrig)
 	return(resultMessage)
 }

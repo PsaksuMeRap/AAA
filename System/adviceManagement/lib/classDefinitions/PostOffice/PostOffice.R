@@ -4,7 +4,7 @@
 ###############################################################################
 
 setClass("PostOffice",representation(absolutePath="character"),
-		prototype=list(inbox=character(0),pending=character(0)))
+		prototype=list(absolutePath=character(0)))
 
 
 setGeneric("setup",def=function(x,y,...) standardGeneric("setup"))
@@ -21,7 +21,6 @@ setMethod("setup",signature(x="PostOffice",y="missing"),
 			} else {
 				dir.create(file.path(x@absolutePath,"postOffice"))
 				dir.create(file.path(x@absolutePath,"postOffice","inbox"))
-				# dir.create(file.path(x@absolutePath,"postOffice","pending"))
 				return(invisible())
 			}
 		}

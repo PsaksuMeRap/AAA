@@ -23,12 +23,12 @@ test.shouldCreateMessageFileName <- function() {
 	checkEquals(result[["messageType"]],"confirmation")
 
 	fileName <- "2012-05-09_14-22-24_Ortelli_globalEquity_preComplianceResult_1.csv"
-	result <- messageFactory(fileName,directory,advisors)
+	result <- messageFactory(fileName,directory)
 	checkEquals(result[["messageType"]],"preComplianceResult")
 	checkEquals(result[["testResult"]],"1")	
 	
 	fileName <- "2012-05-09_14-22-24_Ortelli_globalEquity_postComplianceResult_0.csv"
-	result <- messageFactory(fileName,directory,advisors)
+	result <- messageFactory(fileName,directory)
 	checkEquals(result[["testResult"]],"0")	
 	
 }

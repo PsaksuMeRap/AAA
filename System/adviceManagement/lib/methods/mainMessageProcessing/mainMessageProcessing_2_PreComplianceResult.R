@@ -19,7 +19,7 @@ setMethod("mainMessageProcessing",signature(message="PreComplianceResult"),
 			logger(paste("Sending e-mail with",fullFileName,"...\n"))
 			result <- sendEmail_preComplianceResult(message)
 			loggerDone(paste(result,"\n"))
-			
+		
 			# remove the lock
 			# logger(paste("Removing lock for portfolio",message[["portfolioName"]],"... "))
 			# cat(unlock(message))
