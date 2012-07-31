@@ -23,7 +23,7 @@ test.shouldRunIsLockOnNewAdvice <- function(message) {
 	to <- file.path(systemOptions[["homeDir"]],"postOffice","inbox")
 	isOk <- file.copy(from,to)
 	
-	message <- messageFactory(fileName,directory,advisors)	
+	message <- messageFactory(fileName,directory)	
 	
 	messageFrom <- advisors[[1]]@name
 	
