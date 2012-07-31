@@ -66,8 +66,15 @@ setMethod("as.character","Mail",
 
 sendEmail_newAdviceDeleted <- function(fileName,message) {
 	
-	messageText <- paste("The advice\n\n'",as.character(message),"'\n\nhas been deleted because of a pending order. Please resend a new advice\n",
-			"after execution and confirmation of the current one.",sep="")
+	messageText <- paste(
+			"The advice\n",
+			"\n",
+			as.character(message),
+			"\n\n",
+			"has been deleted because of a pending advice. Resend a new advice\n",
+			"after execution and confirmation of the pending one.",
+			sep=""
+	)
 	
 	# create the e-mail
 	mail <- new("Mail",
@@ -77,7 +84,7 @@ sendEmail_newAdviceDeleted <- function(fileName,message) {
 			message=messageText
 	)
 	sendEMail(mail)
-	logger(paste("Mail sent:\n",as.character(mail),sep=""))
+	logger(paste("Mail sent:\n\n",as.character(mail),sep=""))
 	
 }
 
@@ -93,16 +100,25 @@ sendEmail_preComplianceResult <- function(message) {
 		setwd(file.path(sys[["homeDir"]],"archive","processed","rejected"))
 	}
 	
-	newAdviceFileName <- paste(paste(getMessageDate_time_from(message),"newAdvice",sep="_"),
-			"csv",sep=".")
-	
 	if (isTestOk) {
-		stringMessage <- paste("Your advice\n\n",as.character(message),"\n\nhas been accepted for execution.\n",
-				"See attached zip file for more information.",sep="")
+		stringMessage <- paste(
+				"Your advice\n",
+				"\n",
+				as.character(message),
+				"\n\n",
+				"has been accepted for execution.\n",
+				"See the attached zip file for more information.",
+				sep=""
+		)
 		subject <- "New advice accepted"
 	} else {
-		stringMessage <- paste("Your advice\n\n",as.character(message),"\n\nhas been rejected because of a negative pre-compliance.\n",
-				"See attached zip file for more information.",sep="")
+		stringMessage <- paste(
+				"Your advice\n",
+				"\n",
+				as.character(message),
+				"\n\n",
+				"has been rejected because of a negative pre-compliance.\n",
+				"See the attached zip file for more information.",sep="")
 		subject <- "New advice rejected"
 	}
 	
@@ -132,17 +148,28 @@ sendEmail_postComplianceResult <- function(message) {
 		setwd(file.path(sys[["homeDir"]],"archive","processed","rejected"))
 	}
 	
-	confirmationFileName <- paste(paste(getMessageDate_time_from(message),"confirmation",sep="_"),
-			"csv",sep=".")
-	
 	if (isTestOk) {
-		stringMessage <- paste("Your advice\n\n",as.character(message),"\n\nhas been accepted.\n",
-				"See attached zip file for more information.",sep="")
+		stringMessage <- paste(
+				"Your advice\n",
+				"\n",
+				as.character(message),
+				"\n\n",
+				"has been accepted.\n",
+				"See attached zip file for more information.",
+				sep=""
+		)
 		subject <- "Confirmation advice accepted"
 	} else {
-		stringMessage <- paste("Your advice\n\n",as.character(message),"\n\nhas been rejected because of a negative post-compliance.\n",
+		stringMessage <- paste(
+				"Your advice\n",
+				"\n",
+				as.character(message),
+				"\n\n",
+				"has been rejected because of a negative post-compliance.\n",
 				"You have to rebalance the portfolio in order to fulfill all constraints and investment limits.\n",
-				"See the attached zip file for more information.",sep="")
+				"See the attached zip file for more information.",
+				sep=""
+		)
 		subject <- "Confirmation advice rejected"
 	}
 	

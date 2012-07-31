@@ -19,7 +19,14 @@ newAdviceNoLock <- function(message) {
 			from=.secrets[["Riskmanager"]][["emailAddress"]],
 			to=message@advisor@email,
 			subject="Processing order",
-			message=paste("Your advice '",csvTradesFileName,"' is being processed",sep="")
+			message=paste(
+					"Your advice\n",
+					"\n",
+					as.character(message),
+					"\n\n",
+					"is being processed",
+					sep=""
+			)
 	)
 	logger(paste("\nSending e-mail:\n",as.character(mail),sep=""))
 	sendEMail(mail)
@@ -47,7 +54,8 @@ newAdviceNoLock <- function(message) {
 				from=.secrets[["Riskmanager"]][["emailAddress"]],
 				to=message@advisor@email,
 				subject="Processing order",
-				message=paste("Error when copying file'",csvTradesFileName,"' in the pending folder",sep="")
+				message=paste(
+						"Error when copying file ",csvTradesFileName," to ",portfolioName,"/pending.",sep="")
 		)
 		logger(paste("\nSending e-mail:\n",as.character(mail),sep=""))
 		sendEMail(mail)

@@ -82,7 +82,7 @@ warnings()
 
 
 ## test messageFactory
-dirs = c("./adviceManagement/unitTests/t.mainMessageProcessing")
+dirs = c("./adviceManagement/unitTests/t.newAdviceNoLock")
 testsuite.lists <- defineTestSuite("Test adviceManagement",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
 warnings()

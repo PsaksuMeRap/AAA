@@ -25,7 +25,7 @@ setMethod("as.character","Message",
 		function(x) {
 			string <- paste("Time:",x$time)
 			string[2] <- paste("Date:",x$date)
-			string[3] <- paste("From:",x$from)
+			string[3] <- paste("Advisor:",x$from)
 			string[4] <- paste("Portfolio:",x$portfolioName)
 			string[5] <- paste("Message type:",x$messageType)
  
