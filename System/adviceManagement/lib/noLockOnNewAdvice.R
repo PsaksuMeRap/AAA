@@ -26,8 +26,8 @@ noLockOnNewAdvice <- function(message) {
 	loggerDone("\n [ok]\n\n")
 	
 	# move file (da migliorare: file non devono essere sovrascritti)
-	fileFrom <- file.path(systemOptions[["homeDir"]],"postOffice","inbox",fileName) 
-	fileTo <- file.path(systemOptions[["homeDir"]],"postOffice",portfolioName,"pending",fileName)
+	fileFrom <- file.path(sys[["homeDir"]],"postOffice","inbox",fileName) 
+	fileTo <- file.path(sys[["homeDir"]],"postOffice",portfolioName,"pending",fileName)
 	copyOk <- file.copy(fileFrom,fileTo)
 	
 	if (copyOk) {
@@ -43,24 +43,24 @@ noLockOnNewAdvice <- function(message) {
 	}
 	
 	logger(paste("Locking mailBox of",portfolioName,"..."))
-	lockFile <- file.create(file.path(systemOptions[["homeDir"]],"postOffice",portfolioName,"lock"))
+	lockFile <- file.create(file.path(sys[["homeDir"]],"postOffice",portfolioName,"lock"))
 	if (lockFile) loggerDone() else logger("Error: impossible to lock the mailbox ... why?")
 	
 	# start batch process for processing
 	# command <- "c:\\Progra~1\\R\\R-2.14.2\\bin\\R CMD BATCH --slave --no-restore-history --no-timing --no-save "
 	
 	# define the name of the file to process and costruct the command
-	fullFileNameToExecute <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","newOrderProcessing.R")
+	fullFileNameToExecute <- file.path(sys[["sourceCodeDir"]],"adviceManagement","lib","newOrderProcessing.R")
 	command <- "R CMD BATCH --slave --no-restore-history --no-timing --no-save "
 	command <- paste(command,"\"--args fileName='",fileName,
-			"' sourceCodeDir='",systemOptions[["sourceCodeDir"]],
-			"' homeDir='"       ,systemOptions[["homeDir"]],"'\" ",
+			"' sourceCodeDir='",sys[["sourceCodeDir"]],
+			"' homeDir='"       ,sys[["homeDir"]],"'\" ",
 			fullFileNameToExecute," out.txt",sep="")
 	
 	# save the current working directory
 	currentWorkingDirectory <- getwd()
 	
-	setwd(file.path(systemOptions[["homeDir"]],"postOffice",portfolioName,"pending"))
+	setwd(file.path(sys[["homeDir"]],"postOffice",portfolioName,"pending"))
 	logger(paste("Launching system command\n",command))
 	system(command,wait=FALSE)
 	loggerDone("\n[ok]")

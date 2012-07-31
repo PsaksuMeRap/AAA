@@ -13,7 +13,7 @@ test.shouldSendEmailWithoutAttachment <- function() {
 	mail@server <- "mail.usi.ch"
 
 	tmp <- getwd()
-	setwd(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.mail"))
+	setwd(file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.mail"))
 	source("secrets.R")
 	
 	mail@username <- username
@@ -38,7 +38,7 @@ test.shouldSendEmailWithAttachment <- function() {
 	mail@attachments <- c("file1.txt","file2_da_allegare.R")
 
 	tmp <- getwd()
-	setwd(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.mail"))
+	setwd(file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.mail"))
 	source("secrets.R")
 	
 	mail@username <- username

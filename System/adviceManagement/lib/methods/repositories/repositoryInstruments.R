@@ -5,7 +5,7 @@
 
 
 # create the data.frame of the instruments
-file <- file.path(systemOptions[["sourceCodeDir"]],"data","instruments","repositoryInstruments.csv")
+file <- file.path(sys[["sourceCodeDir"]],"data","instruments","repositoryInstruments.csv")
 instruments.df <- read.csv(file=file,header=TRUE,stringsAsFactors=FALSE)
 colnames(instruments.df) <- c("ID","Instrument")
 rm(file)

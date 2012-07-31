@@ -27,7 +27,7 @@ tradesToPositionsFactory <- function(fileName,directory) {
 		# update the local repository
 		assign("bloombergData",blData,pos=repositories)
 		# save it to data/bloomberg directory
-		directory <- file.path(systemOptions[["homeDir"]],"data","bloomberg",message[["portfolioName"]])
+		directory <- file.path(sys[["homeDir"]],"data","bloomberg",message[["portfolioName"]])
 		saveLastObject(blData,"bloombergData.RData",directory)
 	}
 	

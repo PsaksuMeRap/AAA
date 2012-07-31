@@ -7,14 +7,14 @@
 test.shouldConvertEquityTradeToPosition <- function() {
 	
 	# create the BloombergData
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
 	source(file.path(directory,"createRepositoryBloombergData.R"))
 	blData <- createRepositoryBloombergData()
 	
 	# set the fileName from which to import trades
 	fileName <- "2012-05-09_14-22-24_Ortelli_equityTrade_newAdvice.csv"
 	messageFileName <- messageFileNameFactory(fileName)
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
 	# import trades
 	trades <- tradesFactory(messageFileName,directory)
@@ -35,14 +35,14 @@ test.shouldConvertEquityTradeToPosition <- function() {
 
 test.shouldConvertFuturesOnIndexTradeToPosition <- function() {
 	# create the BloombergData
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
 	source(file.path(directory,"createRepositoryBloombergData.R"))
 	blData <- createRepositoryBloombergData()
 	
 	# set the fileName from which to import trades
 	fileName <- "2012-05-09_14-22-24_Ortelli_futureEquityIndexTrade_newAdvice.csv"
 	messageFileName <- messageFileNameFactory(fileName)
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
 	# import trades
 	trades <- tradesFactory(messageFileName,directory)
@@ -63,14 +63,14 @@ test.shouldConvertFuturesOnIndexTradeToPosition <- function() {
 
 test.shouldConvertBondTradeToPosition <- function() {
 	# create the BloombergData
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
 	source(file.path(directory,"createRepositoryBloombergData.R"))
 	blData <- createRepositoryBloombergData()
 	
 	# set the fileName from which to import trades
 	fileName <- "2012-05-09_14-22-24_Ortelli_bondTrade_newAdvice.csv"
 	messageFileName <- messageFileNameFactory(fileName)
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
 	# import trades
 	trades <- tradesFactory(messageFileName,directory)
@@ -100,14 +100,14 @@ test.shouldParseFxSpotId_Bloomberg <- function() {
 
 test.shouldConvertFXSpotTradeToPosition <- function() {
 	# create the BloombergData
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
 	source(file.path(directory,"createRepositoryBloombergData.R"))
 	blData <- createRepositoryBloombergData()
 	
 	# set the fileName from which to import trades
 	fileName <- "2012-05-09_14-22-24_Ortelli_fxSpotTrade_newAdvice.csv"
 	messageFileName <- messageFileNameFactory(fileName)
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
 	# import trades
 	trades <- tradesFactory(messageFileName,directory)
@@ -130,14 +130,14 @@ test.shouldConvertFXSpotTradeToPosition <- function() {
 
 test.shouldConvertOptionOnEquityTradeToPosition <- function() {
 	# create the BloombergData
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
 	source(file.path(directory,"createRepositoryBloombergData.R"))
 	blData <- createRepositoryBloombergData()
 	
 	# set the fileName from which to import trades
 	fileName <- "2012-05-09_14-22-24_Ortelli_optionEquityTrade_newAdvice.csv"
 	messageFileName <- messageFileNameFactory(fileName)
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
 	# import trades
 	trades <- tradesFactory(messageFileName,directory)
@@ -161,14 +161,14 @@ test.shouldConvertOptionOnEquityTradeToPosition <- function() {
 
 test.shouldConvertOptionOnFxTradeToPosition <- function() {
 	# create the BloombergData
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
 	source(file.path(directory,"createRepositoryBloombergData.R"))
 	blData <- createRepositoryBloombergData()
 	
 	# set the fileName from which to import trades
 	fileName <- "2012-05-09_14-22-24_Ortelli_optionFxTrade_newAdvice.csv"
 	messageFileName <- messageFileNameFactory(fileName)
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
 	# import trades
 	trades <- tradesFactory(messageFileName,directory)
@@ -190,14 +190,14 @@ test.shouldConvertOptionOnFxTradeToPosition <- function() {
 
 test.shouldConvertForwardOnFxTradeToPosition <- function() {
 	# create the BloombergData
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
 	source(file.path(directory,"createRepositoryBloombergData.R"))
 	blData <- createRepositoryBloombergData()
 	
 	# set the fileName from which to import trades
 	fileName <- "2012-05-09_14-22-24_Ortelli_fxForwardTrade_newAdvice.csv"
 	messageFileName <- messageFileNameFactory(fileName)
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
 	# import trades
 	trades <- tradesFactory(messageFileName,directory)

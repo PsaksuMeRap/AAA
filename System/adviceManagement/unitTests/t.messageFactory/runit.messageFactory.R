@@ -7,7 +7,7 @@
 test.shouldCreateMessage <- function() {
 	# identify a new order
 	fileName <- "2012-05-09_14-22-24_Ortelli_globalEquity_newAdvice.csv"
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.messageFactory")
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.messageFactory")
 	
 	result <- messageFactory(fileName,directory)
 	
@@ -44,7 +44,7 @@ test.shouldCreateMessage <- function() {
 test.shouldTestGetMessageDate_time_from <- function() {
 	# identify a new order
 	fileName <- "2012-05-09_14-22-24_Ortelli_globalEquity_newAdvice.csv"
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.messageFactory")
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.messageFactory")
 	
 	message <- messageFactory(fileName,directory)
 	

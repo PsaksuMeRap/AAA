@@ -10,7 +10,7 @@ test.shouldKillRunningRbatchProcess <- function() {
 	# the PID of the process is then identified and
 	# the kill command executed
 	
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.sendStopToRProcess")
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.sendStopToRProcess")
 	
 	# create the file "stop"
 	tmp <- getwd()

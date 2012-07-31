@@ -25,7 +25,7 @@ setMethod("mainMessageProcessing",signature(message="Confirmation"),
 			}
 			
 			# is the mailbox locked? 
-			isLocked <- file.exists(file.path(systemOptions[["homeDir"]],"postOffice",portfolioName,"lock"))
+			isLocked <- file.exists(file.path(sys[["homeDir"]],"postOffice",portfolioName,"lock"))
 			
 			# if locked move the advice in the mailbox_xxx/pending and start processing
 			if (isLocked) {

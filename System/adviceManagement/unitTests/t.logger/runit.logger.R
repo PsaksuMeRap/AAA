@@ -5,7 +5,7 @@
 
 
 test.shouldCreateLogger <- function() {
-	directory <- file.path(systemOptions[["homeDir"]],"log")
+	directory <- file.path(sys[["homeDir"]],"log")
 	fileName <- create_logger(fileName="newAdvice.csv")
 	
 	fileExists <- file.exists(fileName)
@@ -17,7 +17,7 @@ test.shouldCreateLogger <- function() {
 }
 
 test.shouldCreateLoggerWithLongName <- function() {
-	directory <- file.path(systemOptions[["homeDir"]],"log")
+	directory <- file.path(sys[["homeDir"]],"log")
 	
 	inputFileName <- "2012-07-01_11-01-07_processing_2012-06-19_14-27-47_Ortelli_globalEconomy_newAdvice.csv"
 	fileName <- create_logger(fileName=inputFileName)

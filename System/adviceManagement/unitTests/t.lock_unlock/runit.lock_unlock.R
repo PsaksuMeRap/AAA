@@ -9,10 +9,10 @@ test.shoudLock <- function() {
 	
 	# identify a new order
 	fileName <- "2012-05-09_14-22-24_Ortelli_globalEquity_newAdvice.csv"
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.lock_unlock")
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.lock_unlock")
 			
 	# create the postOffice
-	absolutePath <- systemOptions[["homeDir"]]
+	absolutePath <- sys[["homeDir"]]
 	postOffice <- new("PostOffice",absolutePath=absolutePath)
 	setup(postOffice)
 
@@ -27,11 +27,11 @@ test.shoudLock <- function() {
 	ok <- lock(message)
 		
 	# check
-	lockExists <- file.exists(file.path(systemOptions[["homeDir"]],"postOffice",message[["portfolioName"]],"lock"))
+	lockExists <- file.exists(file.path(sys[["homeDir"]],"postOffice",message[["portfolioName"]],"lock"))
 	checkEquals(lockExists,TRUE)
 	
 	# clean
-	unlink(file.path(systemOptions[["homeDir"]],"postOffice"),recursive=TRUE)
+	unlink(file.path(sys[["homeDir"]],"postOffice"),recursive=TRUE)
 	setwd(workingDirectory)
 }
 
@@ -41,10 +41,10 @@ test.shoudUnLock <- function() {
 	
 	# identify a new order
 	fileName <- "2012-05-09_14-22-24_Ortelli_globalEquity_newAdvice.csv"
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.lock_unlock")
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.lock_unlock")
 	
 	# create the postOffice
-	absolutePath <- systemOptions[["homeDir"]]
+	absolutePath <- sys[["homeDir"]]
 	postOffice <- new("PostOffice",absolutePath=absolutePath)
 	setup(postOffice)
 	
@@ -57,17 +57,17 @@ test.shoudUnLock <- function() {
 	
 	# create the lock (previously tested)
 	ok <- lock(message)
-	lockExists <- file.exists(file.path(systemOptions[["homeDir"]],"postOffice",message[["portfolioName"]],"lock"))
+	lockExists <- file.exists(file.path(sys[["homeDir"]],"postOffice",message[["portfolioName"]],"lock"))
 	checkEquals(lockExists,TRUE)
 	
 	# unlock
 	ok <- unlock(message)
-	lockExists <- file.exists(file.path(systemOptions[["homeDir"]],"postOffice",message[["portfolioName"]],"lock"))
+	lockExists <- file.exists(file.path(sys[["homeDir"]],"postOffice",message[["portfolioName"]],"lock"))
 	
 	# check
 	checkEquals(lockExists,FALSE)
 	
 	# clean
-	unlink(file.path(systemOptions[["homeDir"]],"postOffice"),recursive=TRUE)
+	unlink(file.path(sys[["homeDir"]],"postOffice"),recursive=TRUE)
 	setwd(workingDirectory)
 }

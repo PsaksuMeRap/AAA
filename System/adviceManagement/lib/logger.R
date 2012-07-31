@@ -3,7 +3,7 @@
 # Author: Claudio
 ###############################################################################
 
-create_logger <- function(fileName,directory=file.path(systemOptions[["homeDir"]],"log")) {
+create_logger <- function(fileName,directory=file.path(sys[["homeDir"]],"log")) {
 
 	# create the log file
 	if (!file.exists(directory)) dir.create(directory,recursive=TRUE)

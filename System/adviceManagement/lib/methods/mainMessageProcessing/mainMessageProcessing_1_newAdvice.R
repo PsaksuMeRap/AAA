@@ -6,7 +6,7 @@
 
 setMethod("mainMessageProcessing",signature(message="NewAdvice"),
 		function(message,postOffice) {
-			# identify the advisor (filename="2012-05-09_14-22-24_Ortelli_globalEquity_newAdvice.csv")
+			# identify the advisor (i.e. fileName="2012-05-09_14-22-24_Ortelli_globalEquity_newAdvice.csv")
 			messageFrom <- message[["from"]]
 			
 			# identify the involved portfolio
@@ -16,21 +16,26 @@ setMethod("mainMessageProcessing",signature(message="NewAdvice"),
 			mailBoxExists <- is.element(portfolioName, dir(file.path(postOffice@absolutePath,"postOffice")))
 			
 			if (!mailBoxExists) {
-				# if the mailBox does not exists create the mailbox
+				# log the creation of the mailBox
 				logger(paste("Creating mailBox for portfolio",portfolioName,"from",messageFrom,"..."))
+				
+				# if the mailBox does not exists create the mailbox
 				mailbox <- new("MailBox",folderName=portfolioName)
 				setup(x=mailbox,y=postOffice)
+				
 				loggerDone()
 			}
 			
 			# is the mailbox locked? 
-			isLocked <- file.exists(file.path(systemOptions[["homeDir"]],"postOffice",portfolioName,"lock"))
+			isLocked <- file.exists(file.path(sys[["homeDir"]],"postOffice",portfolioName,"lock"))
 			
-			# if locked send an e-mail and move the file into the removed folder
 			if (isLocked) {
+				# log the existence of the lock
+				logger(paste("Lock detected for order",message[["fileName"]], "from",message[["from"]]))
+				# if locked send an e-mail and move the file into the removed folder
 				isOk <- newAdviceWithLock(message)
 			} else {
-				# if the file is not locked start processing
+				# if the mailBox is not locked start processing the newAdvice
 				PID <- newAdviceNoLock(message)
 			}
 		}

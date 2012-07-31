@@ -42,14 +42,14 @@ logger(paste(textMessage,positionsStrings,sep="\n"))
 
 # save the portfolio
 logger(paste("Saving the portfolio in the data/portfolios directory ..."))
-directory <- file.path(systemOptions[["homeDir"]],"data","portfolios",message[["portfolioName"]])
+directory <- file.path(sys[["homeDir"]],"data","portfolios",message[["portfolioName"]])
 saveLastObject(portfolio,"portfolio.RData",directory)
 loggerDone()
 
 
 # copy the checkFile into the pre-compliance input/output folder
 logger(paste("Copying check file for",message[["portfolioName"]],"in",checkDirectory,"..."))
-fileFrom <- file.path(systemOptions[["homeDir"]],"data","checkFiles",message[["portfolioName"]],"check.txt") 
+fileFrom <- file.path(sys[["homeDir"]],"data","checkFiles",message[["portfolioName"]],"check.txt") 
 fileTo <- file.path(checkDirectory,"check.txt")
 ok <- file.copy(from=fileFrom,to=fileTo)
 if (!ok) {
@@ -79,8 +79,8 @@ if (testResult) {
 
 # zip all results in a single file
 logger("compressing result files ...")
-zipToDir <- file.path(systemOptions[["homeDir"]],"postOffice",message[["portfolioName"]])
-zipFromDir <- file.path(systemOptions[["homeDir"]],"postOffice",message[["portfolioName"]],"pending")
+zipToDir <- file.path(sys[["homeDir"]],"postOffice",message[["portfolioName"]])
+zipFromDir <- file.path(sys[["homeDir"]],"postOffice",message[["portfolioName"]],"pending")
 zipFullFileName <- zipResults(message,all(testResult),zipFromDir,zipToDir)
 loggerDone()
 
@@ -91,15 +91,15 @@ cat(file.remove(list.files(zipFromDir,full.names=TRUE)))
 # copy the result in the archive
 logger("Archiving compressed result files ... ")
 if (testResult) {
-	to <- file.path(systemOptions[["homeDir"]],"archive","processed","accepted")
+	to <- file.path(sys[["homeDir"]],"archive","processed","accepted")
 } else {
-	to <- file.path(systemOptions[["homeDir"]],"archive","processed","rejected")
+	to <- file.path(sys[["homeDir"]],"archive","processed","rejected")
 }
 cat(file.copy(zipFullFileName,to))
 
 # copy the zip file into the postOffice/inbox folder
 logger("Copying result in the postOffice/inbox folder ... ")
-to <- file.path(systemOptions[["homeDir"]],"postOffice","inbox")
+to <- file.path(sys[["homeDir"]],"postOffice","inbox")
 cat(file.copy(zipFullFileName,to))
 
 # remove compressed file

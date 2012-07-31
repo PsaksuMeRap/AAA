@@ -169,7 +169,7 @@ setMethod("==",signature(e1="Money",e2="Money"),
 				e2 <- exchange(e2,e1@currency)
 			}
 			# excecute the check
-			return(abs(e1@amount- e2@amount) < systemOptions[["eq.tolerance"]]) 	
+			return(abs(e1@amount- e2@amount) < sys[["eq.tolerance"]]) 	
 		}
 )
 

@@ -9,15 +9,15 @@ test.shouldProcessPostComplianceResultMessage_0 <- function() {
 # 2) copied to the archive/processed/accepted or rejected folder
 
 # create the archive
-create_archive(systemOptions[["homeDir"]])
+create_archive(sys[["homeDir"]])
 
 # identify the preCompliance result file to copy
 fileName <- "2012-06-19_14-27-47_Ortelli_globalEconomy_postComplianceResult_1.zip"
-directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.mainMessageProcessing")
+directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.mainMessageProcessing")
 fullFileNameFrom <- file.path(directory,fileName)
 
 # create the postOffice
-absolutePath <- systemOptions[["homeDir"]]
+absolutePath <- sys[["homeDir"]]
 postOffice <- new("PostOffice",absolutePath=absolutePath)
 setup(postOffice)
 
@@ -25,13 +25,13 @@ mailBox <- new("MailBox",folderName="globalEconomy")
 setup(x=mailBox,y=postOffice)
 
 # create file
-fullFileNameTo <- file.path(systemOptions[["homeDir"]],"postOffice","inbox",fileName) 
+fullFileNameTo <- file.path(sys[["homeDir"]],"postOffice","inbox",fileName) 
 isOk <- file.copy(fullFileNameFrom,fullFileNameTo)
-fullFileNameTo <- file.path(systemOptions[["homeDir"]],"archive","processed","accepted",fileName) 
+fullFileNameTo <- file.path(sys[["homeDir"]],"archive","processed","accepted",fileName) 
 isOk <- file.copy(fullFileNameFrom,fullFileNameTo)
 
 # identify the messageType
-directory <- file.path(systemOptions[["homeDir"]],"postOffice","inbox")
+directory <- file.path(sys[["homeDir"]],"postOffice","inbox")
 message <- messageFactory(fileName,directory)
 
 # lock
@@ -40,17 +40,17 @@ ok <- lock(message)
 result <- mainMessageProcessing(message)
 checkEquals(result,1)
 
-directory <- file.path(systemOptions[["homeDir"]],"postOffice","inbox")
+directory <- file.path(sys[["homeDir"]],"postOffice","inbox")
 exists <- file.exists(file.path(directory,message[["fileName"]]))
 checkEquals(exists,FALSE)
 
 # check that the lock is removed
-exists <- file.exists(file.path(systemOptions[["homeDir"]],"postOffice",message[["portfolioName"]],"lock"))
+exists <- file.exists(file.path(sys[["homeDir"]],"postOffice",message[["portfolioName"]],"lock"))
 checkEquals(exists,FALSE)
 	
 # clean
-unlink(file.path(systemOptions[["homeDir"]],"postOffice"),recursive=TRUE)
-unlink(file.path(systemOptions[["homeDir"]],"archive"),recursive=TRUE)	
+unlink(file.path(sys[["homeDir"]],"postOffice"),recursive=TRUE)
+unlink(file.path(sys[["homeDir"]],"archive"),recursive=TRUE)	
 
 }
 
@@ -61,15 +61,15 @@ test.shouldProcessPostComplianceResultMessage_0 <- function() {
 	# 2) copied to the archive/processed/accepted or rejected folder
 	
 	# create the archive
-	create_archive(systemOptions[["homeDir"]])
+	create_archive(sys[["homeDir"]])
 	
 	# identify the preCompliance result file to copy
 	fileName <- "2012-06-19_14-27-47_Ortelli_globalEconomy_postComplianceResult_0.zip"
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.mainMessageProcessing")
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.mainMessageProcessing")
 	fullFileNameFrom <- file.path(directory,fileName)
 	
 	# create the postOffice
-	absolutePath <- systemOptions[["homeDir"]]
+	absolutePath <- sys[["homeDir"]]
 	postOffice <- new("PostOffice",absolutePath=absolutePath)
 	setup(postOffice)
 	
@@ -77,13 +77,13 @@ test.shouldProcessPostComplianceResultMessage_0 <- function() {
 	setup(x=mailBox,y=postOffice)
 	
 	# create file
-	fullFileNameTo <- file.path(systemOptions[["homeDir"]],"postOffice","inbox",fileName) 
+	fullFileNameTo <- file.path(sys[["homeDir"]],"postOffice","inbox",fileName) 
 	isOk <- file.copy(fullFileNameFrom,fullFileNameTo)
-	fullFileNameTo <- file.path(systemOptions[["homeDir"]],"archive","processed","rejected",fileName) 
+	fullFileNameTo <- file.path(sys[["homeDir"]],"archive","processed","rejected",fileName) 
 	isOk <- file.copy(fullFileNameFrom,fullFileNameTo)
 	
 	# identify the messageType
-	directory <- file.path(systemOptions[["homeDir"]],"postOffice","inbox")
+	directory <- file.path(sys[["homeDir"]],"postOffice","inbox")
 	message <- messageFactory(fileName,directory)
 	
 	# lock
@@ -92,16 +92,16 @@ test.shouldProcessPostComplianceResultMessage_0 <- function() {
 	result <- mainMessageProcessing(message)
 	checkEquals(result,0)
 	
-	directory <- file.path(systemOptions[["homeDir"]],"postOffice","inbox")
+	directory <- file.path(sys[["homeDir"]],"postOffice","inbox")
 	exists <- file.exists(file.path(directory,message[["fileName"]]))
 	checkEquals(exists,FALSE)
 	
 	# check that the lock is removed
-	exists <- file.exists(file.path(systemOptions[["homeDir"]],"postOffice",message[["portfolioName"]],"lock"))
+	exists <- file.exists(file.path(sys[["homeDir"]],"postOffice",message[["portfolioName"]],"lock"))
 	checkEquals(exists,FALSE)
 	
 	# clean
-	unlink(file.path(systemOptions[["homeDir"]],"postOffice"),recursive=TRUE)
-	unlink(file.path(systemOptions[["homeDir"]],"archive"),recursive=TRUE)	
+	unlink(file.path(sys[["homeDir"]],"postOffice"),recursive=TRUE)
+	unlink(file.path(sys[["homeDir"]],"archive"),recursive=TRUE)	
 	
 }

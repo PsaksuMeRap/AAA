@@ -5,7 +5,7 @@
 
 
 test.shouldSetupPostOffice <- function() {
-	homeDir <- systemOptions[["homeDir"]]
+	homeDir <- sys[["homeDir"]]
 	postOffice <- new("PostOffice",absolutePath=homeDir)
 	setup(postOffice)
 	
@@ -14,6 +14,6 @@ test.shouldSetupPostOffice <- function() {
 	checkEquals(is.element("inbox",directories),TRUE)	
 
 	# remove the directory postOffice
-	unlink(file.path(systemOptions[["homeDir"]],"postOffice"),recursive=TRUE)
+	unlink(file.path(sys[["homeDir"]],"postOffice"),recursive=TRUE)
 
 }

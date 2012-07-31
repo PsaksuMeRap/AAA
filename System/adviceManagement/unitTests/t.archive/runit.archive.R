@@ -7,7 +7,7 @@
 test.shouldCreateArchive <- function() {
 	
 
-	rootDir <- systemOptions[["homeDir"]]
+	rootDir <- sys[["homeDir"]]
 	create_archive(rootDir)
 	
 	oldWorkingDirectory <- getwd()

@@ -25,7 +25,7 @@ loadPortfolio <- function(portfolioName="portfolio.RData",directory,portfolioId)
 	# portfolioID: portfolioId is for example "globalEquity"
 	# directory: the directory path without the portfolioId
 	
-	if (missing(directory)) directory <- file.path(systemOptions[["homeDir"]],"data","portfolios")
+	if (missing(directory)) directory <- file.path(sys[["homeDir"]],"data","portfolios")
 	if (!missing(portfolioId)) directory <- file.path(directory,portfolioId)
 	
 	

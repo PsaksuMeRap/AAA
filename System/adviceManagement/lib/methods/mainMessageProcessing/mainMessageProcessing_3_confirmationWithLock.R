@@ -26,8 +26,8 @@ confirmationWithLock <- function(message) {
 	loggerDone("\n [ok]\n\n")
 	
 	# move file
-	fileFrom <- file.path(systemOptions[["homeDir"]],"postOffice","inbox",csvTradesFileName) 
-	fileTo <- file.path(systemOptions[["homeDir"]],"postOffice",portfolioName,"pending",csvTradesFileName)
+	fileFrom <- file.path(sys[["homeDir"]],"postOffice","inbox",csvTradesFileName) 
+	fileTo <- file.path(sys[["homeDir"]],"postOffice",portfolioName,"pending",csvTradesFileName)
 	copyOk <- file.copy(fileFrom,fileTo)
 	
 	if (copyOk) {
@@ -44,17 +44,17 @@ confirmationWithLock <- function(message) {
 	
 
 	# define the name of the file to process and costruct the command
-	fullFileNameToExecute <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","subConfirmationProcessing.R")
+	fullFileNameToExecute <- file.path(sys[["sourceCodeDir"]],"adviceManagement","lib","subConfirmationProcessing.R")
 	command <- "R CMD BATCH --slave --no-restore-history --no-timing --no-save "
 	command <- paste(command,"\"--args csvTradesFileName='",csvTradesFileName,
-			"' sourceCodeDir='",systemOptions[["sourceCodeDir"]],
-			"' homeDir='"       ,systemOptions[["homeDir"]],"'\" ",
+			"' sourceCodeDir='",sys[["sourceCodeDir"]],
+			"' homeDir='"       ,sys[["homeDir"]],"'\" ",
 			fullFileNameToExecute," out.txt",sep="")
 	
 	# save the current working directory
 	currentWorkingDirectory <- getwd()
 	
-	setwd(file.path(systemOptions[["homeDir"]],"postOffice",portfolioName,"pending"))
+	setwd(file.path(sys[["homeDir"]],"postOffice",portfolioName,"pending"))
 	logger(paste("Launching system command\n",command))
 	system(command,wait=FALSE)
 	loggerDone("\n[ok]")

@@ -6,7 +6,7 @@
 
 test.shouldSaveAnObject <- function() {
 	
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement",
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement",
 			"unitTests","t.saveLastObject")
 	fileName <- "portfolio.RData"
 

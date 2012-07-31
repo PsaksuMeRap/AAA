@@ -23,7 +23,7 @@ source(file.path(sourceCodeDir,"adviceManagement","lib","initialSetup.R"))
 # message is waiting for processing
 
 pendingDirectory <- strsplit(csvTradesFileName,"_")[[1]][4]
-pendingDirectory <- file.path(systemOptions[["homeDir"]],"postOffice",pendingDirectory,"pending")
+pendingDirectory <- file.path(sys[["homeDir"]],"postOffice",pendingDirectory,"pending")
 
 # create the message
 logger(paste("Creating message for",csvTradesFileName, "in",pendingDirectory,"..."))
@@ -32,12 +32,12 @@ loggerDone()
 
 # source the repositoryPoliticaInvestimento
 logger(paste("Loading repositoryPoliticaInvestimento ..."))
-source(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","methods","repositories","repositoryPoliticaInvestimento.R"))
+source(file.path(sys[["sourceCodeDir"]],"adviceManagement","lib","methods","repositories","repositoryPoliticaInvestimento.R"))
 loggerDone()
 
 # source the instrument repository
 logger(paste("Loading repositoryInstruments ..."))
-source(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","lib","methods","repositories","repositoryInstruments.R"))
+source(file.path(sys[["sourceCodeDir"]],"adviceManagement","lib","methods","repositories","repositoryInstruments.R"))
 loggerDone()
 
 # source the exchangerates repository
@@ -47,7 +47,7 @@ loggerDone()
 
 # define the checkDirectory, i.e. the directory containing the checkFile, the csv file with
 # the desired trades and the output result
-checkDirectory <- file.path(systemOptions[["homeDir"]],"postOffice",message[["portfolioName"]],"pending")
+checkDirectory <- file.path(sys[["homeDir"]],"postOffice",message[["portfolioName"]],"pending")
 
 # import the portfolio
 # create the path to the portfolio directory
@@ -57,7 +57,7 @@ loggerDone()
 
 # import the bloomberg repository
 logger("Loading the bloomberg data file ...")
-bloombergDataFile <- file.path(systemOptions[["homeDir"]],"data","bloomberg",message[["portfolioName"]],"bloombergData.RData")
+bloombergDataFile <- file.path(sys[["homeDir"]],"data","bloomberg",message[["portfolioName"]],"bloombergData.RData")
 load(bloombergDataFile,envir=repositories)
 repositories$bloombergData <- repositories$object
 rm("object",pos=repositories)

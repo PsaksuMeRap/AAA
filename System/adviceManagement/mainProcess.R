@@ -17,28 +17,27 @@ sleepTime <- 10
 
 # create the PostOffice
 logger("Initializing PostOffice ...")
-postOffice <- new("PostOffice",absolutePath=systemOptions[["homeDir"]])
+postOffice <- new("PostOffice",absolutePath=sys[["homeDir"]])
 setup(postOffice)
 loggerDone()
 
 # setup the archive
 logger("Initializing archive ...")
-create_archive(systemOptions[["homeDir"]])
+create_archive(sys[["homeDir"]])
 loggerDone()
 
 # setup the data directory
 logger("Initializing the data directory ...")
-from <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","files","riskman","data")
-to <- file.path(systemOptions[["homeDir"]])
+from <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","files","riskman","data")
+to <- file.path(sys[["homeDir"]])
 isOk <- file.copy(from,to,recursive=TRUE)
 loggerDone()
 
 # start monitoring input directory
-
 T <- Sys.time()+360
 while(Sys.time()<T) {
 	logger("Looking for new files ...")
-	existingFiles <- list.files(path=file.path(systemOptions[["homeDir"]],"postOffice","inbox"))
+	existingFiles <- list.files(path=file.path(sys[["homeDir"]],"postOffice","inbox"))
 	loggerDone()
 	
 	if (length(existingFiles>0)) {
@@ -52,16 +51,23 @@ while(Sys.time()<T) {
 		}
 		logger(msg,noOk="\n")
 		
+		# cycle on each file 
 		for (fileName in existingFiles) {
-			#identify messageTye between: newAdvice,adviceConfirmation,preComplianceResult,postComplianceResult
-			directory <- file.path(systemOptions[["homeDir"]],"postOffice","inbox")
+			
+			# log the processing of the file
+			directory <- file.path(sys[["homeDir"]],"postOffice","inbox")
 			logger(paste("Construct and identify message",fileName,"..."))
+			
+			#identify messageTye between: newAdvice,adviceConfirmation,preComplianceResult,postComplianceResult
 			message <- messageFactory(fileName,directory)
 			loggerDone()
 			
 			# process the message
 			logger(paste("Process message",fileName))			
 			mainMessageProcessing(message,postOffice)
+			
+			# log the end of the processing
+			logger(paste("file",fileName,"terminated"))
 			
 		} # end for (fileName in existingFiles)
 		

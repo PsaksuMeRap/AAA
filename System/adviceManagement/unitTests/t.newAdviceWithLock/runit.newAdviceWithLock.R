@@ -6,19 +6,19 @@
 
 test.shouldNewAdviceWithLock <- function(message) {
 	
-	create_archive(systemOptions[["homeDir"]])
+	create_archive(sys[["homeDir"]])
 	
 	#create postOffice
-	postOffice <- new("PostOffice",absolutePath=systemOptions[["homeDir"]])
+	postOffice <- new("PostOffice",absolutePath=sys[["homeDir"]])
 	setup(postOffice)
 	
 	# define the file
 	fileName <- "2012-05-09_14-22-24_Ortelli_globalEquity_newAdvice.csv"
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.newAdviceWithLock")
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.newAdviceWithLock")
 	
 	# copy incoming message	
 	from <- file.path(directory,fileName)
-	to <- file.path(systemOptions[["homeDir"]],"postOffice","inbox")
+	to <- file.path(sys[["homeDir"]],"postOffice","inbox")
 	isOk <- file.copy(from,to)
 	
 	message <- messageFactory(fileName,directory)	
@@ -28,15 +28,15 @@ test.shouldNewAdviceWithLock <- function(message) {
 	setup(x=mailbox,y=postOffice)
 		
 	# lock the globalEquity mailBox
-	isOk <- file.create(file.path(systemOptions[["homeDir"]],"postOffice","globalEquity","lock"))
+	isOk <- file.create(file.path(sys[["homeDir"]],"postOffice","globalEquity","lock"))
 	
 	# run the test				
 	result <- newAdviceWithLock(message)
 	checkEquals(result,0)
-	checkEquals(file.exists(file.path(systemOptions[["homeDir"]],"archive","deleted",fileName)),TRUE)
+	checkEquals(file.exists(file.path(sys[["homeDir"]],"archive","deleted",fileName)),TRUE)
 	
-	unlink(file.path(systemOptions[["homeDir"]],"postOffice"),recursive=TRUE)
-	unlink(file.path(systemOptions[["homeDir"]],"archive"),recursive=TRUE)
+	unlink(file.path(sys[["homeDir"]],"postOffice"),recursive=TRUE)
+	unlink(file.path(sys[["homeDir"]],"archive"),recursive=TRUE)
 
 	
 }

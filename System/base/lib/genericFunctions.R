@@ -26,10 +26,10 @@ mySetwd <- function(directory) {
 	#	home <- "/home/claudio/workspace/AAA/System/"
 	#}
 	if(missing(directory)) {
-		setwd(systemOptions[["sourceCodeDir"]])
-		path <- systemOptions[["sourceCodeDir"]]
+		setwd(sys[["sourceCodeDir"]])
+		path <- sys[["sourceCodeDir"]]
 	} else {
-		path <- file.path(systemOptions[["sourceCodeDir"]],directory)
+		path <- file.path(sys[["sourceCodeDir"]],directory)
 		setwd(path)
 	}
 	return(invisible(path))

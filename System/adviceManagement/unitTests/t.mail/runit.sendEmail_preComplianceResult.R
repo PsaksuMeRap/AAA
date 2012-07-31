@@ -6,14 +6,14 @@
 
 test.shouldSendPreComplianceResultNo <- function() {
 	
-	create_archive(systemOptions[["homeDir"]])
+	create_archive(sys[["homeDir"]])
 	
 	# identify a new order
 	fileName <- "2012-05-09_14-22-24_Ortelli_globalEquity_preComplianceResult_0.csv"
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.mail")
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.mail")
 		
 	# create the postOffice
-	absolutePath <- systemOptions[["homeDir"]]
+	absolutePath <- sys[["homeDir"]]
 	postOffice <- new("PostOffice",absolutePath=absolutePath)
 	setup(postOffice)
 	
@@ -25,7 +25,7 @@ test.shouldSendPreComplianceResultNo <- function() {
 	setup(x=mailBox,y=postOffice)
 	
 	# create the message on the disk
-	ok <- file.create(file.path(systemOptions[["homeDir"]],"archive","processed","rejected",message[["fileName"]])) 
+	ok <- file.create(file.path(sys[["homeDir"]],"archive","processed","rejected",message[["fileName"]])) 
 	
 	newAdviceFileName <- paste(paste(getMessageDate_time_from(message),"newAdvice","_"),message[["fileExtension"]],sep=".")
 	stringMessage <- paste("Your advice '",newAdviceFileName,"' has been rejected because of a negative pre-compliance.\n",sep="")
@@ -35,21 +35,21 @@ test.shouldSendPreComplianceResultNo <- function() {
 	checkEquals(result,"Email was sent successfully!")
 	
 	# clean
-	unlink(file.path(systemOptions[["homeDir"]],"postOffice"),recursive=TRUE)
-	unlink(file.path(systemOptions[["homeDir"]],"archive"),recursive=TRUE)
-	setwd(systemOptions[["sourceCodeDir"]])
+	unlink(file.path(sys[["homeDir"]],"postOffice"),recursive=TRUE)
+	unlink(file.path(sys[["homeDir"]],"archive"),recursive=TRUE)
+	setwd(sys[["sourceCodeDir"]])
 }
 
 
 test.shouldSendPreComplianceResultOk <- function() {
 	
-	create_archive(systemOptions[["homeDir"]])
+	create_archive(sys[["homeDir"]])
 	# identify a new order
 	fileName <- "2012-05-09_14-22-24_Ortelli_globalEquity_preComplianceResult_1.csv"
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.mail")
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.mail")
 		
 	# create the postOffice
-	absolutePath <- systemOptions[["homeDir"]]
+	absolutePath <- sys[["homeDir"]]
 	postOffice <- new("PostOffice",absolutePath=absolutePath)
 	setup(postOffice)
 	
@@ -61,7 +61,7 @@ test.shouldSendPreComplianceResultOk <- function() {
 	setup(x=mailBox,y=postOffice)
 
 	# create the message on the disk
-	ok <- file.create(file.path(systemOptions[["homeDir"]],"archive","processed","accepted",message[["fileName"]])) 
+	ok <- file.create(file.path(sys[["homeDir"]],"archive","processed","accepted",message[["fileName"]])) 
 	
 	newAdviceFileName <- paste(paste(getMessageDate_time_from(message),"newAdvice","_"),message[["fileExtension"]],sep=".")
 	stringMessage <- paste("Your advice '",newAdviceFileName,"' has been accepted for execution.\n",sep="")
@@ -70,8 +70,8 @@ test.shouldSendPreComplianceResultOk <- function() {
 	checkEquals(result,"Email was sent successfully!")
 	
 	# clean
-	unlink(file.path(systemOptions[["homeDir"]],"postOffice"),recursive=TRUE)
-	unlink(file.path(systemOptions[["homeDir"]],"archive"),recursive=TRUE)
-	setwd(systemOptions[["sourceCodeDir"]])
+	unlink(file.path(sys[["homeDir"]],"postOffice"),recursive=TRUE)
+	unlink(file.path(sys[["homeDir"]],"archive"),recursive=TRUE)
+	setwd(sys[["sourceCodeDir"]])
 	
 }

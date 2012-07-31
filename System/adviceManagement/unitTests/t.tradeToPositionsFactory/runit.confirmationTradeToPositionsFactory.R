@@ -7,14 +7,14 @@
 test.shouldConvertEquityTradeToPortfolioPositions <- function() {
 	
 	# create the BloombergData
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
 	source(file.path(directory,"createRepositoryBloombergData.R"))
 	blData <- createRepositoryBloombergData()
 	
 	# set the fileName from which to import trades
 	fileName <- "2012-05-21_12-33-21_Riskmanager_equityTrade_confirmation.csv"
 	messageFileName <- messageFileNameFactory(fileName)
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
 	# import trades
 	trades <- tradesFactory(messageFileName,directory)
@@ -36,14 +36,14 @@ test.shouldConvertEquityTradeToPortfolioPositions <- function() {
 
 test.shouldConvertFuturesOnIndexTradeToPortfolioPositions <- function() {
 	# create the BloombergData
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
 	source(file.path(directory,"createRepositoryBloombergData.R"))
 	blData <- createRepositoryBloombergData()
 	
 	# set the fileName from which to import trades
 	fileName <- "2012-05-21_12-33-21_Riskmanager_futureEquityIndexTrade_confirmation.csv"
 	messageFileName <- messageFileNameFactory(fileName)
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
 	# import trades
 	trades <- tradesFactory(messageFileName,directory)
@@ -64,14 +64,14 @@ test.shouldConvertFuturesOnIndexTradeToPortfolioPositions <- function() {
 
 test.shouldConvertBondTradeToPortfolioPositions <- function() {
 	# create the BloombergData
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
 	source(file.path(directory,"createRepositoryBloombergData.R"))
 	blData <- createRepositoryBloombergData()
 	
 	# set the fileName from which to import trades
 	fileName <- "2012-05-21_12-33-21_Riskmanager_bondTrade_confirmation.csv"
 	messageFileName <- messageFileNameFactory(fileName)
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
 	# import trades
 	trades <- tradesFactory(messageFileName,directory)
@@ -96,14 +96,14 @@ test.shouldConvertBondTradeToPortfolioPositions <- function() {
 
 test.shouldConvertFXSpotTradeToPortfolioPositions <- function() {
 	# create the BloombergData
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
 	source(file.path(directory,"createRepositoryBloombergData.R"))
 	blData <- createRepositoryBloombergData()
 	
 	# set the fileName from which to import trades
 	fileName <- "2012-05-21_12-33-21_Riskmanager_fxSpotTrade_confirmation.csv"
 	messageFileName <- messageFileNameFactory(fileName)
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
 	# import trades
 	trades <- tradesFactory(messageFileName,directory)
@@ -123,14 +123,14 @@ test.shouldConvertFXSpotTradeToPortfolioPositions <- function() {
 
 test.shouldConvertOptionOnEquityTradeToPortfolioPositions <- function() {
 	# create the BloombergData
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
 	source(file.path(directory,"createRepositoryBloombergData.R"))
 	blData <- createRepositoryBloombergData()
 	
 	# set the fileName from which to import trades
 	fileName <- "2012-05-21_12-33-21_Riskmanager_optionEquityTrade_confirmation.csv"
 	messageFileName <- messageFileNameFactory(fileName)
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
 	# import trades
 	trades <- tradesFactory(messageFileName,directory)
@@ -152,14 +152,14 @@ test.shouldConvertOptionOnEquityTradeToPortfolioPositions <- function() {
 
 test.shouldConvertOptionOnFxTradeToPortfolioPositions <- function() {
 	# create the BloombergData
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
 	source(file.path(directory,"createRepositoryBloombergData.R"))
 	blData <- createRepositoryBloombergData()
 	
 	# set the fileName from which to import trades
 	fileName <- "2012-05-21_12-33-21_Riskmanager_optionFxTrade_confirmation.csv"
 	messageFileName <- messageFileNameFactory(fileName)
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
 	# import trades
 	trades <- tradesFactory(messageFileName,directory)
@@ -180,14 +180,14 @@ test.shouldConvertOptionOnFxTradeToPortfolioPositions <- function() {
 
 test.shouldConvertForwardOnFxTradeToPortfolioPositions <- function() {
 	# create the BloombergData
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
 	source(file.path(directory,"createRepositoryBloombergData.R"))
 	blData <- createRepositoryBloombergData()
 	
 	# set the fileName from which to import trades
 	fileName <- "2012-05-21_12-33-21_Riskmanager_fxForwardTrade_confirmation.csv"
 	messageFileName <- messageFileNameFactory(fileName)
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
 	# import trades
 	trades <- tradesFactory(messageFileName,directory)

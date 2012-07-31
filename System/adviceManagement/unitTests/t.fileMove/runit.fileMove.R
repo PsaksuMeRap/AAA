@@ -7,7 +7,7 @@
 test.fileMove <- function() {
 	
 	workingDirectory <- getwd()
-	setwd(file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.fileMove"))
+	setwd(file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.fileMove"))
 	
 	dir.create("./testDirectory")
 	ok <- file.create("./testDirectory/test.txt")

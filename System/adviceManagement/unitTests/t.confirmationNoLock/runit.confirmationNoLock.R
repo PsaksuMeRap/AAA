@@ -4,19 +4,19 @@
 ###############################################################################
 
 test.shouldProcessConfirmationNoLock <- function() {
-	create_archive(systemOptions[["homeDir"]])
+	create_archive(sys[["homeDir"]])
 	
 	#create postOffice
-	postOffice <- new("PostOffice",absolutePath=systemOptions[["homeDir"]])
+	postOffice <- new("PostOffice",absolutePath=sys[["homeDir"]])
 	setup(postOffice)
 	
 	# define the file
 	fileName <- "2012-05-09_14-22-24_Ortelli_globalEquity_confirmation.csv"
-	directory <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement","unitTests","t.confirmationNoLock")
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.confirmationNoLock")
 	
 	# copy incoming message	
 	from <- file.path(directory,fileName)
-	to <- file.path(systemOptions[["homeDir"]],"postOffice","inbox")
+	to <- file.path(sys[["homeDir"]],"postOffice","inbox")
 	isOk <- file.copy(from,to)
 	
 	message <- messageFactory(fileName,directory)	
@@ -28,10 +28,10 @@ test.shouldProcessConfirmationNoLock <- function() {
 	# run the test				
 	result <- confirmationNoLock(message)
 	checkEquals(result,0)
-	checkEquals(file.exists(file.path(systemOptions[["homeDir"]],"archive","deleted",fileName)),TRUE)
+	checkEquals(file.exists(file.path(sys[["homeDir"]],"archive","deleted",fileName)),TRUE)
 	
-	unlink(file.path(systemOptions[["homeDir"]],"postOffice"),recursive=TRUE)
-	unlink(file.path(systemOptions[["homeDir"]],"archive"),recursive=TRUE)
+	unlink(file.path(sys[["homeDir"]],"postOffice"),recursive=TRUE)
+	unlink(file.path(sys[["homeDir"]],"archive"),recursive=TRUE)
 	
 }
 

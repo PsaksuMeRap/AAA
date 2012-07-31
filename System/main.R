@@ -20,7 +20,7 @@ if (.Platform$OS.type=="windows") {
 }
 
 source("./base/lib/library.R")
-systemOptions[["sourceCodeDir"]] <- getwd()
+sys[["sourceCodeDir"]] <- getwd()
 
 ## -- fine setup 
 

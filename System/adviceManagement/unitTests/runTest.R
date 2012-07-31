@@ -29,7 +29,7 @@ source("./base/lib/library.R")
 source("./ayrton/lib/library.R")
 source("./riskman/lib/library.R")
 
-systemOptions[["sourceCodeDir"]] <- sourceCodeDir
+sys[["sourceCodeDir"]] <- sourceCodeDir
 source("./adviceManagement/lib/library.R")
 
 source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")

@@ -10,9 +10,9 @@ test.shouldZipFiles <- function() {
 	message <-list(date="2012-11-11",time="03-34-12",from="Ortelli",
 			portfolioName="globalFixedIncome",messageType="newAdvice")
 	
-	toDir <- file.path(systemOptions[["sourceCodeDir"]],"adviceManagement",
+	toDir <- file.path(sys[["sourceCodeDir"]],"adviceManagement",
 			"unitTests","t.zipResults")
-	fromDir <-  file.path(systemOptions[["sourceCodeDir"]],"adviceManagement",
+	fromDir <-  file.path(sys[["sourceCodeDir"]],"adviceManagement",
 			"unitTests","t.zipResults","tmp")
 	
 	# test a newAdvice messageType

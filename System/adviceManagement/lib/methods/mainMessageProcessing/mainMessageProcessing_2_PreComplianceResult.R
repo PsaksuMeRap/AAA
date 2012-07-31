@@ -11,7 +11,7 @@ setMethod("mainMessageProcessing",signature(message="PreComplianceResult"),
 			# 2) copied to the archive/processed/accepted or rejected folder
 			
 			# remove the file in the postOffice/incoming folder
-			fullFileName <- file.path(systemOptions[["homeDir"]],"postOffice","inbox",message[["fileName"]])
+			fullFileName <- file.path(sys[["homeDir"]],"postOffice","inbox",message[["fileName"]])
 			logger(paste("Removing file",fullFileName,"... "))
 			cat(file.remove(fullFileName))
 			

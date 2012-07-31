@@ -22,7 +22,7 @@ create_BloombergRequestHandler <- function() {
 		if (is.null(match)) return(FALSE)
 		
 		dateDiff <- Sys.time() - match@dateLastUpdate
-		if (dateDiff - systemOptions[["bloombergUpdateInterval"]]>=0) {
+		if (dateDiff - sys[["bloombergUpdateInterval"]]>=0) {
 			return(FALSE) 
 		} else {
 			return(TRUE)
@@ -37,7 +37,7 @@ create_BloombergRequestHandler <- function() {
 
 		} else {
 			# remove from the current request all data entries having a value not older 
-			# than systemOptions[["bloombergUpdateInterval"]] seconds
+			# than sys[["bloombergUpdateInterval"]] seconds
 			if (length(blRequestHandler[["requests"]])==0) return(blData)
 			
 			isToRemove <- sapply(blRequestHandler[["requests"]],blRequestHandler[["isToRemove"]],blData,USE.NAMES=FALSE)

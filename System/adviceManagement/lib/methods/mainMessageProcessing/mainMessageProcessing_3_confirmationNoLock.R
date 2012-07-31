@@ -6,7 +6,7 @@
 
 confirmationNoLock <- function(message) {
 	
-	rootDir <- systemOptions[["homeDir"]]
+	rootDir <- sys[["homeDir"]]
 	fileName <- message[["fileName"]]
 	
 	logger(paste("No lock detected for order",fileName, "from",message[["from"]]))

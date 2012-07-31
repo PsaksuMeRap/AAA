@@ -14,19 +14,19 @@ stringsAsFactors = FALSE
 repositories <- new.env()
 
 source("./base/lib/library.R")
-systemOptions[["sourceCodeDir"]] <- getwd()
+sys[["sourceCodeDir"]] <- getwd()
 
 ## -- fine setup 
 
 
 # import the exchange rates
-# setwd(file.path(systemOptions[["sourceCodeDir"]],"base"))
+# setwd(file.path(sys[["sourceCodeDir"]],"base"))
 
 source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
 testRepository <- createExchangeRatesTestRepository() 
 repositories$exchangeRates <- testRepository
 
-# setwd(systemOptions[["sourceCodeDir"]])
+# setwd(sys[["sourceCodeDir"]])
 
 # execute the test of the base
 source("./base/unitTests/runTest.R")

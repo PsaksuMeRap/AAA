@@ -5,7 +5,7 @@
 
 setClass("Currency",contains="character",
 		validity=function(object) {
-			allowedCurrencies <- systemOptions[["allowedCurrencies"]]
+			allowedCurrencies <- sys[["allowedCurrencies"]]
 			if (is.element(object@.Data,allowedCurrencies)) {
 				return(TRUE)
 			} else {
