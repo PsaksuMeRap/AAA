@@ -20,7 +20,7 @@ newAdviceNoLock <- function(message) {
 			to=message@advisor@email,
 			subject="Processing order",
 			message=paste(
-					"Your advice\n",
+					"The advice\n",
 					"\n",
 					as.character(message),
 					"\n\n",

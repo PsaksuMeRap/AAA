@@ -102,7 +102,7 @@ sendEmail_preComplianceResult <- function(message) {
 	
 	if (isTestOk) {
 		stringMessage <- paste(
-				"Your advice\n",
+				"The advice\n",
 				"\n",
 				as.character(message),
 				"\n\n",
@@ -113,7 +113,7 @@ sendEmail_preComplianceResult <- function(message) {
 		subject <- "New advice accepted"
 	} else {
 		stringMessage <- paste(
-				"Your advice\n",
+				"The advice\n",
 				"\n",
 				as.character(message),
 				"\n\n",
@@ -150,7 +150,7 @@ sendEmail_postComplianceResult <- function(message) {
 	
 	if (isTestOk) {
 		stringMessage <- paste(
-				"Your advice\n",
+				"The advice\n",
 				"\n",
 				as.character(message),
 				"\n\n",
@@ -161,7 +161,7 @@ sendEmail_postComplianceResult <- function(message) {
 		subject <- "Confirmation advice accepted"
 	} else {
 		stringMessage <- paste(
-				"Your advice\n",
+				"the advice\n",
 				"\n",
 				as.character(message),
 				"\n\n",

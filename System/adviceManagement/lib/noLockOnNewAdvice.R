@@ -19,7 +19,13 @@ noLockOnNewAdvice <- function(message) {
 			from="claudio.ortelli@usi.ch",
 			to=message@advisor@email,
 			subject="Processing order",
-			message=paste("Your advice '",fileName,"' is being processed",sep="")
+			message=paste("The advice\n",
+					"\n",
+					as.character(message),
+					"\n\n",
+					"is being processed",
+					sep=""
+				)
 	)
 	logger(paste("\nSending e-mail:\n",as.character(mail),sep=""))
 	sendEMail(mail)
