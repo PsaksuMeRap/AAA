@@ -72,9 +72,9 @@ defaultDate <- function() {
 }
 
 
-fine <- as.Date("2012-06-29")
-dates <- seq(as.Date("2012-05-21"),to=fine,by="day")
-for (i in 1:length(dates)) if (!is.element(weekdays(dates[[i]]),c("Saturday","Sunday"))) {print("new-date\n");getFundNav(dates[[i]])}
+fine <- as.Date("2012-08-01")
+dates <- seq(as.Date("2012-07-02"),to=fine,by="day")
+for (i in 1:length(dates)) if (!is.element(weekdays(dates[[i]]),c("Saturday","Sunday"))) {cat("new-date\n");getFundNav(dates[[i]])}
 
 
 getFundNav("2012-04-20")
