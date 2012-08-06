@@ -19,7 +19,12 @@ confirmationWithLock <- function(message) {
 			from=.secrets[["Riskmanager"]][["emailAddress"]],
 			to=message@advisor@email,
 			subject="Processing order",
-			message=paste("Your confirmation '",csvTradesFileName,"' is being processed",sep="")
+			message=paste("Your confirmation\n",
+					"\n",
+					as.character(message),
+					"\n\n",
+					"is being processed.",
+					sep="")
 	)
 	logger(paste("\nSending e-mail:\n",as.character(mail),sep=""))
 	sendEMail(mail)

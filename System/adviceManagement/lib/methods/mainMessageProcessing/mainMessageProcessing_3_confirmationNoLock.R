@@ -16,7 +16,13 @@ confirmationNoLock <- function(message) {
 			from=.secrets[["Riskmanager"]][["emailAddress"]],
 			to=message@advisor@email,
 			subject="Confirmation advice refused",
-			message=paste("Your confirmation '",fileName,"' has been deleted because of no pending order.\nPlease send a new advice first or contact the riskmanager.",sep="")
+			message=paste("Your confirmation\n",
+					"\n",
+					as.character(message),"\n",
+					"\n",
+					"has been deleted because of no pending order. Please send a new advice first or\n",
+					"contact the riskmanager.",
+					sep="")
 	)
 	sendEMail(mail)
 	logger(paste("Mail sent:\n",as.character(mail),sep=""))

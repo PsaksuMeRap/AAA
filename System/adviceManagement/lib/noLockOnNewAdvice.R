@@ -23,7 +23,7 @@ noLockOnNewAdvice <- function(message) {
 					"\n",
 					as.character(message),
 					"\n\n",
-					"is being processed",
+					"is being processed.",
 					sep=""
 				)
 	)
