@@ -3,8 +3,6 @@
 # Author: claudio
 ###############################################################################
 
-# mySetwd("base")
-
 source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
 testRepository <- createExchangeRatesTestRepository() 
 repositories$exchangeRates <- testRepository
@@ -28,6 +26,4 @@ testsuite.lists <- defineTestSuite("Test globale",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
 warnings()
 
-# restore System working directory
-# mySetwd()
 
