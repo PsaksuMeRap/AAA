@@ -2,12 +2,48 @@
 setMethod("Apply",
 		signature(x="DirectiveString"),
 		function (x, positions) {
+			directives <- split(x)
 			
-			directiveString <- unclass(x)
-			if (is.na(directiveString)) return(positions)
+			if (length(directives)==0) return(positions)
 			
-			if (directiveString!="explode:Fondi_misti") stop("directiveString other than explode:Fondi_misti not implemented yet.")
+			for (directive in directives) positions <- Apply(directive,positions)
 			
+			return(positions)
+		}
+)
+
+setMethod("Apply",
+		signature(x="ExplodeDirective"),
+		function(x,positions) {
+
+			if (length(x)==0) return(positions)
+			if (is.na(x) | is.null(x)) return(positions)
+			
+			if (x!="Fondi_misti") stop("Explode directive string other than Fondi_misti is not allowed yet.")
+			
+			# create newPositions
+			isMixedFund <- sapply(positions,is,"PositionFondi_misti")
+			if (any(isMixedFund)) {
+				p1 <- positions[!isMixedFund]
+				p2 <- unlist(lapply(positions[isMixedFund],explode),recursive=FALSE)
+				newPositions <- new("Positions",c(p1,p2))
+				return(newPositions)
+			} else {
+				return(positions)
+			}
+		}
+)
+
+
+setMethod("Apply",
+		signature(x="ReplaceDirective"),
+		function(x,positions) {
+			
+			if (length(x)==0) return(positions)
+			if (is.na(x) | is.null(x)) return(positions)
+			validDirectives <- c("PositionOpzioni_su_azioni","PositionOpzioni_su_divise")
+			if (any(!is.element(x,validDirectives))) stop(paste("Invalid ReplaceDirectiveString:\n",x))
+return(FALSE)
 			# create newPositions
 			isMixedFund <- sapply(positions,is,"PositionFondi_misti")
 			if (any(isMixedFund)) {

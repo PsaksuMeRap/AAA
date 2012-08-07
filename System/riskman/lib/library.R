@@ -7,6 +7,7 @@
 source("./riskman/lib/classDefinitions/Constraint/Constraint.R") 
 source("./riskman/lib/classDefinitions/Strings/CheckString.R")
 source("./riskman/lib/classDefinitions/SelectionCriterium/SelectionCriteriaList.R")
+source("./riskman/lib/classDefinitions/Directive/Directive.R")
 source("./riskman/lib/classDefinitions/Strings/DirectiveString.R")
 source("./riskman/lib/classDefinitions/Strings/CheckStringParsed.R")
 source("./riskman/lib/classDefinitions/Strings/ConstraintString.R")

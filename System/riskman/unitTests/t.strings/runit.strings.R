@@ -35,57 +35,6 @@ test.shouldParseCheckStringWithoutConstraintString <- function() {
 }
 
 
-test.shouldIdentifyDirective <- function() {
-	
-	## test 1: all 3 strings
-	checkString = paste(" instrument:bond & currency:JPY +",
-			"instrument:bond,equity & currency:usd,chf + amount:<=100.3CHF",
-			"; =0  USD     ::explode:Fondi_misti ")
-	checkString <- new("CheckString",checkString)
-	
-	result <- split(checkString)
-	checkEquals(unclass(result[["constraintString"]]),"=0  USD")
-	checkEquals(unclass(result[["selectionString"]]),"instrument:bond & currency:JPY + instrument:bond,equity & currency:usd,chf + amount:<=100.3CHF")
-	checkEquals(unclass(result[["directiveString"]]),"explode:Fondi_misti")
-	
-	
-	## test 2: selectionString con directiveString, no constraintString
-	checkString = paste(" instrument:bond & currency:JPY +",
-			"instrument:bond,equity & currency:usd,chf + amount:<=100.3CHF",
-			" ::   explode:Fondi_misti ")
-	checkString <- new("CheckString",checkString)
-	result <- split(checkString)
-	
-	checkEquals(unclass(result[["constraintString"]]),NA_character_)
-	checkEquals(unclass(result[["selectionString"]]),"instrument:bond & currency:JPY + instrument:bond,equity & currency:usd,chf + amount:<=100.3CHF")
-	checkEquals(unclass(result[["directiveString"]]),"explode:Fondi_misti")
-	
-	## test 3: selectionString con constraintString
-	checkString = paste(" instrument:bond & currency:JPY +",
-			"instrument:bond,equity & currency:usd,chf + amount:<=100.3CHF",
-			"; =0  USD")
-	checkString <- new("CheckString",checkString)
-	result <- split(checkString)
-	
-	checkEquals(unclass(result[["constraintString"]]),"=0  USD")
-	checkEquals(unclass(result[["selectionString"]]),"instrument:bond & currency:JPY + instrument:bond,equity & currency:usd,chf + amount:<=100.3CHF")
-	checkEquals(unclass(result[["directiveString"]]),NA_character_)
-	
-	## test 4: solo selectionString
-	checkString = paste(" instrument:bond & currency:JPY +",
-			"instrument:bond,equity & currency:usd,chf + amount:<=100.3CHF")
-	checkString <- new("CheckString",checkString)
-	result <- split(checkString)
-	
-	checkEquals(unclass(result[["constraintString"]]),NA_character_)
-	checkEquals(unclass(result[["selectionString"]]),"instrument:bond & currency:JPY + instrument:bond,equity & currency:usd,chf + amount:<=100.3CHF")
-	checkEquals(unclass(result[["directiveString"]]),NA_character_)
-	
-	
-}
-
-
-
 test.shouldSplitSelectionString <- function() {
 	
 	selectionString = paste("instrument:bond & currency:JPY +  instrument:bond,equity & currency:usd,chf + amount:<=100.3CHF")

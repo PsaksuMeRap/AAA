@@ -6,45 +6,40 @@
 
 setClass("DirectiveString",contains="character")
 
+setClass("DirectiveStringElement",contains="DirectiveString")
+
+
+setMethod("split",signature(x = "DirectiveStringElement"),
+		function (x, f, drop = FALSE, ...) 
+		{
+			firstSplit <- removeStartEndSpaces(unlist(strsplit(x,":")))
+			
+			if (firstSplit[[1]]=="replace") {
+				secondSplit <- removeStartEndSpaces(unlist(strsplit(firstSplit[[2]],",")))
+				return(new("ReplaceDirective",secondSplit))
+			}
+			
+			if (firstSplit[[1]]=="explode") {
+				return(new("ExplodeDirective",firstSplit[[2]]))
+			}
+			
+			stop(paste("Error: unknown DirectiveStringElement\n",x,sep=""))
+		}
+)
+
+
 setMethod("split",
 		signature(x = "DirectiveString"),
 		function (x, f, drop = FALSE, ...) 
 		{
-			# DirectiveString: a string like "explode:Fondi_misti & replace:PositionOpzioni_su_azioni,PositionOpzioni_su_divise"
+			firstSplit <- unlist(strsplit(x,"&"))
 			
-			firstSplit <- unlist(strsplit(x,";"))
-			
-			if (length(firstSplit)==0) stop(paste("Error: empty checkString",x,sep="\n"))
+			if (length(firstSplit)==0) stop(paste("Error: empty directiveString",x,sep="\n"))
 			firstSplit <- removeStartEndSpaces(firstSplit)
 			
-			if (length(firstSplit)==1)  {
-				constraintString <- new("ConstraintString",NA_character_)
-				secondSplit <- unlist(strsplit(firstSplit[[1]],"::"))
-				secondSplit <- removeStartEndSpaces(secondSplit)
-				if (length(secondSplit)==1)  {
-					directiveString <- new("DirectiveString",NA_character_)
-					selectionString <- new("SelectionString",secondSplit[[1]])
-				} else {
-					directiveString <- new("DirectiveString",secondSplit[[2]])
-					selectionString <- new("SelectionString",secondSplit[[1]])				
-				}	
-			} else {
-				selectionString <- new("SelectionString",firstSplit[[1]])
-				
-				secondSplit <- unlist(strsplit(firstSplit[[2]],"::"))
-				secondSplit <- removeStartEndSpaces(secondSplit)
-				
-				if (length(secondSplit)==1)  {
-					directiveString  <- new("DirectiveString",NA_character_)
-					constraintString <- new("ConstraintString",secondSplit[[1]])
-				} else {
-					directiveString <- new("DirectiveString",secondSplit[[2]])
-					constraintString <- new("ConstraintString",secondSplit[[1]])				
-				}				
-			}
+			# create a wrapper of new() which reverse the arguments order
+			New <- function(element,type) return(new(type,element))
 			
-			x <- list(selectionString=selectionString,constraintString=constraintString,
-					directiveString=directiveString)		
-			return(x)
+			return(lapply(lapply(firstSplit,New,"DirectiveStringElement"),split))
 		}
 )

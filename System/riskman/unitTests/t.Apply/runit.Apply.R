@@ -4,7 +4,7 @@
 ###############################################################################
 
 
-test.shouldApplyDirectiveString <- function() {
+test.shouldApplyExplodeDirectiveString <- function() {
 	# exchange rates required for position initialization
 	# initialize exchange rates
 	repository <- repositories$exchangeRates
@@ -36,7 +36,7 @@ test.shouldApplyDirectiveString <- function() {
 }
 
 
-test.shouldFailToApplyDirectiveString <- function() {
+test.shouldFailToApplyExplodeDirectiveString <- function() {
 	# exchange rates required for position initialization
 	# initialize exchange rates
 	repository <- repositories$exchangeRates
