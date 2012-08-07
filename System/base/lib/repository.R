@@ -3,6 +3,26 @@
 # Author: claudio
 ###############################################################################
 
+create_repositoryDBEquities <- function(DBEquities.df) {
+	repository <- list()
+	class(repository) <- "repositoryDBEquities"
+	
+	if (missing(DBEquities.df)) {
+		connection <- odbcConnect("prezzi_storici_azioni_VAR",.utente,.password)
+		query <- paste("SELECT DISTINCT TOP 100 PERCENT A.ID, A.ID_strumento, A.Azione, A.NumeroValore, C.Moneta, A.ISIN ",
+				"FROM [Sistema (prova)].dbo.DBAzioni A INNER JOIN [Sistema (prova)].dbo.DBPortfolioGenerale B ",
+				"ON A.NumeroValore = B.NumeroValore INNER JOIN ",
+				"[Sistema (prova)].dbo.DBBorsa C ON A.Borsa = C.Borsa",
+				"WHERE (B.Cliente IN ('EUR FIXED INCOME', 'CB-ACC GLOBAL ECON', 'CB-ACC GLOBAL EQ'))"
+		)
+
+		repository[["DBEquities.df"]] <- sqlQuery(connection,query,as.is=TRUE)
+	} else {
+		repository[["DBEquities.df"]] <- DBEquities.df
+	}
+
+	return(repository)
+}
 
 create_repositoryPoliticaInvestimento <- function(politicaInvestimento.df) {
 	
@@ -15,7 +35,8 @@ create_repositoryPoliticaInvestimento <- function(politicaInvestimento.df) {
 				"FROM [Sistema (prova)].dbo.DBPoliticaInvestimento A ",
 				"INNER JOIN [Sistema (prova)].dbo.Clienti_ID B on A.Cliente = B.Cliente")
 
-		repository$politicaInvestimento.df <- sqlQuery(connection,query,as.is=TRUE)
+		politicaInvestimento.df <- sqlQuery(connection,query,as.is=TRUE)
+		repository$politicaInvestimento.df <- politicaInvestimento.df
 	} else {
 		repository$politicaInvestimento.df <- politicaInvestimento.df
 	}
