@@ -6,6 +6,7 @@
 library("RUnit")
 library("tcltk")
 library("stringr")
+library("RODBC")
 
 if(.Platform$OS.type=="windows") {
 	library("rJava")

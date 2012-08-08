@@ -86,6 +86,3 @@ source("./base/lib/identifyPositionsToExplode.R")
 
 source("./base/lib/explodePortfolioByFund.R")
 
-# source("./ayrton/lib/library.R")
-# source("./riskman/lib/library.R")
-# source("./adviceManagement/lib/library.R")
