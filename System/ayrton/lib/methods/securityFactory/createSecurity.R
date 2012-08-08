@@ -11,9 +11,10 @@ setMethod("createSecurity",signature(origin="Ayrton_Futures_EQ"),
 			
 			className <- class(origin)
 			className <- substr(className,start=8,stop=nchar(className))
-			underlying <- new("Equity")
 			
+			underlying <- new("IndexEquity",name=origin@Nome,id=idAyrton)
 			
+
 			# the following slot is empty: deliveryDate="character"
 			security <- new(className,currency=new("Currency",origin@Moneta),name=origin@Nome,id=idAyrton,
 					underlying=underlying)

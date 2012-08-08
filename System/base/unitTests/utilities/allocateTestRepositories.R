@@ -4,7 +4,23 @@
 ###############################################################################
 
 allocateTestRepositories <- function(repoName) {
+	if (repoName=="DBEquities") {
+		# create the data 
+		source("./base/unitTests/utilities/createDBEquitiesDataFrame.R")
+		DBEquities.df <- createDBEquitiesDataFrame()
 		
+		# create the instrument repository
+		DBEquities <- create_repositoryDBEquities(DBEquities.df)
+		
+		# create backup if necessary
+		if (exists("DBEquities",envir=repositories,inherits=FALSE)) {
+			eval(expression(DBEquities_back <- DBEquities),envir=repositories)
+		}
+		
+		# assign the repository	
+		assign("DBEquities",DBEquities,envir=repositories)
+	}
+	
 	if (repoName=="instruments") {
 		# create the data 
 		source("./base/unitTests/utilities/createInstrumentsDataFrame.R")
@@ -35,7 +51,7 @@ allocateTestRepositories <- function(repoName) {
 		if (exists("exchangeRates",envir=repositories,inherits=FALSE)) {
 			eval(expression(exchangeRates_back <- exchangeRates),envir=repositories)
 		}
-		
+	
 		# assign the repository	
 		assign("exchangeRates",exchangeRates,envir=repositories)
 	}
@@ -57,12 +73,23 @@ allocateTestRepositories <- function(repoName) {
 		# assegna i repositories
 		assign("politicaInvestimento",politicaInvestimento,envir=repositories)
 	}
-	
 
 }
 
 
 deallocateTestRepositories <- function(repoName) {
+	if (repoName=="DBEquities") {
+		if (exists("DBEquities_back",envir=repositories,inherits=FALSE)) {
+			eval(expression(instruments <- instruments_back),envir=repositories)
+			rm("DBEquities_back",envir=repositories)
+		} else {
+			if (exists("DBEquities",envir=repositories,inherits=FALSE)) {
+				rm("DBEquities",envir=repositories)				
+			}
+			
+		}
+	}
+	
 	
 	if (repoName=="instruments") {
 		if (exists("instruments_back",envir=repositories,inherits=FALSE)) {

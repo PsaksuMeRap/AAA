@@ -39,6 +39,18 @@ setMethod("createPosition",signature(security="Conto_corrente",origin="AyrtonPos
 		}
 )
 
+setMethod("createPosition",signature(security="Futures_EQ",origin="Ayrton_Futures_EQ"),
+		function(security,origin) {
+			id <- 10.2
+			quantity <- origin@Saldo
+			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
+			value <- repositories$exchangeRates$exchange(value,security@currency)
+			position <- new("PositionEquity",id=id,security=security,
+					quantity=quantity,value=value)
+			
+			return(position)
+		}
+)
 
 setMethod("createPosition",signature(security="Equity",origin="AyrtonPosition"),
 		function(security,origin) {

@@ -41,18 +41,33 @@ setMethod("Apply",
 			
 			if (length(x)==0) return(positions)
 			if (is.na(x) | is.null(x)) return(positions)
-			validDirectives <- c("PositionOpzioni_su_azioni","PositionOpzioni_su_divise")
+			validDirectives <- c("Futures_EQ","PositionOpzioni_su_azioni","PositionOpzioni_su_divise")
 			if (any(!is.element(x,validDirectives))) stop(paste("Invalid ReplaceDirectiveString:\n",x))
 return(FALSE)
-			# create newPositions
-			isMixedFund <- sapply(positions,is,"PositionFondi_misti")
-			if (any(isMixedFund)) {
-				p1 <- positions[!isMixedFund]
-				p2 <- unlist(lapply(positions[isMixedFund],explode),recursive=FALSE)
-				newPositions <- new("Positions",c(p1,p2))
-				return(newPositions)
-			} else {
-				return(positions)
+			
+			
+			for (directive in x) {
+				
+				if (directive=="Futures_EQ") {
+					# identify the Futures_EQ positions
+					isPositionFutures_EQ <- sapply(positions,is,"PositionFutures_EQ")
+					if (any(isPositionFutures_EQ)) {
+						p1 <- positions[!isPositionFutures_EQ]
+						p2 <- unlist(lapply(positions[isPositionFutures_EQ],replaceDirective),recursive=FALSE)
+						positions <- new("Positions",c(p1,p2))
+					}
+				}
+				
+				if (directive=="") {
+					isMixedFund <- sapply(positions,is,"PositionFondi_misti")
+					if (any(isMixedFund)) {
+						p1 <- positions[!isMixedFund]
+						p2 <- unlist(lapply(positions[isMixedFund],explode),recursive=FALSE)
+						newPositions <- new("Positions",c(p1,p2))
+						return(newPositions)
+					} 					
+				}
+				
 			}
 		}
 )

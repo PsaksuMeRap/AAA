@@ -26,7 +26,6 @@ test.shouldJoinTwoPositions <- function() {
 }
 
 
-
 test.shouldExtractPositions <- function() {
 	
 	source("./base/unitTests/utilities/createRepositoryPositions.R")
@@ -46,6 +45,7 @@ test.shouldExtractPositions <- function() {
 	checkEquals(is(result,"Positions"),TRUE)
 	checkEquals(result,new("Positions",positions[-2]))
 }
+
 
 test.shouldSumPositions <- function() {
 	

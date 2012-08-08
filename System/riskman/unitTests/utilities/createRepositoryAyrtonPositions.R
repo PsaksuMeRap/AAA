@@ -429,6 +429,7 @@ createRepositoryAyrtonPositions <- function() {
 	x@Moneta <- 'CHF'
 	x@Saldo <- -25
 	x@Nome <- 'Swiss Index Futures (SMI) Futures 16-03-2012                    '
+	x@PrezzoMercato <- 6445
 	x@ValoreMercatoMonetaCHF <- 0
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 50
@@ -606,21 +607,6 @@ createRepositoryAyrtonPositions <- function() {
 	testData$Strutturati_FI1 <- x
 	##---------------------
 	
-
-		x <- new("AyrtonPosition")
-	x@Cliente <- 'pippo210'
-	x@Strumento <- 'F'
-	x@Moneta <- 'CHF'
-	x@Saldo <- -25
-	x@Nome <- 'Swiss Index Futures (SMI) Futures 16-03-2012                    '
-	x@ValoreMercatoMonetaCHF <- 0
-	x@ID_AAA <- NA_real_
-	x@ID_strumento <- 50
-	x@Saldo <- -25
-	class(x) <- "AyrtonPosition"
-	testData$Futures_EQ1 <- x
-	##---------------------
-	
 	
 	x <- new("AyrtonPosition")
 	x@Cliente <- 'pippo202'
@@ -659,7 +645,8 @@ create_ayrtonPosition <- function(i,df) {
 	string <- paste(string,"x@Strumento <- '",df[i,"Strumento"],"'\n",sep="")
 	string <- paste(string,"x@Moneta <- '",df[i,"Moneta"],"'\n",sep="")
 	string <- paste(string,"x@Saldo <- ",df[i,"Saldo"],"\n",sep="")	
-	string <- paste(string,"x@Nome <- '",df[i,"Nome"],"'\n",sep="")	
+	string <- paste(string,"x@Nome <- '",df[i,"Nome"],"'\n",sep="")
+	string <- paste(string,"x@PrezzoMercato <- '",df[i,"PrezzoMercato"],"'\n",sep="")
 	string <- paste(string,"x@ValoreMercatoMonetaCHF <- ",df[i,"ValoreMercatoMonetaCHF"],"\n",sep="")	
 	string <- paste(string,"x@ID_AAA <- ",df[i,"ID_AAA"],"\n",sep="")	
 	string <- paste(string,"x@ID_strumento <- ",df[i,"ID_strumento"],"\n",sep="")	

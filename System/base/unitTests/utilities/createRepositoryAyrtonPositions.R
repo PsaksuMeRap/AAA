@@ -523,7 +523,7 @@ createRepositoryAyrtonPositions <- function() {
 	x@Strumento <- 'F'
 	x@Moneta <- 'CHF'
 	x@Saldo <- -25
-	x@Nome <- 'Swiss Index Futures (SMI) Futures 16-03-2012                    '
+	x@Nome <- 'Swiss Index Futures (SMI) Futures 16-03-2012 / 10              '
 	x@ValoreMercatoMonetaCHF <- 0
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 50
