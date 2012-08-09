@@ -45,9 +45,9 @@ setMethod("Apply",
 			if (any(!is.element(x,validDirectives))) stop(paste("Invalid ReplaceDirectiveString:\n",x))
 return(FALSE)
 			
-			
+			# replace all futures on equities with the corresponding position in 
+			# underlying and cash
 			for (directive in x) {
-				
 				if (directive=="Futures_EQ") {
 					# identify the Futures_EQ positions
 					isPositionFutures_EQ <- sapply(positions,is,"PositionFutures_EQ")
@@ -58,17 +58,17 @@ return(FALSE)
 					}
 				}
 				
-				if (directive=="") {
-					isMixedFund <- sapply(positions,is,"PositionFondi_misti")
-					if (any(isMixedFund)) {
-						p1 <- positions[!isMixedFund]
-						p2 <- unlist(lapply(positions[isMixedFund],explode),recursive=FALSE)
-						newPositions <- new("Positions",c(p1,p2))
-						return(newPositions)
+				if (directive=="PositionOpzioni_su_azioni") {
+					isDesiredPosition <- sapply(positions,is,"PositionOpzioni_su_azioni")
+					if (any(isDesiredPosition)) {
+						p1 <- positions[!isDesiredPosition]
+						p2 <- unlist(lapply(positions[isDesiredPosition],replaceDirective),recursive=FALSE)
+						positions <- new("Positions",c(p1,p2))
 					} 					
 				}
 				
 			}
+			return(positions)
 		}
 )
 
