@@ -63,26 +63,26 @@ test.shouldSplitExplodeDirectiveStringElement <- function() {
 
 
 test.shouldSplitReplaceDirectiveStringElement <- function() {
-	replaceDirectiveString <- new("DirectiveStringElement","   replace  :   PositionOpzioni_su_azioni  , PositionOpzioni_su_divise           ")
+	replaceDirectiveString <- new("DirectiveStringElement","   replace  :   Opzioni_su_azioni  , Opzioni_su_divise           ")
 
 	result <- split(replaceDirectiveString)
-	checkEquals(result,new("ReplaceDirective",c("PositionOpzioni_su_azioni","PositionOpzioni_su_divise")))
+	checkEquals(result,new("ReplaceDirective",c("Opzioni_su_azioni","Opzioni_su_divise")))
 }
 
 
 test.shouldFailToSplitDirectiveStringElement <- function() {
-	replaceDirectiveString <- new("DirectiveStringElement","   roplace  :   PositionOpzioni_su_azioni  , PositionOpzioni_su_divise           ")
+	replaceDirectiveString <- new("DirectiveStringElement","   roplace  :   Opzioni_su_azioni  , Opzioni_su_divise           ")
 	
 	checkException(split(replaceDirectiveString))
 }
 
 test.shouldSplitDirectiveString <- function() {
 	
-	# DirectiveString: a string like "explode:Fondi_misti & replace:PositionOpzioni_su_azioni,PositionOpzioni_su_divise"
-	x <- new("DirectiveString","explode:Fondi_misti & replace:PositionOpzioni_su_azioni,PositionOpzioni_su_divise")
+	# DirectiveString: a string like "explode:Fondi_misti & replace:Opzioni_su_azioni,Opzioni_su_divise"
+	x <- new("DirectiveString","explode:Fondi_misti & replace:Opzioni_su_azioni,Opzioni_su_divise")
 	
 	r1 <- new("ExplodeDirective","Fondi_misti")
-	r2 <- new("ReplaceDirective",c("PositionOpzioni_su_azioni","PositionOpzioni_su_divise"))
+	r2 <- new("ReplaceDirective",c("Opzioni_su_azioni","Opzioni_su_divise"))
 	result <- split(x)
 	
 	checkEquals(length(result),2)

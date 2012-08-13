@@ -5,5 +5,5 @@
 
 
 # crea la classe "PositionFutures_EQ"
-setClass("PositionFutures_EQ",representation(valueOnePoint="numeric"),contains="Position")
+setClass("PositionFutures_EQ",representation(indexLevel="numeric",valueOnePoint="Money"),contains="Position")
 

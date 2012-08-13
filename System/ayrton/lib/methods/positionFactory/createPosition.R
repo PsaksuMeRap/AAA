@@ -45,8 +45,15 @@ setMethod("createPosition",signature(security="Futures_EQ",origin="Ayrton_Future
 			quantity <- origin@Saldo
 			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
 			value <- repositories$exchangeRates$exchange(value,security@currency)
+			
+			
+mettere qui il parsing del nome per estrarre il preceOnePoint
+			
+			
+			
+			
 			position <- new("PositionEquity",id=id,security=security,
-					quantity=quantity,value=value)
+					quantity=quantity,value=value,indexLevel=origin@PrezzoMercato)
 			
 			return(position)
 		}

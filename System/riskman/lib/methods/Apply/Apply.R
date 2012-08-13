@@ -41,7 +41,7 @@ setMethod("Apply",
 			
 			if (length(x)==0) return(positions)
 			if (is.na(x) | is.null(x)) return(positions)
-			validDirectives <- c("Futures_EQ","PositionOpzioni_su_azioni","PositionOpzioni_su_divise")
+			validDirectives <- c("Futures_EQ","Opzioni_su_azioni","Opzioni_su_divise")
 			if (any(!is.element(x,validDirectives))) stop(paste("Invalid ReplaceDirectiveString:\n",x))
 return(FALSE)
 			
@@ -58,7 +58,7 @@ return(FALSE)
 					}
 				}
 				
-				if (directive=="PositionOpzioni_su_azioni") {
+				if (directive=="Opzioni_su_azioni") {
 					isDesiredPosition <- sapply(positions,is,"PositionOpzioni_su_azioni")
 					if (any(isDesiredPosition)) {
 						p1 <- positions[!isDesiredPosition]
