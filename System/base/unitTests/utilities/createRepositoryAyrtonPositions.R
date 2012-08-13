@@ -534,6 +534,7 @@ createRepositoryAyrtonPositions <- function() {
 	##---------------------
 	
 	
+	
 	x <- new("AyrtonPosition")
 	x@Cliente <- 'pippo15'
 	x@Strumento <- 'XAU'
@@ -727,23 +728,6 @@ createRepositoryAyrtonPositions <- function() {
 
 	A_Strutturati_FI1 <- x	
 	testData$Strutturati_FI1 <- x
-	##---------------------
-	
-
-	x <- new("AyrtonPosition")
-	x@Cliente <- 'pippo210'
-	x@Strumento <- 'F'
-	x@Moneta <- 'CHF'
-	x@Saldo <- -25
-	x@Nome <- 'Swiss Index Futures (SMI) Futures 16-03-2012                    '
-	x@ValoreMercatoMonetaCHF <- 0
-	x@ID_AAA <- NA_real_
-	x@ID_strumento <- 50
-	x@Saldo <- -25
-	class(x) <- "AyrtonPosition"
-
-	A_Futures_EQ1 <- x
-	testData$Futures_EQ1 <- x
 	##---------------------
 	
 	

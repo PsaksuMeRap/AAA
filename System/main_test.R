@@ -37,6 +37,9 @@ rm(homeDir,sourceCodeDir)
 source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
 testRepository <- createExchangeRatesTestRepository() 
 repositories$exchangeRates <- testRepository
+
+
+
 ## test globale
 dirs = c(
 		"./base/unitTests/t.lists",

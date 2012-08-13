@@ -39,22 +39,25 @@ setMethod("createPosition",signature(security="Conto_corrente",origin="AyrtonPos
 		}
 )
 
-setMethod("createPosition",signature(security="Futures_EQ",origin="Ayrton_Futures_EQ"),
+setMethod("createPosition",signature(security="Futures_EQ",origin="AyrtonPosition"),
 		function(security,origin) {
 			id <- 10.2
 			quantity <- origin@Saldo
 			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
 			value <- repositories$exchangeRates$exchange(value,security@currency)
 			
-			
-# mettere qui il parsing del nome per estrarre il preceOnePoint
-			
-			
-			
-			
-			position <- new("PositionEquity",id=id,security=security,
-					quantity=quantity,value=value,indexLevel=origin@PrezzoMercato)
-			
+			getValueOnePoint <- function(security) {
+
+				result <- strsplit(security@name,"/")
+				valueOnePoint <- as.numeric(result[[1]][[length(result[[1]])]])
+				valueOnePoint <- toMoney(valueOnePoint,security@currency)
+				return(valueOnePoint)
+			}
+
+			position <- new("PositionFutures_EQ",id=id,security=security,
+					quantity=quantity,value=value,valueOnePoint=getValueOnePoint(security),
+					indexLevel=origin@PrezzoMercato)
+		
 			return(position)
 		}
 )
