@@ -128,12 +128,17 @@ createRepositoryPositions <- function() {
 	Opzioni_su_azioni2 <- positionFactory(repository$Opzioni_su_azioni2)
 	testData$Opzioni_su_azioni2 <- positionFactory(repository$Opzioni_su_azioni2)
 	
-	
 	Deposito_a_termine_acc1 <- positionFactory(repository$Deposito_a_termine_acc1)
 	testData$Deposito_a_termine_acc1 <- positionFactory(repository$Deposito_a_termine_acc1)	
 	
 	Deposito_a_termine1 <- positionFactory(repository$Deposito_a_termine1)
 	testData$Deposito_a_termine1 <- positionFactory(repository$Deposito_a_termine1)
+	
+	Obbligazioni_convertibili <- positionFactory(repository$Obbligazioni_convertibili)
+	testData$Obbligazioni_convertibili <- positionFactory(repository$Obbligazioni_convertibili)	
+	
+	proRataObbligazioni_convertibili <- positionFactory(repository$proRataObbligazioni_convertibili)
+	testData$proRataObbligazioni_convertibili <- positionFactory(repository$proRataObbligazioni_convertibili)
 	
 	return(testData)
 }

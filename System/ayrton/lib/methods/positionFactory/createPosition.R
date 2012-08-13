@@ -47,7 +47,7 @@ setMethod("createPosition",signature(security="Futures_EQ",origin="Ayrton_Future
 			value <- repositories$exchangeRates$exchange(value,security@currency)
 			
 			
-mettere qui il parsing del nome per estrarre il preceOnePoint
+# mettere qui il parsing del nome per estrarre il preceOnePoint
 			
 			
 			
@@ -76,7 +76,6 @@ setMethod("createPosition",signature(security="Bond",origin="AyrtonPosition"),
 		function(security,origin) {
 			# the position will be completed with the accruedInterest after an
 			# appropriate call to the createPositions method
-
 			id <- 10.2
 			quantity <- new("NominalValue",amount=new("Amount",origin@Saldo),currency=new("Currency",origin@Moneta))
 			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
@@ -88,6 +87,22 @@ setMethod("createPosition",signature(security="Bond",origin="AyrtonPosition"),
 			return(position)
 		}
 )
+
+setMethod("createPosition",signature(security="Obbligazioni_convertibili",origin="AyrtonPosition"),
+		function(security,origin) {
+			# the position will be completed with the accruedInterest after an
+			# appropriate call to the createPositions method
+			id <- 10.2
+			quantity <- new("NominalValue",amount=new("Amount",origin@Saldo),currency=new("Currency",origin@Moneta))
+			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
+			value <- repositories$exchangeRates$exchange(value,security@currency)
+			accruedInterest <- new("AccruedInterest",toMoney(NA_real_,security@currency))
+			position <- new("PositionObbligazioni_convertibili",id=id,security=security,
+					quantity=quantity,value=value,accruedInterest=accruedInterest)
+			return(position)
+		}
+)
+
 
 setMethod("createPosition",signature(security="Anticipi_fissi",origin="AyrtonPosition"),
 		function(security,origin) {

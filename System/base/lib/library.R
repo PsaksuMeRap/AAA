@@ -41,11 +41,13 @@ source("./base/lib/classDefinitions/Security/Fondi_mercato_monetario.R")
 source("./base/lib/classDefinitions/Security/Credit_linked_note.R")
 source("./base/lib/classDefinitions/Security/Diritti_aumento_capitale_azionario.R")
 
+
 # Underlying requires definitions of securities and Index.
 source("./base/lib/classDefinitions/Underlying/Underlying.R")
 source("./base/lib/classDefinitions/Security/Futures_EQ.R")
 source("./base/lib/classDefinitions/Security/Opzioni_su_azioni.R")
 source("./base/lib/classDefinitions/Security/Opzioni_su_divise.R")
+source("./base/lib/classDefinitions/Security/Obbligazioni_convertibili.R")
 
 source("./base/lib/classDefinitions/FundDB/FundDB.R")
 source("./base/lib/classDefinitions/FundRecord/FundRecord.R")
@@ -63,6 +65,7 @@ source("./base/lib/classDefinitions/Position/PositionConto_corrente.R")
 source("./base/lib/classDefinitions/Position/PositionOpzioni_su_azioni.R")
 source("./base/lib/classDefinitions/Position/PositionOpzioni_su_divise.R")
 source("./base/lib/classDefinitions/Position/PositionFX_Forward.R")
+source("./base/lib/classDefinitions/Position/PositionObbligazioni_convertibili.R")
 
 source("./base/lib/classDefinitions/Positions/Positions.R")
 source("./base/lib/classDefinitions/Portfolio/Portfolio.R")

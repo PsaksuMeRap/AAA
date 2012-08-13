@@ -186,3 +186,24 @@ test.shouldCreateFutures_EQ <- function() {
 	checkEquals(security@currency,new("Currency","CHF"))
 	checkEquals(security@deliveryDate,character(0))
 }
+
+
+test.shouldCreateObbligazioni_convertibili <- function() {
+	
+	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
+	
+	# create the origin
+	repository <- createRepositoryAyrtonPositions()
+	origin <- repository$Obbligazioni_convertibili
+	class(origin) <- "Ayrton_Obbligazioni_convertibili"
+	
+	convertibleBond <- createSecurity(origin)
+	
+	checkEquals(convertibleBond@name,"20130329 - 4% CS 29-03-13")
+	checkEquals(convertibleBond@id,new("IdAyrton",idAAA=new("IdAAA_numeric",2209),idStrumento=11))
+	checkEquals(convertibleBond@maturity,"2013-03-29")
+	
+}
+
+
+

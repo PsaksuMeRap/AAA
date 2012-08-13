@@ -213,3 +213,34 @@ test.shouldCreatePositionConto_corrente<- function() {
 	# restore initial conditions	
 	deallocateTestRepositories("instruments")
 }
+
+
+
+test.shouldCreatePositionObbligazioni_convertibili <- function() {	
+	
+	# uses a default method
+	source("./base/unitTests/utilities/allocateTestRepositories.R")	
+	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
+	
+	# create the instrument repository	
+	allocateTestRepositories("instruments")
+	mySetwd()
+	
+	# create the origin
+	repository <- createRepositoryAyrtonPositions()
+	origin <- repository$Obbligazioni_convertibili
+	
+	convertibleBondSecurity <- securityFactory(origin)
+	
+	convertibleBondSecurity <- createPosition(convertibleBondSecurity,origin)
+	
+	checkEquals(is(convertibleBondSecurity)[1],"PositionObbligazioni_convertibili")
+	checkEquals(convertibleBondSecurity@id,10.2)
+	checkEquals(convertibleBondSecurity@accruedInterest@amount,new("Amount",NA_real_))	
+	checkEquals(convertibleBondSecurity@quantity,new("NominalValue",amount=new("Amount",25000),currency=new("Currency","CHF")))
+	checkEquals(convertibleBondSecurity@value,toMoney(26312.5,"CHF"))
+	
+	# restore initial conditions	
+	deallocateTestRepositories("instruments")
+}
+

@@ -778,6 +778,38 @@ createRepositoryAyrtonPositions <- function() {
 	testData$Credit_linked_note <- x
 	##---------------------
 	
+
+	
+	# create a valid Obbligazioni_convertibili
+	x <- new("AyrtonPosition")
+	x@Cliente <- "pippo3"
+	x@Strumento <- "O      "
+	x@Moneta <- "CHF"
+	x@Saldo <- 25000
+	x@Nome <- "20130329 - 4% CS 29-03-13"
+	x@ValoreMercatoMonetaCHF <- 26312.5
+	x@ID_AAA <- 2209
+	x@ID_strumento <- 11
+	class(x) <- "AyrtonPosition"
+	
+	A_Obbligazioni_convertibili <- x
+	testData$Obbligazioni_convertibili <- x
+	
+	# create a valid AccruedInterest di Obbligazioni_convertibili
+	x <- new("AyrtonPosition")
+	x@Cliente <- "pippo3"
+	x@Strumento <- "Oacc"
+	x@Moneta <- "CHF"
+	x@Saldo <- 25000
+	x@Nome <- "20130329 - 4% CS 29-03-13 Pro-rata"
+	x@ValoreMercatoMonetaCHF <- 431.78
+	x@ID_AAA <- 2209
+	x@ID_strumento <- 11
+	class(x) <- "AyrtonPosition"
+	
+	A_proRataObbligazioni_convertibili <- x
+	testData$proRataObbligazioni_convertibili <- x
+	
 	
 	return(testData)
 }

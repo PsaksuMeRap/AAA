@@ -12,6 +12,7 @@ source("./ayrton/lib/classDefinitions/AyrtonPositions/AyrtonPositions.R")
 source("./ayrton/lib/classDefinitions/AyrtonSecurity/AyrtonSecurity.R")
 # dipende da AyrtonPosition
 source("./ayrton/lib/classDefinitions/IdAyrton/IdAyrton.R")
+source("./ayrton/lib/methods/getMaturity/getMaturity.R")
 # dipende da securities in Sistema
 source("./ayrton/lib/methods/securityFactory/securityFactory.R")
 # dipende da Position in Sistema

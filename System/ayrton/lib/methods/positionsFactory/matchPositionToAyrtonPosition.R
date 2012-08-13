@@ -16,7 +16,7 @@ matchPositionToAyrtonPosition <- function(accPosition,positionWithAcc){
 		nameWithoutProRata <- substr(accPosition@Nome,1,lengthName-9)
 		if (positionWithAcc@security@name == nameWithoutProRata) return(TRUE) else return(FALSE)
 	}	
-	
+
 	return(identical(positionWithAcc@security@id@idAAA,accPosition) &
 			identical(positionWithAcc@security@id@idStrumento,accPosition@ID_strumento) &
 			matchPositionQuantityToAccPosition(positionWithAcc@quantity,accPosition))
