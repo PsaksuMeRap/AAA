@@ -9,13 +9,19 @@ setGeneric("replaceDirective",def=function(position,...) standardGeneric("replac
 setMethod("replaceDirective",
 		signature(position="PositionFutures_EQ"),
 		function(position) {
-			# parse the name and extract FUT_VAL_PT  <- verifica!
 			
-			name <- position@security@name
-			splitResult <- strsplit(nome,"/")
-			futureValueOfOnePoint <- splitResult[[1]][[length(splitResult)]]
-			futureValueOfOnePoint <- as.numeric(futureValueOfOnePoint)
-			positionValue <- position@ * position
+			positionValue <- position@quantity * position@indexLevel * position@valueOnePoint
+			
+			position@value <- positionValue
+			
+			# crate the corresponding money flow
+			currency <- position@security@currency
+			securityConto_corrente <- new("Conto_corrente",currency=position@security@currency,
+					name=paste(currency,"-",position@currency@name,sep=""))
+			positionConto_corrente <- new("PositionConto_corrente",security=securityConto_corrente,
+					value=-position@value,quantity=1,id=position@security@name)
+			
+			return(new("Positions",list(position,positionConto_corrente)))
 		}
 )
 

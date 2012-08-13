@@ -182,7 +182,7 @@ test.shouldCreateFutures_EQ <- function() {
 	
 	security <- createSecurity(origin)
 	checkEquals(class(security)[[1]],"Futures_EQ")
-	checkEquals(security@name,"Swiss Index Futures (SMI) Futures 16-03-2012                    ")
+	checkEquals(security@name,"Swiss Index Futures (SMI) Futures 16-03-2012 / 10              ")
 	checkEquals(security@currency,new("Currency","CHF"))
 	checkEquals(security@deliveryDate,character(0))
 }
