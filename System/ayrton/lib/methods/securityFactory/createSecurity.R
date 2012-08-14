@@ -40,10 +40,33 @@ setMethod("createSecurity",signature(origin="Ayrton_Opzioni_su_azioni"),
 			
 			className <- class(origin)
 			className <- substr(className,start=8,stop=nchar(className))
-			underlying <- new("Equity")
-			# the following two slots are empty: expiryDate="character",strike="numeric"
+
+
+			
+			getOptionParameters <- function(name) {
+				tmp <- as.list(stringr::str_trim(strsplit(name,"/")[[1]]))
+				fieldNames <- c("quantity","optionType","name","expiryDate","strike","Premio","isin")
+				names(tmp) <- fieldNames
+
+				tmp[["expiryDate"]] <- format(strptime(tmp[["expiryDate"]],format="%d-%m-%y"),"%Y-%m-%d")
+				tmp[["strike"]] <- as.numeric(substr(tmp[["strike"]],7,nchar(tmp[["strike"]])))
+				tmp[["quantity"]] <- as.numeric(tmp[["quantity"]])
+				if (tolower(tmp[["optionType"]])=="put") tmp[["optionType"]] <- "Put" else tmp[["optionType"]] <- "Call"
+				return(tmp)
+			}
+	
+			parameters <- getOptionParameters(origin@Nome)
+		
+			# identify the underlying equity
+			underlying <- createEquitySecurityFromIsin(parameters[["isin"]])
+			## adjust for the missing currency in case that the underlying equity is not in the DBEquity
+			if (identical(underlying@currency,new("Currency"))) underlying@currency <- new("Currency",origin@Moneta)
+		
 			security <- new(className,currency=new("Currency",origin@Moneta),
-					name=origin@Nome,id=idAyrton,underlying=underlying)
+					name=origin@Nome,id=idAyrton,underlying=underlying,
+					strike=parameters[["strike"]],expiryDate=parameters[["expiryDate"]],
+					optionType=parameters[["optionType"]])
+			
 			return(security)
 		}
 )

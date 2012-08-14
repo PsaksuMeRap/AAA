@@ -191,6 +191,26 @@ setMethod("createPosition",signature(security="Fondi_obbligazionari",origin="Ayr
 		}
 )
 
+setMethod("createPosition",signature(security="Opzioni_su_azioni",origin="AyrtonPosition"),
+		function(security,origin) {
+			
+			id <- 10.2
+			
+			## ! for Opzioni_su_azioni this is not the number of contracts but it is the
+			## corresponding number of underlying equities
+			numberEquities <- origin@Saldo
+			
+			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
+			value <- repositories$exchangeRates$exchange(value,security@currency)
+			position <- new("PositionOpzioni_su_azioni",id=id,security=security,
+					numberEquities=numberEquities,value=value)
+			
+			return(position)
+			
+	
+		}
+)
+
 #setMethod("createPosition",signature(security="ETF_commodities",origin="AyrtonPosition"),
 #		function(security,origin) {
 #			

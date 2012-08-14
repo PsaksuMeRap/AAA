@@ -29,19 +29,11 @@ testRepository <- createExchangeRatesTestRepository()
 repositories$exchangeRates <- testRepository
 
 
-## test globale
-dirs = c(
-		"./ayrton/unitTests/t.ayrtonPositions",
-		"./ayrton/unitTests/t.explode",				
-		"./ayrton/unitTests/t.idAyrton",		
-		"./ayrton/unitTests/t.idFactory",
-		"./ayrton/unitTests/t.portfolioFactory",
-		"./ayrton/unitTests/t.portfoliosFactory",
-		"./ayrton/unitTests/t.positionFactory",
-		"./ayrton/unitTests/t.positionsFactory",
-		"./ayrton/unitTests/t.securityFactory"
-)
+# load the list of test in the variable dirs
+source("./ayrton/unitTests/tests.R")
 
+
+# execute the tests
 testsuite.lists <- defineTestSuite("Test ayrton",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
 warnings()

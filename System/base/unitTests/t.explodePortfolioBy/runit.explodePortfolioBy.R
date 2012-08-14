@@ -122,7 +122,7 @@ test.shouldExplodePositionsByFunds <- function() {
 }
 
 
-test.shouldexplodePortfolioByFunds <- function() {
+test.shouldExplodePortfolioByFunds <- function() {
 	source("./base/lib/repository.R")
 	source("./base/unitTests/utilities/allocateTestRepositories.R")
 	source("./base/unitTests/utilities/createOriginData.R")

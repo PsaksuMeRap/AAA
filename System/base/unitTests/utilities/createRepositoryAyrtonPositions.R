@@ -492,7 +492,7 @@ createRepositoryAyrtonPositions <- function() {
 	x@Strumento <- 'OA'
 	x@Moneta <- 'CHF'
 	x@Saldo <- -1000
-	x@Nome <- '-1000 Call Syngenta AG 17-02-12 Strike 290 Premio(5500 CHF)'
+	x@Nome <- '-1000 / Call / Syngenta AG / 17-02-12 / Strike 290 / Premio(5500 CHF) / CH0011027469'
 	x@ValoreMercatoMonetaCHF <- -5840
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 18
@@ -507,13 +507,13 @@ createRepositoryAyrtonPositions <- function() {
 	x@Strumento <- 'OA'
 	x@Moneta <- 'CHF'
 	x@Saldo <- -5000
-	x@Nome <- '-5000 PUT Credit Suisse Group Na 21-12-12 Strike 46 Premio(112267 CHF)'
+	x@Nome <- '-5000 / PUT / Credit Suisse Group Na / 21-12-12 / Strike 46 / Premio(112267 CHF)-5000 / PUT / Credit Suisse Group Na / 21-12-12 / Strike 46 / Premio(112267 CHF) / CH0012138530'
 	x@ValoreMercatoMonetaCHF <- -107100
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 18
 	class(x) <- "AyrtonPosition"
 
-	A_Opzioni_su_azioni1 <- x		
+	A_Opzioni_su_azioni2 <- x		
 	testData$Opzioni_su_azioni2 <- x
 	##---------------------
 	
@@ -795,6 +795,35 @@ createRepositoryAyrtonPositions <- function() {
 	A_proRataObbligazioni_convertibili <- x
 	testData$proRataObbligazioni_convertibili <- x
 	
+	# create a valid opzioni_su_divise
+	x <- new("AyrtonPosition")
+	x@Cliente <- "pippo210"
+	x@Strumento <- "OV"
+	x@Moneta <- "USD"
+	x@Saldo <- 125000
+	x@Nome <- "PUT 17-08-12 Strike 1.295 EUR 125000 Premio(-8293.75 USD)"
+	x@ValoreMercatoMonetaCHF <- 7751.37
+	x@ID_AAA <- NA_real_
+	x@ID_strumento <- 19
+	class(x) <- "AyrtonPosition"
+	
+	A_Opzioni_su_divise1 <- x
+	testData$Opzioni_su_divise1 <- x
+	
+	# create a valid opzioni_su_divise
+	x <- new("AyrtonPosition")
+	x@Cliente <- "pippo210"
+	x@Strumento <- "OV"
+	x@Moneta <- "USD"
+	x@Saldo <- -250000
+	x@Nome <- "Call 17-08-12 Strike 1.295 EUR -250000 Premio(1930 USD)"
+	x@ValoreMercatoMonetaCHF <- -44.03
+	x@ID_AAA <- NA_real_
+	x@ID_strumento <- 19
+	class(x) <- "AyrtonPosition"
+	
+	A_Opzioni_su_divise2 <- x
+	testData$Opzioni_su_divise2 <- x
 	
 	return(testData)
 }

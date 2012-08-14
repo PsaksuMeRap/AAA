@@ -25,3 +25,5 @@ source("./ayrton/lib/methods/idFactory/idFactory.R")
 source("./ayrton/lib/methods/portfolioFactory/portfolioFactory.R")
 # dipende da portfolioFactory
 source("./ayrton/lib/methods/portfoliosFactory/portfoliosFactory.R")
+# dipende da IdAyrton
+source("./ayrton/lib/methods/createEquityFromIsin/createEquityFromIsin.R")

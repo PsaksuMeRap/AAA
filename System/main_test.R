@@ -29,71 +29,32 @@ sys[["sourceCodeDir"]] <- getwd()
 
 rm(homeDir,sourceCodeDir)
 
-
+source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
+testRepository <- createExchangeRatesTestRepository() 
+repositories$exchangeRates <- testRepository
 ## -- fine setup 
 
 
 # base test suite
-source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
-testRepository <- createExchangeRatesTestRepository() 
-repositories$exchangeRates <- testRepository
+source("./base/unitTests/tests.R")
 
-
-
-## test globale
-dirs = c(
-		"./base/unitTests/t.lists",
-		"./base/unitTests/t.utilities",
-		"./base/unitTests/t.repositories/runit.repositoryExchangeRates",
-		"./base/unitTests/t.currency",
-		"./base/unitTests/t.money",
-		"./base/unitTests/t.position",
-		"./base/unitTests/t.positions",
-		"./base/unitTests/t.portfolio" ,
-		"./base/unitTests/t.toXXX",
-		"./base/unitTests/t.explode",
-		"./base/unitTests/t.identifyPositionsToExplode",
-		"./base/unitTests/t.explodePortfolioBy"
-)
 testsuite.lists <- defineTestSuite("Test globale",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
 warnings()
 
 
 # ayrton test suite
-
-## test globale
-dirs = c(
-		"./ayrton/unitTests/t.ayrtonPositions",
-		"./ayrton/unitTests/t.explode",				
-		"./ayrton/unitTests/t.idAyrton",		
-		"./ayrton/unitTests/t.idFactory",
-		"./ayrton/unitTests/t.portfolioFactory",
-		"./ayrton/unitTests/t.portfoliosFactory",
-		"./ayrton/unitTests/t.positionFactory",
-		"./ayrton/unitTests/t.positionsFactory",
-		"./ayrton/unitTests/t.securityFactory"
-)
+source("./ayrton/unitTests/tests.R")
 
 testsuite.lists <- defineTestSuite("Test ayrton",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
 warnings()
 
 
-# riskman test suite
-## test directories
-dirs = c(
-		"./riskman/unitTests/t.Apply",
-		"./riskman/unitTests/t.strings",
-		"./riskman/unitTests/t.constraintFactory",
-		"./riskman/unitTests/t.parser",
-		"./riskman/unitTests/t.check",
-		"./riskman/unitTests/t.testSuiteFactory",
-		"./riskman/unitTests/t.applyTestSuite",
-		"./riskman/unitTests/t.selector",
-		"./riskman/unitTests/t.selectionCriteriumFactory"
 
-)
+
+# riskman test suite
+source("./riskman/unitTests/tests.R")
 
 testsuite.lists <- defineTestSuite("Tests riskman",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)

@@ -31,19 +31,8 @@ testRepository <- createExchangeRatesTestRepository()
 repositories$exchangeRates <- testRepository
 
 
-## test directories
-dirs = c(
-		"./riskman/unitTests/t.Apply",
-		"./riskman/unitTests/t.strings",
-		"./riskman/unitTests/t.constraintFactory",
-		"./riskman/unitTests/t.parser",
-		"./riskman/unitTests/t.check",
-		"./riskman/unitTests/t.testSuiteFactory",
-		"./riskman/unitTests/t.applyTestSuite",
-		"./riskman/unitTests/t.selector",
-		"./riskman/unitTests/t.selectionCriteriumFactory"
-
-)
+# load the list of test in the variable dirs
+source("./riskman/unitTests/tests.R")
 
 testsuite.lists <- defineTestSuite("Tests riskman",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)

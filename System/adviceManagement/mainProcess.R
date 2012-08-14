@@ -79,8 +79,11 @@ while(Sys.time()<T) {
 }
 
 sink()
+print("opzioni su azioni: controlla che la quantity corrisponda al numero di opzioni e non al numero di azioni come da AAA")
 print("Aggiusta blFxCorrectionFactor!")
 print("In base importa i futuri tenendo conto del delivery date e price come in adviceManagement")
 print("Aggiusta calcolo prezzo opzioni su FX quando moneta NOK,SEK, ...")
 print("rimuovi postOffice dal setup del mailBox ...")
 print("Modificare 'Future EQ' in Future EquityIndex")
+print("fare in modo che quando viene inserita una nuova azione o opzione su azioni/indici o nuovo futuro viene aggiornato il dbEquity")
+print("createEquitySecurityFromIsin: se la tabella DBEquity contiene stesso ISIN ma valute diverse funzione blocca tutto")

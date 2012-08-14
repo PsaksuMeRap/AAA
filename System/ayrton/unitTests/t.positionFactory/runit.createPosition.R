@@ -276,3 +276,35 @@ test.shouldCreatePositionObbligazioni_convertibili <- function() {
 	deallocateTestRepositories("instruments")
 }
 
+
+test.shouldCreatePositionOpzioni_su_azioni <- function() {	
+	
+	# uses a default method
+	source("./base/unitTests/utilities/allocateTestRepositories.R")	
+	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
+	
+	# create the instrument repository	
+	allocateTestRepositories("instruments")
+	allocateTestRepositories("DBEquities")
+	
+	# create the origin
+	repository <- createRepositoryAyrtonPositions()
+	origin <- repository$Opzioni_su_azioni1
+	
+	securityEquityOption <- securityFactory(origin)
+	
+	positionEquityOption <- createPosition(securityEquityOption,origin)
+	
+	checkEquals(FALSE,TRUE)
+	
+	checkEquals(is(positionEquityOption)[1],"PositionOpzioni_su_azioni")
+	checkEquals(positionEquityOption@id,10.2)
+	checkEquals(positionEquityOption@accruedInterest@amount,new("Amount",NA_real_))	
+	checkEquals(positionEquityOption@quantity,new("NominalValue",amount=new("Amount",25000),currency=new("Currency","CHF")))
+	checkEquals(positionEquityOption@value,toMoney(26312.5,"CHF"))
+	
+	# restore initial conditions	
+	deallocateTestRepositories("instruments")
+	deallocateTestRepositories("DBEquities")
+}
+

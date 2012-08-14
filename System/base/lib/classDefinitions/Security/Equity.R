@@ -5,4 +5,3 @@
 
 
 setClass("Equity",representation(currency="Currency",name="character",id="Id"),contains="Security") 
-

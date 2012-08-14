@@ -34,7 +34,7 @@ source("./riskman/lib/methods/selectionCriteriumFactory/selectionCriteriumFactor
 source("./riskman/lib/methods/check/check.R")
 source("./riskman/lib/methods/selector/selector.R")
 source("./riskman/lib/methods/selector/filterByCriteria.R")
-
+source("./riskman/lib/methods/replaceDirective/replaceDirective.R")
 
 source("./riskman/lib/methods/parser/parser.R")
 source("./riskman/lib/methods/Apply/Apply.R")

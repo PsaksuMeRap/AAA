@@ -9,10 +9,10 @@
 ###############################################################################
 
 test.shouldCreateUnclassified <- function() {
-# uses a default method
+	## uses a default method
 	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
 	
-# create the origin
+	## create the origin
 	repository <- createRepositoryAyrtonPositions()
 	origin <- repository$equity1
 	class(origin) <- "Ayrton_Unclassified"
@@ -27,15 +27,15 @@ test.shouldCreateUnclassified <- function() {
 
 
 test.shouldCreateEquity <- function() {
-# uses a default method
+	## uses a default method
 	source("./base/unitTests/utilities/allocateTestRepositories.R")
 	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
 	
-# create the equity repository and instrument repository
+	## create the equity repository and instrument repository
 	allocateTestRepositories("equities")
 	allocateTestRepositories("instruments")
 	
-# create the origin
+	## create the origin
 	repository <- createRepositoryAyrtonPositions()
 	origin <- repository$equity1
 	class(origin) <- "Ayrton_Equity"
@@ -46,7 +46,7 @@ test.shouldCreateEquity <- function() {
 	checkEquals(equity@currency,new("Currency","CHF"))
 	checkEquals(equity@id,new("IdAyrton",idAAA=new("IdAAA_numeric",824),idStrumento=1))
 	
-# same test but with equity in EUR
+	## same test but with equity in EUR
 	origin <- repository$equity2
 	class(origin) <- "Ayrton_Equity"
 	
@@ -55,7 +55,7 @@ test.shouldCreateEquity <- function() {
 	checkEquals(equity@currency,new("Currency","EUR"))
 	
 	
-# restore initial conditions
+	## restore initial conditions
 	deallocateTestRepositories("equities")
 	deallocateTestRepositories("instruments")
 }
@@ -64,7 +64,7 @@ test.shouldCreateBond <- function() {
 	
 	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
 	
-# create the origin
+	## create the origin
 	repository <- createRepositoryAyrtonPositions()
 	origin <- repository$bond1
 	class(origin) <- "Ayrton_Bond"
@@ -78,10 +78,10 @@ test.shouldCreateBond <- function() {
 }
 
 test.shouldCreateAnticipoFisso <- function() {
-# this is valid for Anticipi fissi
+	## this is valid for Anticipi fissi
 	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
 	
-# create the origin
+	## create the origin
 	repository <- createRepositoryAyrtonPositions()
 	origin <- repository$Anticipi_fissi1
 	class(origin) <- "Ayrton_Anticipi_fissi"
@@ -95,10 +95,10 @@ test.shouldCreateAnticipoFisso <- function() {
 
 
 test.shouldCreateTimeDeposit <- function() {
-# this is valid for time deposits. The procedure is identical to that of Anticipi_fissi
+	## this is valid for time deposits. The procedure is identical to that of Anticipi_fissi
 	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
 	
-# create the origin
+	## create the origin
 	repository <- createRepositoryAyrtonPositions()
 	origin <- repository$Deposito_a_termine1
 	class(origin) <- "Ayrton_Depositi_a_termine"
@@ -115,10 +115,10 @@ test.shouldNULLForAccruedInterest <- function() {
 	
 	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
 	
-# create the equity repository and instrument repository
+	## create the equity repository and instrument repository
 	allocateTestRepositories("instruments")
 	
-# create the origin
+	## create the origin
 	repository <- createRepositoryAyrtonPositions()
 	origin <- repository$proRata1
 	class(origin) <- "Ayrton_Bond"
@@ -133,10 +133,10 @@ test.shouldCreateStrutturati_FI <- function() {
 	
 	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
 	
-# create the equity repository and instrument repository
+	## create the equity repository and instrument repository
 	allocateTestRepositories("instruments")
 	
-# create the origin
+	## create the origin
 	repository <- createRepositoryAyrtonPositions()
 	origin <- repository$strutturati_FI
 	class(origin) <- "Ayrton_Strutturati_FI"
@@ -152,30 +152,32 @@ test.shouldCreateOpzioni_su_azioni <- function() {
 	
 	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
 	
-# create the equity repository and instrument repository
+	## create the DBEquity repository and instrument repository
 	allocateTestRepositories("instruments")
+	allocateTestRepositories("DBEquities")
 	
-# create the origin
+	## create the origin
 	repository <- createRepositoryAyrtonPositions()
 	origin <- repository$Opzioni_su_azioni1
 	class(origin) <- "Ayrton_Opzioni_su_azioni"
 	
 	security <- createSecurity(origin)
 	checkEquals(class(security)[[1]],"Opzioni_su_azioni")
-	checkEquals(security@name,"-1000 Call Syngenta AG 17-02-12 Strike 290 Premio(5500 CHF)")
+	checkEquals(security@name,"-1000 / Call / Syngenta AG / 17-02-12 / Strike 290 / Premio(5500 CHF) / CH0011027469")
 	checkEquals(security@currency,new("Currency","CHF"))
-	checkEquals(security@expiryDate,character(0))
-	checkEquals(security@strike,numeric(0))	
+	checkEquals(security@expiryDate,"2012-02-17")
+	checkEquals(security@strike,290)
+	
 }
 
 test.shouldCreateFutures_EQ <- function() {
 	
 	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
 	
-# create the equity repository and instrument repository
+	## create the equity repository and instrument repository
 	allocateTestRepositories("instruments")
 	
-# create the origin
+	## create the origin
 	repository <- createRepositoryAyrtonPositions()
 	origin <- repository$Futures_EQ1
 	class(origin) <- "Ayrton_Futures_EQ"
@@ -192,7 +194,7 @@ test.shouldCreateObbligazioni_convertibili <- function() {
 	
 	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
 	
-	# create the origin
+	## create the origin
 	repository <- createRepositoryAyrtonPositions()
 	origin <- repository$Obbligazioni_convertibili
 	class(origin) <- "Ayrton_Obbligazioni_convertibili"

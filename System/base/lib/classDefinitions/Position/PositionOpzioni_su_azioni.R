@@ -5,5 +5,5 @@
 
 
 # crea la classe "PositionOpzioni_su_azioni"
-setClass("PositionOpzioni_su_azioni",representation(contractSize="numeric"),contains="Position")
+setClass("PositionOpzioni_su_azioni",representation(numberEquities="Quantity",contractSize="numeric"),contains="Position")
 
