@@ -13,11 +13,21 @@ setMethod("createSecurity",signature(origin="Ayrton_Futures_EQ"),
 			className <- substr(className,start=8,stop=nchar(className))
 			
 			underlying <- new("IndexEquity",name=origin@Nome,id=idAyrton)
-			
 
-			# the following slot is empty: deliveryDate="character"
+			# get the deliveryDate			
+			getDeliveryDate <- function(origin) {
+
+				result <- strsplit(origin@Nome,"/")
+				result <- result[[1]][[length(result[[1]])-1]]
+				stringLength <- nchar(result)
+				dateString <- substr(result,stringLength-10,stringLength-1)
+				deliveryDate <- format(strptime(dateString,format="%d-%m-%Y"),"%Y-%m-%d")
+				return(deliveryDate)
+			}
+			
 			security <- new(className,currency=new("Currency",origin@Moneta),
-					name=origin@Nome,id=idAyrton,underlying=underlying)
+					name=origin@Nome,id=idAyrton,underlying=underlying,
+					deliveryDate=getDeliveryDate(origin))
 			return(security)
 		}
 )

@@ -140,5 +140,8 @@ createRepositoryPositions <- function() {
 	proRataObbligazioni_convertibili <- positionFactory(repository$proRataObbligazioni_convertibili)
 	testData$proRataObbligazioni_convertibili <- positionFactory(repository$proRataObbligazioni_convertibili)
 	
+	Futures_EQ1 <- positionFactory(repository$Futures_EQ1)
+	testData$Futures_EQ1 <- positionFactory(repository$Futures_EQ1)
+	
 	return(testData)
 }
