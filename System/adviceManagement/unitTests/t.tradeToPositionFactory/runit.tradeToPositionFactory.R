@@ -155,6 +155,8 @@ test.shouldConvertOptionOnEquityTradeToPosition <- function() {
 	checkEquals(newPosition@value,toMoney(0.16*100*100,"CHF"))
 	checkEquals(newPosition@contractSize,100)
 	checkEquals(newPosition@security@strike,55)
+	checkEquals(newPosition@quantity,100)
+	checkEquals(newPosition@numberEquities,10000)
 	checkEquals(newPosition@security@expiryDate,"06/15/2012")
 }
 

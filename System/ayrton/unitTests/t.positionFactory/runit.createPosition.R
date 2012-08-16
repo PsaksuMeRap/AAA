@@ -295,16 +295,43 @@ test.shouldCreatePositionOpzioni_su_azioni <- function() {
 	
 	positionEquityOption <- createPosition(securityEquityOption,origin)
 	
-	checkEquals(FALSE,TRUE)
 	
 	checkEquals(is(positionEquityOption)[1],"PositionOpzioni_su_azioni")
 	checkEquals(positionEquityOption@id,10.2)
-	checkEquals(positionEquityOption@accruedInterest@amount,new("Amount",NA_real_))	
-	checkEquals(positionEquityOption@quantity,new("NominalValue",amount=new("Amount",25000),currency=new("Currency","CHF")))
-	checkEquals(positionEquityOption@value,toMoney(26312.5,"CHF"))
+	checkEquals(positionEquityOption@numberEquities,-1000)	
+	checkEquals(positionEquityOption@quantity,NA_real_)
+	checkEquals(positionEquityOption@contractSize,NA_real_)
+	checkEquals(positionEquityOption@value,toMoney(-5840,"CHF"))
 	
 	# restore initial conditions	
 	deallocateTestRepositories("instruments")
 	deallocateTestRepositories("DBEquities")
 }
+
+test.shouldCreatePositionOpzioni_su_divise <- function() {	
+	
+	# uses a default method
+	source("./base/unitTests/utilities/allocateTestRepositories.R")	
+	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
+	
+	# create the instrument repository	
+	allocateTestRepositories("instruments")
+	
+	## create the origin
+	origin <- repository$Opzioni_su_divise1
+	class(origin) <- "Ayrton_Opzioni_su_divise"
+	
+	securityOpzioniSuDivise <- securityFactory(origin)
+	
+	positionOpzioniSuDivise <- createPosition(securityOpzioniSuDivise,origin)
+	
+	checkEquals(is(positionEquityOption)[1],"PositionOpzioni_su_azioni")
+	checkEquals(positionOpzioniSuDivise@id,new("IdCharacter","PUT 17-08-12 Strike 1.295 EUR 125000 Premio(-8293.75 USD)"))	
+	checkEquals(positionOpzioniSuDivise@quantity,toMoney(125000,"EUR"))
+	checkEquals(positionOpzioniSuDivise@value,repositories$exchangeRates$exchange(toMoney(origin@ValoreMercatoMonetaCHF,"CHF"),new("Currency",origin@Moneta)))
+	
+	# restore initial conditions	
+	deallocateTestRepositories("instruments")
+}
+
 

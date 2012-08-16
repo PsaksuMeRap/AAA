@@ -217,8 +217,11 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Opzioni_su_azioni"),
 			newSecurity@optionType <- optionType
 			
 			# create the class "PositionOpzioni_su_azioni"
-			OptionOnEquityPosition <- new("PositionOpzioni_su_azioni",id=new("IdBloomberg",trade$Id_Bloomberg),security=newSecurity,
-					contractSize=contractSize,quantity=quantity,value=toMoney(quantity*contractSize*price,newSecurity@currency))
+			OptionOnEquityPosition <- new("PositionOpzioni_su_azioni",id=new("IdBloomberg",trade$Id_Bloomberg),
+					security=newSecurity,contractSize=contractSize,
+					quantity=quantity,
+					value=toMoney(quantity*contractSize*price,newSecurity@currency),
+					numberEquities=quantity*contractSize)
 			
 			return(OptionOnEquityPosition)
 		}
@@ -255,7 +258,7 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Opzioni_su_divise"),
 
 			# create the class "PositionOpzioni_su_divise"
 			optionOnFxPosition <- new("PositionOpzioni_su_divise",id=new("IdCharacter",id),security=newSecurity,
-					contractSize=1.0,quantity=quantity,value=value)
+					quantity=quantity,value=value)
 
 			return(optionOnFxPosition)
 		}

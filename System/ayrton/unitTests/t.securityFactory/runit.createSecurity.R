@@ -170,6 +170,27 @@ test.shouldCreateOpzioni_su_azioni <- function() {
 	
 }
 
+test.shouldCreateOpzioni_su_divise <- function() {
+	
+	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
+	
+	## create the DBEquity repository and instrument repository
+	allocateTestRepositories("instruments")
+	
+	## create the origin
+	repository <- createRepositoryAyrtonPositions()
+	origin <- repository$Opzioni_su_divise1
+	class(origin) <- "Ayrton_Opzioni_su_divise"
+	
+	security <- createSecurity(origin)
+	checkEquals(class(security)[[1]],"Opzioni_su_divise")
+	checkEquals(security@name,"PUT 17-08-12 Strike 1.295 EUR 125000 Premio(-8293.75 USD)")
+	checkEquals(security@currency,new("Currency","USD"))
+	checkEquals(security@expiryDate,"2012-08-17")
+	checkEquals(security@strike,1.295)
+	
+}
+
 test.shouldCreateFutures_EQ <- function() {
 	
 	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")

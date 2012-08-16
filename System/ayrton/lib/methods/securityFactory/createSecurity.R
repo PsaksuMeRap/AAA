@@ -32,6 +32,32 @@ setMethod("createSecurity",signature(origin="Ayrton_Futures_EQ"),
 		}
 )
 
+
+setMethod("createSecurity",signature(origin="Ayrton_Opzioni_su_divise"),
+		function(origin) {
+			
+			# this is a common slot of all instruments
+			idAyrton <- idFactory(origin)
+			
+			className <- class(origin)
+			className <- substr(className,start=8,stop=nchar(className))
+			
+			info <- getOptionParameters(origin)
+
+			security <- new(className,
+					currency=new("Currency",origin@Moneta),
+					name=origin@Nome,
+					id=new("IdCharacter",origin@Nome),
+					underlying=new("Currency",info$underlying),
+					expiryDate=info$expiryDate,
+					optionType=info$optionType,
+					strike=info[["strike"]]) 
+						
+			return(security)
+		}
+)
+
+
 setMethod("createSecurity",signature(origin="Ayrton_Opzioni_su_azioni"),
 		function(origin) {
 			
@@ -40,36 +66,23 @@ setMethod("createSecurity",signature(origin="Ayrton_Opzioni_su_azioni"),
 			
 			className <- class(origin)
 			className <- substr(className,start=8,stop=nchar(className))
-
-
-			
-			getOptionParameters <- function(name) {
-				tmp <- as.list(stringr::str_trim(strsplit(name,"/")[[1]]))
-				fieldNames <- c("quantity","optionType","name","expiryDate","strike","Premio","isin")
-				names(tmp) <- fieldNames
-
-				tmp[["expiryDate"]] <- format(strptime(tmp[["expiryDate"]],format="%d-%m-%y"),"%Y-%m-%d")
-				tmp[["strike"]] <- as.numeric(substr(tmp[["strike"]],7,nchar(tmp[["strike"]])))
-				tmp[["quantity"]] <- as.numeric(tmp[["quantity"]])
-				if (tolower(tmp[["optionType"]])=="put") tmp[["optionType"]] <- "Put" else tmp[["optionType"]] <- "Call"
-				return(tmp)
-			}
 	
-			parameters <- getOptionParameters(origin@Nome)
+			info <- getOptionParameters(origin)
 		
 			# identify the underlying equity
-			underlying <- createEquitySecurityFromIsin(parameters[["isin"]])
+			underlying <- createEquitySecurityFromIsin(info[["isin"]])
 			## adjust for the missing currency in case that the underlying equity is not in the DBEquity
 			if (identical(underlying@currency,new("Currency"))) underlying@currency <- new("Currency",origin@Moneta)
 		
 			security <- new(className,currency=new("Currency",origin@Moneta),
 					name=origin@Nome,id=idAyrton,underlying=underlying,
-					strike=parameters[["strike"]],expiryDate=parameters[["expiryDate"]],
-					optionType=parameters[["optionType"]])
+					strike=info[["strike"]],expiryDate=info[["expiryDate"]],
+					optionType=info[["optionType"]])
 			
 			return(security)
 		}
 )
+
 
 setMethod("createSecurity",signature(origin="Ayrton_Obbligazioni_convertibili"),
 		function(origin) {

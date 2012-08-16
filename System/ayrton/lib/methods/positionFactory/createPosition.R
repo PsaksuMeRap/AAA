@@ -203,13 +203,35 @@ setMethod("createPosition",signature(security="Opzioni_su_azioni",origin="Ayrton
 			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
 			value <- repositories$exchangeRates$exchange(value,security@currency)
 			position <- new("PositionOpzioni_su_azioni",id=id,security=security,
-					numberEquities=numberEquities,value=value)
+					numberEquities=numberEquities,quantity=NA_real_,
+					contractSize=NA_real_,value=value)
 			
 			return(position)
-			
 	
 		}
 )
+
+
+setMethod("createPosition",signature(security="Opzioni_su_divise",origin="AyrtonPosition"),
+		function(security,origin) {
+		
+			id <- security@id
+			
+			info <- getOptionParameters(origin)
+			
+			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
+			value <- repositories$exchangeRates$exchange(value,security@currency)
+			
+			position <- new("PositionOpzioni_su_divise",id=id,
+					security=security,
+					quantity=toMoney(origin@Saldo,info$underlying),
+					value=value)
+			
+			return(position)
+			
+		}
+)
+
 
 #setMethod("createPosition",signature(security="ETF_commodities",origin="AyrtonPosition"),
 #		function(security,origin) {
