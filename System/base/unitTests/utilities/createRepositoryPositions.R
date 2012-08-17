@@ -127,6 +127,12 @@ createRepositoryPositions <- function() {
 	
 	Opzioni_su_azioni2 <- positionFactory(repository$Opzioni_su_azioni2)
 	testData$Opzioni_su_azioni2 <- positionFactory(repository$Opzioni_su_azioni2)
+
+	Opzioni_su_azioni3 <- positionFactory(repository$Opzioni_su_azioni3)
+	testData$Opzioni_su_azioni3 <- positionFactory(repository$Opzioni_su_azioni3)
+	
+	Opzioni_su_azioni4 <- positionFactory(repository$Opzioni_su_azioni4)
+	testData$Opzioni_su_azioni4 <- positionFactory(repository$Opzioni_su_azioni4)
 	
 	Deposito_a_termine_acc1 <- positionFactory(repository$Deposito_a_termine_acc1)
 	testData$Deposito_a_termine_acc1 <- positionFactory(repository$Deposito_a_termine_acc1)	
@@ -142,6 +148,18 @@ createRepositoryPositions <- function() {
 	
 	Futures_EQ1 <- positionFactory(repository$Futures_EQ1)
 	testData$Futures_EQ1 <- positionFactory(repository$Futures_EQ1)
+	
+	Opzioni_su_divise1 <- positionFactory(repository$Opzioni_su_divise1)
+	testData$Opzioni_su_divise1 <- positionFactory(repository$Opzioni_su_divise1)
+	
+	Opzioni_su_divise2 <- positionFactory(repository$Opzioni_su_divise2)
+	testData$Opzioni_su_divise2 <- positionFactory(repository$Opzioni_su_divise2)
+
+	Opzioni_su_divise3 <- positionFactory(repository$Opzioni_su_divise3)
+	testData$Opzioni_su_divise3 <- positionFactory(repository$Opzioni_su_divise3)
+	
+	Opzioni_su_divise4 <- positionFactory(repository$Opzioni_su_divise4)
+	testData$Opzioni_su_divise4 <- positionFactory(repository$Opzioni_su_divise4)
 	
 	return(testData)
 }

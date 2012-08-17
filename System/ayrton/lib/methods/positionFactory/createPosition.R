@@ -64,12 +64,15 @@ setMethod("createPosition",signature(security="Futures_EQ",origin="AyrtonPositio
 
 setMethod("createPosition",signature(security="Equity",origin="AyrtonPosition"),
 		function(security,origin) {
-			id <- 10.2
+			
 			quantity <- origin@Saldo
 			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
 			value <- repositories$exchangeRates$exchange(value,security@currency)
-			position <- new("PositionEquity",id=id,security=security,
-					quantity=quantity,value=value)
+			position <- new("PositionEquity",
+					id=security@id,
+					security=security,
+					quantity=quantity,
+					value=value)
 			
 			return(position)
 		}
@@ -84,8 +87,12 @@ setMethod("createPosition",signature(security="Bond",origin="AyrtonPosition"),
 			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
 			value <- repositories$exchangeRates$exchange(value,security@currency)
 			accruedInterest <- new("AccruedInterest",toMoney(NA_real_,security@currency))
-			position <- new("PositionBond",id=id,security=security,
-					quantity=quantity,value=value,accruedInterest=accruedInterest)
+			position <- new("PositionBond",
+					id=security@id,
+					security=security,
+					quantity=quantity,
+					value=value,
+					accruedInterest=accruedInterest)
 			
 			return(position)
 		}
@@ -95,13 +102,18 @@ setMethod("createPosition",signature(security="Obbligazioni_convertibili",origin
 		function(security,origin) {
 			# the position will be completed with the accruedInterest after an
 			# appropriate call to the createPositions method
-			id <- 10.2
+		
 			quantity <- new("NominalValue",amount=new("Amount",origin@Saldo),currency=new("Currency",origin@Moneta))
 			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
 			value <- repositories$exchangeRates$exchange(value,security@currency)
 			accruedInterest <- new("AccruedInterest",toMoney(NA_real_,security@currency))
-			position <- new("PositionObbligazioni_convertibili",id=id,security=security,
-					quantity=quantity,value=value,accruedInterest=accruedInterest)
+			position <- new("PositionObbligazioni_convertibili",
+					id=security@id,
+					security=security,
+					quantity=quantity,
+					value=value,
+					accruedInterest=accruedInterest)
+			
 			return(position)
 		}
 )
@@ -112,13 +124,16 @@ setMethod("createPosition",signature(security="Anticipi_fissi",origin="AyrtonPos
 			# the position will be completed with the accruedInterest after an
 			# appropriate call to the createPositions method
 			
-			id <- 10.2
 			quantity <- new("NominalValue",amount=new("Amount",origin@Saldo),currency=new("Currency",origin@Moneta))
 			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
 			value <- repositories$exchangeRates$exchange(value,security@currency)
 			accruedInterest <- new("AccruedInterest",toMoney(NA_real_,security@currency))
-			position <- new("PositionAnticipi_fissi",id=id,security=security,
-					quantity=quantity,value=value,accruedInterest=accruedInterest)
+			position <- new("PositionAnticipi_fissi",
+					id=security@id,
+					security=security,
+					quantity=quantity,
+					value=value,
+					accruedInterest=accruedInterest)
 			
 			return(position)
 		}
@@ -129,13 +144,16 @@ setMethod("createPosition",signature(security="Depositi_a_termine",origin="Ayrto
 			# the position will be completed with the accruedInterest after an
 			# appropriate call to the createPositions method
 			
-			id <- 10.2
 			quantity <- new("NominalValue",amount=new("Amount",origin@Saldo),currency=new("Currency",origin@Moneta))
 			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
 			value <- repositories$exchangeRates$exchange(value,security@currency)
 			accruedInterest <- new("AccruedInterest",toMoney(NA_real_,security@currency))
-			position <- new("PositionDepositi_a_termine",id=id,security=security,
-					quantity=quantity,value=value,accruedInterest=accruedInterest)
+			position <- new("PositionDepositi_a_termine",
+					id=security@id,
+					security=security,
+					quantity=quantity,
+					value=value,
+					accruedInterest=accruedInterest)
 			
 			return(position)
 		}
@@ -144,7 +162,7 @@ setMethod("createPosition",signature(security="Depositi_a_termine",origin="Ayrto
 
 setMethod("createPosition",signature(security="Fondi_misti",origin="AyrtonPosition"),
 		function(security,origin) {
-			id <- 10.2
+			
 			quantity <- origin@Saldo
 		
 			split1 <- strsplit(security@name," ")
@@ -162,8 +180,12 @@ setMethod("createPosition",signature(security="Fondi_misti",origin="AyrtonPositi
 				
 			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
 			value <- repositories$exchangeRates$exchange(value,security@currency)
-			position <- new("PositionFondi_misti",id=id,security=security,
-					quantity=quantity,value=value,bondPart=bondPart,equityPart=equityPart)
+			position <- new("PositionFondi_misti",id=security@id,
+					security=security,
+					quantity=quantity,
+					value=value,
+					bondPart=bondPart,
+					equityPart=equityPart)
 			
 			return(position)
 		}
@@ -176,14 +198,18 @@ setMethod("createPosition",signature(security="Fondi_obbligazionari",origin="Ayr
 			fundsOpenCapital <- create_fundsDB()
 			ID_STRUMENTI <- sapply(fundsOpenCapital,slot,"id")
 			if (is.element(origin@ID_AAA,ID_STRUMENTI)) {
-				id <- 10.2
+
 				quantity <- origin@Saldo
 				value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
 				value <- repositories$exchangeRates$exchange(value,security@currency)
 				
 				accruedInterest <- new("AccruedInterest",toMoney(NA_real_,security@currency))
-				position <- new("PositionFondiObbligazionariOC",accruedInterest=accruedInterest,id=id,security=security,
-						quantity=quantity,value=value)
+				position <- new("PositionFondiObbligazionariOC",
+						accruedInterest=accruedInterest,
+						id=security@id,
+						security=security,
+						quantity=quantity,
+						value=value)
 				return(position)
 			} else {
 				callNextMethod(security,origin)
@@ -194,17 +220,19 @@ setMethod("createPosition",signature(security="Fondi_obbligazionari",origin="Ayr
 setMethod("createPosition",signature(security="Opzioni_su_azioni",origin="AyrtonPosition"),
 		function(security,origin) {
 			
-			id <- 10.2
-			
 			## ! for Opzioni_su_azioni this is not the number of contracts but it is the
 			## corresponding number of underlying equities
 			numberEquities <- origin@Saldo
 			
 			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
 			value <- repositories$exchangeRates$exchange(value,security@currency)
-			position <- new("PositionOpzioni_su_azioni",id=id,security=security,
-					numberEquities=numberEquities,quantity=NA_real_,
-					contractSize=NA_real_,value=value)
+			position <- new("PositionOpzioni_su_azioni",
+					id=security@id,
+					security=security,
+					numberEquities=numberEquities,
+					quantity=NA_real_,
+					contractSize=NA_real_,
+					value=value)
 			
 			return(position)
 	
@@ -214,15 +242,15 @@ setMethod("createPosition",signature(security="Opzioni_su_azioni",origin="Ayrton
 
 setMethod("createPosition",signature(security="Opzioni_su_divise",origin="AyrtonPosition"),
 		function(security,origin) {
-		
-			id <- security@id
 			
+			class(origin) <- "Ayrton_Opzioni_su_divise"
 			info <- getOptionParameters(origin)
 			
 			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
 			value <- repositories$exchangeRates$exchange(value,security@currency)
 			
-			position <- new("PositionOpzioni_su_divise",id=id,
+			position <- new("PositionOpzioni_su_divise",
+					id=security@id,
 					security=security,
 					quantity=toMoney(origin@Saldo,info$underlying),
 					value=value)

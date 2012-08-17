@@ -33,15 +33,31 @@ setMethod("getOptionParameters",signature(origin="Ayrton_Opzioni_su_divise"),
 setMethod("getOptionParameters",signature(origin="Ayrton_Opzioni_su_azioni"),
 		function(origin) {
 			tmp <- as.list(stringr::str_trim(strsplit(origin@Nome,"/")[[1]]))
-			fieldNames <- c("quantity","optionType","name","expiryDate","strike","Premio","isin")
+			fieldNames <- c("quantity","optionType","name","expiryDate","strike","Premio","isin","underlyingPrice")
 			names(tmp) <- fieldNames
 			
 			tmp[["expiryDate"]] <- format(strptime(tmp[["expiryDate"]],format="%d-%m-%y"),"%Y-%m-%d")
 			tmp[["strike"]] <- as.numeric(substr(tmp[["strike"]],7,nchar(tmp[["strike"]])))
 			tmp[["quantity"]] <- as.numeric(tmp[["quantity"]])
+			tmp[["underlyingPrice"]] <- as.numeric(tmp[["underlyingPrice"]])		
 			if (tolower(tmp[["optionType"]])=="put") tmp[["optionType"]] <- "Put" else tmp[["optionType"]] <- "Call"
 			return(tmp)
 			
 			}
 
+)
+
+setMethod("getOptionParameters",signature(origin="PositionOpzioni_su_azioni"),
+		function(origin) {
+			tmp <- as.list(stringr::str_trim(strsplit(origin@security@name,"/")[[1]]))
+			fieldNames <- c("quantity","optionType","name","expiryDate","strike","Premio","isin","underlyingPrice")
+			names(tmp) <- fieldNames
+			
+			tmp[["expiryDate"]] <- format(strptime(tmp[["expiryDate"]],format="%d-%m-%y"),"%Y-%m-%d")
+			tmp[["strike"]] <- as.numeric(substr(tmp[["strike"]],7,nchar(tmp[["strike"]])))
+			tmp[["quantity"]] <- as.numeric(tmp[["quantity"]])
+			tmp[["underlyingPrice"]] <- as.numeric(tmp[["underlyingPrice"]])		
+			if (tolower(tmp[["optionType"]])=="put") tmp[["optionType"]] <- "Put" else tmp[["optionType"]] <- "Call"
+			return(tmp)
+		}
 )

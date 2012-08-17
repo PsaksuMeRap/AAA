@@ -24,6 +24,7 @@ sourceCodeDir <- getwd()
 source("./base/lib/library.R")
 source("./ayrton/lib/library.R")
 source("./riskman/lib/library.R")
+source("./adviceManagement/lib/library.R")
 
 sys[["sourceCodeDir"]] <- getwd()
 
