@@ -163,7 +163,7 @@ test.shouldCreateOpzioni_su_azioni <- function() {
 	
 	security <- createSecurity(origin)
 	checkEquals(class(security)[[1]],"Opzioni_su_azioni")
-	checkEquals(security@name,"-1000 / Call / Syngenta AG / 17-02-12 / Strike 290 / Premio(5500 CHF) / CH0011027469")
+	checkEquals(security@name,"-1000 / Call / Syngenta AG / 17-02-12 / Strike 290 / Premio(5500 CHF) / CH0011027469 / 337.90")
 	checkEquals(security@currency,new("Currency","CHF"))
 	checkEquals(security@expiryDate,"2012-02-17")
 	checkEquals(security@strike,290)

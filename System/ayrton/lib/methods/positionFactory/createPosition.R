@@ -5,12 +5,15 @@
 
 setGeneric("createPosition",
 		useAsDefault=function(security,origin) {
-			id <- 10.2
+
 			quantity <- origin@Saldo
 			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
 			value <- repositories$exchangeRates$exchange(value,security@currency)
-			position <- new("Position",id=id,security=security,
-					quantity=quantity,value=value)
+			position <- new("Position",
+					id=security@id,
+					security=security,
+					quantity=quantity,
+					value=value)
 			
 			return(position)
 		}
@@ -27,12 +30,14 @@ setMethod("createPosition",signature(security="NULL",origin="AyrtonPosition"),
 
 setMethod("createPosition",signature(security="Conto_corrente",origin="AyrtonPosition"),
 		function(security,origin) {
-			id <- 10.2
-			quantity <- 1.0
+
 			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
 			value <- repositories$exchangeRates$exchange(value,security@currency)
-			position <- new("PositionConto_corrente",id=id,security=security,
-					quantity=quantity,value=value)
+			position <- new("PositionConto_corrente",
+					id=security@id,
+					security=security,
+					quantity=1.0,
+					value=value)
 			
 			return(position)
 			
@@ -41,7 +46,7 @@ setMethod("createPosition",signature(security="Conto_corrente",origin="AyrtonPos
 
 setMethod("createPosition",signature(security="Futures_EQ",origin="AyrtonPosition"),
 		function(security,origin) {
-			id <- 10.2
+
 			quantity <- origin@Saldo
 			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
 			value <- repositories$exchangeRates$exchange(value,security@currency)
@@ -54,8 +59,12 @@ setMethod("createPosition",signature(security="Futures_EQ",origin="AyrtonPositio
 				return(valueOnePoint)
 			}
 
-			position <- new("PositionFutures_EQ",id=id,security=security,
-					quantity=quantity,value=value,valueOnePoint=getValueOnePoint(security),
+			position <- new("PositionFutures_EQ",
+					id=security@id,
+					security=security,
+					quantity=quantity,
+					value=value,
+					valueOnePoint=getValueOnePoint(security),
 					indexLevel=origin@PrezzoMercato)
 		
 			return(position)

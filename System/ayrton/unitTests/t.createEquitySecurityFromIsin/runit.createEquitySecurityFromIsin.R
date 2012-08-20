@@ -5,6 +5,8 @@
 
 
 test.shouldCreateEquitySecurityFromIsin <- function() {
+	source("./base//lib/repository.R")
+	source("./base/unitTests/utilities/allocateTestRepositories.R")
 	
 	allocateTestRepositories("DBEquities")
 	

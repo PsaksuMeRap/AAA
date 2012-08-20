@@ -21,7 +21,7 @@ test.shouldCreateUnclassifiedPosition <- function() {
 	
 	position <- createPosition(unclassified,origin)
 	
-	checkEquals(position@id,10.2)	
+	checkEquals(position@id,position@id)	
 	checkEquals(position@quantity,100.3)
 	checkEquals(position@value,toMoney(new("Amount",123.55),new("Currency","CHF")))
 	
@@ -72,7 +72,7 @@ test.shouldCreatePositionEquity <- function() {
 	equityPosition <- createPosition(equitySecurity,origin)
 	
 	checkEquals(is(equityPosition)[1],"PositionEquity")
-	checkEquals(equityPosition@id,10.2)	
+	checkEquals(equityPosition@id,equityPosition@security@id)	
 	checkEquals(equityPosition@quantity,15)
 	checkEquals(equityPosition@value,toMoney(new("Amount",88205),new("Currency","CHF")))
 	
@@ -99,7 +99,7 @@ test.shouldCreatePositionFuture_EQ <- function() {
 	positionFutures_EQ <- createPosition(securityFuture_EQ,origin)
 	
 	checkEquals(is(positionFutures_EQ)[1],"PositionFutures_EQ")
-	checkEquals(positionFutures_EQ@id,10.2)	
+	checkEquals(positionFutures_EQ@id,positionFutures_EQ@security@id)	
 	checkEquals(positionFutures_EQ@quantity,-25)
 	checkEquals(positionFutures_EQ@valueOnePoint,toMoney(10,"CHF"))
 	checkEquals(positionFutures_EQ@value,toMoney(new("Amount",0),new("Currency","CHF")))
@@ -131,7 +131,7 @@ test.shouldCreatePositionBond <- function() {
 	bondPosition <- createPosition(bondSecurity,origin)
 	
 	checkEquals(is(bondPosition)[1],"PositionBond")
-	checkEquals(bondPosition@id,10.2)
+	checkEquals(bondPosition@id,bondPosition@security@id)
 	checkEquals(bondPosition@accruedInterest@amount,new("Amount",NA_real_))	
 	checkEquals(bondPosition@quantity,new("NominalValue",amount=new("Amount",100000),currency=new("Currency","EUR")))
 	checkEquals(bondPosition@value,repositories$exchangeRates$exchange(toMoney(124345.632268,"CHF"),new("Currency","EUR")))
@@ -158,7 +158,7 @@ test.shouldCreatePositionAnticipiFissi <- function() {
 	anticipiFissiPosition <- createPosition(anticipiFissiSecurity,origin)
 	
 	checkEquals(is(anticipiFissiPosition)[1],"PositionAnticipi_fissi")
-	checkEquals(anticipiFissiPosition@id,10.2)
+	checkEquals(anticipiFissiPosition@id,anticipiFissiPosition@security@id)
 	checkEquals(anticipiFissiPosition@accruedInterest@amount,new("Amount",NA_real_))	
 	checkEquals(anticipiFissiPosition@quantity,new("NominalValue",new("Money",amount=new("Amount",-1),currency=new("Currency","CHF"))))
 	
@@ -184,7 +184,7 @@ test.shouldCreatePositionDepositiAtermine <- function() {
 	depositoAtermine <- createPosition(depositoAtermine,origin)
 	
 	checkEquals(is(depositoAtermine)[1],"PositionDepositi_a_termine")
-	checkEquals(depositoAtermine@id,10.2)
+	checkEquals(depositoAtermine@id,depositoAtermine@security@id)
 	checkEquals(depositoAtermine@accruedInterest@amount,new("Amount",NA_real_))	
 	checkEquals(depositoAtermine@quantity,new("NominalValue",new("Money",amount=new("Amount",1),currency=new("Currency","CHF"))))
 	
@@ -211,7 +211,7 @@ test.shouldCreatePositionFondi_misti<- function() {
 	fondo_misto <- createPosition(fondo_misto,origin)
 	
 	checkEquals(is(fondo_misto)[1],"PositionFondi_misti")
-	checkEquals(fondo_misto@id,10.2)
+	checkEquals(fondo_misto@id,fondo_misto@security@id)
 	checkEquals(fondo_misto@equityPart,30)
 	checkEquals(fondo_misto@bondPart,70)
 	
@@ -238,7 +238,7 @@ test.shouldCreatePositionConto_corrente<- function() {
 	cc <- createPosition(cc,origin)
 	
 	checkEquals(is(cc)[1],"PositionConto_corrente")
-	checkEquals(cc@id,10.2)
+	checkEquals(cc@id,cc@security@id)
 	checkEquals(cc@quantity,1.0)
 	checkEquals(cc@value,repositories$exchangeRates$exchange(toMoney(39416.1310068511,"CHF"),new("Currency","EUR")))
 	
@@ -267,7 +267,7 @@ test.shouldCreatePositionObbligazioni_convertibili <- function() {
 	convertibleBondSecurity <- createPosition(convertibleBondSecurity,origin)
 	
 	checkEquals(is(convertibleBondSecurity)[1],"PositionObbligazioni_convertibili")
-	checkEquals(convertibleBondSecurity@id,10.2)
+	checkEquals(convertibleBondSecurity@id,convertibleBondSecurity@security@id)
 	checkEquals(convertibleBondSecurity@accruedInterest@amount,new("Amount",NA_real_))	
 	checkEquals(convertibleBondSecurity@quantity,new("NominalValue",amount=new("Amount",25000),currency=new("Currency","CHF")))
 	checkEquals(convertibleBondSecurity@value,toMoney(26312.5,"CHF"))
@@ -297,7 +297,7 @@ test.shouldCreatePositionOpzioni_su_azioni <- function() {
 	
 	
 	checkEquals(is(positionEquityOption)[1],"PositionOpzioni_su_azioni")
-	checkEquals(positionEquityOption@id,10.2)
+	checkEquals(positionEquityOption@id,positionEquityOption@security@id)
 	checkEquals(positionEquityOption@numberEquities,-1000)	
 	checkEquals(positionEquityOption@quantity,NA_real_)
 	checkEquals(positionEquityOption@contractSize,NA_real_)
@@ -318,6 +318,7 @@ test.shouldCreatePositionOpzioni_su_divise <- function() {
 	allocateTestRepositories("instruments")
 	
 	## create the origin
+	repository <- createRepositoryAyrtonPositions()
 	origin <- repository$Opzioni_su_divise1
 	class(origin) <- "Ayrton_Opzioni_su_divise"
 	
@@ -325,7 +326,7 @@ test.shouldCreatePositionOpzioni_su_divise <- function() {
 	
 	positionOpzioniSuDivise <- createPosition(securityOpzioniSuDivise,origin)
 	
-	checkEquals(is(positionEquityOption)[1],"PositionOpzioni_su_azioni")
+	checkEquals(is(positionOpzioniSuDivise)[1],"PositionOpzioni_su_divise")
 	checkEquals(positionOpzioniSuDivise@id,new("IdCharacter","PUT 17-08-12 Strike 1.295 EUR 125000 Premio(-8293.75 USD)"))	
 	checkEquals(positionOpzioniSuDivise@quantity,toMoney(125000,"EUR"))
 	checkEquals(positionOpzioniSuDivise@value,repositories$exchangeRates$exchange(toMoney(origin@ValoreMercatoMonetaCHF,"CHF"),new("Currency",origin@Moneta)))

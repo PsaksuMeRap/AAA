@@ -43,7 +43,7 @@ setMethod("Apply",
 			if (is.na(x) | is.null(x)) return(positions)
 			validDirectives <- c("Futures_EQ","Opzioni_su_azioni","Opzioni_su_divise")
 			if (any(!is.element(x,validDirectives))) stop(paste("Invalid ReplaceDirectiveString:\n",x))
-			
+browser()			
 			# replace all futures on equities with the corresponding position in 
 			# underlying and cash
 			for (directive in x) {
