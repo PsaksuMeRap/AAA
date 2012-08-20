@@ -32,6 +32,7 @@ setMethod("getOptionParameters",signature(origin="Ayrton_Opzioni_su_divise"),
 
 setMethod("getOptionParameters",signature(origin="Ayrton_Opzioni_su_azioni"),
 		function(origin) {
+
 			tmp <- as.list(stringr::str_trim(strsplit(origin@Nome,"/")[[1]]))
 			fieldNames <- c("quantity","optionType","name","expiryDate","strike","Premio","isin","underlyingPrice")
 			names(tmp) <- fieldNames
@@ -49,6 +50,7 @@ setMethod("getOptionParameters",signature(origin="Ayrton_Opzioni_su_azioni"),
 
 setMethod("getOptionParameters",signature(origin="PositionOpzioni_su_azioni"),
 		function(origin) {
+
 			tmp <- as.list(stringr::str_trim(strsplit(origin@security@name,"/")[[1]]))
 			fieldNames <- c("quantity","optionType","name","expiryDate","strike","Premio","isin","underlyingPrice")
 			names(tmp) <- fieldNames

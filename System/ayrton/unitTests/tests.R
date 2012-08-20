@@ -15,5 +15,5 @@ dirs = c(
 		"./ayrton/unitTests/t.positionFactory",
 		"./ayrton/unitTests/t.positionsFactory",
 		"./ayrton/unitTests/t.securityFactory",
-		"./base/unitTests/t.createEquitySecurityFromIsin"
+		"./ayrton/unitTests/t.createEquitySecurityFromIsin"
 )

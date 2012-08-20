@@ -30,7 +30,7 @@ setMethod("replaceDirective",
 setMethod("replaceDirective",
 		signature(position="PositionOpzioni_su_azioni"),
 		function(position) {
-		
+	
 			info <- getOptionParameters(position)
 			
 			## construct the equity leg of the position

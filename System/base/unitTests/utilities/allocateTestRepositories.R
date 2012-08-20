@@ -80,7 +80,7 @@ allocateTestRepositories <- function(repoName) {
 deallocateTestRepositories <- function(repoName) {
 	if (repoName=="DBEquities") {
 		if (exists("DBEquities_back",envir=repositories,inherits=FALSE)) {
-			eval(expression(instruments <- instruments_back),envir=repositories)
+			eval(expression(instruments <- DBEquities_back),envir=repositories)
 			rm("DBEquities_back",envir=repositories)
 		} else {
 			if (exists("DBEquities",envir=repositories,inherits=FALSE)) {
