@@ -60,7 +60,7 @@ setMethod("createSecurity",signature(origin="Ayrton_Opzioni_su_divise"),
 
 setMethod("createSecurity",signature(origin="Ayrton_Opzioni_su_azioni"),
 		function(origin) {
-			
+		
 			# this is a common slot of all instruments
 			idAyrton <- idFactory(origin)
 			

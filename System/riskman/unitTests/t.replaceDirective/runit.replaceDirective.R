@@ -97,7 +97,7 @@ test.shouldReplacePositionOpzioni_su_azioni <- function() {
 	result <- replaceDirective(positions[[1]])	
 	checkEquals(length(result),2)
 	
-	checkEquals(is(result[[1]],"PositionConto_corrente"),TRUE)
+	checkEquals(is(result[[1]],"PositionEquity"),TRUE)
 	checkEquals(result[[1]]@security@currency,new("Currency","CHF"))
 	checkEquals(result[[1]]@value,toMoney(-1000*337.90,"CHF"))	
 	
@@ -106,41 +106,41 @@ test.shouldReplacePositionOpzioni_su_azioni <- function() {
 	checkEquals(result[[2]]@value,toMoney(1000*290,"CHF"))
 	
 	
-	# for '-5000 / PUT / Credit Suisse Group Na / 21-12-12 / Strike 46 / Premio(112267 CHF)-5000 / PUT / Credit Suisse Group Na / 21-12-12 / Strike 46 / Premio(112267 CHF) / CH0012138530 / 17.71'
+	# for '-5000 / PUT / Credit Suisse Group Na / 21-12-12 / Strike 46 / Premio(112267 CHF) / CH0012138530 / 17.71'
 	result <- replaceDirective(positions[[2]])
 	checkEquals(length(result),2)
 	
-	checkEquals(is(result[[1]],"PositionConto_corrente"),TRUE)
-	checkEquals(result[[1]]@security@currency,new("Currency","EUR"))
-	checkEquals(result[[1]]@value,toMoney(-250000,"EUR"))	
+	checkEquals(is(result[[1]],"PositionEquity"),TRUE)
+	checkEquals(result[[1]]@security@currency,new("Currency","CHF"))
+	checkEquals(result[[1]]@value,toMoney(5000*17.71,"CHF"))	
 	
 	checkEquals(is(result[[2]],"PositionConto_corrente"),TRUE)
-	checkEquals(result[[2]]@security@currency,new("Currency","USD"))
-	checkEquals(result[[2]]@value,toMoney(250000*1.295,"USD"))
+	checkEquals(result[[2]]@security@currency,new("Currency","CHF"))
+	checkEquals(result[[2]]@value,toMoney(-5000*46,"CHF"))
 	
 	# for '-1000 / PUT / Syngenta AG / 17-02-12 / Strike 290 / Premio(5500 CHF) / CH0011027469 / 337.90'
 	result <- replaceDirective(positions[[3]])	
 	checkEquals(length(result),2)
 	
-	checkEquals(is(result[[1]],"PositionConto_corrente"),TRUE)
-	checkEquals(result[[1]]@security@currency,new("Currency","EUR"))
-	checkEquals(result[[1]]@value,toMoney(125000,"EUR"))	
+	checkEquals(is(result[[1]],"PositionEquity"),TRUE)
+	checkEquals(result[[1]]@security@currency,new("Currency","CHF"))
+	checkEquals(result[[1]]@value,toMoney(1000*337.90,"CHF"))	
 	
 	checkEquals(is(result[[2]],"PositionConto_corrente"),TRUE)
-	checkEquals(result[[2]]@security@currency,new("Currency","USD"))
-	checkEquals(result[[2]]@value,toMoney(-125000*1.295,"USD"))
+	checkEquals(result[[2]]@security@currency,new("Currency","CHF"))
+	checkEquals(result[[2]]@value,toMoney(-1000*290,"CHF"))
 	
 	
-	# for '-5000 / Call / Credit Suisse Group Na / 21-12-12 / Strike 46 / Premio(112267 CHF)-5000 / PUT / Credit Suisse Group Na / 21-12-12 / Strike 46 / Premio(112267 CHF) / CH0012138530 / 17.71'
+	# for '-5000 / Call / Credit Suisse Group Na / 21-12-12 / Strike 46 / Premio(112267 CHF) / CH0012138530 / 17.71'
 	result <- replaceDirective(positions[[4]])
 	checkEquals(length(result),2)
 	
-	checkEquals(is(result[[1]],"PositionConto_corrente"),TRUE)
-	checkEquals(result[[1]]@security@currency,new("Currency","EUR"))
-	checkEquals(result[[1]]@value,toMoney(250000,"EUR"))	
+	checkEquals(is(result[[1]],"PositionEquity"),TRUE)
+	checkEquals(result[[1]]@security@currency,new("Currency","CHF"))
+	checkEquals(result[[1]]@value,toMoney(-5000*17.71,"CHF"))	
 	
 	checkEquals(is(result[[2]],"PositionConto_corrente"),TRUE)
-	checkEquals(result[[2]]@security@currency,new("Currency","USD"))
-	checkEquals(result[[2]]@value,toMoney(-250000*1.295,"USD"))
+	checkEquals(result[[2]]@security@currency,new("Currency","CHF"))
+	checkEquals(result[[2]]@value,toMoney(5000*46,"CHF"))
 	
 }

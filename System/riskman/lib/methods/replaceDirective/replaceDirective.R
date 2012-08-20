@@ -68,7 +68,7 @@ setMethod("replaceDirective",
 					value=value2,
 					quantity=1.0)
 			
-			return(new("Positions",list(position,positionConto_corrente)))
+			return(new("Positions",list(equityPosition,positionConto_corrente)))
 			
 		}
 )
