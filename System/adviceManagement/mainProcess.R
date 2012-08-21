@@ -79,7 +79,6 @@ while(Sys.time()<T) {
 }
 
 sink()
-print("opzioni su azioni: controlla che la quantity corrisponda al numero di opzioni e non al numero di azioni come da AAA")
 print("Aggiusta blFxCorrectionFactor!")
 print("In base importa i futuri tenendo conto del delivery date e price come in adviceManagement")
 print("Aggiusta calcolo prezzo opzioni su FX quando moneta NOK,SEK, ...")
