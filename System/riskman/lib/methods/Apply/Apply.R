@@ -37,13 +37,16 @@ setMethod("Apply",
 
 setMethod("Apply",
 		signature(x="ReplaceDirective"),
-		function(x,positions) {
+		function(x,positions) {			
+			if (length(x)==0) return(positions)
+			
+			toDelete <- is.na(x) | is.null(x)
+			if (any(toDelete)) x <- x[!toDelete]
 			
 			if (length(x)==0) return(positions)
-			if (is.na(x) | is.null(x)) return(positions)
 			validDirectives <- c("Futures_EQ","Opzioni_su_azioni","Opzioni_su_divise")
 			if (any(!is.element(x,validDirectives))) stop(paste("Invalid ReplaceDirectiveString:\n",x))
-browser()			
+			
 			# replace all futures on equities with the corresponding position in 
 			# underlying and cash
 			for (directive in x) {
@@ -60,6 +63,7 @@ browser()
 				if (directive=="Opzioni_su_azioni") {
 					isDesiredPosition <- sapply(positions,is,"PositionOpzioni_su_azioni")
 					if (any(isDesiredPosition)) {
+
 						p1 <- positions[!isDesiredPosition]
 						p2 <- unlist(lapply(positions[isDesiredPosition],replaceDirective),recursive=FALSE)
 						positions <- new("Positions",c(p1,p2))

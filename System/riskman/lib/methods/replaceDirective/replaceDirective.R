@@ -17,7 +17,7 @@ setMethod("replaceDirective",
 			
 			# crate the corresponding money flow
 			currency <- position@security@currency
-			nameAndId <- paste(currency,"-",position@security@name,sep="")
+			nameAndId <- paste(currency,"- ",gsub(" / ","  ",position@security@name),sep="")
 			securityConto_corrente <- new("Conto_corrente",currency=currency,
 					name=nameAndId,id=new("IdCharacter",nameAndId))
 			positionConto_corrente <- new("PositionConto_corrente",security=securityConto_corrente,
@@ -32,10 +32,10 @@ setMethod("replaceDirective",
 		function(position) {
 	
 			info <- getOptionParameters(position)
-			
+
 			## construct the equity leg of the position
 			securityEquity <- as(position@security@underlying,"Equity")
-			securityEquity@name <- paste(securityEquity@name,"-",position@security@name)
+			securityEquity@name <- paste(securityEquity@name,"- ",gsub(" / ","  ",position@security@name))
 			
 			## compute the value of the position
 			currency <- position@security@currency
@@ -57,7 +57,7 @@ setMethod("replaceDirective",
 			
 			
 			# crate the corresponding money flow
-			nameAndId <- paste(currency,"-",position@security@name,sep="")
+			nameAndId <- paste(currency,"- ",gsub(" / ","  ",position@security@name),sep="")
 			securityConto_corrente <- new("Conto_corrente",
 					currency=currency,
 					name=nameAndId,
@@ -79,7 +79,7 @@ setMethod("replaceDirective",
 			
 			## construct the leg based on the underlying currency
 			currency <- position@security@underlying
-			nameAndId <- paste(currency,"-",position@security@name,sep="")
+			nameAndId <- paste(currency,"- ",position@security@name,sep="")
 			securityConto_corrente1 <- new("Conto_corrente",
 					currency=currency,
 					name=nameAndId,
@@ -103,7 +103,7 @@ setMethod("replaceDirective",
 			
 			## create the corresponding money flow
 			currency <- position@security@currency
-			nameAndId <- paste(currency,"-",position@security@name,sep="")
+			nameAndId <- paste(currency,"- ",position@security@name,sep="")
 			
 			securityConto_corrente2 <- new("Conto_corrente",
 					currency=currency,

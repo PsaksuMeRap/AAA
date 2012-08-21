@@ -7,10 +7,10 @@
 test.shouldApplyExplodeDirectiveString <- function() {
 	# exchange rates required for position initialization
 	# initialize exchange rates
-	repository <- repositories$exchangeRates
-	source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
-	testRepository <- createExchangeRatesTestRepository() 
-	repositories$exchangeRates <- testRepository
+#	repository <- repositories$exchangeRates
+#	source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
+#	testRepository <- createExchangeRatesTestRepository() 
+#	repositories$exchangeRates <- testRepository
 	# exchange rate USD-CHF: 0.9627
 	# exchange rate EUR-CHF: 1.33853808
 	
@@ -32,7 +32,7 @@ test.shouldApplyExplodeDirectiveString <- function() {
 	checkEquals(identical(result[[1]],positions[[2]]),TRUE)
 	checkEquals(identical(result[[2]],positions[[3]]),TRUE)
 	
-	if (!is.null(repository)) repositories$exchangeRates <- repository
+#	if (!is.null(repository)) repositories$exchangeRates <- repository
 }
 
 
@@ -62,9 +62,9 @@ test.shouldFailToApplyExplodeDirectiveString <- function() {
 	
 	
 	# reset the repositories in the original state
-	deallocateTestRepositories("exchangeRates")
-	deallocateTestRepositories("instruments")
-	deallocateTestRepositories("politicaInvestimento")
+#	deallocateTestRepositories("exchangeRates")
+#	deallocateTestRepositories("instruments")
+#	deallocateTestRepositories("politicaInvestimento")
 }
 
 
@@ -114,6 +114,6 @@ test.shouldapplyOneCheckStringOnPositions <- function() {
 	checkEquals(result$actualPercentage,"0.00%")
 	
 	# reset the repository in the original state
-	repositories$exchangeRates <- repository
+	#repositories$exchangeRates <- repository
 }
 

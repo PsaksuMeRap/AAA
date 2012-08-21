@@ -36,6 +36,9 @@ repositories$exchangeRates <- testRepository
 ## -- fine setup 
 
 
+
+
+
 # base test suite
 source("./base/unitTests/tests.R")
 
@@ -57,6 +60,7 @@ warnings()
 # riskman test suite
 source("./riskman/unitTests/tests.R")
 
+dirs <- "./riskman/unitTests/t.Apply"
 testsuite.lists <- defineTestSuite("Tests riskman",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
 warnings()
