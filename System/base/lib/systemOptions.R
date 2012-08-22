@@ -4,7 +4,16 @@
 ###############################################################################
 sys <- list()
 sys[["eq.tolerance"]] <- 10^-6
-sys[["allowedCurrencies"]] <- c("CHF","EUR","USD","AUD","NOK","GBP","INR","BRL","JPY","CAD","INR","NZD","CHr")
+sys[["allowedCurrencies"]] <- c("ATS",
+		"AUD","BEF","BRL","CAD",
+		"CHF","CNY","DEM","DKK",
+		"ESP","EUR","FIM","FRF",
+		"GBP","GRD","IDR","IEP",
+		"INR","ITL","JPY","MXN",
+		"NLG","NOK","NZD","PLN",
+		"PTE","RUB","SEK","SGD",
+		"TRY","USD","ZAR"
+)
 
 sys[["homeDir"]] <- homeDir
 sys[["sourceCodeDir"]] <- sourceCodeDir

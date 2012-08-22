@@ -78,3 +78,48 @@ test.update <- function() {
 	checkEquals(repo$rates[["ZAR"]],ZAR)
 
 }
+
+test.shouldComputePPMF <- function() {
+	
+	# check the idrchf exchange rate
+	idrAmount <- 1
+	idrchf <- 1.0135
+	chfAmount <- idrAmount*idrchf*repositories$exchangeRates$getPricePositionMultFactor("IDRCHF")
+	
+	# the data has been checked from www.ex.com
+	should.ex.com <- 0.00010135
+	
+	checkEquals(chfAmount,should.ex.com)
+	
+	# check the nokchf exchange rate
+	nokAmount <- 1
+	nokchf <- 16.3488
+	chfAmount <- nokAmount*nokchf*repositories$exchangeRates$getPricePositionMultFactor("NOKCHF")
+	
+	# the data has been checked from www.ex.com
+	should.ex.com <- 0.163488
+	checkEquals(chfAmount,should.ex.com)
+	
+	# check the nokidr exchange rate
+	nokAmount <- 1
+	nokchf <- 16.3488
+	idrchf <- 1.0135
+	
+	nokidr <- nokchf/idrchf 
+	idrAmount <- nokAmount*nokidr*repositories$exchangeRates$getPricePositionMultFactor("NOKIDR")
+	
+	# the data has been checked from www.ex.com
+	should.ex.com <- 1613.103
+	checkEquals(idrAmount,should.ex.com)
+	
+	# check the chfsek exchange rate
+	chfAmount <- 1
+	jpychf <- 1.2129
+	chfjpy <- 1/jpychf
+	jpyAmount <- chfAmount*chfjpy*repositories$exchangeRates$getPricePositionMultFactor("CHFJPY")
+	
+	# the data has been checked from www.ex.com
+	should.ex.com <- 82.447
+	checkEquals(round(jpyAmount,3),should.ex.com)
+}
+

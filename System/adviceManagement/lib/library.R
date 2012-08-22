@@ -49,4 +49,4 @@ source("./adviceManagement/lib/methods/mainMessageProcessing/mainMessageProcessi
 source("./adviceManagement/lib/methods/mainMessageProcessing/mainMessageProcessing_3_confirmationNoLock.R")
 source("./adviceManagement/lib/methods/mainMessageProcessing/mainMessageProcessing_3_confirmationWithLock.R")
 source("./adviceManagement/lib/methods/mainMessageProcessing/mainMessageProcessing_4_PostComplianceResult.R")
-
+source("./adviceManagement/lib/methods/bloombergPPMF/pricePositionMultFactors.R")
