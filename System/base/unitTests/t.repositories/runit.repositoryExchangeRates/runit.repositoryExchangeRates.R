@@ -110,7 +110,7 @@ test.shouldComputePPMF <- function() {
 	
 	# the data has been checked from www.ex.com
 	should.ex.com <- 1613.103
-	checkEquals(idrAmount,should.ex.com)
+	checkEquals(round(idrAmount,3),should.ex.com)
 	
 	# check the chfsek exchange rate
 	chfAmount <- 1

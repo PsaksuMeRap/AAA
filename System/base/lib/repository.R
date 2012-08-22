@@ -151,10 +151,10 @@ create_repositoryExchangeRates <- function(exchangeRatesDate) {
 	
 	# create the chfPositionMultFactors (from "CHr" the entries are not currencies!)
 	repository$chfMultFactors <- c(
-			"BRL"=1,"CAD"=1,"CNY"=1,"DEM"=0.01,"DKK"=0.01,"ESP"=0.01,
+			"ATS"=0.01,"AUD"=1,"BEF"=0.01,"BRL"=1,"CAD"=1,"DEM"=0.01,"DKK"=0.01,"ESP"=0.01,
 			"EUR"=1,"FIM"=0.01,"FRF"=0.01,"GBP"=1,"GRD"=1,"IDR"=0.0001,
 			"IEP"=1,"INR"=1,"ITL"=0.01,"JPY"=0.01,"MXN"=1,"NLG"=0.01,
-			"NOK"=0.01,"NZD"=1,"PLN"=1,"PTE"=1,"RUB"=1,"SEK"=0.01,
+			"NOK"=0.01,"NZD"=1,"PLN"=1,"PTE"=1,"SEK"=0.01,
 			"SGD"=1,"TRY"=1,"USD"=1,"ZAR"=1,"CHr"=1,"PLD"=1,"SLV"=1,
 			"XAG"=1,"XAU"=1
 			)
@@ -170,13 +170,10 @@ create_repositoryExchangeRates <- function(exchangeRatesDate) {
 		numeraire  <- substr(currCodes,4,6)
 		
 		if (numeraire==underlying) return(1.0)
-		if (numeraire=="CHF") return(repository$chfMultFactors[[currCodes]])
-		if (underlying=="CHF") return(1/repository$chfMultFactors[[paste(numeraire,"CHF",sep="")]])
+		if (numeraire=="CHF") return(repository$chfMultFactors[[underlying]])
+		if (underlying=="CHF") return(1/repository$chfMultFactors[[numeraire]])
 		
-		underlyingCHF <- paste(underlying,"CHF",sep="")
-		numeraireCHF  <- paste(numeraire,"CHF",sep="")
-		
-		crossMultFactor <- repository$chfMultFactors[[underlyingCHF]] / repository$chfMultFactors[[numeraireCHF]]
+		crossMultFactor <- repository$chfMultFactors[[underlying]] / repository$chfMultFactors[[numeraire]]
 		return(crossMultFactor)
 	}
 
@@ -258,6 +255,34 @@ create_testRepositoryExchangeRates <- function(exchangeRates.v) {
 		result <- new("Money",amount=amount * repository$rates[[fromCurrency]] / repository$rates[[toCurrency]],
 				currency=toCurrency)
 		return(result)
+	}
+	
+	# create the chfPositionMultFactors (from "CHr" the entries are not currencies!)
+	repository$chfMultFactors <- c(
+			"ATS"=0.01,"AUD"=1,"BEF"=0.01,"BRL"=1,"CAD"=1,"DEM"=0.01,"DKK"=0.01,"ESP"=0.01,
+			"EUR"=1,"FIM"=0.01,"FRF"=0.01,"GBP"=1,"GRD"=1,"IDR"=0.0001,
+			"IEP"=1,"INR"=1,"ITL"=0.01,"JPY"=0.01,"MXN"=1,"NLG"=0.01,
+			"NOK"=0.01,"NZD"=1,"PLN"=1,"PTE"=1,"SEK"=0.01,
+			"SGD"=1,"TRY"=1,"USD"=1,"ZAR"=1,"CHr"=1,"PLD"=1,"SLV"=1,
+			"XAG"=1,"XAU"=1
+	)
+	
+	
+	## create the function for the computation of the cross position multiplication factors
+	## use: see the corresponding test function
+	repository$getPricePositionMultFactor <- function(currCodes) {
+		## this function returns the price position multiplication factor
+		## for the currency pair xxxyyy
+		
+		underlying <- substr(currCodes,1,3)
+		numeraire  <- substr(currCodes,4,6)
+		
+		if (numeraire==underlying) return(1.0)
+		if (numeraire=="CHF") return(repository$chfMultFactors[[underlying]])
+		if (underlying=="CHF") return(1/repository$chfMultFactors[[numeraire]])
+		
+		crossMultFactor <- repository$chfMultFactors[[underlying]] / repository$chfMultFactors[[numeraire]]
+		return(crossMultFactor)
 	}
 	
 	repository$update <- function(values,dateTimes) {

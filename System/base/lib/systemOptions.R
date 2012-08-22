@@ -4,15 +4,18 @@
 ###############################################################################
 sys <- list()
 sys[["eq.tolerance"]] <- 10^-6
+
+# "CHr" will be removed and is deprecated (when removed please remove also in 
+# repository exchange rate, i.e. identical(toCurrency,new("Currency","CHr"))
 sys[["allowedCurrencies"]] <- c("ATS",
 		"AUD","BEF","BRL","CAD",
-		"CHF","CNY","DEM","DKK",
+		"CHF","DEM","DKK",
 		"ESP","EUR","FIM","FRF",
 		"GBP","GRD","IDR","IEP",
 		"INR","ITL","JPY","MXN",
 		"NLG","NOK","NZD","PLN",
-		"PTE","RUB","SEK","SGD",
-		"TRY","USD","ZAR"
+		"PTE","SEK","SGD",
+		"TRY","USD","ZAR","CHr"
 )
 
 sys[["homeDir"]] <- homeDir

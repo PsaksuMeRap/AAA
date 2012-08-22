@@ -129,17 +129,16 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Conto_corrente"),
 		
 			if (securityType=="FX Spot") {
 				
-				blFxCorrectionFactor <- function(IdBloomberg) {
-					return(1.0)
-				}
+				# identify the currency codes defining the trades, i.e. EURCHF (buy EUR vs CHF)
+				currCodes <- paste(info[["underlying"]],info[["numeraire"]],sep="") 
 			
 				if (is.null(trade$Confirmed_quantity)) {
 					# get the last price
 					priceId <- paste(trade$Id_Bloomberg,"LAST_PRICE",sep="__")
-					price <- blData[[priceId]]@value * blFxCorrectionFactor(trade$Id_Bloomberg)
+					price <- blData[[priceId]]@value * repositories$exchangeRates$getPricePositionMultFactor(currCodes)
 					tradeQuantity <- trade$Quantity
 				} else {
-					price <- trade$Confirmed_price
+					price <- trade$Confirmed_price * repositories$exchangeRates$getPricePositionMultFactor(currCodes)
 					tradeQuantity <- trade$Confirmed_quantity			
 				}
 					
