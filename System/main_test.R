@@ -74,13 +74,12 @@ if(.Platform$OS.type=="windows") {
 
 # source the test advisors
 source("./adviceManagement/unitTests/t.advisors/advisors.R")
-source(file.path(sys[["sourceCodeDir"]],"adviceManagement","lib","secrets.R"))
 
 ## test globale
 dirs = c(
 		"./adviceManagement/unitTests/t.archive",
-		#"./adviceManagement/unitTests/t.bloombergData",
-		#"./adviceManagement/unitTests/t.bloombergRequestHandler",
+		##"./adviceManagement/unitTests/t.bloombergData",
+		##"./adviceManagement/unitTests/t.bloombergRequestHandler",
 		"./adviceManagement/unitTests/t.confirmationNoLock",
 		"./adviceManagement/unitTests/t.confirmationWithLock",
 		"./adviceManagement/unitTests/t.detectRprocesses",
