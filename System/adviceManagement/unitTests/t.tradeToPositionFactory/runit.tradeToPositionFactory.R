@@ -180,7 +180,6 @@ test.shouldConvertOptionOnFxTradeToPosition <- function() {
 	checkEquals(class(newPosition@id)[[1]],"IdCharacter")
 	checkEquals(newPosition@quantity,toMoney(trade$Quantity,"EUR"))
 	checkEquals(newPosition@value,toMoney(as.numeric(trade$Amount),"CHF"))
-	checkEquals(newPosition@contractSize,1)
 }
 
 test.shouldConvertForwardOnFxTradeToPosition <- function() {

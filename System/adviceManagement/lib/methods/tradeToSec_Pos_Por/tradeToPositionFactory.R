@@ -56,11 +56,11 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Futures_EQ"),
 			
 			# update the newSecurity
 			newSecurity@deliveryDate <- deliveryDate
-			newSecurity@deliveryPrice <- toMoney(deliveryPrice,newSecurity@currency)
+			newSecurity@deliveryPrice <- deliveryPrice # error: cambia nome slot -> deliveryLevel
 			newSecurity@underlying <- new("IndexEquity",name=underlying,id=new("IdBloomberg",underlying))
 	
 			# create the class "PositionFutures_EQ"
-			futureEquityIndexPosition <- new("PositionFutures_EQ",valueOnePoint=valueOnePoint,id=new("IdBloomberg",trade$Id_Bloomberg),security=newSecurity,
+			futureEquityIndexPosition <- new("PositionFutures_EQ",valueOnePoint=toMoney(valueOnePoint,newSecurity@currency),id=new("IdBloomberg",trade$Id_Bloomberg),security=newSecurity,
 					quantity=quantity,value=toMoney(quantity*price*valueOnePoint,newSecurity@currency))
 			
 			return(futureEquityIndexPosition)
@@ -136,15 +136,15 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Conto_corrente"),
 				
 				# create the class "PositionConto_corrente"
 				# the underlying currency first
-				name <- paste(id,trade$Id_Bloomberg)
-				conto_corrente_xxx <- new("PositionConto_corrente",id=security@id,security=newSecurity,
+				name <- paste(newSecurity@id,trade$Id_Bloomberg)
+				conto_corrente_xxx <- new("PositionConto_corrente",id=newSecurity@id,security=newSecurity,
 						quantity=1.0,value=toMoney(sign(trade)*tradeQuantity,newSecurity@currency))
 				
 				# the numeraire currency then
 				name <- paste(info[["numeraire"]],"-",tolower(info[["numeraire"]])," ",trade$Id_Bloomberg,sep="")
 				id <- new("IdBloomberg",name)
 				
-				newSecurity <- new("Conto_corrente",currency=info[["numeraire"]],name=name,id=id) 
+				newSecurity <- new("Conto_corrente",currency=new("Currency",info[["numeraire"]]),name=name,id=id) 
 				conto_corrente_yyy <- new("PositionConto_corrente",id=id,security=newSecurity,
 						quantity=1.0,value=toMoney(-sign(trade)*tradeQuantity*price,info[["numeraire"]]))
 				
