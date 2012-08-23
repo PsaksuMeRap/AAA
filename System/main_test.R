@@ -74,6 +74,7 @@ if(.Platform$OS.type=="windows") {
 
 # source the test advisors
 source("./adviceManagement/unitTests/t.advisors/advisors.R")
+source(file.path(sys[["sourceCodeDir"]],"adviceManagement","lib","secrets.R"))
 
 ## test globale
 dirs = c(

@@ -129,27 +129,24 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Conto_corrente"),
 					tradeQuantity <- trade$Confirmed_quantity			
 				}
 					
-				# we create two conto_corrente positions with respect the "xxxyyy curncy" spot trade.
+				# we create two conto_corrente positions with respect the spot trade "xxxyyy curncy" .
 				# the first conto_corrente contains the amount in currency "xxx" while the second the 
 				# corresponding amount in "yyy" currency.
 				# the amount in currency "xxx" can be extracted directly from the trade$quantity field
 				
 				# create the class "PositionConto_corrente"
 				# the underlying currency first
-				currency <- new("Currency",info[["underlying"]])
-				id <- new("IdBloomberg",paste(currency,tolower(currency),sep="-"))
 				name <- paste(id,trade$Id_Bloomberg)
-				newSecurity <- new("Conto_corrente",currency=currency,name=name,id=id) 
-				conto_corrente_xxx <- new("PositionConto_corrente",id=new("IdBloomberg",id),security=newSecurity,
-						quantity=1.0,value=toMoney(sign(trade)*tradeQuantity,currency))
+				conto_corrente_xxx <- new("PositionConto_corrente",id=security@id,security=newSecurity,
+						quantity=1.0,value=toMoney(sign(trade)*tradeQuantity,newSecurity@currency))
 				
 				# the numeraire currency then
-				currency <- new("Currency",info[["numeraire"]])
-				id <- new("IdBloomberg",paste(currency,tolower(currency),sep="-"))
-				name <- paste(id,trade$Id_Bloomberg)
-				newSecurity <- new("Conto_corrente",currency=currency,name=name,id=id) 
-				conto_corrente_yyy <- new("PositionConto_corrente",id=new("IdBloomberg",id),security=newSecurity,
-						quantity=1.0,value=toMoney(-sign(trade)*tradeQuantity*price,currency))
+				name <- paste(info[["numeraire"]],"-",tolower(info[["numeraire"]])," ",trade$Id_Bloomberg,sep="")
+				id <- new("IdBloomberg",name)
+				
+				newSecurity <- new("Conto_corrente",currency=info[["numeraire"]],name=name,id=id) 
+				conto_corrente_yyy <- new("PositionConto_corrente",id=id,security=newSecurity,
+						quantity=1.0,value=toMoney(-sign(trade)*tradeQuantity*price,info[["numeraire"]]))
 				
 				# create a list of positions
 				positions <- new("Positions")

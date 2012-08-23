@@ -126,11 +126,11 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 		## while the quantity is expressed in the underlying currency
 		
 		info <- parseFxSpotId_Bloomberg(trade$Id_Bloomberg)
-		underlyingCurrency <- info[["underlying"]]
-		currency <- new("Currency",underlyingCurrency)
 
-		name <- paste(underlyingCurrency,tolower(underlyingCurrency),sep="-")
-		id=new("IdBloomberg",trade$Id_Bloomberg)
+		underlyingCurrency <- new("Currency",info[["underlying"]])
+
+		name <- paste(info[["underlying"]],"-",tolower(info[["underlying"]])," ",trade$Id_Bloomberg,sep="")
+		id <- new("IdBloomberg",name)
 		
 		# collect the last price (clean) 1200071
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"LAST_PRICE")
