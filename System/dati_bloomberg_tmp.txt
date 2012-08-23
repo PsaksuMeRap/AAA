@@ -1,0 +1,53 @@
+Equity
+
+blRequestHandler[["collect"]](trade$Id_Bloomberg,"LAST_PRICE")
+
+securityType=="Future index") {
+		
+		
+		# collect the ticker of the underlying
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"UNDL_SPOT_TICKER")
+		# collect the delivery date
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"FUT_DLV_DT_FIRST")
+		# collect the last price
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"LAST_PRICE")
+		# collect the value of one point
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"FUT_VAL_PT")
+
+Bond
+
+		# collect the last price (clean) 102.284
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"LAST_PRICE")
+		
+		# collect the accrued interest (%) to be added to the clean price 1.7
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"INT_ACC")
+		
+		# collect the rating AA
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"RTG_SP")	
+		
+		# collect the maturity 05/08/2013
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"MATURITY")	
+
+
+"FX Spot"
+		
+		# collect the last price (clean) 1200071
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"LAST_PRICE")
+
+"Option Equity"
+		# collect the ticker of the underlying NESN VX
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"OPT_UNDL_TICKER")
+		# collect the expiry date 06/05/2012
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"OPT_EXPIRE_DT")
+		# collect the strike price 55
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"OPT_STRIKE_PX")
+		# collect the last price 0.16
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"LAST_PRICE")
+		# collect the option type c
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"OPT_PUT_CALL")
+		# collect the option contract size 	100
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"OPT_CONT_SIZE")
+	
+"Option FX"
+
+
