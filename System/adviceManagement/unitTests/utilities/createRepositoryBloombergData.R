@@ -12,6 +12,7 @@ createRepositoryBloombergData <- function() {
 	blDataEntryEquity <- new("BloombergDataEntry",blId="UBSN VX Equity",fieldId="LAST_PRICE",value=11.08,dateLastUpdate=Sys.time())
 	
 	blData <- add(blDataEntryEquity,blData)
+	blDataEntryEquity <- new("BloombergDataEntry",blId="NOVN VX Equity",fieldId="LAST_PRICE",value=52.15,dateLastUpdate=Sys.time())
 	
 	# create the BloombergData for Future on equity index trade (SMI maturity June 2012)
 	blDataEntryFutureEquityIndex1 <- new("BloombergDataEntry",blId="SMM2 Index",fieldId="LAST_PRICE",value=5864,dateLastUpdate=Sys.time())
@@ -51,8 +52,29 @@ createRepositoryBloombergData <- function() {
 	blData <- add(blDataEntryBond3,blData)
 	blData <- add(blDataEntryBond4,blData)
 	
+	## another 2 bonds
+	blDataEntryBond1 <- new("BloombergDataEntry",blId="nesnvx 2 08/05/13 corp",fieldId="LAST_PRICE",value=102.238,dateLastUpdate=Sys.time())
+	blDataEntryBond2 <- new("BloombergDataEntry",blId="nesnvx 2 08/05/13 corp",fieldId="INT_ACC",value=1.2,dateLastUpdate=Sys.time())
+	blDataEntryBond3 <- new("BloombergDataEntry",blId="nesnvx 2 08/05/13 corp",fieldId="RTG_SP",value="AAA",dateLastUpdate=Sys.time())
+	blDataEntryBond4 <- new("BloombergDataEntry",blId="nesnvx 2 08/05/13 corp",fieldId="MATURITY",value="05/08/2013",dateLastUpdate=Sys.time())
 	
-	# create the BloombergData for opzioni_su_azioni nestlé maturity june 2012
+	blData <- add(blDataEntryBond1,blData)
+	blData <- add(blDataEntryBond2,blData)
+	blData <- add(blDataEntryBond3,blData)
+	blData <- add(blDataEntryBond4,blData)
+	
+	## new bond 
+	blDataEntryBond1 <- new("BloombergDataEntry",blId="nedwbk 4 03/12/13 corp",fieldId="LAST_PRICE",value=102.58,dateLastUpdate=Sys.time())
+	blDataEntryBond2 <- new("BloombergDataEntry",blId="nedwbk 4 03/12/13 corp",fieldId="INT_ACC",value=1.2,dateLastUpdate=Sys.time())
+	blDataEntryBond3 <- new("BloombergDataEntry",blId="nedwbk 4 03/12/13 corp",fieldId="RTG_SP",value="AAA",dateLastUpdate=Sys.time())
+	blDataEntryBond4 <- new("BloombergDataEntry",blId="nedwbk 4 03/12/13 corp",fieldId="MATURITY",value="05/08/2013",dateLastUpdate=Sys.time())
+	
+	blData <- add(blDataEntryBond1,blData)
+	blData <- add(blDataEntryBond2,blData)
+	blData <- add(blDataEntryBond3,blData)
+	blData <- add(blDataEntryBond4,blData)
+	
+	# create the BloombergData for opzioni_su_azioni nestlï¿½ maturity june 2012
 	blDataEntryOption1 <- new("BloombergDataEntry",blId="nesn sw 06/15/12 c55 equity",fieldId="LAST_PRICE",value=0.16,dateLastUpdate=Sys.time())
 	blDataEntryOption2 <- new("BloombergDataEntry",blId="nesn sw 06/15/12 c55 equity",fieldId="OPT_UNDL_TICKER",value="NESN VX",dateLastUpdate=Sys.time())
 	blDataEntryOption3 <- new("BloombergDataEntry",blId="nesn sw 06/15/12 c55 equity",fieldId="OPT_EXPIRE_DT",value="06/15/2012",dateLastUpdate=Sys.time())
@@ -68,7 +90,7 @@ createRepositoryBloombergData <- function() {
 	blData <- add(blDataEntryOption6,blData)
 	
 
-	# create the BloombergData for opzioni_su_azioni nestlé maturity september 2012
+	# create the BloombergData for opzioni_su_azioni nestlï¿½ maturity september 2012
 	blDataEntryOption1 <- new("BloombergDataEntry",blId="nesn sw 09/21/12 c58 equity",fieldId="LAST_PRICE",value=0.16,dateLastUpdate=Sys.time())
 	blDataEntryOption2 <- new("BloombergDataEntry",blId="nesn sw 09/21/12 c58 equity",fieldId="OPT_UNDL_TICKER",value="NESN VX",dateLastUpdate=Sys.time())
 	blDataEntryOption3 <- new("BloombergDataEntry",blId="nesn sw 09/21/12 c58 equity",fieldId="OPT_EXPIRE_DT",value="09/21/2012",dateLastUpdate=Sys.time())
