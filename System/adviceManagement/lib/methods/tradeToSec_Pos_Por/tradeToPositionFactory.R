@@ -108,20 +108,6 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Bond"),
 )
 
 
-parseFxSpotId_Bloomberg <- function(IdBloomberg) {
-	tmp <- strsplit(IdBloomberg,"\\s+")[[1]]
-	
-	# identify the two currencies codes, the underlying and the 
-	# numeraire
-	
-	currencyCodes <- toupper(tmp[1])
-	underlying <- substr(currencyCodes,1,3)
-	numeraire <- substr(currencyCodes,4,6)
-	
-	return(list(underlying=underlying,numeraire=numeraire))
-}
-
-
 setMethod("tradeToPositionFactory",signature(newSecurity="Conto_corrente"),
 		function(newSecurity,trade,blData) {
 			
@@ -130,6 +116,7 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Conto_corrente"),
 			if (securityType=="FX Spot") {
 				
 				# identify the currency codes defining the trades, i.e. EURCHF (buy EUR vs CHF)
+				info <- parseFxSpotId_Bloomberg(trade$Id_Bloomberg)
 				currCodes <- paste(info[["underlying"]],info[["numeraire"]],sep="") 
 			
 				if (is.null(trade$Confirmed_quantity)) {
@@ -148,8 +135,6 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Conto_corrente"),
 				# the amount in currency "xxx" can be extracted directly from the trade$quantity field
 				
 				# create the class "PositionConto_corrente"
-				info <- parseFxSpotId_Bloomberg(trade$Id_Bloomberg)
-				
 				# the underlying currency first
 				currency <- new("Currency",info[["underlying"]])
 				id <- new("IdBloomberg",paste(currency,tolower(currency),sep="-"))

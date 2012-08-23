@@ -89,13 +89,6 @@ test.shouldConvertBondTradeToPosition <- function() {
 	checkEquals(newPosition@accruedInterest,as(toMoney(0.017*trade$Quantity,"EUR"),"AccruedInterest"))
 }
 
-test.shouldParseFxSpotId_Bloomberg <- function() {
-	Id_Bloomberg <- "usdchf curncy"
-	result <- parseFxSpotId_Bloomberg(Id_Bloomberg)
-
-	checkEquals(result[["underlying"]],"USD")	
-	checkEquals(result[["numeraire"]],"CHF")
-}
 
 
 test.shouldConvertFXSpotTradeToPosition <- function() {

@@ -54,6 +54,14 @@ test.shouldConvertBondTradeToSecurity <- function() {
 	
 }
 
+test.shouldParseFxSpotId_Bloomberg <- function() {
+	Id_Bloomberg <- "usdchf curncy"
+	result <- parseFxSpotId_Bloomberg(Id_Bloomberg)
+	
+	checkEquals(result[["underlying"]],"USD")	
+	checkEquals(result[["numeraire"]],"CHF")
+}
+
 test.shouldConvertFxSpotTradeToSecurity <- function() {
 	# set the fileName from which to import trades
 	fileName <- "2012-05-09_14-22-24_Ortelli_fxSpotTrade_newAdvice.csv"

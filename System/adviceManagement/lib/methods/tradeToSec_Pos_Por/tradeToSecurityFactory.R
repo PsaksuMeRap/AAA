@@ -52,6 +52,19 @@ parseFxForwardName <- function(name) {
 					numeraire=numeraire,deliveryDate=deliveryDate))
 }
 
+parseFxSpotId_Bloomberg <- function(IdBloomberg) {
+	tmp <- strsplit(IdBloomberg,"\\s+")[[1]]
+	
+	# identify the two currencies codes, the underlying and the 
+	# numeraire
+	
+	currencyCodes <- toupper(tmp[1])
+	underlying <- substr(currencyCodes,1,3)
+	numeraire <- substr(currencyCodes,4,6)
+	
+	return(list(underlying=underlying,numeraire=numeraire))
+}
+
 tradeToSecurityFactory <- function(trade,blRequestHandler) {
 	# determine the security type
 	securityType <- trade$Security_type
@@ -109,15 +122,20 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 	
 	if (securityType=="FX Spot") {
 		
-		currency <- new("Currency",trade$Currency)
+		## by convention the currency is the numeraire (the second currency)
+		## while the quantity is expressed in the underlying currency
+		
+		info <- parseFxSpotId_Bloomberg(trade$Id_Bloomberg)
+		underlyingCurrency <- info[["underlying"]]
+		currency <- new("Currency",underlyingCurrency)
 
-		name <- paste(toupper(trade$Currency),tolower(trade$Currency),sep="-")
+		name <- paste(underlyingCurrency,tolower(underlyingCurrency),sep="-")
 		id=new("IdBloomberg",trade$Id_Bloomberg)
 		
 		# collect the last price (clean) 1200071
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"LAST_PRICE")
 		
-		newSecurity <- new("Conto_corrente",currency=currency,name=name,id=id) 
+		newSecurity <- new("Conto_corrente",currency=underlyingCurrency,name=name,id=id) 
 		return(newSecurity)
 	}
 	
