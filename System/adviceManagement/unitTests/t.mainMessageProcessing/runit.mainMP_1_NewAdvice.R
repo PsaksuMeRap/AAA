@@ -39,7 +39,7 @@ test.shouldProcessNewAdviceMessageWithoutLock <- function() {
 	# run the test				
 	mainMessageProcessing(message,postOffice)
 	
-	Sys.sleep(5)
+	Sys.sleep(8)
 	
 	# check the existence of a rejected file in archive/processed/rejected
 	rejectedFiles <- list.files(file.path(sys[["homeDir"]],"archive","processed","rejected"))

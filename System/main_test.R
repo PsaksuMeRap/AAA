@@ -95,8 +95,14 @@ dirs = c(
 		"./adviceManagement/unitTests/t.newAdviceWithLock",
 		"./adviceManagement/unitTests/t.postOffice",
 		"./adviceManagement/unitTests/t.saveLastObject",
-		"./adviceManagement/unitTests/t.sendStopToRProcess",
-		"./adviceManagement/unitTests/t.startBatchProcess",
+		"./adviceManagement/unitTests/t.sendStopToRProcess"
+)
+
+if (.Platform$OS.type=="windows") {
+	dirs = c(dirs,"./adviceManagement/unitTests/t.startBatchProcess")
+}
+
+dirs = c(dirs,
 		"./adviceManagement/unitTests/t.subConfirmationProcessing",
 		"./adviceManagement/unitTests/t.subNewAdviceProcessing",
 		"./adviceManagement/unitTests/t.tradeFactory",
