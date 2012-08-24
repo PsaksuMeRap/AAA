@@ -37,8 +37,6 @@ repositories$exchangeRates <- testRepository
 
 
 
-
-
 # base test suite
 source("./base/unitTests/tests.R")
 
@@ -108,6 +106,7 @@ dirs = c(
 		"./adviceManagement/unitTests/t.tradeToSecurityFactory",
 		"./adviceManagement/unitTests/t.zipResults"
 )
+
 
 testsuite.lists <- defineTestSuite("Test adviceManagement",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)

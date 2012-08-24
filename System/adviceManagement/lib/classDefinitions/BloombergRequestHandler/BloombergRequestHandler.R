@@ -45,12 +45,17 @@ create_BloombergRequestHandler <- function() {
 			if (any(isToRemove)) blRequestHandler[["requests"]] <<- blRequestHandler[["requests"]][!isToRemove]
 			
 		}
+		
+		# exit if blRequestHandler is empty, i.e. all data are up to date
+		if (length(blRequestHandler[["requests"]])==0) return(blData)
+		
 		# extract all securities (repeated if necessary)
 		blId <- extractFromList(blRequestHandler[["requests"]],"blId")
 		# extract all fields Id
 		fieldId <- extractFromList(blRequestHandler[["requests"]],"fieldId")
+
+		# excecute request by blId
 		
-		# excecute request by blId		
 		conn <- blpConnect()
 		for (security in unique(blId)) {
 			ok <- blId == security

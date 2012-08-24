@@ -10,9 +10,10 @@ createRepositoryBloombergData <- function() {
 	
 	# create the BloombergData for Equity trade
 	blDataEntryEquity <- new("BloombergDataEntry",blId="UBSN VX Equity",fieldId="LAST_PRICE",value=11.08,dateLastUpdate=Sys.time())
-	
 	blData <- add(blDataEntryEquity,blData)
+	
 	blDataEntryEquity <- new("BloombergDataEntry",blId="NOVN VX Equity",fieldId="LAST_PRICE",value=52.15,dateLastUpdate=Sys.time())
+	blData <- add(blDataEntryEquity,blData)
 	
 	# create the BloombergData for Future on equity index trade (SMI maturity June 2012)
 	blDataEntryFutureEquityIndex1 <- new("BloombergDataEntry",blId="SMM2 Index",fieldId="LAST_PRICE",value=5864,dateLastUpdate=Sys.time())
