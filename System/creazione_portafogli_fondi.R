@@ -10,14 +10,13 @@ library("tcltk")
 library("stringr")
 
 if(.Platform$OS.type=="windows") {
-	homeDir <- "C:/"
-	sourceCodeDir <- "\\\\usi/dfs/Utenti/O/ortellic/My Documents/workspace/AAA/System/"
+	homeDir <- "C:/riskman"
+	sourceCodeDir <- getwd()
 } else {
-	homeDir <- "/home/claudio/AAA/portfolios"
-	sourceCodeDir <- "/home/claudio/workspace/AAA/System"
+	homeDir <- "/home/claudio/riskman"
+	sourceCodeDir <- getwd()
 }
 
-setwd(sourceCodeDir)
 
 stringsAsFactors = FALSE
 repositories <- new.env()
