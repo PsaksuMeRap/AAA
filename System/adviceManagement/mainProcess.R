@@ -12,9 +12,6 @@ logger("Starting initialSetup ...")
 source(file.path(sourceCodeDir,"adviceManagement","lib","initialSetup.R"))
 loggerDone()
 
-# set the sleeping time in seconds
-sleepTime <- 10
-
 # create the PostOffice
 logger("Initializing PostOffice ...")
 postOffice <- new("PostOffice",absolutePath=sys[["homeDir"]])
@@ -36,7 +33,7 @@ loggerDone()
 # start monitoring input directory
 dayString <- format(Sys.time(), "%Y-%m-%d")
 stopHour <- "17:45:00"
-end <- strftime(paste(dayString,stopHour),format="%Y-%m-%d %H:%M:%S")
+end <- strptime(paste(dayString,stopHour),format="%Y-%m-%d %H:%M:%S")
 		
 # end <- Sys.time()+360
 while(Sys.time()<end) {
@@ -77,16 +74,17 @@ while(Sys.time()<end) {
 		
 	} # end if (length(existingFiles>0))
 	
-	logger(paste("Sleep",sleepTime,"seconds ..."))
-	Sys.sleep(sleepTime)
+	logger(paste("Sleep",sys[["sleepTime"]] ,"seconds ..."))
+	Sys.sleep(sys[["sleepTime"]] )
 	loggerDone()
 }
-
+logger(paste("Sys.time() is larger than",end,"\n\n"))
+logger("Closing program")
 sink()
-print("Aggiusta blFxCorrectionFactor!")
-print("In base importa i futuri tenendo conto del delivery date e price come in adviceManagement")
-print("Aggiusta calcolo prezzo opzioni su FX quando moneta NOK,SEK, ...")
-print("rimuovi postOffice dal setup del mailBox ...")
-print("Modificare 'Future EQ' in Future EquityIndex")
-print("fare in modo che quando viene inserita una nuova azione o opzione su azioni/indici o nuovo futuro viene aggiornato il dbEquity")
-print("createEquitySecurityFromIsin: se la tabella DBEquity contiene stesso ISIN ma valute diverse funzione blocca tutto")
+# quit(save="no")
+
+#print("In base importa i futuri tenendo conto del delivery date e price come in adviceManagement")
+#print("rimuovi postOffice dal setup del mailBox ...")
+#print("Modificare 'Future EQ' in Future EquityIndex")
+#print("fare in modo che quando viene inserita una nuova azione o opzione su azioni/indici o nuovo futuro viene aggiornato il dbEquity")
+#print("createEquitySecurityFromIsin: se la tabella DBEquity contiene stesso ISIN ma valute diverse funzione blocca tutto")
