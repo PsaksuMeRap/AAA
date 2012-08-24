@@ -34,8 +34,12 @@ isOk <- file.copy(from,to,recursive=TRUE)
 loggerDone()
 
 # start monitoring input directory
-T <- Sys.time()+360
-while(Sys.time()<T) {
+dayString <- format(Sys.time(), "%Y-%m-%d")
+stopHour <- "17:45:00"
+end <- strftime(paste(dayString,stopHour),format="%Y-%m-%d %H:%M:%S")
+		
+# end <- Sys.time()+360
+while(Sys.time()<end) {
 	logger("Looking for new files ...")
 	existingFiles <- list.files(path=file.path(sys[["homeDir"]],"postOffice","inbox"))
 	loggerDone()
