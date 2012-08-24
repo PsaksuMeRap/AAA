@@ -112,7 +112,7 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Conto_corrente"),
 		function(newSecurity,trade,blData) {
 			
 			securityType <- trade$Security_type
-		
+	
 			if (securityType=="FX Spot") {
 				
 				# identify the currency codes defining the trades, i.e. EURCHF (buy EUR vs CHF)

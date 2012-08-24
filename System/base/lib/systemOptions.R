@@ -18,6 +18,16 @@ sys[["allowedCurrencies"]] <- c("ATS",
 		"TRY","USD","ZAR","CHr"
 )
 
+sys[["tradedCurrencies"]] <- c(
+		"AUD","BRL","CAD",
+		"CHF","DKK","EUR",
+		"GBP","IDR","INR",
+		"JPY","MXN","NOK",
+		"NZD","PLN","SEK",
+		"SGD","TRY","USD",
+		"ZAR"
+)
+
 sys[["homeDir"]] <- homeDir
 sys[["sourceCodeDir"]] <- sourceCodeDir
 

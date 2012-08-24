@@ -30,23 +30,29 @@ downloadExchangeRatesFromBloomberg <- function(currencies) {
 	lastUpdateDateTime <- rep(lastUpdateDateTime,length(rates))
 	names(lastUpdateDateTime) <- currencies
 	
-	# adjust 
-	divideBYHundred <- c("JPY","DKK","SEK","NOK")
-	rates[divideBYHundred] <- rates[divideBYHundred] / 100
-	rates["IDR"] <- rates["IDR"] / 10000
-	
 	return(list(rates=rates,lastUpdateDateTime=lastUpdateDateTime))
 }
 
 updateFromBloomberg_exchangeRatesRepository <- function(currencies,saveIfNewer=FALSE) {
 	
-	if (missing(currencies)) currencies <- c("AUD","BRL","CAD","DKK","EUR","GBP","IDR",
-				"INR","JPY","MXN","NOK","NZD","PLN","SEK","SGD","TRY","USD","ZAR")
+	if (missing(currencies)) currencies <- sys[["tradedCurrencies"]]
+	
+	#remove CHF if present
+	currencies <- currencies[!currencies=="CHF"]
 	
 	data <- downloadExchangeRatesFromBloomberg(currencies)
 	
-	# create the exchangeRates repository		
-	updated <- repositories$exchangeRates$update(data$rates,data$lastUpdateDateTime)
+	# adjust the rates for the price multiplication factor (not necessary when downloading with API)
+	multFactors <- repositories$exchangeRates$chfMultFactors[currencies]
+	data$rates <- data$rates * multFactors
+	
+	# create the exchangeRates repository
+	currentRates <- repositories$exchangeRates$rates
+	currentLastUpdateDateTime <- repositories$exchangeRates$lastUpdateDateTime
+	currentRates[currencies] <- data$rates
+	currentLastUpdateDateTime[currencies] <- data$lastUpdateDateTime
+	
+	updated <- repositories$exchangeRates$update(currentRates,currentLastUpdateDateTime)
 	rm(data)
 	
 	directoryExchangeRates <- file.path(sys[["homeDir"]],"data","exchangeRates")
@@ -72,6 +78,26 @@ load_repositoryExchangeRate <- function(saveIfNewer=FALSE,directory=file.path(sy
 		assign("exchangeRates",tmpEnvir$object,pos=repositories)
 	}
 	
+}
+
+save_repositoryExchangeRate <- function(exchangeRatesRepo,directory=file.path(sys[["homeDir"]],"data","exchangeRates"),
+		fileName="exchangeRates.RData") {
 	
+	oldFileFullName <- file.path(directory,fileName)
+	fileExists <- file.exists(oldFileFullName)
+	
+	if (fileExists) {
+		dateTime <- format(Sys.time(),format="%Y-%m-%d_%H-%M-%S")
+		file.rename(from=oldFileFullName,to=file.path(directory,paste(dateTime,fileName,sep="_")))
+
+	}
+	
+	saveLastObject(object=exchangeRatesRepo,fileName=fileName,directory=directory)
+	
+}
+
+save_testRepositoryExchangeRate <- function() {
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","files","riskman","data","exchangeRates")
+	save_repositoryExchangeRate(repositories$exchangeRates,directory=directory)
 }
 
