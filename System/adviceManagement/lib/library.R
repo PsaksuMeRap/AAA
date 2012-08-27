@@ -16,6 +16,7 @@ source("./adviceManagement/lib/methods/repositories/repositoryPoliticaInvestimen
 source("./adviceManagement/lib/methods/repositories/repositoryDBEquities.R") 
 
 source("./adviceManagement/lib/methods/portfolio/loadPortfolio.R")
+source("./adviceManagement/lib/methods/portfolio/savePortfolio.R")
 source("./adviceManagement/lib/methods/tradeToSec_Pos_Por/tradeToSecurityFactory.R")
 source("./adviceManagement/lib/methods/tradeToSec_Pos_Por/tradeToPositionFactory.R")
 source("./adviceManagement/lib/methods/tradeToSec_Pos_Por/tradeToPositionsFactory.R")
