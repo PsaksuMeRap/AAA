@@ -18,7 +18,7 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Fondi_obbligazionari")
 				quantity <- sign(trade)*trade$Confirmed_quantity
 			}
 			
-			# create the class "PositionFondi_azionari"
+			# create the class "PositionFondi_obbligazionari"
 			equityPositions <- new("PositionFondi_obbligazionari",id=new("IdBloomberg",trade$Id_Bloomberg),security=newSecurity,
 					quantity=quantity,value=toMoney(quantity*price,newSecurity@currency))
 			
