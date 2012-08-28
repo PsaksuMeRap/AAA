@@ -14,8 +14,9 @@ create_fundsDB <- function() {
 			id=2256,owner="pippo210")
 	fixedIncome <- new("FundRecord",fundName="FIXED INCOME",securityClass="Fondi_obbligazionari",
 			id=825,owner="pippo76")
-	
-	fundsDB <- new("FundDB",list(globalEquity,globalEconomy,fixedIncome))
+	multistrategy <- new("FundRecord",fundName="MULTI STRATEGY",securityClass="Fondi_obbligazionari",
+			id=0,owner="pippo250")
+	fundsDB <- new("FundDB",list(globalEquity,globalEconomy,fixedIncome,multistrategy))
 	
 	return(fundsDB)
 }

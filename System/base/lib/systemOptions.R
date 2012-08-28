@@ -6,7 +6,7 @@ sys <- list()
 sys[["eq.tolerance"]] <- 10^-6
 
 # set the sleep time in seconds for new incoming message check
-sys[["sleepTime"]] <- 15
+sys[["sleepTime"]] <- 20
 
 # "CHr" will be removed and is deprecated (when removed please remove also in 
 # repository exchange rate, i.e. identical(toCurrency,new("Currency","CHr"))

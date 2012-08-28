@@ -80,6 +80,18 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 		newSecurity <- new("Equity",currency=currency,name=name,id=id) 
 		return(newSecurity)		
 	}
+	
+	if (securityType=="Fund equity") {
+		currency <- new("Currency",trade$Currency)
+		name <- trade$Security_name
+		id=new("IdBloomberg",trade$Id_Bloomberg)
+		
+		# collect the last price
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"LAST_PRICE")
+		
+		newSecurity <- new("Fondi_azionari",currency=currency,name=name,id=id) 
+		return(newSecurity)		
+	}
 
 	if (securityType=="Future index") {
 		currency <- new("Currency",trade$Currency)

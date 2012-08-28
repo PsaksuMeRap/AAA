@@ -1,0 +1,38 @@
+testSuiteName: Global Economy
+creationDate: 2010-12-29
+creator: Claudio Ortelli
+# testSuiteKind: general - specific
+testSuiteKind: specific
+testTarget: pippo250
+reportTo: claudio.ortelli@usi.ch
+outputDir: ./
+checkListStart:
+
+# 2) verifica che non ci siano posizioni diverse dalla liquidità che superino il 10% del NAV
+amount:>10% & security!:Conto_corrente,Depositi_a_termine ; = 0%
+
+# 3) verifica che non ci siano posizioni che superino il 20% del NAV
+# amount:>=20% ; = 0%
+
+# verifica che le posizioni che superano il 5% del NAV non superino complessivamente il 40% dello stesso
+amount:>5% & security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity,ETF_commodities,Futures_EQ ; <= 40%
+
+# 4) verifica che non ci siano altre monete al di fuori di EUR,CHF,USD,JPY,AUD,INR
+currency:USD,SEK,NZD,NOK,JPY,GBP,DKK,CHF,CAD,AUD ; >= 100%
+
+# 5) verifica che non si vada corto nelle monete consentite
+currency:EUR ; >= 0EUR
+currency:CHF ; >= 0CHF
+currency:USD ; >= 0USD
+currency:AUD ; >= 0AUD
+currency:NOK ; >= 0NOK
+currency:SEK ; >= 0SEK
+currency:NZD ; >= 0NZD
+currency:JPY ; >= 0JPY
+currency:GBP ; >= 0DKK
+currency:CAD ; >= 0CAD
+
+
+checkListEnd:
+externalSuiteFileName:
+

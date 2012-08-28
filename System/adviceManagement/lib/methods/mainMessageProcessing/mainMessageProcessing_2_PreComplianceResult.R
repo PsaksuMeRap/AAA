@@ -5,7 +5,7 @@
 
 
 setMethod("mainMessageProcessing",signature(message="PreComplianceResult"),
-		function(message) {
+		function(message,...) {
 			# this method assumes that the preComplianceResult file has been 
 			# 1) moved from postOffice/portfolio/pending to postOffice/incoming folder
 			# 2) copied to the archive/processed/accepted or rejected folder

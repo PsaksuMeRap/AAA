@@ -4,9 +4,9 @@
 ###############################################################################
 
 
-savePortfolio <- function(portfolio,portfolioSubDirectory="",directory=file.path(sys[["homeDir"]],"data","portfolios")) {
+savePortfolio <- function(portfolio,portfolioSubDirectory,directory=file.path(sys[["homeDir"]],"data","portfolios")) {
 	
-	if (portfolioSubDirectory!="") directory <- file.path(directory,portfolioSubDirectory)
+	if (!missing(portfolioSubDirectory)) directory <- file.path(directory,portfolioSubDirectory)
 	#oldFileFullName <- file.path(directory,portfolioSubDirectory,"portfolio.RData")
 	#fileExists <- file.exists(oldFileFullName)
 	
@@ -23,5 +23,5 @@ savePortfolio <- function(portfolio,portfolioSubDirectory="",directory=file.path
 saveTestPortfolio <- function(portfolio,portfolioSubDirectory) {
 	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","files","riskman","data","portfolios")
 	
-	savePortfolio(portfolio,portfolioSubDirectory,directory=directory)
+	savePortfolio(portfolio,portfolioSubDirectory=portfolioSubDirectory,directory=directory)
 }
