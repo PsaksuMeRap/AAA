@@ -33,6 +33,10 @@ rm(homeDir,sourceCodeDir)
 source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
 testRepository <- createExchangeRatesTestRepository() 
 repositories$exchangeRates <- testRepository
+
+# source the test advisors
+source("./adviceManagement/unitTests/t.advisors/advisors.R")
+
 ## -- fine setup 
 
 
@@ -70,8 +74,6 @@ if(.Platform$OS.type=="windows") {
 	library("Rbbg")
 }
 
-# source the test advisors
-source("./adviceManagement/unitTests/t.advisors/advisors.R")
 
 ## test globale
 dirs = c(

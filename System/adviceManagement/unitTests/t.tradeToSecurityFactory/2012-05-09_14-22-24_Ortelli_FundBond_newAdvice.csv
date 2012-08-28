@@ -1,2 +1,2 @@
 Portfolio,Buy_Sell,Id_Bloomberg,Security_name,Currency,Security_type,Moxy_Sec_type,Quantity,ISIN_Ticker,Price,Order_type,Amount,Broker,Limit_price,Limit_date
-MULTISTRATEGY,Sell,WDIMIXD Equity,WORLD INVEST-ABSOL RET-C,EUR,Fund equity,MUTUAL FUND,1000,LU0028583804,244.04,,244040,Moxy,,41149
+MULTISTRATEGY,Buy,lemwbda equity,LEMANIK SICAV-FL DUR-CP R €A,EUR,Fund bond,BOND FUND,500,LU0146153936,1178.911,,589455.5,UBS,,41149

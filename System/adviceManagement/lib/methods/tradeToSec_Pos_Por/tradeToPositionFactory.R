@@ -5,6 +5,49 @@
 
 setGeneric("tradeToPositionFactory",def=function(newSecurity,trade,blData) standardGeneric("tradeToPositionFactory"))
 
+setMethod("tradeToPositionFactory",signature(newSecurity="Fondi_obbligazionari"),
+		function(newSecurity,trade,blData) {
+			
+			if (is.null(trade$Confirmed_quantity)) {
+				priceId <- paste(trade$Id_Bloomberg,"LAST_PRICE",sep="__")
+				price <- blData[[priceId]]@value
+				
+				quantity <- sign(trade)*trade$Quantity
+			} else {
+				price <- trade$Confirmed_price
+				quantity <- sign(trade)*trade$Confirmed_quantity
+			}
+			
+			# create the class "PositionFondi_azionari"
+			equityPositions <- new("PositionFondi_obbligazionari",id=new("IdBloomberg",trade$Id_Bloomberg),security=newSecurity,
+					quantity=quantity,value=toMoney(quantity*price,newSecurity@currency))
+			
+			return(equityPositions)
+		}
+)
+
+
+setMethod("tradeToPositionFactory",signature(newSecurity="Fondi_azionari"),
+		function(newSecurity,trade,blData) {
+			
+			if (is.null(trade$Confirmed_quantity)) {
+				priceId <- paste(trade$Id_Bloomberg,"LAST_PRICE",sep="__")
+				price <- blData[[priceId]]@value
+				
+				quantity <- sign(trade)*trade$Quantity
+			} else {
+				price <- trade$Confirmed_price
+				quantity <- sign(trade)*trade$Confirmed_quantity
+			}
+			
+			# create the class "PositionFondi_azionari"
+			equityPositions <- new("PositionFondi_azionari",id=new("IdBloomberg",trade$Id_Bloomberg),security=newSecurity,
+					quantity=quantity,value=toMoney(quantity*price,newSecurity@currency))
+			
+			return(equityPositions)
+		}
+)
+
 setMethod("tradeToPositionFactory",signature(newSecurity="Equity"),
 		function(newSecurity,trade,blData) {
 		

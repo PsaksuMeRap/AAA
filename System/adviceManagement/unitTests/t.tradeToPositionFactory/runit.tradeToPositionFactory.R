@@ -4,6 +4,37 @@
 ###############################################################################
 
 
+test.shouldConvertFondi_azionariTradeToPosition <- function() {
+	
+	# create the BloombergData
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
+	source(file.path(directory,"createRepositoryBloombergData.R"))
+	blData <- createRepositoryBloombergData()
+	
+	# set the fileName from which to import trades
+	fileName <- "2012-05-09_14-22-24_Ortelli_FundEquity_newAdvice.csv"
+	messageFileName <- messageFileNameFactory(fileName)
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+	
+	# import trades
+	trades <- tradesFactory(messageFileName,directory)
+	trade <- trades[[1]]
+	
+	# create the blRequestHandler required from tradeToSecurityFactory
+	blRequestHandler <- create_BloombergRequestHandler()
+	
+	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)
+	
+	newPosition <- tradeToPositionFactory(newSecurity,trade,blData)
+	
+	checkEquals(class(newPosition)[[1]],"PositionFondi_azionari")
+	checkEquals(class(newPosition@id)[[1]],"IdBloomberg")
+	checkEquals(as.character(newPosition@id),"WDIMIXD Equity")
+	checkEquals(newPosition@value,toMoney(-1000*244.04,"EUR"))
+	
+}
+
+
 test.shouldConvertEquityTradeToPosition <- function() {
 	
 	# create the BloombergData
