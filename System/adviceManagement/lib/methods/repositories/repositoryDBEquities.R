@@ -6,7 +6,12 @@
 
 create_repositoryDBEquities <- function() {
 	
-	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","files","riskman","data","DBEquities")
+	if (exists("testFramework")) {
+		directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","files","riskman","data","DBEquities")
+	} else {
+		directory <- file.path(sys[["homeDir"]],"data","DBEquities")
+	}
+	
 	fileName <- "DBEquities.RData"
 	
 	# create the list containing the data.frame DBEquities

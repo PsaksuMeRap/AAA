@@ -8,7 +8,7 @@ setClass("Ayrton_Equity",contains="AyrtonPosition")
 
 setClass("Ayrton_Bond",contains="AyrtonPosition")
 
-setClass("Ayrton_Fondi_obbligazionari",contains="AyrtonPosition")
+setClass("Ayrton_Fondi_obbligazionari",contains="Ayrton_Bond")
 
 setClass("Ayrton_Fondi_mercato_monetario",contains="AyrtonPosition")
 

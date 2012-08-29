@@ -5,7 +5,7 @@
 
 setGeneric("tradeToPositionFactory",def=function(newSecurity,trade,blData) standardGeneric("tradeToPositionFactory"))
 
-setMethod("tradeToPositionFactory",signature(newSecurity="security"),
+setMethod("tradeToPositionFactory",signature(newSecurity="Security"),
 		function(newSecurity,trade,blData) {
 			
 			if (is.null(trade$Confirmed_quantity)) {
@@ -18,9 +18,11 @@ setMethod("tradeToPositionFactory",signature(newSecurity="security"),
 				quantity <- sign(trade)*trade$Confirmed_quantity
 			}
 			
-			
+		
 			# create the class position
-			position <- new("Position",id=new("IdBloomberg",trade$Id_Bloomberg),security=newSecurity,
+			className <- paste("Position",class(newSecurity)[[1]],sep="")
+			
+			position <- new(className,id=new("IdBloomberg",trade$Id_Bloomberg),security=newSecurity,
 					quantity=quantity,value=toMoney(quantity*price,newSecurity@currency))
 			
 			return(position)

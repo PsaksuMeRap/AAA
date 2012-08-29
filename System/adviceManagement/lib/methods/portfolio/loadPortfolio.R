@@ -11,9 +11,11 @@ loadPortfolio <- function(portfolioName="portfolio.RData",directory,portfolioId)
 	if (missing(directory)) directory <- file.path(sys[["homeDir"]],"data","portfolios")
 	if (!missing(portfolioId)) directory <- file.path(directory,portfolioId)
 	
+	tmpEnv <- new.env()
+
 	# load the portfolio
-	load(file.path(directory,portfolioName))
+	load(file.path(directory,portfolioName),envir=tmpEnv)
 	
-	return(object)
+	return(tmpEnv$object)
 }
 

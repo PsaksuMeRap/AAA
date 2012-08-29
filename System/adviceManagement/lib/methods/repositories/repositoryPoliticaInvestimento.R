@@ -5,8 +5,8 @@
 
 
 # create the ID and MonetaInvestimento vectors to populate the data.frame
-ID <- c("fixedIncome","globalEquity","globalEconomy","dynamicMultistrategy")
-MonetaInvestimento <- c("EUR","CHF","CHF","EUR")
+ID <- c("fixedIncome","globalEquity","globalEconomy","multistrategy","asymmetricEquity")
+MonetaInvestimento <- c("EUR","CHF","CHF","EUR","EUR")
 
 # create the data.frame
 politicaInvestimento.df <- data.frame(ID=ID,MonetaInvestimento=MonetaInvestimento)

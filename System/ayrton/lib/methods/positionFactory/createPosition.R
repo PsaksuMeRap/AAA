@@ -202,16 +202,16 @@ setMethod("createPosition",signature(security="Fondi_misti",origin="AyrtonPositi
 
 setMethod("createPosition",signature(security="Fondi_obbligazionari",origin="AyrtonPosition"),
 		function(security,origin) {
-				
+			
+			quantity <- origin@Saldo
+			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
+			value <- repositories$exchangeRates$exchange(value,security@currency)
+			
 			# identify if the fund is from OpenCapital
 			fundsOpenCapital <- create_fundsDB()
 			ID_STRUMENTI <- sapply(fundsOpenCapital,slot,"id")
+			
 			if (is.element(origin@ID_AAA,ID_STRUMENTI)) {
-
-				quantity <- origin@Saldo
-				value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
-				value <- repositories$exchangeRates$exchange(value,security@currency)
-				
 				accruedInterest <- new("AccruedInterest",toMoney(NA_real_,security@currency))
 				position <- new("PositionFondiObbligazionariOC",
 						accruedInterest=accruedInterest,
@@ -221,7 +221,14 @@ setMethod("createPosition",signature(security="Fondi_obbligazionari",origin="Ayr
 						value=value)
 				return(position)
 			} else {
-				callNextMethod(security,origin)
+				accruedInterest <- new("AccruedInterest",toMoney(0.0,security@currency))
+				position <- new("PositionFondi_obbligazionari",
+						accruedInterest=accruedInterest,
+						id=security@id,
+						security=security,
+						quantity=quantity,
+						value=value)
+				return(position)
 			}
 		}
 )

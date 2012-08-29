@@ -12,6 +12,7 @@ library("stringr")
 
 stringsAsFactors = FALSE
 repositories <- new.env()
+testFramework <- TRUE
 
 if (.Platform$OS.type=="windows") {
 	homeDir <- "C:/riskman"
@@ -103,16 +104,16 @@ dirs = c(
 if (.Platform$OS.type=="windows") {
 	dirs = c(dirs,"./adviceManagement/unitTests/t.startBatchProcess")
 }
-
+dirs=c()
 dirs = c(dirs,
-		"./adviceManagement/unitTests/t.subConfirmationProcessing",
-		"./adviceManagement/unitTests/t.subNewAdviceProcessing",
-		"./adviceManagement/unitTests/t.tradeFactory",
-		"./adviceManagement/unitTests/t.tradesToPositionsFactory",	
-		"./adviceManagement/unitTests/t.tradeToPositionFactory",
-		"./adviceManagement/unitTests/t.tradeToPositionsFactory",		
-		"./adviceManagement/unitTests/t.tradeToSecurityFactory",
-		"./adviceManagement/unitTests/t.zipResults"
+		#"./adviceManagement/unitTests/t.subConfirmationProcessing",
+		#"./adviceManagement/unitTests/t.subNewAdviceProcessing",
+		"./adviceManagement/unitTests/t.tradeFactory"
+		#"./adviceManagement/unitTests/t.tradesToPositionsFactory",	
+		#"./adviceManagement/unitTests/t.tradeToPositionFactory",
+		#"./adviceManagement/unitTests/t.tradeToPositionsFactory",		
+		#"./adviceManagement/unitTests/t.tradeToSecurityFactory",
+		#"./adviceManagement/unitTests/t.zipResults"
 )
 
 

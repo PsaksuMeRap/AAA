@@ -135,6 +135,21 @@ createRepositoryAyrtonPositions <- function() {
 	A_bond4 <- x
 	testData$bond4 <- x
 	
+	# create a valid  Fondi_obbligazionari con accruedInterst 0 
+	x <- new("AyrtonPosition")
+	x@Cliente <- "pippo172"
+	x@Strumento <- "O      "
+	x@Moneta <- "CHF"
+	x@Saldo <- 105
+	x@Nome <- "20201231 - 0% <3Y - LGT CF 2Y CHF 31-12-20"
+	x@ValoreMercatoMonetaCHF <- 227808
+	x@ID_AAA <- 363
+	x@ID_strumento <- 3
+	class(x) <- "AyrtonPosition"
+	
+	A_fondiObbligazionariNoAC <- x
+	testData$fondiObbligazionariNoAC <- x
+	
 	
 	# create a valid  Fondi_obbligazionari
 	x <- new("AyrtonPosition")

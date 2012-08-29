@@ -77,6 +77,34 @@ test.shouldCreateBond <- function() {
 	
 }
 
+test.shouldCreateFondi_obbligazionari <- function() {
+	
+	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
+	
+	## create the origin
+	repository <- createRepositoryAyrtonPositions()
+	origin <- repository$fondiObbligazionari
+	class(origin) <- "Ayrton_Fondi_obbligazionari"
+	
+	fondo <- createSecurity(origin)
+	
+	checkEquals(fondo@name,"20201231 - 0% <3Y - CB-Accent Lux Sicav - Fixed Income EUR 31-12-20")
+	checkEquals(fondo@id,new("IdAyrton",idAAA=new("IdAAA_numeric",825),idStrumento=3))
+	checkEquals(fondo@maturity,"2020-12-31")
+	
+	# the NoAc version (funds without the Oacc information and therefore with Oacc = 0)
+	origin <- repository$fondiObbligazionariNoAC
+	class(origin) <- "Ayrton_Fondi_obbligazionari"
+	
+	fondo <- createSecurity(origin)
+	
+	checkEquals(fondo@name,"20201231 - 0% <3Y - LGT CF 2Y CHF 31-12-20")
+	checkEquals(fondo@id,new("IdAyrton",idAAA=new("IdAAA_numeric",363),idStrumento=3))
+	checkEquals(fondo@maturity,"2020-12-31")
+
+}
+
+
 test.shouldCreateAnticipoFisso <- function() {
 	## this is valid for Anticipi fissi
 	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")

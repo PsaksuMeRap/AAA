@@ -3,6 +3,6 @@
 # Author: claudio
 ###############################################################################
 
-
-setClass("Fondi_obbligazionari",contains="Bond") 
+# crea la classe virtuale "Position"
+setClass("PositionFondi_obbligazionari",contains="PositionBond")
 

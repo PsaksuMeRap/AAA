@@ -40,7 +40,7 @@ test.shouldProcessOrder <- function() {
 	checkEquals(substr(file,32,nchar(file)),"2012-06-19_14-27-47_Ortelli_globalEconomy_newAdvice_log.txt")
 	
 	file <- list.files(file.path(sys[["homeDir"]],"postOffice","inbox"))
-	checkEquals(file,"2012-06-19_14-27-47_Ortelli_globalEconomy_preComplianceResult_1.zip")	
+	checkEquals(file,"2012-06-19_14-27-47_Ortelli_globalEconomy_preComplianceResult_0.zip")	
 	
 	file <- list.files(file.path(sys[["homeDir"]],"postOffice","globalEconomy"))
 	checkEquals(file,"pending")	
@@ -48,8 +48,8 @@ test.shouldProcessOrder <- function() {
 	file <- list.files(file.path(sys[["homeDir"]],"postOffice","globalEconomy","pending"))
 	checkEquals(file,character(0))	
 	
-	file <- list.files(file.path(sys[["homeDir"]],"archive","processed","accepted"))
-	checkEquals(file,"2012-06-19_14-27-47_Ortelli_globalEconomy_preComplianceResult_1.zip")
+	file <- list.files(file.path(sys[["homeDir"]],"archive","processed","rejected"))
+	checkEquals(file,"2012-06-19_14-27-47_Ortelli_globalEconomy_preComplianceResult_0.zip")
 	
 	unlink(file.path(sys[["homeDir"]],"archive"),recursive=TRUE)
 	unlink(file.path(sys[["homeDir"]],"log"),recursive=TRUE)
