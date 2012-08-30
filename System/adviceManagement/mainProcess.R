@@ -26,6 +26,7 @@ if (!dataDirExists) {
 		to <- file.path(homeDir,"data")
 		isOk <- file.copy(from,to,recursive=TRUE)
 		loggerDone()
+		rm(bloombergDirExists,from,to,isOk)
 	}
 	
 	checkFilesDirExists <- file.exists(file.path(homeDir,"data","checkFiles"))
@@ -35,6 +36,7 @@ if (!dataDirExists) {
 		to <- file.path(homeDir,"data")
 		isOk <- file.copy(from,to,recursive=TRUE)
 		loggerDone()
+		rm(checkFilesDirExists,from,to,isOk)
 	}	
 	
 	DBEquitiesDirExists <- file.exists(file.path(homeDir,"data","DBEquities"))
@@ -44,6 +46,7 @@ if (!dataDirExists) {
 		to <- file.path(homeDir,"data")
 		isOk <- file.copy(from,to,recursive=TRUE)
 		loggerDone()
+		rm(DBEquitiesDirExists,from,to,isOk)		
 	}		
 	
 	exchangeRatesDirExists <- file.exists(file.path(homeDir,"data","exchangeRates"))
@@ -53,6 +56,7 @@ if (!dataDirExists) {
 		to <- file.path(homeDir,"data")
 		isOk <- file.copy(from,to,recursive=TRUE)
 		loggerDone()
+		rm(exchangeRatesDirExists,from,to,isOk)
 	}
 	
 	instrumentsDirExists <- file.exists(file.path(homeDir,"data","instruments"))
@@ -62,6 +66,7 @@ if (!dataDirExists) {
 		to <- file.path(homeDir,"data")
 		isOk <- file.copy(from,to,recursive=TRUE)
 		loggerDone()
+		rm(instrumentsDirExists,from,to,isOk)
 	}
 	
 	portfoliosDirExists <- file.exists(file.path(homeDir,"data","portfolios"))
@@ -71,9 +76,8 @@ if (!dataDirExists) {
 		to <- file.path(homeDir,"data")
 		isOk <- file.copy(from,to,recursive=TRUE)
 		loggerDone()
+		rm(portfoliosDirExists,from,to,isOk)
 	}
-	rm(checkFilesDirExists,DBEquitiesDirExists,exchangeRatesDirExists,instrumentsDirExists,portfoliosDirExists)
-	rm(dataDirExists,from,to,isOk)
 }
 
 
