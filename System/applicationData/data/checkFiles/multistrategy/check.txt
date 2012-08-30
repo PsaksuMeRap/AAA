@@ -18,7 +18,7 @@ amount:>10% & security!:Conto_corrente,Depositi_a_termine ; = 0%
 amount:>5% & security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity,ETF_commodities,Futures_EQ ; <= 40%
 
 # 4) verifica che non ci siano altre monete al di fuori di EUR,CHF,USD,JPY,AUD,INR
-currency:USD,SEK,NZD,NOK,JPY,GBP,DKK,CHF,CAD,AUD ; >= 100%
+currency:EUR,USD,SEK,NZD,NOK,JPY,GBP,DKK,CHF,CAD,AUD ; >= 100%
 
 # 5) verifica che non si vada corto nelle monete consentite
 currency:EUR ; >= 0EUR
