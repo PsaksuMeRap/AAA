@@ -79,8 +79,8 @@ if(.Platform$OS.type=="windows") {
 ## test globale
 dirs = c(
 		"./adviceManagement/unitTests/t.archive",
-		##"./adviceManagement/unitTests/t.bloombergData",
-		##"./adviceManagement/unitTests/t.bloombergRequestHandler",
+		"./adviceManagement/unitTests/t.bloombergData",
+		"./adviceManagement/unitTests/t.bloombergRequestHandler",
 		"./adviceManagement/unitTests/t.confirmationNoLock",
 		"./adviceManagement/unitTests/t.confirmationWithLock",
 		"./adviceManagement/unitTests/t.detectRprocesses",
@@ -104,16 +104,16 @@ dirs = c(
 if (.Platform$OS.type=="windows") {
 	dirs = c(dirs,"./adviceManagement/unitTests/t.startBatchProcess")
 }
-dirs=c()
+dirs=c(		"./adviceManagement/unitTests/t.bloombergData")
 dirs = c(dirs,
-		#"./adviceManagement/unitTests/t.subConfirmationProcessing",
-		#"./adviceManagement/unitTests/t.subNewAdviceProcessing",
-		"./adviceManagement/unitTests/t.tradeFactory"
-		#"./adviceManagement/unitTests/t.tradesToPositionsFactory",	
-		#"./adviceManagement/unitTests/t.tradeToPositionFactory",
-		#"./adviceManagement/unitTests/t.tradeToPositionsFactory",		
-		#"./adviceManagement/unitTests/t.tradeToSecurityFactory",
-		#"./adviceManagement/unitTests/t.zipResults"
+		"./adviceManagement/unitTests/t.subConfirmationProcessing",
+		"./adviceManagement/unitTests/t.subNewAdviceProcessing",
+		"./adviceManagement/unitTests/t.tradeFactory",
+		"./adviceManagement/unitTests/t.tradesToPositionsFactory",	
+		"./adviceManagement/unitTests/t.tradeToPositionFactory",
+		"./adviceManagement/unitTests/t.tradeToPositionsFactory",		
+		"./adviceManagement/unitTests/t.tradeToSecurityFactory",
+		"./adviceManagement/unitTests/t.zipResults"
 )
 
 

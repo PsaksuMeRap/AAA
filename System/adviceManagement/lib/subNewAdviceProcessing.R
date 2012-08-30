@@ -10,6 +10,7 @@ args=commandArgs(trailingOnly = TRUE)
 if (length(args)==0) {
 	sourceCodeDir <- getwd()
 	csvTradesFileName <- "2012-06-19_14-27-47_Ortelli_globalEconomy_newAdvice.csv"
+	# csvTradesFileName <- "2012-08-30_18-05-58_Ortelli_fixedIncome_newAdvice.csv"
 	if (.Platform$OS.type=="windows") homeDir <- "C:/riskman" else homeDir <- "/home/claudio/riskman"
 } else {	
 	## args is now a list of character vectors
