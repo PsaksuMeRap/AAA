@@ -164,6 +164,22 @@ test.shouldCreatePositionFondiObbligazionari <- function() {
 	checkEquals(FundPosition@quantity,105)
 	checkEquals(FundPosition@value,toMoney(227808,"CHF"))
 	
+	
+	# now a Fund with accrued interests
+	origin <- repository$fondiObbligazionari
+	
+	FundSecurity <- securityFactory(origin)
+	
+	FundPosition <- createPosition(FundSecurity,origin)
+	
+	checkEquals(is(FundPosition)[1],"PositionFondi_obbligazionariOC")
+	checkEquals(FundPosition@id,FundPosition@security@id)
+	checkEquals(FundPosition@accruedInterest@amount,new("Amount",NA_real_))	
+	checkEquals(FundPosition@quantity,10000)
+	checkEquals(FundPosition@value,repositories$exchangeRates$exchange(toMoney(10300,"CHF"),new("Currency","EUR")))
+	
+	
+	
 	# restore initial conditions	
 	deallocateTestRepositories("instruments")
 }

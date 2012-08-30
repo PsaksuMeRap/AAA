@@ -61,7 +61,7 @@ source("./base/lib/classDefinitions/Position/PositionFondi_misti/PositionFondi_m
 source("./base/lib/classDefinitions/Position/PositionBond/AccruedInterest.R")
 source("./base/lib/classDefinitions/Position/PositionFondi_azionari/PositionFondi_azionari.R")
 source("./base/lib/classDefinitions/Position/PositionFondi_obbligazionari/PositionFondi_obbligazionari.R")
-source("./base/lib/classDefinitions/Position/PositionFondiObbligazionariOC/PositionFondiObbligazionariOC.R")
+source("./base/lib/classDefinitions/Position/PositionFondi_obbligazionariOC/PositionFondi_obbligazionariOC.R")
 source("./base/lib/classDefinitions/Position/PositionFutures_EQ.R")
 source("./base/lib/classDefinitions/Position/PositionConto_corrente.R")
 source("./base/lib/classDefinitions/Position/PositionOpzioni_su_azioni.R")

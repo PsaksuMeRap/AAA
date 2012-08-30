@@ -213,7 +213,7 @@ setMethod("createPosition",signature(security="Fondi_obbligazionari",origin="Ayr
 			
 			if (is.element(origin@ID_AAA,ID_STRUMENTI)) {
 				accruedInterest <- new("AccruedInterest",toMoney(NA_real_,security@currency))
-				position <- new("PositionFondiObbligazionariOC",
+				position <- new("PositionFondi_obbligazionariOC",
 						accruedInterest=accruedInterest,
 						id=security@id,
 						security=security,

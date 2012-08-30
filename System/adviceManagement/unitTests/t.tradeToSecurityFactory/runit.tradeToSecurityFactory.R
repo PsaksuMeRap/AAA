@@ -3,6 +3,25 @@
 # Author: claudio
 ###############################################################################
 
+test.shouldConvertFundBondTradeToSecurity <- function() {
+	# set the fileName from which to import trades
+	fileName <- "2012-05-09_14-22-24_Ortelli_FundBond_newAdvice.csv"
+	messageFileName <- messageFileNameFactory(fileName)
+	
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+	blRequestHandler <- create_BloombergRequestHandler()
+	
+	# import trades
+	trades <- tradesFactory(messageFileName,directory)
+	trade <- trades[[1]]
+	
+	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)	
+	checkEquals(class(newSecurity)[[1]],"Fondi_obbligazionari")
+	checkEquals(newSecurity@name,"20201231 - 0% >3Y - LEMANIK SICAV-FL DUR-CP R")	
+	checkEquals(newSecurity@maturity,"2020-12-31")	
+	checkEquals(newSecurity@currency,new("Currency","EUR"))	
+}
+
 
 test.shouldConvertFundEquityTradeToSecurity <- function() {
 	# set the fileName from which to import trades

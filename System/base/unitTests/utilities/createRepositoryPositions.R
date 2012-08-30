@@ -50,8 +50,8 @@ createRepositoryPositions <- function() {
 	testData$bond4 <- positionFactory(repository$bond4)
 
 	# create a valid AccruedInterest di Fondi_obbligazionari con 0 AC
-	fondiObbligazionariNoAc <- positionFactory(repository$fondiObbligazionariNoAc)
-	testData$fondiObbligazionariNoAc <- positionFactory(repository$fondiObbligazionariNoAc)
+	fondiObbligazionariNoAC <- positionFactory(repository$fondiObbligazionariNoAC)
+	testData$fondiObbligazionariNoAC <- positionFactory(repository$fondiObbligazionariNoAC)
 	
 	# create a valid AccruedInterest di Fondi_obbligazionari
 	fondiObbligazionari <- positionFactory(repository$fondiObbligazionari)

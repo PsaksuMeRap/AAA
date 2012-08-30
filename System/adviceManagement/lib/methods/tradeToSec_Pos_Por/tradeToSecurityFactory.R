@@ -93,6 +93,19 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 		return(newSecurity)		
 	}
 
+	if (securityType=="Fund bond") {
+		currency <- new("Currency",trade$Currency)
+		name <- paste(sysAyrton[["Fondi_obbligazionari"]][["preNameString"]],trade$Security_name,sep=" - ")
+		id=new("IdBloomberg",trade$Id_Bloomberg)
+		
+		# collect the last price
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"LAST_PRICE")
+		
+		newSecurity <- new("Fondi_obbligazionari",currency=currency,name=name,id=id,
+				maturity=sysAyrton[["Fondi_obbligazionari"]][["maturity"]]) 
+		return(newSecurity)		
+	}
+	
 	if (securityType=="Future index") {
 		currency <- new("Currency",trade$Currency)
 		name <- trade$Security_name

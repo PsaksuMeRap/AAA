@@ -129,11 +129,11 @@ setMethod("createSecurity",signature(origin="Ayrton_Fondi_obbligazionari"),
 		function(origin) {
 			# se si tratta di accrued interest non considerarli ora,
 			# verranno considerati solo nella costruzione delle posizioni
-			
+		
 			if (origin@Strumento=="Oacc") return(NULL)
 			
 			# this is a common slot of all instruments
-			idAyrton <- idAyrton <- idFactory(origin)
+			idAyrton <- idFactory(origin)
 			
 			# extract the maturity from the name
 			maturity=getMaturity(origin)
@@ -185,17 +185,6 @@ setMethod("createSecurity",signature(origin="Ayrton_Depositi_a_termine"),
 		}
 )
 
-setMethod("createSecurity",signature(origin="Ayrton_Fondi_obbligazionari"),
-		function(origin) {
-			# se si tratta di accrued interest non considerarli ora,
-			# verranno considerati solo nella costruzione delle posizioni
-			
-			if (origin@Strumento=="Oacc") return(NULL)
-			
-			callNextMethod()
-			
-		}
-)
 
 setMethod("createSecurity",signature(origin="Ayrton_Strutturati_FI"),
 		function(origin) {

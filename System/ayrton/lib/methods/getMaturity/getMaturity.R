@@ -6,8 +6,6 @@
 
 setGeneric("getMaturity",def=function(origin,...) standardGeneric("getMaturity"))
 
-
-
 setMethod("getMaturity",signature(origin="Ayrton_Bond"),
 		function(origin) {
 			# extract the maturity
