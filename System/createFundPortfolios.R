@@ -24,6 +24,7 @@ repositories <- new.env()
 source("./base/lib/library.R")
 source("./ayrton/lib/library.R")
 source("./riskman/lib/library.R")
+source("./adviceManagement/lib/library.R")
 ## -- fine setup
 
 ## -- inizio procedura salvataggio portafogli - parte generale
@@ -73,7 +74,7 @@ if (FALSE) {
 for (portfolio in fundPortfolios) {
 	portfolioName <- mappingPippoPortfolio[[portfolio@owner]]
 	if (!file.exists(file.path(homeDir,portfolioName))) dir.create(file.path(homeDir,portfolioName)) 
-	save(portfolio,file=file.path(homeDir,portfolioName,"portfolio.RData"))
+	savePortfolio(portfolio,portfolioSubDirectory=portfolioName,directory=homeDir)
 }
 
 # zip the portfolio's directories
