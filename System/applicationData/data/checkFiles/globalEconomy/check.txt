@@ -1,0 +1,32 @@
+testSuiteName: Global Economy
+creationDate: 2010-12-29
+creator: Claudio Ortelli
+# testSuiteKind: general - specific
+testSuiteKind: specific
+testTarget: pippo210
+reportTo: claudio.ortelli@usi.ch
+outputDir: ./
+checkListStart:
+# 1) verifica che il fondo sia investito almeno il 50% in CHF
+currency!:CHF ; <=50%
+
+# 2) verifica che non ci siano posizioni diverse dalla liquidità che superino il 10% del NAV
+amount:>10% & security!:Conto_corrente,Depositi_a_termine ; = 0%
+
+# 3) verifica che non ci siano posizioni che superino il 20% del NAV
+amount:>=20% ; = 0%
+
+# 4) verifica che non ci siano altre monete al di fuori di EUR,CHF,USD,JPY,AUD,INR
+currency:EUR,CHF,USD,AUD,INR,NOK ; >= 100%
+
+# 5) verifica che non si vada corto nelle monete consentite
+currency:EUR ; >= 0EUR
+currency:CHF ; >= 0CHF
+currency:USD ; >= 0USD
+currency:AUD ; >= 0AUD
+currency:INR ; >= 0INR
+currency:NOK ; >= 0NOK
+
+checkListEnd:
+externalSuiteFileName:
+

@@ -1,0 +1,29 @@
+testSuiteName: Global Equities
+creationDate: 2010-07-06
+creator: Claudio Ortelli
+# testSuiteKind: general - specific
+testSuiteKind: specific
+testTarget: pippo53
+reportTo: claudio.ortelli@usi.ch; info@bacep.com
+outputDir: ./
+checkListStart:
+
+# verifica che i contratti a termine in EUR siano solo a titolo di copertura
+security:FX_Forward,Equity,Strutturati_EQ,ETF_equity,ETF_commodities,Fondi_azionari,Conto_corrente,Opzioni_su_azioni & currency:EUR ; > 0 EUR
+
+# verifica che almeno i 2/3 del fondo siano investiti in Equity e simili
+security:Equity,Strutturati_EQ,ETF_equity,Futures_EQ ; > 66.66%
+
+# Verifica che la liquidità non superi il 20% del NAV
+amount:>20% & security:Conto_corrente ; = 0%
+
+# verifica che posizioni non conto corrente non superino il 10%
+amount:>10% & security:Equity,Fondi_azionari,ETF_commodities,Opzioni_su_azioni,Strutturati_EQ,ETF_equity,Futures_EQ ; = 0%
+
+# verifica che le posizioni che superano il 5% del NAV non superino complessivamente il 40% dello stesso
+amount:>5% & security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity,ETF_commodities,Futures_EQ ; <= 40%
+
+# verifica che sia investito unicamente negli strumenti sotto elencati
+security:Equity,Fondi_azionari,Futures_EQ,Conto_corrente,Opzioni_su_azioni,FX_Forward,Strutturati_EQ,ETF_equity,ETF_commodities,Bond,Index_certificate ; >= 100%
+checkListEnd:
+externalSuiteFileName:

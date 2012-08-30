@@ -1,0 +1,28 @@
+testSuiteName: Euro Fixed Income
+creationDate: 2010-07-12
+creator: Claudio Ortelli
+# testSuiteKind: general - specific
+testSuiteKind: specific
+testTarget: pippo76
+reportTo: claudio.ortelli@usi.ch; info@bacep.com
+outputDir: ./
+checkListStart:
+
+# 1) verifica che gli strumenti investibili siano quelli indicati e non ce ne siano altri non ammessi
+#    o non ancora implementati per il controllo
+security:Bond,Conto_corrente,Capital_protected_notes,Floating_rate_notes,Strutturati_FI ; >= 100%
+
+# 2) verifica che almeno 2/3 sia investito in strumenti a reddito fisso
+security:Bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI ; >= 66.6%
+
+# 3) verifica che ci siano investimenti solo in EUR
+currency:EUR ; >= 100%
+
+# 4) verifica che gli investimenti con un peso superiore al 5% non costituiscano piu' del 40% del NAV
+amount:>5% & security:Bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI; <= 40%
+
+# 5) verifica che il conto corrente non superi il 20% del NAV (rischio controparte)
+amount:>=20% & security:Conto_corrente ; <= 0%
+
+checkListEnd:
+externalSuiteFileName:

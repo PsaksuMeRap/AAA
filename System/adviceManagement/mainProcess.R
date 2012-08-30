@@ -7,6 +7,76 @@ logFileName <- paste(format(Sys.time(),"%Y-%m-%d_%H-%M-%S"),"riskman_log.txt",se
 invisible(create_logger(fileName=logFileName,directory=file.path(homeDir,"log")))
 logger("Logger successfully created.\n")
 
+# setup the data directory
+# check if the data directory exists
+dataDirExists <- file.exists(file.path(homeDir,"data"))
+if (!dataDirExists) {
+	logger("Initializing entire data directory ...")
+	from <- file.path(sourceCodeDir,"applicationData","data")
+	to <- file.path(homeDir)
+	isOk <- file.copy(from,to,recursive=TRUE)
+	loggerDone()
+	rm(dataDirExists,from,to,isOk)
+} else {
+# chech if the bloomberg directory exists
+	bloombergDirExists <- file.exists(file.path(homeDir,"data","bloomberg"))
+	if (!bloombergDirExists) {
+		logger("Data directory exists. Initializing bloomberg directory ...")
+		from <- file.path(sourceCodeDir,"applicationData","data","bloomberg")
+		to <- file.path(homeDir,"data")
+		isOk <- file.copy(from,to,recursive=TRUE)
+		loggerDone()
+	}
+	
+	checkFilesDirExists <- file.exists(file.path(homeDir,"data","checkFiles"))
+	if (!checkFilesDirExists) {
+		logger("Data directory exists. Initializing checkFile directory ...")
+		from <- file.path(sourceCodeDir,"applicationData","data","checkFiles")
+		to <- file.path(homeDir,"data")
+		isOk <- file.copy(from,to,recursive=TRUE)
+		loggerDone()
+	}	
+	
+	DBEquitiesDirExists <- file.exists(file.path(homeDir,"data","DBEquities"))
+	if (!DBEquitiesDirExists) {
+		logger("Data directory exists. Initializing DBEquities directory ...")
+		from <- file.path(sourceCodeDir,"applicationData","data","DBEquities")
+		to <- file.path(homeDir,"data")
+		isOk <- file.copy(from,to,recursive=TRUE)
+		loggerDone()
+	}		
+	
+	exchangeRatesDirExists <- file.exists(file.path(homeDir,"data","exchangeRates"))
+	if (!exchangeRatesDirExists) {
+		logger("Data directory exists. Initializing exchangeRates directory ...")
+		from <- file.path(sourceCodeDir,"applicationData","data","exchangeRates")
+		to <- file.path(homeDir,"data")
+		isOk <- file.copy(from,to,recursive=TRUE)
+		loggerDone()
+	}
+	
+	instrumentsDirExists <- file.exists(file.path(homeDir,"data","instruments"))
+	if (!instrumentsDirExists) {
+		logger("Data directory exists. Initializing instruments directory ...")
+		from <- file.path(sourceCodeDir,"applicationData","data","instruments")
+		to <- file.path(homeDir,"data")
+		isOk <- file.copy(from,to,recursive=TRUE)
+		loggerDone()
+	}
+	
+	portfoliosDirExists <- file.exists(file.path(homeDir,"data","portfolios"))
+	if (!portfoliosDirExists) {
+		logger("Data directory exists. Initializing portfolios directory ...")
+		from <- file.path(sourceCodeDir,"applicationData","data","portfolios")
+		to <- file.path(homeDir,"data")
+		isOk <- file.copy(from,to,recursive=TRUE)
+		loggerDone()
+	}
+	rm(checkFilesDirExists,DBEquitiesDirExists,exchangeRatesDirExists,instrumentsDirExists,portfoliosDirExists)
+	rm(dataDirExists,from,to,isOk)
+}
+
+
 # source the code
 logger("Starting initialSetup ...")
 source(file.path(sourceCodeDir,"adviceManagement","lib","initialSetup.R"))
@@ -21,13 +91,6 @@ loggerDone()
 # setup the archive
 logger("Initializing archive ...")
 create_archive(sys[["homeDir"]])
-loggerDone()
-
-# setup the data directory
-logger("Initializing the data directory ...")
-from <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","files","riskman","data")
-to <- file.path(sys[["homeDir"]])
-isOk <- file.copy(from,to,recursive=TRUE)
 loggerDone()
 
 # start monitoring input directory
@@ -81,7 +144,6 @@ while(Sys.time()<end) {
 logger(paste("Sys.time() is larger than",end,"\n\n"))
 logger("Closing program")
 sink()
-# quit(save="no")
 
 #print("In base importa i futuri tenendo conto del delivery date e price come in adviceManagement")
 #print("rimuovi postOffice dal setup del mailBox ...")
