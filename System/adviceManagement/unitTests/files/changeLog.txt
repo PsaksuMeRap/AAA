@@ -1,0 +1,6 @@
+
+
+versione [0.7.3] 
+- aggiunto fondo GLOBAL EQUITY
+- calcolo valuta tiene conto del fine settimana
+- spostata colonna Broker dopo colonna Security_type
