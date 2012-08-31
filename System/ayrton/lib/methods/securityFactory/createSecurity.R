@@ -92,7 +92,7 @@ setMethod("createSecurity",signature(origin="Ayrton_Obbligazioni_convertibili"),
 			if (origin@Strumento=="Oacc") return(NULL)
 			
 			# this is a common slot of all instruments
-			idAyrton <- idAyrton <- idFactory(origin)
+			idAyrton <- idFactory(origin)
 			
 			# extract the maturity from the name
 			maturity=getMaturity(origin)
@@ -113,7 +113,7 @@ setMethod("createSecurity",signature(origin="Ayrton_Bond"),
 			if (origin@Strumento=="Oacc") return(NULL)
 	
 			# this is a common slot of all instruments
-			idAyrton <- idAyrton <- idFactory(origin)
+			idAyrton <- idFactory(origin)
 			
 			# extract the maturity from the name
 			maturity=getMaturity(origin)
@@ -153,7 +153,7 @@ setMethod("createSecurity",signature(origin="Ayrton_Anticipi_fissi"),
 			if (origin@Strumento=="Macc") return(NULL)
 			
 			# this is a common slot of all instruments
-			idAyrton <- idAyrton <- idFactory(origin)
+			idAyrton <- idFactory(origin)
 			
 			# extract the maturity from the name
 			maturity = getMaturity(origin)
@@ -173,7 +173,7 @@ setMethod("createSecurity",signature(origin="Ayrton_Depositi_a_termine"),
 			if (origin@Strumento=="Macc") return(NULL)
 			
 			# this is a common slot of all instruments
-			idAyrton <- idAyrton <- idFactory(origin)
+			idAyrton <- idFactory(origin)
 			
 			# extract the maturity from the name
 			maturity=getMaturity(origin)
