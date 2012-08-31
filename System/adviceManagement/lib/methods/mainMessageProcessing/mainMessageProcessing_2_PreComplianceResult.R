@@ -19,17 +19,18 @@ setMethod("mainMessageProcessing",signature(message="PreComplianceResult"),
 			logger(paste("Sending e-mail with",fullFileName,"...\n"))
 			result <- sendEmail_preComplianceResult(message)
 			loggerDone(paste(result,"\n"))
-		
-			# remove the lock
-			# logger(paste("Removing lock for portfolio",message[["portfolioName"]],"... "))
-			# cat(unlock(message))
 			
 			# show pop up
 			if (message[["testResult"]]=="0") {
+				# remove the lock
+				logger(paste("Removing lock for portfolio",message[["portfolioName"]],"... "))
+				cat(unlock(message))
+				# display a message on screen
 				messageString <- paste("Result '",message[["fileName"]],"' \nhas been rejected because of a negative pre-compliance.\n",sep="") 
 				ok <- tkmessageBox(message=messageString,icon="warning")
 				messageString <- paste("Result '",message[["fileName"]],"' has been rejected because of a negative pre-compliance.\n",sep="")
 			} else {
+				# display a message on screen
 				messageString <- paste("Result '",message[["fileName"]],"' \nhas been accepted.",sep="") 
 				ok <- tkmessageBox(message=messageString,icon="warning")
 				messageString <- paste("Result '",message[["fileName"]],"' has been accepted.",sep="") 

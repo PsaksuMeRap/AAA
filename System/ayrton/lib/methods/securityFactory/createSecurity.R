@@ -1,7 +1,7 @@
 # TODO: Add comment
 # 
 # Author: claudio
-###############################################################################
+##############g)#################################################################
 
 setMethod("createSecurity",signature(origin="Ayrton_Futures_EQ"),
 		function(origin) {

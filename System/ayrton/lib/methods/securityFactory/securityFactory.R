@@ -14,7 +14,7 @@ setMethod("securityFactory",signature(origin="AyrtonPosition"),
 				# record: a list
 				
 				# create the repository of the instruments if not available
-				if (!exists("instruments",envir=repositories,inherits=FALSE)) {
+				if (!exists("instruments",envir=repositories,inherits=TRUE)) {
 					eval(expression(instruments <- create_repositoryInstruments())
 							,env=repositories)
 				}

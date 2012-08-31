@@ -91,7 +91,7 @@ setMethod("createPosition",signature(security="Bond",origin="AyrtonPosition"),
 		function(security,origin) {
 			# the position will be completed with the accruedInterest after an
 			# appropriate call to the createPositions method
-			id <- 10.2
+
 			quantity <- new("NominalValue",amount=new("Amount",origin@Saldo),currency=new("Currency",origin@Moneta))
 			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
 			value <- repositories$exchangeRates$exchange(value,security@currency)
@@ -189,7 +189,8 @@ setMethod("createPosition",signature(security="Fondi_misti",origin="AyrtonPositi
 				
 			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
 			value <- repositories$exchangeRates$exchange(value,security@currency)
-			position <- new("PositionFondi_misti",id=security@id,
+			position <- new("PositionFondi_misti",
+					id=security@id,
 					security=security,
 					quantity=quantity,
 					value=value,
