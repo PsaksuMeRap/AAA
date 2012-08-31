@@ -90,8 +90,11 @@ test.shouldProcessPreComplianceResultMessage_0 <- function() {
 	result <- mainMessageProcessing(message)
 	checkEquals(result,0)
 	
-	directory <- file.path(sys[["homeDir"]],"postOffice","inbox")
-	exists <- file.exists(file.path(directory,message[["fileName"]]))
+	directory <- file.path(sys[["homeDir"]],"postOffice")
+	exists <- file.exists(file.path(directory,"inbox",message[["fileName"]]))
+	checkEquals(exists,FALSE)
+	# check that the lock has been removed
+	exists <- file.exists(file.path(directory,message[["portfolioName"]],"lock"))
 	checkEquals(exists,FALSE)
 	
 	# clean

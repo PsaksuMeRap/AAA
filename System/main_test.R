@@ -104,17 +104,6 @@ dirs = c(
 if (.Platform$OS.type=="windows") {
 	dirs = c(dirs,"./adviceManagement/unitTests/t.startBatchProcess")
 }
-dirs=c(		"./adviceManagement/unitTests/t.bloombergRequestHandler")
-dirs = c(dirs,
-		"./adviceManagement/unitTests/t.subConfirmationProcessing",
-		"./adviceManagement/unitTests/t.subNewAdviceProcessing",
-		"./adviceManagement/unitTests/t.tradeFactory",
-		"./adviceManagement/unitTests/t.tradesToPositionsFactory",	
-		"./adviceManagement/unitTests/t.tradeToPositionFactory",
-		"./adviceManagement/unitTests/t.tradeToPositionsFactory",		
-		"./adviceManagement/unitTests/t.tradeToSecurityFactory",
-		"./adviceManagement/unitTests/t.zipResults"
-)
 
 
 testsuite.lists <- defineTestSuite("Test adviceManagement",dirs = dirs)
