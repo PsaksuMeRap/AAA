@@ -24,7 +24,6 @@ amount:>10% & security:Equity,Fondi_azionari,ETF_commodities,Opzioni_su_azioni,S
 amount:>5% & security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity,ETF_commodities,Futures_EQ ; <= 40%
 
 # verifica che sia investito unicamente negli strumenti sotto elencati
-security:Equity,Fondi_azionari,Futures_EQ,Conto_corrente,Opzioni_su_azioni,FX_Forward,Strutturati_EQ,ETF_equity,ETF_commodities,Bond,Obbligazioni_convertibili
-,Index_certificate ; >= 100%
+security:Equity,Fondi_azionari,Futures_EQ,Conto_corrente,Opzioni_su_azioni,FX_Forward,Strutturati_EQ,ETF_equity,ETF_commodities,Bond,Obbligazioni_convertibili,Index_certificate ; >= 100%
 checkListEnd:
 externalSuiteFileName:

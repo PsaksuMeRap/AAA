@@ -43,14 +43,16 @@ setwd(homeDir)
 mappingPippoPortfolio <- c(
 		pippo53="globalEquity",
 		pippo76="fixedIncome",
-		pippo210="globalEconomy"
+		pippo210="globalEconomy",
+		pippo100="asymmetricEquity",
+		pippo101="multistrategy"
 )
 
 ## caso con data storica
 if (FALSE) {
 	date <- c("2012-04-13")
 	# controlla che la data sia dopo il "2011-05-31" altrimenti togli il fondo globalEconomy
-	if (as.Date(date) > as.Date("2011-05-31")) fundsOwners <- c("pippo53","pippo76","pippo210") else fundsOwners <- c("pippo53","pippo76")
+	if (as.Date(date) > as.Date("2011-05-31")) fundsOwners <- c("pippo53","pippo76","pippo210","pippo100","pippo101") else fundsOwners <- c("pippo53","pippo76","pippo100","pippo101")
 	repositories$exchangeRates <- create_repositoryExchangeRates(exchangeRatesDate=date)
 	
 	# importa i dati dalla tabella del DB
@@ -64,7 +66,7 @@ if (FALSE) {
 	
 } else {
 	# caso data attuale
-	fundsOwners <- c("pippo53","pippo76","pippo210")
+	fundsOwners <- c("pippo53","pippo76","pippo210","pippo100","pippo101")
 	fundPortfolios <- filterLists(dati,"Cliente",value=fundsOwners)	
 	fundPortfolios <- portfoliosFactory(fundPortfolios)
 

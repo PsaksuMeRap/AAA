@@ -32,6 +32,10 @@ currency:JPY ; >= 0JPY
 currency:GBP ; >= 0DKK
 currency:CAD ; >= 0CAD
 
+# 6) verifica che i fondi non superino il 30%
+security:Fondi_azionari,Fondi_obbligazionari,ETF_equity; <= 30%
+
+# 7) verifica che il singolo fondo non superi il 20%
 
 checkListEnd:
 externalSuiteFileName:

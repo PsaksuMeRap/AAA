@@ -40,8 +40,8 @@ test.shouldNewAdviceWithoutLock <- function() {
 	Sys.sleep(15)
 	
 	# check the existence of a rejected file in archive/processed/rejected
-	rejectedFiles <- list.files(file.path(sys[["homeDir"]],"archive","processed","rejected"))
-	checkEquals(length(rejectedFiles)>0,TRUE)
+	acceptedFiles <- list.files(file.path(sys[["homeDir"]],"archive","processed","accepted"))
+	checkEquals(length(acceptedFiles)>0,TRUE)
 	
 	unlink(file.path(sys[["homeDir"]],"data"),recursive=TRUE)
 	unlink(file.path(sys[["homeDir"]],"postOffice"),recursive=TRUE)
