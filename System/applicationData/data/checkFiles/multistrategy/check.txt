@@ -1,9 +1,9 @@
-testSuiteName: Global Economy
+testSuiteName: Multistrategy
 creationDate: 2010-12-29
 creator: Claudio Ortelli
 # testSuiteKind: general - specific
 testSuiteKind: specific
-testTarget: pippo250
+testTarget: pippo101
 reportTo: claudio.ortelli@usi.ch
 outputDir: ./
 checkListStart:

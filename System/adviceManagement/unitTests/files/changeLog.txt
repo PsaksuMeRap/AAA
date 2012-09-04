@@ -1,4 +1,8 @@
 
+versione [0.7.4] 
+- corretto formula per Amount in Option FX
+- iniziato invio automatico e-mail
+
 
 versione [0.7.3] 
 - aggiunto fondo GLOBAL EQUITY

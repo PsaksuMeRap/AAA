@@ -167,6 +167,25 @@ test.shouldConvertOptionFxTradeToSecurity <- function() {
 	
 }
 
+test.shouldConvertOptionFxTradeSellToSecurity <- function() {
+	# set the fileName from which to import trades
+	fileName <- "2012-05-09_14-22-24_Ortelli_optionFxTradeSell_newAdvice.csv"
+	messageFileName <- messageFileNameFactory(fileName)
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+	blRequestHandler <- create_BloombergRequestHandler()
+	
+	# import trades
+	trades <- tradesFactory(messageFileName,directory)
+	trade <- trades[[1]]
+	
+	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)	
+	checkEquals(class(newSecurity)[[1]],"Opzioni_su_divise")	
+	checkEquals(newSecurity@expiryDate,"2012-12-27")
+	checkEquals(newSecurity@optionType,"Call")
+	checkEquals(newSecurity@strike,1.3)
+	checkEquals(newSecurity@name,"Eurusd 12/27/12 c1.3")
+	
+}
 
 test.shouldParseFxForwardName <- function() {
 	

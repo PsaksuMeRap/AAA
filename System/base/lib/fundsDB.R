@@ -20,7 +20,7 @@ create_fundsDB <- function() {
 	multistrategy <- new("FundRecord",fundName="OC DYNAMIC MS",securityClass="Fondi_obbligazionari",
 			id=0,owner="pippo101")
 	
-	asymmetric <- new("FundRecord",fundName="OC DYNAMIC MS",securityClass="Fondi_azionari",
+	asymmetric <- new("FundRecord",fundName="OC ASYMMETRIC",securityClass="Fondi_azionari",
 			id=0,owner="pippo100")
 	
 	fundsDB <- new("FundDB",list(globalEquity,globalEconomy,fixedIncome,multistrategy))

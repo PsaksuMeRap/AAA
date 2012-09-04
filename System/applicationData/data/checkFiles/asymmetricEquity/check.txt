@@ -3,7 +3,7 @@ creationDate: 2012-08-27
 creator: Claudio Ortelli
 # testSuiteKind: general - specific
 testSuiteKind: specific
-testTarget: pippo211
+testTarget: pippo100
 reportTo: claudio.ortelli@usi.ch
 outputDir: ./
 checkListStart:
@@ -14,7 +14,7 @@ currency!:CHF ; <=50%
 amount:>10% & security!:Conto_corrente,Depositi_a_termine ; = 0%
 
 # 3) verifica che non ci siano posizioni che superino il 20% del NAV
-amount:>=20% ; = 0%
+amount:>=20% & security!:Conto_corrente, ; = 0%
 
 # 4) verifica che non ci siano altre monete al di fuori di EUR,CHF,USD
 currency:EUR,CHF,USD ; >= 100%

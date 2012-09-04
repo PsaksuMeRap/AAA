@@ -1,0 +1,2 @@
+Portfolio,Buy_Sell,Id_Bloomberg,Security_name,Currency,Security_type,UBS_Sec_type,Quantity,ISIN_Ticker,Price,Order_type,Amount,Broker,Limit_price,Limit_date
+GLOBAL ECONOMY,Sell to open,eurusd 12/27/12 c1.3,Eurusd 12/27/12 c1.3,USD,Option FX,,1500000,,0.013,Care,19500,UBS,0.013,19-06-2012
