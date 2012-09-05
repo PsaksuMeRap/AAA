@@ -294,7 +294,7 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Opzioni_su_divise"),
 				quantity <- toMoney(sign(trade)*trade$Confirmed_quantity,underlying)	
 			}
 			
-			# compute the value of the position. By convention the price is in CHF / 1 unit of
+			# compute the value of the position. By convention the price is in numeraire / 1 unit of
 			# underlying quantity
 			numeraire <- newSecurity@currency 
 			
@@ -303,7 +303,7 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Opzioni_su_divise"),
 			# construct the id 
 			id <- paste(newSecurity@optionType," ",newSecurity@expiryDate," Strike ",
 					newSecurity@strike," ",numeraire,"/",underlying," ",
-					as.character(quantity)," (Premio ",as.character(value),")",sep="")
+					as.character(quantity)," (Premio ",as.character(-1*value),")",sep="")
 
 			# create the class "PositionOpzioni_su_divise"
 			optionOnFxPosition <- new("PositionOpzioni_su_divise",id=new("IdCharacter",id),security=newSecurity,
