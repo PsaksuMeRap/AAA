@@ -238,8 +238,8 @@ test.shouldConvertOptionOnFxSellTradeToPosition <- function() {
 	
 	checkEquals(class(newPosition)[[1]],"PositionOpzioni_su_divise")
 	checkEquals(class(newPosition@id)[[1]],"IdCharacter")
-	checkEquals(newPosition@quantity,toMoney(trade$Quantity,"EUR"))
-	checkEquals(newPosition@value,toMoney(as.numeric(trade$Amount),"CHF"))
+	checkEquals(newPosition@quantity,toMoney(-trade$Quantity,"EUR"))
+	checkEquals(newPosition@value,toMoney(as.numeric(-trade$Amount),"USD"))
 }
 
 

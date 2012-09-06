@@ -5,7 +5,7 @@
 
 
 
-createSecurity <- function(origin) UseMethod("createSecurity")
+# createSecurity <- function(origin) UseMethod("createSecurity")
 
 setGeneric("createSecurity",
 		useAsDefault=function(origin) {
