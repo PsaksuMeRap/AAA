@@ -7,26 +7,33 @@ testTarget: pippo100
 reportTo: claudio.ortelli@usi.ch
 outputDir: ./
 checkListStart:
-# 1) verifica che il fondo sia investito almeno il 50% in EUR
-currency!:CHF ; <=50%
+# 1.1) verifica che non ci siano altre monete al di fuori di quelle indicate
+currency:AUD,BRL,CHF,EUR,NOK,TRY,USD ; = 100%
 
-# 2) verifica che non ci siano posizioni diverse dalla liquidità che superino il 10% del NAV
+# 1.2) verifica che il fondo sia investito almeno il 20% in EUR
+currency:EUR ; >=20%
+
+# 1.3) verifica che le altre monete siano meno del 15% (a parte USD che è 35%)
+currency:AUD ; <=15%
+currency:BRL ; <=15%
+currency:CHF ; <=15%
+currency:NOK ; <=15%
+currency:TRY ; <=15%
+currency:USD ; <=35%
+
+# 2) verifica che non ci siano posizioni non cash che superino il 10% del NAV
 amount:>10% & security!:Conto_corrente,Depositi_a_termine ; = 0%
 
 # 3) verifica che non ci siano posizioni che superino il 20% del NAV
 amount:>=20% & security!:Conto_corrente, ; = 0%
 
-# 4) verifica che non ci siano altre monete al di fuori di EUR,CHF,USD
-currency:EUR,CHF,USD ; >= 100%
-
-# 5) verifica che non si vada corto nelle monete consentite
-currency:EUR ; >= 0EUR
-currency:CHF ; >= 0CHF
-currency:USD ; >= 0USD
-
-# 7) verifica le posizioni opzioni_su_divise
-currency:EUR ; >= 0EUR :: replace:Opzioni_su_divise
+# 4) verifica le posizioni opzioni_su_divise
+currency:AUD ; >= 0AUD :: replace:Opzioni_su_divise
+currency:BRL ; >= 0BRL :: replace:Opzioni_su_divise
 currency:CHF ; >= 0CHF :: replace:Opzioni_su_divise
+currency:EUR ; >= 0EUR :: replace:Opzioni_su_divise
+currency:NOK ; >= 0NOK :: replace:Opzioni_su_divise
+currency:TRY ; >= 0TRY :: replace:Opzioni_su_divise
 currency:USD ; >= 0USD :: replace:Opzioni_su_divise
 
 # 8) verifica le posizioni opzioni_su_azioni

@@ -21,6 +21,11 @@ if(.Platform$OS.type=="windows") {
 stringsAsFactors = FALSE
 repositories <- new.env()
 
+# copy the data directory
+fileFrom <- file.path(sourceCodeDir,"applicationData","data") 
+fileTo <- file.path(homeDir)
+ok <- file.copy(from=fileFrom,to=fileTo,recursive = TRUE)
+
 source("./base/lib/library.R")
 source("./ayrton/lib/library.R")
 source("./riskman/lib/library.R")
@@ -69,7 +74,6 @@ if (FALSE) {
 	fundsOwners <- c("pippo53","pippo76","pippo210","pippo100","pippo101")
 	fundPortfolios <- filterLists(dati,"Cliente",value=fundsOwners)	
 	fundPortfolios <- portfoliosFactory(fundPortfolios)
-
 }
 
 # salva i portafogli in homeDir

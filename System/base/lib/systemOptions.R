@@ -3,7 +3,7 @@
 # Author: claudio
 ###############################################################################
 sys <- list()
-sys[["eq.tolerance"]] <- 10^-6
+sys[["eq.tolerance"]] <- 10^-3
 
 # set the sleep time in seconds for new incoming message check
 sys[["sleepTime"]] <- 20
