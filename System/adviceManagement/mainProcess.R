@@ -99,7 +99,7 @@ loggerDone()
 
 # start monitoring input directory
 dayString <- format(Sys.time(), "%Y-%m-%d")
-stopHour <- "17:45:00"
+stopHour <- sys[["stopHour"]]
 end <- strptime(paste(dayString,stopHour),format="%Y-%m-%d %H:%M:%S")
 		
 # end <- Sys.time()+360
