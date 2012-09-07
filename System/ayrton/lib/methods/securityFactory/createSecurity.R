@@ -3,6 +3,22 @@
 # Author: claudio
 ##############g)#################################################################
 
+setMethod("createSecurity",signature(origin="AyrtonPosition"),
+		function(origin) {
+		## this is the default method for any AyrtonPosition 
+		## not further specified
+		
+		# this is a common slot of all instruments
+		idAyrton <- idFactory(origin)
+		
+		className <- class(origin)
+		className <- substr(className,start=8,stop=nchar(className))
+		security <- new(className,currency=new("Currency",origin@Moneta),name=origin@Nome,id=idAyrton)
+		return(security)
+	}
+)
+
+
 setMethod("createSecurity",signature(origin="Ayrton_Futures_EQ"),
 		function(origin) {
 			

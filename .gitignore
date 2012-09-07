@@ -2,3 +2,4 @@
 .project
 *.log
 secrets.R
+.settings
