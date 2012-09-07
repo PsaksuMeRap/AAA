@@ -1,6 +1,7 @@
 versione [0.7.5] 
 - corretto formula per Amount in Option FX
 - continuato invio automatico e-mail
+- inserito nome colonne blocco trade
 
 
 versione [0.7.4] 
