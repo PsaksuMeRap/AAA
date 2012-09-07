@@ -34,6 +34,37 @@ test.shouldConvertFondi_azionariTradeToPosition <- function() {
 	
 }
 
+test.shouldConvertFundBondTradeToPosition <- function() {
+	# create the BloombergData
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
+	source(file.path(directory,"createRepositoryBloombergData.R"))
+	blData <- createRepositoryBloombergData()
+		
+	# set the fileName from which to import trades
+	fileName <- "2012-05-09_14-22-24_Ortelli_FundBond_newAdvice.csv"
+	messageFileName <- messageFileNameFactory(fileName)
+	
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+	
+	# create the blRequestHandler required from tradeToSecurityFactory
+	blRequestHandler <- create_BloombergRequestHandler()
+	
+	# import trades
+	trades <- tradesFactory(messageFileName,directory)
+	trade <- trades[[1]]
+	
+	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)
+	
+	newPosition <- tradeToPositionFactory(newSecurity,trade,blData)
+	
+	
+	checkEquals(class(newPosition)[[1]],"PositionFondi_obbligazionari")
+	checkEquals(newPosition@quantity,500)	
+	checkEquals(newPosition@value,toMoney(589455.5,"EUR"))	
+	checkEquals(newPosition@accruedInterest,new("AccruedInterest",toMoney(0,"EUR")))	
+}
+
+
 
 test.shouldConvertEquityTradeToPosition <- function() {
 	

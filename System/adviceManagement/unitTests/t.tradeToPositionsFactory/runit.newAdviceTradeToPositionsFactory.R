@@ -2,6 +2,63 @@
 # 
 # Author: claudio
 ###############################################################################
+test.shouldConvertFondi_azionariTradeToPortfolioPositions <- function() {
+	
+	# create the BloombergData
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
+	source(file.path(directory,"createRepositoryBloombergData.R"))
+	blData <- createRepositoryBloombergData()
+	
+	# set the fileName from which to import trades
+	fileName <- "2012-05-09_14-22-24_Ortelli_FundEquity_newAdvice.csv"
+	messageFileName <- messageFileNameFactory(fileName)
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+	
+	# import trades
+	trades <- tradesFactory(messageFileName,directory)
+	trade <- trades[[1]]
+	
+	# create the blRequestHandler required from tradeToSecurityFactory
+	blRequestHandler <- create_BloombergRequestHandler()
+	
+	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)
+	
+	newPosition <- tradeToPositionFactory(newSecurity,trade,blData)
+	
+	positions <- tradeToPositionsFactory(newPosition,trade)
+	
+	checkEquals(sum(positions),toMoney(0,positions[[1]]@security@currency))
+	
+}
+
+test.shouldConvertFundBondTradeToPortfolioPositions <- function() {
+	
+	# create the BloombergData
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
+	source(file.path(directory,"createRepositoryBloombergData.R"))
+	blData <- createRepositoryBloombergData()
+	
+	# set the fileName from which to import trades
+	fileName <- "2012-05-09_14-22-24_Ortelli_FundBond_newAdvice.csv"
+	messageFileName <- messageFileNameFactory(fileName)
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+	
+	# import trades
+	trades <- tradesFactory(messageFileName,directory)
+	trade <- trades[[1]]
+	
+	# create the blRequestHandler required from tradeToSecurityFactory
+	blRequestHandler <- create_BloombergRequestHandler()
+	
+	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)
+	
+	newPosition <- tradeToPositionFactory(newSecurity,trade,blData)
+	
+	positions <- tradeToPositionsFactory(newPosition,trade)
+	
+	checkEquals(sum(positions),toMoney(0,positions[[1]]@security@currency))
+	
+}
 
 
 test.shouldConvertEquityTradeToPortfolioPositions <- function() {

@@ -112,6 +112,11 @@ createRepositoryBloombergData <- function() {
 	blDataEntry <- new("BloombergDataEntry",blId="WDIMIXD Equity",fieldId="LAST_PRICE",value=244.04,dateLastUpdate=Sys.time())
 	blData <- add(blDataEntry,blData)
 	
+	# create the BloombergData for fondi_obbligazionari
+	blDataEntry <- new("BloombergDataEntry",blId="lemwbda equity",fieldId="LAST_PRICE",value=1178.911,dateLastUpdate=Sys.time())
+	blData <- add(blDataEntry,blData)
+	
+	
 	return(blData)
 	
 }

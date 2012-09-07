@@ -30,26 +30,28 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Security"),
 )
 
 
-#setMethod("tradeToPositionFactory",signature(newSecurity="Fondi_obbligazionari"),
-#		function(newSecurity,trade,blData) {
-#			
-#			if (is.null(trade$Confirmed_quantity)) {
-#				priceId <- paste(trade$Id_Bloomberg,"LAST_PRICE",sep="__")
-#				price <- blData[[priceId]]@value
-#				
-#				quantity <- sign(trade)*trade$Quantity
-#			} else {
-#				price <- trade$Confirmed_price
-#				quantity <- sign(trade)*trade$Confirmed_quantity
-#			}
-#			
-#			# create the class "PositionFondi_obbligazionari"
-#			equityPositions <- new("PositionFondi_obbligazionari",id=new("IdBloomberg",trade$Id_Bloomberg),security=newSecurity,
-#					quantity=quantity,value=toMoney(quantity*price,newSecurity@currency))
-#			
-#			return(equityPositions)
-#		}
-#)
+setMethod("tradeToPositionFactory",signature(newSecurity="Fondi_obbligazionari"),
+		function(newSecurity,trade,blData) {
+			
+			if (is.null(trade$Confirmed_quantity)) {
+				priceId <- paste(trade$Id_Bloomberg,"LAST_PRICE",sep="__")
+				price <- blData[[priceId]]@value
+				
+				quantity <- sign(trade)*trade$Quantity
+			} else {
+				price <- trade$Confirmed_price
+				quantity <- sign(trade)*trade$Confirmed_quantity
+			}
+			
+			# create the class "PositionFondi_obbligazionari"
+			accruedInterest <- new("AccruedInterest",toMoney(0,"EUR"))
+			Position <- new("PositionFondi_obbligazionari",accruedInterest=accruedInterest,id=new("IdBloomberg",
+							trade$Id_Bloomberg),security=newSecurity,quantity=quantity,
+							value=toMoney(quantity*price,newSecurity@currency))
+			
+			return(Position)
+		}
+)
 
 
 #setMethod("tradeToPositionFactory",signature(newSecurity="Fondi_azionari"),
