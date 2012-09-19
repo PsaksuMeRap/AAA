@@ -17,7 +17,7 @@ importDBPortfolioGenerale <- function() {
 		x <- df[i,,drop=TRUE]
 		ayrtonPosition <- new("AyrtonPosition",
 				Cliente=x[["Cliente"]],Strumento=x[["Strumento"]],Moneta=x[["Moneta"]],
-				Saldo=x[["Saldo"]],Nome=x[["Nome"]],PrezzoMercato=x[["PrezzoMercato"]],ValoreMercatoMonetaCHF=x[["ValoreMercatoMonetaCHF"]],
+				Saldo=x[["Saldo"]],NumeroValore=x[["NumeroValore"]],Nome=x[["Nome"]],PrezzoMercato=x[["PrezzoMercato"]],ValoreMercatoMonetaCHF=x[["ValoreMercatoMonetaCHF"]],
 				ID_AAA=as.numeric(x[["ID_AAA"]]),ID_strumento=x[["ID_strumento"]])
 		return(ayrtonPosition)
 	}
@@ -44,7 +44,7 @@ importDBPortfolioGeneraleByDate <- function(fetchDate) {
 		x <- df[i,,drop=TRUE]
 		ayrtonPosition <- new("AyrtonPosition",
 				Cliente=x[["Cliente"]],Strumento=x[["Strumento"]],Moneta=x[["Moneta"]],
-				Saldo=x[["Saldo"]],Nome=x[["Nome"]],ValoreMercatoMonetaCHF=x[["ValoreMercatoMonetaCHF"]],
+				Saldo=x[["Saldo"]],NumeroValore=x[["NumeroValore"]],Nome=x[["Nome"]],ValoreMercatoMonetaCHF=x[["ValoreMercatoMonetaCHF"]],
 				ID_AAA=as.numeric(x[["ID_AAA"]]),ID_strumento=x[["ID_strumento"]])
 		return(ayrtonPosition)
 	}

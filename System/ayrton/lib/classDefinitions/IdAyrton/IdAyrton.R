@@ -5,9 +5,9 @@
 
 
 setClass("IdAAA_numeric",contains="numeric")
-setClass("IdAAA_string",contains="character")
+setClass("IdAAA_character",contains="character")
 
-setClassUnion("IdAAA", c("IdAAA_numeric","IdAAA_string"))
+setClassUnion("IdAAA", c("IdAAA_numeric","IdAAA_character"))
 
 setClass("IdAyrton",representation(idAAA="IdAAA",idStrumento="numeric"))
 

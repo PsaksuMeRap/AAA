@@ -65,7 +65,16 @@ setMethod("idFactory",signature(origin="AyrtonPosition"),
 			## 53,Unclassified
 			## 54,Conto_corrente_fittizio"
 			
-
+			instrumentsWithISIN <- c(1,2,3,4,5,8:17,23:30,32:38,42:52,54)
+			if (is.element(origin@ID_strumento,instrumentsWithISIN)) {
+				idAyrton <- new("IdAyrton",
+						idAAA=new("IdAAA_character",origin@NumeroValore),
+						idStrumento=origin@ID_strumento)
+				
+				return(idAyrton)
+			}
+			
+			
 			if (is.na(origin@ID_AAA)) {
 				# check for particular instruments: Conto_corrente, 
 				no_ID_AAA_instruments <- c(5,6,7,18,19,21,22,40,50,54)			
@@ -83,11 +92,7 @@ setMethod("idFactory",signature(origin="AyrtonPosition"),
 				return(idAyrton)
 			}
 			
-			idAyrton <- new("IdAyrton",
-					idAAA=new("IdAAA_numeric",origin@ID_AAA),
-					idStrumento=origin@ID_strumento)
 			
-			return(idAyrton)
 		}
 )
 
