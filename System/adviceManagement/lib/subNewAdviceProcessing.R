@@ -43,11 +43,12 @@ logger(paste(textMessage,positionsStrings,sep="\n"))
 
 # copy the checkFile into the pre-compliance input/output folder
 logger(paste("Copying check file for",message[["portfolioName"]],"in",checkDirectory,"..."))
-fileFrom <- file.path(sys[["homeDir"]],"data","checkFiles",message[["portfolioName"]],"check.txt") 
-fileTo <- file.path(checkDirectory,"check.txt")
+checkFileName <- paste("check_",message[["portfolioName"]],".txt",sep="")
+fileFrom <- file.path(sys[["homeDir"]],"data","checkFiles",message[["portfolioName"]],checkFileName) 
+fileTo <- file.path(checkDirectory,checkFileName)
 ok <- file.copy(from=fileFrom,to=fileTo)
 if (!ok) {
-	logger(paste("Error when copying check.txt in",checkDirectory,"!"))
+	logger(paste("Error when copying",checkFileName,"in",checkDirectory,"!"))
 	loggerDone()
 	return(0)
 }
@@ -61,7 +62,7 @@ loggerDone()
 
 
 ## -- inizio procedura di controllo parte specifica
-testSuite <- testSuiteFactory(testSuiteName=message[["portfolioName"]],directories="./",fileName="check.txt")
+testSuite <- testSuiteFactory(testSuiteName=message[["portfolioName"]],directories="./",fileName=checkFileName)
 
 testResults <- applyTestSuite(testSuite@testSuitesParsed[[1]],portfolio)
 testResult <- all(testResults)

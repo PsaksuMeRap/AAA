@@ -7,25 +7,27 @@
 
 setGeneric("replaceDirective",def=function(position,...) standardGeneric("replaceDirective"))
 
-setMethod("replaceDirective",
-		signature(position="PositionFutures_EQ"),
-		function(position) {
+## 2012-09-18
+## Questo metodo e' stato rimosso perche' i futuri sono conteggiati diversamente in DBPortfolioGenerale
+#setMethod("replaceDirective",
+#		signature(position="PositionFutures_EQ"),
+#		function(position) {
 			
-			positionValue <- (position@quantity * position@indexLevel) * position@valueOnePoint
+#			positionValue <- (position@quantity * position@indexLevel) * position@valueOnePoint
 			
-			position@value <- positionValue
+#			position@value <- positionValue
 			
 			# crate the corresponding money flow
-			currency <- position@security@currency
-			nameAndId <- paste(currency,"- ",gsub(" / ","  ",position@security@name),sep="")
-			securityConto_corrente <- new("Conto_corrente",currency=currency,
-					name=nameAndId,id=new("IdCharacter",nameAndId))
-			positionConto_corrente <- new("PositionConto_corrente",security=securityConto_corrente,
-					value=-1 *position@value,quantity=1,id=new("IdCharacter",nameAndId))
+#			currency <- position@security@currency
+#			nameAndId <- paste(currency,"- ",gsub(" / ","  ",position@security@name),sep="")
+#			securityConto_corrente <- new("Conto_corrente",currency=currency,
+#					name=nameAndId,id=new("IdCharacter",nameAndId))
+#			positionConto_corrente <- new("PositionConto_corrente",security=securityConto_corrente,
+#					value=-1 *position@value,quantity=1,id=new("IdCharacter",nameAndId))
 			
-			return(new("Positions",list(position,positionConto_corrente)))
-		}
-)
+#			return(new("Positions",list(position,positionConto_corrente)))
+#		}
+#)
 
 setMethod("replaceDirective",
 		signature(position="PositionOpzioni_su_azioni"),
@@ -41,11 +43,11 @@ setMethod("replaceDirective",
 			currency <- position@security@currency
 			if (position@security@optionType=="Call") {
 				quantity <- position@numberEquities
-				value1 <- toMoney(info$underlyingPrice * quantity,currency)
+				value1 <- toMoney(position@security@strike * quantity,currency)
 				value2 <- toMoney(-position@security@strike * position@numberEquities,currency)
 			} else {
 				quantity <- -position@numberEquities
-				value1 <- toMoney(info$underlyingPrice * quantity,currency)
+				value1 <- toMoney(position@security@strike * quantity,currency)
 				value2 <- toMoney(position@security@strike * position@numberEquities,currency)
 			}
 			

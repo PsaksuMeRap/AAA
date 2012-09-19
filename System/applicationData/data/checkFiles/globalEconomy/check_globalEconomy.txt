@@ -18,7 +18,7 @@ amount:>=20% ; = 0%
 
 # 4) verifica che non ci siano altre monete al di fuori di 
 # EUR,CHF,USD,JPY,AUD,INR,BRL
-currency:EUR,CHF,USD,AUD,INR,NOK,BRL ; >= 100%
+currency:EUR,CHF,USD,AUD,INR,NOK,BRL ; = 100%
 
 # 5) verifica che non si vada corto nelle monete consentite
 currency:EUR ; >= 0EUR

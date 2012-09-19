@@ -12,10 +12,16 @@ checkListStart:
 security:FX_Forward,Equity,Strutturati_EQ,ETF_equity,ETF_commodities,Fondi_azionari,Conto_corrente,Opzioni_su_azioni & currency:EUR ; > 0 EUR
 
 # verifica che almeno i 2/3 del fondo siano investiti in Equity e simili
-security:Equity,Strutturati_EQ,ETF_equity,Futures_EQ ; > 66.66%
+security:Equity,Fondi_azionari,Strutturati_EQ,ETF_equity + security:Futures_EQ & amount:>0% ; > 66.66%
+
+# verifica che gli eventuali futuri siano solo a titolo di copertura
+security:Equity,Fondi_azionari,Strutturati_EQ,ETF_equity,Futures_EQ ; > 0%
+
+# verifica che gli eventuali opzioni siano solo a titolo di copertura
+# security:Equity,Fondi_azionari,Strutturati_EQ,ETF_equity,Futures_EQ,Opzioni_su_azioni ; > 0% :: replace:Opzioni_su_azioni
 
 # Verifica che la liquidità non superi il 20% del NAV
-amount:>20% & security:Conto_corrente ; = 0%
+amount:>20% & security:Conto_corrente & security!:Conto_corrente_fittizio; = 0%
 
 # verifica che posizioni non conto corrente non superino il 10%
 amount:>10% & security:Equity,Fondi_azionari,ETF_commodities,Opzioni_su_azioni,Strutturati_EQ,ETF_equity,Futures_EQ ; = 0%
@@ -24,6 +30,6 @@ amount:>10% & security:Equity,Fondi_azionari,ETF_commodities,Opzioni_su_azioni,S
 amount:>5% & security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity,ETF_commodities,Futures_EQ ; <= 40%
 
 # verifica che sia investito unicamente negli strumenti sotto elencati
-security:Equity,Fondi_azionari,Futures_EQ,Conto_corrente,Opzioni_su_azioni,FX_Forward,Strutturati_EQ,ETF_equity,ETF_commodities,Bond,Obbligazioni_convertibili,Index_certificate ; >= 100%
+security:Equity,Fondi_azionari,Futures_EQ,Conto_corrente,Opzioni_su_azioni,FX_Forward,Strutturati_EQ,ETF_equity,ETF_commodities,Bond,Obbligazioni_convertibili,Index_certificate ; = 100%
 checkListEnd:
 externalSuiteFileName:

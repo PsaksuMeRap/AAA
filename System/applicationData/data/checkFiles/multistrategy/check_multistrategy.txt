@@ -9,7 +9,7 @@ outputDir: ./
 checkListStart:
 
 # 2) verifica che non ci siano posizioni diverse dalla liquidità che superino il 10% del NAV
-amount:>10% & security!:Conto_corrente,Depositi_a_termine ; = 0%
+amount:>10% & security!:Conto_corrente,Depositi_a_termine,Futures_EQ ; = 0%
 
 # 3) verifica che non ci siano posizioni che superino il 20% del NAV
 # amount:>=20% ; = 0%

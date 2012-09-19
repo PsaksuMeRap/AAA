@@ -62,12 +62,13 @@ setMethod("idFactory",signature(origin="AyrtonPosition"),
 			## 50,Futures_EQ
 			## 51,ETF_commodities
 			## 52,Credit_linked_note
-			## 53,Unclassified"
+			## 53,Unclassified
+			## 54,Conto_corrente_fittizio"
 			
 
 			if (is.na(origin@ID_AAA)) {
 				# check for particular instruments: Conto_corrente, 
-				no_ID_AAA_instruments <- c(5,6,7,18,19,21,22,40,50)			
+				no_ID_AAA_instruments <- c(5,6,7,18,19,21,22,40,50,54)			
 				if (!is.element(origin@ID_strumento,no_ID_AAA_instruments)) {
 					string <- "The following instrument is not implemented or is incomplete:"
 					string <- paste(string,

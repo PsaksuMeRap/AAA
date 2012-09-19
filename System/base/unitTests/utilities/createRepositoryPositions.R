@@ -165,5 +165,8 @@ createRepositoryPositions <- function() {
 	Opzioni_su_divise4 <- positionFactory(repository$Opzioni_su_divise4)
 	testData$Opzioni_su_divise4 <- positionFactory(repository$Opzioni_su_divise4)
 	
+	Conto_corrente_fittizio <- positionFactory(repository$Conto_corrente_fittizio)
+	testData$Conto_corrente_fittizio <- positionFactory(repository$Conto_corrente_fittizio)
+	
 	return(testData)
 }

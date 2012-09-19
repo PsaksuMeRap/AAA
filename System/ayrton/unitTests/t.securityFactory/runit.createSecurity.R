@@ -8,6 +8,25 @@
 # Author: claudio
 ###############################################################################
 
+test.shouldCreateConto_corrente_fittizio <- function() {
+	## uses a default method
+	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
+	
+	## create the origin
+	repository <- createRepositoryAyrtonPositions()
+	origin <- repository$Conto_corrente_fittizio
+	class(origin) <- "Ayrton_Conto_corrente_fittizio"
+	
+	ccFittizio <- createSecurity(origin)
+	
+	checkEquals(is(ccFittizio)[[1]],"Conto_corrente_fittizio")
+	checkEquals(ccFittizio@name,"SMI Futures 21-09-2012 / 10")
+	checkEquals(ccFittizio@currency,new("Currency","CHF"))
+	checkEquals(ccFittizio@id,new("IdAyrton",idAAA=new("IdAAA_string","SMI Futures 21-09-2012 / 10"),idStrumento=54))
+	
+}
+
+
 test.shouldCreateUnclassified <- function() {
 	## uses a default method
 	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")

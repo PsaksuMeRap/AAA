@@ -64,6 +64,8 @@ warnings()
 source("./riskman/unitTests/tests.R")
 
 dirs <- "./riskman/unitTests/t.Apply"
+source("./riskman/unitTests/tests.R")
+
 testsuite.lists <- defineTestSuite("Tests riskman",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
 warnings()

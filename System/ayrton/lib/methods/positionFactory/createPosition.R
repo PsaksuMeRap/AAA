@@ -33,6 +33,17 @@ setMethod("createPosition",signature(security="Conto_corrente",origin="AyrtonPos
 
 			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
 			value <- repositories$exchangeRates$exchange(value,security@currency)
+			
+			if (is(security,"Conto_corrente_fittizio")) {
+				position <- new("PositionConto_corrente_fittizio",
+						id=security@id,
+						security=security,
+						quantity=1.0,
+						value=value)
+				
+				return(position)				
+			}
+			
 			position <- new("PositionConto_corrente",
 					id=security@id,
 					security=security,

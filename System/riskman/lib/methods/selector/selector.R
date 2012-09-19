@@ -51,17 +51,6 @@ setMethod("selector",signature(x="MaturityHorizonSelectionCriterium",positions="
 					return(result)
 				}
 				
-				if (is(position@security,"Bond")) {
-					bondMaturity <- as.Date(position@security@maturity)
-					maturityInYears <- as.integer(bondMaturity - baseDate)/365
-					if (maturityInYears <= 3) maturityHorizon <- "<3Y"
-					if (maturityInYears > 3) maturityHorizon <- ">3Y"
-					
-					if (identical(maturityHorizon,values)) result <- TRUE
-					if (x@negation) result <- !result
-					return(result)
-				}
-				
 				if (is(position@security,"Fondi_obbligazionari")) {
 					if (grepl("<3Y",x=position@security@name)) {
 						averageHorizon = "<3Y"
@@ -85,6 +74,18 @@ setMethod("selector",signature(x="MaturityHorizonSelectionCriterium",positions="
 					if (x@negation) result <- !result
 					return(result)
 				}		
+				
+				if (is(position@security,"Bond")) {
+					bondMaturity <- as.Date(position@security@maturity)
+					maturityInYears <- as.integer(bondMaturity - baseDate)/365
+					if (maturityInYears <= 3) maturityHorizon <- "<3Y"
+					if (maturityInYears > 3) maturityHorizon <- ">3Y"
+					
+					if (identical(maturityHorizon,values)) result <- TRUE
+					if (x@negation) result <- !result
+					return(result)
+				}
+	
 				return(result)
 			}
 			

@@ -54,7 +54,10 @@ setMethod("check",signature(x="Position",selectionCriterium="AmountSelectionCrit
 setMethod("check",signature(x="Position",selectionCriterium="SecuritySelectionCriterium"),
 		function(x,selectionCriterium) {
 			classes <- selectionCriterium@values
-			securityClass <- class(x@security)
+			securityClass <- class(x@security)[[1]]
+			
+			# 2012-09-17 eventualmente creare nuovo selectionCriterium per prendere anche le sottoclassi			
+			# securityClass <- is(x@security)
 			result <- any(is.element(securityClass,classes))
 			if (selectionCriterium@negation) result <- !result
 			return(result)			

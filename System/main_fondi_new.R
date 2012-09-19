@@ -37,7 +37,7 @@ repositories$politicaInvestimento <- create_repositoryPoliticaInvestimento()
 repositories$instruments <- create_repositoryInstruments()
 repositories$exchangeRates <- create_repositoryExchangeRates()
 
-checkDirectory <- "/home/claudio/XP/"
+checkDirectory <- "/home/claudio/XP/FondiNew"
 setwd(checkDirectory)
 ## -- fine procedura controllo - parte generale
 
@@ -67,7 +67,7 @@ if (FALSE) {
 		
 		fundPortfolios <- portfoliosFactory(fundPortfolios)
 
-		AyrtonTestSuite <- testSuiteFactory(testSuiteName="Fondi OpenCapital",directories="./FondiNew")
+		AyrtonTestSuite <- testSuiteFactory(testSuiteName="Fondi OpenCapital",directories="./")
 		
 		results <- lapply(AyrtonTestSuite@testSuitesParsed,applyTestSuite,fundPortfolios,date)
 	}
@@ -78,7 +78,7 @@ if (FALSE) {
 	
 	fundPortfolios <- portfoliosFactory(fundPortfolios)
 	
-	AyrtonTestSuite <- testSuiteFactory(testSuiteName="Fondi OpenCapital",directories="./FondiNew")
+	AyrtonTestSuite <- testSuiteFactory(testSuiteName="Fondi OpenCapital",directories="./")
 
 	results <- lapply(AyrtonTestSuite@testSuitesParsed,applyTestSuite,fundPortfolios)
 }

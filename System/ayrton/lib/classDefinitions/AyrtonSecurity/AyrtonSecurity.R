@@ -84,6 +84,8 @@ setClass("Ayrton_Swaps",contains="AyrtonPosition")
 
 setClass("Ayrton_Conto_corrente",contains="AyrtonPosition")
 
+setClass("Ayrton_Conto_corrente_fittizio",contains="AyrtonPosition")
+
 setClass("Ayrton_Call_Geld",contains="AyrtonPosition")
 
 setClass("Ayrton_Trigger_Equity_Yield_Note",contains="AyrtonPosition")

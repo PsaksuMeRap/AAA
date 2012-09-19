@@ -900,6 +900,22 @@ createRepositoryAyrtonPositions <- function() {
 	A_Opzioni_su_divise4 <- x
 	testData$Opzioni_su_divise4 <- x
 	
+	# create a valid Conto_corrente_fittizio
+	x <- new("AyrtonPosition")
+	x@Cliente <- "pippo210"
+	x@Strumento <- "L"
+	x@Moneta <- "CHF"
+	x@Saldo <- 4590600
+	x@Nome <- "SMI Futures 21-09-2012 / 10"
+	x@ValoreMercatoMonetaCHF <- 4590600
+	x@ID_AAA <- NA_real_
+	x@ID_strumento <- 54
+	class(x) <- "AyrtonPosition"
+	
+	A_Conto_corrente_fittizio <- x
+	testData$Conto_corrente_fittizio <- x
+	
+	
 	return(testData)
 }
 

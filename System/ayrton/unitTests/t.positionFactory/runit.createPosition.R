@@ -290,6 +290,32 @@ test.shouldCreatePositionConto_corrente<- function() {
 	deallocateTestRepositories("instruments")
 }
 
+test.shouldCreatePositionConto_corrente<- function() {	
+	
+	# uses a default method
+	source("./base/unitTests/utilities/allocateTestRepositories.R")	
+	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
+	
+	# create the instrument repository	
+	allocateTestRepositories("instruments")
+	mySetwd()
+	
+	# create the origin
+	repository <- createRepositoryAyrtonPositions()
+	origin <- repository$Conto_corrente_fittizio
+	
+	cc <- securityFactory(origin)
+	
+	cc <- createPosition(cc,origin)
+	
+	checkEquals(is(cc)[1],"PositionConto_corrente_fittizio")
+	checkEquals(cc@id,cc@security@id)
+	checkEquals(cc@quantity,1.0)
+	checkEquals(cc@value,toMoney(4590600,"CHF"))
+	
+	# restore initial conditions	
+	deallocateTestRepositories("instruments")
+}
 
 
 test.shouldCreatePositionObbligazioni_convertibili <- function() {	
