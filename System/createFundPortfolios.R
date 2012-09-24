@@ -3,18 +3,17 @@
 # Author: Claudio
 ###############################################################################
 
-rm(list=ls(all=TRUE))
-
 library("RODBC")
 library("tcltk")
 library("stringr")
 
 if(.Platform$OS.type=="windows") {
 	homeDir <- "C:/riskman"
-	sourceCodeDir <- getwd()
+	if (!exists("sourceCodeDir")) sourceCodeDir <- getwd() else setwd(sourceCodeDir)
 } else {
 	homeDir <- "/home/claudio/riskman"
-	sourceCodeDir <- getwd()
+	if (!exists("sourceCodeDir")) sourceCodeDir <- getwd() else setwd(sourceCodeDir)
+
 }
 
 
