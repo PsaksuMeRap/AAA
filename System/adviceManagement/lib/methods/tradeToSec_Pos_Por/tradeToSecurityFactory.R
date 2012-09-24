@@ -12,7 +12,7 @@ parseOptionFxName <- function(name) {
 	
 	# identify the expiryDate
 	expiryDate <- tmp[2]
-	monthAndDay <- substr(expiryDate,1,5)
+	# monthAndDay <- substr(expiryDate,1,5)
 	twoDigitsYear <- substr(expiryDate,7,8)
 	expiryDate <- paste(substr(expiryDate,1,6),"20",twoDigitsYear,sep="")
 	expiryDate <- format(strptime(expiryDate,format="%m/%d/%Y"),"%d-%m-%Y")

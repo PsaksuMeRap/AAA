@@ -5,18 +5,18 @@
 
 source("./ayrton/lib/methods/positionsFactory/matchPositionToAyrtonPosition.R")
 
-completePositionWithAccruedInterest <- function(positionWithAcc,accPositions) {
-	# positionWithAcc: a variable having an accruedInterest slot
-	# accPositions: a list of AyrtonPositions of type accruedInterest
+completePositionWithAccruedInterest <- function(positionWithAcc,oaccPositions) {
+	# positionWithAcc: a position having an accruedInterest slot
+	# oaccPositions: a list of AyrtonPositions of type accruedInterest
 
-	isMatchedAccruedInterest <- sapply(accPositions,matchPositionToAyrtonPosition,positionWithAcc)
+	isMatchedAccruedInterest <- sapply(oaccPositions,matchPositionToAyrtonPosition,positionWithAcc)
 	if (!any(isMatchedAccruedInterest)) {
 		message <- "Error from completePositionWithAccruedInterest.\n The position:\n"
 		message <- paste(message,as.character(positionWithAcc),"\n",sep="")
 		message <- paste(message,"has no matching accruedInterest.")
 		stop(message)
 	}
-	matchedAccruedInterest <- accPositions[isMatchedAccruedInterest]
+	matchedAccruedInterest <- oaccPositions[isMatchedAccruedInterest]
 	# compute the value of the accruedInterest
 	amount <- matchedAccruedInterest[[1]]@ValoreMercatoMonetaCHF
 	value <- toMoney(amount,"CHF")

@@ -1,8 +1,3 @@
-# TODO: Add comment
-# 
-# Author: claudio
-###############################################################################
-
 setGeneric("idFactory",def=function(origin,...) standardGeneric("idFactory"))
 
 setMethod("idFactory",signature(origin="AyrtonPosition"),
@@ -73,26 +68,40 @@ setMethod("idFactory",signature(origin="AyrtonPosition"),
 				
 				return(idAyrton)
 			}
-			
-			
-			if (is.na(origin@ID_AAA)) {
-				# check for particular instruments: Conto_corrente, 
-				no_ID_AAA_instruments <- c(5,6,7,18,19,21,22,40,50,54)			
-				if (!is.element(origin@ID_strumento,no_ID_AAA_instruments)) {
-					string <- "The following instrument is not implemented or is incomplete:"
-					string <- paste(string,
-							"\n  ID_strumento: ",origin@ID_strumento,
-							"\n  ID_AAA: ",origin@ID_AAA,
-							"\n  Name: ",origin@Nome,sep="")
-					stop(string)
-				}
+			# consider Anticipi_fissi and Depositi_a_termine
+			if (is.element(origin@ID_strumento,c(6,7))) {
 				idAyrton <- new("IdAyrton",
-						idAAA=new("IdAAA_string",origin@Nome),
+						idAAA=new("IdAAA_character",origin@Nome),
 						idStrumento=origin@ID_strumento)
+				
+				return(idAyrton)
+			}
+			# consider Opzioni_su_azioni
+			if (origin@ID_strumento==18) {
+				parseOptionOnEquityName <- function(name) {
+					tmp <- strsplit(name,"/")[[1]]
+					tmp <- str_trim(tmp)
+					names(tmp) <- c("numberEquities","callPut","underlyingName","maturity","strike","premium","ISIN","underlyingPrice")
+					tmp <- as.list(tmp)
+					tmp[["numberEquities"]] <- as.numeric(tmp[["numberEquities"]])
+					if (tmp[["callPut"]]=="Call") tmp[["callPut"]] <- "C" else tmp[["callPut"]] <- "P"
+					
+					tmp[["maturity"]] <- format(strptime(tmp[["maturity"]],format="%d-%m-%y"),"%d-%m-%Y")
+					tmp[["strike"]] <- as.numeric(substr(tmp[["strike"]],8,nchar(tmp[["strike"]])))
+					tmp[["underlyingPrice"]] <- as.numeric(tmp[["underlyingPrice"]])
+					#'-1000 / Call / Syngenta AG / 17-02-12 / Strike 290 / Premio(5500 CHF) / CH0011027469 / 337.90'
+					return(tmp)
+				}
+				parsedName <- parseOptionOnEquityName(origin@Nome)
+				idAyrton <- new("IdAyrton",
+						idAAA=new("IdAAA_character",parsedName[["ISIN"]]),
+						idStrumento=origin@ID_strumento)
+				
 				return(idAyrton)
 			}
 			
-			
 		}
 )
+
+		
 

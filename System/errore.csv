@@ -1,0 +1,3 @@
+Cliente,Strumento,Moneta,Saldo,NumeroValore,Nome,PrezzoMedio,PrezzoMercato,ValorePosizione,ValoreMonetaRiferimento,Evoluzione,Ordine,Categoria,ValoreMercatoMonetaCHF,ValoreMercatoMonetaEUR,ValoreMercatoMonetaUSD,ID_AAA,ID_strumento,ID_transazione,Ticker_indice_per_BETA,Valuta,VariazioneFX
+CB-ACC GLOBAL Econ,O      ,CHF,500000,CH0019854212,20121130 - 2.375% Total 30-11-12,102.55,100.43,502150,502150,-0.0206728425158459,D ,Obbligazioni e simili          ,502150,415717.177408934,539018.892228424,1803,2,,,,
+CB-ACC GLOBAL Econ,Oacc,CHF,500000,CH0019854212,20121130 - 2.375% Total 30-11-12 Pro-rata,,,9598.9580078125,9598.9580078125,,D,Obbligazioni e simili          ,9598.9580078125,7946.73250836344,10303.733370344,1803,2,,,,
