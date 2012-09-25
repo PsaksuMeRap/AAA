@@ -15,7 +15,7 @@ amount:>10% & security!:Conto_corrente,Depositi_a_termine,Futures_EQ ; = 0%
 # amount:>=20% ; = 0%
 
 # verifica che le posizioni che superano il 5% del NAV non superino complessivamente il 40% dello stesso
-amount:>5% & security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity,ETF_commodities,Futures_EQ ; <= 40%
+amount:>5% & security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity,ETF_commodities_gold,Futures_EQ ; <= 40%
 
 # 4) verifica che non ci siano altre monete al di fuori di EUR,CHF,USD,JPY,AUD,INR
 currency:EUR,USD,SEK,NZD,NOK,JPY,GBP,DKK,CHF,CAD,AUD ; = 100%

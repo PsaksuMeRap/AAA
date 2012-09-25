@@ -1,0 +1,15 @@
+testSuiteName: test importazione di una testSuite
+creationDate: 2010-11-05
+creator: Claudio Ortelli
+# testSuiteKind: general - specific to portfolio
+testSuiteKind: general
+testTarget: pippo5
+reportTo: claudio.ortelli@usi.ch; info@bacep.com
+outputFile:
+groupDefinition: allowedInstruments = conto_corrente,bond,mamma
+groupDefinition: allowedCurrencies = USD,EUR,CHF
+checkListStart:
+   security:bond & currency:CHF & pippo:allowedInstruments   ; > 5%  
+currency:USD & security:equity,allowedCurrencies & pippo:allowedInstruments  ; < 10%  
+checkListEnd:
+externalSuiteFileName:

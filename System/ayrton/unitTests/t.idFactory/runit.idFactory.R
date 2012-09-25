@@ -38,13 +38,18 @@ test.createIdForInstrumentsWithIsin <- function() {
 	fondiAzionari <- repository$Fondi_azionari1
 	#15
 	indexCertificate <- repository$Index_certificate1
-	# metalliPreziosi <- repository$Metalli_preziosi1
+	#21
+	metalliPreziosi <- repository$Metalli_preziosi1
+	#22
+	fxForward <- repository$FX_Forward1
 	#25
 	fondiImmobiliari <- repository$Fondi_immobiliari1
 	#26
 	fondiMisti <- repository$Fondi_misti
 	#30
 	dirittiAumentoCapitaleAzionario <- repository$Diritti_aumento_capitale_azionario1
+	#40 
+	contoCorrente <- repository$Conto_corrente1
 	#49
 	strutturatiFI <- repository$strutturati_FI
 	#50
@@ -54,17 +59,24 @@ test.createIdForInstrumentsWithIsin <- function() {
 	#45
 	etfEquity <- repository$ETF_equity1
 	#51
-	etfCommodity <- repository$ETF_commodities
+	etfCommodityGold <- repository$ETF_commodities_gold
 	#52
 	creditLinkedNote <- repository$Credit_linked_note
-
+	#55
+	etfCommodityPlatinum <- repository$ETF_commodities_platinum
+	
 	# check creditLinkedNote
 	result <- idFactory(creditLinkedNote)
 	checkEquals(as.character(result@idAAA),"14723815")
 	checkEquals(as.numeric(result@idStrumento),52)
 	
-	# check etfCommodity
-	result <- idFactory(etfCommodity)
+	# check etfCommodityPlatinum
+	result <- idFactory(etfCommodityPlatinum)
+	checkEquals(as.character(result@idAAA),"CH0116014934")
+	checkEquals(as.numeric(result@idStrumento),55)
+	
+	# check etfCommodityGold
+	result <- idFactory(etfCommodityGold)
 	checkEquals(as.character(result@idAAA),"GB00B00FHZ82")
 	checkEquals(as.numeric(result@idStrumento),51)
 	
@@ -102,6 +114,21 @@ test.createIdForInstrumentsWithIsin <- function() {
 	result <- idFactory(fondiImmobiliari)
 	checkEquals(as.character(result@idAAA),"1968401EU")
 	checkEquals(as.numeric(result@idStrumento),25)
+	
+	# check fxForward
+	result <- idFactory(fxForward)
+	checkEquals(as.character(result@idAAA),"CHF26-03-2012")
+	checkEquals(as.numeric(result@idStrumento),22)
+	
+	# check Conto_corrente
+	result <- idFactory(contoCorrente)
+	checkEquals(as.character(result@idAAA),"CHF-chf")
+	checkEquals(as.numeric(result@idStrumento),40)
+	
+	# check MetalliPreziosi
+	result <- idFactory(MetalliPreziosi)
+	checkEquals(as.character(result@idAAA),"XAU")
+	checkEquals(as.numeric(result@idStrumento),21)
 	
 	# check indexCertificate
 	result <- idFactory(indexCertificate)
@@ -178,5 +205,21 @@ test.createIdForOptionInstruments <- function() {
 	
 	# check opzioniSuAzioni
 	result <- idFactory(opzioniSuAzioni)
+	checkEquals(result@idAAA,new("IdAAA_character","CH0011027469290C17-02-2012"))
+	checkEquals(result@idStrumento,18)
 	
+	opzioniSuDivise <- repository$Opzioni_su_divise1
+	
+	# check opzioniSuDivise
+	result <- idFactory(opzioniSuDivise)
+	checkEquals(result@idAAA,new("IdAAA_character","EURUSD1.295P17-08-2012"))
+	checkEquals(result@idStrumento,19)
+	
+	opzioniSuObbligazioni <- repository$opzioni_su_obbligazioni
+	
+	# check opzioniSuObbligazioni
+	result <- idFactory(opzioniSuObbligazioni)
+	checkEquals(result@idAAA,new("IdAAA_character","EU0011027469103.5P17-08-2012"))
+	checkEquals(result@idStrumento,20)
 }
+

@@ -108,7 +108,9 @@ setClass("Ayrton_Futures_EQ",contains="AyrtonPosition")
 
 setClass("Ayrton_Unclassified",contains="AyrtonPosition")
 
-setClass("Ayrton_ETF_commodities",contains="AyrtonPosition")
+setClass("Ayrton_ETF_commodities_gold",contains="AyrtonPosition")
+
+setClass("Ayrton_ETF_commodities_platinum",contains="AyrtonPosition")
 
 setClass("Ayrton_Credit_linked_note",contains="AyrtonPosition")
 

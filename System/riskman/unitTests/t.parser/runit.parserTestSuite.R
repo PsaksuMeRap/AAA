@@ -75,3 +75,18 @@ test.shouldParserTestSuite <- function() {
 	checkEquals(unclass(parsedTestSuite@checkStrings[[1]]),checkStrings)
 	
 }
+
+test.shouldParserTestSuiteWithGroupDefinition <- function() {
+	fileName <- "testImportTestSuiteWithGroupDefinition.txt"
+	directory <- "./riskman/unitTests/data"
+	
+	testSuite <- new("TestSuite",directory=directory,fileName=fileName)
+	
+	# check parser 
+	parsedTestSuite <- parser(testSuite)
+	isGroupDefinition <- names(parsedTestSuite@configLines)=="groupDefinition"
+	checkEquals(isGroupDefinition,c(rep(FALSE,7),TRUE,TRUE,FALSE))
+	checkEquals(parsedTestSuite@configLines[isGroupDefinition],
+			c(groupDefinition="allowedInstruments = conto_corrente,bond,mamma",groupDefinition="allowedCurrencies = USD,EUR,CHF"))
+
+}

@@ -640,7 +640,7 @@ createRepositoryAyrtonPositions <- function() {
 	x@Moneta <- 'CHF'
 	x@Saldo <- -829060.081320845
 	x@NumeroValore <- ""
-	x@Nome <- 'CHF -1,000,000.00 Valuta 26-03-2012'
+	x@Nome <- "CHF -1,000,000.00 Valuta 26-03-2012"
 	x@ValoreMercatoMonetaCHF <- -1e+06
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 22
@@ -833,14 +833,30 @@ createRepositoryAyrtonPositions <- function() {
 	x@Moneta <- 'USD'
 	x@Saldo <- 3000
 	x@NumeroValore <- "GB00B00FHZ82"
-	x@Nome <- 'Gold Bullion Securities'
+	x@Nome <- "Gold Bullion Securities"
 	x@ValoreMercatoMonetaCHF <- 434745.41
 	x@ID_AAA <- 2430
 	x@ID_strumento <- 51
 	class(x) <- "AyrtonPosition"
 
-	A_ETF_commodities <- x
-	testData$ETF_commodities <- x
+	A_ETF_commodities_gold <- x
+	testData$ETF_commodities_gold <- x
+	##---------------------
+
+	x <- new("AyrtonPosition")
+	x@Cliente <- 'pippo202'
+	x@Strumento <- 'A'
+	x@Moneta <- 'USD'
+	x@Saldo <- 276
+	x@NumeroValore <- "CH0116014934"
+	x@Nome <- "IS Platinum ETF"
+	x@ValoreMercatoMonetaCHF <- 37192.09
+	x@ID_AAA <- 2461
+	x@ID_strumento <- 55
+	class(x) <- "AyrtonPosition"
+	
+	A_ETF_commodities_platinum <- x
+	testData$ETF_commodities_platinum <- x
 	##---------------------
 	
 	
@@ -893,6 +909,22 @@ createRepositoryAyrtonPositions <- function() {
 	
 	A_proRataObbligazioni_convertibili <- x
 	testData$proRataObbligazioni_convertibili <- x
+	
+	# create a valid opzioni_su_obbligazioni
+	x <- new("AyrtonPosition")
+	x@Cliente <- "pippo210"
+	x@Strumento <- "OV"
+	x@Moneta <- "EUR"
+	x@Saldo <- 125000
+	x@NumeroValore <- ""
+	x@Nome <- "PUT 17-08-12 Strike 103.5 EUR 125000 Premio(-345.45 EUR) EU0011027469 "
+	x@ValoreMercatoMonetaCHF <- 242.47
+	x@ID_AAA <- NA_real_
+	x@ID_strumento <- 20
+	class(x) <- "AyrtonPosition"
+	
+	A_opzioni_su_obbligazioni <- x
+	testData$opzioni_su_obbligazioni <- x
 	
 	# create a valid opzioni_su_divise
 	x <- new("AyrtonPosition")

@@ -55,12 +55,13 @@ setMethod("idFactory",signature(origin="AyrtonPosition"),
 			## 48,Strutturati_EQ
 			## 49,Strutturati_FI
 			## 50,Futures_EQ
-			## 51,ETF_commodities
+			## 51,ETF_commodities_gold
 			## 52,Credit_linked_note
 			## 53,Unclassified
 			## 54,Conto_corrente_fittizio"
+			## 55,ETF_commodities_platinum
 			
-			instrumentsWithISIN <- c(1,2,3,4,5,8:17,23:30,32:38,42:52,54)
+			instrumentsWithISIN <- c(1,2,3,4,5,8:17,23:30,32:38,42:55)
 			if (is.element(origin@ID_strumento,instrumentsWithISIN)) {
 				idAyrton <- new("IdAyrton",
 						idAAA=new("IdAAA_character",origin@NumeroValore),
@@ -76,6 +77,14 @@ setMethod("idFactory",signature(origin="AyrtonPosition"),
 				
 				return(idAyrton)
 			}
+			# consider Conto_corrente
+			if (origin@ID_strumento==40) {
+				idAyrton <- new("IdAyrton",
+						idAAA=new("IdAAA_character",paste(origin@Moneta,tolower(origin@Moneta),sep="-")),
+						idStrumento=origin@ID_strumento)
+				
+				return(idAyrton)
+			}
 			# consider Opzioni_su_azioni
 			if (origin@ID_strumento==18) {
 				parseOptionOnEquityName <- function(name) {
@@ -84,22 +93,91 @@ setMethod("idFactory",signature(origin="AyrtonPosition"),
 					names(tmp) <- c("numberEquities","callPut","underlyingName","maturity","strike","premium","ISIN","underlyingPrice")
 					tmp <- as.list(tmp)
 					tmp[["numberEquities"]] <- as.numeric(tmp[["numberEquities"]])
-					if (tmp[["callPut"]]=="Call") tmp[["callPut"]] <- "C" else tmp[["callPut"]] <- "P"
 					
+					if (tmp[["callPut"]]=="Call") tmp[["callPut"]] <- "C" else tmp[["callPut"]] <- "P"
 					tmp[["maturity"]] <- format(strptime(tmp[["maturity"]],format="%d-%m-%y"),"%d-%m-%Y")
-					tmp[["strike"]] <- as.numeric(substr(tmp[["strike"]],8,nchar(tmp[["strike"]])))
+					tmp[["strike"]] <- substr(tmp[["strike"]],8,nchar(tmp[["strike"]]))
 					tmp[["underlyingPrice"]] <- as.numeric(tmp[["underlyingPrice"]])
 					#'-1000 / Call / Syngenta AG / 17-02-12 / Strike 290 / Premio(5500 CHF) / CH0011027469 / 337.90'
 					return(tmp)
 				}
-				parsedName <- parseOptionOnEquityName(origin@Nome)
+				info <- parseOptionOnEquityName(origin@Nome)
+				idAAA <- paste(info[["ISIN"]],info[["strike"]],info[["callPut"]],info[["maturity"]],sep="")
 				idAyrton <- new("IdAyrton",
-						idAAA=new("IdAAA_character",parsedName[["ISIN"]]),
+						idAAA=new("IdAAA_character",idAAA),
 						idStrumento=origin@ID_strumento)
 				
 				return(idAyrton)
 			}
-			
+			# consider Opzioni_su_divise
+			if (origin@ID_strumento==19) {
+				parseOptionOnFxName <- function(name) {
+					tmp <- strsplit(name," ")[[1]]
+					tmp <- str_trim(tmp)
+					names(tmp) <- c("callPut","maturity","strike_label","strike","underlyingName","amount","premium","premiumCurrency")
+					tmp <- as.list(tmp)
+					
+					if (tmp[["callPut"]]=="PUT") tmp[["callPut"]] <- "P" else tmp[["callPut"]] <- "C"
+					tmp[["maturity"]] <- format(strptime(tmp[["maturity"]],format="%d-%m-%y"),"%d-%m-%Y")
+					#"PUT 17-08-12 Strike 1.295 EUR 125000 Premio(-8293.75 USD)"
+					return(tmp)
+				}
+				info <- parseOptionOnFxName(origin@Nome)
+				idAAA <- paste(info[["underlyingName"]],origin@Moneta,info[["strike"]],info[["callPut"]],info[["maturity"]],sep="")
+				idAyrton <- new("IdAyrton",
+						idAAA=new("IdAAA_character",idAAA),
+						idStrumento=origin@ID_strumento)
+				
+				return(idAyrton)
+			}
+			# consider Opzioni_su_obbligazioni
+			if (origin@ID_strumento==20) {
+				parseOptionOnBondName <- function(name) {
+					tmp <- strsplit(name," ")[[1]]
+					tmp <- str_trim(tmp)
+					names(tmp) <- c("callPut","maturity","strike_label","strike","currency","amount","premium","premiumCurrency","ISIN")
+					tmp <- as.list(tmp)
+					
+					if (tmp[["callPut"]]=="PUT") tmp[["callPut"]] <- "P" else tmp[["callPut"]] <- "C"
+					tmp[["maturity"]] <- format(strptime(tmp[["maturity"]],format="%d-%m-%y"),"%d-%m-%Y")
+					#"PUT 17-08-12 Strike 103.5 EUR 125000 Premio(-345.45 EUR) EU0011027469"
+					return(tmp)
+				}
+				info <- parseOptionOnBondName(origin@Nome)
+				idAAA <- paste(info[["ISIN"]],info[["strike"]],info[["callPut"]],info[["maturity"]],sep="")
+				idAyrton <- new("IdAyrton",
+						idAAA=new("IdAAA_character",idAAA),
+						idStrumento=origin@ID_strumento)
+				
+				return(idAyrton)
+			}
+			# consider Metalli_preziosi
+			if (origin@ID_strumento==21) {
+				idAyrton <- new("IdAyrton",
+						idAAA=new("IdAAA_character",origin@Nome),
+						idStrumento=origin@ID_strumento)
+				
+				return(idAyrton)
+			}			
+			# consider FX_forward
+			if (origin@ID_strumento==22) {
+				parseFXForwardName <- function(name) {
+					tmp <- strsplit(name," ")[[1]]
+					tmp <- str_trim(tmp)
+					names(tmp) <- c("currency","amount","valuta_label","valueDate")
+					tmp <- as.list(tmp)
+					
+					#"CHF -1,000,000.00 Valuta 26-03-2012"
+					return(tmp)
+				}
+				info <- parseFXForwardName(origin@Nome)
+				idAAA <- paste(origin@Moneta,info[["valueDate"]],sep="")
+				idAyrton <- new("IdAyrton",
+						idAAA=new("IdAAA_character",idAAA),
+						idStrumento=origin@ID_strumento)
+				
+				return(idAyrton)
+			}
 		}
 )
 
