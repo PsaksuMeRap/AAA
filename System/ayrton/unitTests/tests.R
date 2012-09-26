@@ -7,8 +7,7 @@
 ## test globale
 dirs = c(
 		"./ayrton/unitTests/t.ayrtonPositions",
-		"./ayrton/unitTests/t.explode",				
-		"./ayrton/unitTests/t.idAyrton",		
+		"./ayrton/unitTests/t.explode",			
 		"./ayrton/unitTests/t.idFactory",
 		"./ayrton/unitTests/t.portfolioFactory",
 		"./ayrton/unitTests/t.portfoliosFactory",

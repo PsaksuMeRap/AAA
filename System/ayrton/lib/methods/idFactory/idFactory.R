@@ -60,8 +60,8 @@ setMethod("idFactory",signature(origin="AyrtonPosition"),
 			## 53,Unclassified
 			## 54,Conto_corrente_fittizio"
 			## 55,ETF_commodities_platinum
-			
-			instrumentsWithISIN <- c(1,2,3,4,5,8:17,23:30,32:38,42:55)
+				
+			instrumentsWithISIN <- c(1,2,3,4,5,8:17,23:30,32:38,42:53,55)
 			if (is.element(origin@ID_strumento,instrumentsWithISIN)) {
 				idAyrton <- new("IdAyrton",
 						idAAA=new("IdAAA_character",origin@NumeroValore),
@@ -77,8 +77,8 @@ setMethod("idFactory",signature(origin="AyrtonPosition"),
 				
 				return(idAyrton)
 			}
-			# consider Conto_corrente
-			if (origin@ID_strumento==40) {
+			# consider Conto_corrente and conto_corrente_fittizio
+			if (is.element(origin@ID_strumento,c(40,54))) {
 				idAyrton <- new("IdAyrton",
 						idAAA=new("IdAAA_character",paste(origin@Moneta,tolower(origin@Moneta),sep="-")),
 						idStrumento=origin@ID_strumento)
@@ -178,6 +178,14 @@ setMethod("idFactory",signature(origin="AyrtonPosition"),
 				
 				return(idAyrton)
 			}
+			
+			string <- "The idFactory method for the following instrument is not implemented:"
+			string <- paste(string,
+						"\n  Name: ",origin@Nome,
+						"\n  ID_strumento: ",origin@ID_strumento,
+						"\n  ID_AAA: ",origin@ID_AAA,sep="")
+			stop(string)
+
 		}
 )
 

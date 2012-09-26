@@ -22,7 +22,7 @@ test.shouldCreateConto_corrente_fittizio <- function() {
 	checkEquals(is(ccFittizio)[[1]],"Conto_corrente_fittizio")
 	checkEquals(ccFittizio@name,"SMI Futures 21-09-2012 / 10")
 	checkEquals(ccFittizio@currency,new("Currency","CHF"))
-	checkEquals(ccFittizio@id,new("IdAyrton",idAAA=new("IdAAA_string","SMI Futures 21-09-2012 / 10"),idStrumento=54))
+	checkEquals(ccFittizio@id,new("IdAyrton",idAAA=new("IdAAA_character","CHF-chf"),idStrumento=54))
 	
 }
 
@@ -40,7 +40,7 @@ test.shouldCreateUnclassified <- function() {
 	
 	checkEquals(unclassified@name,"Roche Holding Gs")
 	checkEquals(unclassified@currency,new("Currency","CHF"))
-	checkEquals(unclassified@id,new("IdAyrton",idAAA=new("IdAAA_numeric",824),idStrumento=1))
+	checkEquals(unclassified@id,new("IdAyrton",idAAA=new("IdAAA_character","1203204CH"),idStrumento=1))
 	
 }
 
@@ -63,7 +63,7 @@ test.shouldCreateEquity <- function() {
 	
 	checkEquals(equity@name,"Roche Holding Gs")
 	checkEquals(equity@currency,new("Currency","CHF"))
-	checkEquals(equity@id,new("IdAyrton",idAAA=new("IdAAA_numeric",824),idStrumento=1))
+	checkEquals(equity@id,new("IdAyrton",idAAA=new("IdAAA_character","1203204CH"),idStrumento=1))
 	
 	## same test but with equity in EUR
 	origin <- repository$equity2
@@ -91,7 +91,7 @@ test.shouldCreateBond <- function() {
 	bond <- createSecurity(origin)
 	
 	checkEquals(bond@name,"20130603 - 3.625% Pfizer 03-06-13")
-	checkEquals(bond@id,new("IdAyrton",idAAA=new("IdAAA_numeric",1218),idStrumento=2))
+	checkEquals(bond@id,new("IdAyrton",idAAA=new("IdAAA_character","10234542"),idStrumento=2))
 	checkEquals(bond@maturity,"2013-06-03")
 	
 }
@@ -108,7 +108,7 @@ test.shouldCreateFondi_obbligazionari <- function() {
 	fondo <- createSecurity(origin)
 	
 	checkEquals(fondo@name,"20201231 - 0% <3Y - CB-Accent Lux Sicav - Fixed Income EUR 31-12-20")
-	checkEquals(fondo@id,new("IdAyrton",idAAA=new("IdAAA_numeric",825),idStrumento=3))
+	checkEquals(fondo@id,new("IdAyrton",idAAA=new("IdAAA_character","2490099"),idStrumento=3))
 	checkEquals(fondo@maturity,"2020-12-31")
 	
 	# the NoAc version (funds without the Oacc information and therefore with Oacc = 0)
@@ -118,7 +118,7 @@ test.shouldCreateFondi_obbligazionari <- function() {
 	fondo <- createSecurity(origin)
 	
 	checkEquals(fondo@name,"20201231 - 0% <3Y - LGT CF 2Y CHF 31-12-20")
-	checkEquals(fondo@id,new("IdAyrton",idAAA=new("IdAAA_numeric",363),idStrumento=3))
+	checkEquals(fondo@id,new("IdAyrton",idAAA=new("IdAAA_character","1831257"),idStrumento=3))
 	checkEquals(fondo@maturity,"2020-12-31")
 
 }
@@ -135,7 +135,7 @@ test.shouldCreateAnticipoFisso <- function() {
 	
 	anticipiFissi <- createSecurity(origin)
 	checkEquals(anticipiFissi@name,"Anticipo fisso 01-04-09/02-04-12 Ipoteca tasso fisso 115.000 CHF 2.05%")
-	checkEquals(anticipiFissi@id,new("IdAyrton",idAAA=new("IdAAA_string","Anticipo fisso 01-04-09/02-04-12 Ipoteca tasso fisso 115.000 CHF 2.05%"),idStrumento=6))
+	checkEquals(anticipiFissi@id,new("IdAyrton",idAAA=new("IdAAA_character","Anticipo fisso 01-04-09/02-04-12 Ipoteca tasso fisso 115.000 CHF 2.05%"),idStrumento=6))
 	checkEquals(anticipiFissi@maturity,"2012-04-02")
 	
 }
@@ -152,7 +152,7 @@ test.shouldCreateTimeDeposit <- function() {
 	
 	depositoAtermine <- createSecurity(origin)
 	checkEquals(depositoAtermine@name,"Deposito singolo 01-04-09/02-04-12 deposito a termine al 2.05%")
-	checkEquals(depositoAtermine@id,new("IdAyrton",idAAA=new("IdAAA_string","Deposito singolo 01-04-09/02-04-12 deposito a termine al 2.05%"),idStrumento=7))
+	checkEquals(depositoAtermine@id,new("IdAyrton",idAAA=new("IdAAA_character","Deposito singolo 01-04-09/02-04-12 deposito a termine al 2.05%"),idStrumento=7))
 	checkEquals(depositoAtermine@maturity,"2012-04-02")
 	
 }
@@ -270,7 +270,7 @@ test.shouldCreateObbligazioni_convertibili <- function() {
 	convertibleBond <- createSecurity(origin)
 	
 	checkEquals(convertibleBond@name,"20130329 - 4% CS 29-03-13")
-	checkEquals(convertibleBond@id,new("IdAyrton",idAAA=new("IdAAA_numeric",2209),idStrumento=11))
+	checkEquals(convertibleBond@id,new("IdAyrton",idAAA=new("IdAAA_character","CH0190462702"),idStrumento=11))
 	checkEquals(convertibleBond@maturity,"2013-03-29")
 	
 }

@@ -45,7 +45,7 @@ test.shouldIdentifyPositionsToExplode <- function() {
 	
 	# identify nothing
 	fundData <- fundsDb[[1]]
-	fundData@id <- -13949
+	fundData@id <- "sxlkdfksdfj"
 	result <- identifyPositionsToExplode(fundData,positions)
 	checkEquals(result,c(FALSE,FALSE,FALSE))
 	

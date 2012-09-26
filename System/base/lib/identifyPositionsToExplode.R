@@ -15,10 +15,10 @@ identifyPositionsToExplode <- function(fundData,positions) {
 	
 	isFundToExplode <- function(position,fundData) {
 	
-		id <- position@security@id@idAAA
+		id <- as.character(position@security@id@idAAA)
 		if (is.null(id)) return(FALSE)
 		if (is.na(id))   return(FALSE)
-		
+
 		return(fundData@id==id & is(position@security,fundData@securityClass))
 	}
 

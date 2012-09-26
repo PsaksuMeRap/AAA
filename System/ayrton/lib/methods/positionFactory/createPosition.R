@@ -218,12 +218,12 @@ setMethod("createPosition",signature(security="Fondi_obbligazionari",origin="Ayr
 			quantity <- origin@Saldo
 			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
 			value <- repositories$exchangeRates$exchange(value,security@currency)
-			
+		
 			# identify if the fund is from OpenCapital
 			fundsOpenCapital <- create_fundsDB()
 			ID_STRUMENTI <- sapply(fundsOpenCapital,slot,"id")
 			
-			if (is.element(origin@ID_AAA,ID_STRUMENTI)) {
+			if (is.element(security@id@idAAA,ID_STRUMENTI)) {
 				accruedInterest <- new("AccruedInterest",toMoney(NA_real_,security@currency))
 				position <- new("PositionFondi_obbligazionariOC",
 						accruedInterest=accruedInterest,

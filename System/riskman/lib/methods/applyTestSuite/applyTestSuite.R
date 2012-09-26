@@ -55,7 +55,7 @@ setMethod("applyTestSuite",signature(x="TestSuiteParsed",po="Positions"),
 			if (missing(valuationDate)) valuationDate <- Sys.Date()
 			
 			# explode the groupDefinitions
-			x <- applyGroupDefinitions(x)
+			x <- applyGroupDefinition(x)
 			
 			# crea output infos
 			if (x@configLines[["testSuiteKind"]]=="specific") { 

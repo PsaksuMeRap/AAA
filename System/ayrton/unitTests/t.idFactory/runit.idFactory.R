@@ -10,7 +10,7 @@ test.shouldFailWithNA <- function() {
 	# create the origin
 	repository <- createRepositoryAyrtonPositions()
 	equity1 <- repository$equity1
-	equity1@ID_AAA <- NA_real_
+	equity1@ID_strumento <- 205526 
 	
 	checkException(idFactory(equity1))
 }
@@ -55,7 +55,7 @@ test.createIdForInstrumentsWithIsin <- function() {
 	#50
 	# futuresEQ <- repository$Futures_EQ1
 	#44
-	FondiHedge <- repository$Fondi_Hedge1
+	fondiHedge <- repository$Fondi_Hedge1
 	#45
 	etfEquity <- repository$ETF_equity1
 	#51
@@ -126,7 +126,7 @@ test.createIdForInstrumentsWithIsin <- function() {
 	checkEquals(as.numeric(result@idStrumento),40)
 	
 	# check MetalliPreziosi
-	result <- idFactory(MetalliPreziosi)
+	result <- idFactory(metalliPreziosi)
 	checkEquals(as.character(result@idAAA),"XAU")
 	checkEquals(as.numeric(result@idStrumento),21)
 	

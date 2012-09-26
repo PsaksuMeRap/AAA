@@ -6,6 +6,6 @@
 
 setClass("FundRecord",
 		representation(fundName="character",securityClass="character",
-				id="numeric",owner = "character")
+				id="character",owner = "character")
 )
 
