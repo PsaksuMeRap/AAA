@@ -90,6 +90,7 @@ source("./base/lib/methods/parser/parser.R")
 source("./base/lib/methods/explode/explode.R")
 source("./base/lib/methods/Apply/Apply.R")
 source("./base/lib/fundsDB.R")
+source("./base/lib/futuresEquityIndicesDB.R")
 source("./base/lib/identifyPositionsToExplode.R")
 
 source("./base/lib/explodePortfolioByFund.R")

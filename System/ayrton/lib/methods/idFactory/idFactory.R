@@ -61,7 +61,7 @@ setMethod("idFactory",signature(origin="AyrtonPosition"),
 			## 54,Conto_corrente_fittizio"
 			## 55,ETF_commodities_platinum
 				
-			instrumentsWithISIN <- c(1,2,3,4,5,8:17,23:30,32:38,42:53,55)
+			instrumentsWithISIN <- c(1,2,3,4,5,8:17,23:30,32:38,42:49,51:53,55)
 			if (is.element(origin@ID_strumento,instrumentsWithISIN)) {
 				idAyrton <- new("IdAyrton",
 						idAAA=new("IdAAA_character",origin@NumeroValore),
@@ -155,6 +155,27 @@ setMethod("idFactory",signature(origin="AyrtonPosition"),
 			if (origin@ID_strumento==21) {
 				idAyrton <- new("IdAyrton",
 						idAAA=new("IdAAA_character",origin@Nome),
+						idStrumento=origin@ID_strumento)
+				
+				return(idAyrton)
+			}
+			# consider Futures_EQ
+			if (origin@ID_strumento==50) {
+				parseFuturesEquityName <- function(name) {
+					tmp1 <- strsplit(name,"/")[[1]]
+					tmp1 <- str_trim(tmp1)
+					partToBeParsed <- tmp1[[1]]
+					maturity <- substr(partToBeParsed,nchar(partToBeParsed)-9,nchar(partToBeParsed))
+					maturity <- format(strptime(maturity,format="%d-%m-%Y"),"%Y-%m-%d")
+					futureName <- substr(partToBeParsed,1,nchar(partToBeParsed)-11)
+					futureName <- str_trim(futureName)
+					
+					#"SMI Futures 16-03-2012 / 10              "
+					return(c(name=futureName,maturity=maturity))
+				}
+				
+				idAyrton <- new("IdAyrton",
+						idAAA=new("IdAAA_character",paste(futureName,maturity,sep="")),
 						idStrumento=origin@ID_strumento)
 				
 				return(idAyrton)

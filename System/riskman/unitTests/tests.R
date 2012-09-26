@@ -7,6 +7,8 @@
 ## test directories
 dirs = c(
 		"./riskman/unitTests/t.Apply",
+		"./riskman/unitTests/t.idForGroupBy",
+		"./riskman/unitTests/t.groupBy",		
 		"./riskman/unitTests/t.strings",
 		"./riskman/unitTests/t.constraintFactory",
 		"./riskman/unitTests/t.parser",

@@ -57,6 +57,19 @@ setMethod("fieldsAsCharacter",signature(x="Position"),
 		}
 )
 
+setMethod("groupBySecurityId",signature(x="Position",y="Position"),
+		function(x,y) {
+			z <- new("PositionBond",
+					id=x@id,
+					security=x@security,
+					quantity=x@quantity + y@quantity,
+					value=x@value+y@value
+			)
+			
+			return(z)
+		}
+)
+
 #setGeneric("fieldsToPrint",def=function(position,width,...) standardGeneric("fieldsToPrint"))
 
 #setMethod("fieldsToPrint",signature(position="Position"),

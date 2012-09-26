@@ -618,7 +618,7 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_AAA <- 2430
 	x@ID_strumento <- 51
 	class(x) <- "AyrtonPosition"
-	testData$ETF_commodities <- x
+	testData$ETF_commodities_gold <- x
 	##---------------------
 	
 	

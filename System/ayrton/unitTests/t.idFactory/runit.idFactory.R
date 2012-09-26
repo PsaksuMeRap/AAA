@@ -53,7 +53,7 @@ test.createIdForInstrumentsWithIsin <- function() {
 	#49
 	strutturatiFI <- repository$strutturati_FI
 	#50
-	# futuresEQ <- repository$Futures_EQ1
+	futuresEQ <- repository$Futures_EQ1
 	#44
 	fondiHedge <- repository$Fondi_Hedge1
 	#45
@@ -90,10 +90,10 @@ test.createIdForInstrumentsWithIsin <- function() {
 	checkEquals(as.character(result@idAAA),"10063727CH")
 	checkEquals(as.numeric(result@idStrumento),44)
 	
-#	# check futuresEQ
-#	result <- idFactory(futuresEQ)
-#	checkEquals(as.character(result@idAAA),"11439214")
-#	checkEquals(as.numeric(result@idStrumento),49)	
+	# check futuresEQ
+	result <- idFactory(futuresEQ)
+	checkEquals(as.character(result@idAAA),"SMI Futures2012-03-16")
+	checkEquals(as.numeric(result@idStrumento),50)	
 	
 	# check strutturati_FI
 	result <- idFactory(strutturatiFI)

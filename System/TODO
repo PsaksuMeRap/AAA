@@ -1,25 +1,14 @@
-newAdvice -> genera un preComplianceResult:
-	- risultato negativo: 
-		a) sendEmail, 
-		b) move newAdvice and preComplianceResult da pending a archive/processed/rejected, 
-		c) rimuovi il lock
-	+ risultato positivo:
-		a) Mantieni il lock
-		b) invia e-mail
-		c) lascia il newAdvice nel pending
-		d) sposta il preCompliance nel pending
-		e) registra nella coda del processo main che stai attendendo il file di conferma eseguito
+- suddividere futures_EQ e futures_EQ_index	
+- verificare per prodotti derivati che il valueOfonePoint sia
+tenuto conto nel groupby
 
 
-adviceConfirmation 
-	a) sposta l'adviceConfirmation nel pending e lancia BATCH che esegue b)
-	b) esegui controllo e riconciliazione posizioni
-		+ se risultato del controllo positivo
-			-> genera un postComplianceResult:
-				- risultato negativo:
-				a) sendEmail, 
-				b) move newAdvice, preComplianceResult da pending a archive/processed/rejected,
-				c) move adviceConfirmation e postComplianceResult
-				c) rimuovi il lock
-				
-					
+
+Dove arrivato: sto facendo il groupBy.R e runit.groupBy.R.
+
+Ora mi serve di "sommare" posizione con il medesimo id (stessa
+security). L'idea è quella di creare per ogni classe instrument
+la funzione groupBySecurityId(pos1,pos2) che unisce le due posizioni.
+il metodo viene scritto direttamente nella definizione della
+classe così da avere poi la sicurezza che è disponibile per 
+tutte le classi.

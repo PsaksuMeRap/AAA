@@ -3,6 +3,9 @@
 # Author: claudio
 ###############################################################################
 
+#groupBySecurityId is a method used to join two positions on the same instrument.
+#equality of the positions is determined by the security@id field
+setGeneric("groupBySecurityId",function(x,y,...) standardGeneric("groupBySecurityId"))
 
 # print is still a generic function
 fun <- function(x) standardGeneric("print")

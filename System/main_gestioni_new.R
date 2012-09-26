@@ -151,7 +151,7 @@ if (FALSE) {
 
 ## -- funzioni di utilità
 whoisP <- function(names) {
-	df <- read.csv("/home/claudio/workspace/Produzione/associazionePippo.csv",header=TRUE,sep=",",
+	df <- read.csv("/home/claudio/workspace/Produzione_new/associazionePippo.csv",header=TRUE,sep=",",
 			as.is=TRUE)
 	
 	getName <- function(name,df) {isOk <- df[,1]==name;return(df[isOk,2])}
