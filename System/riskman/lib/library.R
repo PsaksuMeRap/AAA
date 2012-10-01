@@ -44,5 +44,5 @@ source("./riskman/lib/methods/testSuiteFactory/testSuiteFactory.R")
 source("./riskman/lib/methods/applyTestSuite/applyTestSuite.R")
 
 source("./riskman/lib/methods/applyGroupDefinition/applyGroupDefinition.R")
-source("./riskman/lib/methods/idFroGroupBy/idFroGroupBy.R")
+source("./riskman/lib/methods/idForGroupBy/idForGroupBy.R")
 source("./riskman/lib/methods/groupBy/groupBy.R")

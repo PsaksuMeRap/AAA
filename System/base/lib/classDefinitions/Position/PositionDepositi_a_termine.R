@@ -18,3 +18,18 @@ setMethod("reweight",signature(x="PositionDepositi_a_termine"),
 			return(position)
 		}
 )
+
+setMethod("groupBySecurityId",signature(x="PositionDepositi_a_termine",y="PositionDepositi_a_termine"),
+		function(x,y) {
+			
+			z <- new("PositionDepositi_a_termine",
+					accruedInterest=x@accruedInterest+y@accruedInterest,
+					id=x@id,
+					security=x@security,
+					quantity=x@quantity + y@quantity,
+					value=x@value+y@value
+			)
+			
+			return(z)
+		}
+)

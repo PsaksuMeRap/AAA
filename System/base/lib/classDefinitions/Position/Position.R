@@ -59,7 +59,9 @@ setMethod("fieldsAsCharacter",signature(x="Position"),
 
 setMethod("groupBySecurityId",signature(x="Position",y="Position"),
 		function(x,y) {
-			z <- new("PositionBond",
+			
+			classOfx <- class(x)[[1]]
+			z <- new(classOfx,
 					id=x@id,
 					security=x@security,
 					quantity=x@quantity + y@quantity,
