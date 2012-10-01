@@ -87,20 +87,7 @@ setMethod("idFactory",signature(origin="AyrtonPosition"),
 			}
 			# consider Opzioni_su_azioni
 			if (origin@ID_strumento==18) {
-				parseOptionOnEquityName <- function(name) {
-					tmp <- strsplit(name,"/")[[1]]
-					tmp <- str_trim(tmp)
-					names(tmp) <- c("numberEquities","callPut","underlyingName","maturity","strike","premium","ISIN","underlyingPrice")
-					tmp <- as.list(tmp)
-					tmp[["numberEquities"]] <- as.numeric(tmp[["numberEquities"]])
-					
-					if (tmp[["callPut"]]=="Call") tmp[["callPut"]] <- "C" else tmp[["callPut"]] <- "P"
-					tmp[["maturity"]] <- format(strptime(tmp[["maturity"]],format="%d-%m-%y"),"%d-%m-%Y")
-					tmp[["strike"]] <- substr(tmp[["strike"]],8,nchar(tmp[["strike"]]))
-					tmp[["underlyingPrice"]] <- as.numeric(tmp[["underlyingPrice"]])
-					#'-1000 / Call / Syngenta AG / 17-02-12 / Strike 290 / Premio(5500 CHF) / CH0011027469 / 337.90'
-					return(tmp)
-				}
+				
 				info <- parseOptionOnEquityName(origin@Nome)
 				idAAA <- paste(info[["ISIN"]],info[["strike"]],info[["callPut"]],info[["maturity"]],sep="")
 				idAyrton <- new("IdAyrton",
@@ -162,6 +149,7 @@ setMethod("idFactory",signature(origin="AyrtonPosition"),
 			# consider Futures_EQ
 			if (origin@ID_strumento==50) {
 				parseFuturesEquityName <- function(name) {
+
 					tmp1 <- strsplit(name,"/")[[1]]
 					tmp1 <- str_trim(tmp1)
 					partToBeParsed <- tmp1[[1]]
@@ -173,9 +161,10 @@ setMethod("idFactory",signature(origin="AyrtonPosition"),
 					#"SMI Futures 16-03-2012 / 10              "
 					return(c(name=futureName,maturity=maturity))
 				}
+				parsedFutureName <- parseFuturesEquityName(origin@Nome)
 				
 				idAyrton <- new("IdAyrton",
-						idAAA=new("IdAAA_character",paste(futureName,maturity,sep="")),
+						idAAA=new("IdAAA_character",paste(parsedFutureName[["name"]],parsedFutureName[["maturity"]],sep="")),
 						idStrumento=origin@ID_strumento)
 				
 				return(idAyrton)

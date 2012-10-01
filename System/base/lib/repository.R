@@ -71,6 +71,10 @@ create_repositoryInstruments <- function(instruments.df) {
 		toChange <- instruments.df[,"Instrument"] == "Obbligazioni"
 		if (any(toChange)) instruments.df[toChange,"Instrument"] <- "Bond"
 		
+		# cambia ETF_commodities in ETF_commodities_gold (poi da rimuovere)
+		toChange <- instruments.df[,"Instrument"] == "ETF_commodities"
+		if (any(toChange)) instruments.df[toChange,"Instrument"] <- "ETF_commodities_gold"
+
 		# sostituisci tutti gli spazi con "_"
 		instruments.df[,"Instrument"] <- gsub(" ","_",instruments.df[,"Instrument"])
 		rm(toChange)

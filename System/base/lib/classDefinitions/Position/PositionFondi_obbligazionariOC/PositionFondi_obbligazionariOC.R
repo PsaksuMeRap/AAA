@@ -17,7 +17,7 @@ setMethod("reweight",signature(x="PositionFondi_obbligazionariOC"),
 		}
 )
 
-setMethod("groupBySecurityId",signature(x="PositionFondi_obbligazionariOC",y="PosPositionFondi_obbligazionariOCitionBond"),
+setMethod("groupBySecurityId",signature(x="PositionFondi_obbligazionariOC",y="PositionFondi_obbligazionariOC"),
 		function(x,y) {
 			z <- new("PositionBond",
 					accruedInterest=x@accruedInterest+y@accruedInterest,

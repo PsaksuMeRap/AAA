@@ -71,6 +71,8 @@ testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
 warnings()
 
 
+
+
 # adviceManagement test suite
 if(.Platform$OS.type=="windows") {
 	library("rJava")
