@@ -369,8 +369,8 @@ test.shouldCreatePositionOpzioni_su_azioni <- function() {
 	checkEquals(is(positionEquityOption)[1],"PositionOpzioni_su_azioni")
 	checkEquals(positionEquityOption@id,positionEquityOption@security@id)
 	checkEquals(positionEquityOption@numberEquities,-1000)	
-	checkEquals(positionEquityOption@quantity,NA_real_)
-	checkEquals(positionEquityOption@contractSize,NA_real_)
+	checkEquals(positionEquityOption@quantity,-100)
+	checkEquals(positionEquityOption@contractSize,10)
 	checkEquals(positionEquityOption@value,toMoney(-5840,"CHF"))
 	
 	# restore initial conditions	

@@ -45,7 +45,7 @@ selectionCriteriumFactory <- function(factorStringParsed) {
 		return(selectionCriterium)
 	}	
 	
-	message <- "Error: invalid factorStringParsed: no method for factorStringParsed of criterium"
+	message <- "Error: invalid factorStringParsed.\nNo method for factorStringParsed of criterium"
 	message <- paste(message," of kind '",factorStringParsed@criterium,"'",sep="")
 	stop(message)
 }

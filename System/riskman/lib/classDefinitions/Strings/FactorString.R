@@ -11,7 +11,7 @@ setMethod("split",
 		function (x, f, drop = FALSE, ...) {
 			# factorString: a string like "instrument:equity,bond" or
 			# "amount:<= 50 USD" or the negation form "instrument!: equity, bond"
-			
+		
 			result <- unlist(strsplit(x,":"))
 			
 			if (length(result)<2) stop(paste("Error: splitFactorString should return 2 blocks.",x))

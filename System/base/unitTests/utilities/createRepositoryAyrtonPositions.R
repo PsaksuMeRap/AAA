@@ -538,7 +538,7 @@ createRepositoryAyrtonPositions <- function() {
 	x@Cliente <- 'pippo53'
 	x@Strumento <- 'OA'
 	x@Moneta <- 'CHF'
-	x@Saldo <- -1000
+	x@Saldo <- -100
 	x@Nome <- "-100 / Call / Syngenta AG / 17-02-12 / Strike 290 / Premio(5500 CHF) / CH0011027469 / 337.90 / 10"
 	x@NumeroValore <- ""
 	x@ValoreMercatoMonetaCHF <- -5840
@@ -554,7 +554,7 @@ createRepositoryAyrtonPositions <- function() {
 	x@Cliente <- 'pippo186'
 	x@Strumento <- 'OA'
 	x@Moneta <- 'CHF'
-	x@Saldo <- -5000
+	x@Saldo <- -500
 	x@NumeroValore <- ""
 	x@Nome <- "-500 / PUT / Credit Suisse Group Na / 21-12-12 / Strike 46 / Premio(112267 CHF) / CH0012138530 / 17.71 / 10"
 	x@ValoreMercatoMonetaCHF <- -107100
@@ -570,7 +570,7 @@ createRepositoryAyrtonPositions <- function() {
 	x@Cliente <- 'pippo53'
 	x@Strumento <- 'OA'
 	x@Moneta <- 'CHF'
-	x@Saldo <- -1000
+	x@Saldo <- -100
 	x@NumeroValore <- ""
 	x@Nome <- "-100 / PUT / Syngenta AG / 17-02-12 / Strike 290 / Premio(5500 CHF) / CH0011027469 / 337.90 / 10"
 	x@ValoreMercatoMonetaCHF <- -5840
@@ -586,7 +586,7 @@ createRepositoryAyrtonPositions <- function() {
 	x@Cliente <- 'pippo186'
 	x@Strumento <- 'OA'
 	x@Moneta <- 'CHF'
-	x@Saldo <- -5000
+	x@Saldo <- -500
 	x@NumeroValore <- ""
 	x@Nome <- '-500 / Call / Credit Suisse Group Na / 21-12-12 / Strike 46 / Premio(112267 CHF) / CH0012138530 / 17.71 / 10'
 	x@ValoreMercatoMonetaCHF <- -107100

@@ -84,8 +84,6 @@ test.shouldGroupTwoPositionsWithSameSecurityId <- function() {
 	checkEquals(res@quantity,2*x@quantity)
 	checkEquals(res@value,2*x@value)	
 	
-	
-	
 	checkEquals(TRUE,FALSE)
 	
 	if (!is.null(repository)) repositories$exchangeRates <- repository
