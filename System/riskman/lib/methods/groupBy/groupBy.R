@@ -23,10 +23,10 @@ groupBy <- function(positions,groupCriteria) {
 		groupPositionsBySecurityId <- function(indices,positions) {
 			# indices: the vector of the indices of the positions to be grouped
 			# positions: the corresponding list of positions
-browser()			
+			
 			if (length(indices)==1) {
 				
-				return(new("Positions",list(positions[[indices[[1]]]])))
+				return(positions[[indices[[1]]]])
 			
 			}
 			result <- positions[[indices[[1]]]]
