@@ -251,7 +251,7 @@ setMethod("createPosition",signature(security="Opzioni_su_azioni",origin="Ayrton
 
 			## ! for Opzioni_su_azioni this is not the number of contracts but it is the
 			## corresponding number of underlying equities
-			info <- parseOptionOnEquityName(origin@Nome)
+			info <- getOptionParameters(origin)
 			numberEquities <- origin@Saldo*info[["contractSize"]]
 			
 			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))

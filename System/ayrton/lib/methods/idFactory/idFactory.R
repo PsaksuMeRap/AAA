@@ -87,36 +87,30 @@ setMethod("idFactory",signature(origin="AyrtonPosition"),
 			}
 			# consider Opzioni_su_azioni
 			if (origin@ID_strumento==18) {
+				info <- getOptionParameters(origin)
 				
-				info <- parseOptionOnEquityName(origin@Nome)
-				idAAA <- paste(info[["ISIN"]],info[["strike"]],info[["callPut"]],info[["maturity"]],sep="")
+				idAAA <- paste(info[["optionType"]],
+						info[["isin"]],
+						info[["expiryDate"]],
+						info[["strike"]],
+						sep="/"
+					)
 				idAyrton <- new("IdAyrton",
 						idAAA=new("IdAAA_character",idAAA),
-						idStrumento=origin@ID_strumento)
+						idStrumento=origin@ID_strumento
+					)
 				
 				return(idAyrton)
 			}
 			# consider Opzioni_su_divise
 			if (origin@ID_strumento==19) {
-			#	parseOptionOnFxName <- function(name) {
-			#		tmp <- strsplit(name," ")[[1]]
-			#		tmp <- str_trim(tmp)
-			#		names(tmp) <- c("callPut","maturity","strike_label","strike","underlyingName","amount","premium","premiumCurrency")
-			#		tmp <- as.list(tmp)
-					
-			#		if (tmp[["callPut"]]=="PUT") tmp[["callPut"]] <- "P" else tmp[["callPut"]] <- "C"
-			#		tmp[["maturity"]] <- format(strptime(tmp[["maturity"]],format="%d-%m-%y"),"%d-%m-%Y")
-			#		#"PUT 17-08-12 Strike 1.295 EUR 125000 Premio(-8293.75 USD)"
-			#		return(tmp)
-			#	}
-			#	info <- parseOptionOnFxName(origin@Nome)
 				info <- getOptionParameters(origin)
 				
 				idAAA <- paste(info[["optionType"]],
 							paste(info[["underlying"]],info[["numeraire"]],sep=""),
 							info[["expiryDate"]],
 							info[["strike"]],
-							sep=""
+							sep="/"
 						)
 				idAyrton <- new("IdAyrton",
 						idAAA=new("IdAAA_character",idAAA),
@@ -126,19 +120,14 @@ setMethod("idFactory",signature(origin="AyrtonPosition"),
 			}
 			# consider Opzioni_su_obbligazioni
 			if (origin@ID_strumento==20) {
-				parseOptionOnBondName <- function(name) {
-					tmp <- strsplit(name," ")[[1]]
-					tmp <- str_trim(tmp)
-					names(tmp) <- c("callPut","maturity","strike_label","strike","currency","amount","premium","premiumCurrency","ISIN")
-					tmp <- as.list(tmp)
-					
-					if (tmp[["callPut"]]=="PUT") tmp[["callPut"]] <- "P" else tmp[["callPut"]] <- "C"
-					tmp[["maturity"]] <- format(strptime(tmp[["maturity"]],format="%d-%m-%y"),"%d-%m-%Y")
-					#"PUT 17-08-12 Strike 103.5 EUR 125000 Premio(-345.45 EUR) EU0011027469"
-					return(tmp)
-				}
-				info <- parseOptionOnBondName(origin@Nome)
-				idAAA <- paste(info[["ISIN"]],info[["strike"]],info[["callPut"]],info[["maturity"]],sep="")
+
+				info <- getOptionParameters(origin)
+				idAAA <- paste(info[["optionType"]],
+							info[["isin"]],
+							info[["expiryDate"]],
+							info[["strike"]],
+							sep="/"
+						)
 				idAyrton <- new("IdAyrton",
 						idAAA=new("IdAAA_character",idAAA),
 						idStrumento=origin@ID_strumento)

@@ -6,6 +6,14 @@
 
 setGeneric("getOptionParameters",def=function(origin,...) standardGeneric("getOptionParameters"))
 
+setMethod("getOptionParameters",signature(origin="AyrtonPosition"),
+		function(origin) {
+			if (origin@ID_strumento==18) class(origin) <- "Ayrton_Opzioni_su_azioni"
+			if (origin@ID_strumento==19) class(origin) <- "Ayrton_Opzioni_su_divise"
+			if (origin@ID_strumento==20) class(origin) <- "Ayrton_Opzioni_su_obbligazioni"
+			return(getOptionParameters(origin))
+		}
+)
 
 setMethod("getOptionParameters",signature(origin="Ayrton_Opzioni_su_divise"),
 		function(origin) {
@@ -59,6 +67,20 @@ setMethod("getOptionParameters",signature(origin="PositionOpzioni_su_divise"),
 
 )
 
+setMethod("getOptionParameters",signature(origin="Ayrton_Opzioni_su_obbligazioni"),
+		function(origin) {
+			name <- origin@Nome
+			tmp <- strsplit(name," ")[[1]]
+			tmp <- str_trim(tmp)
+			names(tmp) <- c("optionType","expiryDate","strike_label","strike","currency","amount","premium","premiumCurrency","isin")
+			tmp <- as.list(tmp)
+			
+			if (tolower(tmp[["optionType"]])=="put") tmp[["optionType"]] <- "P" else tmp[["optionType"]] <- "C"
+			tmp[["expiryDate"]] <- format(strptime(tmp[["expiryDate"]],format="%d-%m-%y"),"%Y-%m-%d")
+			#"PUT 17-08-12 Strike 103.5 EUR 125000 Premio(-345.45 EUR) EU0011027469"
+			return(tmp)
+		}
+)
 
 setMethod("getOptionParameters",signature(origin="Ayrton_Opzioni_su_azioni"),
 		function(origin) {

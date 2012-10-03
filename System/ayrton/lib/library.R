@@ -33,4 +33,4 @@ source("./ayrton/lib/methods/getOptionParameters/getOptionParameters.R")
 # non ho guardato da cosa dipende
 source("./ayrton/lib/systemOptions.R")
 # non dipende da nulla
-source("./ayrton/lib/methods/parseName/parseName.R")
+# da rimuovere source("./ayrton/lib/methods/parseName/parseName.R")

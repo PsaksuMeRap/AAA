@@ -397,7 +397,7 @@ test.shouldCreatePositionOpzioni_su_divise <- function() {
 	positionOpzioniSuDivise <- createPosition(securityOpzioniSuDivise,origin)
 	
 	checkEquals(is(positionOpzioniSuDivise)[1],"PositionOpzioni_su_divise")
-	checkEquals(positionOpzioniSuDivise@id,new("IdCharacter","PUT 17-08-12 Strike 1.295 EUR 125000 Premio(-8293.75 USD)"))	
+	checkEquals(positionOpzioniSuDivise@id,new("IdAyrton",idAAA=new("IdAAA_character","P/EURUSD/2012-08-17/1.295"),idStrumento=19))	
 	checkEquals(positionOpzioniSuDivise@quantity,toMoney(125000,"EUR"))
 	checkEquals(positionOpzioniSuDivise@value,repositories$exchangeRates$exchange(toMoney(origin@ValoreMercatoMonetaCHF,"CHF"),new("Currency",origin@Moneta)))
 	

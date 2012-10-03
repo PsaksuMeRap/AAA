@@ -202,10 +202,11 @@ test.createIdForOptionInstruments <- function() {
 	repository <- createRepositoryAyrtonPositions()
 	
 	opzioniSuAzioni <- repository$Opzioni_su_azioni1
-	
+	class(opzioniSuAzioni) <- "Ayrton_Opzioni_su_azioni"
+
 	# check opzioniSuAzioni
 	result <- idFactory(opzioniSuAzioni)
-	checkEquals(result@idAAA,new("IdAAA_character","CH0011027469290C17-02-2012"))
+	checkEquals(result@idAAA,new("IdAAA_character","C/CH0011027469/2012-02-17/290"))
 	checkEquals(result@idStrumento,18)
 	
 	opzioniSuDivise <- repository$Opzioni_su_divise1
@@ -213,11 +214,12 @@ test.createIdForOptionInstruments <- function() {
 	
 	# check opzioniSuDivise
 	result <- idFactory(opzioniSuDivise)
-	checkEquals(result@idAAA,new("IdAAA_character","PEURUSD2012-08-171.295"))
+	checkEquals(result@idAAA,new("IdAAA_character","P/EURUSD/2012-08-17/1.295"))
 	checkEquals(result@idStrumento,19)
 	
 	opzioniSuObbligazioni <- repository$opzioni_su_obbligazioni
-	
+	class(opzioniSuObbligazioni) <- "Ayrton_Opzioni_su_obbligazioni"
+
 	# check opzioniSuObbligazioni
 	result <- idFactory(opzioniSuObbligazioni)
 	checkEquals(result@idAAA,new("IdAAA_character","EU0011027469103.5P17-08-2012"))
