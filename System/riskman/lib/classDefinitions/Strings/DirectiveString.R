@@ -23,6 +23,10 @@ setMethod("split",signature(x = "DirectiveStringElement"),
 				return(new("ExplodeDirective",firstSplit[[2]]))
 			}
 			
+			if (firstSplit[[1]]=="groupBy") {
+				return(new("GroupByDirective",firstSplit[[2]]))
+			}
+			
 			stop(paste("Error: unknown DirectiveStringElement\n",x,sep=""))
 		}
 )

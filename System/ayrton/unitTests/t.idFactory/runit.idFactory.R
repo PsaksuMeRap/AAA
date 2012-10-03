@@ -209,10 +209,11 @@ test.createIdForOptionInstruments <- function() {
 	checkEquals(result@idStrumento,18)
 	
 	opzioniSuDivise <- repository$Opzioni_su_divise1
+	class(opzioniSuDivise) <- "Ayrton_Opzioni_su_divise"
 	
 	# check opzioniSuDivise
 	result <- idFactory(opzioniSuDivise)
-	checkEquals(result@idAAA,new("IdAAA_character","EURUSD1.295P17-08-2012"))
+	checkEquals(result@idAAA,new("IdAAA_character","PEURUSD2012-08-171.295"))
 	checkEquals(result@idStrumento,19)
 	
 	opzioniSuObbligazioni <- repository$opzioni_su_obbligazioni

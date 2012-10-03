@@ -59,11 +59,18 @@ setMethod("createSecurity",signature(origin="Ayrton_Opzioni_su_divise"),
 			className <- substr(className,start=8,stop=nchar(className))
 			
 			info <- getOptionParameters(origin)
+			name <- paste(info[["optionType"]],"/",
+						info[["expiryDate"]],"/",
+						"Strike"," ",info[["strike"]],"/",
+						info[["underlying"]]," ",info[["quantity"]],"/",
+						"Premium ",info[["premium"]], " ",info[["numeraire"]],
+						sep=""
+					)
 
 			security <- new(className,
 					currency=new("Currency",origin@Moneta),
-					name=origin@Nome,
-					id=new("IdCharacter",origin@Nome),
+					name=name,
+					id=idFactory(origin),
 					underlying=new("Currency",info$underlying),
 					expiryDate=info$expiryDate,
 					optionType=info$optionType,

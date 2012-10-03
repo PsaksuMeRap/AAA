@@ -7,3 +7,5 @@
 setClass("ExplodeDirective",contains="character")
 
 setClass("ReplaceDirective",contains="character")
+
+setClass("GroupByDirective",contains="character")

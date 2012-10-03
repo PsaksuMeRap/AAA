@@ -12,3 +12,5 @@ la funzione groupBySecurityId(pos1,pos2) che unisce le due posizioni.
 il metodo viene scritto direttamente nella definizione della
 classe così da avere poi la sicurezza che è disponibile per 
 tutte le classi.
+
+fare i test per tutti gli strumenti per il metodo reweight in riskman

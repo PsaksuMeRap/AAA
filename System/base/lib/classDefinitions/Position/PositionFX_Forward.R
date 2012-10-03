@@ -4,6 +4,6 @@
 ###############################################################################
 
 
-# crea la classe "PositionOpzioni_su_azioni"
+# crea la classe "PositionFX_Forward"
 setClass("PositionFX_Forward",contains="Position")
 

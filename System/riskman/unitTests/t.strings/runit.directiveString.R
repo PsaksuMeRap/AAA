@@ -61,6 +61,13 @@ test.shouldSplitExplodeDirectiveStringElement <- function() {
 	checkEquals(result,new("ExplodeDirective","Fondi_misti"))
 }
 
+test.shouldSplitGroupByDirectiveStringElement <- function() {
+	groupByDirectiveString <- new("DirectiveStringElement"," groupBy : securityId  ")
+	
+	result <- split(groupByDirectiveString)
+	checkEquals(result,new("GroupByDirective","securityId"))
+}
+
 
 test.shouldSplitReplaceDirectiveStringElement <- function() {
 	replaceDirectiveString <- new("DirectiveStringElement","   replace  :   Opzioni_su_azioni  , Opzioni_su_divise           ")
@@ -79,14 +86,16 @@ test.shouldFailToSplitDirectiveStringElement <- function() {
 test.shouldSplitDirectiveString <- function() {
 	
 	# DirectiveString: a string like "explode:Fondi_misti & replace:Opzioni_su_azioni,Opzioni_su_divise"
-	x <- new("DirectiveString","explode:Fondi_misti & replace:Opzioni_su_azioni,Opzioni_su_divise")
+	x <- new("DirectiveString","groupBy:securityId & explode:Fondi_misti & replace:Opzioni_su_azioni,Opzioni_su_divise")
 	
-	r1 <- new("ExplodeDirective","Fondi_misti")
-	r2 <- new("ReplaceDirective",c("Opzioni_su_azioni","Opzioni_su_divise"))
+	r1 <- new("GroupByDirective","securityId")
+	r2 <- new("ExplodeDirective","Fondi_misti")
+	r3 <- new("ReplaceDirective",c("Opzioni_su_azioni","Opzioni_su_divise"))
 	result <- split(x)
 	
-	checkEquals(length(result),2)
-	checkEquals(result[[1]],r1)
+	checkEquals(length(result),3)
+	checkEquals(result[[1]],r1)	
 	checkEquals(result[[2]],r2)
+	checkEquals(result[[3]],r3)
 	
 }

@@ -21,7 +21,11 @@ setMethod("reweight",signature(x="PositionBond"),
 
 setMethod("groupBySecurityId",signature(x="PositionBond",y="PositionBond"),
 		function(x,y) {
-			z <- new("PositionBond",
+			# the next line is necessary because PositionFondiObbligazionari
+			# extend PositionBond but does not have a groupBySecurityId
+			classOfx <- class(x)[[1]]
+			
+			z <- new(classOfx,
 					accruedInterest=x@accruedInterest+y@accruedInterest,
 					spRating=x@spRating,
 					id=x@id,

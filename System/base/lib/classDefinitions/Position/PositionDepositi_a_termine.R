@@ -8,7 +8,6 @@ source("./base/lib/classDefinitions/Position/PositionBond/AccruedInterest.R")
 # crea la classe virtuale "Position"
 setClass("PositionDepositi_a_termine",representation(accruedInterest="AccruedInterest"),contains="Position")
 
-
 setMethod("reweight",signature(x="PositionDepositi_a_termine"),
 		function(x,weight) {
 			position <- x

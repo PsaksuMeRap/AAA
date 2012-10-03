@@ -13,6 +13,20 @@ setMethod("Apply",
 )
 
 setMethod("Apply",
+		signature(x="GroupByDirective"),
+		function(x,positions) {
+			
+			if (length(x)==0) return(positions)
+			if (is.na(x) | is.null(x)) return(positions)
+			
+			result <- groupByDirective(x,positions)
+			return(result)
+		}
+)
+
+
+
+setMethod("Apply",
 		signature(x="ExplodeDirective"),
 		function(x,positions) {
 
