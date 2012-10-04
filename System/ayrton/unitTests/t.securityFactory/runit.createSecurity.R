@@ -231,7 +231,7 @@ test.shouldCreateOpzioni_su_divise <- function() {
 	
 	security <- createSecurity(origin)
 	checkEquals(class(security)[[1]],"Opzioni_su_divise")
-	checkEquals(security@name,"PUT 17-08-12 Strike 1.295 EUR 125000 Premio(-8293.75 USD)")
+	checkEquals(security@name,"P/2012-08-17/Strike 1.295/EUR 125000/Premium -8293.75 USD")
 	checkEquals(security@currency,new("Currency","USD"))
 	checkEquals(security@expiryDate,"2012-08-17")
 	checkEquals(security@strike,1.295)

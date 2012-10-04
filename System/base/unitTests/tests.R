@@ -9,6 +9,7 @@ dirs = c(
 		"./base/unitTests/t.currency",
 		"./base/unitTests/t.explode",
 		"./base/unitTests/t.explodePortfolioBy",
+		"./base/unitTests/t.getOptionParametersFromName",		
 		"./base/unitTests/t.groupBySecurityId",
 		"./base/unitTests/t.identifyPositionsToExplode",
 		"./base/unitTests/t.lists",

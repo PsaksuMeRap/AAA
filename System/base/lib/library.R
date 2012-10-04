@@ -95,3 +95,5 @@ source("./base/lib/identifyPositionsToExplode.R")
 
 source("./base/lib/explodePortfolioByFund.R")
 source("./base/lib/methods/groupBySecurityId/groupBySecurityId.R")
+
+source("./base/lib/methods/getOptionParametersFromName/getOptionParametersFromName.R")

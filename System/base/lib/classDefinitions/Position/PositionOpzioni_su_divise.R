@@ -12,7 +12,30 @@ setMethod("groupBySecurityId",signature(x="PositionOpzioni_su_divise",y="Positio
 			info1 <- getOptionParameters(x)
 			info2 <- getOptionParameters(y)
 			
-			"Call 17-08-12 Strike 1.295 EUR -250000 Premio(1930 USD)"
+			## "C/2012-08-17/Strike 1.295/EUR -250000/Premium 1930 USD"
+			newName <- paste(info1[[optionType]],
+					info1[["expiryDate"]],
+					paste("Strike",info1[["strike"]]),
+					sep="/"
+			)
+			
+			
+			????
+			tmp1 <- stringr::str_trim(strsplit(name,"/")[[1]])
+			names(tmp1) <- c("optionType","expiryDate","strike","amount","premium")
+			tmp1 <- as.list(tmp1)
+			
+			tmp1[["strike"]] <- as.numeric(strsplit(tmp1[["strike"]]," ")[[1]][[2]])
+			
+			money <- strsplit(tmp1[["amount"]]," ")[[1]]
+			tmp1[["amount"]] <- as.numeric(money[[2]])
+			tmp1[["underlying"]] <- money[[1]]
+			
+			premium <- strsplit(tmp1[["premium"]]," ")[[1]]
+			tmp1[["premium"]] <-  as.numeric(premium[[2]])
+			tmp1[["numeraire"]] <-  premium[[3]]
+			
+			
 			
 			z <- new("PositionOpzioni_su_divise",
 					id=x@id,

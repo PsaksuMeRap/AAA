@@ -222,7 +222,7 @@ test.createIdForOptionInstruments <- function() {
 
 	# check opzioniSuObbligazioni
 	result <- idFactory(opzioniSuObbligazioni)
-	checkEquals(result@idAAA,new("IdAAA_character","EU0011027469103.5P17-08-2012"))
+	checkEquals(result@idAAA,new("IdAAA_character","P/EU0011027469/2012-08-17/103.5"))
 	checkEquals(result@idStrumento,20)
 }
 

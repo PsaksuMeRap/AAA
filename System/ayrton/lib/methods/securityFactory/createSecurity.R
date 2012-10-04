@@ -59,10 +59,11 @@ setMethod("createSecurity",signature(origin="Ayrton_Opzioni_su_divise"),
 			className <- substr(className,start=8,stop=nchar(className))
 			
 			info <- getOptionParameters(origin)
+
 			name <- paste(info[["optionType"]],"/",
 						info[["expiryDate"]],"/",
 						"Strike"," ",info[["strike"]],"/",
-						info[["underlying"]]," ",info[["quantity"]],"/",
+						info[["underlying"]]," ",info[["amount"]],"/",
 						"Premium ",info[["premium"]], " ",info[["numeraire"]],
 						sep=""
 					)
@@ -91,7 +92,7 @@ setMethod("createSecurity",signature(origin="Ayrton_Opzioni_su_azioni"),
 			className <- substr(className,start=8,stop=nchar(className))
 	
 			info <- getOptionParameters(origin)
-		
+			
 			# identify the underlying equity
 			underlying <- createEquitySecurityFromIsin(info[["isin"]])
 			## adjust for the missing currency in case that the underlying equity is not in the DBEquity

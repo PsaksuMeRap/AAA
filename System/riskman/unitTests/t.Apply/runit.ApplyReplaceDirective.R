@@ -29,7 +29,8 @@ test.shouldApplyGroupByDirective <- function() {
 	testRepository <- createExchangeRatesTestRepository() 
 	repositories$exchangeRates <- testRepository
 	
-	# create the positions
+	## check with opzioni_su_azioni 
+	## create the positions
 	positions <- new("Positions",list(repository$Opzioni_su_divise2,repository$Opzioni_su_azioni1,
 			repository$Opzioni_su_azioni2,repository$Opzioni_su_azioni1))
 	
@@ -38,8 +39,26 @@ test.shouldApplyGroupByDirective <- function() {
 	result <- Apply(directive,positions)
 	
 	checkEquals(length(result),3)
-	checkEquals(result[[1]],repository$Opzioni_su_divise2)
-	checkEquals(result[[2]]@value,2*repository$Opzioni_su_azioni1@value)
+	checkEquals(result[[2]],repository$Opzioni_su_divise2)
+	checkEquals(result[[1]]@value,2*repository$Opzioni_su_azioni1@value)
+	name <- "-200 / Call / Syngenta AG / 17-02-12 / Premio(11000 CHF) / CH0011027469 / 337.9 / 10"
+	checkEquals(result[[1]]@security@name,name)
 	checkEquals(result[[3]],repository$Opzioni_su_azioni2)
-		
+	
+	## check with opzioni_su_valute
+	## create the positions
+	positions <- new("Positions",list(repository$Opzioni_su_divise2,repository$Opzioni_su_azioni1,
+					repository$Opzioni_su_azioni2,repository$Opzioni_su_divise2))
+	
+	directive <- new("GroupByDirective","securityId")
+	
+	result <- Apply(directive,positions)
+	
+	checkEquals(length(result),3)
+	checkEquals(result[[2]],repository$Opzioni_su_divise2)
+	checkEquals(result[[1]]@value,2*repository$Opzioni_su_azioni1@value)
+	name <- "-200 / Call / Syngenta AG / 17-02-12 / Premio(11000 CHF) / CH0011027469 / 337.9 / 10"
+	checkEquals(result[[1]]@security@name,name)
+	checkEquals(result[[3]],repository$Opzioni_su_azioni2)
 }
+
