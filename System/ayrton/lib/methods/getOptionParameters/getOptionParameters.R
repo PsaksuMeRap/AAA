@@ -86,12 +86,13 @@ setMethod("getOptionParameters",signature(origin="Ayrton_Opzioni_su_azioni"),
 		function(origin) {
 
 			tmp <- as.list(stringr::str_trim(strsplit(origin@Nome,"/")[[1]]))
-			fieldNames <- c("quantity","optionType","name","expiryDate","strike","Premio","isin","underlyingPrice")
+			fieldNames <- c("quantity","optionType","name","expiryDate","strike","Premio","isin","underlyingPrice","contractSize")
 			names(tmp) <- fieldNames
 			
 			tmp[["expiryDate"]] <- format(strptime(tmp[["expiryDate"]],format="%d-%m-%y"),"%Y-%m-%d")
 			tmp[["strike"]] <- as.numeric(substr(tmp[["strike"]],7,nchar(tmp[["strike"]])))
 			tmp[["quantity"]] <- as.numeric(tmp[["quantity"]])
+			tmp[["contractSize"]] <- as.numeric(tmp[["contractSize"]])
 			tmp[["underlyingPrice"]] <- as.numeric(tmp[["underlyingPrice"]])		
 			if (tolower(tmp[["optionType"]])=="put") tmp[["optionType"]] <- "P" else tmp[["optionType"]] <- "C"
 			return(tmp)

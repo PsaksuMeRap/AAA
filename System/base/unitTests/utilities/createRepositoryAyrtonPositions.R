@@ -546,7 +546,8 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_strumento <- 18
 	class(x) <- "AyrtonPosition"
 
-	A_Opzioni_su_azioni1 <- x	
+	A_Opzioni_su_azioni1 <- x
+	class(x) <- "Ayrton_Opzioni_su_azioni"
 	testData$Opzioni_su_azioni1 <- x
 	##---------------------
 	
@@ -563,6 +564,7 @@ createRepositoryAyrtonPositions <- function() {
 	class(x) <- "AyrtonPosition"
 
 	A_Opzioni_su_azioni2 <- x		
+	class(x) <- "Ayrton_Opzioni_su_azioni"
 	testData$Opzioni_su_azioni2 <- x
 	##---------------------
 	
@@ -578,7 +580,8 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_strumento <- 18
 	class(x) <- "AyrtonPosition"
 	
-	A_Opzioni_su_azioni3 <- x	
+	A_Opzioni_su_azioni3 <- x
+	class(x) <- "Ayrton_Opzioni_su_azioni"
 	testData$Opzioni_su_azioni3 <- x
 	##---------------------
 	
@@ -594,7 +597,8 @@ createRepositoryAyrtonPositions <- function() {
 	x@ID_strumento <- 18
 	class(x) <- "AyrtonPosition"
 	
-	A_Opzioni_su_azioni4 <- x		
+	A_Opzioni_su_azioni4 <- x
+	class(x) <- "Ayrton_Opzioni_su_azioni"
 	testData$Opzioni_su_azioni4 <- x
 	##---------------------
 	

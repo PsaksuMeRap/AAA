@@ -248,7 +248,6 @@ setMethod("createPosition",signature(security="Fondi_obbligazionari",origin="Ayr
 setMethod("createPosition",signature(security="Opzioni_su_azioni",origin="AyrtonPosition"),
 		function(security,origin) {
 
-
 			## ! for Opzioni_su_azioni this is not the number of contracts but it is the
 			## corresponding number of underlying equities
 			info <- getOptionParameters(origin)
