@@ -159,15 +159,18 @@ test.shouldGroupTwoPositionsWithSameSecurityId <- function() {
 	checkEquals(res,x)
 	
 	# test PositionOpzioni_su_divise
-#	x <- repo$Opzioni_su_divise1
-#	y <- x
+	x <- repo$Opzioni_su_divise1
+	y <- x
 	
-#	res <- groupBySecurityId(x,y)
-#	x@quantity <- 2*x@quantity
-#	x@value <- 2*x@value	
-#	checkEquals(res,x)	
+	res <- groupBySecurityId(x,y)
+	x@quantity <- 2*x@quantity
+	x@value <- 2*x@value
+	security <- x@security
+	security@name <- "P/2012-08-17/Strike 1.295/EUR 250000/Premium -16587.5 USD"
+	x@security <- security
+	checkEquals(res,x)	
 		
-#	checkEquals(TRUE,FALSE)
+#	(TRUE,FALSE)
 	
 	if (!is.null(repository)) repositories$exchangeRates <- repository
 }
