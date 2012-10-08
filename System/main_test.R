@@ -121,8 +121,10 @@ if (.Platform$OS.type=="windows") {
 
 
 dirs = c(
-		"./adviceManagement/unitTests/t.subNewAdviceProcessing",
-		"./adviceManagement/unitTests/t.tradeFactory"
+		"./adviceManagement/unitTests/t.newAdviceWithLock",
+		"./adviceManagement/unitTests/t.postOffice",
+		"./adviceManagement/unitTests/t.saveLastObject",
+		"./adviceManagement/unitTests/t.sendStopToRProcess"
 		
 )
 testsuite.lists <- defineTestSuite("Test adviceManagement",dirs = dirs)

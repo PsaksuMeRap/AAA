@@ -3,6 +3,41 @@
 # Author: claudio
 ###############################################################################
 
+create_repositoryFixedIncomeRatings <- function(fixedIncomeRatings.df) {
+	repository <- list()
+	class(repository) <- "fixedIncomeRatings"
+	
+	
+	if (missing(fixedIncomeRatings.df)) {
+		getFixedIncomeRatings <- function() {	
+			connection <- odbcConnect("prezzi_storici_azioni_VAR",.utente,.password)
+			
+			query <- paste("SELECT DISTINCT
+							A.ID_strumento,
+							A.ID, 
+							A.NomeDebitoreRedditoFisso,
+							A.NumeroValore,
+							A.RatingRedditoFisso
+							FROM 
+							[Sistema (prova)].dbo.DBRedditoFisso AS A, 
+							[Sistema (prova)].dbo.DBPortfolioGenerale AS B 
+							WHERE A.NumeroValore = B.NumeroValore AND 
+							(B.Cliente IN ('CB-ACC GLOBAL EQ', 'CB-ACC GLOBAL Econ', 'EUR FIXED INCOME') 
+							OR B.Cliente LIKE 'OC%' 
+							)")
+			
+			ratingsTable.df <- sqlQuery(connection,query,as.is=TRUE)
+			
+		}
+		
+		repository[["fixedIncomeRatings.df"]] <- getFixedIncomeRatings()
+	} else {
+		repository[["fixedIncomeRatings.df"]] <- fixedIncomeRatings.df
+	}
+	
+	return(repository)
+}
+
 create_repositoryDBEquities <- function(DBEquities.df) {
 	repository <- list()
 	class(repository) <- "repositoryDBEquities"
