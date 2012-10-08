@@ -19,8 +19,8 @@ setMethod("groupBySecurityId",signature(x="PositionOpzioni_su_divise",y="Positio
 			newName <- paste(info1[["optionType"]],
 					info1[["expiryDate"]],
 					paste("Strike",info1[["strike"]]),
-					paste(info1[["underlying"]],newAmount),
-					paste("Premium",newPremium,info1[["numeraire"]]),
+					paste(info1[["underlying"]],format(newAmount,scientific=FALSE)),
+					paste("Premium",format(newPremium,scientific=FALSE),info1[["numeraire"]]),
 					sep="/"
 			)
 			

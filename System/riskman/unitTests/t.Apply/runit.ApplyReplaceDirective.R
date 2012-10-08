@@ -41,7 +41,7 @@ test.shouldApplyGroupByDirective <- function() {
 	checkEquals(length(result),3)
 	checkEquals(result[[2]],repository$Opzioni_su_divise2)
 	checkEquals(result[[1]]@value,2*repository$Opzioni_su_azioni1@value)
-	name <- "-200 / Call / Syngenta AG / 17-02-12 / Premio(11000 CHF) / CH0011027469 / 337.9 / 10"
+	name <- "-200 / Call / Syngenta AG / 17-02-12 / Strike 290 / Premio(11000 CHF) / CH0011027469 / 337.9 / 10"
 	checkEquals(result[[1]]@security@name,name)
 	checkEquals(result[[3]],repository$Opzioni_su_azioni2)
 	
@@ -55,10 +55,12 @@ test.shouldApplyGroupByDirective <- function() {
 	result <- Apply(directive,positions)
 	
 	checkEquals(length(result),3)
-	checkEquals(result[[2]],repository$Opzioni_su_divise2)
-	checkEquals(result[[1]]@value,2*repository$Opzioni_su_azioni1@value)
-	name <- "-200 / Call / Syngenta AG / 17-02-12 / Premio(11000 CHF) / CH0011027469 / 337.9 / 10"
-	checkEquals(result[[1]]@security@name,name)
+	x <- repository$Opzioni_su_divise2
+	x@security@name <- "C/2012-08-17/Strike 1.295/EUR -500000/Premium 3860 USD"
+	x@value <- 2*x@value
+	x@quantity <- 2*x@quantity
+	checkEquals(result[[2]],x)
+	checkEquals(result[[1]],repository$Opzioni_su_azioni1)
 	checkEquals(result[[3]],repository$Opzioni_su_azioni2)
 }
 

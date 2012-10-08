@@ -49,7 +49,7 @@ setMethod("groupBySecurityId",signature(x="PositionOpzioni_su_azioni",y="Positio
 			
 			## This is the name structure
 			## "-100 / Call / Syngenta AG / 17-02-12 / Strike 290 / Premio(5500 CHF) / CH0011027469 / 337.90 / 10"
-			premium <- paste("Premio(",newPremium," ",newNumeraire,")",sep="")
+			premium <- paste("Premio(",format(newPremium,scientific=FALSE)," ",newNumeraire,")",sep="")
 			newName <- paste(newQuantity,
 					callPut(info1[["optionType"]]),
 					info1[["name"]],

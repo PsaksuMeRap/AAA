@@ -40,7 +40,7 @@ test.shouldProcessConfirmationWithLock <- function() {
 	
 	Sys.sleep(15)
 	
-	checkEquals(file.exists(file.path(sys[["homeDir"]],"archive","processed","rejected","2012-05-09_14-22-24_Ortelli_globalEquity_postComplianceResult_0.zip")),TRUE)
+	checkEquals(file.exists(file.path(sys[["homeDir"]],"archive","processed","accepted","2012-05-09_14-22-24_Ortelli_globalEquity_postComplianceResult_1.zip")),TRUE)
 	
 	unlink(file.path(sys[["homeDir"]],"data"),recursive=TRUE)
 	unlink(file.path(sys[["homeDir"]],"postOffice"),recursive=TRUE)

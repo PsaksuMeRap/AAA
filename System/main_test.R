@@ -50,6 +50,7 @@ testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
 warnings()
 
 
+
 # ayrton test suite
 source("./ayrton/unitTests/tests.R")
 
@@ -59,17 +60,12 @@ warnings()
 
 
 
-
 # riskman test suite
-source("./riskman/unitTests/tests.R")
-
-dirs <- "./riskman/unitTests/t.Apply"
 source("./riskman/unitTests/tests.R")
 
 testsuite.lists <- defineTestSuite("Tests riskman",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
 warnings()
-
 
 
 
@@ -80,6 +76,7 @@ if(.Platform$OS.type=="windows") {
 }
 
 
+
 ## test globale
 dirs = c(
 		"./adviceManagement/unitTests/t.archive",
@@ -87,22 +84,35 @@ dirs = c(
 		"./adviceManagement/unitTests/t.bloombergRequestHandler",
 		"./adviceManagement/unitTests/t.confirmationNoLock",
 		"./adviceManagement/unitTests/t.confirmationWithLock",
+		
 		"./adviceManagement/unitTests/t.detectRprocesses",
 		"./adviceManagement/unitTests/t.fileMove",
 		"./adviceManagement/unitTests/t.logger",
 		"./adviceManagement/unitTests/t.loadPortfolio",
+		
 		"./adviceManagement/unitTests/t.lock_unlock",
 		"./adviceManagement/unitTests/t.logger",
 		"./adviceManagement/unitTests/t.mail",
 		"./adviceManagement/unitTests/t.mailBox",
+		
 		"./adviceManagement/unitTests/t.mainMessageProcessing",
 		"./adviceManagement/unitTests/t.messageFactory",
 		"./adviceManagement/unitTests/t.messageFileNameFactory",
 		"./adviceManagement/unitTests/t.newAdviceNoLock",
+		
 		"./adviceManagement/unitTests/t.newAdviceWithLock",
 		"./adviceManagement/unitTests/t.postOffice",
 		"./adviceManagement/unitTests/t.saveLastObject",
-		"./adviceManagement/unitTests/t.sendStopToRProcess"
+		"./adviceManagement/unitTests/t.sendStopToRProcess",
+		
+		"./adviceManagement/unitTests/t.subNewAdviceProcessing",
+		"./adviceManagement/unitTests/t.tradeFactory",
+		
+		"./adviceManagement/unitTests/t.tradesToPositionsFactory",	
+		"./adviceManagement/unitTests/t.tradeToPositionFactory",
+		"./adviceManagement/unitTests/t.tradeToPositionsFactory",		
+		"./adviceManagement/unitTests/t.tradeToSecurityFactory",
+		"./adviceManagement/unitTests/t.zipResults"
 )
 
 if (.Platform$OS.type=="windows") {
@@ -110,6 +120,11 @@ if (.Platform$OS.type=="windows") {
 }
 
 
+dirs = c(
+		"./adviceManagement/unitTests/t.subNewAdviceProcessing",
+		"./adviceManagement/unitTests/t.tradeFactory"
+		
+)
 testsuite.lists <- defineTestSuite("Test adviceManagement",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
 warnings()
