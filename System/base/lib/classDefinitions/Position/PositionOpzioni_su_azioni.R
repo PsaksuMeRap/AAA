@@ -54,6 +54,7 @@ setMethod("groupBySecurityId",signature(x="PositionOpzioni_su_azioni",y="Positio
 					callPut(info1[["optionType"]]),
 					info1[["name"]],
 					format(strptime(info1[["expiryDate"]],format="%Y-%m-%d"),"%d-%m-%y"),
+					paste("Strike",info1[["strike"]]),
 					premium,
 					info1[["isin"]],
 					info1[["underlyingPrice"]],

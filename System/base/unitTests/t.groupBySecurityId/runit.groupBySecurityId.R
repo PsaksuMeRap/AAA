@@ -142,7 +142,8 @@ test.shouldGroupTwoPositionsWithSameSecurityId <- function() {
 	res <- groupBySecurityId(x,y)
 	x@numberEquities <- 2*x@numberEquities
 	x@quantity <- 2*x@quantity
-	x@value <- 2*x@value	
+	x@value <- 2*x@value
+	x@security@name <- "-200 / Call / Syngenta AG / 17-02-12 / Strike 290 / Premio(11000 CHF) / CH0011027469 / 337.9 / 10"
 	checkEquals(res,x)	
 	
 	# test PositionObbligazioni_convertibili
@@ -169,8 +170,6 @@ test.shouldGroupTwoPositionsWithSameSecurityId <- function() {
 	security@name <- "P/2012-08-17/Strike 1.295/EUR 250000/Premium -16587.5 USD"
 	x@security <- security
 	checkEquals(res,x)	
-		
-#	(TRUE,FALSE)
 	
 	if (!is.null(repository)) repositories$exchangeRates <- repository
 }
