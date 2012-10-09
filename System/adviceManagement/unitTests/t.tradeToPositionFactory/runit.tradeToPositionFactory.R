@@ -234,13 +234,14 @@ test.shouldConvertOptionOnEquityTradeToPosition <- function() {
 	newPosition <- tradeToPositionFactory(newSecurity,trade,blData)
 	
 	checkEquals(class(newPosition)[[1]],"PositionOpzioni_su_azioni")
-	checkEquals(class(newPosition@id)[[1]],"IdBloomberg")
+	checkEquals(class(newPosition@id)[[1]],"IdAyrton")
 	checkEquals(newPosition@value,toMoney(0.16*100*100,"CHF"))
 	checkEquals(newPosition@contractSize,100)
 	checkEquals(newPosition@security@strike,55)
 	checkEquals(newPosition@quantity,100)
 	checkEquals(newPosition@numberEquities,10000)
-	checkEquals(newPosition@security@expiryDate,"06/15/2012")
+	checkEquals(newPosition@security@expiryDate,"2012-06-15")
+	checkEquals(newPosition@security@name,"100 / Call / Nestle Na / 15-06-12 / Strike 55 / Premio(-1600 CHF) / CH0038863350 / 58.3 / 100")
 }
 
 

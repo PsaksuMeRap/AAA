@@ -242,17 +242,16 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Opzioni_su_azioni"),
 
 			# get the underlying ticker
 			underlyingId <- paste(trade$Id_Bloomberg,"OPT_UNDL_TICKER",sep="__")
-			underlying <- blData[[underlyingId]]@value
+			underlyingTicker <- blData[[underlyingId]]@value
 			
 			# get the underlying isin (if index like s&p 500 then value is NA)
 			underlyingId <- paste(trade$Id_Bloomberg,"OPT_UNDL_ISIN",sep="__")
 			underlyingIsin <- blData[[underlyingId]]@value
-	
+			if (is.na(underlyingIsin)) underlyingIsin <- underlyingTicker
+			
 			# get the underlying price 
 			underlyingId <- paste(trade$Id_Bloomberg,"OPT_UNDL_PX",sep="__")
 			underlyingPrice <- blData[[underlyingId]]@value
-			
-			if (is.na(underlyingIsin)) isinForName <- underlying else isinForName <- underlyingIsin 
 			
 			# get the expiry date
 			expiryDateId <- paste(trade$Id_Bloomberg,"OPT_EXPIRE_DT",sep="__")
@@ -265,38 +264,64 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Opzioni_su_azioni"),
 			# get the option type
 			optionTypeId <- paste(trade$Id_Bloomberg,"OPT_PUT_CALL",sep="__")
 			optionType <- blData[[optionTypeId]]@value
+			if (tolower(optionType)=="put") optionType <- "P" else optionType <- "C"
+			optionTypeAAA <- c(P="Put",C="Call")
 			
 			# get the option contract size
 			contractSizeId <- paste(trade$Id_Bloomberg,"OPT_CONT_SIZE",sep="__")
 			contractSize <- blData[[contractSizeId]]@value
 			
-			# update the newSecurity
-			newSecurity@expiryDate <- expiryDate
-			newSecurity@underlying <- new("IndexEquity",name=underlying,id=new("IdBloomberg",underlying))
-			newSecurity@strike <- strike
-			newSecurity@optionType <- optionType
+			# determine the underlying
+			tmp <- createEquitySecurityFromIsin(underlyingIsin)
+			if (tmp@name=="Equity not in DBEquity") tmp@name <- underlyingTicker
+			newSecurity@underlying <- tmp
 			
 			# construct the security name according to ayrton_position
 			## "-100 / Call / Syngenta AG / 17-02-12 / Strike 290 / Premio(5500 CHF) / CH0011027469 / 337.90 / 10"
 			name <- paste(quantity,
-					optionType,
-					underlying,
-					format(strptime(expiryDate,format="%m/%d/%y"),"%d-%m-%y"),
+					optionTypeAAA[[optionType]],
+					newSecurity@underlying@name,
+					format(strptime(expiryDate,format="%m/%d/%Y"),"%d-%m-%y"),
 					paste("Strike",strike),
 					paste("Premio(",-quantity*contractSize*price," ",newSecurity@currency,")",sep=""),
-					isinForName,
+					underlyingIsin,
 					underlyingPrice,
 					contractSize,
 					sep=" / ")
 						
+			# update the newSecurity
+			newSecurity@expiryDate <- expiryDate
+			
+			newSecurity@expiryDate <- format(strptime(expiryDate,format="%m/%d/%Y"),"%Y-%m-%d")
+			newSecurity@strike <- strike
+			newSecurity@optionType <- optionType
+			newSecurity@name <- name
+			
+			# create the idAyrton
+			
+			idAAA <- paste(optionType,
+					underlyingIsin,
+					newSecurity@expiryDate,
+					strike,
+					sep="/"
+			)
+			idAyrton <- new("IdAyrton",
+					idAAA=new("IdAAA_character",idAAA),
+					idStrumento=18
+			)
+
+			newSecurity@id <- idAyrton
 			
 			# create the class "PositionOpzioni_su_azioni"
-			OptionOnEquityPosition <- new("PositionOpzioni_su_azioni",id=new("IdBloomberg",trade$Id_Bloomberg),
-					security=newSecurity,contractSize=contractSize,
+			OptionOnEquityPosition <- new("PositionOpzioni_su_azioni",
+					id=newSecurity@id,
+					security=newSecurity,
+					numberEquities=quantity*contractSize,
 					quantity=quantity,
-					value=toMoney(quantity*contractSize*price,newSecurity@currency),
-					numberEquities=quantity*contractSize)
-			
+					contractSize=contractSize,
+					value=toMoney(quantity*contractSize*price,newSecurity@currency)
+					)
+
 			return(OptionOnEquityPosition)
 		}
 )

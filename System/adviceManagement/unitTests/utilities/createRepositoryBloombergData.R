@@ -97,6 +97,9 @@ createRepositoryBloombergData <- function() {
 	blDataEntryOption4 <- new("BloombergDataEntry",blId="nesn sw 06/15/12 c55 equity",fieldId="OPT_STRIKE_PX",value=55,dateLastUpdate=Sys.time())
 	blDataEntryOption5 <- new("BloombergDataEntry",blId="nesn sw 06/15/12 c55 equity",fieldId="OPT_PUT_CALL",value="Call",dateLastUpdate=Sys.time())
 	blDataEntryOption6 <- new("BloombergDataEntry",blId="nesn sw 06/15/12 c55 equity",fieldId="OPT_CONT_SIZE",value=100,dateLastUpdate=Sys.time())
+	blDataEntryOption7 <- new("BloombergDataEntry",blId="nesn sw 06/15/12 c55 equity",fieldId="OPT_UNDL_ISIN",value="CH0038863350",dateLastUpdate=Sys.time())
+	blDataEntryOption8 <- new("BloombergDataEntry",blId="nesn sw 06/15/12 c55 equity",fieldId="OPT_UNDL_PX",value=58.30,dateLastUpdate=Sys.time())
+	
 	
 	blData <- add(blDataEntryOption1,blData)
 	blData <- add(blDataEntryOption2,blData)
@@ -104,7 +107,8 @@ createRepositoryBloombergData <- function() {
 	blData <- add(blDataEntryOption4,blData)
 	blData <- add(blDataEntryOption5,blData)
 	blData <- add(blDataEntryOption6,blData)
-	
+	blData <- add(blDataEntryOption7,blData)
+	blData <- add(blDataEntryOption8,blData)
 
 	# create the BloombergData for opzioni_su_azioni nestl� maturity september 2012
 	blDataEntryOption1 <- new("BloombergDataEntry",blId="nesn sw 09/21/12 c58 equity",fieldId="LAST_PRICE",value=0.16,dateLastUpdate=Sys.time())
@@ -113,6 +117,9 @@ createRepositoryBloombergData <- function() {
 	blDataEntryOption4 <- new("BloombergDataEntry",blId="nesn sw 09/21/12 c58 equity",fieldId="OPT_STRIKE_PX",value=55,dateLastUpdate=Sys.time())
 	blDataEntryOption5 <- new("BloombergDataEntry",blId="nesn sw 09/21/12 c58 equity",fieldId="OPT_PUT_CALL",value="Call",dateLastUpdate=Sys.time())
 	blDataEntryOption6 <- new("BloombergDataEntry",blId="nesn sw 09/21/12 c58 equity",fieldId="OPT_CONT_SIZE",value=100,dateLastUpdate=Sys.time())
+	blDataEntryOption7 <- new("BloombergDataEntry",blId="nesn sw 09/21/12 c58 equity",fieldId="OPT_UNDL_ISIN",value="CH0038863350",dateLastUpdate=Sys.time())
+	blDataEntryOption8 <- new("BloombergDataEntry",blId="nesn sw 09/21/12 c58 equity",fieldId="OPT_UNDL_PX",value=58.30,dateLastUpdate=Sys.time())
+	
 	
 	blData <- add(blDataEntryOption1,blData)
 	blData <- add(blDataEntryOption2,blData)
@@ -120,6 +127,8 @@ createRepositoryBloombergData <- function() {
 	blData <- add(blDataEntryOption4,blData)
 	blData <- add(blDataEntryOption5,blData)
 	blData <- add(blDataEntryOption6,blData)
+	blData <- add(blDataEntryOption7,blData)
+	blData <- add(blDataEntryOption8,blData)
 	
 	# create the BloombergData for fondi_azionari
 	blDataEntry <- new("BloombergDataEntry",blId="WDIMIXD Equity",fieldId="LAST_PRICE",value=244.04,dateLastUpdate=Sys.time())

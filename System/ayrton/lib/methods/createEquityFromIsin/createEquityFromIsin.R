@@ -21,11 +21,13 @@ createEquitySecurityFromIsin <- function(isin)  {
 	
 	currency <- new("Currency",result[["Moneta"]])
 	
-	# create the id field
-	idAAA <- new("IdAAA_numeric",result[["ID"]])
-	id <- new("IdAyrton",idAAA=idAAA,
+	# create the id field as in idFactory
+	id <- new("IdAyrton",
+			idAAA=new("IdAAA_character",isin),
 			idStrumento=result[["ID_strumento"]])
+	
 	name <- result[["Azione"]]
+	
 	return(new("Equity",currency=currency,name=name,id=id))
 	
 }

@@ -72,7 +72,9 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 	if (securityType=="Equity") {
 		currency <- new("Currency",trade$Currency)
 		name <- trade$Security_name
-		id=new("IdBloomberg",trade$Id_Bloomberg)
+		id <- new("IdAyrton",
+				idAAA=new("IdAAA_character",trade$ISIN_ticker),
+				idStrumento=1)
 		
 		# collect the last price
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"LAST_PRICE")
@@ -84,7 +86,9 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 	if (securityType=="Fund equity") {
 		currency <- new("Currency",trade$Currency)
 		name <- trade$Security_name
-		id=new("IdBloomberg",trade$Id_Bloomberg)
+		id <- new("IdAyrton",
+				idAAA=new("IdAAA_character",trade$ISIN_ticker),
+				idStrumento=14)
 		
 		# collect the last price
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"LAST_PRICE")
@@ -96,7 +100,9 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 	if (securityType=="Fund bond") {
 		currency <- new("Currency",trade$Currency)
 		name <- paste(sysAyrton[["Fondi_obbligazionari"]][["preNameString"]],trade$Security_name,sep=" - ")
-		id=new("IdBloomberg",trade$Id_Bloomberg)
+		id <- new("IdAyrton",
+				idAAA=new("IdAAA_character",trade$ISIN_ticker),
+				idStrumento=3)
 		
 		# collect the last price
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"LAST_PRICE")
@@ -109,7 +115,6 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 	if (securityType=="Future index") {
 		currency <- new("Currency",trade$Currency)
 		name <- trade$Security_name
-		id=new("IdBloomberg",trade$Id_Bloomberg)
 		
 		# collect the ticker of the underlying
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"UNDL_SPOT_TICKER")
@@ -119,6 +124,13 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"LAST_PRICE")
 		# collect the value of one point
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"FUT_VAL_PT")
+		 
+		futureEquityIndicesDB <- create_futureEquityIndicesDB()
+		isFuture <- futureEquityIndicesDB[,"bloombergName"] == 
+		# forse mettere UNDL_SPOT_TICKER invece che bloombergName?
+		id <- new("IdAyrton",
+				idAAA=new("IdAAA_character",??),
+				idStrumento=50)
 		
 		newSecurity <- new("Futures_EQ",currency=currency,name=name,id=id,underlying=new("IndexEquity")) 
 		return(newSecurity)
