@@ -16,6 +16,7 @@ source("./base/lib/classDefinitions/Money/Money.R")
 source("./base/lib/classDefinitions/Id/Id.R")
 source("./base/lib/classDefinitions/Quantity/Quantity.R")
 source("./base/lib/classDefinitions/Index/Index.R")
+source("./base/lib/classDefinitions/SPLongTermRating/SPLongTermRating.R")
 
 source("./base/lib/classDefinitions/Security/Security.R")
 source("./base/lib/classDefinitions/Security/Bond.R")
