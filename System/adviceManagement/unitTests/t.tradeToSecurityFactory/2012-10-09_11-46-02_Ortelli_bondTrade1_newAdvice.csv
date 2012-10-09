@@ -1,0 +1,2 @@
+Portfolio,Buy_Sell,Id_Bloomberg,Security_name,Currency,Security_type,Broker,Moxy_Sec_type,Quantity,ISIN_Ticker,Price,Order_type,Amount,Limit_price,Limit_date
+MULTISTRATEGY,Buy,xs0842560640 corp,F VAN LANSCHOT BANKIERS,EUR,Bond,Moxy,,500000,XS0842560640,99.5305,,497652.5,,41191

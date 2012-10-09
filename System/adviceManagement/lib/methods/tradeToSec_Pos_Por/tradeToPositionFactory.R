@@ -17,8 +17,7 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Security"),
 				price <- trade$Confirmed_price
 				quantity <- sign(trade)*trade$Confirmed_quantity
 			}
-			
-		
+
 			# create the class position
 			className <- paste("Position",class(newSecurity)[[1]],sep="")
 			

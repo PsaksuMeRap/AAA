@@ -91,6 +91,23 @@ test.shouldConvertBondTradeToSecurity <- function() {
 	
 }
 
+test.shouldConvertBondTrade1ToSecurity <- function() {
+	# set the fileName from which to import trades
+	fileName <- "2012-10-09_11-46-02_Ortelli_bondTrade1_newAdvice.csv"
+	messageFileName <- messageFileNameFactory(fileName)
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+	blRequestHandler <- create_BloombergRequestHandler()
+	
+	# import trades
+	trades <- tradesFactory(messageFileName,directory)
+	trade <- trades[[1]]
+	
+	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)	
+	checkEquals(class(newSecurity)[[1]],"Bond")	
+	
+}
+
+
 test.shouldParseFxSpotId_Bloomberg <- function() {
 	Id_Bloomberg <- "usdchf curncy"
 	result <- parseFxSpotId_Bloomberg(Id_Bloomberg)

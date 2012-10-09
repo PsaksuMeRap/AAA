@@ -125,6 +125,7 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 	}
 	
 	if (securityType=="Bond") {
+	
 		currency <- new("Currency",trade$Currency)
 		name <- trade$Security_name
 		id=new("IdBloomberg",trade$Id_Bloomberg)
@@ -140,7 +141,7 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 		
 		# collect the maturity 05/08/2013
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"MATURITY")	
-		
+	
 		newSecurity <- new("Bond",currency=currency,name=name,id=id) 
 		return(newSecurity)
 	}

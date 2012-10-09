@@ -14,3 +14,5 @@ classe così da avere poi la sicurezza che è disponibile per
 tutte le classi.
 
 fare i test per tutti gli strumenti per il metodo reweight in riskman
+
+mettere as.numeric() nel campo PRICE del createRepositoryBloombergData.R

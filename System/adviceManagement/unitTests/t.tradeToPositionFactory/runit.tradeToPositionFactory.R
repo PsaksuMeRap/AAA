@@ -152,6 +152,34 @@ test.shouldConvertBondTradeToPosition <- function() {
 }
 
 
+test.shouldConvertBondTrade1ToPosition <- function() {
+	# create the BloombergData
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","utilities")
+	source(file.path(directory,"createRepositoryBloombergData.R"))
+	blData <- createRepositoryBloombergData()
+	
+	# set the fileName from which to import trades
+	fileName <- "2012-10-09_11-46-02_Ortelli_bondTrade1_newAdvice.csv"
+	messageFileName <- messageFileNameFactory(fileName)
+	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+	
+	# import trades
+	trades <- tradesFactory(messageFileName,directory)
+	trade <- trades[[1]]
+	
+	# create the blRequestHandler required from tradeToSecurityFactory
+	blRequestHandler <- create_BloombergRequestHandler()
+	
+	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)
+	
+	newPosition <- tradeToPositionFactory(newSecurity,trade,blData)
+	
+	checkEquals(class(newPosition)[[1]],"PositionBond")
+	checkEquals(class(newPosition@id)[[1]],"IdBloomberg")
+	checkEquals(newPosition@value,toMoney(0.01*trade$Price*trade$Quantity,"EUR"))
+	checkEquals(newPosition@accruedInterest,as(toMoney(0.0,"EUR"),"AccruedInterest"))
+}
+
 
 test.shouldConvertFXSpotTradeToPosition <- function() {
 	# create the BloombergData
