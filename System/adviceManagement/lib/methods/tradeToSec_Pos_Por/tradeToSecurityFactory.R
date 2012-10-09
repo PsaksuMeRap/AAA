@@ -174,6 +174,10 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 		
 		# collect the ticker of the underlying NESN VX
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"OPT_UNDL_TICKER")
+		# collect the isin of the underlying
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"OPT_UNDL_ISIN")
+		# collect the price of the underlying
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"OPT_UNDL_PX")
 		# collect the expiry date 06/05/2012
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"OPT_EXPIRE_DT")
 		# collect the strike price 55

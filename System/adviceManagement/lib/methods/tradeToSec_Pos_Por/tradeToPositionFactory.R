@@ -237,12 +237,22 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Opzioni_su_azioni"),
 				quantity <- sign(trade)*trade$Quantity
 			} else {
 				price <- trade$Confirmed_price
-				quantity <- trade$Confirmed_quantity			
+				quantity <- sign(trade)*trade$Confirmed_quantity			
 			}
 
 			# get the underlying ticker
 			underlyingId <- paste(trade$Id_Bloomberg,"OPT_UNDL_TICKER",sep="__")
 			underlying <- blData[[underlyingId]]@value
+			
+			# get the underlying isin (if index like s&p 500 then value is NA)
+			underlyingId <- paste(trade$Id_Bloomberg,"OPT_UNDL_ISIN",sep="__")
+			underlyingIsin <- blData[[underlyingId]]@value
+	
+			# get the underlying price 
+			underlyingId <- paste(trade$Id_Bloomberg,"OPT_UNDL_PX",sep="__")
+			underlyingPrice <- blData[[underlyingId]]@value
+			
+			if (is.na(underlyingIsin)) isinForName <- underlying else isinForName <- underlyingIsin 
 			
 			# get the expiry date
 			expiryDateId <- paste(trade$Id_Bloomberg,"OPT_EXPIRE_DT",sep="__")
@@ -265,6 +275,20 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Opzioni_su_azioni"),
 			newSecurity@underlying <- new("IndexEquity",name=underlying,id=new("IdBloomberg",underlying))
 			newSecurity@strike <- strike
 			newSecurity@optionType <- optionType
+			
+			# construct the security name according to ayrton_position
+			## "-100 / Call / Syngenta AG / 17-02-12 / Strike 290 / Premio(5500 CHF) / CH0011027469 / 337.90 / 10"
+			name <- paste(quantity,
+					optionType,
+					underlying,
+					format(strptime(expiryDate,format="%m/%d/%y"),"%d-%m-%y"),
+					paste("Strike",strike),
+					paste("Premio(",-quantity*contractSize*price," ",newSecurity@currency,")",sep=""),
+					isinForName,
+					underlyingPrice,
+					contractSize,
+					sep=" / ")
+						
 			
 			# create the class "PositionOpzioni_su_azioni"
 			OptionOnEquityPosition <- new("PositionOpzioni_su_azioni",id=new("IdBloomberg",trade$Id_Bloomberg),
