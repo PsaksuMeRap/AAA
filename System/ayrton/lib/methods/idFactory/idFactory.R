@@ -154,7 +154,7 @@ setMethod("idFactory",signature(origin="AyrtonPosition"),
 					futureName <- substr(partToBeParsed,1,nchar(partToBeParsed)-11)
 					futureName <- str_trim(futureName)
 					
-					#"SMI Futures 16-03-2012 / 10              "
+					#"Future SMI 16-03-2012 / 10              "
 					return(c(name=futureName,maturity=maturity))
 				}
 				parsedFutureName <- parseFuturesEquityName(origin@Nome)

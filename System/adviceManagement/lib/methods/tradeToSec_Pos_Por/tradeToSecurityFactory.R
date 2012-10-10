@@ -116,23 +116,16 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 		currency <- new("Currency",trade$Currency)
 		name <- trade$Security_name
 		
-		# collect the ticker of the underlying
+		# collect the ticker of the underlying used in the id
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"UNDL_SPOT_TICKER")
 		# collect the delivery date
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"FUT_DLV_DT_FIRST")
 		# collect the last price
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"LAST_PRICE")
 		# collect the value of one point
-		blRequestHandler[["collect"]](trade$Id_Bloomberg,"FUT_VAL_PT")
-		 
-		futureEquityIndicesDB <- create_futureEquityIndicesDB()
-		isFuture <- futureEquityIndicesDB[,"bloombergName"] == 
-		# forse mettere UNDL_SPOT_TICKER invece che bloombergName?
-		id <- new("IdAyrton",
-				idAAA=new("IdAAA_character",??),
-				idStrumento=50)
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"FUT_VAL_PT")		
 		
-		newSecurity <- new("Futures_EQ",currency=currency,name=name,id=id,underlying=new("IndexEquity")) 
+		newSecurity <- new("Futures_EQ",currency=currency,name=name,underlying=new("IndexEquity")) 
 		return(newSecurity)
 	}
 	

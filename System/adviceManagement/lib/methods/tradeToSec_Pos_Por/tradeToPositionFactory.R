@@ -117,19 +117,28 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Futures_EQ"),
 			
 			# get the underlying ticker
 			underlyingId <- paste(trade$Id_Bloomberg,"UNDL_SPOT_TICKER",sep="__")
-			underlying <- blData[[underlyingId]]@value
+			underlyingName <- paste("Future",blData[[underlyingId]]@value)
 			
 			# get the delivery date
 			deliveryDateId <- paste(trade$Id_Bloomberg,"FUT_DLV_DT_FIRST",sep="__")
 			deliveryDate <- blData[[deliveryDateId]]@value
+			deliveryDate <- format(strptime(deliveryDate,format="%m/%d/%Y"),"%Y-%m-%d")
+			
 			
 			# update the newSecurity
 			newSecurity@deliveryDate <- deliveryDate
 			newSecurity@deliveryPrice <- deliveryPrice # error: cambia nome slot -> deliveryLevel
-			newSecurity@underlying <- new("IndexEquity",name=underlying,id=new("IdBloomberg",underlying))
-	
+			newSecurity@underlying <- new("IndexEquity",name=underlyingName,id=underlyingName)
+			
+			## "Future SMI 2012-12-27"
+			id <- new("IdAyrton",
+					idAAA=new("IdAAA_character",paste(underlyingName,deliveryDate,sep="")),
+					idStrumento=50)
+			
+			newSecurity@id <- id
+			
 			# create the class "PositionFutures_EQ"
-			futureEquityIndexPosition <- new("PositionFutures_EQ",valueOnePoint=toMoney(valueOnePoint,newSecurity@currency),id=new("IdBloomberg",trade$Id_Bloomberg),security=newSecurity,
+			futureEquityIndexPosition <- new("PositionFutures_EQ",valueOnePoint=toMoney(valueOnePoint,newSecurity@currency),id=id,security=newSecurity,
 					quantity=quantity,value=toMoney(quantity*price*valueOnePoint,newSecurity@currency))
 			
 			return(futureEquityIndexPosition)
@@ -350,15 +359,32 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Opzioni_su_divise"),
 			
 			value <- toMoney(as.numeric(quantity@amount)*price,numeraire)
 			
-			# construct the id 
-			id <- paste(newSecurity@optionType," ",newSecurity@expiryDate," Strike ",
-					newSecurity@strike," ",numeraire,"/",underlying," ",
-					as.character(quantity)," (Premio ",as.character(-1*value),")",sep="")
-
+			info <- parseOptionFxName(trade$Security_name)
+			
+			## construct the security name
+			securityName <- paste(info[["optionType"]],"/",
+					info[["expiryDate"]],"/",
+					"Strike"," ",info[["strike"]],"/",
+					underlying," ",info[["amount"]],"/",
+					"Premium ",as.character(-1*value), " ",numeraire,
+					sep=""
+			)		
+			newSecurity@name <- securityName
+			
+			# construct the id		
+			idAAA <- paste(info[["optionType"]],
+					paste(underlying,numeraire,sep=""),
+					info[["expiryDate"]],
+					info[["strike"]],
+					sep="/")
+			id <- new("IdAyrton",
+					idAAA=new("IdAAA_character",idAAA),
+					idStrumento=19)
+			newSecurity@id < -id
 			# create the class "PositionOpzioni_su_divise"
-			optionOnFxPosition <- new("PositionOpzioni_su_divise",id=new("IdCharacter",id),security=newSecurity,
+			optionOnFxPosition <- new("PositionOpzioni_su_divise",id=id,security=newSecurity,
 					quantity=quantity,value=value)
-
+			
 			return(optionOnFxPosition)
 		}
 )
