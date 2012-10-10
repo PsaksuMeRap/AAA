@@ -15,9 +15,8 @@ as.SPlongTermRating <- function(x) {
 		x <- levels
 	}
 	longTermRating <- factor(x,levels=levels,ordered=TRUE)
-	
-	
-	return(longTermRatings.df)
+	longTermRating <- new("SPlongTermRating")
+	return(longTermRatings)
 }
 
 

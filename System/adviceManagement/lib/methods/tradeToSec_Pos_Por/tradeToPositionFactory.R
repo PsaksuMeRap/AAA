@@ -21,7 +21,7 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Security"),
 			# create the class position
 			className <- paste("Position",class(newSecurity)[[1]],sep="")
 			
-			position <- new(className,id=new("IdBloomberg",trade$Id_Bloomberg),security=newSecurity,
+			position <- new(className,id=newSecurity@id,security=newSecurity,
 					quantity=quantity,value=toMoney(quantity*price,newSecurity@currency))
 			
 			return(position)
@@ -52,48 +52,6 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Fondi_obbligazionari")
 		}
 )
 
-
-#setMethod("tradeToPositionFactory",signature(newSecurity="Fondi_azionari"),
-#		function(newSecurity,trade,blData) {
-#			
-#			if (is.null(trade$Confirmed_quantity)) {
-#				priceId <- paste(trade$Id_Bloomberg,"LAST_PRICE",sep="__")
-#				price <- blData[[priceId]]@value
-#				
-#				quantity <- sign(trade)*trade$Quantity
-#			} else {
-#				price <- trade$Confirmed_price
-#				quantity <- sign(trade)*trade$Confirmed_quantity
-#			}
-#			
-#			# create the class "PositionFondi_azionari"
-#			equityPositions <- new("PositionFondi_azionari",id=new("IdBloomberg",trade$Id_Bloomberg),security=newSecurity,
-#					quantity=quantity,value=toMoney(quantity*price,newSecurity@currency))
-#			
-#			return(equityPositions)
-#		}
-#)
-#
-#setMethod("tradeToPositionFactory",signature(newSecurity="Equity"),
-#		function(newSecurity,trade,blData) {
-#		
-#			if (is.null(trade$Confirmed_quantity)) {
-#				priceId <- paste(trade$Id_Bloomberg,"LAST_PRICE",sep="__")
-#				price <- blData[[priceId]]@value
-#				
-#				quantity <- sign(trade)*trade$Quantity
-#			} else {
-#				price <- trade$Confirmed_price
-#				quantity <- sign(trade)*trade$Confirmed_quantity
-#			}
-#			
-#			# create the class "PositionEquity"
-#			equityPositions <- new("PositionEquity",id=new("IdBloomberg",trade$Id_Bloomberg),security=newSecurity,
-#							quantity=quantity,value=toMoney(quantity*price,newSecurity@currency))
-#			
-#			return(equityPositions)
-#		}
-#)
 
 
 setMethod("tradeToPositionFactory",signature(newSecurity="Futures_EQ"),
@@ -126,9 +84,12 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Futures_EQ"),
 			
 			
 			# update the newSecurity
+			newSecurity@name <- paste(underlyingName,
+					format(strptime(deliveryDate,format="%Y-%m-%d"),"%d-%m-%Y"),
+					"/",valueOnePoint)
 			newSecurity@deliveryDate <- deliveryDate
 			newSecurity@deliveryPrice <- deliveryPrice # error: cambia nome slot -> deliveryLevel
-			newSecurity@underlying <- new("IndexEquity",name=underlyingName,id=underlyingName)
+			newSecurity@underlying <- new("IndexEquity",name=underlyingName,id=new("IdCharacter",underlyingName))
 			
 			## "Future SMI 2012-12-27"
 			id <- new("IdAyrton",
@@ -138,7 +99,8 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Futures_EQ"),
 			newSecurity@id <- id
 			
 			# create the class "PositionFutures_EQ"
-			futureEquityIndexPosition <- new("PositionFutures_EQ",valueOnePoint=toMoney(valueOnePoint,newSecurity@currency),id=id,security=newSecurity,
+			futureEquityIndexPosition <- new("PositionFutures_EQ",valueOnePoint=toMoney(valueOnePoint,
+						newSecurity@currency),id=id,security=newSecurity,
 					quantity=quantity,value=toMoney(quantity*price*valueOnePoint,newSecurity@currency))
 			
 			return(futureEquityIndexPosition)
@@ -214,13 +176,15 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Conto_corrente"),
 				
 				# create the class "PositionConto_corrente"
 				# the underlying currency first
-				name <- paste(newSecurity@id,trade$Id_Bloomberg)
+				name <- newSecurity@name
 				conto_corrente_xxx <- new("PositionConto_corrente",id=newSecurity@id,security=newSecurity,
 						quantity=1.0,value=toMoney(sign(trade)*tradeQuantity,newSecurity@currency))
 				
 				# the numeraire currency then
 				name <- paste(info[["numeraire"]],"-",tolower(info[["numeraire"]])," ",trade$Id_Bloomberg,sep="")
-				id <- new("IdBloomberg",name)
+				id <- new("IdAyrton",
+						idAAA=new("IdAAA_character",paste(info[["numeraire"]],tolower(info[["numeraire"]]),sep="-")),
+						idStrumento=40)
 				
 				newSecurity <- new("Conto_corrente",currency=new("Currency",info[["numeraire"]]),name=name,id=id) 
 				conto_corrente_yyy <- new("PositionConto_corrente",id=id,security=newSecurity,
@@ -342,7 +306,7 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Opzioni_su_divise"),
 			# for options on fx we define the quantity to be the quantity of the first currency
 			# in the xxxyyy mnemonic, (xxx is the iso code of the first currency and yyy
 			# the iso code of the second currency)
-			
+	
 			underlying <- newSecurity@underlying
 			
 			if (is.null(trade$Confirmed_quantity)) {
@@ -360,13 +324,13 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Opzioni_su_divise"),
 			value <- toMoney(as.numeric(quantity@amount)*price,numeraire)
 			
 			info <- parseOptionFxName(trade$Security_name)
-			
+	
 			## construct the security name
 			securityName <- paste(info[["optionType"]],"/",
 					info[["expiryDate"]],"/",
 					"Strike"," ",info[["strike"]],"/",
-					underlying," ",info[["amount"]],"/",
-					"Premium ",as.character(-1*value), " ",numeraire,
+					underlying, " ",format(quantity@amount,scientific=FALSE),"/",
+					"Premium ",as.character(-1*value@amount), " ",numeraire,
 					sep=""
 			)		
 			newSecurity@name <- securityName
@@ -380,7 +344,7 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Opzioni_su_divise"),
 			id <- new("IdAyrton",
 					idAAA=new("IdAAA_character",idAAA),
 					idStrumento=19)
-			newSecurity@id < -id
+			newSecurity@id <- id
 			# create the class "PositionOpzioni_su_divise"
 			optionOnFxPosition <- new("PositionOpzioni_su_divise",id=id,security=newSecurity,
 					quantity=quantity,value=value)

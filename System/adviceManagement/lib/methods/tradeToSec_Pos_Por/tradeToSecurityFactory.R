@@ -15,14 +15,14 @@ parseOptionFxName <- function(name) {
 	# monthAndDay <- substr(expiryDate,1,5)
 	twoDigitsYear <- substr(expiryDate,7,8)
 	expiryDate <- paste(substr(expiryDate,1,6),"20",twoDigitsYear,sep="")
-	expiryDate <- format(strptime(expiryDate,format="%m/%d/%Y"),"%d-%m-%Y")
+	expiryDate <- format(strptime(expiryDate,format="%m/%d/%Y"),"%Y-%m-%d")
 	
 	# identify the option type
 	optionType <- substr(tmp[3],1,1)
 	if (optionType=="c") {
-		optionType <- "Call" 
+		optionType <- "C" 
 	} else {
-		optionType <- "Put" 
+		optionType <- "P" 
 	}
 	
 	# identify the strike
@@ -133,7 +133,9 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 	
 		currency <- new("Currency",trade$Currency)
 		name <- trade$Security_name
-		id=new("IdBloomberg",trade$Id_Bloomberg)
+		id <- new("IdAyrton",
+				idAAA=new("IdAAA_character",trade$ISIN_ticker),
+				idStrumento=2)
 		
 		# collect the last price (clean) 102.284
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"LAST_PRICE")
@@ -161,7 +163,10 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 		underlyingCurrency <- new("Currency",info[["underlying"]])
 
 		name <- paste(info[["underlying"]],"-",tolower(info[["underlying"]])," ",trade$Id_Bloomberg,sep="")
-		id <- new("IdBloomberg",name)
+		
+		id <- new("IdAyrton",
+				idAAA=new("IdAAA_character",paste(info[["underlying"]],tolower(info[["underlying"]]),sep="-")),
+				idStrumento=40)
 		
 		# collect the last price (clean) 1200071
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"LAST_PRICE")
@@ -215,10 +220,9 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 	
 		underlying = new("Currency",info[["underlying"]])
 		id=new("IdCharacter",name)
-		
-		expiryDateYYYMMDD <- format(strptime(info[["expiryDate"]],format="%d-%m-%Y"),"%Y-%m-%d") 
+	
 		newSecurity <- new("Opzioni_su_divise",currency=currency,name=name,id=id,underlying=underlying,
-				expiryDate=expiryDateYYYMMDD,optionType=info[["optionType"]],strike=info[["strike"]]) 
+				expiryDate=info[["expiryDate"]],optionType=info[["optionType"]],strike=info[["strike"]]) 
 		return(newSecurity)
 	}
 	

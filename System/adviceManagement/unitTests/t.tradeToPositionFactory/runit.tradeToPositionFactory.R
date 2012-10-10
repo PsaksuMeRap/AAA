@@ -118,7 +118,7 @@ test.shouldConvertFuturesOnIndexTradeToPosition <- function() {
 	newPosition <- tradeToPositionFactory(newSecurity,trade,blData)
 	
 	checkEquals(class(newPosition)[[1]],"PositionFutures_EQ")
-	checkEquals(class(newPosition@id)[[1]],"IdBloomberg")
+	checkEquals(class(newPosition@id)[[1]],"IdAyrton")
 	checkEquals(newPosition@value,toMoney(5864*10*5,"CHF"))
 	
 }
@@ -268,7 +268,7 @@ test.shouldConvertOptionOnFxTradeToPosition <- function() {
 	newPosition <- tradeToPositionFactory(newSecurity,trade,blData)
 	
 	checkEquals(class(newPosition)[[1]],"PositionOpzioni_su_divise")
-	checkEquals(class(newPosition@id)[[1]],"IdCharacter")
+	checkEquals(class(newPosition@id)[[1]],"IdAyrton")
 	checkEquals(newPosition@quantity,toMoney(trade$Quantity,"EUR"))
 	checkEquals(newPosition@value,toMoney(as.numeric(trade$Amount),"CHF"))
 }
@@ -297,7 +297,7 @@ test.shouldConvertOptionOnFxSellTradeToPosition <- function() {
 	newPosition <- tradeToPositionFactory(newSecurity,trade,blData)
 	
 	checkEquals(class(newPosition)[[1]],"PositionOpzioni_su_divise")
-	checkEquals(class(newPosition@id)[[1]],"IdCharacter")
+	checkEquals(class(newPosition@id)[[1]],"IdAyrton")
 	checkEquals(newPosition@quantity,toMoney(-trade$Quantity,"EUR"))
 	checkEquals(newPosition@value,toMoney(as.numeric(-trade$Amount),"USD"))
 }

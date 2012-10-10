@@ -92,7 +92,7 @@ test.createIdForInstrumentsWithIsin <- function() {
 	
 	# check futuresEQ
 	result <- idFactory(futuresEQ)
-	checkEquals(as.character(result@idAAA),"SMI Futures2012-03-16")
+	checkEquals(as.character(result@idAAA),"Future SMI2012-03-16")
 	checkEquals(as.numeric(result@idStrumento),50)	
 	
 	# check strutturati_FI

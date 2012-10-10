@@ -20,7 +20,7 @@ test.shouldCreateConto_corrente_fittizio <- function() {
 	ccFittizio <- createSecurity(origin)
 	
 	checkEquals(is(ccFittizio)[[1]],"Conto_corrente_fittizio")
-	checkEquals(ccFittizio@name,"SMI Futures 21-09-2012 / 10")
+	checkEquals(ccFittizio@name,"Future SMI 21-09-2012 / 10")
 	checkEquals(ccFittizio@currency,new("Currency","CHF"))
 	checkEquals(ccFittizio@id,new("IdAyrton",idAAA=new("IdAAA_character","CHF-chf"),idStrumento=54))
 	
@@ -252,7 +252,7 @@ test.shouldCreateFutures_EQ <- function() {
 	
 	security <- createSecurity(origin)
 	checkEquals(class(security)[[1]],"Futures_EQ")
-	checkEquals(security@name,"SMI Futures 16-03-2012 / 10              ")
+	checkEquals(security@name,"Future SMI 16-03-2012 / 10")
 	checkEquals(security@currency,new("Currency","CHF"))
 	checkEquals(security@deliveryDate,"2012-03-16")
 }

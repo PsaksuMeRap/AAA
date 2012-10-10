@@ -27,23 +27,27 @@ setMethod("createSecurity",signature(origin="Ayrton_Futures_EQ"),
 			
 			className <- class(origin)
 			className <- substr(className,start=8,stop=nchar(className))
-			
-			underlying <- new("IndexEquity",name=origin@Nome,id=idAyrton)
 
-			# get the deliveryDate			
-			getDeliveryDate <- function(origin) {
-
+			# get the name and the deliveryDate		
+			getInfo <- function(origin) {
 				result <- strsplit(origin@Nome,"/")
-				result <- result[[1]][[length(result[[1]])-1]]
+				## result <- strsplit("Future SMI 16-03-2012 / 10              ","/")
+				result <- stringr::str_trim(result[[1]])[[1]]
+
 				stringLength <- nchar(result)
-				dateString <- substr(result,stringLength-10,stringLength-1)
+				dateString <- substr(result,stringLength-10,stringLength)
+				name <- substr(result,1,stringLength-11)
 				deliveryDate <- format(strptime(dateString,format="%d-%m-%Y"),"%Y-%m-%d")
-				return(deliveryDate)
+				return(list(name=name,deliveryDate=deliveryDate))
 			}
+			info <- getInfo(origin)
+			
+			underlying <- new("IndexEquity",name=info[["name"]],id=new("IdCharacter",info[["name"]]))
 			
 			security <- new(className,currency=new("Currency",origin@Moneta),
-					name=origin@Nome,id=idAyrton,underlying=underlying,
-					deliveryDate=getDeliveryDate(origin))
+					name=stringr::str_trim(origin@Nome),id=idAyrton,underlying=underlying,
+					deliveryDate=info[["deliveryDate"]])
+
 			return(security)
 		}
 )

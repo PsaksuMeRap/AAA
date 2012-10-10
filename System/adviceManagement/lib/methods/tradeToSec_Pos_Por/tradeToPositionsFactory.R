@@ -11,10 +11,13 @@ setMethod("tradeToPositionsFactory",signature(position="PositionEquity"),
 			positions[1] <- position
 			
 			# create the cash flow associated with this trade
-			id <- paste(position@security@currency,"-",tolower(position@security@currency),sep="")
-			name <- paste(id," from equity trade ", position@id,sep="")
+			id <- new("IdAyrton",
+					idAAA=new("IdAAA_character",paste(info[["numeraire"]],tolower(info[["numeraire"]]),sep="-")),
+					idStrumento=40)
 			
-			security <- new("Conto_corrente",currency=position@security@currency,name=name,id=new("IdCharacter",id))
+			name <- paste(paste(info[["numeraire"]],tolower(info[["numeraire"]]),sep="-")," from equity trade ", position@security@name,sep="")
+			
+			security <- new("Conto_corrente",currency=position@security@currency,name=name,id=id)
 			positions[2] <- new("PositionConto_corrente",id=security@id,security=security,
 					quantity=1,value= -1 * position@value)
 			
