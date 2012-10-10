@@ -37,18 +37,23 @@ setMethod("replaceDirective",
 
 			## construct the equity leg of the position
 			securityEquity <- as(position@security@underlying,"Equity")
-			securityEquity@name <- paste(securityEquity@name,"- ",gsub(" / ","  ",position@security@name))
+			securityEquity@name <- paste(securityEquity@name,"-",gsub(" / ","  ",position@security@name))
 			
 			## compute the value of the position
 			currency <- position@security@currency
-			if (position@security@optionType=="Call") {
+			if (position@security@optionType=="C") {
 				quantity <- position@numberEquities
 				value1 <- toMoney(position@security@strike * quantity,currency)
 				value2 <- toMoney(-position@security@strike * position@numberEquities,currency)
 			} else {
-				quantity <- -position@numberEquities
-				value1 <- toMoney(position@security@strike * quantity,currency)
-				value2 <- toMoney(position@security@strike * position@numberEquities,currency)
+				if (position@security@optionType=="P") {
+					quantity <- -position@numberEquities
+					value1 <- toMoney(position@security@strike * quantity,currency)
+					value2 <- toMoney(position@security@strike * position@numberEquities,currency)
+				} else {
+					stop("Invalid optionType in replaceDirective:PositionOpzioni_su_azioni.")
+				}
+				
 			}
 			
 			equityPosition <- new("PositionEquity",
@@ -58,14 +63,20 @@ setMethod("replaceDirective",
 					value=value1)
 			
 			
-			# crate the corresponding money flow
-			nameAndId <- paste(currency,"- ",gsub(" / ","  ",position@security@name),sep="")
+			# create the corresponding money flow
+			currency <- as.character(position@security@currency)
+			idCharacter <- paste(currency,tolower(currency),sep="-")
+			id <- new("IdAyrton",
+					idAAA=new("IdAAA_character",idCharacter),
+					idStrumento=40)
+			
+			name <- paste(idCharacter,"from",position@security@name)
 			securityConto_corrente <- new("Conto_corrente",
-					currency=currency,
-					name=nameAndId,
-					id=new("IdCharacter",nameAndId))
+					currency=new("Currency",currency),
+					name=name,id=id)
+			
 			positionConto_corrente <- new("PositionConto_corrente",
-					id=new("IdCharacter",nameAndId),
+					id=id,
 					security=securityConto_corrente,
 					value=value2,
 					quantity=1.0)
@@ -80,22 +91,30 @@ setMethod("replaceDirective",
 		function(position) {
 			
 			## construct the leg based on the underlying currency
-			currency <- position@security@underlying
-			nameAndId <- paste(currency,"- ",position@security@name,sep="")
+			currency <- as.character(position@security@underlying)
+			idCharacter <- paste(currency,tolower(currency),sep="-")
+			id <- new("IdAyrton",
+					idAAA=new("IdAAA_character",idCharacter),
+					idStrumento=40)
+			
+			name <- paste(idCharacter,"from",position@security@name)
+			
 			securityConto_corrente1 <- new("Conto_corrente",
-					currency=currency,
-					name=nameAndId,
-					id=new("IdCharacter",nameAndId))
+					currency=new("Currency",currency),name=name,id=id)
 			
 			## compute the value of the position
-			if (position@security@optionType=="Call") {
+			if (position@security@optionType=="C") {
 				value1 <- position@quantity
 				value2 <- -position@security@strike * position@quantity
 				value2@currency <- position@security@currency
 			} else {
-				value1 <- -1 * position@quantity
-				value2 <- position@security@strike * position@quantity
-				value2@currency <- position@security@currency
+				if (position@security@optionType=="P") {
+					value1 <- -1 * position@quantity
+					value2 <- position@security@strike * position@quantity
+					value2@currency <- position@security@currency
+				} else {
+					stop("Invalid optionType in replaceDirective:PositionOpzioni_su_divise.")
+				}
 			}
 			positionConto_corrente1 <- new("PositionConto_corrente",
 					security=securityConto_corrente1,
@@ -105,12 +124,16 @@ setMethod("replaceDirective",
 			
 			## create the corresponding money flow
 			currency <- position@security@currency
-			nameAndId <- paste(currency,"- ",position@security@name,sep="")
+			idCharacter <- paste(currency,tolower(currency),sep="-")
+			id <- new("IdAyrton",
+					idAAA=new("IdAAA_character",idCharacter),
+					idStrumento=40)
+			
+			name <- paste(idCharacter,"from",position@security@name)
 			
 			securityConto_corrente2 <- new("Conto_corrente",
-					currency=currency,
-					name=nameAndId,
-					id=new("IdCharacter",nameAndId))
+					currency=new("Currency",currency),
+					name=name,id=id)
 			
 
 			positionConto_corrente2 <- new("PositionConto_corrente",
