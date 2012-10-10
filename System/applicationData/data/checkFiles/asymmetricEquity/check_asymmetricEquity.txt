@@ -37,7 +37,7 @@ currency:TRY ; >= 0TRY :: replace:Opzioni_su_divise
 currency:USD ; >= 0USD :: replace:Opzioni_su_divise
 
 # 8) verifica le posizioni opzioni_su_azioni
-instrument:Conto_corrente ; >= 0EUR :: replace:Opzioni_su_azioni & groupBy:securityId
+security:Conto_corrente ; >= 0EUR :: replace:Opzioni_su_azioni & groupBy:securityId
 
 checkListEnd:
 externalSuiteFileName:
