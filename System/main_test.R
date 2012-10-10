@@ -119,14 +119,6 @@ if (.Platform$OS.type=="windows") {
 	dirs = c(dirs,"./adviceManagement/unitTests/t.startBatchProcess")
 }
 
-
-dirs = c(
-		"./adviceManagement/unitTests/t.newAdviceWithLock",
-		"./adviceManagement/unitTests/t.postOffice",
-		"./adviceManagement/unitTests/t.saveLastObject",
-		"./adviceManagement/unitTests/t.sendStopToRProcess"
-		
-)
 testsuite.lists <- defineTestSuite("Test adviceManagement",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
 warnings()

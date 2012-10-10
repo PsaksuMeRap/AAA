@@ -28,8 +28,8 @@ test.shouldConvertFondi_azionariTradeToPosition <- function() {
 	newPosition <- tradeToPositionFactory(newSecurity,trade,blData)
 	
 	checkEquals(class(newPosition)[[1]],"PositionFondi_azionari")
-	checkEquals(class(newPosition@id)[[1]],"IdBloomberg")
-	checkEquals(as.character(newPosition@id),"WDIMIXD Equity")
+	checkEquals(class(newPosition@id)[[1]],"IdAyrton")
+	checkEquals(as.character(newPosition@id@idAAA),"LU0028583804")
 	checkEquals(newPosition@value,toMoney(-1000*244.04,"EUR"))
 	
 }
@@ -90,7 +90,7 @@ test.shouldConvertEquityTradeToPosition <- function() {
 	newPosition <- tradeToPositionFactory(newSecurity,trade,blData)
 	
 	checkEquals(class(newPosition)[[1]],"PositionEquity")
-	checkEquals(class(newPosition@id)[[1]],"IdBloomberg")
+	checkEquals(class(newPosition@id)[[1]],"IdAyrton")
 	checkEquals(newPosition@value,toMoney(100*11.08,"CHF"))
 	
 }
@@ -146,7 +146,7 @@ test.shouldConvertBondTradeToPosition <- function() {
 	newPosition <- tradeToPositionFactory(newSecurity,trade,blData)
 	
 	checkEquals(class(newPosition)[[1]],"PositionBond")
-	checkEquals(class(newPosition@id)[[1]],"IdBloomberg")
+	checkEquals(class(newPosition@id)[[1]],"IdAyrton")
 	checkEquals(newPosition@value,toMoney(0.01*(trade$Price+1.7)*trade$Quantity,"EUR"))
 	checkEquals(newPosition@accruedInterest,as(toMoney(0.017*trade$Quantity,"EUR"),"AccruedInterest"))
 }
@@ -175,7 +175,7 @@ test.shouldConvertBondTrade1ToPosition <- function() {
 	newPosition <- tradeToPositionFactory(newSecurity,trade,blData)
 	
 	checkEquals(class(newPosition)[[1]],"PositionBond")
-	checkEquals(class(newPosition@id)[[1]],"IdBloomberg")
+	checkEquals(class(newPosition@id)[[1]],"IdAyrton")
 	checkEquals(newPosition@value,toMoney(0.01*trade$Price*trade$Quantity,"EUR"))
 	checkEquals(newPosition@accruedInterest,as(toMoney(0.0,"EUR"),"AccruedInterest"))
 }
@@ -205,7 +205,7 @@ test.shouldConvertFXSpotTradeToPosition <- function() {
 	
 	checkEquals(class(positions[[1]])[[1]],"PositionConto_corrente")
 	checkEquals(class(positions[[2]])[[1]],"PositionConto_corrente")
-	checkEquals(class(positions[[1]]@id)[[1]],"IdBloomberg")
+	checkEquals(class(positions[[1]]@id)[[1]],"IdAyrton")
 	checkEquals(positions[[1]]@value,toMoney(500000,"EUR"))
 	checkEquals(positions[[2]]@value,toMoney(500000 * -1.201,"CHF"))
 	

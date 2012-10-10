@@ -24,7 +24,7 @@ test.shouldCreatePositionsFromTrades <- function() {
 	positions <- tradesToPositionsFactory(fileName,directory)
 	
 	checkEquals(length(positions),6)
-	checkEquals(as.character(positions[[3]]@id),"UBSN VX Equity")
+	checkEquals(as.character(positions[[3]]@security@name),"UBS AG-REG")
 	
 	rm("bloombergData",pos=repositories)
 	unlink(file.path(sys[["homeDir"]],"data"),recursive=TRUE)
@@ -50,7 +50,7 @@ test.shouldCreateLongPositionsFromTrades <- function() {
 	positions <- tradesToPositionsFactory(fileName,directory)
 	
 	checkEquals(length(positions),18)
-	checkEquals(as.character(positions[[1]]@id),"UBSN VX Equity")
+	checkEquals(as.character(positions[[1]]@security@name),"UBS AG-REG")
 	
 	rm("bloombergData",pos=repositories)
 	unlink(file.path(sys[["homeDir"]],"data"),recursive=TRUE)

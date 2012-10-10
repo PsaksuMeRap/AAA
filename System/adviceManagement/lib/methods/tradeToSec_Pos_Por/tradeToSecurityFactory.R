@@ -73,7 +73,7 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 		currency <- new("Currency",trade$Currency)
 		name <- trade$Security_name
 		id <- new("IdAyrton",
-				idAAA=new("IdAAA_character",trade$ISIN_ticker),
+				idAAA=new("IdAAA_character",trade$ISIN_Ticker),
 				idStrumento=1)
 		
 		# collect the last price
@@ -87,7 +87,7 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 		currency <- new("Currency",trade$Currency)
 		name <- trade$Security_name
 		id <- new("IdAyrton",
-				idAAA=new("IdAAA_character",trade$ISIN_ticker),
+				idAAA=new("IdAAA_character",trade$ISIN_Ticker),
 				idStrumento=14)
 		
 		# collect the last price
@@ -98,10 +98,11 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 	}
 
 	if (securityType=="Fund bond") {
+
 		currency <- new("Currency",trade$Currency)
 		name <- paste(sysAyrton[["Fondi_obbligazionari"]][["preNameString"]],trade$Security_name,sep=" - ")
 		id <- new("IdAyrton",
-				idAAA=new("IdAAA_character",trade$ISIN_ticker),
+				idAAA=new("IdAAA_character",trade$ISIN_Ticker),
 				idStrumento=3)
 		
 		# collect the last price
@@ -125,7 +126,7 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 		# collect the value of one point
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"FUT_VAL_PT")		
 		
-		newSecurity <- new("Futures_EQ",currency=currency,name=name,underlying=new("IndexEquity")) 
+		newSecurity <- new("Futures_EQ",currency=currency,name=name,id=new("IdCharacter",name),underlying=new("IndexEquity")) 
 		return(newSecurity)
 	}
 	
@@ -134,7 +135,7 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 		currency <- new("Currency",trade$Currency)
 		name <- trade$Security_name
 		id <- new("IdAyrton",
-				idAAA=new("IdAAA_character",trade$ISIN_ticker),
+				idAAA=new("IdAAA_character",trade$ISIN_Ticker),
 				idStrumento=2)
 		
 		# collect the last price (clean) 102.284
@@ -180,7 +181,7 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 		currency <- new("Currency",trade$Currency)
 		
 		name <- trade$Security_name
-		id=new("IdBloomberg",trade$Id_Bloomberg)
+		id=new("IdCharacter",trade$Id_Bloomberg)
 		
 		# collect the ticker of the underlying NESN VX
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"OPT_UNDL_TICKER")

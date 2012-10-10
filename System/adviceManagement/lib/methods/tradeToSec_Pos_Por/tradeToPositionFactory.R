@@ -44,8 +44,8 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Fondi_obbligazionari")
 			
 			# create the class "PositionFondi_obbligazionari"
 			accruedInterest <- new("AccruedInterest",toMoney(0,"EUR"))
-			Position <- new("PositionFondi_obbligazionari",accruedInterest=accruedInterest,id=new("IdBloomberg",
-							trade$Id_Bloomberg),security=newSecurity,quantity=quantity,
+			Position <- new("PositionFondi_obbligazionari",accruedInterest=accruedInterest,id=newSecurity@id,
+							security=newSecurity,quantity=quantity,
 							value=toMoney(quantity*price,newSecurity@currency))
 			
 			return(Position)
@@ -140,7 +140,7 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Bond"),
 			# create the class "PositionBond"
 			value <- (0.01*(price+accInterestPercentage))*quantity
 			value <- as(value,"Money")
-			bondPosition <- new("PositionBond",spRating=spRating,accruedInterest=accInterest,id=new("IdBloomberg",trade$Id_Bloomberg),security=newSecurity,
+			bondPosition <- new("PositionBond",spRating=spRating,accruedInterest=accInterest,id=newSecurity@id,security=newSecurity,
 					quantity=quantity,value=value)
 			
 			return(bondPosition)

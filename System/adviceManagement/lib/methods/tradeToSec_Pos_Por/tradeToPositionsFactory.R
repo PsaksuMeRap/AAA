@@ -5,19 +5,28 @@
 
 setGeneric("tradeToPositionsFactory",def=function(position,trade) standardGeneric("tradeToPositionsFactory"))
 
+tradeToPositionsFactoryCreateCashFlow <- function(position,fromString) {
+	# create the cash flow associated with this trade
+	currency <- as.character(position@security@currency)
+	idCharacter <- paste(currency,tolower(currency),sep="-")
+	id <- new("IdAyrton",idAAA=new("IdAAA_character",idCharacter),idStrumento=40)
+	
+	name <- paste(idCharacter, position@security@name,sep="")
+	
+	security <- new("Conto_corrente",currency=position@security@currency,name=name,id=id)
+	return(security)
+}
+
 setMethod("tradeToPositionsFactory",signature(position="PositionEquity"),
 		function(position,trade) {
 			positions <- new("Positions")
 			positions[1] <- position
 			
-			# create the cash flow associated with this trade
-			id <- new("IdAyrton",
-					idAAA=new("IdAAA_character",paste(info[["numeraire"]],tolower(info[["numeraire"]]),sep="-")),
-					idStrumento=40)
+			## create the security Conto_corrente
+			fromString <- " from equity trade "
+			security <- tradeToPositionsFactoryCreateCashFlow(position,fromString)
 			
-			name <- paste(paste(info[["numeraire"]],tolower(info[["numeraire"]]),sep="-")," from equity trade ", position@security@name,sep="")
-			
-			security <- new("Conto_corrente",currency=position@security@currency,name=name,id=id)
+			## create the corresponding position
 			positions[2] <- new("PositionConto_corrente",id=security@id,security=security,
 					quantity=1,value= -1 * position@value)
 			
@@ -32,11 +41,11 @@ setMethod("tradeToPositionsFactory",signature(position="PositionFondi_azionari")
 			positions <- new("Positions")
 			positions[1] <- position
 			
-			# create the cash flow associated with this trade
-			id <- paste(position@security@currency,"-",tolower(position@security@currency),sep="")
-			name <- paste(id," from Fund equity trade ", position@id,sep="")
+			## create the security Conto_corrente
+			fromString <- " from equity fund trade "
+			security <- tradeToPositionsFactoryCreateCashFlow(position,fromString)
 			
-			security <- new("Conto_corrente",currency=position@security@currency,name=name,id=new("IdCharacter",id))
+			## create the corresponding position
 			positions[2] <- new("PositionConto_corrente",id=security@id,security=security,
 					quantity=1,value= -1 * position@value)
 			
@@ -50,11 +59,11 @@ setMethod("tradeToPositionsFactory",signature(position="PositionFondi_obbligazio
 			positions <- new("Positions")
 			positions[1] <- position
 			
-			# create the cash flow associated with this trade
-			id <- paste(position@security@currency,"-",tolower(position@security@currency),sep="")
-			name <- paste(id," from Fund bond trade ", position@id,sep="")
+			## create the security Conto_corrente
+			fromString <- " from bond fund trade "
+			security <- tradeToPositionsFactoryCreateCashFlow(position,fromString)
 			
-			security <- new("Conto_corrente",currency=position@security@currency,name=name,id=new("IdCharacter",id))
+			## create the corresponding position
 			positions[2] <- new("PositionConto_corrente",id=security@id,security=security,
 					quantity=1,value= -1 * position@value)
 			
@@ -68,11 +77,11 @@ setMethod("tradeToPositionsFactory",signature(position="PositionFutures_EQ"),
 			positions <- new("Positions")
 			positions[1] <- position
 			
-			# create the cash flow associated with this trade
-			id <- paste(position@security@currency,"-",tolower(position@security@currency),sep="")
-			name <- paste(id," from future on equity trade ", position@id,sep="")
+			## create the security Conto_corrente
+			fromString <- " from future on equity trade "
+			security <- tradeToPositionsFactoryCreateCashFlow(position,fromString)
 			
-			security <- new("Conto_corrente",currency=position@security@currency,name=name,id=new("IdCharacter",id))
+			## create the corresponding position
 			positions[2] <- new("PositionConto_corrente",id=security@id,security=security,
 					quantity=1,value= position@security@deliveryPrice * (-1 * as.numeric(position@quantity) * position@valueOnePoint))
 			
@@ -88,18 +97,17 @@ setMethod("tradeToPositionsFactory",signature(position="PositionBond"),
 			positions <- new("Positions")
 			positions[1] <- position
 			
-			# create the cash flow associated with this trade
-			id <- paste(position@security@currency,"-",tolower(position@security@currency),sep="")
-			name <- paste(id," from bond trade ", position@id,sep="")
+			## create the security Conto_corrente
+			fromString <- " from bond trade "
+			security <- tradeToPositionsFactoryCreateCashFlow(position,fromString)
 			
-			security <- new("Conto_corrente",currency=position@security@currency,name=name,id=new("IdCharacter",id))
+			## create the corresponding position
 			positions[2] <- new("PositionConto_corrente",id=security@id,security=security,
 					quantity=1,value= -1 * position@value)
 			
 			return(positions)
 		}
 )
-
 
 
 setMethod("tradeToPositionsFactory",signature(position="Positions"),
@@ -114,12 +122,12 @@ setMethod("tradeToPositionsFactory",signature(position="PositionOpzioni_su_azion
 		function(position,trade) {
 			positions <- new("Positions")
 			positions[1] <- position
-						
-			# create the cash flow associated with this trade
-			id <- paste(position@security@currency,"-",tolower(position@security@currency),sep="")
-			name <- paste(id," from options on equity trade ", position@id,sep="")
 			
-			security <- new("Conto_corrente",currency=position@security@currency,name=name,id=new("IdCharacter",id))
+			## create the security Conto_corrente
+			fromString <- " from options on equity trade "
+			security <- tradeToPositionsFactoryCreateCashFlow(position,fromString)
+			
+			## create the corresponding position
 			positions[2] <- new("PositionConto_corrente",id=security@id,security=security,
 					quantity=1,value= -1 * position@value)
 			
@@ -128,17 +136,17 @@ setMethod("tradeToPositionsFactory",signature(position="PositionOpzioni_su_azion
 		}
 )
 
+
 setMethod("tradeToPositionsFactory",signature(position="PositionOpzioni_su_divise"),
 		function(position,trade) {
 			
 			positions <- new("Positions")
-			positions[1] <- position			
-	
-			# create the cash flow associated with this trade
-			id <- paste(position@security@currency,"-",tolower(position@security@currency),sep="")
-			name <- paste(id," from options on fx trade ", position@id,sep="")
+			positions[1] <- position
 			
-			security <- new("Conto_corrente",currency=position@security@currency,name=name,id=new("IdCharacter",id))
+			## create the security Conto_corrente
+			fromString <- " from options on fx trade "
+			security <- tradeToPositionsFactoryCreateCashFlow(position,fromString)
+			
 			positions[2] <- new("PositionConto_corrente",id=security@id,security=security,
 					quantity=1,value= -1 * position@value)
 			
