@@ -32,7 +32,10 @@ setGeneric("replaceDirective",def=function(position,...) standardGeneric("replac
 setMethod("replaceDirective",
 		signature(position="PositionOpzioni_su_azioni"),
 		function(position) {
-	
+			# if long put return
+			if (position@security@optionType=="P" & position@quantity >=0) return(new("Positions",list(position)))
+			
+			# get the option parameters
 			info <- getOptionParameters(position)
 
 			## construct the equity leg of the position
@@ -81,6 +84,11 @@ setMethod("replaceDirective",
 					value=value2,
 					quantity=1.0)
 			
+			
+			
+			if (position@security@optionType=="C" & position@quantity >=0) return(new("Positions",list(positionConto_corrente)))
+			if (position@security@optionType=="P" & position@quantity <0) return(new("Positions",list(positionConto_corrente)))
+			if (position@security@optionType=="C" & position@quantity <0) return(new("Positions",list(equityPosition)))
 			return(new("Positions",list(equityPosition,positionConto_corrente)))
 			
 		}
