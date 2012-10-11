@@ -39,7 +39,7 @@
 #	return(repository)
 #}
 
-create_repositoryDBEquities <- function(DBEquities.df) {
+create_DBEquities <- function(DBEquities.df) {
 	repository <- list()
 	class(repository) <- "repositoryDBEquities"
 	
@@ -48,15 +48,23 @@ create_repositoryDBEquities <- function(DBEquities.df) {
 		query <- paste("SELECT DISTINCT TOP 100 PERCENT A.ID, A.ID_strumento, A.Azione, A.NumeroValore, C.Moneta, A.ISIN ",
 				"FROM [Sistema (prova)].dbo.DBAzioni A INNER JOIN [Sistema (prova)].dbo.DBPortfolioGenerale B ",
 				"ON A.NumeroValore = B.NumeroValore INNER JOIN ",
-				"[Sistema (prova)].dbo.DBBorsa C ON A.Borsa = C.Borsa",
-				"WHERE (B.Cliente IN ('EUR FIXED INCOME', 'CB-ACC GLOBAL ECON', 'CB-ACC GLOBAL EQ'))"
-		)
+				"[Sistema (prova)].dbo.DBBorsa C ON A.Borsa = C.Borsa"
+       )
+#		query <- paste("SELECT DISTINCT TOP 100 PERCENT A.ID, A.ID_strumento, A.Azione, A.NumeroValore, C.Moneta, A.ISIN ",
+#				"FROM [Sistema (prova)].dbo.DBAzioni A INNER JOIN [Sistema (prova)].dbo.DBPortfolioGenerale B ",
+#				"ON A.NumeroValore = B.NumeroValore INNER JOIN ",
+#				"[Sistema (prova)].dbo.DBBorsa C ON A.Borsa = C.Borsa",
+#				"WHERE (B.Cliente IN ('EUR FIXED INCOME', 'CB-ACC GLOBAL ECON', 'CB-ACC GLOBAL EQ'))"
+#		)
 
 		repository[["DBEquities.df"]] <- sqlQuery(connection,query,as.is=TRUE)
 	} else {
 		repository[["DBEquities.df"]] <- DBEquities.df
 	}
-
+	
+	# remove the NA 
+	isIsinNA <- is.na(repository[["DBEquities.df"]][,"ISIN"])
+	repository[["DBEquities.df"]][isIsinNA,"ISIN"] <- ""
 	return(repository)
 }
 

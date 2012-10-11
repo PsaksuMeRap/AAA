@@ -31,8 +31,17 @@ source("./riskman/lib/library.R")
 source("./adviceManagement/lib/library.R")
 ## -- fine setup
 
+
 ## -- inizio procedura salvataggio portafogli - parte generale
 source("./odbc/connessioni.R")
+
+
+## salva il nuovo DBEquity nella cartella data prima dell'importazione
+# salva il DBEquities
+repositoryDBEquities <- create_DBEquities()
+directory <- file.path(homeDir,"data","DBEquities")
+saveLastObject(repositoryDBEquities[["DBEquities.df"]],fileName="DBEquities.RData",directory)
+
 
 dati <- importDBPortfolioGenerale()
 
@@ -78,15 +87,29 @@ if (FALSE) {
 # salva i portafogli in homeDir
 for (portfolio in fundPortfolios) {
 	portfolioName <- mappingPippoPortfolio[[portfolio@owner]]
-	if (!file.exists(file.path(homeDir,portfolioName))) dir.create(file.path(homeDir,portfolioName)) 
-	savePortfolio(portfolio,portfolioSubDirectory=portfolioName,directory=homeDir)
+	directory <- file.path(homeDir,"dataNew","portfolios",portfolioName)
+	if (!file.exists(directory)) dir.create(directory,recursive=TRUE)
+	directory <- file.path(homeDir,"dataNew","portfolios")
+	savePortfolio(portfolio,portfolioSubDirectory=portfolioName,directory=directory)
 }
+
+# salva repositoryDBEquities in dataNew
+directory <- file.path(homeDir,"dataNew","DBEquities")
+if (!file.exists(directory)) dir.create(directory,recursive=TRUE) 
+saveLastObject(repositoryDBEquities[["DBEquities.df"]],fileName="DBEquities.RData",directory)
+
+# copy the script file
+from <- file.path(sourceCodeDir,"Sincronizza.R")
+to <- file.path(homeDir,"Sincronizza.R")
+ok <- file.copy(from,to)
 
 # zip the portfolio's directories
 zipFullFileName <- file.path(homeDir,"portfolios.zip")
-files <- file.path(homeDir,mappingPippoPortfolio)
+files <- file.path(homeDir,"dataNew")
+files <- c(files,file.path(homeDir,"Sincronizza.R"))
 ok <- zip(zipFullFileName, files, flags = "-r9X")
 ## -- terminato salvataggio portafogli
+
 
 
 

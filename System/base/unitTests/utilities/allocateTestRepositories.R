@@ -10,7 +10,7 @@ allocateTestRepositories <- function(repoName) {
 		DBEquities.df <- createDBEquitiesDataFrame()
 		
 		# create the instrument repository
-		DBEquities <- create_repositoryDBEquities(DBEquities.df)
+		DBEquities <- create_DBEquities(DBEquities.df)
 		
 		# create backup if necessary
 		if (exists("DBEquities",envir=repositories,inherits=FALSE)) {

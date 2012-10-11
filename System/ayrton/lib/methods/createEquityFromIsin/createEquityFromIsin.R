@@ -5,7 +5,7 @@
 
 
 createEquitySecurityFromIsin <- function(isin)  {
-	
+
 	isOk <- repositories$DBEquities$DBEquities.df[,"ISIN"] == isin
 	
 	matches <- sum(isOk)
