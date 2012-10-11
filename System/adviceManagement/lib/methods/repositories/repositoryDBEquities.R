@@ -3,6 +3,14 @@
 # Author: claudio
 ###############################################################################
 
+import_repositoryDBEquitites <- function() {
+	connection <- odbcConnect("prezzi_storici_azioni_VAR",.utente,.password)
+	query = paste("SELECT A.ID, A.ID_strumento,A.Azione,A.NumeroValore,A.Moneta,A.ISIN FROM [Sistema (prova)].dbo.DBEquitites AS A",
+			"INNER JOIN DBPortfolioGenerale AS B ON A.NumeroValore=B.NumeroValore")
+	
+	DBPortfolioGenerale.df <- sqlQuery(connection,query,as.is=TRUE)
+	
+}
 
 create_repositoryDBEquities <- function() {
 	
