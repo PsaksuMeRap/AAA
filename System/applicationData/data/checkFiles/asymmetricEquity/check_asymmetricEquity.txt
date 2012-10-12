@@ -28,16 +28,13 @@ amount:>10% & security!:Conto_corrente,Depositi_a_termine ; = 0%
 amount:>=20% & security!:Conto_corrente, ; = 0%
 
 # 4) verifica le posizioni opzioni_su_divise
-currency:AUD ; >= 0AUD :: replace:Opzioni_su_divise
-currency:BRL ; >= 0BRL :: replace:Opzioni_su_divise
-currency:CHF ; >= 0CHF :: replace:Opzioni_su_divise
-currency:EUR ; >= 0EUR :: replace:Opzioni_su_divise
-currency:NOK ; >= 0NOK :: replace:Opzioni_su_divise
-currency:TRY ; >= 0TRY :: replace:Opzioni_su_divise
-currency:USD ; >= 0USD :: replace:Opzioni_su_divise
+currency:AUD,BRL,CHF,EUR,NOK,TRY,USD ; >= 5% :: replace:Opzioni_su_azioni,Opzioni_su_divise
 
-# 8) verifica le posizioni opzioni_su_azioni
-security:Conto_corrente ; >= 0EUR :: replace:Opzioni_su_azioni & groupBy:securityId
+# 5) verifica le posizioni opzioni_su_azioni (short put,long call)
+currency:AUD,BRL,CHF,EUR,NOK,TRY,USD ; >= 0EUR :: replace:Opzioni_su_azioni & groupBy:securityId
+
+# 6) verifica le posizioni opzioni_su_azioni (short call)
+security:Equity ; >= 0EUR :: replace:Opzioni_su_azioni & groupBy:securityId
 
 checkListEnd:
 externalSuiteFileName:

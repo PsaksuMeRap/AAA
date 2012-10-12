@@ -31,6 +31,15 @@ setMethod("getOptionParameters",signature(origin="Ayrton_Opzioni_su_azioni"),
 			
 			tmp <- as.list(stringr::str_trim(strsplit(origin@Nome,"/")[[1]]))
 			fieldNames <- c("quantity","optionType","name","expiryDate","strike","premium","isin","underlyingPrice","contractSize")
+			
+			# check the the number of fields is complete
+			if (length(tmp)<9) {
+				messageString <- paste("Fields problems in the option position:",origin@Nome,
+						"\n\nSome field is missing?")
+				ok <- tkmessageBox(message=messageString,icon="warning")
+				stop(paste("Procedure terminated from getOptionParameters:",origin@Nome))
+			}
+			
 			names(tmp) <- fieldNames
 			
 			tmp[["expiryDate"]] <- format(strptime(tmp[["expiryDate"]],format="%d-%m-%y"),"%Y-%m-%d")
