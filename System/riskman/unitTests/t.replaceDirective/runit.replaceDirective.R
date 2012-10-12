@@ -93,7 +93,8 @@ test.shouldReplacePositionOpzioni_su_azioni <- function() {
 	positions <- list(repository$Opzioni_su_azioni1,repository$Opzioni_su_azioni2,
 			repository$Opzioni_su_azioni3,repository$Opzioni_su_azioni4)
 	
-	# for '-1000 / Call / Syngenta AG / 17-02-12 / Strike 290 / Premio(5500 CHF) / CH0011027469 / 337.90'	
+	## short call
+	# for "-100 / Call / Syngenta AG / 17-02-12 / Strike 290 / Premio(5500 CHF) / CH0011027469 / 337.90 / 10"
 	result <- replaceDirective(positions[[1]])	
 	checkEquals(length(result),2)
 	
