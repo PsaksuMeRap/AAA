@@ -32,8 +32,33 @@ setGeneric("replaceDirective",def=function(position,...) standardGeneric("replac
 setMethod("replaceDirective",
 		signature(position="PositionOpzioni_su_azioni"),
 		function(position) {
-			# if long put return
-			if (position@security@optionType=="P" & position@quantity >=0) return(new("Positions",list(position)))
+			# the following rules apply:
+			# long put: we return the worst case scenario, i.e. at expiry a cash position of 0
+			# short put: a negative cash position and the corresponding underlying position
+			# long call: a negative cash position and the corresponding underlying position
+			# short call: the corresponding underlying position
+			
+			# if long put
+			if (position@security@optionType=="P" & position@quantity >=0) {
+				# create a cash position of 0
+				currency <- as.character(position@security@currency)
+				idCharacter <- paste(currency,tolower(currency),sep="-")
+				id <- new("IdAyrton",
+						idAAA=new("IdAAA_character",idCharacter),
+						idStrumento=40)
+				
+				name <- paste(idCharacter,"from",position@security@name)
+				securityConto_corrente <- new("Conto_corrente",
+						currency=new("Currency",currency),
+						name=name,id=id)
+				
+				positionConto_corrente <- new("PositionConto_corrente",
+						id=id,
+						security=securityConto_corrente,
+						value=toMoney(0,position@security@currency),
+						quantity=1.0)
+				return(new("Positions",list(positionConto_corrente)))
+			} 
 			
 			# get the option parameters
 			info <- getOptionParameters(position)
@@ -46,12 +71,12 @@ setMethod("replaceDirective",
 			currency <- position@security@currency
 			if (position@security@optionType=="C") {
 				quantity <- position@numberEquities
-				value1 <- toMoney(position@security@strike * quantity,currency)
+				value1 <- toMoney(info[["underlyingPrice"]] * quantity,currency)
 				value2 <- toMoney(-position@security@strike * position@numberEquities,currency)
 			} else {
 				if (position@security@optionType=="P") {
 					quantity <- -position@numberEquities
-					value1 <- toMoney(position@security@strike * quantity,currency)
+					value1 <- toMoney(info[["underlyingPrice"]] * quantity,currency)
 					value2 <- toMoney(position@security@strike * position@numberEquities,currency)
 				} else {
 					stop("Invalid optionType in replaceDirective:PositionOpzioni_su_azioni.")
@@ -85,11 +110,9 @@ setMethod("replaceDirective",
 					quantity=1.0)
 			
 			
-			
-			if (position@security@optionType=="C" & position@quantity >=0) return(new("Positions",list(positionConto_corrente)))
-			if (position@security@optionType=="P" & position@quantity <0) return(new("Positions",list(positionConto_corrente)))
+			if (position@security@optionType=="C" & position@quantity >=0) return(new("Positions",list(equityPosition,positionConto_corrente)))
+			if (position@security@optionType=="P" & position@quantity <0) return(new("Positions",list(equityPosition,positionConto_corrente)))
 			if (position@security@optionType=="C" & position@quantity <0) return(new("Positions",list(equityPosition)))
-			return(new("Positions",list(equityPosition,positionConto_corrente)))
 			
 		}
 )

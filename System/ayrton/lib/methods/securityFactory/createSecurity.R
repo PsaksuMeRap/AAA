@@ -95,7 +95,7 @@ setMethod("createSecurity",signature(origin="Ayrton_Opzioni_su_azioni"),
 			className <- class(origin)
 			className <- substr(className,start=8,stop=nchar(className))
 	
-			info <- getOptionParameters(origin)
+			info <- getOptionParameters(origin)			
 			
 			# identify the underlying equity
 			underlying <- createEquitySecurityFromIsin(info[["isin"]])

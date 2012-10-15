@@ -29,7 +29,7 @@ source("./ayrton/lib/methods/portfoliosFactory/portfoliosFactory.R")
 # dipende da IdAyrton
 source("./ayrton/lib/methods/createEquityFromIsin/createEquityFromIsin.R")
 # non ho guardato da cosa dipende
-source("./ayrton/lib/methods/getOptionParametersFromName/getOptionParametersFromName.R")
+source("./ayrton/lib/methods/getOptionParameters/getOptionParameters.R")
 # non ho guardato da cosa dipende
 source("./ayrton/lib/systemOptions.R")
 # non dipende da nulla

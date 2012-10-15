@@ -38,13 +38,12 @@ test.shouldApplyReplaceDirectiveOpzioni_su_azioni <- function() {
 	
 	result <- Apply(directive,positions)
 	
-	checkEquals(length(result),6)
+	checkEquals(length(result),5)
 	checkEquals(is(result[[1]]),c("PositionOpzioni_su_divise","Position"))
 	checkEquals(is(result[[2]]),c("PositionOpzioni_su_divise","Position"))
-	checkEquals(is(result[[3]]),c("PositionEquity","Position"))	
-	checkEquals(is(result[[4]]),c("PositionConto_corrente","Position"))		
-	checkEquals(is(result[[5]]),c("PositionEquity","Position"))	
-	checkEquals(is(result[[6]]),c("PositionConto_corrente","Position"))			
+	checkEquals(is(result[[3]]),c("PositionEquity","Position"))		
+	checkEquals(is(result[[4]]),c("PositionEquity","Position"))	
+	checkEquals(is(result[[5]]),c("PositionConto_corrente","Position"))			
 }
 
 test.shouldApplyReplaceDirectiveOpzioni_su_divise <- function() {
@@ -84,21 +83,20 @@ test.shouldApplyReplaceDirectiveOpzioni_su_divise_azioni <- function() {
 	repositories$exchangeRates <- testRepository
 	
 	# create the positions
-	positions <- list(repository$Opzioni_su_azioni1,repository$Opzioni_su_divise2,
-			repository$Opzioni_su_azioni2,repository$Opzioni_su_divise4)
+	positions <- new("Positions",list(repository$Opzioni_su_azioni1,repository$Opzioni_su_divise2,
+			repository$Opzioni_su_azioni2,repository$Opzioni_su_divise4))
 	
 	directive <- new("ReplaceDirective",c("Opzioni_su_azioni","Opzioni_su_divise"))
 	
 	result <- Apply(directive,positions)
 	
-	checkEquals(length(result),8)
+	checkEquals(length(result),7)
 	checkEquals(is(result[[1]]),c("PositionEquity","Position"))
-	checkEquals(is(result[[2]]),c("PositionConto_corrente","Position"))
-	checkEquals(is(result[[3]]),c("PositionEquity","Position"))
-	checkEquals(is(result[[4]]),c("PositionConto_corrente","Position"))
-	checkEquals(is(result[[5]]),c("PositionConto_corrente","Position"))	
-	checkEquals(is(result[[6]]),c("PositionConto_corrente","Position"))		
-	checkEquals(is(result[[7]]),c("PositionConto_corrente","Position"))	
-	checkEquals(is(result[[8]]),c("PositionConto_corrente","Position"))
+	checkEquals(is(result[[2]]),c("PositionEquity","Position"))
+	checkEquals(is(result[[3]]),c("PositionConto_corrente","Position"))
+	checkEquals(is(result[[4]]),c("PositionConto_corrente","Position"))	
+	checkEquals(is(result[[5]]),c("PositionConto_corrente","Position"))		
+	checkEquals(is(result[[6]]),c("PositionConto_corrente","Position"))	
+	checkEquals(is(result[[7]]),c("PositionConto_corrente","Position"))
 	
 }
