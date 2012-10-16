@@ -16,6 +16,16 @@ selectionCriteriumFactory <- function(factorStringParsed) {
 		return(selectionCriterium)
 	}
 	
+	if (identical(factorStringParsed@criterium,"currency")) {
+		values <- unlist(strsplit(factorStringParsed@values,","))
+		values <- removeStartEndSpaces(values)
+		selectionCriterium <- new("CurrencySelectionCriterium",
+				values=values,
+				negation=factorStringParsed@negation
+		)
+		return(selectionCriterium)
+	}
+	
 	if (identical(factorStringParsed@criterium,"amount")) {
 		constraint <- constraintFactory(factorStringParsed@values)
 		selectionCriterium <- new("AmountSelectionCriterium",
@@ -25,10 +35,11 @@ selectionCriteriumFactory <- function(factorStringParsed) {
 		return(selectionCriterium)
 	}
 	
-	if (identical(factorStringParsed@criterium,"currency")) {
+	if (identical(factorStringParsed@criterium,"rating")) {
+		relationalOperator <- relationalOperatorFactory(factorStringParsed@values)
 		values <- unlist(strsplit(factorStringParsed@values,","))
 		values <- removeStartEndSpaces(values)
-		selectionCriterium <- new("CurrencySelectionCriterium",
+		selectionCriterium <- new("RatingSelectionCriterium",
 				values=values,
 				negation=factorStringParsed@negation
 		)

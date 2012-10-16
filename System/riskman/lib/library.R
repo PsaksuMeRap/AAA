@@ -22,6 +22,7 @@ source("./riskman/lib/classDefinitions/SelectionCriterium/SecuritySelectionCrite
 source("./riskman/lib/classDefinitions/SelectionCriterium/AmountSelectionCriterium.R")
 source("./riskman/lib/classDefinitions/SelectionCriterium/CurrencySelectionCriterium.R")
 source("./riskman/lib/classDefinitions/SelectionCriterium/MaturityHorizonSelectionCriterium.R")
+source("./riskman/lib/classDefinitions/SelectionCriterium/RatingSelectionCriterium.R")
 source("./riskman/lib/classDefinitions/SelectionCriterium/SelectionCriteria.R")
 
 
