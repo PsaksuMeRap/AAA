@@ -13,7 +13,7 @@ getLongTermRatingLevelsMoody <- function() {
 	return(levels)
 }
 
-as.MoodylongTermRating <- function(x) {
+as.longTermRatingMoody <- function(x) {
 	
 	levels <- getLongTermRatingLevelsMoody()
 	if (missing(x)) {

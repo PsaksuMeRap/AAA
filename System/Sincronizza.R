@@ -41,5 +41,15 @@ if (!file.copy(from,to,overwrite=TRUE)) {
 	isOk <- FALSE
 }
 
+# copy the repositoryExchangeRates
+from <- file.path(workingDir,"dataNew","exchangeRates","exchangeRates.RData")
+to <- file.path(homeDir,"data","exchangeRates","exchangeRates.RData")
+
+if (!file.copy(from,to,overwrite=TRUE)) {
+	messageText <- paste("Warning, the exchangeRates.RData file has not been copied correctly!",sep="")
+	tkmessageBox(message=messageText,icon="warning")
+	isOk <- FALSE
+}
+
 if (isOk) tkmessageBox(message="The copy procedure has terminated correctly.",icon="warning")
 

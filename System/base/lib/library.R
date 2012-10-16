@@ -20,6 +20,7 @@ source("./base/lib/classDefinitions/LongTermRatingSP/LongTermRatingSP.R")
 source("./base/lib/classDefinitions/LongTermRatingMoody/LongTermRatingMoody.R")
 source("./base/lib/classDefinitions/LongTermRating/LongTermRating.R")
 source("./base/lib/methods/LongTermRatingFactory/LongTermRatingFactory.R")
+source("./base/lib/methods/LongTermRatingMoodyToSP/LongTermRatingMoodyToSP.R")
 
 source("./base/lib/classDefinitions/Security/Security.R")
 source("./base/lib/classDefinitions/Security/Bond.R")

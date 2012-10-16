@@ -42,6 +42,11 @@ repositoryDBEquities <- create_DBEquities()
 directory <- file.path(homeDir,"data","DBEquities")
 saveLastObject(repositoryDBEquities[["DBEquities.df"]],fileName="DBEquities.RData",directory)
 
+## salva il nuovo repositoryExchangeRates nela cartella data prima dell'importazione
+repositoryExchangeRates <- create_repositoryExchangeRates()
+directory <- file.path(homeDir,"data","exchangeRates")
+saveLastObject(repositoryExchangeRates,fileName="exchangeRates.RData",directory)
+
 
 dati <- importDBPortfolioGenerale()
 
@@ -97,6 +102,11 @@ for (portfolio in fundPortfolios) {
 directory <- file.path(homeDir,"dataNew","DBEquities")
 if (!file.exists(directory)) dir.create(directory,recursive=TRUE) 
 saveLastObject(repositoryDBEquities[["DBEquities.df"]],fileName="DBEquities.RData",directory)
+
+# salva repositoryExchangeRates in dataNew
+directory <- file.path(homeDir,"dataNew","exchangeRates")
+if (!file.exists(directory)) dir.create(directory,recursive=TRUE) 
+saveLastObject(repositoryExchangeRates,fileName="exchangeRates.RData",directory)
 
 # copy the script file
 from <- file.path(sourceCodeDir,"Sincronizza.R")
