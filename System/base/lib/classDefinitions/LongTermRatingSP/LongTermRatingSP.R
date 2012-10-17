@@ -4,25 +4,14 @@
 ###############################################################################
 
 
-setClass("LongTermRatingSP",contains="factor")
+setClass("LongTermRatingSP",contains="character")
 
 getLongTermRatingLevelsSP <- function() {
-	levels <- c("NR","D","C","CC","CCC-","CCC","CCC+",
+	levels <- 1:23
+	rates <- c("NR","D","C","CC","CCC-","CCC","CCC+",
 			"B-","B","B+","BB-","BB","BB+","BBB-","BBB","BBB+",
 			"A-","A","A+","AA-","AA","AA+","AAA")
+	names(levels) <- rates
 	return(levels)
 }
-
-as.longTermRatingSP <- function(x) {
-	
-	levels <- getLongTermRatingLevelsSP()
-	if (missing(x)) {
-		x <- levels
-	}
-	longTermRating <- factor(x,levels=levels,ordered=TRUE)
-	longTermRating <- new("LongTermRatingSP",longTermRating)
-	return(longTermRating)
-}
-
-
 

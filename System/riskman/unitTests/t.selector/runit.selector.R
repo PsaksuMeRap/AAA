@@ -3,6 +3,38 @@
 # Author: claudio
 ###############################################################################
 
+test.shouldSelectPositionsByRating <- function() {
+	
+	# exchange rates required for position initialization
+	# initialize exchange rates
+	repository <- repositories$exchangeRates
+	source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
+	testRepository <- createExchangeRatesTestRepository() 
+	repositories$exchangeRates <- testRepository
+	# exchange rate USD-CHF: 0.9627
+	# exchange rate EUR-CHF: 1.33853808
+	
+	# initialize the position
+	source("./base/unitTests/utilities/createRepositoryPositions.R")
+	repo <- createRepositoryPositions()
+	
+	p1 <- repo$equity1
+	p2 <- repo$bond1
+	p3 <- repo$bond2
+	p4 <- repo$unclassified1
+	p5 <- repo$bond3
+	
+	positions <- new("Positions",list(p1,p2,p3))
+	
+	# one position
+	criterium <- new("RatingSelectionCriterium",values=c("AAA","BBB"),relationalOperator="<",negation=FALSE)
+	result <- selector(criterium,positions)
+	should <- c(FALSE,TRUE,FALSE)
+	checkEquals(result,should)
+		
+	if (!is.null(repository)) repositories$exchangeRates <- repository
+}
+
 test.shouldSelectPositionsBySecurities <- function() {
 	
 	# exchange rates required for position initialization

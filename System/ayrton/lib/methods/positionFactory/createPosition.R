@@ -107,11 +107,15 @@ setMethod("createPosition",signature(security="Bond",origin="AyrtonPosition"),
 			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
 			value <- repositories$exchangeRates$exchange(value,security@currency)
 			accruedInterest <- new("AccruedInterest",toMoney(NA_real_,security@currency))
+			
+			rating <- longTermRatingFactory(origin@rating)
+			
 			position <- new("PositionBond",
 					id=security@id,
 					security=security,
 					quantity=quantity,
 					value=value,
+					rating=rating,
 					accruedInterest=accruedInterest)
 			
 			return(position)
@@ -127,11 +131,15 @@ setMethod("createPosition",signature(security="Obbligazioni_convertibili",origin
 			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
 			value <- repositories$exchangeRates$exchange(value,security@currency)
 			accruedInterest <- new("AccruedInterest",toMoney(NA_real_,security@currency))
+			
+			rating <- longTermRatingFactory(origin@rating)
+
 			position <- new("PositionObbligazioni_convertibili",
 					id=security@id,
 					security=security,
 					quantity=quantity,
 					value=value,
+					rating=rating,
 					accruedInterest=accruedInterest)
 			
 			return(position)

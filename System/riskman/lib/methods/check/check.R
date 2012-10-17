@@ -6,6 +6,58 @@
 
 setGeneric("check",def=function(x,selectionCriterium) standardGeneric("check"))
 
+setMethod("check",signature(x="Position",selectionCriterium="RatingSelectionCriterium"),
+		function(x,selectionCriterium) {
+			
+			# if the position x does not have a slot rating then return FALSE
+			if (!.hasSlot(x,"rating")) return(FALSE) 
+			
+			# if the relational operator is empty then perform a normal check
+			relationalOperator <- selectionCriterium@relationalOperator
+			if (relationalOperator=="") return(is.element(x@rating,selectionCriterium@values))
+			
+			# otherwise transform the values string into longTermRating
+			values <- lapply(selectionCriterium@values,longTermRatingFactory)
+			
+			# excecute the check
+			if (relationalOperator==">" ) {
+				result <- longTermRatingFactory(x@rating)>values
+				result <- all(result)
+				if (selectionCriterium@negation) result <- !result
+				
+				return(result)
+			}
+			if (relationalOperator==">=")  {
+				result <- x@rating >= selectionCriterium@constraint@value
+				if (selectionCriterium@negation) result <- !result
+				return(result)
+			}
+			if (relationalOperator=="<" )  {
+				result <- x@rating < selectionCriterium@constraint@value
+				if (selectionCriterium@negation) result <- !result
+				return(result)
+			}
+			if (relationalOperator=="<=")  {
+				result <- x@rating <= selectionCriterium@constraint@value
+				if (selectionCriterium@negation) result <- !result
+				return(result)
+			}
+			if (relationalOperator=="!=")  {
+				result <- x@rating != selectionCriterium@constraint@value
+				if (selectionCriterium@negation) result <- !result
+				return(result)
+			}
+			if (relationalOperator=="=" )  {
+				result <- x@rating == selectionCriterium@constraint@value
+				if (selectionCriterium@negation) result <- !result
+				return(result)
+			}
+			
+			stop (paste("Error: invalid operator",operator))
+		}
+)
+
+
 setMethod("check",signature(x="Position",selectionCriterium="AmountSelectionCriterium"),
 		function(x,selectionCriterium) {
 			operator <- selectionCriterium@constraint@operator

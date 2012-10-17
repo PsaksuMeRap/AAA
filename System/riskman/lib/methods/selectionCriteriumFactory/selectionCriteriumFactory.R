@@ -36,11 +36,17 @@ selectionCriteriumFactory <- function(factorStringParsed) {
 	}
 	
 	if (identical(factorStringParsed@criterium,"rating")) {
-		relationalOperator <- relationalOperatorFactory(factorStringParsed@values)
-		values <- unlist(strsplit(factorStringParsed@values,","))
-		values <- removeStartEndSpaces(values)
+		operatorAndValues <- relationalOperatorFactory(factorStringParsed@values)
+		values <- operatorAndValues[["values"]]
+		
+		if (nchar(values)>0) {
+			values <- unlist(strsplit(values,","))
+			values <- removeStartEndSpaces(values)
+		}
+
 		selectionCriterium <- new("RatingSelectionCriterium",
 				values=values,
+				relationalOperator=operatorAndValues[["operator"]],
 				negation=factorStringParsed@negation
 		)
 		return(selectionCriterium)

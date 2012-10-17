@@ -21,6 +21,7 @@ dirs = c(
 		"./base/unitTests/t.toXXX",
 		"./base/unitTests/t.utilities",
 		"./base/unitTests/t.longTermRatingFactory",
-		"./base/unitTests/t.longTermRatingMoodyToSP"
+		"./base/unitTests/t.longTermRatingMoodyToSP",
+		"./base/unitTests/t.longTermRatingSP_Moody"
 )
 

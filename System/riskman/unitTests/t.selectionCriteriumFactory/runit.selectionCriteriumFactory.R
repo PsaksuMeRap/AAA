@@ -12,6 +12,26 @@ test.selectionCriteriumFactory <- function() {
 	checkString <- new("CheckString",checkString)
 	result <- split(checkString)
 	
+	# test a rating selection criterium	with no negation and no relational operator
+	factorString <- new("FactorString","rating:AAA,ABC")
+	factorStringParsed <- split(factorString)
+	
+	SC1 <- selectionCriteriumFactory(factorStringParsed)
+	
+	checkEquals(SC1@values,c("AAA","ABC"))
+	checkEquals(SC1@relationalOperator,"")
+	checkEquals(SC1@negation,FALSE)
+	
+	# test a rating selection criterium	with negation and relational operator but no values
+	factorString <- new("FactorString","rating !  : != ")
+	factorStringParsed <- split(factorString)
+	
+	SC1 <- selectionCriteriumFactory(factorStringParsed)
+	
+	checkEquals(SC1@values,"")
+	checkEquals(SC1@relationalOperator,"!=")
+	checkEquals(SC1@negation,TRUE)
+	
 	# test a security selection criterium	
 	factorString <- new("FactorString","security:bond,equity")
 	factorStringParsed <- split(factorString)
@@ -75,3 +95,4 @@ test.shouldFailWithUnexistingFactor <- function() {
 	checkException(selectionCriteriumFactory(factorStringParsed))
 	
 }
+

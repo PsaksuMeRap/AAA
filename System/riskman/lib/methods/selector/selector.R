@@ -13,7 +13,6 @@ selector <- function(x,positions,...) {
 
 setGeneric("selector",def=function(x,positions,...) standardGeneric("selector"))
 
-
 setMethod("selector",signature(x="AmountSelectionCriterium",positions="Positions"),
 		function(x,positions) {
 	

@@ -6,7 +6,7 @@
 source("./base/lib/classDefinitions/Position/PositionBond/AccruedInterest.R")
 
 # crea la classe virtuale "Position"
-setClass("PositionBond",representation(accruedInterest="AccruedInterest",spRating="character"),contains="Position")
+setClass("PositionBond",representation(accruedInterest="AccruedInterest",rating="character"),contains="Position")
 
 
 setMethod("reweight",signature(x="PositionBond"),
@@ -27,7 +27,7 @@ setMethod("groupBySecurityId",signature(x="PositionBond",y="PositionBond"),
 			
 			z <- new(classOfx,
 					accruedInterest=x@accruedInterest+y@accruedInterest,
-					spRating=x@spRating,
+					rating=x@rating,
 					id=x@id,
 					security=x@security,
 					quantity=x@quantity + y@quantity,

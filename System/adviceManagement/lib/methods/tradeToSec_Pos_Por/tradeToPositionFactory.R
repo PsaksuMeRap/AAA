@@ -127,8 +127,8 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Bond"),
 			accInterestPercentage <- blData[[accInterestId]]@value
 			
 			# get the Standard and Poors rating
-			spRatingId <- paste(trade$Id_Bloomberg,"RTG_SP",sep="__")
-			spRating <- blData[[spRatingId]]@value
+			ratingId <- paste(trade$Id_Bloomberg,"RTG_SP",sep="__")
+			rating <- c(spRating=blData[[ratingId]]@value)
 			
 			# get the maturity date
 			maturityId <- paste(trade$Id_Bloomberg,"MATURITY",sep="__")
@@ -140,7 +140,7 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Bond"),
 			# create the class "PositionBond"
 			value <- (0.01*(price+accInterestPercentage))*quantity
 			value <- as(value,"Money")
-			bondPosition <- new("PositionBond",spRating=spRating,accruedInterest=accInterest,id=newSecurity@id,security=newSecurity,
+			bondPosition <- new("PositionBond",rating=rating,accruedInterest=accInterest,id=newSecurity@id,security=newSecurity,
 					quantity=quantity,value=value)
 			
 			return(bondPosition)

@@ -87,6 +87,7 @@ createRepositoryAyrtonPositions <- function() {
 	x@ValoreMercatoMonetaCHF <- 124345.632268
 	x@ID_AAA <- 1218
 	x@ID_strumento <- 2
+	x@rating <- "AAA"
 	class(x) <- "AyrtonPosition"
 
 	A_bond1 <- x
@@ -104,6 +105,7 @@ createRepositoryAyrtonPositions <- function() {
 	x@ValoreMercatoMonetaCHF <- 362217.41556
 	x@ID_AAA <- 1976
 	x@ID_strumento <- 2
+	x@rating <- "B"
 	class(x) <- "AyrtonPosition"
 
 	A_bond2 <- x
@@ -121,6 +123,7 @@ createRepositoryAyrtonPositions <- function() {
 	x@ValoreMercatoMonetaCHF <- 241164.668888
 	x@ID_AAA <- 1967
 	x@ID_strumento <- 2
+	x@rating <- "C"
 	class(x) <- "AyrtonPosition"
 
 	A_bond3 <- x
@@ -138,6 +141,7 @@ createRepositoryAyrtonPositions <- function() {
 	x@ValoreMercatoMonetaCHF <- 50025
 	x@ID_AAA <- 1073
 	x@ID_strumento <- 2
+	x@rating <- "BB"
 	class(x) <- "AyrtonPosition"
 
 	A_bond4 <- x
@@ -893,6 +897,7 @@ createRepositoryAyrtonPositions <- function() {
 	x@ValoreMercatoMonetaCHF <- 26312.5
 	x@ID_AAA <- 2209
 	x@ID_strumento <- 11
+	x@rating <- "BB"
 	class(x) <- "AyrtonPosition"
 	
 	A_Obbligazioni_convertibili <- x
