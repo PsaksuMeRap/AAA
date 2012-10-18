@@ -18,22 +18,27 @@ setMethod("check",signature(x="Position",selectionCriterium="RatingSelectionCrit
 			
 			# otherwise transform the values string into longTermRating
 			values <- lapply(selectionCriterium@values,longTermRatingFactory)
-			
+
 			# excecute the check
 			if (relationalOperator==">" ) {
-				result <- longTermRatingFactory(x@rating)>values
+				h <- function(x,y) {return(x<y)}
+				result <- sapply(values,h,x@rating)
 				result <- all(result)
 				if (selectionCriterium@negation) result <- !result
 				
 				return(result)
 			}
 			if (relationalOperator==">=")  {
-				result <- x@rating >= selectionCriterium@constraint@value
+				h <- function(x,y) {return(x<=y)}
+				result <- sapply(values,h,x@rating)
+				result <- all(result)
 				if (selectionCriterium@negation) result <- !result
 				return(result)
 			}
 			if (relationalOperator=="<" )  {
-				result <- x@rating < selectionCriterium@constraint@value
+				h <- function(x,y) {return(x>y)}
+				result <- sapply(values,h,x@rating)
+				result <- all(result)
 				if (selectionCriterium@negation) result <- !result
 				return(result)
 			}
@@ -48,7 +53,9 @@ setMethod("check",signature(x="Position",selectionCriterium="RatingSelectionCrit
 				return(result)
 			}
 			if (relationalOperator=="=" )  {
-				result <- x@rating == selectionCriterium@constraint@value
+				h <- function(x,y) {return(x==y)}
+				result <- sapply(values,h,x@rating)
+				result <- all(result)
 				if (selectionCriterium@negation) result <- !result
 				return(result)
 			}

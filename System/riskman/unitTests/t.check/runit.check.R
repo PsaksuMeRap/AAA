@@ -43,29 +43,65 @@ test.shouldCheckPositionByRating <- function() {
 	result <- check(bond2,selectionCriterium)
 	checkEquals(result,TRUE)
 	
-	
-	# check <
-	factorString <- new("FactorString","amount:<100.8623CHF")
+	# check >
+	factorString <- new("FactorString","rating:>C,B")
 	factorStringParsed <- split(factorString)
 	selectionCriterium <- selectionCriteriumFactory(factorStringParsed)
 	
-	result <- check(indexCertificate,selectionCriterium)
+	result <- check(bond2,selectionCriterium)
 	checkEquals(result,FALSE)
 	
-	# check =
-	factorString <- new("FactorString","amount:=294333.520307469  USD")
+	# check >
+	factorString <- new("FactorString","rating!:>C,B")
 	factorStringParsed <- split(factorString)
 	selectionCriterium <- selectionCriteriumFactory(factorStringParsed)
-	result <- check(indexCertificate,selectionCriterium)
+	
+	result <- check(bond2,selectionCriterium)
 	checkEquals(result,TRUE)
 	
-	
-	# check >=
-	factorString <- new("FactorString","amount:>=300000.8623CHF")
+	# check <
+	factorString <- new("FactorString","rating:<Ba1")
 	factorStringParsed <- split(factorString)
 	selectionCriterium <- selectionCriteriumFactory(factorStringParsed)
-	result <- check(indexCertificate,selectionCriterium)
+	
+	result <- check(bond2,selectionCriterium)
+	checkEquals(result,TRUE)
+
+	# check <
+	factorString <- new("FactorString","rating:<Ba1,AAA")
+	factorStringParsed <- split(factorString)
+	selectionCriterium <- selectionCriteriumFactory(factorStringParsed)
+	
+	result <- check(bond2,selectionCriterium)
+	checkEquals(result,TRUE)
+	
+	# check =
+	factorString <- new("FactorString","rating:=B")
+	factorStringParsed <- split(factorString)
+	selectionCriterium <- selectionCriteriumFactory(factorStringParsed)
+	result <- check(bond2,selectionCriterium)
+	checkEquals(result,TRUE)
+	
+	# check =
+	factorString <- new("FactorString","rating:=B2")
+	factorStringParsed <- split(factorString)
+	selectionCriterium <- selectionCriteriumFactory(factorStringParsed)
+	result <- check(bond2,selectionCriterium)
+	checkEquals(result,TRUE)
+	
+	# check =
+	factorString <- new("FactorString","rating:=B2,Aaa")
+	factorStringParsed <- split(factorString)
+	selectionCriterium <- selectionCriteriumFactory(factorStringParsed)
+	result <- check(bond2,selectionCriterium)
 	checkEquals(result,FALSE)
+	
+	# check >=
+	factorString <- new("FactorString","rating:>=B2,B3")
+	factorStringParsed <- split(factorString)
+	selectionCriterium <- selectionCriteriumFactory(factorStringParsed)
+	result <- check(bond2,selectionCriterium)
+	checkEquals(result,TRUE)
 	
 	# check <=
 	factorString <- new("FactorString","amount:<=283354.88 CHF")

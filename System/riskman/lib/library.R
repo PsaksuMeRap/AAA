@@ -39,7 +39,7 @@ source("./riskman/lib/methods/replaceDirective/replaceDirective.R")
 
 source("./riskman/lib/methods/parser/parser.R")
 source("./riskman/lib/methods/Apply/Apply.R")
-
+source("./riskman/lib/methods/relationalOperatorFactory/relationalOperatorFactory.R")
 
 source("./riskman/lib/methods/testSuiteFactory/testSuiteFactory.R")
 source("./riskman/lib/methods/applyTestSuite/applyTestSuite.R")
