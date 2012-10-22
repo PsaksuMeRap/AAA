@@ -4,7 +4,7 @@
 ###############################################################################
 
 
-LongTermRatingMoodyToSP <- function(MoodyRate) {
+longTermRatingMoodyToSP <- function(MoodyRate) {
 	
 	MoodyRate <- as.character(MoodyRate)
 
