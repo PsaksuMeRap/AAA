@@ -132,25 +132,3 @@ whoisP <- function(names) {
 	pippoNames <- sapply(names,getName,df)
 	return(paste(names,"->",pippoNames))
 }
-
-whois <- function(names) {
-	df <- read.csv("/home/claudio/workspace/Produzione_new/associazionePippo.csv",header=TRUE,sep=",",
-			as.is=TRUE)
-	
-	getName <- function(name,df) {isOk <- df[,2]==name;return(df[isOk,1])}
-	return(sapply(names,getName,df))
-}
-
-aggiornaAssociazionePippo <- function() {
-	connection <- odbcConnect("prezzi_storici_azioni_VAR",.utente,.password)
-	query <- "SELECT * FROM [Sistema (prova)].dbo.Clienti_ID"
-	dati <- sqlQuery(connection,query,as.is=TRUE)
-	colnames(dati) <- c("Nome","Nick")
-	dati <- data.frame(Nick=dati[["Nick"]],Nome=dati[["Nome"]])
-	
-	write.csv(dati,"/home/claudio/workspace/Produzione_new/associazionePippo_new.csv",row.names=FALSE)
-}
-
-
-
-
