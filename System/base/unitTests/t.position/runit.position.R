@@ -102,7 +102,7 @@ test.shouldFieldsAsCharacter <- function() {
 	p2Text <- fieldsAsCharacter(p2,referenceCurrency=new("Currency","CHF"))
 	checkEquals(p2Text[["securityClassName"]],"Bond")
 	checkEquals(p2Text[["currency"]],as.character(p2@security@currency))
-	checkEquals(p2Text[["securityName"]],p2@security@name)
+	checkEquals(p2Text[["securityName"]],paste(p2@security@name,p2@rating,sep=" rated: "))
 	checkEquals(p2Text[["referenceCurrency"]],"CHF")
 	
 	if (!is.null(repository)) repositories$exchangeRates <- repository

@@ -188,7 +188,7 @@ test.shouldFieldsAsCharacter <- function() {
 	checkEquals(result[,"referenceCurrencyAmount"],should)
 }
 
-test.shouldAs.character <- function() {
+test.shouldPositionsAs.character <- function() {
 	
 	# exchange rates required for position initialization
 	# initialize exchange rates
@@ -210,7 +210,7 @@ test.shouldAs.character <- function() {
 	
 	# test 1: without referenceCurrency, with formatWidth
 	result <- as.character(positions)
-	should <- "Equity / EUR /  5'558.12 / Kontron AG                       "
+	should <- "Equity / EUR /  5'558.12 / Kontron AG                                  "
 	checkEquals(result[[1]],should)
 
 	
@@ -221,11 +221,11 @@ test.shouldAs.character <- function() {
 	
 	# test 3: with referenceCurrency, with formatWidth
 	result <- as.character(positions,referenceCurrency=new("Currency","USD"))
-	should <- "Bond   / EUR / 92'896.60 / 20130603 - 3.625% Pfizer 03-06-13 / USD / 129'163.43"
+	should <- "Bond   / EUR / 92'896.60 / 20130603 - 3.625% Pfizer 03-06-13 rated: AAA / USD / 129'163.43"
 	checkEquals(result[[2]],should)
 	
 	# test 4: with referenceCurrency, without formatWidth
 	result <- as.character(positions,formatWidth=FALSE,referenceCurrency=new("Currency","USD"))
-	should <- "Bond / EUR / 92'896.60 / 20130603 - 3.625% Pfizer 03-06-13 / USD / 129'163.43"
+	should <- "Bond / EUR / 92'896.60 / 20130603 - 3.625% Pfizer 03-06-13 rated: AAA / USD / 129'163.43"
 	checkEquals(result[[2]],should)
 }

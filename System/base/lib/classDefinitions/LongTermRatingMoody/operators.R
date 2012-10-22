@@ -57,7 +57,7 @@ setMethod("!=",signature("LongTermRatingMoody","LongTermRatingMoody"),
 setMethod(">",signature("LongTermRatingMoody","LongTermRatingSP"),
 		function(e1,e2) {
 			levels <- getLongTermRatingLevelsSP()
-			return(levels[[LongTermRatingMoodyToSP(e1)]]>levels[[e2]])
+			return(levels[[longTermRatingMoodyToSP(e1)]]>levels[[e2]])
 		}
 )
 
@@ -65,7 +65,7 @@ setMethod(">",signature("LongTermRatingMoody","LongTermRatingSP"),
 setMethod(">=",signature("LongTermRatingMoody","LongTermRatingSP"),
 		function(e1,e2) {
 			levels <- getLongTermRatingLevelsSP()
-			return(levels[[LongTermRatingMoodyToSP(e1)]]>=levels[[e2]])
+			return(levels[[longTermRatingMoodyToSP(e1)]]>=levels[[e2]])
 		}
 )
 
@@ -73,28 +73,28 @@ setMethod(">=",signature("LongTermRatingMoody","LongTermRatingSP"),
 setMethod("<",signature("LongTermRatingMoody","LongTermRatingSP"),
 		function(e1,e2) {
 			levels <- getLongTermRatingLevelsSP()
-			return(levels[[LongTermRatingMoodyToSP(e1)]]<levels[[e2]])
+			return(levels[[longTermRatingMoodyToSP(e1)]]<levels[[e2]])
 		}
 )
 
 setMethod("<=",signature("LongTermRatingMoody","LongTermRatingSP"),
 		function(e1,e2) {
 			levels <- getLongTermRatingLevelsSP()
-			return(levels[[LongTermRatingMoodyToSP(e1)]]<=levels[[e2]])
+			return(levels[[longTermRatingMoodyToSP(e1)]]<=levels[[e2]])
 		}
 )
 
 setMethod("==",signature("LongTermRatingMoody","LongTermRatingSP"),
 		function(e1,e2) {
 			levels <- getLongTermRatingLevelsSP()
-			return(levels[[LongTermRatingMoodyToSP(e1)]]==levels[[e2]])
+			return(levels[[longTermRatingMoodyToSP(e1)]]==levels[[e2]])
 		}
 )
 
 setMethod("!=",signature("LongTermRatingMoody","LongTermRatingSP"),
 		function(e1,e2) {
 			levels <- getLongTermRatingLevelsSP()
-			return(levels[[LongTermRatingMoodyToSP(e1)]]!=levels[[e2]])
+			return(levels[[longTermRatingMoodyToSP(e1)]]!=levels[[e2]])
 		}
 )
 
