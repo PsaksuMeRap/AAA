@@ -136,6 +136,7 @@ if (FALSE) {
 } else {
 	dati <- importDBPortfolioGenerale()	
 	fundsOwners <- c("pippo53","pippo76","pippo210")
+
 	portfolios <- filterLists(dati,"Cliente",value=c(fundsOwners,clienti))
 	
 	portfolios <- portfoliosFactory(portfolios)
@@ -167,7 +168,7 @@ whois <- function(names) {
 	return(sapply(names,getName,df))
 }
 
-
+x <- c("pippo11","pippo72","pippo132","pippo13","pippo84")
 
 
 

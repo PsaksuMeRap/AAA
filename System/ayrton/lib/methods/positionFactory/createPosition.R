@@ -133,13 +133,20 @@ setMethod("createPosition",signature(security="Obbligazioni_convertibili",origin
 			accruedInterest <- new("AccruedInterest",toMoney(NA_real_,security@currency))
 			
 			rating <- longTermRatingFactory(origin@rating)
-
+			
+			optionSecurity <- new("Opzioni_su_azioni",currency=new("Currency",origin@Moneta),optionType="C")
+			positionCall <- new("PositionOpzioni_su_azioni",numberEquities=0,contractSize=0,
+								quantity=0,value=toMoney(0,origin@Moneta),
+								security=optionSecurity)
+			
+			
 			position <- new("PositionObbligazioni_convertibili",
 					id=security@id,
 					security=security,
 					quantity=quantity,
 					value=value,
 					rating=rating,
+					positionCall=positionCall,
 					accruedInterest=accruedInterest)
 			
 			return(position)

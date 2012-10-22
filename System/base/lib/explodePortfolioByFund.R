@@ -14,7 +14,7 @@ explodePositionsByFund <- function(fundData,fundPortfolios,positions) {
 	
 	# determine the number of positions
 	nbPositions <- length(positions)
-	
+
 	# se positions è vuoto termina
 	if (nbPositions==0) return(invisible())
 
@@ -62,7 +62,6 @@ explodePortfolioByFunds <- function(portfolio,fundsDb,fundPortfolios) {
 
 	lengthPortfolio <- length(portfolio)
 	if (lengthPortfolio==0) return(portfolio)
-	
 	
 	# determine which portfolio's positions must be exploded
 	# Step1: create the list of vectors of logical values indicating if a portfolio position
