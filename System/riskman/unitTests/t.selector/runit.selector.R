@@ -24,12 +24,12 @@ test.shouldSelectPositionsByRating <- function() {
 	p4 <- repo$unclassified1
 	p5 <- repo$bond3
 	
-	positions <- new("Positions",list(p1,p2,p3))
+	positions <- new("Positions",list(p1,p2,p3,p4))
 	
 	# one position
 	criterium <- new("RatingSelectionCriterium",values=c("AAA","BBB"),relationalOperator="<",negation=FALSE)
 	result <- selector(criterium,positions)
-	should <- c(FALSE,TRUE,FALSE)
+	should <- c(FALSE,FALSE,TRUE,FALSE)
 	checkEquals(result,should)
 		
 	if (!is.null(repository)) repositories$exchangeRates <- repository

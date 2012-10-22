@@ -29,9 +29,11 @@ setMethod("groupBySecurityId",signature(x="PositionObbligazioni_convertibili",y=
 					id=x@id,
 					security=x@security,
 					quantity=x@quantity + y@quantity,
+					rating=x@rating,
 					value=x@value+y@value
 			)
 			
 			return(z)
 		}
 )
+

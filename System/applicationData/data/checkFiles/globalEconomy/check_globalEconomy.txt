@@ -29,6 +29,9 @@ currency:INR ; >= 0INR
 currency:NOK ; >= 0NOK
 currency:BRL ; >= 0BRL
 
+# 6) rating:<BBB & rating:>NR ; = 0%
+rating:<BBB & rating:>NR ; = 0%
+
 checkListEnd:
 externalSuiteFileName:
 

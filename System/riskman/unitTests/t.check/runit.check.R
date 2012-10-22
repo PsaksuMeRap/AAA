@@ -95,6 +95,13 @@ test.shouldCheckPositionByRating <- function() {
 	selectionCriterium <- selectionCriteriumFactory(factorStringParsed)
 	result <- check(bond2,selectionCriterium)
 	checkEquals(result,FALSE)
+
+	# check =
+	factorString <- new("FactorString","rating!:=B2,Aaa")
+	factorStringParsed <- split(factorString)
+	selectionCriterium <- selectionCriteriumFactory(factorStringParsed)
+	result <- check(bond2,selectionCriterium)
+	checkEquals(result,TRUE)
 	
 	# check >=
 	factorString <- new("FactorString","rating:>=B2,B3")
@@ -103,19 +110,40 @@ test.shouldCheckPositionByRating <- function() {
 	result <- check(bond2,selectionCriterium)
 	checkEquals(result,TRUE)
 	
-	# check <=
-	factorString <- new("FactorString","amount:<=283354.88 CHF")
+	# check >=
+	factorString <- new("FactorString","rating!:>=B2,B3")
 	factorStringParsed <- split(factorString)
 	selectionCriterium <- selectionCriteriumFactory(factorStringParsed)
-	result <- check(indexCertificate,selectionCriterium)
+	result <- check(bond2,selectionCriterium)
+	checkEquals(result,FALSE)
+	
+	# check <=
+	factorString <- new("FactorString","rating:<=B2")
+	factorStringParsed <- split(factorString)
+	selectionCriterium <- selectionCriteriumFactory(factorStringParsed)
+	result <- check(bond2,selectionCriterium)
 	checkEquals(result,TRUE)
 	
-	# check !=
-	factorString <- new("FactorString","amount:!=283354.89 CHF")
+	# check <=
+	factorString <- new("FactorString","rating:<=B2,B3")
 	factorStringParsed <- split(factorString)
 	selectionCriterium <- selectionCriteriumFactory(factorStringParsed)
-	result <- check(indexCertificate,selectionCriterium)
-	checkEquals(result,TRUE)
+	result <- check(bond2,selectionCriterium)
+	checkEquals(result,FALSE)
+	
+	# check !=
+	factorString <- new("FactorString","rating:!=B2")
+	factorStringParsed <- split(factorString)
+	selectionCriterium <- selectionCriteriumFactory(factorStringParsed)
+	result <- check(bond2,selectionCriterium)
+	checkEquals(result,FALSE)
+	
+	# check !=
+	factorString <- new("FactorString","rating:!=B2,B3")
+	factorStringParsed <- split(factorString)
+	selectionCriterium <- selectionCriteriumFactory(factorStringParsed)
+	result <- check(bond2,selectionCriterium)
+	checkEquals(result,FALSE)
 	
 	# reset the repository in the original state
 	if (!is.null(repository)) repositories$exchangeRates <- repository

@@ -8,7 +8,7 @@ test.selectionCriteriumFactory <- function() {
 		
 	# crea una checkString
 	checkString = paste("amount:=10% + currency:JPY,EUR,USD +",
-			"  amount:<=100.3CHF + instrument:xyz")
+			" amount:<=100.3CHF + instrument:xyz")
 	checkString <- new("CheckString",checkString)
 	result <- split(checkString)
 	
@@ -31,6 +31,18 @@ test.selectionCriteriumFactory <- function() {
 	checkEquals(SC1@values,"")
 	checkEquals(SC1@relationalOperator,"!=")
 	checkEquals(SC1@negation,TRUE)
+	
+	# test a rating selection criterium	with negation and relational operator but no values
+	factorString <- new("FactorString","rating !  : <= ")
+	factorStringParsed <- split(factorString)
+	
+	SC1 <- selectionCriteriumFactory(factorStringParsed)
+	
+	checkEquals(SC1@values,"")
+	checkEquals(SC1@relationalOperator,"<=")
+	checkEquals(SC1@negation,TRUE)	
+	
+	
 	
 	# test a security selection criterium	
 	factorString <- new("FactorString","security:bond,equity")

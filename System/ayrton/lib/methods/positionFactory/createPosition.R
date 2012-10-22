@@ -107,6 +107,11 @@ setMethod("createPosition",signature(security="Bond",origin="AyrtonPosition"),
 			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
 			value <- repositories$exchangeRates$exchange(value,security@currency)
 			accruedInterest <- new("AccruedInterest",toMoney(NA_real_,security@currency))
+
+			
+			if (length(origin@rating)==0) origin@rating <- "NR"
+			if (is.na(origin@rating)) origin@rating <- "NR"
+			if (origin@rating=="#N/A N/A" | origin@rating=="#N/A N Ap") origin@rating <- "NR"
 			
 			rating <- longTermRatingFactory(origin@rating)
 			
@@ -131,6 +136,9 @@ setMethod("createPosition",signature(security="Obbligazioni_convertibili",origin
 			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
 			value <- repositories$exchangeRates$exchange(value,security@currency)
 			accruedInterest <- new("AccruedInterest",toMoney(NA_real_,security@currency))
+			
+			if (length(origin@rating)==0) origin@rating <- "NR"
+			if (origin@rating=="#N/A N/A" | origin@rating=="#N/A N Ap") origin@rating <- "NR"
 			
 			rating <- longTermRatingFactory(origin@rating)
 			

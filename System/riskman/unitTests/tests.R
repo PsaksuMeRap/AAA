@@ -18,5 +18,6 @@ dirs = c(
 		"./riskman/unitTests/t.testSuiteFactory",
 		"./riskman/unitTests/t.applyTestSuite",
 		"./riskman/unitTests/t.selector",
-		"./riskman/unitTests/t.selectionCriteriumFactory"
+		"./riskman/unitTests/t.selectionCriteriumFactory",
+		"./riskman/unitTests/t.relationalOperatorFactory"
 )

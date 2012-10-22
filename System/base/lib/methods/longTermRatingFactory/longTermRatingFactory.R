@@ -6,8 +6,10 @@
 
 longTermRatingFactory <- function(characterRate) {
 
-	if (is.na(characterRate) | is.null(characterRate) | length(characterRate)==0) {
-		rating <- new("LongTermRatingSP","NR")
+	if (length(characterRate)==0) return(new("LongTermRatingSP","NR"))
+	
+	if (is.na(characterRate) | is.null(characterRate)) {
+		rating <- return(new("LongTermRatingSP","NR"))
 	} else {
 		ratingCodesSP <- names(getLongTermRatingLevelsSP())
 		if (is.element(characterRate,ratingCodesSP)) {
@@ -17,7 +19,8 @@ longTermRatingFactory <- function(characterRate) {
 			if (is.element(characterRate,ratingCodesMoody)) {
 				rating <- new("LongTermRatingMoody",characterRate)					
 			} else {
-				rating <- new("LongTermRatingSP","NR")
+				stop(paste("Invalid LongTermRating:",characterRate,"\n",
+						"Please verify the checkfile. Exception raised from longTermRatingFactory"))
 			}
 		}
 		
@@ -26,5 +29,3 @@ longTermRatingFactory <- function(characterRate) {
 	return(rating)
 	
 }
-
-

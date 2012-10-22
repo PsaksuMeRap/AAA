@@ -16,6 +16,6 @@ test.shouldConvertMoodyRateToSPRate <- function() {
 	
 	rate <- longTermRatingFactory("C")
 	result <- LongTermRatingMoodyToSP(rate)		
-	checkEquals(result,new("LongTermRatingSP","D")
+	checkEquals(result,new("LongTermRatingSP","D"))
 	
 }

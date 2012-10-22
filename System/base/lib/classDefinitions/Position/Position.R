@@ -48,7 +48,11 @@ setMethod("fieldsAsCharacter",signature(x="Position"),
 			fields["securityClassName"] <- is(x@security)[1]
 			fields["currency"] <- as.character(x@value@currency)
 			fields["amount"] <- formatC(x@value@amount)
-			fields["securityName"] <- x@security@name
+			if (.hasSlot(x,"rating")) {
+				fields["securityName"] <- paste(x@security@name,x@rating,sep=" rated: ")
+			} else {
+				fields["securityName"] <- x@security@name
+			}
 			if (!missing(referenceCurrency)) {
 				fields["referenceCurrency"] <- as.character(referenceCurrency)
 				fields["referenceCurrencyAmount"] <- formatC(exchange(x@value,referenceCurrency)@amount)

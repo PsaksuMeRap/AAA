@@ -21,3 +21,9 @@ tests.shouldCreateMoodyRate <- function() {
 	
 	checkEquals(as.character(rateSP),rate)
 }
+
+tests.shouldFailToCreateRate <- function() {
+	rate <- "Bad"
+	
+	checkException(longTermRatingFactory(rate))
+}

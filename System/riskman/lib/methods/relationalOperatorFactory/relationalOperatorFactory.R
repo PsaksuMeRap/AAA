@@ -30,5 +30,5 @@ relationalOperatorFactory <- function(string) {
 
 	values <- substr(string,stop+1,nbChar)
 
-	return(c(operator=operator,values=values))
+	return(c(operator=operator,values=removeStartEndSpaces(values)))
 }

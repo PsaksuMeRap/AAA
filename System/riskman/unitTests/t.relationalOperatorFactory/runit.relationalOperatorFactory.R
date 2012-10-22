@@ -25,7 +25,7 @@ test.shouldParseStringWithRelationalOperator <- function() {
 	result <- relationalOperatorFactory(string)
 	
 	checkEquals(result[["operator"]],">")
-	checkEquals(result[["values"]],"   > abcDE a ")
+	checkEquals(result[["values"]],"abcDE a")
 	
 	# check with a string with the operator only
 	string <- "   !=  "

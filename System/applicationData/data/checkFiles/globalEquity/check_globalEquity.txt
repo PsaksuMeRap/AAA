@@ -31,5 +31,9 @@ amount:>5% & security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF
 
 # verifica che sia investito unicamente negli strumenti sotto elencati
 security:Equity,Fondi_azionari,Futures_EQ,Conto_corrente,Conto_corrente_fittizio,Opzioni_su_azioni,FX_Forward,Strutturati_EQ,ETF_equity,ETF_commodities_gold,Bond,Obbligazioni_convertibili,Index_certificate ; = 100%
+
+# verifica parte fixed income high yield, subordinati, ...
+rating:<BBB ; <= 15%
+
 checkListEnd:
 externalSuiteFileName:

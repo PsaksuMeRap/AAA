@@ -24,5 +24,8 @@ amount:>5% & security:Bond,Capital_protected_notes,Floating_rate_notes,Struttura
 # 5) verifica che il conto corrente non superi il 20% del NAV (rischio controparte)
 amount:>=20% & security:Conto_corrente ; <= 0%
 
+# 6) verifica che i bonds con rating abbiano rating maggiore o uguale di BBB
+rating:<BBB & rating:>NR ; = 0%
+
 checkListEnd:
 externalSuiteFileName:
