@@ -20,3 +20,5 @@ mettere as.numeric() nel campo PRICE del createRepositoryBloombergData.R
 aggiornare:
 - futuresEquityIndexDB
 - DBEquities
+
+mettere test su reweight di un'obbli convertibile
