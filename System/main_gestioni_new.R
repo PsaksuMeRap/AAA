@@ -103,7 +103,7 @@ clienti <- c(
 )
 
 # caso con data storica
-if (FALSE) {
+if (TRUE) {
 	fine <- as.Date("2011-09-15")
 	dates <- seq(as.Date("2011-09-1"),to=fine,by=7)
 	dates <- c(dates,seq(as.Date("2011-09-2"),to=fine,by=7))
@@ -114,7 +114,8 @@ if (FALSE) {
 	# togli il 18 gennaio e 19 maggio
 	
 	dates <- c(as.Date("2011-09-14"),as.Date("2011-09-15"),as.Date("2011-09-16"))
-	dates <- c("2012-07-11")
+	dates <- c("2012-10-24")
+	dates <- c("2012-11-02")	
 	date <- dates
 	for (date in as.character(dates)) {
 		print(date)

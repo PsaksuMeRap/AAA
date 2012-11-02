@@ -102,7 +102,7 @@ setMethod("createPosition",signature(security="Bond",origin="AyrtonPosition"),
 		function(security,origin) {
 			# the position will be completed with the accruedInterest after an
 			# appropriate call to the createPositions method
-
+browser()
 			quantity <- new("NominalValue",amount=new("Amount",origin@Saldo),currency=new("Currency",origin@Moneta))
 			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
 			value <- repositories$exchangeRates$exchange(value,security@currency)
@@ -136,8 +136,9 @@ setMethod("createPosition",signature(security="Obbligazioni_convertibili",origin
 			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
 			value <- repositories$exchangeRates$exchange(value,security@currency)
 			accruedInterest <- new("AccruedInterest",toMoney(NA_real_,security@currency))
-			
+browser()			
 			if (length(origin@rating)==0) origin@rating <- "NR"
+			if (is.na(origin@rating)) origin@rating <- "NR"
 			if (origin@rating=="#N/A N/A" | origin@rating=="#N/A N Ap") origin@rating <- "NR"
 			
 			rating <- longTermRatingFactory(origin@rating)
