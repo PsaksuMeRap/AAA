@@ -136,7 +136,7 @@ plot.table <- function
 		plot.table.param(myMatrix, smain, myMatrix.cex, myMatrix_bg.col,
 				frame.cell, keep_all.same.cex)
 	}
-	browser()
+
 	if(colorbar) plot.table.helper.colorbar(myMatrix);
 }
 
