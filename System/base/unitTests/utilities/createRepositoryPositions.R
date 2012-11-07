@@ -30,8 +30,8 @@ createRepositoryPositions <- function() {
 	testData$indexCertificate <- indexCertificate
 	
 	# create a non existing equity
-	noExists <- positionFactory(repository$noExists)
-	testData$noExists <- noExists
+	# noExists <- positionFactory(repository$noExists)
+	# testData$noExists <- noExists
 	
 	# create a valid bond
 	bond1 <- positionFactory(repository$bond1)

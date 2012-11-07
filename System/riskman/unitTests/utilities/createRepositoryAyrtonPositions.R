@@ -57,18 +57,18 @@ createRepositoryAyrtonPositions <- function() {
 	
 	
 	# create a non existing equity
-	x <- new("AyrtonPosition")
-	x@Cliente <- "pippo160"
-	x@Strumento <- "A"
-	x@Moneta <- "CHF"
-	x@Saldo <- 19
-	x@Nome <- "Non existing"
-	x@ValoreMercatoMonetaCHF <- 88205
-	x@ID_AAA <- 100020202
-	x@ID_strumento <- 1
-	class(x) <- "AyrtonPosition"
+	#x <- new("AyrtonPosition")
+	#x@Cliente <- "pippo160"
+	#x@Strumento <- "A"
+	#x@Moneta <- "CHF"
+	#x@Saldo <- 19
+	#x@Nome <- "Non existing"
+	#x@ValoreMercatoMonetaCHF <- 88205
+	#x@ID_AAA <- 100020202
+	#x@ID_strumento <- 1
+	#class(x) <- "AyrtonPosition"
 	
-	testData$noExists <- x
+	# testData$noExists <- x
 	
 	
 	# create a valid bond

@@ -42,12 +42,12 @@ createRepositoryPositions <- function() {
 	testData$equity1 <- x
 
 	## create equity2
-	x@Moneta <- "EUR"
-	x@Saldo <- 1000
-	x@NumeroValore <- "1469452EU"
-	x@Nome <- "Kontron AG"
-	x@ValoreMercatoMonetaCHF <- 7439.7503136
-	x@ID_strumento <- 1
+	Moneta <- "EUR"
+	Saldo <- 1000
+	NumeroValore <- "1469452EU"
+	Nome <- "Kontron AG"
+	ValoreMercatoMonetaCHF <- 7439.7503136
+	ID_strumento <- 1
 	
 	currency <- new("Currency",Moneta)
 	name <- Nome
@@ -90,5 +90,38 @@ createRepositoryPositions <- function() {
 	
 	A_indexCertificate <- x
 	testData$indexCertificate <- x
+	
+	# create a first bond
+
+	Moneta <- "EUR"
+	Saldo <- 100000
+	NumeroValore <- "10234542"
+	Nome <- "20130603 - 3.625% Pfizer 03-06-13"
+	ValoreMercatoMonetaCHF <- 124345.632268
+	ID_AAA <- 1218
+	ID_strumento <- 2
+	rating <- "AAA"
+	
+	currency <- new("Currency",Moneta)
+	name <- Nome
+	id <- new("IdAyrton",new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
+	maturity <- "2013-06-03"
+
+	security <- new("Bond",currency=currency,name=name,id,maturity=maturity)
+	quantity <- Saldo
+	value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
+	value <- repositories$exchangeRates$exchange(value,currency)
+	x <- new("Position",
+# continuare qui mancano campi ...
+			id=id,
+			security=security,
+			quantity=quantity,
+			value=value)		
+	
+	
+	
+	A_bond1 <- x
+	testData$bond1 <- x
+	
 	
 }
