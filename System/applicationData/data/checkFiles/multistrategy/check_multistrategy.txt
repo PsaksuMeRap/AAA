@@ -1,4 +1,3 @@
-
 testSuiteName: Multistrategy
 creationDate: 2010-12-29
 creator: Claudio Ortelli
@@ -7,19 +6,28 @@ testSuiteKind: specific
 testTarget: pippo101
 reportTo: claudio.ortelli@usi.ch
 outputDir: ./
+groupDefinition: allowedCurrencies = EUR,USD,SEK,NZD,NOK,JPY,GBP,DKK,CHF,CAD,AUD
+groupDefinition: liquidity = Conto_corrente,Conto_corrente_fittizio,Call_Geld,Depositi_a_termine
+groupDefinition: azionario = Equity,Fondi_azionari,Opzioni_su_azioni,Diritti_aumento_capitale_azionario,ETF_equity,Strutturati_EQ,Futures_EQ,Reverse_convertible,Obbligazioni_convertibili
+groupDefinition: redditoFisso = Bond,Fondi_obbligazionari,Fondi_mercato_monetario,Floating_rate_notes,Obbligazioni_step-down,Barrier_Reverse_Convertible,Opzioni_su_obbligazioni,Strutturati_FI
+groupDefinition: altriStrumenti = Opzioni_su_divise,FX_Forward,Fondi_immobiliari,Fondi_misti,Fund_of_funds,Fondi_absolute_return
+groupDefinition: metalliPreziosi = ETF_commodities_gold,ETF_commodities_platinum
 checkListStart:
 
+# 1) verifica universo investibile
+security!:liquidity,azionario,redditoFisso,altriStrumenti,metalliPreziosi ; = 0EUR
+
 # 2) verifica che non ci siano posizioni diverse dalla liquidità che superino il 10% del NAV
-amount:>10% & security!:Conto_corrente,Depositi_a_termine,Futures_EQ ; = 0%
+amount:>10% & security!:liquidity,Futures_EQ,FX_Forward ; = 0% :: groupBy:securityId
 
 # 3) verifica che non ci siano posizioni che superino il 20% del NAV
 # amount:>=20% ; = 0%
 
 # verifica che le posizioni che superano il 5% del NAV non superino complessivamente il 40% dello stesso
-amount:>5% & security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity,ETF_commodities_gold,Futures_EQ ; <= 40%
+amount:>5% & security:azionario,redditoFisso,altriStrumenti,metalliPreziosi ; <= 40%
 
-# 4) verifica che non ci siano altre monete al di fuori di EUR,CHF,USD,JPY,AUD,INR
-currency:EUR,USD,SEK,NZD,NOK,JPY,GBP,DKK,CHF,CAD,AUD ; = 100%
+# 4) verifica che non ci siano altre monete al di fuori delle allowedCurrencies
+currency:allowedCurrencies ; = 100%
 
 # 5) verifica che non si vada corto nelle monete consentite
 currency:EUR ; >= 0EUR
@@ -34,10 +42,10 @@ currency:GBP ; >= 0DKK
 currency:CAD ; >= 0CAD
 
 # 6) verifica che i fondi non superino il 30%
-security:Fondi_azionari,Fondi_obbligazionari,ETF_equity; <= 30%
+security:Fondi_azionari,Fondi_obbligazionari,ETF_equity,Fondi_absolute_return,ETF_commodities_gold; <= 30%
 
 # 7) verifica il core investiment (vedi Investment Policy and Objective)
-security:Equity + security:Bond & rating:>=BBB-; > 50%
+# security:Equity,ETF_equity + security:Bond,Floating_rate_notes & rating:>=BBB-; > 50%
 
 checkListEnd:
 externalSuiteFileName:
