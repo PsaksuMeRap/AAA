@@ -4,13 +4,10 @@
 ###############################################################################
 
 
-createRepositoryPositions <- function() {
+createEquity1 <- function() {
 
 	source("./base/unitTests/utilities/allocateTestRepositories.R")	
 	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
-	
-	## create the instrument repository	
-	allocateTestRepositories("instruments")
 	
 	## create the origin
 	repository <- createRepositoryAyrtonPositions()
