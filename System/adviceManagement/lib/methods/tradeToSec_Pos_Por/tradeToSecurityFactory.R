@@ -154,7 +154,7 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 		return(newSecurity)
 	}
 	
-	if (securityType=="FX Spot") {
+	if (securityType=="FX spot") {
 		
 		## by convention the currency is the numeraire (the second currency)
 		## while the quantity is expressed in the underlying currency
@@ -176,7 +176,7 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 		return(newSecurity)
 	}
 	
-	if (securityType=="Option Equity") {
+	if (securityType=="Option equity") {
 		
 		currency <- new("Currency",trade$Currency)
 		
@@ -227,7 +227,7 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 		return(newSecurity)
 	}
 	
-	if (securityType=="FX Forward") {
+	if (securityType=="FX forward") {
 		
 		info <- parseFxForwardName(trade$Security_name)
 		

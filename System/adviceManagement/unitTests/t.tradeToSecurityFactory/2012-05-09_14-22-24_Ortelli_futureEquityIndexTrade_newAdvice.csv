@@ -1,2 +1,2 @@
-Portfolio,Buy_Sell,Id_Bloomberg,Security_name,Currency,Security_type,Quantity,ISIN_Ticker,Price,Order_type,Amount,Broker,Limit_price,Limit_date,Comments
-GLOBAL ECONOMY,Buy,SMM2 Index,SWISS MKT IX FUTR Jun12,CHF,Future index,5,#N/A N/A,5864,Care,293200,UBS,,41052,Trans. Futuro indice azionario
+Trade_number,Portfolio,Buy_Sell,Id_Bloomberg,Security_name,Currency,Security_type,Broker,Quantity,ISIN_Ticker,Rating,Maturity_Expiry,Accrued_interests,Delivery_date,Underlying_ticker,Underlying_ISIN,Contract_size,Future_one_point_value,Underlying_price,Price,Order_type,Amount,Limit_price,Limit_date,Comments,Counterparty_risk,Fund_type,Force_data
+1,GLOBAL ECONOMY,Buy,SMM3 Index,SWISS MKT IX FUTR Jun13,CHF,Future index,UBS,5,,,,,41449,SMI,,,10,,6537,,326850,,41227,,Claudio,,No

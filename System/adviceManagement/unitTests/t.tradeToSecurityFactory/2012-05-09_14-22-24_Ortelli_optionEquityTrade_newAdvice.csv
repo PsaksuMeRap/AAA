@@ -1,2 +1,2 @@
-Portfolio,Buy_Sell,Id_Bloomberg,Security_name,Currency,Security_type,Quantity,ISIN_Ticker,Price,Order_type,Amount,Broker,Limit_price,Limit_date,Comments
-GLOBAL ECONOMY,Buy to open,nesn sw 06/15/12 c55 equity,June 12 Calls on NESN VX,CHF,Option Equity,100,#N/A N Ap,0.63,Market,63,UBS,,41052,Acquisto Opzioni(manca size opt)
+Trade_number,Portfolio,Buy_Sell,Id_Bloomberg,Security_name,Currency,Security_type,Broker,Quantity,ISIN_Ticker,Rating,Maturity_Expiry,Accrued_interests,Delivery_date,Underlying_ticker,Underlying_ISIN,Contract_size,Future_one_point_value,Underlying_price,Price,Order_type,Amount,Limit_price,Limit_date,Comments,Counterparty_risk,Fund_type,Force_data
+1,GLOBAL EQUITY,Buy to open,MSFT US 01/19/13 C26 Equity,January 13 Calls on MSFT US,USD,Option equity,UBS,100,,,41293,,,MSFT US,US5949181045,100,,,1.73,,17300,,41227,,Claudio,,No
