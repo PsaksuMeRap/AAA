@@ -56,11 +56,14 @@ if (FALSE) {
 	# togli il 18 gennaio e 19 maggio
 	
 	dates <- c(as.Date("2011-09-14"),as.Date("2011-09-15"),as.Date("2011-09-16"))
-	dates <- c("2012-04-13")
+	dates <- c("2012-10-01","2012-10-02","2012-10-03","2012-10-04","2012-10-05",
+			"2012-10-08","2012-10-09","2012-10-10","2012-10-11","2012-10-12",
+			"2012-10-15","2012-10-16","2012-10-17","2012-10-18","2012-10-19")
 	for (date in as.character(dates)) {
 		print(date)
 		# controlla che la data sia dopo il "2011-05-31" altrimenti togli il fondo globalEconomy
 		if (as.Date(date) > as.Date("2011-05-31")) fundsOwners <- c("pippo53","pippo76","pippo210") else fundsOwners <- c("pippo53","pippo76")
+		if (as.Date(date) > as.Date("2012-09-01")) fundsOwners <- c(fundsOwners,"pippo100","pippo101")
 		repositories$exchangeRates <- create_repositoryExchangeRates(exchangeRatesDate=date)
 		dati <- importDBPortfolioGeneraleByDate(date)		
 		fundPortfolios <- filterLists(dati,"Cliente",value=fundsOwners)
@@ -74,7 +77,7 @@ if (FALSE) {
 } else {
 	# caso data attuale
 	fundsOwners <- c("pippo53","pippo76","pippo210","pippo100","pippo101")
-	fundsOwners <- c("pippo210")	
+	
 	fundPortfolios <- filterLists(dati,"Cliente",value=fundsOwners)
 	
 	fundPortfolios <- portfoliosFactory(fundPortfolios)

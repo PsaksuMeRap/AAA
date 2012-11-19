@@ -168,6 +168,7 @@ setMethod("idFactory",signature(origin="AyrtonPosition"),
 			# consider FX_forward
 			if (origin@ID_strumento==22) {
 				parseFXForwardName <- function(name) {
+
 					tmp <- strsplit(name," ")[[1]]
 					tmp <- str_trim(tmp)
 					names(tmp) <- c("currency","amount","valuta_label","valueDate")

@@ -6,6 +6,12 @@ testSuiteKind: specific
 testTarget: pippo53
 reportTo: claudio.ortelli@usi.ch; info@bacep.com
 outputDir: ./
+groupDefinition: liquidity = Conto_corrente,Conto_corrente_fittizio,Call_Geld,Depositi_a_termine
+groupDefinition: azionario = Equity,Fondi_azionari,Opzioni_su_azioni,Diritti_aumento_capitale_azionario,ETF_equity,Strutturati_EQ,Futures_EQ,Index_certificate
+groupDefinition: strumentiMisti = Reverse_convertible,Obbligazioni_convertibili
+groupDefinition: redditoFisso = Bond,Fondi_obbligazionari,Fondi_mercato_monetario,Floating_rate_notes,Obbligazioni_step-down,Barrier_Reverse_Convertible,Opzioni_su_obbligazioni,Strutturati_FI
+groupDefinition: altriStrumenti = Opzioni_su_divise,FX_Forward,Fondi_immobiliari,Fondi_misti,Fund_of_funds,Fondi_absolute_return
+groupDefinition: metalliPreziosi = ETF_commodities_gold,ETF_commodities_platinum
 checkListStart:
 
 # verifica che i contratti a termine in EUR siano solo a titolo di copertura
@@ -30,7 +36,7 @@ amount:>10% & security:Equity,Fondi_azionari,ETF_commodities_gold,Opzioni_su_azi
 amount:>5% & security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity,ETF_commodities_gold,Futures_EQ ; <= 40%
 
 # verifica che sia investito unicamente negli strumenti sotto elencati
-security:Equity,Fondi_azionari,Futures_EQ,Conto_corrente,Conto_corrente_fittizio,Opzioni_su_azioni,FX_Forward,Strutturati_EQ,ETF_equity,ETF_commodities_gold,Bond,Obbligazioni_convertibili,Index_certificate ; = 100%
+security: liquidity,azionario,strumentiMisti,redditoFisso,altriStrumenti,metalliPreziosi ; = 100%
 
 # verifica parte fixed income high yield, subordinati, ...
 rating:<BBB ; <= 15%

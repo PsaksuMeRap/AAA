@@ -30,16 +30,16 @@ amount:>5% & security:azionario,redditoFisso,altriStrumenti,metalliPreziosi ; <=
 currency:allowedCurrencies ; = 100%
 
 # 5) verifica che non si vada corto nelle monete consentite
-currency:EUR ; >= 0EUR
-currency:CHF ; >= 0CHF
-currency:USD ; >= 0USD
-currency:AUD ; >= 0AUD
-currency:NOK ; >= 0NOK
-currency:SEK ; >= 0SEK
-currency:NZD ; >= 0NZD
-currency:JPY ; >= 0JPY
-currency:GBP ; >= 0DKK
-currency:CAD ; >= 0CAD
+currency:EUR ; >= -1%
+currency:CHF ; >= -1%
+currency:USD ; >= -1%
+currency:AUD ; >= -1%
+currency:NOK ; >= -1%
+currency:SEK ; >= -1%
+currency:NZD ; >= -1%
+currency:JPY ; >= -1%
+currency:GBP ; >= -1%
+currency:CAD ; >= -1%
 
 # 6) verifica che i fondi non superino il 30%
 security:Fondi_azionari,Fondi_obbligazionari,ETF_equity,Fondi_absolute_return,ETF_commodities_gold; <= 30%
