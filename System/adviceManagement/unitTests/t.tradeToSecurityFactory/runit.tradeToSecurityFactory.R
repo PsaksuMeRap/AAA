@@ -197,10 +197,10 @@ test.shouldConvertOptionFxTradeSellToSecurity <- function() {
 	
 	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)	
 	checkEquals(class(newSecurity)[[1]],"Opzioni_su_divise")	
-	checkEquals(newSecurity@expiryDate,"2012-12-27")
+	checkEquals(newSecurity@expiryDate,"2013-09-12")
 	checkEquals(newSecurity@optionType,"C")
 	checkEquals(newSecurity@strike,1.3)
-	checkEquals(newSecurity@name,"Eurusd 12/27/12 c1.3")
+	checkEquals(newSecurity@name,"EURCHF 09/12/13 c1.3")
 	
 }
 
