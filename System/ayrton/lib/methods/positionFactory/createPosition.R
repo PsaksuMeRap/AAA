@@ -247,6 +247,13 @@ setMethod("createPosition",signature(security="Fondi_obbligazionari",origin="Ayr
 			fundsOpenCapital <- create_fundsDB()
 			ID_STRUMENTI <- sapply(fundsOpenCapital,slot,"id")
 			
+			if (length(origin@rating)==0) origin@rating <- "NR"
+			if (is.na(origin@rating)) origin@rating <- "NR"
+			if (origin@rating=="#N/A N/A" | origin@rating=="#N/A N Ap") origin@rating <- "NR"
+			
+			rating <- longTermRatingFactory(origin@rating)
+			
+			
 			if (is.element(security@id@idAAA,ID_STRUMENTI)) {
 				accruedInterest <- new("AccruedInterest",toMoney(NA_real_,security@currency))
 				position <- new("PositionFondi_obbligazionariOC",
@@ -254,6 +261,7 @@ setMethod("createPosition",signature(security="Fondi_obbligazionari",origin="Ayr
 						id=security@id,
 						security=security,
 						quantity=quantity,
+						rating=rating,
 						value=value)
 				return(position)
 			} else {
@@ -263,6 +271,7 @@ setMethod("createPosition",signature(security="Fondi_obbligazionari",origin="Ayr
 						id=security@id,
 						security=security,
 						quantity=quantity,
+						rating=rating,
 						value=value)
 				return(position)
 			}

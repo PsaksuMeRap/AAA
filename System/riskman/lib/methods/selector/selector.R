@@ -102,7 +102,7 @@ setMethod("selector",signature(x="MaturityHorizonSelectionCriterium",positions="
 setMethod("selector",signature(x="SelectionString",positions="Positions"),
 		function(x,positions) {
 			factorStrings.l <- split(x)
-		
+	
 			selectionCriteriaList <- new("SelectionCriteriaList",lapply(factorStrings.l,toSelectionCriteria))
 			toExtract <- filterByCriteriaLogicalOr(selectionCriteriaList,positions)
 			
@@ -116,7 +116,7 @@ setMethod("selector",signature(x="SelectionString",positions="Positions"),
 
 setMethod("selector",signature(x="SelectionCriteriaList",positions="Positions"),
 		function(x,positions) {
-			
+				
 			toExtract <- filterByCriteriaLogicalOr(x,positions)
 			
 			# crea la lista delle posizioni
