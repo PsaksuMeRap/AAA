@@ -21,6 +21,14 @@ currency:NOK ; <=15%
 currency:TRY ; <=15%
 currency:USD ; <=35%
 
+# 1.3bis) verifica che le altre monete siano meno del 15% (a parte USD che è 35%) opzioni incluse
+currency:AUD ; <=15% :: replace:Opzioni_su_divise
+currency:BRL ; <=15% :: replace:Opzioni_su_divise
+currency:CHF ; <=15% :: replace:Opzioni_su_divise
+currency:NOK ; <=15% :: replace:Opzioni_su_divise
+currency:TRY ; <=15% :: replace:Opzioni_su_divise
+currency:USD ; <=35% :: replace:Opzioni_su_divise
+
 # 2) verifica che non ci siano posizioni non cash che superino il 10% del NAV
 amount:>10% & security!:Conto_corrente,Depositi_a_termine ; = 0%
 

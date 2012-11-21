@@ -8,13 +8,22 @@ library("tcltk")
 library("stringr")
 
 if(.Platform$OS.type=="windows") {
+	unlink("C:/riskman",recursive=TRUE)
+	dir.create("C:/riskman")
 	homeDir <- "C:/riskman"
-	if (!exists("sourceCodeDir")) sourceCodeDir <- getwd() else setwd(sourceCodeDir)
 } else {
+	unlink("/home/claudio/riskman",recursive=TRUE)
+	dir.create("/home/claudio/riskman")
 	homeDir <- "/home/claudio/riskman"
-	if (!exists("sourceCodeDir")) sourceCodeDir <- getwd() else setwd(sourceCodeDir)
-
 }
+
+# considera args
+args=commandArgs(trailingOnly = TRUE)
+if (length(args>0)) {
+	eval(parse(text=args[[1]])) # this is the sourceCodeDir variable
+}
+if (!exists("sourceCodeDir")) sourceCodeDir <- getwd() else setwd(sourceCodeDir)
+
 
 
 stringsAsFactors = FALSE
@@ -113,22 +122,14 @@ from <- file.path(sourceCodeDir,"Sincronizza.R")
 to <- file.path(homeDir,"Sincronizza.R")
 ok <- file.copy(from,to)
 
-# zip the portfolio's directories
+# remove the portfolios.zip the portfolio's directories
 zipFullFileName <- file.path(homeDir,"portfolios.zip")
 files <- file.path(homeDir,"dataNew")
 files <- c(files,file.path(homeDir,"Sincronizza.R"))
 ok <- zip(zipFullFileName, files, flags = "-r9X")
 ## -- terminato salvataggio portafogli
 
-
-
-
-## -- funzioni di utilità
-whoisP <- function(names) {
-	df <- read.csv("/home/claudio/workspace/Produzione_new/associazionePippo.csv",header=TRUE,sep=",",
-			as.is=TRUE)
-	
-	getName <- function(name,df) {isOk <- df[,1]==name;return(df[isOk,2])}
-	pippoNames <- sapply(names,getName,df)
-	return(paste(names,"->",pippoNames))
-}
+# copy the portfolios.zip file
+from <- file.path(homeDir,"portfolios.zip")
+to <- file.path("/home/claudio/XP","portfolios.zip")
+ok <- file.copy(from,to,overwrite=TRUE)

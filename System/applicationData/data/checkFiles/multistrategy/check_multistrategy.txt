@@ -24,7 +24,7 @@ amount:>10% & security!:liquidity,Futures_EQ,FX_Forward ; = 0% :: groupBy:securi
 # amount:>=20% ; = 0%
 
 # verifica che le posizioni che superano il 5% del NAV non superino complessivamente il 40% dello stesso
-amount:>5% & security:azionario,redditoFisso,altriStrumenti,metalliPreziosi ; <= 40%
+amount:>5% & security:azionario,redditoFisso,altriStrumenti,metalliPreziosi & security!:Futures_EQ,FX_Forward ; <= 40%
 
 # 4) verifica che non ci siano altre monete al di fuori delle allowedCurrencies
 currency:allowedCurrencies ; = 100%
@@ -32,7 +32,7 @@ currency:allowedCurrencies ; = 100%
 # 5) verifica che non si vada corto nelle monete consentite
 currency:EUR ; >= -1%
 currency:CHF ; >= -1%
-currency:USD ; >= -1%
+currency:USD ; >= -4%
 currency:AUD ; >= -1%
 currency:NOK ; >= -1%
 currency:SEK ; >= -1%
