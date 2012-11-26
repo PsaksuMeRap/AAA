@@ -113,7 +113,7 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 		return(newSecurity)		
 	}
 	
-	if (securityType=="Future index") {
+	if (securityType=="Future equity index") {
 		currency <- new("Currency",trade$Currency)
 		name <- trade$Security_name
 		
