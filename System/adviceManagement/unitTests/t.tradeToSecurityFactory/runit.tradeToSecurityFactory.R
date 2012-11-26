@@ -77,14 +77,44 @@ test.shouldConvertFuturesOnIndexTradeToSecurity <- function() {
 
 test.shouldConvertBondTradeToSecurity <- function() {
 	# set the fileName from which to import trades
-	fileName <- "2012-05-09_14-22-24_Ortelli_bondTrade_newAdvice.csv"
-	messageFileName <- messageFileNameFactory(fileName)
-	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+#	fileName <- "2012-05-09_14-22-24_Ortelli_bondTrade_newAdvice.csv"
+#	messageFileName <- messageFileNameFactory(fileName)
+#	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	blRequestHandler <- create_BloombergRequestHandler()
 	
 	# import trades
-	trades <- tradesFactory(messageFileName,directory)
-	trade <- trades[[1]]
+	trade <- new("Trade",list(
+			Trade_number = 1,
+			Portfolio = "GLOBAL EQUITY",
+			Buy_Sell = "Buy",
+			Id_Bloomberg = "nesnvx 2 08/05/13 corp",
+			Security_name = "NESTLE FINANCE INTL LTD",
+			Currency = "CHF",
+			Security_type = "Bond",
+			Broker = "UBS",
+			Quantity = 200000,
+			ISIN_Ticker = "CH0049524041",
+			Rating = "AA",
+			Maturity_Expiry = 41491,
+			Accrued_interests = 0.57777778,
+			Delivery_date = NA,
+			Underlying_ticker = NA,
+			Underlying_ISIN = NA,
+			Contract_size = NA,
+			Future_one_point_value = NA,
+			Underlying_price = NA,
+			Price = 101.594,
+			Order_type = NA,
+			Amount = 203188,
+			Limit_price = NA,
+			Limit_date = 41227,
+			Comments = NA,
+			Counterparty_risk = "Claudio",
+			Fund_type = NA,
+			Force_data = "No")
+		)
+	#trades <- tradesFactory(messageFileName,directory)
+	#trade <- trades[[1]]
 	
 	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)	
 	checkEquals(class(newSecurity)[[1]],"Bond")	
@@ -93,14 +123,14 @@ test.shouldConvertBondTradeToSecurity <- function() {
 
 test.shouldConvertBondTrade1ToSecurity <- function() {
 	# set the fileName from which to import trades
-	fileName <- "2012-10-09_11-46-02_Ortelli_bondTrade1_newAdvice.csv"
-	messageFileName <- messageFileNameFactory(fileName)
-	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+#	fileName <- "2012-10-09_11-46-02_Ortelli_bondTrade1_newAdvice.csv"
+#	messageFileName <- messageFileNameFactory(fileName)
+#	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	blRequestHandler <- create_BloombergRequestHandler()
 	
 	# import trades
-	trades <- tradesFactory(messageFileName,directory)
-	trade <- trades[[1]]
+#	trades <- tradesFactory(messageFileName,directory)
+#	trade <- trades[[1]]
 	
 	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)	
 	checkEquals(class(newSecurity)[[1]],"Bond")	

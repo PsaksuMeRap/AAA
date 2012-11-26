@@ -75,7 +75,6 @@ if(.Platform$OS.type=="windows") {
 }
 
 
-
 ## test globale
 dirs = c(
 		"./adviceManagement/unitTests/t.archive",
