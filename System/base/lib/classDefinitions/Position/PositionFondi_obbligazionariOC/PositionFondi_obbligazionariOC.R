@@ -4,7 +4,7 @@
 ###############################################################################
 
 # crea la classe virtuale "Position"
-setClass("PositionFondi_obbligazionariOC",representation(accruedInterest="AccruedInterest"),contains="Position")
+setClass("PositionFondi_obbligazionariOC",representation(accruedInterest="AccruedInterest",rating="character"),contains="Position")
 
 
 setMethod("reweight",signature(x="PositionFondi_obbligazionariOC"),
@@ -21,6 +21,7 @@ setMethod("groupBySecurityId",signature(x="PositionFondi_obbligazionariOC",y="Po
 		function(x,y) {
 			z <- new("PositionFondi_obbligazionariOC",
 					accruedInterest=x@accruedInterest+y@accruedInterest,
+					rating=x@rating,
 					id=x@id,
 					security=x@security,
 					quantity=x@quantity + y@quantity,
