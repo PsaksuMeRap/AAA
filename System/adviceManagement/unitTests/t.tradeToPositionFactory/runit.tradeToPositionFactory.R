@@ -12,13 +12,45 @@ test.shouldConvertFondi_azionariTradeToPosition <- function() {
 	blData <- createRepositoryBloombergData()
 	
 	# set the fileName from which to import trades
-	fileName <- "2012-05-09_14-22-24_Ortelli_FundEquity_newAdvice.csv"
-	messageFileName <- messageFileNameFactory(fileName)
-	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+#	fileName <- "2012-05-09_14-22-24_Ortelli_FundEquity_newAdvice.csv"
+#	messageFileName <- messageFileNameFactory(fileName)
+#	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
 	# import trades
-	trades <- tradesFactory(messageFileName,directory)
-	trade <- trades[[1]]
+#	trades <- tradesFactory(messageFileName,directory)
+#	trade <- trades[[1]]
+	trade <- new("Trade",list(
+					Trade_number = 1,
+					Portfolio = "MULTISTRATEGY",
+					Buy_Sell = "Sell",
+					Id_Bloomberg = "WDIMIXD Equity",
+					Security_name = "WORLD INVEST-ABSOL RET-C",
+					Currency = "EUR",
+					Security_type = "Fund equity",
+					Broker = "UBS",
+					Quantity = 250,
+					ISIN_Ticker = "LU0028583804",
+					Rating = NA,
+					Call_Put_Future = NA,
+					Strike = NA,
+					Maturity_Expiry = NA,
+					Accrued_interests = NA,
+					Delivery_date = NA,
+					Underlying_ticker = NA,
+					Underlying_ISIN = NA,
+					Contract_size = NA,
+					Future_one_point_value = NA,
+					Underlying_price = NA,
+					Price = 244.04,
+					Order_type = "Market",
+					Amount = 62280,
+					Limit_price = NA,
+					Limit_date = 41239,
+					Comments = "Test",
+					Counterparty_risk = "Claudio",
+					Fund_type = "UCIs",
+					Force_data = "No")
+	)
 	
 	# create the blRequestHandler required from tradeToSecurityFactory
 	blRequestHandler <- create_BloombergRequestHandler()
@@ -30,7 +62,7 @@ test.shouldConvertFondi_azionariTradeToPosition <- function() {
 	checkEquals(class(newPosition)[[1]],"PositionFondi_azionari")
 	checkEquals(class(newPosition@id)[[1]],"IdAyrton")
 	checkEquals(as.character(newPosition@id@idAAA),"LU0028583804")
-	checkEquals(newPosition@value,toMoney(-1000*244.04,"EUR"))
+	checkEquals(newPosition@value,toMoney(-250*244.04,"EUR"))
 	
 }
 
@@ -41,17 +73,50 @@ test.shouldConvertFundBondTradeToPosition <- function() {
 	blData <- createRepositoryBloombergData()
 		
 	# set the fileName from which to import trades
-	fileName <- "2012-05-09_14-22-24_Ortelli_FundBond_newAdvice.csv"
-	messageFileName <- messageFileNameFactory(fileName)
+#	fileName <- "2012-05-09_14-22-24_Ortelli_FundBond_newAdvice.csv"
+#	messageFileName <- messageFileNameFactory(fileName)
 	
-	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+#	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
 	# create the blRequestHandler required from tradeToSecurityFactory
 	blRequestHandler <- create_BloombergRequestHandler()
 	
 	# import trades
-	trades <- tradesFactory(messageFileName,directory)
-	trade <- trades[[1]]
+#	trades <- tradesFactory(messageFileName,directory)
+#	trade <- trades[[1]]
+
+	trade <- new("Trade",list(
+					Trade_number = 1,
+					Portfolio = "MULTISTRATEGY",
+					Buy_Sell = "Buy",
+					Id_Bloomberg = "lemwbda equity",
+					Security_name = "LEMANIK SICAV-FL DUR-CP R",
+					Currency = "EUR",
+					Security_type = "Fund bond",
+					Broker = "UBS",
+					Quantity = 500,
+					ISIN_Ticker = "LU0146153936",
+					Rating = NA,
+					Call_Put_Future = NA,
+					Strike = NA,
+					Maturity_Expiry = NA,
+					Accrued_interests = NA,
+					Delivery_date = NA,
+					Underlying_ticker = NA,
+					Underlying_ISIN = NA,
+					Contract_size = NA,
+					Future_one_point_value = NA,
+					Underlying_price = NA,
+					Price = 1178.911,
+					Order_type = "Care",
+					Amount = 17462.25,
+					Limit_price = NA,
+					Limit_date = 41239,
+					Comments = NA,
+					Counterparty_risk = "Claudio",
+					Fund_type = "UCITS",
+					Force_data = "No")
+	)
 	
 	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)
 	
@@ -74,13 +139,46 @@ test.shouldConvertEquityTradeToPosition <- function() {
 	blData <- createRepositoryBloombergData()
 	
 	# set the fileName from which to import trades
-	fileName <- "2012-05-09_14-22-24_Ortelli_equityTrade_newAdvice.csv"
-	messageFileName <- messageFileNameFactory(fileName)
-	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+#	fileName <- "2012-05-09_14-22-24_Ortelli_equityTrade_newAdvice.csv"
+#	messageFileName <- messageFileNameFactory(fileName)
+#	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
 	# import trades
-	trades <- tradesFactory(messageFileName,directory)
-	trade <- trades[[1]]
+#	trades <- tradesFactory(messageFileName,directory)
+#	trade <- trades[[1]]
+
+	trade <- new("Trade",list(
+					Trade_number = 1,
+					Portfolio = "FIXED INCOME",
+					Buy_Sell = "Buy",
+					Id_Bloomberg = "UBSN VX Equity",
+					Security_name = "UBS AG-REG",
+					Currency = "CHF",
+					Security_type = "Equity",
+					Broker = "UBS",
+					Quantity = 100,
+					ISIN_Ticker = "CH0024899483",
+					Rating = NA,
+					Call_Put_Future = NA,
+					Strike = NA,
+					Maturity_Expiry = NA,
+					Accrued_interests = NA,
+					Delivery_date = NA,
+					Underlying_ticker = NA,
+					Underlying_ISIN = NA,
+					Contract_size = NA,
+					Future_one_point_value = NA,
+					Underlying_price = NA,
+					Price = 11.08,
+					Order_type = "Limited",
+					Amount = 7290,
+					Limit_price = 12.5,
+					Limit_date = 41239,
+					Comments = NA,
+					Counterparty_risk = "Claudio",
+					Fund_type = NA,
+					Force_data = "No")
+	)
 	
 	# create the blRequestHandler required from tradeToSecurityFactory
 	blRequestHandler <- create_BloombergRequestHandler()
@@ -102,13 +200,46 @@ test.shouldConvertFuturesOnIndexTradeToPosition <- function() {
 	blData <- createRepositoryBloombergData()
 	
 	# set the fileName from which to import trades
-	fileName <- "2012-05-09_14-22-24_Ortelli_futureEquityIndexTrade_newAdvice.csv"
-	messageFileName <- messageFileNameFactory(fileName)
-	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+#	fileName <- "2012-05-09_14-22-24_Ortelli_futureEquityIndexTrade_newAdvice.csv"
+#	messageFileName <- messageFileNameFactory(fileName)
+#	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
 	# import trades
-	trades <- tradesFactory(messageFileName,directory)
-	trade <- trades[[1]]
+#	trades <- tradesFactory(messageFileName,directory)
+#	trade <- trades[[1]]
+	trade <- new("Trade",list(
+					Trade_number = 1,
+					Portfolio = "MULTISTRATEGY",
+					Buy_Sell = "Buy to open",
+					Id_Bloomberg = "SMM2 Index",
+					Security_name = "SWISS MKT IX FUTR Jun12",
+					Currency = "CHF",
+					Security_type = "Future equity index",
+					Broker = "UBS",
+					Quantity = 5,
+					ISIN_Ticker = NA,
+					Rating = NA,
+					Call_Put_Future = "Future",
+					Strike = NA,
+					Maturity_Expiry = NA,
+					Accrued_interests = NA,
+					Delivery_date = 41449,
+					Underlying_ticker = NA,
+					Underlying_ISIN = "US81663N2062",
+					Contract_size = NA,
+					Future_one_point_value = 10,
+					Underlying_price = NA,
+					Price = 5864,
+					Order_type = "Market",
+					Amount = 978750,
+					Limit_price = NA,
+					Limit_date = "11/11/2012",
+					Comments = NA,
+					Counterparty_risk = "Claudio",
+					Fund_type = NA,
+					Force_data = "No")
+	)
+
 	
 	# create the blRequestHandler required from tradeToSecurityFactory
 	blRequestHandler <- create_BloombergRequestHandler()
@@ -130,13 +261,45 @@ test.shouldConvertBondTradeToPosition <- function() {
 	blData <- createRepositoryBloombergData()
 	
 	# set the fileName from which to import trades
-	fileName <- "2012-05-09_14-22-24_Ortelli_bondTrade_newAdvice.csv"
-	messageFileName <- messageFileNameFactory(fileName)
-	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+#	fileName <- "2012-05-09_14-22-24_Ortelli_bondTrade_newAdvice.csv"
+#	messageFileName <- messageFileNameFactory(fileName)
+#	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
 	# import trades
-	trades <- tradesFactory(messageFileName,directory)
-	trade <- trades[[2]]
+#	trades <- tradesFactory(messageFileName,directory)
+#	trade <- trades[[2]]
+	trade <- new("Trade",list(
+					Trade_number = 1,
+					Portfolio = "MULTISTRATEGY",
+					Buy_Sell = "Buy",
+					Id_Bloomberg = "nesnvx 2 08/05/13 corp",
+					Security_name = "NESTLE FINANCE INTL LTD",
+					Currency = "CHF",
+					Security_type = "Bond",
+					Broker = "UBS",
+					Quantity = 100000,
+					ISIN_Ticker = "CH0049524041",
+					Rating = "AA",
+					Call_Put_Future = NA,
+					Strike = NA,
+					Maturity_Expiry = 41491,
+					Accrued_interests = 1.2,
+					Delivery_date = NA,
+					Underlying_ticker = NA,
+					Underlying_ISIN = NA,
+					Contract_size = NA,
+					Future_one_point_value = NA,
+					Underlying_price = NA,
+					Price = 102.238,
+					Order_type = "Market",
+					Amount = 101480,
+					Limit_price = NA,
+					Limit_date = 41239,
+					Comments = NA,
+					Counterparty_risk = "Claudio",
+					Fund_type = NA,
+					Force_data = "No")
+	)
 	
 	# create the blRequestHandler required from tradeToSecurityFactory
 	blRequestHandler <- create_BloombergRequestHandler()
@@ -147,8 +310,9 @@ test.shouldConvertBondTradeToPosition <- function() {
 	
 	checkEquals(class(newPosition)[[1]],"PositionBond")
 	checkEquals(class(newPosition@id)[[1]],"IdAyrton")
-	checkEquals(newPosition@value,toMoney(0.01*(trade$Price+1.7)*trade$Quantity,"EUR"))
-	checkEquals(newPosition@accruedInterest,as(toMoney(0.017*trade$Quantity,"EUR"),"AccruedInterest"))
+	checkEquals(newPosition@value,toMoney(0.01*(trade$Price+1.2)*trade$Quantity,"CHF"))
+	checkEquals(newPosition@accruedInterest,as(toMoney(0.012*trade$Quantity,"CHF"),"AccruedInterest"))
+	
 }
 
 
@@ -159,13 +323,46 @@ test.shouldConvertBondTrade1ToPosition <- function() {
 	blData <- createRepositoryBloombergData()
 	
 	# set the fileName from which to import trades
-	fileName <- "2012-10-09_11-46-02_Ortelli_bondTrade1_newAdvice.csv"
-	messageFileName <- messageFileNameFactory(fileName)
-	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+#	fileName <- "2012-10-09_11-46-02_Ortelli_bondTrade1_newAdvice.csv"
+#	messageFileName <- messageFileNameFactory(fileName)
+#	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
 	# import trades
-	trades <- tradesFactory(messageFileName,directory)
-	trade <- trades[[1]]
+#	trades <- tradesFactory(messageFileName,directory)
+#	trade <- trades[[1]]
+
+	trade <- new("Trade", list(
+					Trade_number = 1,
+					Portfolio = "MULTISTRATEGY",
+					Buy_Sell = "Buy",
+					Id_Bloomberg = "xs0842560640 corp",
+					Security_name = "F VAN LANSCHOT BANKIERS",
+					Currency = "EUR",
+					Security_type = "Bond",
+					Broker = "UBS",
+					Quantity = 150000,
+					ISIN_Ticker = "XS0842560640",
+					Rating = "BBB+",
+					Call_Put_Future = NA,
+					Strike = NA,
+					Maturity_Expiry = 42660,
+					Accrued_interests = 0.0,
+					Delivery_date = NA,
+					Underlying_ticker = NA,
+					Underlying_ISIN = NA,
+					Contract_size = NA,
+					Future_one_point_value = NA,
+					Underlying_price = NA,
+					Price = 99.5305,
+					Order_type = "Market",
+					Amount = 152161.5,
+					Limit_price = NA,
+					Limit_date = 41239,
+					Comments = NA,
+					Counterparty_risk = "Claudio",
+					Fund_type = NA,
+					Force_data = "No")
+	)
 	
 	# create the blRequestHandler required from tradeToSecurityFactory
 	blRequestHandler <- create_BloombergRequestHandler()
@@ -188,13 +385,46 @@ test.shouldConvertFXSpotTradeToPosition <- function() {
 	blData <- createRepositoryBloombergData()
 	
 	# set the fileName from which to import trades
-	fileName <- "2012-05-09_14-22-24_Ortelli_fxSpotTrade_newAdvice.csv"
-	messageFileName <- messageFileNameFactory(fileName)
-	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+#	fileName <- "2012-05-09_14-22-24_Ortelli_fxSpotTrade_newAdvice.csv"
+#	messageFileName <- messageFileNameFactory(fileName)
+#	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
 	# import trades
-	trades <- tradesFactory(messageFileName,directory)
-	trade <- trades[[1]]
+#	trades <- tradesFactory(messageFileName,directory)
+#	trade <- trades[[1]]
+
+	trade <- new("Trade", list(
+					Trade_number = 1,
+					Portfolio = "MULTISTRATEGY",
+					Buy_Sell = "Buy",
+					Id_Bloomberg = "EURCHF Curncy",
+					Security_name = "EUR-CHF X-RATE",
+					Currency = "CHF",
+					Security_type = "FX spot",
+					Broker = "UBS",
+					Quantity = 500000,
+					ISIN_Ticker = NA,
+					Rating = NA,
+					Call_Put_Future = NA,
+					Strike = NA,
+					Maturity_Expiry = NA,
+					Accrued_interests = NA,
+					Delivery_date = NA,
+					Underlying_ticker = "EUR",
+					Underlying_ISIN = NA,
+					Contract_size = NA,
+					Future_one_point_value = NA,
+					Underlying_price = NA,
+					Price = 1.201,
+					Order_type = "Limited",
+					Amount = 1806315,
+					Limit_price = 1.2015,
+					Limit_date = 41239,
+					Comments = NA,
+					Counterparty_risk = "Claudio",
+					Fund_type = NA,
+					Force_data = "No")
+	)
 	
 	# create the blRequestHandler required from tradeToSecurityFactory
 	blRequestHandler <- create_BloombergRequestHandler()

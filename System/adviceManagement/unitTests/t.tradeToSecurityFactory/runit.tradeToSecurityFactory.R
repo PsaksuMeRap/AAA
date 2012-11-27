@@ -24,7 +24,7 @@ test.shouldConvertFundBondTradeToSecurity <- function() {
 			Currency = "EUR",
 			Security_type = "Fund bond",
 			Broker = "UBS",
-			Quantity = 15,
+			Quantity = 500,
 			ISIN_Ticker = "LU0146153936",
 			Rating = NA,
 			Call_Put_Future = NA,
@@ -37,7 +37,7 @@ test.shouldConvertFundBondTradeToSecurity <- function() {
 			Contract_size = NA,
 			Future_one_point_value = NA,
 			Underlying_price = NA,
-			Price = 1164.15,
+			Price = 1178.911,
 			Order_type = "Care",
 			Amount = 17462.25,
 			Limit_price = NA,
@@ -70,7 +70,7 @@ test.shouldConvertFundEquityTradeToSecurity <- function() {
 	trade <- new("Trade",list(
 			Trade_number = 1,
 			Portfolio = "MULTISTRATEGY",
-			Buy_Sell = "Buy",
+			Buy_Sell = "Sell",
 			Id_Bloomberg = "WDIMIXD Equity",
 			Security_name = "WORLD INVEST-ABSOL RET-C",
 			Currency = "EUR",
@@ -89,7 +89,7 @@ test.shouldConvertFundEquityTradeToSecurity <- function() {
 			Contract_size = NA,
 			Future_one_point_value = NA,
 			Underlying_price = NA,
-			Price = 249.12,
+			Price = 244.04,
 			Order_type = "Market",
 			Amount = 62280,
 			Limit_price = NA,
@@ -126,7 +126,7 @@ test.shouldConvertEquityTradeToSecurity <- function() {
 			Currency = "CHF",
 			Security_type = "Equity",
 			Broker = "UBS",
-			Quantity = 500,
+			Quantity = 100,
 			ISIN_Ticker = "CH0024899483",
 			Rating = NA,
 			Call_Put_Future = NA,
@@ -139,7 +139,7 @@ test.shouldConvertEquityTradeToSecurity <- function() {
 			Contract_size = NA,
 			Future_one_point_value = NA,
 			Underlying_price = NA,
-			Price = 14.58,
+			Price = 11.08,
 			Order_type = "Limited",
 			Amount = 7290,
 			Limit_price = 12.5,
@@ -169,12 +169,12 @@ test.shouldConvertFuturesOnIndexTradeToSecurity <- function() {
 			Trade_number = 1,
 			Portfolio = "MULTISTRATEGY",
 			Buy_Sell = "Buy to open",
-			Id_Bloomberg = "SMM3 Index",
-			Security_name = "SWISS MKT IX FUTR Jun13",
+			Id_Bloomberg = "SMM2 Index",
+			Security_name = "SWISS MKT IX FUTR Jun12",
 			Currency = "CHF",
 			Security_type = "Future equity index",
 			Broker = "UBS",
-			Quantity = 15,
+			Quantity = 5,
 			ISIN_Ticker = NA,
 			Rating = NA,
 			Call_Put_Future = "Future",
@@ -187,7 +187,7 @@ test.shouldConvertFuturesOnIndexTradeToSecurity <- function() {
 			Contract_size = NA,
 			Future_one_point_value = 10,
 			Underlying_price = NA,
-			Price = 6525,
+			Price = 5864,
 			Order_type = "Market",
 			Amount = 978750,
 			Limit_price = NA,
@@ -226,14 +226,14 @@ test.shouldConvertBondTradeToSecurity <- function() {
 					Call_Put_Future = NA,
 					Strike = NA,
 					Maturity_Expiry = 41491,
-					Accrued_interests = 0.63333333,
+					Accrued_interests = 1.2,
 					Delivery_date = NA,
 					Underlying_ticker = NA,
 					Underlying_ISIN = NA,
 					Contract_size = NA,
 					Future_one_point_value = NA,
 					Underlying_price = NA,
-					Price = 101.48,
+					Price = 102.238,
 					Order_type = "Market",
 					Amount = 101480,
 					Limit_price = NA,
@@ -276,14 +276,14 @@ test.shouldConvertBondTrade1ToSecurity <- function() {
 			Call_Put_Future = NA,
 			Strike = NA,
 			Maturity_Expiry = 42660,
-			Accrued_interests = 0.33869863,
+			Accrued_interests = 0.0,
 			Delivery_date = NA,
 			Underlying_ticker = NA,
 			Underlying_ISIN = NA,
 			Contract_size = NA,
 			Future_one_point_value = NA,
 			Underlying_price = NA,
-			Price = 101.441,
+			Price = 99.5305,
 			Order_type = "Market",
 			Amount = 152161.5,
 			Limit_price = NA,
@@ -340,7 +340,7 @@ test.shouldConvertFxSpotTradeToSecurity <- function() {
 			Contract_size = NA,
 			Future_one_point_value = NA,
 			Underlying_price = NA,
-			Price = 1.20421,
+			Price = 1.201,
 			Order_type = "Limited",
 			Amount = 1806315,
 			Limit_price = 1.2015,
@@ -406,11 +406,11 @@ test.shouldConvertOptionEquityTradeToSecurity <- function() {
 
 test.shouldParseOptionFxName <- function() {
 	
-	name <- "eurchf  09/13/12 c1.2000"
+	name <- "eurchf 09/13/12 c1.2000"
 	
 	result <- parseOptionFxName(name)
 	
-	checkEquals(result[["name"]],"eurchf  09/13/12 c1.2000")
+	checkEquals(result[["name"]],"eurchf 09/13/12 c1.2000")
 	checkEquals(result[["expiryDate"]],"2012-09-13")
 	checkEquals(result[["optionType"]],"C")
 	checkEquals(result[["strike"]],1.2)
@@ -434,8 +434,8 @@ test.shouldConvertOptionFxTradeToSecurity <- function() {
 			Trade_number = 1,
 			Portfolio = "MULTISTRATEGY",
 			Buy_Sell = "Buy to close",
-			Id_Bloomberg = "EURCHF 09/12/13 c1.22",
-			Security_name = "EURCHF 09/12/13 c1.22",
+			Id_Bloomberg = "EURCHF 09/12/13 c1.2",
+			Security_name = "EURCHF 09/12/13 c1.2",
 			Currency = "CHF",
 			Security_type = "Option FX",
 			Broker = "UBS",
@@ -443,7 +443,7 @@ test.shouldConvertOptionFxTradeToSecurity <- function() {
 			ISIN_Ticker = NA,
 			Rating = NA,
 			Call_Put_Future = "Call",
-			Strike = 1.3,
+			Strike = 1.2,
 			Maturity_Expiry = 41529,
 			Accrued_interests = NA,
 			Delivery_date = NA,
@@ -464,10 +464,10 @@ test.shouldConvertOptionFxTradeToSecurity <- function() {
 		)
 	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)	
 	checkEquals(class(newSecurity)[[1]],"Opzioni_su_divise")	
-	checkEquals(newSecurity@expiryDate,"2012-09-13")
+	checkEquals(newSecurity@expiryDate,"2013-09-12")
 	checkEquals(newSecurity@optionType,"C")
 	checkEquals(newSecurity@strike,1.2)
-	checkEquals(newSecurity@name,"eurchf  09/13/12 c1.2000")
+	checkEquals(newSecurity@name,"EURCHF 09/12/13 c1.2")
 	
 }
 
@@ -486,8 +486,8 @@ test.shouldConvertOptionFxTradeSellToSecurity <- function() {
 					Trade_number = 1,
 					Portfolio = "MULTISTRATEGY",
 					Buy_Sell = "Sell to close",
-					Id_Bloomberg = "EURCHF 09/12/13 c1.22",
-					Security_name = "EURCHF 09/12/13 c1.22",
+					Id_Bloomberg = "EURCHF 09/12/13 c1.3",
+					Security_name = "EURCHF 09/12/13 c1.3",
 					Currency = "CHF",
 					Security_type = "Option FX",
 					Broker = "UBS",
@@ -526,10 +526,10 @@ test.shouldConvertOptionFxTradeSellToSecurity <- function() {
 
 test.shouldParseFxForwardName <- function() {
 	
-	name <- "eurchf 08/27/12"	
+	name <- "EUR/CHF 082713X112612 BGNL Curncy"	
 	info <- parseFxForwardName(name)
 	checkEquals(info[["currencyCodes"]],"EURCHF")
-	checkEquals(info[["deliveryDate"]],"08/27/2012")
+	checkEquals(info[["deliveryDate"]],"08/27/2013")
 	checkEquals(info[["underlying"]],"EUR")
 	checkEquals(info[["numeraire"]],"CHF")
 }
@@ -580,6 +580,6 @@ test.shouldConvertFxForwardTradeToSecurity <- function() {
 		)
 	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)	
 	checkEquals(class(newSecurity)[[1]],"FX_Forward")	
-	checkEquals(newSecurity@name,"EURCHF 08/27/2012")
+	checkEquals(newSecurity@name,"EURCHF 08/27/2013")
 	
 }

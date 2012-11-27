@@ -33,22 +33,43 @@ parseOptionFxName <- function(name) {
 }
 
 parseFxForwardName <- function(name) {
-	tmp <- strsplit(name,"\\s+")[[1]]
 	
-	# identify the two currencies codes, the underlying and the 
-	# numeraire
+	# name <- "EUR/CHF 082713X112612 BGNL Curncy"
 	
-	currencyCodes <- toupper(tmp[1])
-	underlying <- toupper(substr(currencyCodes,1,3))
-	numeraire <- toupper(substr(currencyCodes,4,6))
+	name <- remSpaces(name)
+	name <- toupper(name)
+	
+	# extract underlying currency
+	stringLength <- nchar(name)
+	underlying <- substr(name,1,3)
+	name <- substr(name,4,stringLength)
+	
+	# remove "/" character
+	name <- remSpaces(name)
+	stringLength <- nchar(name)
+	name <- substr(name,2,stringLength)
+	name <- remSpaces(name)
+	
+	# extract numeraire currency
+	stringLength <- nchar(name)
+	numeraire <- substr(name,1,3)
+	name <- substr(name,4,stringLength)	
+	name <- remSpaces(name)
+	stringLength <- nchar(name)
+	
+	# extract the delivery date
+	tmp <- strsplit(name," ")
+	tmp <- strsplit(tmp[[1]][1],"X")
+	deliveryDate <- tmp[[1]][[1]]
+	
 	
 	# identify the deliveryDate
-	deliveryDate <- tmp[2]
-	monthAndDay <- substr(deliveryDate,1,5)
-	twoDigitsYear <- substr(deliveryDate,7,8)
-	deliveryDate <- paste(substr(deliveryDate,1,6),"20",twoDigitsYear,sep="")
+	day <- substr(deliveryDate,3,4)
+	month <- substr(deliveryDate,1,2)
+	twoDigitsYear <- substr(deliveryDate,5,6)
+	deliveryDate <- paste(month,"/",day,"/","20",twoDigitsYear,sep="")
 	
-	return(list(currencyCodes=currencyCodes,underlying=underlying,
+	return(list(currencyCodes=paste(underlying,numeraire,sep=""),underlying=underlying,
 					numeraire=numeraire,deliveryDate=deliveryDate))
 }
 
@@ -229,17 +250,17 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 	
 	if (securityType=="FX forward") {
 		
-		info <- parseFxForwardName(trade$Security_name)
-		
+		info <- parseFxForwardName(trade$Id_Bloomberg)
+	
 		# currency is the currency used to express the price of x units of
 		# the underlying. We use the bloomberg convention, i.e. usdeur means
 		# the price in eur of 1 unit of usd and sekusd the price of 100 sek in
 		# usd
 	
-		if (info[["underlying"]]!=trade$Currency) {
+		if (info[["numeraire"]]!=trade$Currency) {
 			message <- paste("Error in trade ",trade$Id_Bloomberg,". \n\n",
 					"The currency used for the Quantity field is ",trade$Currency,". \n",
-					"It should be ",info[["underlying"]],sep="")
+					"It should be ",info[["numeraire"]],sep="")
 			tkmessageBox(message=message,icon="error",type="ok")
 		}
 		

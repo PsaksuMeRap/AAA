@@ -69,13 +69,54 @@ test.shouldConvertBondTradeToPortfolioPositions <- function() {
 	blData <- createRepositoryBloombergData()
 	
 	# set the fileName from which to import trades
-	fileName <- "2012-05-21_12-33-21_Riskmanager_bondTrade_confirmation.csv"
-	messageFileName <- messageFileNameFactory(fileName)
-	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
+#	fileName <- "2012-05-21_12-33-21_Riskmanager_bondTrade_confirmation.csv"
+#	messageFileName <- messageFileNameFactory(fileName)
+#	directory <- file.path(sys[["sourceCodeDir"]],"adviceManagement","unitTests","t.tradeToSecurityFactory") 
 	
 	# import trades
-	trades <- tradesFactory(messageFileName,directory)
-	trade <- trades[[2]]
+#	trades <- tradesFactory(messageFileName,directory)
+#	trade <- trades[[2]]
+
+	trade <- new("Trade",list(
+			Trade_number = 1,
+			Portfolio = "MULTISTRATEGY",
+			Buy_Sell = "Buy",
+			Id_Bloomberg = "nesnvx 2 08/05/13 corp",
+			Security_name = "NESTLE FINANCE INTL LTD",
+			Currency = "CHF",
+			Security_type = "Bond",
+			Broker = "UBS",
+			Quantity = 500000,
+			ISIN_Ticker = "CH0049524041",
+			Rating = "AA",
+			Call_Put_Future = NA,
+			Strike = NA,
+			Maturity_Expiry = 41491,
+			Accrued_interests = 1.2,
+			Delivery_date = NA,
+			Underlying_ticker = NA,
+			Underlying_ISIN = NA,
+			Contract_size = NA,
+			Future_one_point_value = NA,
+			Underlying_price = NA,
+			Price = 101.48,
+			Order_type = "Market",
+			Amount = 507400,
+			Limit_price = 101.5,
+			Limit_date = 41239,
+			Comments = NA,
+			Counterparty_risk = "Claudio",
+			Fund_type = NA,
+			Force_data = "No",
+			Security_name_1 = "NESTLE FINANCE INTL LTD",
+			Confirmed_quantity = 250000,
+			Confirmed_price = 101.2,
+			Trade_date = 41239,
+			Value_date = 41242.70395,
+			Costs = NA,
+			Portfolio_number = "L5000600",
+			Portfolio_name = "OnCapital - DYNAMIC MULTISTRATEGY")
+		)
 	
 	# create the blRequestHandler required from tradeToSecurityFactory
 	blRequestHandler <- create_BloombergRequestHandler()
@@ -88,8 +129,8 @@ test.shouldConvertBondTradeToPortfolioPositions <- function() {
 	
 	checkEquals(sum(positions),toMoney(0,positions[[1]]@security@currency))
 	nominalValue <- 250000
-	accruedInterests <- 1.7
-	price <- 105
+	accruedInterests <- 1.2
+	price <- 101.2
 	checkEquals(positions[[1]]@value,toMoney(nominalValue*(price+accruedInterests)/100,positions[[1]]@security@currency))
 
 }

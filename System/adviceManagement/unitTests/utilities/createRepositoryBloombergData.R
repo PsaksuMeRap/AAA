@@ -90,7 +90,7 @@ createRepositoryBloombergData <- function() {
 	blData <- add(blDataEntryBond4,blData)	
 	
 	
-	# create the BloombergData for opzioni_su_azioni nestl� maturity june 2012
+	# create the BloombergData for opzioni_su_azioni nestle maturity june 2012
 	blDataEntryOption1 <- new("BloombergDataEntry",blId="nesn sw 06/15/12 c55 equity",fieldId="LAST_PRICE",value=0.16,dateLastUpdate=Sys.time())
 	blDataEntryOption2 <- new("BloombergDataEntry",blId="nesn sw 06/15/12 c55 equity",fieldId="OPT_UNDL_TICKER",value="NESN VX",dateLastUpdate=Sys.time())
 	blDataEntryOption3 <- new("BloombergDataEntry",blId="nesn sw 06/15/12 c55 equity",fieldId="OPT_EXPIRE_DT",value="06/15/2012",dateLastUpdate=Sys.time())
