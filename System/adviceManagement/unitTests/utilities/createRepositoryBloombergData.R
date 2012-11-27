@@ -39,9 +39,9 @@ createRepositoryBloombergData <- function() {
 	
 	
 	# create the BloombergData for FX Spot
-	blDataEntryFXSpot <- new("BloombergDataEntry",blId="eurchf curncy",fieldId="LAST_PRICE",value=1.201,dateLastUpdate=Sys.time())
+	blDataEntryFXSpot <- new("BloombergDataEntry",blId="EURCHF Curncy",fieldId="LAST_PRICE",value=1.201,dateLastUpdate=Sys.time())
 	blData <- add(blDataEntryFXSpot,blData)
-	blDataEntryFXSpot <- new("BloombergDataEntry",blId="eurusd curncy",fieldId="LAST_PRICE",value=1.2011,dateLastUpdate=Sys.time())
+	blDataEntryFXSpot <- new("BloombergDataEntry",blId="EURUSD Curncy",fieldId="LAST_PRICE",value=1.2011,dateLastUpdate=Sys.time())
 	blData <- add(blDataEntryFXSpot,blData)
 	
 	# create the BloombergData for Bond

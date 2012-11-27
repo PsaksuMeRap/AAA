@@ -149,6 +149,7 @@ test.shouldConvertEquityTradeToSecurity <- function() {
 			Fund_type = NA,
 			Force_data = "No")
 			)
+
 	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)	
 	checkEquals(class(newSecurity)[[1]],"Equity")
 	
@@ -370,27 +371,27 @@ test.shouldConvertOptionEquityTradeToSecurity <- function() {
 			Trade_number = 1,
 			Portfolio = "MULTISTRATEGY",
 			Buy_Sell = "Buy to open",
-			Id_Bloomberg = "MSFT US 01/19/13 C26 Equity",
-			Security_name = "January 13 Calls on MSFT US",
-			Currency = "USD",
+			Id_Bloomberg = "nesn sw 06/15/12 c55 equity",
+			Security_name = "June 12 Calls on NESN VX",
+			Currency = "CHF",
 			Security_type = "Option equity",
 			Broker = "UBS",
 			Quantity = 150,
 			ISIN_Ticker = NA,
 			Rating = NA,
 			Call_Put_Future = "Call",
-			Strike = 26,
+			Strike = 55,
 			Maturity_Expiry = 41293,
 			Accrued_interests = NA,
 			Delivery_date = NA,
-			Underlying_ticker = "MSFT US",
-			Underlying_ISIN = "US5949181045",
+			Underlying_ticker = "NESN VX",
+			Underlying_ISIN = "CH0038863350",
 			Contract_size = 100,
 			Future_one_point_value = NA,
-			Underlying_price = NA,
-			Price = 1.73,
+			Underlying_price = 58.30,
+			Price = 0.16,
 			Order_type = "Care",
-			Amount = 25950,
+			Amount = NA,
 			Limit_price = NA,
 			Limit_date = 41239,
 			Comments = NA,
@@ -462,6 +463,7 @@ test.shouldConvertOptionFxTradeToSecurity <- function() {
 			Fund_type = NA,
 			Force_data = "No")
 		)
+		
 	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)	
 	checkEquals(class(newSecurity)[[1]],"Opzioni_su_divise")	
 	checkEquals(newSecurity@expiryDate,"2013-09-12")
@@ -578,6 +580,7 @@ test.shouldConvertFxForwardTradeToSecurity <- function() {
 			Fund_type = NA,
 			Force_data = "No")
 		)
+		
 	newSecurity <- tradeToSecurityFactory(trade,blRequestHandler)	
 	checkEquals(class(newSecurity)[[1]],"FX_Forward")	
 	checkEquals(newSecurity@name,"EURCHF 08/27/2013")
