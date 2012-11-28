@@ -80,7 +80,39 @@ test.shouldConvertFundBondTradeToPortfolioPositions <- function() {
 #	trades <- tradesFactory(messageFileName,directory)
 #	trade <- trades[[1]]
 
-
+	trade <- new("Trade",list(
+					Trade_number = 1,
+					Portfolio = "MULTISTRATEGY",
+					Buy_Sell = "Buy",
+					Id_Bloomberg = "lemwbda equity",
+					Security_name = "LEMANIK SICAV-FL DUR-CP R",
+					Currency = "EUR",
+					Security_type = "Fund bond",
+					Broker = "UBS",
+					Quantity = 500,
+					ISIN_Ticker = "LU0146153936",
+					Rating = NA,
+					Call_Put_Future = NA,
+					Strike = NA,
+					Maturity_Expiry = NA,
+					Accrued_interests = NA,
+					Delivery_date = NA,
+					Underlying_ticker = NA,
+					Underlying_ISIN = NA,
+					Contract_size = NA,
+					Future_one_point_value = NA,
+					Underlying_price = NA,
+					Price = 1178.911,
+					Order_type = "Care",
+					Amount = 17462.25,
+					Limit_price = NA,
+					Limit_date = 41239,
+					Comments = NA,
+					Counterparty_risk = "Claudio",
+					Fund_type = "UCITS",
+					Force_data = "No")
+	)
+	
 	# create the blRequestHandler required from tradeToSecurityFactory
 	blRequestHandler <- create_BloombergRequestHandler()
 	
@@ -515,7 +547,7 @@ test.shouldConvertForwardOnFxTradeToPortfolioPositions <- function() {
 	result <- tradeToPositionsFactory(positions,trade)
 	
 	checkEquals(positions,result)
-	checkEquals(positions[[1]]@value@amount,result[[2]]@value@amount/(-1.1998))
+	checkEquals(positions[[1]]@value@amount,result[[2]]@value@amount/(-1.2019161))
 	
 }
 
