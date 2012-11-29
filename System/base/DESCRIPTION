@@ -6,7 +6,7 @@ Authors@R: c(person("Claudio", "Developer", role = c("aut", "cre"),
                      email = "claudio.ortelli@opencapital.ch"))
 Author: Claudio Ortelli
 Maintainer: Claudio Ortelli <claudio.ortelli@opencapital.ch>
-Depends: R (>= 2.4.0), nlme
+Depends: R (>= 2.4.0), RODBC, RUnit, tcltk
 Description: This package defines the basic classes of instrument
 		     used in asset allocation by OpenCapital.
 License: GPL (>= 2)

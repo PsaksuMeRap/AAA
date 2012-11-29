@@ -3,7 +3,7 @@
 # Author: Claudio
 ###############################################################################
 
-rm(list=ls(all=TRUE))
+if (length(objects())>0) rm(list=ls(all=TRUE))
 
 
 library("RODBC")
