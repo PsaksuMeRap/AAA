@@ -1,0 +1,2 @@
+Trade_number,Portfolio,Buy_Sell,Id_Bloomberg,Security_name,Currency,Security_type,Broker,Quantity,ISIN_Ticker,Rating,Maturity_Expiry,Accrued_interests,Delivery_date,Underlying_ticker,Underlying_ISIN,Contract_size,Future_one_point_value,Underlying_price,Price,Order_type,Amount,Limit_price,Limit_date,Comments,Counterparty_risk,Fund_type,Force_data
+1,MULTISTRATEGY,Buy,lemwbda equity,LEMANIK SICAV-FL DUR-CP R,EUR,Fund bond,UBS,500,LU0146153936,,,,,,,,,,1161.89,,580945,,41227,,Claudio,UCITS,No

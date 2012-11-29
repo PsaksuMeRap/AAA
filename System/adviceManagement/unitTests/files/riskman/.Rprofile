@@ -6,14 +6,12 @@ options(defaultPackages = c("utils"))
 
 if (.Platform$OS.type=="windows") {
 	library("tcltk",quietly=TRUE,verbose=FALSE)
-	library("stringr",quietly=TRUE)
 	library("rJava",quietly=TRUE)
 	library("Rbbg",quietly=TRUE)
 	homeDir <- "C:/riskman"
 	sourceCodeDir <- "C:/Users/Claudio/workspace/AAA/System"
  } else {
  	library("tcltk",quietly=TRUE,verbose=FALSE)
-	library("stringr",quietly=TRUE)
 	library("rJava",quietly=TRUE)
 	homeDir <- "/home/claudio/riskman"
 	sourceCodeDir <- "/home/claudio/workspace/AAA/System"

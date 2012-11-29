@@ -20,12 +20,10 @@ if (length(args)==0) {
 	
 	if (.Platform$OS.type=="windows") {
 		library("tcltk",quietly=TRUE,verbose=FALSE)
-		library("stringr",quietly=TRUE)
 		library("rJava",quietly=TRUE)
 		library("Rbbg",quietly=TRUE)
 	} else {
 		library("tcltk",quietly=TRUE,verbose=FALSE)
-		library("stringr",quietly=TRUE)
 		library("rJava",quietly=TRUE)
 	}
 }

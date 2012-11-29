@@ -23,7 +23,6 @@ test.shouldExplodePositionFondi_misti <- function() {
 	
 	result <- explode(p1)
 	
-	
 	checkEquals(result[[1]]@security@name,"Fondo misto: 70-30 UBS Strategy Fund Yield CHF")
 	checkEquals(result[[1]]@value@amount,p1@value@amount*0.3)
 	checkEquals(result[[2]]@value@amount,p1@value@amount*0.7)

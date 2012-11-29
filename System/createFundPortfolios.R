@@ -5,7 +5,6 @@
 
 library("RODBC")
 library("tcltk")
-library("stringr")
 
 if(.Platform$OS.type=="windows") {
 	unlink("C:/riskman",recursive=TRUE)

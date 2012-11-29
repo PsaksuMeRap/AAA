@@ -1,0 +1,2 @@
+Trade_number,Portfolio,Buy_Sell,Id_Bloomberg,Security_name,Currency,Security_type,Broker,Quantity,ISIN_Ticker,Rating,Maturity_Expiry,Accrued_interests,Delivery_date,Underlying_ticker,Underlying_ISIN,Contract_size,Future_one_point_value,Underlying_price,Price,Order_type,Amount,Limit_price,Limit_date,Comments,Counterparty_risk,Fund_type,Force_data
+1,GLOBAL ECONOMY,Buy,EUR/CHF 082713X111412 BGNL Curncy,EUR/CHF R  8/27/2013,EUR,FX forward,UBS,1000000,,,,,,,,,,,1.2022294,Market,1202229.4,,41227,,Claudio,,No

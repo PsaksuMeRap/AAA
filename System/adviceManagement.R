@@ -3,16 +3,6 @@
 # Author: Claudio
 ###############################################################################
 
-
-#library("tcltk")
-#library("stringr")
-#library("RODBC")
-
-#if(.Platform$OS.type=="windows") {
-#	library("rJava")
-#	library("Rbbg")
-#}
-
 stringsAsFactors = FALSE
 
 repositories <- new.env()

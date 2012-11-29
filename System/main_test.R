@@ -3,12 +3,12 @@
 # Author: Claudio
 ###############################################################################
 
-rm(list=ls(all=TRUE))
+if (length(objects())>0) rm(list=ls(all=TRUE))
+
 
 library("RODBC")
 library("RUnit")
 library("tcltk")
-library("stringr")
 
 stringsAsFactors = FALSE
 repositories <- new.env()
@@ -72,7 +72,6 @@ if(.Platform$OS.type=="windows") {
 	library("rJava")
 	library("Rbbg")
 }
-
 
 
 ## test globale

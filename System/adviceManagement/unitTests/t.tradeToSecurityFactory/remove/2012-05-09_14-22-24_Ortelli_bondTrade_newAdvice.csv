@@ -1,0 +1,4 @@
+Trade_number,Portfolio,Buy_Sell,Id_Bloomberg,Security_name,Currency,Security_type,Broker,Quantity,ISIN_Ticker,Rating,Maturity_Expiry,Accrued_interests,Delivery_date,Underlying_ticker,Underlying_ISIN,Contract_size,Future_one_point_value,Underlying_price,Price,Order_type,Amount,Limit_price,Limit_date,Comments,Counterparty_risk,Fund_type,Force_data
+1,GLOBAL EQUITY,Buy,nesnvx 2 08/05/13 corp,NESTLE FINANCE INTL LTD,CHF,Bond,UBS,200000,CH0049524041,AA,41491,0.57777778,,,,,,,101.594,,203188,,41227,,Claudio,,No
+2,GLOBAL EQUITY,Buy,eib 01/09/15 corp,EUROPEAN INVESTMENT BANK,EUR,Bond,UBS,250000,XS0439139998,AAA,42013,0.04726389,,,,,,,100.507,Limited,251267.5,100.7,41227,Test 2,Claudio,,No
+3,GLOBAL EQUITY,Buy,nedwbk 4 03/12/13 corp,NEDER WATERSCHAPSBANK,EUR,Bond,UBS,250000,XS0163939753,AAA,41345,2.76164384,,,,,,,101.28,Market,253200,,41227,Test 3,Claudio,,Yes

@@ -7,7 +7,7 @@ setGeneric("tradeToPositionFactory",def=function(newSecurity,trade,blData) stand
 
 setMethod("tradeToPositionFactory",signature(newSecurity="Security"),
 		function(newSecurity,trade,blData) {
-			
+		
 			if (is.null(trade$Confirmed_quantity)) {
 				priceId <- paste(trade$Id_Bloomberg,"LAST_PRICE",sep="__")
 				price <- blData[[priceId]]@value
@@ -110,7 +110,7 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Futures_EQ"),
 
 setMethod("tradeToPositionFactory",signature(newSecurity="Bond"),
 		function(newSecurity,trade,blData) {
-			
+		
 			if (is.null(trade$Confirmed_quantity)) {
 				# get the last price
 				priceId <- paste(trade$Id_Bloomberg,"LAST_PRICE",sep="__")
@@ -153,7 +153,7 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Conto_corrente"),
 			
 			securityType <- trade$Security_type
 	
-			if (securityType=="FX Spot") {
+			if (securityType=="FX spot") {
 				
 				# identify the currency codes defining the trades, i.e. EURCHF (buy EUR vs CHF)
 				info <- parseFxSpotId_Bloomberg(trade$Id_Bloomberg)
@@ -356,8 +356,8 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Opzioni_su_divise"),
 setMethod("tradeToPositionFactory",signature(newSecurity="FX_Forward"),
 		function(newSecurity,trade,blData) {
 			
-			info <- parseFxForwardName(trade$Security_name)
-			
+			info <- parseFxForwardName(trade$Id_Bloomberg)
+		
 			# for fx forwards we define the quantity to be the quantity bought or sold of the first currency
 			# in the xxxyyy mnemonic, (xxx is the iso code of the first currency and yyy
 			# the iso code of the second currency)

@@ -1,0 +1,12 @@
+Package: openCapitalBase
+Version: 0.1-1
+Date: 2012-11-29
+Title: OpenCapital base package
+Authors@R: c(person("Claudio", "Developer", role = c("aut", "cre"),
+                     email = "claudio.ortelli@opencapital.ch"))
+Author: Claudio Ortelli
+Maintainer: Claudio Ortelli <claudio.ortelli@opencapital.ch>
+Depends: R (>= 2.4.0), RODBC, RUnit, tcltk
+Description: This package defines the basic classes of instrument
+		     used in asset allocation by OpenCapital.
+License: GPL (>= 2)
