@@ -143,10 +143,13 @@ setMethod("createPosition",signature(security="Obbligazioni_convertibili",origin
 			
 			rating <- longTermRatingFactory(origin@rating)
 			
-			optionSecurity <- new("Opzioni_su_azioni",currency=new("Currency",origin@Moneta),optionType="C")
+			emptyEquity <- new("Equity",id=new("IdCharacter",NA_character_))
+			emptyId <- new("IdCharacter",NA_character_)
+			optionSecurity <- new("Opzioni_su_azioni",currency=new("Currency",origin@Moneta),optionType="C",
+					id=emptyId,underlying=emptyEquity)
 			positionCall <- new("PositionOpzioni_su_azioni",numberEquities=0,contractSize=0,
 								quantity=0,value=toMoney(0,origin@Moneta),
-								security=optionSecurity)
+								security=optionSecurity,id=emptyId)
 			
 			
 			position <- new("PositionObbligazioni_convertibili",
