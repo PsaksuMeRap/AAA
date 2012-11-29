@@ -6,6 +6,7 @@
 source("./base/lib/systemOptions.R")
 source("./base/lib/lists.R")
 source("./base/lib/remSpaces.R")
+source("./base/lib/str_pad.R")
 
 source("./base/lib/repository.R")
 source("./base/lib/importazioneDBPortfolioGenerale.R") 

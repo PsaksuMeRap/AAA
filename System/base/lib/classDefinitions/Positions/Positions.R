@@ -73,7 +73,7 @@ setMethod("fieldsAsCharacter","Positions",
 				for (fieldName in names(maxFieldsWidth)) {
 
 					if (is.element(fieldName,c("amount","referenceCurrencyAmount"))) side <- "left" else side <- "right"
-					fieldsAsCharacter.matrix[,fieldName] <- str_pad(fieldsAsCharacter.matrix[,fieldName],width=maxFieldsWidth[[fieldName]],side=side,pad=" ")
+					fieldsAsCharacter.matrix[,fieldName] <- sapply(fieldsAsCharacter.matrix[,fieldName],str_pad,width=maxFieldsWidth[[fieldName]],side=side)
 				}
 				return(fieldsAsCharacter.matrix)
 			} else {
