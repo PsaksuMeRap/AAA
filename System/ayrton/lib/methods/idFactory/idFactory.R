@@ -147,12 +147,12 @@ setMethod("idFactory",signature(origin="AyrtonPosition"),
 				parseFuturesEquityName <- function(name) {
 
 					tmp1 <- strsplit(name,"/")[[1]]
-					tmp1 <- str_trim(tmp1)
+					tmp1 <- remSpaces(tmp1)
 					partToBeParsed <- tmp1[[1]]
 					maturity <- substr(partToBeParsed,nchar(partToBeParsed)-9,nchar(partToBeParsed))
 					maturity <- format(strptime(maturity,format="%d-%m-%Y"),"%Y-%m-%d")
 					futureName <- substr(partToBeParsed,1,nchar(partToBeParsed)-11)
-					futureName <- str_trim(futureName)
+					futureName <- remSpaces(futureName)
 					
 					#"Future SMI 16-03-2012 / 10              "
 					return(c(name=futureName,maturity=maturity))
@@ -169,7 +169,7 @@ setMethod("idFactory",signature(origin="AyrtonPosition"),
 			if (origin@ID_strumento==22) {
 				parseFXForwardName <- function(name) {
 					tmp <- strsplit(name," ")[[1]]
-					tmp <- str_trim(tmp)
+					tmp <- remSpaces(tmp)
 					names(tmp) <- c("currency","amount","valuta_label","valueDate")
 					tmp <- as.list(tmp)
 					

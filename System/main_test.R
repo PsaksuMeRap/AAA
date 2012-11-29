@@ -9,7 +9,6 @@ rm(list=ls(all=TRUE))
 library("RODBC")
 library("RUnit")
 library("tcltk")
-library("stringr")
 
 stringsAsFactors = FALSE
 repositories <- new.env()

@@ -34,8 +34,8 @@ setMethod("groupBySecurityId",signature(x="PositionOpzioni_su_azioni",y="Positio
 			callPut <- function(x) {if (x=="C") return("Call") else return("Put")}
 			
 			parsePremium <- function(premium) {
-				tmp <- stringr::str_trim(strsplit(premium,"Premio\\(")[[1]][[2]])
-				tmp <- as.list(stringr::str_trim(strsplit(tmp," ")[[1]]))
+				tmp <- remSpaces(strsplit(premium,"Premio\\(")[[1]][[2]])
+				tmp <- as.list(remSpaces(strsplit(tmp," ")[[1]]))
 				tmp[[1]] <- as.numeric(tmp[[1]])
 				tmp[[2]] <- substr(tmp[[2]],1,3)
 				names(tmp) <- c("premium","numeraire")

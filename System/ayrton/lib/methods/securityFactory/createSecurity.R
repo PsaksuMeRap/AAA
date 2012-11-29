@@ -32,7 +32,7 @@ setMethod("createSecurity",signature(origin="Ayrton_Futures_EQ"),
 			getInfo <- function(origin) {
 				result <- strsplit(origin@Nome,"/")
 				## result <- strsplit("Future SMI 16-03-2012 / 10              ","/")
-				result <- stringr::str_trim(result[[1]])[[1]]
+				result <- remSpaces(result[[1]])[[1]]
 
 				stringLength <- nchar(result)
 				dateString <- substr(result,stringLength-10,stringLength)
@@ -45,7 +45,7 @@ setMethod("createSecurity",signature(origin="Ayrton_Futures_EQ"),
 			underlying <- new("IndexEquity",name=info[["name"]],id=new("IdCharacter",info[["name"]]))
 			
 			security <- new(className,currency=new("Currency",origin@Moneta),
-					name=stringr::str_trim(origin@Nome),id=idAyrton,underlying=underlying,
+					name=remSpaces(origin@Nome),id=idAyrton,underlying=underlying,
 					deliveryDate=info[["deliveryDate"]])
 
 			return(security)

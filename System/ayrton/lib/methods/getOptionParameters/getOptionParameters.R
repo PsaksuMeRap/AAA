@@ -29,7 +29,7 @@ setMethod("getOptionParameters",signature(origin="AyrtonPosition"),
 setMethod("getOptionParameters",signature(origin="Ayrton_Opzioni_su_azioni"),
 		function(origin) {
 			
-			tmp <- as.list(stringr::str_trim(strsplit(origin@Nome,"/")[[1]]))
+			tmp <- as.list(remSpaces(strsplit(origin@Nome,"/")[[1]]))
 			fieldNames <- c("quantity","optionType","name","expiryDate","strike","premium","isin","underlyingPrice","contractSize")
 			
 			# check the the number of fields is complete
@@ -59,11 +59,11 @@ setMethod("getOptionParameters",signature(origin="Ayrton_Opzioni_su_divise"),
 			
 			## example: name = "Call 17-08-12 Strike 1.295 EUR -250000 Premio(1930 USD)"
 			## the first string contains "Call 17-08-12 Strike 1.295 EUR -250000" and the second "1930 USD)"				
-			tmp1 <- as.list(stringr::str_trim(strsplit(origin@Nome,"Premio\\(")[[1]]))
+			tmp1 <- as.list(remSpaces(strsplit(origin@Nome,"Premio\\(")[[1]]))
 			premium <- tmp1[[2]]
 			
 			## extract from the first component of tmp1
-			tmp2 <- as.list(stringr::str_trim(strsplit(tmp1[[1]]," ")[[1]]))
+			tmp2 <- as.list(remSpaces(strsplit(tmp1[[1]]," ")[[1]]))
 			fieldNames <- c("optionType","expiryDate","strikeLabel","strike","underlying","amount")
 			names(tmp2) <- fieldNames
 			tmp2[["strikeLabel"]] <- NULL
@@ -83,7 +83,7 @@ setMethod("getOptionParameters",signature(origin="Ayrton_Opzioni_su_obbligazioni
 		function(origin) {
 			name <- origin@Nome
 			tmp <- strsplit(name," ")[[1]]
-			tmp <- str_trim(tmp)
+			tmp <- remSpaces(tmp)
 			names(tmp) <- c("optionType","expiryDate","strike_label","strike","underlyingCurrency","amount","premium","numeraire","isin")
 			tmp <- as.list(tmp)
 			tmp[["strike"]] <- as.numeric(tmp[["strike"]])

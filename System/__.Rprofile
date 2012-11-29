@@ -4,7 +4,6 @@
 if (.Platform$OS.type=="windows") {
 	library("utils")
 	library("tcltk",quietly=TRUE,verbose=FALSE)
-	library("stringr",quietly=TRUE)
 	library("rJava",quietly=TRUE)
 	library("Rbbg",quietly=TRUE)
 	homeDir <- "C:/riskman"

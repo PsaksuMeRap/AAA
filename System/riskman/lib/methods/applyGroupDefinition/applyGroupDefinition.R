@@ -18,7 +18,7 @@ setMethod("applyGroupDefinition",signature(x="TestSuiteParsed"),
 			
 			for (groupDefinition in x@configLines[isGroupDefinition]) {
 				info <- strsplit(groupDefinition,"=")[[1]]
-				info <- str_trim(info)
+				info <- remSpaces(info)
 				x@checkStrings <- lapply(x@checkStrings,applyGroupDefinition,info)
 			}
 			return(x)

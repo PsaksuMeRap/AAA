@@ -5,7 +5,6 @@
 
 library("RODBC")
 library("tcltk")
-library("stringr")
 
 if(.Platform$OS.type=="windows") {
 	homeDir <- "C:/riskman"
