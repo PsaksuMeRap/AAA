@@ -147,7 +147,7 @@ createRepositoryAyrtonPositions <- function() {
 	A_bond4 <- x
 	testData$bond4 <- x
 	
-	# create a valid  Fondi_obbligazionari con accruedInterst 0 
+	# create a valid Fondi_obbligazionari con accruedInterst 0 
 	x <- new("AyrtonPosition")
 	x@Cliente <- "pippo172"
 	x@Strumento <- "O      "
@@ -164,7 +164,7 @@ createRepositoryAyrtonPositions <- function() {
 	testData$fondiObbligazionariNoAC <- x
 	
 	
-	# create a valid  Fondi_obbligazionari
+	# create a valid Fondi_obbligazionari
 	x <- new("AyrtonPosition")
 	x@Cliente <- "pippo11"
 	x@Strumento <- "O      "

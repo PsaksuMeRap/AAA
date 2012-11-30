@@ -17,6 +17,8 @@ tradeToPositionsFactoryCreateCashFlow <- function(position,fromString) {
 	return(security)
 }
 
+
+
 setMethod("tradeToPositionsFactory",signature(position="PositionEquity"),
 		function(position,trade) {
 			positions <- new("Positions")

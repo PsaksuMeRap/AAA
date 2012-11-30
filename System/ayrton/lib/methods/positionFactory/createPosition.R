@@ -256,7 +256,7 @@ setMethod("createPosition",signature(security="Fondi_obbligazionari",origin="Ayr
 			
 			rating <- longTermRatingFactory(origin@rating)
 			
-			
+			# funds from OpenCapital will be updated with the acrrued interest
 			if (is.element(security@id@idAAA,ID_STRUMENTI)) {
 				accruedInterest <- new("AccruedInterest",toMoney(NA_real_,security@currency))
 				position <- new("PositionFondi_obbligazionariOC",

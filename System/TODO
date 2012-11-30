@@ -22,3 +22,6 @@ aggiornare:
 - DBEquities
 
 mettere test su reweight di un'obbli convertibile
+
+BUG: la position fondi azionari Global Equity in realtà è semplicemente
+di classe position e non di classe positionFondiAzionari!
