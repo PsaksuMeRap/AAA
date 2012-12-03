@@ -19,7 +19,6 @@ source("./odbc/connessioni.R")
 ## -- funzione che restituisce il NAV dei tre fondi
 connection <- odbcConnect("prezzi_storici_azioni_VAR",.utente,.password)
 
-
 getFundNavGlobalEquity <- function(date) {
 	# date: la data in formato "yyyy-mm-dd"
 	
@@ -72,9 +71,11 @@ defaultDate <- function() {
 }
 
 
-fine <- as.Date("2012-08-01")
-dates <- seq(as.Date("2012-07-02"),to=fine,by="day")
-for (i in 1:length(dates)) if (!is.element(weekdays(dates[[i]]),c("Saturday","Sunday"))) {cat("new-date\n");getFundNav(dates[[i]])}
+inizio <- as.Date("2012-11-26")
+fine   <- inizio+4
+dates <- seq(inizio,to=fine,by="day")
+
+for (i in 1:length(dates)) if (!is.element(weekdays(dates[[i]]),c("Saturday","Sunday"))) {cat("new-date ------------------------\n");getFundNav(dates[[i]])}
 
 
 getFundNav("2012-04-20")
