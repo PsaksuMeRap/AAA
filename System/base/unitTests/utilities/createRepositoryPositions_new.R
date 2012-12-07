@@ -1243,7 +1243,76 @@ createRepositoryPositions <- function() {
 	A_Obbligazioni_convertibili <- x
 	testData$Obbligazioni_convertibili <- x
 	
+
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+
+
+	# ---------------------------------------
+	# create Conto_corrente_fittizio
+	Moneta <- "CHF"
+	Saldo <- 4590600
+	NumeroValore <- ""
+	Nome <- "Future SMI 21-09-2012 / 10"
+	ID_strumento <- 54
+	valoreMercatoMonetaCHF <- 4590600
+	
+	currency <- new("Currency",Moneta)
+	name <- Nome
+	id <- new("IdAyrton",idAAA=new("IdAAA_character","CHF-chf"),idStrumento=ID_strumento)
+	
+	security <- new("Conto_corrente_fittizio",currency=currency,name=name,id=id)
+	quantity <- 1
+	value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
+	value <- repositories$exchangeRates$exchange(value,currency)
+	x <- new("PositionConto_corrente_fittizio",
+			id=id,
+			security=security,
+			quantity=quantity,
+			value=value)
+	
+	
+	A_Conto_corrente_fittizio <- x
+	testData$Conto_corrente_fittizio <- x
 	
 	
 }
