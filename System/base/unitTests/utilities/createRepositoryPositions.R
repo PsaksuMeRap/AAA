@@ -151,6 +151,39 @@ createRepositoryPositions <- function() {
 	
 	Futures_EQ1 <- positionFactory(repository$Futures_EQ1)
 	testData$Futures_EQ1 <- Futures_EQ1
+
+	Metalli_preziosi1 <- positionFactory(repository$Metalli_preziosi1)
+	testData$Metalli_preziosi1 <- Metalli_preziosi1
+			
+	FX_forward <- positionFactory(repository$FX_Forward1)
+	testData$FX_forward <- FX_forward
+	
+	Fondi_immobiliari1 <- positionFactory(repository$Fondi_immobiliari1)
+	testData$Fondi_immobiliari1 <- Fondi_immobiliari1
+	
+	Diritti_aumento_capitale_azionario1 <- positionFactory(repository$Diritti_aumento_capitale_azionario1)
+	testData$Diritti_aumento_capitale_azionario1 <- Diritti_aumento_capitale_azionario1
+	
+	Fondi_Hedge1 <- positionFactory(repository$Fondi_Hedge1)
+	testData$Fondi_Hedge1 <- Fondi_Hedge1
+	
+	ETF_equity1 <- positionFactory(repository$ETF_equity1)
+	testData$ETF_equity1 <- ETF_equity1
+	
+	Strutturati_EQ1 <- positionFactory(repository$Strutturati_EQ1)
+	testData$Strutturati_EQ1 <- Strutturati_EQ1
+	
+	Strutturati_FI1 <- positionFactory(repository$Strutturati_FI1)
+	testData$Strutturati_FI1 <- Strutturati_FI1
+	
+	ETF_commodities_gold <- positionFactory(repository$ETF_commodities_gold)
+	testData$ETF_commodities_gold <- ETF_commodities_gold
+
+	ETF_commodities_platinum <- positionFactory(repository$ETF_commodities_platinum)
+	testData$ETF_commodities_platinum <- ETF_commodities_platinum
+	
+	Credit_linked_note <- positionFactory(repository$Credit_linked_note)
+	testData$Credit_linked_note <- Credit_linked_note	
 	
 	Opzioni_su_divise1 <- positionFactory(repository$Opzioni_su_divise1)
 	testData$Opzioni_su_divise1 <- Opzioni_su_divise1
@@ -170,8 +203,7 @@ createRepositoryPositions <- function() {
 	Conto_corrente_fittizio <- positionFactory(repository$Conto_corrente_fittizio)
 	testData$Conto_corrente_fittizio <- Conto_corrente_fittizio
 	
-	FX_forward <- positionFactory(repository$FX_Forward1)
-	testData$FX_forward <- FX_forward
+
 	
 	return(testData)
 }

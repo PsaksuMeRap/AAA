@@ -631,7 +631,7 @@ createRepositoryAyrtonPositions <- function() {
 	x@Strumento <- 'XAU'
 	x@Moneta <- 'USD'
 	x@Saldo <- 180
-	x@NumeroValore <- "0" # look at Strumento
+	x@NumeroValore <- "" # look at Strumento
 	x@Nome <- 'XAU'	
 	x@ValoreMercatoMonetaCHF <- 284105.4768
 	x@ID_AAA <- NA_real_
