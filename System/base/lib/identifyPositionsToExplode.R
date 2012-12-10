@@ -12,9 +12,9 @@ identifyPositionsToExplode <- function(fundData,positions) {
 	
 	nbPositions <- length(positions)
 	if (nbPositions==0) return (logical(0))
-	
+
 	isFundToExplode <- function(position,fundData) {
-	
+
 		id <- as.character(position@security@id@idAAA)
 		if (is.null(id)) return(FALSE)
 		if (is.na(id))   return(FALSE)
