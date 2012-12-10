@@ -108,7 +108,7 @@ test.shouldCreateFondi_obbligazionari <- function() {
 	fondo <- createSecurity(origin)
 	
 	checkEquals(fondo@name,"20201231 - 0% <3Y - CB-Accent Lux Sicav - Fixed Income EUR 31-12-20")
-	checkEquals(fondo@id,new("IdAyrton",idAAA=new("IdAAA_character","2490099"),idStrumento=3))
+	checkEquals(fondo@id,new("IdAyrton",idAAA=new("IdAAA_character","LU0810451608"),idStrumento=3))
 	checkEquals(fondo@maturity,"2020-12-31")
 	
 	# the NoAc version (funds without the Oacc information and therefore with Oacc = 0)

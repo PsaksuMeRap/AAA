@@ -84,7 +84,7 @@ setMethod("tradeToPositionsFactory",signature(position="PositionFutures_EQ"),
 			security <- tradeToPositionsFactoryCreateCashFlow(position,fromString)
 			
 			## create the corresponding position
-			positions[2] <- new("PositionConto_corrente",id=security@id,security=security,
+			positions[2] <- new("PositionConto_corrente_fittizio",id=security@id,security=security,
 					quantity=1,value= position@security@deliveryPrice * (-1 * as.numeric(position@quantity) * position@valueOnePoint))
 			
 			return(positions)

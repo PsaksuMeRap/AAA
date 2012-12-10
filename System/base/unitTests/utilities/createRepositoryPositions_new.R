@@ -254,7 +254,7 @@ createRepositoryPositions <- function() {
 	# create Fondi_obbligazionari from OpenCapital (accruedInterest set to NA_real_)
 	Moneta <- "EUR"
 	Saldo <- 10000
-	NumeroValore <- "2490099"
+	NumeroValore <- "LU0810451608"
 	Nome <- "20201231 - 0% <3Y - CB-Accent Lux Sicav - Fixed Income EUR 31-12-20"
 	ValoreMercatoMonetaCHF <- 227808
 	ID_AAA <- 825
@@ -345,7 +345,7 @@ createRepositoryPositions <- function() {
 	# create OpenCapital fund "Fixed Income"
 	Moneta <- "EUR"
 	Saldo <- 11000
-	NumeroValore <- "2490099"
+	NumeroValore <- "LU0810451608"
 	Nome <- "CB-Accent Lux Sicav - Fixed Income EUR 31-12-20"
 	ValoreMercatoMonetaCHF <- 1686274.5866043
 	ID_AAA <- 825
@@ -581,7 +581,7 @@ createRepositoryPositions <- function() {
 	# create Fondi_azionari
 	Moneta <- "CHF"
 	Saldo <- 250
-	NumeroValore <- "2742261CH"
+	NumeroValore <- "LU0810451434"
 	Nome <- "CB-Accent Global Equity Fund Cap B"
 	ValoreMercatoMonetaCHF <- 17115
 	ID_AAA <- 1701

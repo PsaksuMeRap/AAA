@@ -157,7 +157,7 @@ test.createIdForInstrumentsWithIsin <- function() {
 	
 	# check fondiObbligazionari
 	result <- idFactory(fondiObbligazionari)
-	checkEquals(as.character(result@idAAA),"2490099")
+	checkEquals(as.character(result@idAAA),"LU0810451608")
 	checkEquals(as.numeric(result@idStrumento),3)
 	
 	# check bond1

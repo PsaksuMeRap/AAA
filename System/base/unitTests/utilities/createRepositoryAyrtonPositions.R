@@ -170,7 +170,7 @@ createRepositoryAyrtonPositions <- function() {
 	x@Strumento <- "O      "
 	x@Moneta <- "EUR"
 	x@Saldo <- 10000
-	x@NumeroValore <- "2490099"
+	x@NumeroValore <- "LU0810451608"
 	x@Nome <- "20201231 - 0% <3Y - CB-Accent Lux Sicav - Fixed Income EUR 31-12-20"
 	x@ValoreMercatoMonetaCHF <- 10300
 	x@ID_AAA <- 825
@@ -187,7 +187,7 @@ createRepositoryAyrtonPositions <- function() {
 	x@Strumento <- "Oacc"
 	x@Moneta <- "EUR"
 	x@Saldo <- 10000
-	x@NumeroValore <- "2490099"
+	x@NumeroValore <- "LU0810451608"
 	x@Nome <- "20201231 - 0% <3Y - CB-Accent Lux Sicav - Fixed Income EUR 31-12-20 Pro-rata"
 	x@ValoreMercatoMonetaCHF <- 0
 	x@ID_AAA <- 825
@@ -269,7 +269,7 @@ createRepositoryAyrtonPositions <- function() {
 	x@Strumento <- "A"
 	x@Moneta <- "CHF"
 	x@Saldo <- 2000
-	x@NumeroValore <- "2742261CH"
+	x@NumeroValore <- "LU0810451434"
 	x@Nome <- "CB-Accent Global Equity Fund Cap B"
 	x@ValoreMercatoMonetaCHF <- 147480
 	x@ID_AAA <- 1701
@@ -286,7 +286,7 @@ createRepositoryAyrtonPositions <- function() {
 	x@Strumento <- "O      "
 	x@Moneta <- "EUR"
 	x@Saldo <- 11000
-	x@NumeroValore <- "2490099"
+	x@NumeroValore <- "LU0810451608"
 	x@Nome <- "CB-Accent Lux Sicav - Fixed Income EUR 31-12-20"
 	x@ValoreMercatoMonetaCHF <- 1686274.5866043
 	x@ID_AAA <- 825
