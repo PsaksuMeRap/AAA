@@ -94,7 +94,7 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 		currency <- new("Currency",trade$Currency)
 		name <- trade$Security_name
 		id <- new("IdAyrton",
-				idAAA=new("IdAAA_character",trade$ISIN_Ticker),
+				idAAA=new("IdAAA_character",trade$ISIN_ticker),
 				idStrumento=1)
 		
 		# collect the last price
@@ -108,7 +108,7 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 		currency <- new("Currency",trade$Currency)
 		name <- trade$Security_name
 		id <- new("IdAyrton",
-				idAAA=new("IdAAA_character",trade$ISIN_Ticker),
+				idAAA=new("IdAAA_character",trade$ISIN_ticker),
 				idStrumento=14)
 		
 		# collect the last price
@@ -123,7 +123,7 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 		currency <- new("Currency",trade$Currency)
 		name <- paste(sysAyrton[["Fondi_obbligazionari"]][["preNameString"]],trade$Security_name,sep=" - ")
 		id <- new("IdAyrton",
-				idAAA=new("IdAAA_character",trade$ISIN_Ticker),
+				idAAA=new("IdAAA_character",trade$ISIN_ticker),
 				idStrumento=3)
 		
 		# collect the last price
@@ -156,7 +156,7 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 		currency <- new("Currency",trade$Currency)
 		name <- trade$Security_name
 		id <- new("IdAyrton",
-				idAAA=new("IdAAA_character",trade$ISIN_Ticker),
+				idAAA=new("IdAAA_character",trade$ISIN_ticker),
 				idStrumento=2)
 		
 		# collect the last price (clean) 102.284

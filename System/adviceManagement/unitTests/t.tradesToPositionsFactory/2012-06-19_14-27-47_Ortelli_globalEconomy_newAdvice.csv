@@ -1,4 +1,4 @@
-Portfolio,Buy_Sell,Id_Bloomberg,Security_name,Currency,Security_type,Quantity,ISIN_Ticker,Price,Order_type,Amount,Broker,Limit_price,Limit_date,Comments
-GLOBAL ECONOMY,Buy,eib 01/09/15 corp,EUROPEAN INVESTMENT BANK,EUR,Bond,250000,XS0439139998,100.322,Market,250805,UBS,,41052,Tras. Obbligazionaria
-GLOBAL ECONOMY,Buy,UBSN VX Equity,UBS AG-REG,CHF,Equity,100,CH0024899483,11.08,Limited,1108,UBS,,41052,Trans. Azionaria
-GLOBAL ECONOMY,Buy,eurchf curncy,EUR-CHF X-RATE,EUR,FX spot,500000,#N/A N Ap,1.201,,600500,UBS,,41052,
+Trade_number,Portfolio,Buy_Sell,Id_Bloomberg,Security_name,Currency,Security_type,Broker,Quantity,ISIN_ticker,Rating,Call_Put_Future,Strike,Maturity_expiry_value_date,Accrued_interests,Delivery_date,Underlying_ticker,Underlying_ISIN,Contract_size,Future_one_point_value,Underlying_price,Price,Order_type,Amount,Limit_price,Limit_date,Comments,Counterparty_risk,Fund_type,Force_data
+1,FIXED INCOME,Buy,eib 01/09/15 corp,EUROPEAN INVESTMENT BANK,EUR,Bond,UBS,250000,XS0439139998,AAA,,,42013,0.07493056,,,,,,,100.401,Market,251002.5,,41253,,Claudio,,No
+2,FIXED INCOME,Buy,UBSN VX Equity,UBS AG-REG,CHF,Equity,UBS,100,CH0024899483,,,,,,,,,,,,14.9,Market,1490,,41253,,Claudio,,No
+3,FIXED INCOME,Buy,EURCHF Curncy,EUR-CHF X-RATE,CHF,FX spot,UBS,500000,,,,,,,,EUR,,,,,1.20707,Market,603535,,41253,,Claudio,,No

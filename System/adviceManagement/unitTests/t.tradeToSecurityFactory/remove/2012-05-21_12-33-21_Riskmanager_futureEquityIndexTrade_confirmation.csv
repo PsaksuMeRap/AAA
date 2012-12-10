@@ -1,2 +1,2 @@
-Portfolio,Buy_Sell,Id_Bloomberg,Security_name,Currency,Security_type,UBS_Sec_type,Quantity,ISIN_Ticker,Price,Order_type,Amount,Broker,,Security_name,Confirmed_quantity,Confirmed_price,Value_date
+Portfolio,Buy_Sell,Id_Bloomberg,Security_name,Currency,Security_type,UBS_Sec_type,Quantity,ISIN_ticker,Price,Order_type,Amount,Broker,,Security_name,Confirmed_quantity,Confirmed_price,Value_date
 GLOBAL ECONOMY,Buy,SMU2 Index,SWISS MKT IX FUTR Sep12,CHF,Future index,,5,,6094,Care,304700,Other,,SWISS MKT IX FUTR Sep12,50,6000,04-07-2012

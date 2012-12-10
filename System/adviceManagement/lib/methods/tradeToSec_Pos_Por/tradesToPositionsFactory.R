@@ -33,9 +33,9 @@ tradesToPositionsFactory <- function(fileName,directory) {
 	
 	positions <- new("Positions")
 	positionsIndex <- 0
-browser()
+
 	for (index in 1:length(securities)) {
-	print(securities[[index]])
+
 		positionTmp <- tradeToPositionFactory(securities[[index]],message@trades[[index]],blData)
 		positionsTmp <- tradeToPositionsFactory(positionTmp,trade[[index]])
 		nbNewPositions <- length(positionsTmp)

@@ -1,10 +1,8 @@
-Portfolio,Buy_Sell,Id_Bloomberg,Security_name,Currency,Security_type,UBS_Sec_type,Quantity,ISIN_Ticker,Price,Order_type,Amount,Broker,Limit_price,Limit_date
-GLOBAL ECONOMY,Buy,UBSN VX Equity,UBS AG-REG,CHF,Equity,SHARES,100,CH0024899483,11.36,Limited,1136,Moxy,,41079
-GLOBAL ECONOMY,Sell,NOVN VX Equity,NOVARTIS AG-REG,CHF,Equity,SHARES,100,CH0012005267,52.15,Market,5215,Moxy,,41079
-GLOBAL ECONOMY,Buy,SMM2 Index,SWISS MKT IX FUTR Jun12,CHF,Future index,,5,,5901.56,Care,295078,Other,,41079
-GLOBAL ECONOMY,Buy,eurchf curncy,EUR-CHF X-RATE,EUR,FX spot,,500000,,1.20095,,600475,Other,,41079
-GLOBAL ECONOMY,Buy,nesnvx 2 08/05/13 corp,NESTLE FINANCE INTL LTD,CHF,Bond,STRAIGHT BOND,200000,CH0049524041,102.238,Limited,204476,Moxy,100.15,41079
-GLOBAL ECONOMY,Buy,eib 01/09/15 corp,EUROPEAN INVESTMENT BANK,EUR,Bond,STRAIGHT BOND,250000,XS0439139998,100.117,Market,250292.5,Moxy,,41079
-GLOBAL ECONOMY,Buy,nedwbk 4 03/12/13 corp,NEDER WATERSCHAPSBANK,EUR,Bond,STRAIGHT BOND,250000,XS0163939753,102.58,Market,256450,Moxy,,41079
-GLOBAL ECONOMY,Buy to open,nesn sw 06/15/12 c55 equity,June 12 Calls on NESN VX,CHF,Option Equity,,100,,0.7,Market,7000,UBS,,41079
-GLOBAL ECONOMY,Buy to open,eurchf  09/13/12 c1.2000,eurchf  09/13/12 c1.2000,EUR,Option FX,,1000000,,12751.59,Care,12751.59,UBS,12751.59,41079
+Trade_number,Portfolio,Buy_Sell,Id_Bloomberg,Security_name,Currency,Security_type,Broker,Quantity,ISIN_ticker,Rating,Call_Put_Future,Strike,Maturity_expiry_value_date,Accrued_interests,Delivery_date,Underlying_ticker,Underlying_ISIN,Contract_size,Future_one_point_value,Underlying_price,Price,Order_type,Amount,Limit_price,Limit_date,Comments,Counterparty_risk,Fund_type,Force_data
+1,FIXED INCOME,Buy,UBSN VX Equity,UBS AG-REG,CHF,Equity,UBS,100,CH0024899483,,,,,,,,,,,,14.9,Market,1490,,41253,,Claudio,,No
+2,FIXED INCOME,Sell,NOVN VX Equity,NOVARTIS AG-REG,CHF,Equity,UBS,100,CH0012005267,,,,,,,,,,,,58.4,Market,5840,,41253,,Claudio,,No
+3,FIXED INCOME,Buy to close,SMM3 Index,SWISS MKT IX FUTR Jun13,CHF,Future equity index,UBS,5,,,Future,,,,41449,SMI,,,10,,6708,Market,335400,,41253,,Claudio,,No
+4,FIXED INCOME,Buy,EURCHF Curncy,EUR-CHF X-RATE,CHF,FX spot,UBS,500000,,,,,,,,EUR,,,,,1.20722,Market,603610,,41253,,Claudio,,No
+5,FIXED INCOME,Buy,nesnvx 2 08/05/13 corp,NESTLE FINANCE INTL LTD,CHF,Bond,UBS,2500000,CH0049524041,AA,,,41491,0.71111111,,,,,,,101.411,Market,2535275,,41253,,Claudio,,No
+6,FIXED INCOME,Buy to open,nesn sw 03/15/13 c60 equity,March 13 Calls on NESN VX,CHF,Option equity,UBS,25,,,Call,60,41348,,,NESN VX,AU000000CRG0,100,,,2.04,Market,5100,,41253,,Claudio,,No
+7,FIXED INCOME,Buy to open,EURCHF 09/13/13 c1.2,EURCHF 09/13/13 c1.2,CHF,Option FX,UBS,2000000,,,Call,1.2,41530,,,EUR,,,,,0.0088,Market,17600,,41253,,Claudio,,No

@@ -1,4 +1,4 @@
-Portfolio,Buy_Sell,Id_Bloomberg,Security_name,Currency,Security_type,UBS_Sec_type,Quantity,ISIN_Ticker,Price,Order_type,Amount,Broker,,Security_name,Confirmed_quantity,Confirmed_price,Value_date
+Portfolio,Buy_Sell,Id_Bloomberg,Security_name,Currency,Security_type,UBS_Sec_type,Quantity,ISIN_ticker,Price,Order_type,Amount,Broker,,Security_name,Confirmed_quantity,Confirmed_price,Value_date
 GLOBAL ECONOMY,Buy,UBSN VX Equity,UBS AG-REG,CHF,Equity,SHARES,100,CH0024899483,11.24,Limited,1124,Moxy,,UBS AG-REG,100000,11.24,05-07-2012
 GLOBAL ECONOMY,Sell,NOVN VX Equity,NOVARTIS AG-REG,CHF,Equity,SHARES,100,CH0012005267,53.15,Market,5315,Moxy,,NOVARTIS AG-REG,100,53.15,05-07-2012
 GLOBAL ECONOMY,Buy,SMU2 Index,SWISS MKT IX FUTR Sep12,CHF,Future index,,5,,6094,Care,304700,Other,,SWISS MKT IX FUTR Sep12,5,6094,04-07-2012

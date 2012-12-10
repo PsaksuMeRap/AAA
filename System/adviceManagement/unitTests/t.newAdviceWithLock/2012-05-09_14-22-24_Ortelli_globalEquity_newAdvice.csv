@@ -1,1 +1,1 @@
-Portfolio,Buy_Sell,Id_Bloomberg,Security_name,Currency,Security_type,UBS_Sec_type,Quantity,ISIN_Ticker,Price,Order_type,Amount,Broker,,Security_name,Confirmed_quantity,Confirmed_price,Value_date
+Portfolio,Buy_Sell,Id_Bloomberg,Security_name,Currency,Security_type,UBS_Sec_type,Quantity,ISIN_ticker,Price,Order_type,Amount,Broker,,Security_name,Confirmed_quantity,Confirmed_price,Value_date

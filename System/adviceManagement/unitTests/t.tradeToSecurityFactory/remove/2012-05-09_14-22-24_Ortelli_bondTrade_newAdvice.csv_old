@@ -1,4 +1,4 @@
-Portfolio,Buy_Sell,Id_Bloomberg,Security_name,Currency,Security_type,Quantity,ISIN_Ticker,Price,Order_type,Amount,Broker,Limit_price,Limit_date,Comments
+Portfolio,Buy_Sell,Id_Bloomberg,Security_name,Currency,Security_type,Quantity,ISIN_ticker,Price,Order_type,Amount,Broker,Limit_price,Limit_date,Comments
 GLOBAL ECONOMY,Buy,nesnvx 2 08/05/13 corp,NESTLE FINANCE INTL LTD,CHF,Bond,200000,CH0049524041,102.184,Limited,204368,UBS,100.15,41052,Tras. Obbligazionaria
 GLOBAL ECONOMY,Buy,eib 01/09/15 corp,EUROPEAN INVESTMENT BANK,EUR,Bond,250000,XS0439139998,100.322,Market,250805,UBS,,41052,Tras. Obbligazionaria
 GLOBAL ECONOMY,Buy,nedwbk 4 03/12/13 corp,NEDER WATERSCHAPSBANK,EUR,Bond,250000,XS0163939753,102.76,Market,256900,UBS,,41052,Tras. Obbligazionaria

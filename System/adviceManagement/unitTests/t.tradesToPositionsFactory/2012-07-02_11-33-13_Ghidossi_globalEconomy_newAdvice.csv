@@ -1,7 +1,7 @@
-Portfolio,Buy_Sell,Id_Bloomberg,Security_name,Currency,Security_type,UBS_Sec_type,Quantity,ISIN_Ticker,Price,Order_type,Amount,Broker,Limit_price,Limit_date
+Portfolio,Buy_Sell,Id_Bloomberg,Security_name,Currency,Security_type,UBS_Sec_type,Quantity,ISIN_ticker,Price,Order_type,Amount,Broker,Limit_price,Limit_date
 GLOBAL ECONOMY,Buy,UBSN VX Equity,UBS AG-REG,CHF,Equity,SHARES,100,CH0024899483,11.24,Limited,1124,Moxy,,41092
 GLOBAL ECONOMY,Sell,NOVN VX Equity,NOVARTIS AG-REG,CHF,Equity,SHARES,100,CH0012005267,53,Market,5300,Moxy,,41092
-GLOBAL ECONOMY,Buy,SMU2 Index,SWISS MKT IX FUTR Sep12,CHF,Future index,,5,,6097,Care,304850,Other,,41092
+GLOBAL ECONOMY,Buy,SMU2 Index,SWISS MKT IX FUTR Sep12,CHF,Future equity index,,5,,6097,Care,304850,Other,,41092
 GLOBAL ECONOMY,Buy,eurchf curncy,EUR-CHF X-RATE,EUR,FX spot,,500000,,1.20143,,600715,Other,,41092
 GLOBAL ECONOMY,Buy,nesnvx 2 08/05/13 corp,NESTLE FINANCE INTL LTD,CHF,Bond,STRAIGHT BOND,200000,CH0049524041,102.133,Limited,204266,Moxy,100.15,41092
 GLOBAL ECONOMY,Buy,eib 01/09/15 corp,EUROPEAN INVESTMENT BANK,EUR,Bond,STRAIGHT BOND,250000,XS0439139998,100.1115,Market,250278.75,Moxy,,41092

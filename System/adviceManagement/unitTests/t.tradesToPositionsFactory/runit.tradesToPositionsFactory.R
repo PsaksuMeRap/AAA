@@ -49,7 +49,7 @@ test.shouldCreateLongPositionsFromTrades <- function() {
 	
 	positions <- tradesToPositionsFactory(fileName,directory)
 	
-	checkEquals(length(positions),18)
+	checkEquals(length(positions),14)
 	checkEquals(as.character(positions[[1]]@security@name),"UBS AG-REG")
 	
 	rm("bloombergData",pos=repositories)

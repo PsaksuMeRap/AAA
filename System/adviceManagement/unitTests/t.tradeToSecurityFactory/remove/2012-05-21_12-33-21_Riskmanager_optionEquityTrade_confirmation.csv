@@ -1,2 +1,2 @@
-Portfolio,Buy_Sell,Id_Bloomberg,Security_name,Currency,Security_type,UBS_Sec_type,Quantity,ISIN_Ticker,Price,Order_type,Amount,Broker,,Security_name,Confirmed_quantity,Confirmed_price,Value_date
+Portfolio,Buy_Sell,Id_Bloomberg,Security_name,Currency,Security_type,UBS_Sec_type,Quantity,ISIN_ticker,Price,Order_type,Amount,Broker,,Security_name,Confirmed_quantity,Confirmed_price,Value_date
 GLOBAL ECONOMY,Buy to open,nesn sw 09/21/12 c58 equity,September 12 Calls on NESN VX,CHF,Option Equity,,100,,0.7,Market,7000,UBS,,September 12 Calls on NESN VX,100,1.20,19-06-2012

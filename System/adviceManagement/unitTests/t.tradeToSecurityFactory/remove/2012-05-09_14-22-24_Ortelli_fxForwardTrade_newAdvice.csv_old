@@ -1,2 +1,2 @@
-Portfolio,Buy_Sell,Security_type,Id_Bloomberg,Security_name,Currency,Quantity,ISIN_Ticker,Price,Order_type,Amount,Broker,Moxy_Sec_type,Limit_price,Limit_date
+Portfolio,Buy_Sell,Security_type,Id_Bloomberg,Security_name,Currency,Quantity,ISIN_ticker,Price,Order_type,Amount,Broker,Moxy_Sec_type,Limit_price,Limit_date
 GLOBAL ECONOMY,Buy,FX Forward,eurchf 08/27/12,eurchf 08/27/12,EUR,1000000,,1.1998,Market,1199800,Other,,,41071
