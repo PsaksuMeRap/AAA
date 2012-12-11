@@ -24,7 +24,7 @@ connection <- odbcConnect("prezzi_storici_azioni_VAR",.utente,.password)
 
 ## extract fixed income
 query = paste("SELECT * FROM [Prezzi storici reddito fisso].dbo.PrezziStorici",
-		"WHERE NumeroValore = '2490099'")
+		"WHERE NumeroValore = 'LU0810451608'")
 
 fixedIncomeData.df <- sqlQuery(connection,query,as.is=TRUE)
 fixedIncomeData.df[["Price"]] <- fixedIncomeData.df[["Price"]] / 100
@@ -33,7 +33,7 @@ write.csv(fixedIncomeData.df,file="fixedIncome.csv")
 
 ## extract global equity
 query = paste("SELECT * FROM [Prezzi storici azioni].dbo.Fondi",
-		"WHERE Ticker = '2742261CH'")
+		"WHERE Ticker = 'LU0810451434'")
 
 globalEquityData.df <- sqlQuery(connection,query,as.is=TRUE)
 
