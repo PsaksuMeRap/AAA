@@ -27,6 +27,12 @@ setMethod("getMaturity",signature(origin="Ayrton_Bond"),
 		}
 )
 
+setMethod("getMaturity",signature(origin="Ayrton_Bond_floater"),
+		function(origin) {
+			class(origin) <- "Ayrton_Bond"
+			return(getMaturity(origin))
+		}
+)
 
 setMethod("getMaturity",signature(origin="Ayrton_Depositi_a_termine"),
 		function(origin) {

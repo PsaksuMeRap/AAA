@@ -32,7 +32,8 @@ setMethod("securityFactory",signature(origin="AyrtonPosition"),
 			securityType <- identifyInstrumentType(origin)
 			if (identifyOnly) return(securityType)
 			
-			class(origin) <- paste("Ayrton",securityType,sep="_")
+			# class(origin) <- paste("Ayrton",securityType,sep="_")
+			origin <- new(paste("Ayrton",securityType,sep="_"),origin)
 			
 			security <- createSecurity(origin)
 			return(security)

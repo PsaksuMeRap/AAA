@@ -166,7 +166,7 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"INT_ACC")
 		
 		# collect the rating AA
-		blRequestHandler[["collect"]](trade$Id_Bloomberg,"RTG_SP")	
+		blRequestHandler[["collect"]](trade$Id_Bloomberg,"RTG_SP_LONG")	
 		
 		# collect the maturity 05/08/2013
 		blRequestHandler[["collect"]](trade$Id_Bloomberg,"MATURITY")	

@@ -29,7 +29,7 @@ ID,Strumento
 28,GOALs
 29,Fund of funds
 30,Diritti aumento capitale azionario
-31,Non classificato
+31,Unclassified
 32,Capital protected notes
 33,Call Ratio Certificate
 34,Certificati convertibili
@@ -51,6 +51,8 @@ ID,Strumento
 50,Futures EQ
 51,ETF_commodities_gold
 52,Credit_linked_note
-53,Unclassified
+53,Fund private equity
 54,Conto corrente fittizio
 55,ETF_commodities_platinum
+56,Bond_floater
+57,Conto_metallo_oro

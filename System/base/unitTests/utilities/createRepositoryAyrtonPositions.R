@@ -147,6 +147,26 @@ createRepositoryAyrtonPositions <- function() {
 	A_bond4 <- x
 	testData$bond4 <- x
 	
+	# create a valid bond_floater
+	x <- new("AyrtonPosition")
+	x@Cliente <- "pippo98"
+	x@Strumento <- "O      "
+	x@Moneta <- "EUR"
+	x@Saldo <- 75000
+	x@NumeroValore <- "XS0439139998A"
+	x@Nome <- "20130109 - 0.415% EIB FRN [09.01.2015] 09-01-13"
+	x@PrezzoMercato <- 100.26
+	x@ValoreMercatoMonetaCHF <- 90861.23
+	x@ID_AAA <- 2242
+	x@ID_strumento <- 56
+	x@rating <- "AAA"
+	class(x) <- "AyrtonPosition"
+	
+	A_bond_floater <- x
+	testData$bond_floater <- x
+	
+
+
 	# create a valid Fondi_obbligazionari con accruedInterst 0 
 	x <- new("AyrtonPosition")
 	x@Cliente <- "pippo172"
@@ -223,7 +243,7 @@ createRepositoryAyrtonPositions <- function() {
 	x@Nome <- "Security not classified"
 	x@ValoreMercatoMonetaCHF <- 123.55
 	x@ID_AAA <- 1073
-	x@ID_strumento <- 53
+	x@ID_strumento <- 31
 	class(x) <- "AyrtonPosition"
 	
 	A_unclassified1 <- x

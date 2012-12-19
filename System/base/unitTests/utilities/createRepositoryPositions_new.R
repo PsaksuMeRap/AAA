@@ -220,6 +220,38 @@ createRepositoryPositions <- function() {
 	
 	
 	# ---------------------------------------
+	# create bond_floater
+	Moneta <- "EUR"
+	Saldo <- 75000
+	NumeroValore <- "XS0439139998"
+	Nome <- "20130109 - 0.415% EIB FRN [09.01.2015] 09-01-13"
+	ValoreMercatoMonetaCHF <- 90861.23
+	ID_AAA <- 2242
+	ID_strumento <- 56
+	rating <- "AAA"
+	
+	currency <- new("Currency",Moneta)
+	name <- Nome
+	id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
+	maturity <- "2013-01-09"
+	
+	security <- new("Bond_floater",currency=currency,name=name,id=id,maturity=maturity)
+	quantity <- new("NominalValue",amount=new("Amount",Saldo),currency=currency)
+	value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
+	value <- repositories$exchangeRates$exchange(value,currency)
+	x <- new("PositionBond",
+			# accruedInterest= 
+			rating=rating,
+			id=id,
+			security=security,
+			quantity=quantity,
+			value=value)		
+	
+	A_bond_floater <- x
+	testData$bond_floater <- x	
+
+	
+	# ---------------------------------------
 	# create Fondi_obbligazionari with 0 accruedInterest (because included in the price)
 	Moneta <- "CHF"
 	Saldo <- 105
@@ -1242,47 +1274,6 @@ createRepositoryPositions <- function() {
 	
 	A_Obbligazioni_convertibili <- x
 	testData$Obbligazioni_convertibili <- x
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 
 

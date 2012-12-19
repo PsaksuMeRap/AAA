@@ -47,7 +47,7 @@ createRepositoryBloombergData <- function() {
 	# create the BloombergData for Bond
 	blDataEntryBond1 <- new("BloombergDataEntry",blId="eib 01/09/15 corp",fieldId="LAST_PRICE",value=100.322,dateLastUpdate=Sys.time())
 	blDataEntryBond2 <- new("BloombergDataEntry",blId="eib 01/09/15 corp",fieldId="INT_ACC",value=1.7,dateLastUpdate=Sys.time())
-	blDataEntryBond3 <- new("BloombergDataEntry",blId="eib 01/09/15 corp",fieldId="RTG_SP",value="AA",dateLastUpdate=Sys.time())
+	blDataEntryBond3 <- new("BloombergDataEntry",blId="eib 01/09/15 corp",fieldId="RTG_SP_LONG",value="AA",dateLastUpdate=Sys.time())
 	blDataEntryBond4 <- new("BloombergDataEntry",blId="eib 01/09/15 corp",fieldId="MATURITY",value="05/08/2013",dateLastUpdate=Sys.time())
 	
 	blData <- add(blDataEntryBond1,blData)
@@ -59,7 +59,7 @@ createRepositoryBloombergData <- function() {
 	## new bond
 	blDataEntryBond1 <- new("BloombergDataEntry",blId="nesnvx 2 08/05/13 corp",fieldId="LAST_PRICE",value=102.238,dateLastUpdate=Sys.time())
 	blDataEntryBond2 <- new("BloombergDataEntry",blId="nesnvx 2 08/05/13 corp",fieldId="INT_ACC",value=1.2,dateLastUpdate=Sys.time())
-	blDataEntryBond3 <- new("BloombergDataEntry",blId="nesnvx 2 08/05/13 corp",fieldId="RTG_SP",value="AAA",dateLastUpdate=Sys.time())
+	blDataEntryBond3 <- new("BloombergDataEntry",blId="nesnvx 2 08/05/13 corp",fieldId="RTG_SP_LONG",value="AAA",dateLastUpdate=Sys.time())
 	blDataEntryBond4 <- new("BloombergDataEntry",blId="nesnvx 2 08/05/13 corp",fieldId="MATURITY",value="05/08/2013",dateLastUpdate=Sys.time())
 	
 	blData <- add(blDataEntryBond1,blData)
@@ -70,7 +70,7 @@ createRepositoryBloombergData <- function() {
 	## new bond 
 	blDataEntryBond1 <- new("BloombergDataEntry",blId="nedwbk 4 03/12/13 corp",fieldId="LAST_PRICE",value=102.58,dateLastUpdate=Sys.time())
 	blDataEntryBond2 <- new("BloombergDataEntry",blId="nedwbk 4 03/12/13 corp",fieldId="INT_ACC",value=1.2,dateLastUpdate=Sys.time())
-	blDataEntryBond3 <- new("BloombergDataEntry",blId="nedwbk 4 03/12/13 corp",fieldId="RTG_SP",value="AAA",dateLastUpdate=Sys.time())
+	blDataEntryBond3 <- new("BloombergDataEntry",blId="nedwbk 4 03/12/13 corp",fieldId="RTG_SP_LONG",value="AAA",dateLastUpdate=Sys.time())
 	blDataEntryBond4 <- new("BloombergDataEntry",blId="nedwbk 4 03/12/13 corp",fieldId="MATURITY",value="05/08/2013",dateLastUpdate=Sys.time())
 	
 	blData <- add(blDataEntryBond1,blData)
@@ -81,7 +81,7 @@ createRepositoryBloombergData <- function() {
 	## new bond 
 	blDataEntryBond1 <- new("BloombergDataEntry",blId="xs0842560640 corp",fieldId="LAST_PRICE",value=as.numeric(99.5305),dateLastUpdate=Sys.time())
 	blDataEntryBond2 <- new("BloombergDataEntry",blId="xs0842560640 corp",fieldId="INT_ACC",value=.0,dateLastUpdate=Sys.time())
-	blDataEntryBond3 <- new("BloombergDataEntry",blId="xs0842560640 corp",fieldId="RTG_SP",value="NA",dateLastUpdate=Sys.time())
+	blDataEntryBond3 <- new("BloombergDataEntry",blId="xs0842560640 corp",fieldId="RTG_SP_LONG",value="NA",dateLastUpdate=Sys.time())
 	blDataEntryBond4 <- new("BloombergDataEntry",blId="xs0842560640 corp",fieldId="MATURITY",value="10/17/2016",dateLastUpdate=Sys.time())
 	
 	blData <- add(blDataEntryBond1,blData)

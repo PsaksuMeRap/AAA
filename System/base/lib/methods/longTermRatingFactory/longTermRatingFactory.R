@@ -19,6 +19,7 @@ longTermRatingFactory <- function(characterRate) {
 			if (is.element(characterRate,ratingCodesMoody)) {
 				rating <- new("LongTermRatingMoody",characterRate)					
 			} else {
+
 				stop(paste("Invalid LongTermRating:",characterRate,"\n",
 						"Please verify the checkfile. Exception raised from longTermRatingFactory"))
 			}

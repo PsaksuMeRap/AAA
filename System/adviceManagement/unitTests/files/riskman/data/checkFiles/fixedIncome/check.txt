@@ -19,7 +19,7 @@ security:Bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI ; >= 66
 currency:EUR ; >= 100%
 
 # 4) verifica che gli investimenti con un peso superiore al 5% non costituiscano piu' del 40% del NAV
-amount:>5% & security:Bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI; <= 40%
+amount:>5% & security:Bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI; <= 40% :: groupBy:securityId
 
 # 5) verifica che il conto corrente non superi il 20% del NAV (rischio controparte)
 amount:>=20% & security:Conto_corrente ; <= 0%

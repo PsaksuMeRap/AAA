@@ -35,7 +35,7 @@ setMethod("idFactory",signature(origin="AyrtonPosition"),
 			## 28,GOALs
 			## 29,Fund_of_funds
 			## 30,Diritti_aumento_capitale_azionario
-			## 31,Non_classificato
+			## 31,Unclassified
 			## 32,Capital_protected_notes
 			## 33,Call_Ratio_Certificate
 			## 34,Certificati_convertibili
@@ -60,11 +60,20 @@ setMethod("idFactory",signature(origin="AyrtonPosition"),
 			## 53,Unclassified
 			## 54,Conto_corrente_fittizio"
 			## 55,ETF_commodities_platinum
-				
-			instrumentsWithISIN <- c(1,2,3,4,5,8:17,23:30,32:38,42:49,51:53,55)
+			## 56,Bond_floater
+			
+			instrumentsWithISIN <- c(1,2,3,4,5,8:17,23:30,32:38,42:49,51:53,55,57)
 			if (is.element(origin@ID_strumento,instrumentsWithISIN)) {
 				idAyrton <- new("IdAyrton",
 						idAAA=new("IdAAA_character",origin@NumeroValore),
+						idStrumento=origin@ID_strumento)
+				
+				return(idAyrton)
+			}
+			if (origin@ID_strumento==56) {
+				isin <- substr(origin@NumeroValore,1,12)
+				idAyrton <- new("IdAyrton",
+						idAAA=new("IdAAA_character",isin),
 						idStrumento=origin@ID_strumento)
 				
 				return(idAyrton)
@@ -186,15 +195,29 @@ setMethod("idFactory",signature(origin="AyrtonPosition"),
 				return(idAyrton)
 			}
 			
+			# consider Unclassified
+			if (origin@ID_strumento==31) {
+	
+				idAyrton <- new("IdAyrton",
+						idAAA=new("IdAAA_character",origin@NumeroValore),
+						idStrumento=origin@ID_strumento)
+				
+				return(idAyrton)
+			}			
+			
+			
 			string <- "The idFactory method for the following instrument is not implemented:"
 			string <- paste(string,
-						"\n  Name: ",origin@Nome,
-						"\n  ID_strumento: ",origin@ID_strumento,
-						"\n  ID_AAA: ",origin@ID_AAA,sep="")
+					"\n  Name: ",origin@Nome,
+					"\n  ID_strumento: ",origin@ID_strumento,
+					"\n  ID_AAA: ",origin@ID_AAA,sep="")
 			stop(string)
-
+			
 		}
+
+
+
 )
 
-		
+
 

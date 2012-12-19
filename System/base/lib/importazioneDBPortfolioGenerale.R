@@ -13,6 +13,14 @@ importDBPortfolioGenerale <- function() {
 	
 	DBPortfolioGenerale.df[["Cliente"]] <- NULL
 	colnames(DBPortfolioGenerale.df)[1] <- "Cliente"
+
+	# determina le posizioni in XAU e cambia la moneta
+	is.XAU <- DBPortfolioGenerale.df[,"Moneta"] == "XAU"
+	if (any(is.XAU)) {
+		DBPortfolioGenerale.df[is.XAU,"Moneta"] <- "USD"
+		DBPortfolioGenerale.df[is.XAU,"ID_strumento"] <- 57
+	}
+	
 	getRow <- function(i,df) { 
 		x <- df[i,,drop=TRUE]
 		ayrtonPosition <- new("AyrtonPosition",
@@ -40,6 +48,14 @@ importDBPortfolioGeneraleByDate <- function(fetchDate) {
 	
 	DBPortfolioGenerale.df[["Cliente"]] <- NULL
 	colnames(DBPortfolioGenerale.df)[1] <- "Cliente"
+
+	# determina le posizioni in XAU e cambia la moneta
+	is.XAU <- DBPortfolioGenerale.df[,"Moneta"] == "XAU"
+	if (any(is.XAU)) {
+		DBPortfolioGenerale.df[is.XAU,"Moneta"] <- "USD"
+		DBPortfolioGenerale.df[is.XAU,"ID_strumento"] <- 57
+	}
+	
 	getRow <- function(i,df) { 
 		x <- df[i,,drop=TRUE]
 
@@ -68,6 +84,13 @@ importDBPortfolioGeneraleDataFrame <- function() {
 	DBPortfolioGenerale.df[["Cliente"]] <- NULL
 	colnames(DBPortfolioGenerale.df)[1] <- "Cliente"
 
+	# determina le posizioni in XAU e cambia la moneta
+	is.XAU <- DBPortfolioGenerale.df[,"Moneta"] == "XAU"
+	if (any(is.XAU)) {
+		DBPortfolioGenerale.df[is.XAU,"Moneta"] <- "USD"
+		DBPortfolioGenerale.df[is.XAU,"ID_strumento"] <- 57
+	}
+	
 	return(DBPortfolioGenerale.df)
 }
 

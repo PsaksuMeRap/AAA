@@ -127,7 +127,7 @@ setMethod("tradeToPositionFactory",signature(newSecurity="Bond"),
 			accInterestPercentage <- blData[[accInterestId]]@value
 			
 			# get the Standard and Poors rating
-			ratingId <- paste(trade$Id_Bloomberg,"RTG_SP",sep="__")
+			ratingId <- paste(trade$Id_Bloomberg,"RTG_SP_LONG",sep="__")
 			rating <- c(spRating=blData[[ratingId]]@value)
 			
 			# get the maturity date

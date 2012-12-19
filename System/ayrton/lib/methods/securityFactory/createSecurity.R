@@ -153,6 +153,26 @@ setMethod("createSecurity",signature(origin="Ayrton_Bond"),
 		}
 )
 
+setMethod("createSecurity",signature(origin="Ayrton_Bond_floater"),
+		function(origin) {
+			# se si tratta di accrued interest non considerarli ora,
+			# verranno considerati solo nella costruzione delle posizioni
+			
+			if (origin@Strumento=="Oacc") return(NULL)
+			
+			# this is a common slot of all instruments
+			idAyrton <- idFactory(origin)
+			
+			# extract the maturity from the name
+			maturity=getMaturity(origin)
+			
+			className <- substr("Ayrton_Bond_floater",start=8,stop=nchar("Ayrton_Bond_floater"))
+			security <- new(className,currency=new("Currency",origin@Moneta),
+					name=origin@Nome,id=idAyrton,maturity=maturity)
+			return(security)	
+		}
+)
+
 setMethod("createSecurity",signature(origin="Ayrton_Fondi_obbligazionari"),
 		function(origin) {
 			# se si tratta di accrued interest non considerarli ora,

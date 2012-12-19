@@ -96,6 +96,24 @@ test.shouldCreateBond <- function() {
 	
 }
 
+test.shouldCreateBond <- function() {
+	
+	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")
+	
+	## create the origin
+	repository <- createRepositoryAyrtonPositions()
+	origin <- repository$bond_floater
+	class(origin) <- "Ayrton_Bond_floater"
+	
+	bond <- createSecurity(origin)
+	
+	checkEquals(bond@name,"20130109 - 0.415% EIB FRN [09.01.2015] 09-01-13")
+	checkEquals(bond@id,new("IdAyrton",idAAA=new("IdAAA_character","XS0439139998"),idStrumento=56))
+	checkEquals(bond@maturity,"2013-01-09")
+	
+}
+
+
 test.shouldCreateFondi_obbligazionari <- function() {
 	
 	source("./base/unitTests/utilities/createRepositoryAyrtonPositions.R")

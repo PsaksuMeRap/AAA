@@ -89,6 +89,7 @@ clienti <- c(
 		"pippo160",
 		"pippo161",
 		"pippo168",
+		"pippo172",
 		"pippo185",
 		"pippo187",
 		"pippo188",
@@ -100,7 +101,22 @@ clienti <- c(
 		"pippo202",
 		"pippo204",
 		"pippo205",
-		"pippo206"
+		"pippo206",
+		"pippo220",
+		"pippo221",
+		"pippo222",
+		"pippo223",
+		"pippo224",
+		"pippo226"
+)
+
+clienti <- c(
+#		"pippo172",
+#		"pippo221",
+#		"pippo222",
+#		"pippo223",
+#		"pippo224",
+		"pippo226"
 )
 
 # caso con data storica

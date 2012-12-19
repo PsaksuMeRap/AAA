@@ -8,6 +8,8 @@ setClass("Ayrton_Equity",contains="AyrtonPosition")
 
 setClass("Ayrton_Bond",contains="AyrtonPosition")
 
+setClass("Ayrton_Bond_floater",contains="AyrtonPosition")
+
 setClass("Ayrton_Fondi_obbligazionari",contains="Ayrton_Bond")
 
 setClass("Ayrton_Fondi_mercato_monetario",contains="AyrtonPosition")
@@ -64,7 +66,7 @@ setClass("Ayrton_Fund_of_funds",contains="AyrtonPosition")
 
 setClass("Ayrton_Diritti_aumento_capitale_azionario",contains="AyrtonPosition")
 
-setClass("Ayrton_Non_classificato",contains="AyrtonPosition")
+setClass("Ayrton_Unclassified",contains="AyrtonPosition")
 
 setClass("Ayrton_Capital_protected_notes",contains="AyrtonPosition")
 
@@ -86,6 +88,8 @@ setClass("Ayrton_Conto_corrente",contains="AyrtonPosition")
 
 setClass("Ayrton_Conto_corrente_fittizio",contains="AyrtonPosition")
 
+setClass("Ayrton_Conto_metallo_oro",contains="AyrtonPosition")
+
 setClass("Ayrton_Call_Geld",contains="AyrtonPosition")
 
 setClass("Ayrton_Trigger_Equity_Yield_Note",contains="AyrtonPosition")
@@ -106,13 +110,13 @@ setClass("Ayrton_Strutturati_FI",contains="AyrtonPosition")
 
 setClass("Ayrton_Futures_EQ",contains="AyrtonPosition")
 
-setClass("Ayrton_Unclassified",contains="AyrtonPosition")
-
 setClass("Ayrton_ETF_commodities_gold",contains="AyrtonPosition")
 
 setClass("Ayrton_ETF_commodities_platinum",contains="AyrtonPosition")
 
 setClass("Ayrton_Credit_linked_note",contains="AyrtonPosition")
+
+setClass("Ayrton_Fund_private_equity",contains="AyrtonPosition")
 
 #create_classDefinition <- function(instrument) {
 #	string <- paste("setClass(\"Ayrton_",instrument,"\",contains=\"AyrtonPosition\")\n\n",sep="")
