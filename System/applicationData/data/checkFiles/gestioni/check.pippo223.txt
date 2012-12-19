@@ -1,0 +1,17 @@
+testSuiteName: clientiAAA
+creationDate: 2010-07-12
+creator: Claudio Ortelli
+# testSuiteKind: general - specific
+testSuiteKind: specific
+testTarget: pippo223
+reportTo: claudio.ortelli@usi.ch; info@bacep.com
+outputDir: ./ClientiNew
+groupDefinition: allowedSecurities = Depositi_a_termine,Conto_corrente,Fondi_Hedge,Bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari,Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity,ETF_commodities_gold
+checkListStart:
+security:allowedSecurities ; = 100%
+currency:EUR ; >= 70%
+security:Depositi_a_termine,Conto_corrente,Bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari; >= 80% :: explode:Fondi_misti
+security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity,Fondi_Hedge ; <= 20% :: explode:Fondi_misti
+security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity ; <= 10% :: explode:Fondi_misti
+checkListEnd:
+externalSuiteFileName:

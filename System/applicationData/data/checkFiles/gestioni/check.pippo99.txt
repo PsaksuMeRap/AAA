@@ -1,0 +1,14 @@
+testSuiteName: clientiAAA
+creationDate: 2010-07-12
+creator: Claudio Ortelli
+# testSuiteKind: general - specific
+testSuiteKind: specific
+testTarget: pippo99
+reportTo: claudio.ortelli@usi.ch; info@bacep.com
+outputDir: ./ClientiNew
+# il cliente può fare di tutto, è lui a gestire. In pratica non ci sono vincoli
+# da controllare
+checkListStart:
+currency:EUR ; >= -100%
+checkListEnd:
+externalSuiteFileName:

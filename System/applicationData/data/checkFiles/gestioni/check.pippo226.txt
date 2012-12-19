@@ -1,0 +1,22 @@
+testSuiteName: clientiAAA
+creationDate: 2010-07-12
+creator: Claudio Ortelli
+# testSuiteKind: general - specific
+testSuiteKind: specific
+testTarget: pippo226
+reportTo: claudio.ortelli@usi.ch; info@bacep.com
+outputDir: ./ClientiNew
+groupDefinition: allowedSecurities = Depositi_a_termine,Conto_corrente,Conto_metallo_oro,Fondi_Hedge,Bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari,Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity
+checkListStart:
+security:allowedSecurities ; = 100%
+# vincolo monetario derivato dal benchmark high yield max 15% + 15% du scostamento massimo
+currency:CHF ; >= 70%
+security:allowedSecurities & amount:<0% ; = 0%
+security:Depositi_a_termine,Conto_corrente,Floating_rate_notes ; <= 33%
+security:Bond & rating:>=AA & maturityHorizon:<3Y ; <= 59% :: explode:Fondi_misti
+security:Bond & rating:>=AA & maturityHorizon:>3Y ; <= 35% :: explode:Fondi_misti
+security:Bond & rating:>=BBB ; <= 80% :: explode:Fondi_misti
+security:Bond & rating:>=BBB ; >= 60% :: explode:Fondi_misti
+security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity ; <= 10% :: explode:Fondi_misti
+checkListEnd:
+externalSuiteFileName:

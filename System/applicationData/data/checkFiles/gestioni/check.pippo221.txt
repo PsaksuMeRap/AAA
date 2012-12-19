@@ -1,0 +1,24 @@
+testSuiteName: clientiAAA
+creationDate: 2010-07-12
+creator: Claudio Ortelli
+# testSuiteKind: general - specific
+testSuiteKind: specific
+testTarget: pippo221
+reportTo: claudio.ortelli@usi.ch; info@bacep.com
+outputDir: ./ClientiNew
+
+groupDefinition: liquidity = Conto_corrente,Conto_corrente_fittizio,Call_Geld,Depositi_a_termine
+groupDefinition: azionario = Equity,Fondi_azionari,Opzioni_su_azioni,Diritti_aumento_capitale_azionario,ETF_equity,Strutturati_EQ,Futures_EQ,Index_certificate
+groupDefinition: redditoFisso = Bond,Fondi_obbligazionari,Fondi_mercato_monetario,Floating_rate_notes,Obbligazioni_step-down,Opzioni_su_obbligazioni,Strutturati_FI
+groupDefinition: ibridi = Reverse_convertible,Obbligazioni_convertibili,Barrier_Reverse_Convertible
+groupDefinition: altriStrumenti = Opzioni_su_divise,FX_Forward,Fondi_immobiliari,Fondi_misti,Fund_of_funds,Fondi_absolute_return,Fondi_Hedge 
+groupDefinition: metalliPreziosi = ETF_commodities_gold,ETF_commodities_platinum
+
+checkListStart:
+security:liquidity,azionario,redditoFisso,ibridi,altriStrumenti,metalliPreziosi ; = 100%
+currency:CHF ; >= 50%
+security:liquidity,redditoFisso; >= 60% :: explode:Fondi_misti
+security:azionario,ibridi,altriStrumenti ; <= 40% :: explode:Fondi_misti
+security:metalliPreziosi ; <= 40% :: explode:Fondi_misti
+checkListEnd:
+externalSuiteFileName:

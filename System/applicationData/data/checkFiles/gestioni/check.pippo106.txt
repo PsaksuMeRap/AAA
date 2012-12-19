@@ -1,0 +1,14 @@
+testSuiteName: clientiAAA
+creationDate: 2010-07-12
+creator: Claudio Ortelli
+# testSuiteKind: general - specific
+testSuiteKind: specific
+testTarget: pippo106
+# il cliente desidera essere investito in un unico fondo private equity ed il
+# resto della liquidità deve essere investito a bassissimo rischio.
+reportTo: claudio.ortelli@usi.ch; info@bacep.com
+outputDir: ./ClientiNew
+checkListStart:
+security:Conto_corrente,Depositi_a_termine,Fondi_azionari ; = 100% 
+checkListEnd:
+externalSuiteFileName:

@@ -1,0 +1,12 @@
+testSuiteName: clientiAAA
+creationDate: 2010-07-12
+creator: Claudio Ortelli
+# testSuiteKind: general - specific
+testSuiteKind: specific
+testTarget: pippo88
+reportTo: claudio.ortelli@usi.ch; info@bacep.com
+outputDir: ./ClientiNew
+checkListStart:
+amount:<0% ; <= 0%
+checkListEnd:
+externalSuiteFileName:

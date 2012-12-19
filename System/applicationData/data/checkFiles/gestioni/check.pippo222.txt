@@ -1,0 +1,15 @@
+testSuiteName: clientiAAA
+creationDate: 2010-07-12
+creator: Claudio Ortelli
+# testSuiteKind: general - specific
+testSuiteKind: specific
+testTarget: pippo222
+reportTo: claudio.ortelli@usi.ch; info@bacep.com
+outputDir: ./ClientiNew
+groupDefinition: allowedSecurities = Depositi_a_termine,Conto_corrente,Bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari
+checkListStart:
+security:allowedSecurities ; = 100%
+currency:EUR ; >= 80%
+security:Bond & rating:<=BBB ; = 0%
+checkListEnd:
+externalSuiteFileName:
