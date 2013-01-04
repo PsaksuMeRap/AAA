@@ -7,7 +7,7 @@ setMethod("createSecurity",signature(origin="AyrtonPosition"),
 		function(origin) {
 		## this is the default method for any AyrtonPosition 
 		## not further specified
-		
+
 		# this is a common slot of all instruments
 		idAyrton <- idFactory(origin)
 		

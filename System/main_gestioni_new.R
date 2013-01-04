@@ -111,14 +111,9 @@ clienti <- c(
 )
 
 clienti <- c(
-#		"pippo172",
-#		"pippo221",
-#		"pippo222",
-#		"pippo223",
-#		"pippo224",
-		"pippo226"
-)
-
+		"pippo221"
+		)
+		
 # caso con data storica
 if (FALSE) {
 	fine <- as.Date("2011-09-15")
