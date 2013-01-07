@@ -10,10 +10,10 @@ checkListStart:
 
 # 1) verifica che gli strumenti investibili siano quelli indicati e non ce ne siano altri non ammessi
 #    o non ancora implementati per il controllo
-security:Bond,Conto_corrente,Capital_protected_notes,Floating_rate_notes,Strutturati_FI ; = 100%
+security:Conto_corrente,Bond,Fondi_obbligazionari,Capital_protected_notes,Floating_rate_notes,Strutturati_FI ; = 100%
 
 # 2) verifica che almeno 2/3 sia investito in strumenti a reddito fisso
-security:Bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI ; >= 66.6%
+security:Bond,Fondi_obbligazionari,Capital_protected_notes,Floating_rate_notes,Strutturati_FI ; >= 66.6%
 
 # 3) verifica che ci siano investimenti solo in EUR
 currency:EUR ; = 100%
@@ -24,7 +24,10 @@ amount:>5% & security:Bond,Capital_protected_notes,Floating_rate_notes,Struttura
 # 5) verifica che il conto corrente non superi il 20% del NAV (rischio controparte)
 amount:>=20% & security:Conto_corrente ; <= 0%
 
-# 6) verifica che i bonds con rating minori all'investment grade siano al max 1/3 del fondo
+# 6) verifica che i fondi non superi il 10% del NAV
+security:Fondi_obbligazionari ; <= 10%
+
+# 7) verifica che i bonds con rating minori all'investment grade siano al max 1/3 del fondo
 # rating:<BBB- & rating:>NR ; <= 33%
 
 checkListEnd:
