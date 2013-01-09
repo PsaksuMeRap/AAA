@@ -45,7 +45,7 @@ setwd(checkDirectory)
 
 # caso con data storica
 if (FALSE) {
-	fine <- as.Date("2011-09-15")
+	fine  <- as.Date("2011-09-15")
 	dates <- seq(as.Date("2011-09-1"),to=fine,by=7)
 	dates <- c(dates,seq(as.Date("2011-09-2"),to=fine,by=7))
 	dates <- c(dates,seq(as.Date("2011-09-5"),to=fine,by=7))	
