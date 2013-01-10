@@ -43,7 +43,7 @@ setMethod("groupBySecurityId",signature(x="PositionOpzioni_su_azioni",y="Positio
 			}
 			
 			p1 <- parsePremium(info1[["premium"]])
-			p2 <- parsePremium(info1[["premium"]])
+			p2 <- parsePremium(info2[["premium"]])
 			newPremium <- p1$premium+p2$premium
 			newNumeraire <- p1$numeraire
 			

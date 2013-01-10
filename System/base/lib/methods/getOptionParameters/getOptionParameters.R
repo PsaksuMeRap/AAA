@@ -24,6 +24,26 @@ setMethod("getOptionParameters",signature(origin="PositionOpzioni_su_azioni"),
 		}
 )
 
+setMethod("getOptionParameters",signature(origin="PositionOpzioni_su_obbligazioni"),
+		function(origin) {
+			
+			name <- origin@security@name
+			tmp <- strsplit(name," ")[[1]]
+			tmp <- remSpaces(tmp)
+			names(tmp) <- c("optionType","expiryDate","strike_label","strike","underlyingCurrency","amount","premium","numeraire","isin")
+			tmp <- as.list(tmp)
+			tmp[["strike"]] <- as.numeric(tmp[["strike"]])
+			tmp[["amount"]] <- as.numeric(tmp[["amount"]])
+			tmp[["premium"]] <- as.numeric(substr(tmp[["premium"]],8,nchar(tmp[["premium"]])))
+			tmp[["numeraire"]] <- substr(tmp[["numeraire"]],1,3)
+			if (tolower(tmp[["optionType"]])=="put") tmp[["optionType"]] <- "P" else tmp[["optionType"]] <- "C"
+			tmp[["expiryDate"]] <- format(strptime(tmp[["expiryDate"]],format="%d-%m-%y"),"%Y-%m-%d")
+			#"PUT 17-08-12 Strike 103.5 EUR 125000 Premio(-345.45 EUR) EU0011027469"
+			return(tmp)
+			
+		}
+)
+
 
 setMethod("getOptionParameters",signature(origin="PositionOpzioni_su_divise"),
 		function(origin) {

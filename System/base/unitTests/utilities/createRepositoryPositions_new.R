@@ -1276,6 +1276,45 @@ createRepositoryPositions <- function() {
 	testData$Obbligazioni_convertibili <- x
 
 
+	# ---------------------------------------	
+	# create opzioni_su_obbligazioni
+
+	Moneta <- "CHF"
+	currency <- new("Currency",Moneta)
+	Saldo <- 125000
+	NumeroValore <- ""
+	Nome <- "PUT 17-05-12 Strike 103.5 CHF 125000 Premio(-345.45 CHF) CH0031240127 "
+	ID_strumento <- 20
+	valoreMercatoMonetaCHF <- 242.47
+	
+	expiryDate <- "2012-05-17"
+	strike <- 103.5
+	maturity <- "2012-03-29"
+	rating <- longTermRatingFactory("B")
+	
+	underlyingId <- new("IdAyrton",idAAA=new("IdAAA_character","CH0031240127"),idStrumento=2)
+	bond <- new("Bond",currency=currency,name="isin CH0031240127",id=underlyingId,maturity=maturity)
+
+	optionId <- new("IdAyrton",idAAA=new("IdAAA_character","P/CH0031240127/2012-05-17/103.5"),idStrumento=ID_strumento)
+	security <- new("Opzioni_su_obbligazioni",currency=currency,optionType="P",
+			id=optionId,underlying=bond,expiryDate=expiryDate,strike=strike)
+
+	quantity <- toMoney(Saldo,Moneta)
+	value <- toMoney(valoreMercatoMonetaCHF,Moneta)
+	x <- new("PositionOpzioni_su_obbligazioni",
+			id=security@id,
+			security=security,
+			quantity=quantity,
+			value=value,
+			rating=rating
+	)
+	
+	
+	A_opzioni_su_obbligazioni <- x
+	testData$opzioni_su_obbligazioni <- x
+	
+	
+	
 
 
 	# ---------------------------------------
