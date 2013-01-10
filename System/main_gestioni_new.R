@@ -110,9 +110,6 @@ clienti <- c(
 		"pippo226"
 )
 
-clienti <- c(
-		"pippo221"
-		)
 		
 # caso con data storica
 if (FALSE) {
