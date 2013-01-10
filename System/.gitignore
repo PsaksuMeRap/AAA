@@ -1,2 +1,5 @@
 .project
 secrets.R
+/data
+/.RData
+/.Rhistory
