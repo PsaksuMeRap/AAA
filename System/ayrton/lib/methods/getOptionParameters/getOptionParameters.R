@@ -7,17 +7,17 @@
 setMethod("getOptionParameters",signature(origin="AyrtonPosition"),
 		function(origin) {
 			if (origin@ID_strumento==18) {
-				class(origin) <- "Ayrton_Opzioni_su_azioni"
+				origin <- new("Ayrton_Opzioni_su_azioni",origin)
 				return(getOptionParameters(origin))
 			}
 			
 			if (origin@ID_strumento==19) {
-				class(origin) <- "Ayrton_Opzioni_su_divise"
+				origin <- new("Ayrton_Opzioni_su_divise",origin)
 				return(getOptionParameters(origin))
 			}
 			
 			if (origin@ID_strumento==20) {
-				class(origin) <- "Ayrton_Opzioni_su_obbligazioni"
+				origin <- new("Ayrton_Opzioni_su_obbligazioni",origin)
 				return(getOptionParameters(origin))
 			}
 			

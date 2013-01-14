@@ -41,9 +41,9 @@ source("./adviceManagement/unitTests/t.advisors/advisors.R")
 ## -- fine setup 
 
 
-
 # base test suite
 source("./base/unitTests/tests.R")
+
 
 testsuite.lists <- defineTestSuite("Test globale",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)

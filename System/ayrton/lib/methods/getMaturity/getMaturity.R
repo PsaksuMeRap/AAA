@@ -29,7 +29,7 @@ setMethod("getMaturity",signature(origin="Ayrton_Bond"),
 
 setMethod("getMaturity",signature(origin="Ayrton_Bond_floater"),
 		function(origin) {
-			class(origin) <- "Ayrton_Bond"
+			origin <- new("Ayrton_Bond",origin)
 			return(getMaturity(origin))
 		}
 )
@@ -79,7 +79,7 @@ setMethod("getMaturity",signature(origin="Ayrton_Anticipi_fissi"),
 setMethod("getMaturity",signature(origin="Ayrton_Obbligazioni_convertibili"),
 		function(origin) {
 
-			class(origin) <- "Ayrton_Bond"
+			origin <- new("Ayrton_Bond",origin)
 
 			return(getMaturity(origin))
 		}	

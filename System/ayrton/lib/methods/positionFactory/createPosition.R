@@ -308,7 +308,7 @@ setMethod("createPosition",signature(security="Opzioni_su_azioni",origin="Ayrton
 setMethod("createPosition",signature(security="Opzioni_su_divise",origin="AyrtonPosition"),
 		function(security,origin) {
 			
-			class(origin) <- "Ayrton_Opzioni_su_divise"
+			origin <- new("Ayrton_Opzioni_su_divise",origin)
 			info <- getOptionParameters(origin)
 			
 			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))

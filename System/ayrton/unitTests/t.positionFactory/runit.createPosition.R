@@ -390,7 +390,7 @@ test.shouldCreatePositionOpzioni_su_divise <- function() {
 	## create the origin
 	repository <- createRepositoryAyrtonPositions()
 	origin <- repository$Opzioni_su_divise1
-	class(origin) <- "Ayrton_Opzioni_su_divise"
+	origin <- new("Ayrton_Opzioni_su_divise",origin)
 	
 	securityOpzioniSuDivise <- securityFactory(origin)
 	
