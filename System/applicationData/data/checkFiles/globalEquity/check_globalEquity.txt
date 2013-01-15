@@ -42,7 +42,7 @@ security: liquidity,azionario,strumentiMisti,redditoFisso,altriStrumenti,metalli
 rating:<BBB ; <= 15%
 
 # 6) verifica che i fondi non superino il 30%
-security:Fondi_azionari,Fondi_obbligazionari,ETF_equity,Fondi_absolute_return,ETF_commodities_gold; <= 10%
+security:Fondi_azionari,Fondi_obbligazionari,ETF_equity,Fondi_absolute_return; <= 10%
 
 
 checkListEnd:
