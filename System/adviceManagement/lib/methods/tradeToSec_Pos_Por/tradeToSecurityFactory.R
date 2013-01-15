@@ -152,7 +152,7 @@ tradeToSecurityFactory <- function(trade,blRequestHandler) {
 	}
 	
 	if (securityType=="Bond") {
-	
+
 		currency <- new("Currency",trade$Currency)
 		name <- trade$Security_name
 		id <- new("IdAyrton",
