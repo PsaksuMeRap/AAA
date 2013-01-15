@@ -16,7 +16,7 @@ security:Conto_corrente,Bond,Fondi_obbligazionari,Capital_protected_notes,Floati
 security:Bond,Fondi_obbligazionari,Capital_protected_notes,Floating_rate_notes,Strutturati_FI ; >= 66.6%
 
 # 3) verifica che ci siano investimenti solo in EUR
-currency:EUR ; = 100%
+currency:!EUR ; <= 10%
 
 # 4) verifica che gli investimenti con un peso superiore al 5% non costituiscano piu' del 40% del NAV
 amount:>5% & security:Bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI; <= 40%
