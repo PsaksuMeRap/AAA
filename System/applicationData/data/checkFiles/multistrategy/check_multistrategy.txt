@@ -27,8 +27,8 @@ amount:>10% & security!:liquidity,Futures_EQ,FX_Forward ; = 0% :: groupBy:securi
 amount:>5% & security:azionario,redditoFisso,altriStrumenti,metalliPreziosi & security!:Futures_EQ,FX_Forward ; <= 40%
 
 # 4) verifica che non ci siano altre monete al di fuori delle allowedCurrencies
-currency!:allowedCurrencies & amount:>0EUR ; 0EUR
-currency!:allowedCurrencies & amount:<0EUR ; 0EUR
+currency!:allowedCurrencies & amount:>0EUR ; =0EUR
+currency!:allowedCurrencies & amount:<0EUR ; =0EUR
 currency:allowedCurrencies ; = 100%
 
 # 5) verifica che non si vada corto nelle monete consentite
