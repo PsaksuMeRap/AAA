@@ -6,7 +6,7 @@ testSuiteKind: specific
 testTarget: pippo101
 reportTo: claudio.ortelli@usi.ch
 outputDir: ./
-groupDefinition: allowedCurrencies = EUR,USD,SEK,NZD,NOK,JPY,GBP,DKK,CHF,CAD,AUD
+groupDefinition: allowedCurrencies = EUR,USD,SEK,NZD,NOK,JPY,GBP,DKK,CHF,CAD,AUD,BRL
 groupDefinition: liquidity = Conto_corrente,Conto_corrente_fittizio,Call_Geld,Depositi_a_termine
 groupDefinition: azionario = Equity,Fondi_azionari,Opzioni_su_azioni,Diritti_aumento_capitale_azionario,ETF_equity,Strutturati_EQ,Futures_EQ,Reverse_convertible,Obbligazioni_convertibili
 groupDefinition: redditoFisso = Bond,Fondi_obbligazionari,Fondi_mercato_monetario,Floating_rate_notes,Obbligazioni_step-down,Barrier_Reverse_Convertible,Opzioni_su_obbligazioni,Strutturati_FI
@@ -27,6 +27,8 @@ amount:>10% & security!:liquidity,Futures_EQ,FX_Forward ; = 0% :: groupBy:securi
 amount:>5% & security:azionario,redditoFisso,altriStrumenti,metalliPreziosi & security!:Futures_EQ,FX_Forward ; <= 40%
 
 # 4) verifica che non ci siano altre monete al di fuori delle allowedCurrencies
+currency!:allowedCurrencies & amount:>0EUR ; 0EUR
+currency!:allowedCurrencies & amount:<0EUR ; 0EUR
 currency:allowedCurrencies ; = 100%
 
 # 5) verifica che non si vada corto nelle monete consentite
@@ -40,6 +42,7 @@ currency:NZD ; >= -1%
 currency:JPY ; >= -1%
 currency:GBP ; >= -1%
 currency:CAD ; >= -1%
+currency:BRL ; >= -1%
 
 # 6) verifica che i fondi non superino il 30%
 security:Fondi_azionari,Fondi_obbligazionari,ETF_equity,Fondi_absolute_return,ETF_commodities_gold; <= 30%
