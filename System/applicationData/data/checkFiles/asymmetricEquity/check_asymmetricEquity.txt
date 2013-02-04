@@ -60,6 +60,11 @@ currency:AUD,BRL,CHF,EUR,NOK,TRY,USD ; >= 0EUR :: replace:Opzioni_su_azioni & gr
 # 6) verifica le posizioni opzioni_su_azioni (short call)
 security:Equity ; >= 0EUR :: replace:Opzioni_su_azioni & groupBy:securityId
 
+# 7) verifica che non ci siano posizioni c/c che superino il 20% del NAV
+amount:>20% & security:Conto_corrente,Depositi_a_termine ; = 0%
+
+
+
 checkListEnd:
 externalSuiteFileName:
 
