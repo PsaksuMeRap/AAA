@@ -24,7 +24,7 @@ getFundNavGlobalEquity <- function(date) {
 	
 	# selezione i campi Ticker, Close e TRADE_DATE
 	query <- paste("SELECT * FROM [Prezzi storici azioni].dbo.Fondi ",
-			"WHERE Ticker='2742261CH' AND ",
+			"WHERE Ticker='LU0810451434' AND ",
 			"TRADE_DATE ='",date,"'")
 	dati <- sqlQuery(connection,query,as.is=TRUE)
 	print(paste(date,"GlobalEquity",dati[,"Close"]))
@@ -46,7 +46,7 @@ getFundNavEuroFixedIncome <- function(date) {
 	
 	# selezione i campi NumeroValore, Date e Price
 	query <- paste("SELECT * FROM [Prezzi storici reddito fisso].dbo.PrezziStorici ",
-			"WHERE NumeroValore='2490099' AND ",
+			"WHERE NumeroValore='LU0810451608' AND ",
 			"Date ='",date,"'")
 	dati <- sqlQuery(connection,query,as.is=TRUE)
 	print(paste(date,"EuroFixedInc",dati[,"Price"]/100))
