@@ -19,7 +19,7 @@ sys[["allowedCurrencies"]] <- c("ATS",
 		"GBP","GRD","IDR","IEP",
 		"INR","ITL","JPY","MXN",
 		"NLG","NOK","NZD","PLN",
-		"PTE","SEK","SGD",
+		"PTE","RUB","SEK","SGD",
 		"TRY","USD","ZAR","CHr"
 )
 
@@ -28,9 +28,9 @@ sys[["tradedCurrencies"]] <- c(
 		"CHF","DKK","EUR",
 		"GBP","IDR","INR",
 		"JPY","MXN","NOK",
-		"NZD","PLN","SEK",
-		"SGD","TRY","USD",
-		"ZAR"
+		"NZD","PLN","RUB",
+		"SEK","SGD","TRY",
+		"USD","ZAR"
 )
 
 sys[["homeDir"]] <- homeDir
