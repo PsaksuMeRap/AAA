@@ -1,0 +1,24 @@
+Allocare_investment_type,ID,Riskman_strumento
+Agency Bonds,2,Obbligazioni
+Bond Funds,3,Fondi obbligazionari
+Cash Accounts,40,Conto corrente
+Convertible Bond Funds,3,Fondi obbligazionari
+Corporate Bonds,2,Obbligazioni
+Currency Forwards,22,FX Forward
+Currency Options,19,Opzioni su divise
+Fiduciary Call Deposits,41,Call Geld
+Fixed Deposits,7,Depositi a termine
+Floater,5,Floating rate notes
+GOAL,28,GOALs
+Govt. Bonds,2,Obbligazioni
+Hedge Funds,44,Fondi Hedge
+Margin Accounts,40,Conto corrente
+Mid & Long Term Notes,2,Obbligazioni
+Non-voting Stocks,1,Azioni
+Ordinary Bonds,2,Obbligazioni
+Ordinary Stocks,1,Azioni
+Other Bonds,2,Obbligazioni
+Stock Certificates,36,Certificate
+Stock Funds,14,Fondi azionari
+Stock Options,18,Opzioni su azioni
+Tracker Certificates,36,Certificate
