@@ -6,7 +6,7 @@
 
 test.shouldCreateRepositoryAllocareInvestementType <- function() {
 	
-	repositoryAllocareInvestmentType <- create_repositoryAllocareInvestementType()
+	repositoryAllocareInvestmentType <- create_repositoryAllocareInvestmentType()
 	
 	# test1: should return the equity ID
 	

@@ -29,7 +29,7 @@ source("./allocare/lib/library.R")
 source("./base/unitTests/utilities/createExchangeRatesTestRepository.R")
 testRepository <- createExchangeRatesTestRepository() 
 repositories$exchangeRates <- testRepository
-
+repositories$allocareInvestmentType <- create_repositoryAllocareInvestmentType()
 
 # load the list of test in the variable dirs
 source("./allocare/unitTests/tests.R")

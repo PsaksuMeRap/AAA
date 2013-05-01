@@ -3,8 +3,7 @@
 # Author: claudio
 ###############################################################################
 
+setClass("IdAllocare",contains="character")
 
-## test directories
-dirs = c(
-		"./allocare/unitTests/t.repositoryAllocareInvestmentType"
-)
+# estendi la classe virtuale Id con ID_Ayrton
+setIs("IdAllocare","Id")

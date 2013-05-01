@@ -80,10 +80,22 @@ explodePortfolioByFunds <- function(portfolio,fundsDb,fundPortfolios) {
 }
 
 
-explodeAllPortfoliosByAllFunds <- function(portfolios) {
-	fundsDb <- create_fundsDB()
-	fundPortfolios <- filterLists(portfolios,by="owner",value=extractFromList(fundsDb,"owner"))
-	
-	invisible(new("Portfolios",lapply(portfolios,explodePortfolioByFunds,fundsDb,fundPortfolios=fundPortfolios)))
+explodeAllPortfoliosByAllFunds <- function(portfolios,only="all") {
+	fundsDb <- create_fundsDB()	
+	if (only="all") {
+		fundPortfolios <- filterLists(portfolios,by="owner",value=extractFromList(fundsDb,"owner"))
+		invisible(new("Portfolios",lapply(portfolios,explodePortfolioByFunds,fundsDb,fundPortfolios=fundPortfolios)))
+	} else {
+		only = c("GLOBAL EQUITY","OC FIXED INCOME")
+		values=extractFromList(fundsDb,"fundName")
+		areRequired <- is.element(values,only)
+		if (any(areRequired)) {
+			fundsDb <- fundsDb[areRequired]
+			fundPortfolios <- filterLists(portfolios,by="owner",value=extractFromList(fundsDb,"owner"))
+			invisible(new("Portfolios",lapply(portfolios,explodePortfolioByFunds,fundsDb,fundPortfolios=fundPortfolios)))			
+		} else {
+			return(portfolios)
+		}
+	}
 }
 
