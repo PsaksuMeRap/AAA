@@ -151,7 +151,7 @@ if (FALSE) {
 	
 	portfolios <- portfoliosFactory(portfolios)
 	
-	portfolios <- explodeAllPortfoliosByAllFunds(portfolios)
+	portfolios <- explodeAllPortfoliosByAllFunds(portfolios, only = c("GLOBAL ECONOMY"))
 	
 	AyrtonTestSuite <- testSuiteFactory(testSuiteName="Clienti Ayrton",directories="./ClientiNew")
 	results <- lapply(AyrtonTestSuite@testSuitesParsed,applyTestSuite,portfolios)
