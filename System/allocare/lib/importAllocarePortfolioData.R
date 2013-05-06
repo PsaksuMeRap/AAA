@@ -4,7 +4,7 @@
 ###############################################################################
 
 
-importAllocarePortfolio <- function(file) {
+importAllocarePortfolioData <- function(file) {
 	
 	data.df <- read.delim(file,header=TRUE,as.is=TRUE)
 	
