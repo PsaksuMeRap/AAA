@@ -6,7 +6,7 @@ testSuiteKind: specific
 testTarget: pippo226
 reportTo: claudio.ortelli@usi.ch; info@bacep.com
 outputDir: ./ClientiNew
-groupDefinition: allowedSecurities = Depositi_a_termine,Conto_corrente,Conto_metallo_oro,Fondi_Hedge,Bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari,Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity
+groupDefinition: allowedSecurities = Depositi_a_termine,Conto_corrente,FX_Forward,Conto_metallo_oro,Fondi_Hedge,Bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari,Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity
 checkListStart:
 security:allowedSecurities ; = 100%
 # vincolo monetario derivato dal benchmark high yield max 15% + 15% du scostamento massimo
