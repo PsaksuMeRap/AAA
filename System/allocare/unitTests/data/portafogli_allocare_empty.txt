@@ -1,0 +1,1 @@
+Tree	Portfolio	Asset Category	Investment Category	Investment Type	Investment Object Identifier	Investment Object Name	Currency	Nominal/Quantity*	Nominal/Quantity	Value	Eco Exp	Mat Date	Rating Standard & Poors	Rating Moodys	Clean Price*	Clean Price	Underlying	Underlying Quantity*	Underlying Quantity	Option Feature
