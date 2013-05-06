@@ -124,8 +124,9 @@ if (FALSE) {
 	
 	dates <- c(as.Date("2011-09-14"),as.Date("2011-09-15"),as.Date("2011-09-16"))
 	dates <- c("2012-10-24")
-	dates <- c("2012-11-21")	
+	dates <- c("2013-04-24")	
 	date <- dates
+	
 	for (date in as.character(dates)) {
 		print(date)
 		# controlla che la data sia dopo il "2011-05-31" altrimenti togli il fondo globalEconomy
@@ -137,12 +138,12 @@ if (FALSE) {
 		
 		portfolios <- portfoliosFactory(portfolios)
 
-		portfolios <- explodeAllPortfoliosByAllFunds(portfolios)
+		portfolios <- explodeAllPortfoliosByAllFunds(portfolios, only = c("GLOBAL ECONOMY"))
 		
 		AyrtonTestSuite <- testSuiteFactory(testSuiteName="Clienti Ayrton",directories="./ClientiNew")
 		results <- lapply(AyrtonTestSuite@testSuitesParsed,applyTestSuite,portfolios,date)
-	
 	}
+	
 } else {
 	dati <- importDBPortfolioGenerale()	
 	fundsOwners <- c("pippo53","pippo76","pippo210")
@@ -181,4 +182,4 @@ whois <- function(names) {
 x <- c("pippo11","pippo72","pippo132","pippo13","pippo84")
 
 
-
+tmp <- extractFromList(dati,"Cliente") == "pippo221"

@@ -27,8 +27,13 @@ test.shouldImportFile <- function() {
 				PrezzoMercato=as.numeric(gsub("'","",x[["Clean.Price"]])),
 				ValoreMercatoLocalCurrency=as.numeric(gsub("'","",x[["Value"]])),
 				ID_AAA=0,
-				ID_strumento=reporitories$allocareInvestmentType$getId(x[["Investment.Type"]]),
-				rating=ifelse(ratingSP=="" | ratingSP=="NR",ratingMoody,ratingSP)
+				ID_strumento=repositories$allocareInvestmentType$getId(x[["Investment.Type"]]),
+				rating=ifelse(ratingSP=="" | ratingSP=="NR",ratingMoody,ratingSP),
+				EconomicExposure=as.numeric(gsub("'","",x[["Eco.Exp"]])),
+				Underlying=x[["Underlying"]],
+				UnderlyingQuantity=as.numeric(gsub("'","",x[["Underlying.Quantity"]])),
+				OptionFeature=x[["Option.Feature"]]
+				
 		)
 		
 		return(allocarePosition)
