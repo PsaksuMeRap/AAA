@@ -1,6 +1,6 @@
 setGeneric("idFactory",def=function(origin,...) standardGeneric("idFactory"))
 
-setMethod("idFactory",signature(origin="AyrtonPosition"),
+setMethod("idFactory",signature(origin="AllocarePosition"),
 		function(origin) {
 			
 			# available instruments at 2012-04-10

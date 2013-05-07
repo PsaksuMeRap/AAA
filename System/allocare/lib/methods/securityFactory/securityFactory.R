@@ -2,23 +2,23 @@
 # 
 # Author: claudio
 ###############################################################################
-source("./ayrton/lib/methods/securityFactory/createSecurity.R")
+source("./allocare/lib/methods/securityFactory/createSecurity.R")
 
-setMethod("securityFactory",signature(origin="AyrtonPosition"),
+setMethod("securityFactory",signature(origin="AllocarePosition"),
 		function(origin,identifyOnly=FALSE) {
 
 			# define the function used to identify the position type, i.e. Equity, Bond, 
 			# Hedge Fund, ...
-		
+
 			identifyInstrumentType <- function(origin) {
 				# record: a list
 				
 				# create the repository of the instruments if not available
 				if (!exists("instruments",envir=repositories,inherits=TRUE)) {
-					eval(expression(instruments <- create_repositoryInstruments())
+					eval(expression(allocareInvestmentType <- create_repositoryAllocareInvestmentType())
 							,env=repositories)
 				}
-				
+# arrivato qui: devi settare lo strumento				
 				securityType <- repositories$instruments$getInstrumentName(origin@ID_strumento)
 				if (is.na(securityType)) {
 					msg <- paste("Warning: the instrument with ID",
