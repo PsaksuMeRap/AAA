@@ -124,7 +124,7 @@ if (FALSE) {
 	
 	dates <- c(as.Date("2011-09-14"),as.Date("2011-09-15"),as.Date("2011-09-16"))
 	dates <- c("2012-10-24")
-	dates <- c("2013-04-24")	
+	dates <- c("2013-03-02","2013-03-17")	
 	date <- dates
 	
 	for (date in as.character(dates)) {
@@ -139,6 +139,7 @@ if (FALSE) {
 		portfolios <- portfoliosFactory(portfolios)
 
 		portfolios <- explodeAllPortfoliosByAllFunds(portfolios, only = c("GLOBAL ECONOMY"))
+		# portfolios <- explodeAllPortfoliosByAllFunds(portfolios)
 		
 		AyrtonTestSuite <- testSuiteFactory(testSuiteName="Clienti Ayrton",directories="./ClientiNew")
 		results <- lapply(AyrtonTestSuite@testSuitesParsed,applyTestSuite,portfolios,date)
