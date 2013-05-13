@@ -46,7 +46,7 @@ currency:USD ; <=35% :: replace:Opzioni_su_divise
 currency:USD ; >=-35% :: replace:Opzioni_su_divise
 
 # 2) verifica che non ci siano posizioni non cash che superino il 10% del NAV
-amount:>10% & security!:Conto_corrente,Depositi_a_termine ; = 0%
+amount:>10% & security!:Conto_corrente,Depositi_a_termine,FX_Forward ; = 0%
 
 # 3) verifica che non ci siano posizioni che superino il 20% del NAV
 amount:>=20% & security!:Conto_corrente, ; = 0%
