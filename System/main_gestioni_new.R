@@ -107,7 +107,8 @@ clienti <- c(
 		"pippo222",
 		"pippo223",
 		"pippo224",
-		"pippo226"
+		"pippo226",
+		"pippo227"
 )
 
 		
@@ -124,7 +125,7 @@ if (FALSE) {
 	
 	dates <- c(as.Date("2011-09-14"),as.Date("2011-09-15"),as.Date("2011-09-16"))
 	dates <- c("2012-10-24")
-	dates <- c("2013-03-02","2013-03-17")	
+	dates <- c("2013-05-06")	
 	date <- dates
 	
 	for (date in as.character(dates)) {

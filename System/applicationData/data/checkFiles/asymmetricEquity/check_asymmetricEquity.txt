@@ -46,9 +46,11 @@ currency:USD ; <=35% :: replace:Opzioni_su_divise
 currency:USD ; >=-35% :: replace:Opzioni_su_divise
 
 # 2) verifica che non ci siano posizioni non cash che superino il 10% del NAV
-amount:>10% & security!:Conto_corrente,Depositi_a_termine,FX_Forward ; = 0%
+#    attenzione: bond governativi sono ammessi fino al 35%!
+amount:>10% & security!:Conto_corrente,Depositi_a_termine,FX_Forward,Bond_gov ; = 0%
 
 # 3) verifica che non ci siano posizioni che superino il 20% del NAV
+#    attenzione: bond governativi sono ammessi fino al 35%!
 amount:>=20% & security!:Conto_corrente, ; = 0%
 
 # 4) verifica le posizioni opzioni_su_divise
@@ -60,10 +62,14 @@ currency:AUD,BRL,CHF,EUR,NOK,TRY,USD ; >= 0EUR :: replace:Opzioni_su_azioni & gr
 # 6) verifica le posizioni opzioni_su_azioni (short call)
 security:Equity ; >= 0EUR :: replace:Opzioni_su_azioni & groupBy:securityId
 
-# 7) verifica che non ci siano posizioni c/c che superino il 20% del NAV
+# 7) verifica le posizioni opzioni_su_azioni (short call)
+security:Equity ; <= 100% :: replace:Opzioni_su_azioni & groupBy:securityId
+
+# 8) verifica che non ci siano posizioni c/c che superino il 20% del NAV
 amount:>20% & security:Conto_corrente,Depositi_a_termine ; = 0%
 
-
+# 9) verifica che sia investito almeno il 51% equity o bond
+security:Equity,Fondi_azionari,Strutturati_EQ,ETF_equity,Bond ; > 51%
 
 checkListEnd:
 externalSuiteFileName:
