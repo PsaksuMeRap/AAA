@@ -98,7 +98,7 @@ setMethod("createSecurity",signature(origin="Ayrton_Opzioni_su_azioni"),
 			info <- getOptionParameters(origin)			
 			
 			# identify the underlying equity
-			underlying <- createEquitySecurityFromIsin(info[["isin"]])
+			underlying <- createEquitySecurityFromIsin(info[["isin"]],origin@Moneta)
 			## adjust for the missing currency in case that the underlying equity is not in the DBEquity
 			if (identical(underlying@currency,new("Currency"))) underlying@currency <- new("Currency",origin@Moneta)
 		
