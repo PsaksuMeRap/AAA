@@ -12,3 +12,5 @@ security:Depositi_a_termine,Conto_corrente,Bond,Capital_protected_notes,Floating
 security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity  ; <= 50% :: explode:Fondi_misti
 checkListEnd:
 externalSuiteFileName:
+
+# relazione chiusa. Controlli terminati il 2013-06-03
