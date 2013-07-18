@@ -76,7 +76,6 @@ clienti <- c(
 		"pippo102",
 		"pippo104",
 		"pippo106",
-		"pippo110",
 		"pippo120",
 		"pippo121",
 		"pippo123",
