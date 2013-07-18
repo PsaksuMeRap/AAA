@@ -18,11 +18,12 @@ setMethod("securityFactory",signature(origin="AllocarePosition"),
 					eval(expression(allocareInvestmentType <- create_repositoryAllocareInvestmentType())
 							,env=repositories)
 				}
-# arrivato qui: devi settare lo strumento				
-				securityType <- repositories$instruments$getInstrumentName(origin@ID_strumento)
+				
+				id_strumento <- repositories$allocareInvestmentType$getId(origin@Strumento)
+				securityType <- repositories$instruments$getInstrumentName(id_strumento)
 				if (is.na(securityType)) {
 					msg <- paste("Warning: the instrument with ID",
-							origin@ID_strumento,"does not exist!")
+							origin@Strumento,"does not exist!")
 					stop(msg)
 				}
 				return(securityType)
@@ -32,8 +33,7 @@ setMethod("securityFactory",signature(origin="AllocarePosition"),
 			securityType <- identifyInstrumentType(origin)
 			if (identifyOnly) return(securityType)
 			
-			# class(origin) <- paste("Ayrton",securityType,sep="_")
-			origin <- new(paste("Ayrton",securityType,sep="_"),origin)
+			origin <- new(paste("Allocare",securityType,sep="_"),origin)
 			
 			security <- createSecurity(origin)
 			return(security)

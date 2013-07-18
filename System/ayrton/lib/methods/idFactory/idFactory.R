@@ -58,7 +58,7 @@ setMethod("idFactory",signature(origin="AyrtonPosition"),
 			## 51,ETF_commodities_gold
 			## 52,Credit_linked_note
 			## 53,Unclassified
-			## 54,Conto_corrente_fittizio"
+			## 54,Conto_corrente_fittizio
 			## 55,ETF_commodities_platinum
 			## 56,Bond_floater
 			
@@ -70,6 +70,7 @@ setMethod("idFactory",signature(origin="AyrtonPosition"),
 				
 				return(idAyrton)
 			}
+			# consider Bond_floater
 			if (origin@ID_strumento==56) {
 				isin <- substr(origin@NumeroValore,1,12)
 				idAyrton <- new("IdAyrton",

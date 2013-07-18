@@ -3,9 +3,9 @@
 # Author: claudio
 ##############g)#################################################################
 
-setMethod("createSecurity",signature(origin="AyrtonPosition"),
+setMethod("createSecurity",signature(origin="AllocarePosition"),
 		function(origin) {
-		## this is the default method for any AyrtonPosition 
+		## this is the default method for any AllocarePosition 
 		## not further specified
 
 		# this is a common slot of all instruments
