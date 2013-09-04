@@ -102,7 +102,6 @@ clienti <- c(
 		"pippo206",
 		"pippo220",
 		"pippo221",
-		"pippo222",
 		"pippo223",
 		"pippo224",
 		"pippo226",
@@ -179,7 +178,8 @@ whois <- function(names) {
 	return(sapply(names,getName,df))
 }
 
+
+# fine
+
 x <- c("pippo11","pippo72","pippo132","pippo13","pippo84")
-
-
 tmp <- extractFromList(dati,"Cliente") == "pippo221"
