@@ -20,3 +20,6 @@ security:Bond & rating:>=BBB ; >= 60% :: explode:Fondi_misti
 security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity ; <= 10% :: explode:Fondi_misti
 checkListEnd:
 externalSuiteFileName:
+
+# log
+# tolta il 2013-09-11 dai controlli perché siamo solo consulenti ma non abbiamo un mandato di gestione
