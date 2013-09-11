@@ -9,12 +9,15 @@ outputDir: ./ClientiNew
 groupDefinition: allowedSecurities = Depositi_a_termine,Conto_corrente,Certificate,Fondi_Hedge,Bond,High_yield,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari,Equity,Basket_certificate,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity,ETF_commodities_gold
 checkListStart:
 security:allowedSecurities ; = 100%
-currency:EUR ; >= 60%
+currency:EUR ; >= 70%
 security:allowedSecurities & amount:<0% ; = 0%
 security:Depositi_a_termine,Conto_corrente,Floating_rate_notes ; <= 40%
-security:Fondi_obbligazionari,Certificate + security:Bond & rating:>BBB ; <= 80% 
-security:Fondi_obbligazionari,Certificate + security:Bond & rating:>BBB ; >= 60% 
+security:Fondi_obbligazionari,Certificate,Strutturati_FI + security:Bond & rating:>BBB ; <= 80% 
+security:Fondi_obbligazionari,Certificate,Strutturati_FI + security:Bond & rating:>BBB ; >= 60% 
 security:High_yield ; <= 15%
 security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity ; <= 10% 
 checkListEnd:
 externalSuiteFileName:
+
+# log
+# 2013-09-11 Aggiunto Strutturati_FI ai vincoli riguardanti la parte obbligazionaria

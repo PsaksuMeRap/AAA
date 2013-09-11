@@ -236,7 +236,7 @@ setMethod("createSecurity",signature(origin="Ayrton_Depositi_a_termine"),
 
 setMethod("createSecurity",signature(origin="Ayrton_Strutturati_FI"),
 		function(origin) {
-			
+		
 			# this is a common slot of all instruments
 			idAyrton <- idFactory(origin)
 			
