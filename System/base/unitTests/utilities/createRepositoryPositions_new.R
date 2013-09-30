@@ -16,451 +16,483 @@ createRepositoryPositions <- function() {
 	repository <- createRepositoryAyrtonPositions()
 	
 	testData <- new.env()
-
+	
+	# ---------------------------------------	
 	## create equity1
-	Moneta <- "CHF"
-	Saldo <- 15
-	NumeroValore <- "1203204CH"
-	Nome <- "Roche Holding Gs"
-	ValoreMercatoMonetaCHF <- 88205
-	ID_strumento <- 1
-
-	currency <- new("Currency",Moneta)
-	name <- Nome
-	id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
+	createPositionEquity1 <- function() {
+		Moneta <- "CHF"
+		Saldo <- 15
+		NumeroValore <- "1203204CH"
+		Nome <- "Roche Holding Gs"
+		ValoreMercatoMonetaCHF <- 88205
+		ID_strumento <- 1
+		
+		currency <- new("Currency",Moneta)
+		name <- Nome
+		id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
+		
+		security <- new("Equity",currency=currency,name=name,id=id)
+		quantity <- Saldo
+		value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
+		value <- repositories$exchangeRates$exchange(value,currency)
+		x <- new("PositionEquity",
+				id=id,
+				security=security,
+				quantity=quantity,
+				value=value)
+		return(x)
+		
+	}
+	testData$equity1 <- createPositionEquity1()
 	
-	security <- new("Equity",currency=currency,name=name,id=id)
-	quantity <- Saldo
-	value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
-	value <- repositories$exchangeRates$exchange(value,currency)
-	x <- new("PositionEquity",
-			id=id,
-			security=security,
-			quantity=quantity,
-			value=value)
-	A_equity1 <- x
-	testData$equity1 <- x
-
+	# ---------------------------------------	
 	## create equity2
-	Moneta <- "EUR"
-	Saldo <- 1000
-	NumeroValore <- "1469452EU"
-	Nome <- "Kontron AG"
-	ValoreMercatoMonetaCHF <- 7439.7503136
-	ID_strumento <- 1
-	
-	currency <- new("Currency",Moneta)
-	name <- Nome
-	id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
-	
-	security <- new("Equity",currency=currency,name=name,id=id)
-	quantity <- Saldo
-	value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
-	value <- repositories$exchangeRates$exchange(value,currency)
-	x <- new("PositionEquity",
-			id=id,
-			security=security,
-			quantity=quantity,
-			value=value)	
+	createPositionEquity2 <- function() {
+		Moneta <- "EUR"
+		Saldo <- 1000
+		NumeroValore <- "1469452EU"
+		Nome <- "Kontron AG"
+		ValoreMercatoMonetaCHF <- 7439.7503136
+		ID_strumento <- 1
+		
+		currency <- new("Currency",Moneta)
+		name <- Nome
+		id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
+		
+		security <- new("Equity",currency=currency,name=name,id=id)
+		quantity <- Saldo
+		value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
+		value <- repositories$exchangeRates$exchange(value,currency)
+		x <- new("PositionEquity",
+				id=id,
+				security=security,
+				quantity=quantity,
+				value=value)	
+		
+		return(x)
+		
+	}
+	testData$equity2 <- createPositionEquity2()
 
-	A_equity2 <- x
-	testData$equity2 <- x
-	
+	# ---------------------------------------	
 	## create an indexCertificate
-	Moneta <- "USD"
-	Saldo <- 100
-	NumeroValore <- "US46429B3096"
-	Nome <- "ISHARES MSCI Indon"
-	ValoreMercatoMonetaCHF <- 283354.88
-	ID_strumento <- 15
+	createPositionIndex_certificate <- function() {
+		Moneta <- "USD"
+		Saldo <- 100
+		NumeroValore <- "US46429B3096"
+		Nome <- "ISHARES MSCI Indon"
+		ValoreMercatoMonetaCHF <- 283354.88
+		ID_strumento <- 15
+		
+		currency <- new("Currency",Moneta)
+		name <- Nome
+		id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
+		
+		security <- new("Index_certificate",currency=currency,name=name,id=id)
+		quantity <- Saldo
+		value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
+		value <- repositories$exchangeRates$exchange(value,currency)
+		x <- new("Position",
+				id=id,
+				security=security,
+				quantity=quantity,
+				value=value)	
+		
+		return(x)
+		
+	}
+	testData$indexCertificate <- createPositionIndex_certificate()
 	
-	currency <- new("Currency",Moneta)
-	name <- Nome
-	id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
-	
-	security <- new("Index_certificate",currency=currency,name=name,id=id)
-	quantity <- Saldo
-	value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
-	value <- repositories$exchangeRates$exchange(value,currency)
-	x <- new("Position",
-			id=id,
-			security=security,
-			quantity=quantity,
-			value=value)	
-	
-	A_indexCertificate <- x
-	testData$indexCertificate <- x
-	
-	# ---------------------------------------
+	# ---------------------------------------	
 	# create bond1
-	Moneta <- "EUR"
-	Saldo <- 100000
-	NumeroValore <- "10234542"
-	Nome <- "20130603 - 3.625% Pfizer 03-06-13"
-	ValoreMercatoMonetaCHF <- 124345.632268
-	ID_AAA <- 1218
-	ID_strumento <- 2
-	rating <- "AAA"
-	
-	currency <- new("Currency",Moneta)
-	name <- Nome
-	id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
-	maturity <- "2013-06-03"
-
-	security <- new("Bond",currency=currency,name=name,id=id,maturity=maturity)
-	quantity <- new("NominalValue",amount=new("Amount",Saldo),currency=currency)
-	value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
-	value <- repositories$exchangeRates$exchange(value,currency)
-	x <- new("PositionBond",
-			# accruedInterest= 
-			rating=rating,
-			id=id,
-			security=security,
-			quantity=quantity,
-			value=value)		
-	
-	A_bond1 <- x
-	testData$bond1 <- x
-	
+	createPositionBond1 <- function() {
+		Moneta <- "EUR"
+		Saldo <- 100000
+		NumeroValore <- "10234542"
+		Nome <- "20130603 - 3.625% Pfizer 03-06-13"
+		ValoreMercatoMonetaCHF <- 124345.632268
+		ID_AAA <- 1218
+		ID_strumento <- 2
+		rating <- "AAA"
+		
+		currency <- new("Currency",Moneta)
+		name <- Nome
+		id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
+		maturity <- "2013-06-03"
+		
+		security <- new("Bond",currency=currency,name=name,id=id,maturity=maturity)
+		quantity <- new("NominalValue",amount=new("Amount",Saldo),currency=currency)
+		value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
+		value <- repositories$exchangeRates$exchange(value,currency)
+		x <- new("PositionBond",
+				# accruedInterest= 
+				rating=rating,
+				id=id,
+				security=security,
+				quantity=quantity,
+				value=value)		
+		
+		return(x)
+	}
+	testData$bond1 <- createAyrtonBond1()
 	
 	# ---------------------------------------
 	# create bond2
-	Moneta <- "EUR"
-	Saldo <- 300000
-	NumeroValore <- "10334618M"
-	Nome <- "20120410 - 1.503% EIB FRN 10-04-12"
-	ValoreMercatoMonetaCHF <- 362217.41556
-	ID_AAA <- 1976
-	ID_strumento <- 2
-	rating <- "B"
-	
-	currency <- new("Currency",Moneta)
-	name <- Nome
-	id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
-	maturity <- "2012-04-12"
-	
-	security <- new("Bond",currency=currency,name=name,id=id,maturity=maturity)
-	quantity <- new("NominalValue",amount=new("Amount",Saldo),currency=currency)
-	value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
-	value <- repositories$exchangeRates$exchange(value,currency)
-	x <- new("PositionBond",
-			# accruedInterest= 
-			rating=rating,
-			id=id,
-			security=security,
-			quantity=quantity,
-			value=value)		
-	
-	A_bond2 <- x
-	testData$bond2 <- x
+	createPositionBond2 <- function() {
+		Moneta <- "EUR"
+		Saldo <- 300000
+		NumeroValore <- "10334618M"
+		Nome <- "20120410 - 1.503% EIB FRN 10-04-12"
+		ValoreMercatoMonetaCHF <- 362217.41556
+		ID_AAA <- 1976
+		ID_strumento <- 2
+		rating <- "B"
+		
+		currency <- new("Currency",Moneta)
+		name <- Nome
+		id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
+		maturity <- "2012-04-12"
+		
+		security <- new("Bond",currency=currency,name=name,id=id,maturity=maturity)
+		quantity <- new("NominalValue",amount=new("Amount",Saldo),currency=currency)
+		value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
+		value <- repositories$exchangeRates$exchange(value,currency)
+		x <- new("PositionBond",
+				# accruedInterest= 
+				rating=rating,
+				id=id,
+				security=security,
+				quantity=quantity,
+				value=value)		
+		
+		return(x)
+	}
+	testData$bond2 <- createAyrtonBond2()
 	
 	
 	# ---------------------------------------
 	# create bond3
-	Moneta <- "EUR"
-	Saldo <- 200000
-	NumeroValore <- "11429971F"
-	Nome <- "20120319 - 1.869% Rabobank Nederland 19-03-12"
-	ValoreMercatoMonetaCHF <- 241164.668888
-	ID_AAA <- 1967
-	ID_strumento <- 2
-	rating <- "C"
-	
-	currency <- new("Currency",Moneta)
-	name <- Nome
-	id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
-	maturity <- "2012-03-19"
-	
-	security <- new("Bond",currency=currency,name=name,id=id,maturity=maturity)
-	quantity <- new("NominalValue",amount=new("Amount",Saldo),currency=currency)
-	value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
-	value <- repositories$exchangeRates$exchange(value,currency)
-	x <- new("PositionBond",
-			# accruedInterest= 
-			rating=rating,
-			id=id,
-			security=security,
-			quantity=quantity,
-			value=value)		
-	
-	A_bond3 <- x
-	testData$bond3 <- x	
+	createPositionBond3 <- function() {
+		Moneta <- "EUR"
+		Saldo <- 200000
+		NumeroValore <- "11429971F"
+		Nome <- "20120319 - 1.869% Rabobank Nederland 19-03-12"
+		ValoreMercatoMonetaCHF <- 241164.668888
+		ID_AAA <- 1967
+		ID_strumento <- 2
+		rating <- "C"
+		
+		currency <- new("Currency",Moneta)
+		name <- Nome
+		id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
+		maturity <- "2012-03-19"
+		
+		security <- new("Bond",currency=currency,name=name,id=id,maturity=maturity)
+		quantity <- new("NominalValue",amount=new("Amount",Saldo),currency=currency)
+		value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
+		value <- repositories$exchangeRates$exchange(value,currency)
+		x <- new("PositionBond",
+				# accruedInterest= 
+				rating=rating,
+				id=id,
+				security=security,
+				quantity=quantity,
+				value=value)		
+		
+		return(x)
+	}
+	testData$bond3 <- createAyrtonBond3()
 	
 	
 	# ---------------------------------------
 	# create bond4
-	Moneta <- "CHF"
-	Saldo <- 50000
-	NumeroValore <- "2403071"
-	Nome <- "20120221 - 2% Toyota 21-02-12"
-	ValoreMercatoMonetaCHF <- 50025
-	ID_AAA <- 1073
-	ID_strumento <- 2
-	rating <- "BB"
-	
-	currency <- new("Currency",Moneta)
-	name <- Nome
-	id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
-	maturity <- "2012-02-21"
-	
-	security <- new("Bond",currency=currency,name=name,id=id,maturity=maturity)
-	quantity <- new("NominalValue",amount=new("Amount",Saldo),currency=currency)
-	value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
-	value <- repositories$exchangeRates$exchange(value,currency)
-	x <- new("PositionBond",
-			# accruedInterest= 
-			rating=rating,
-			id=id,
-			security=security,
-			quantity=quantity,
-			value=value)		
-	
-	A_bond4 <- x
-	testData$bond4 <- x		
+	createPositionBond4 <- function() {
+		Moneta <- "CHF"
+		Saldo <- 50000
+		NumeroValore <- "2403071"
+		Nome <- "20120221 - 2% Toyota 21-02-12"
+		ValoreMercatoMonetaCHF <- 50025
+		ID_AAA <- 1073
+		ID_strumento <- 2
+		rating <- "BB"
+		
+		currency <- new("Currency",Moneta)
+		name <- Nome
+		id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
+		maturity <- "2012-02-21"
+		
+		security <- new("Bond",currency=currency,name=name,id=id,maturity=maturity)
+		quantity <- new("NominalValue",amount=new("Amount",Saldo),currency=currency)
+		value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
+		value <- repositories$exchangeRates$exchange(value,currency)
+		x <- new("PositionBond",
+				# accruedInterest= 
+				rating=rating,
+				id=id,
+				security=security,
+				quantity=quantity,
+				value=value)		
+		
+		return(x)
+	}
+	testData$bond4 <- createAyrtonBond4()	
 	
 	
 	# ---------------------------------------
 	# create bond_floater
-	Moneta <- "EUR"
-	Saldo <- 75000
-	NumeroValore <- "XS0439139998"
-	Nome <- "20130109 - 0.415% EIB FRN [09.01.2015] 09-01-13"
-	ValoreMercatoMonetaCHF <- 90861.23
-	ID_AAA <- 2242
-	ID_strumento <- 56
-	rating <- "AAA"
+	createPositionBond_floater <- function() {
+		Moneta <- "EUR"
+		Saldo <- 75000
+		NumeroValore <- "XS0439139998"
+		Nome <- "20130109 - 0.415% EIB FRN [09.01.2015] 09-01-13"
+		ValoreMercatoMonetaCHF <- 90861.23
+		ID_AAA <- 2242
+		ID_strumento <- 56
+		rating <- "AAA"
+		
+		currency <- new("Currency",Moneta)
+		name <- Nome
+		id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
+		maturity <- "2013-01-09"
+		
+		security <- new("Bond_floater",currency=currency,name=name,id=id,maturity=maturity)
+		quantity <- new("NominalValue",amount=new("Amount",Saldo),currency=currency)
+		value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
+		value <- repositories$exchangeRates$exchange(value,currency)
+		x <- new("PositionBond",
+				# accruedInterest= 
+				rating=rating,
+				id=id,
+				security=security,
+				quantity=quantity,
+				value=value)		
+		
+		return(x)	
+	}
+	testData$bond_floater <- createPositionBond_floater()
 	
-	currency <- new("Currency",Moneta)
-	name <- Nome
-	id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
-	maturity <- "2013-01-09"
-	
-	security <- new("Bond_floater",currency=currency,name=name,id=id,maturity=maturity)
-	quantity <- new("NominalValue",amount=new("Amount",Saldo),currency=currency)
-	value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
-	value <- repositories$exchangeRates$exchange(value,currency)
-	x <- new("PositionBond",
-			# accruedInterest= 
-			rating=rating,
-			id=id,
-			security=security,
-			quantity=quantity,
-			value=value)		
-	
-	A_bond_floater <- x
-	testData$bond_floater <- x	
-
 	
 	# ---------------------------------------
 	# create Fondi_obbligazionari with 0 accruedInterest (because included in the price)
-	Moneta <- "CHF"
-	Saldo <- 105
-	NumeroValore <- "1831257"
-	Nome <- "20201231 - 0% <3Y - LGT CF 2Y CHF 31-12-20"
-	ValoreMercatoMonetaCHF <- 227808
-	ID_AAA <- 363
-	ID_strumento <- 3
-	
-	currency <- new("Currency",Moneta)
-	name <- Nome
-	id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
-	maturity <- "2020-12-31"
-	
-	security <- new("Fondi_obbligazionari",currency=currency,name=name,id=id,maturity=maturity)
-	quantity <- Saldo
-	value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
-	value <- repositories$exchangeRates$exchange(value,currency)
-	x <- new("PositionFondi_obbligazionari",
-			accruedInterest=new("AccruedInterest",toMoney(0.0,security@currency)),
-			rating=longTermRatingFactory("NR"),
-			id=id,
-			security=security,
-			quantity=quantity,
-			value=value)		
-	
-	A_fondiObbligazionariNoAC <- x
-	testData$fondiObbligazionariNoAC <- x	
+	createPositionFondi_obbligazionariNoAc <- function() {	
+		Moneta <- "CHF"
+		Saldo <- 105
+		NumeroValore <- "1831257"
+		Nome <- "20201231 - 0% <3Y - LGT CF 2Y CHF 31-12-20"
+		ValoreMercatoMonetaCHF <- 227808
+		ID_AAA <- 363
+		ID_strumento <- 3
+		
+		currency <- new("Currency",Moneta)
+		name <- Nome
+		id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
+		maturity <- "2020-12-31"
+		
+		security <- new("Fondi_obbligazionari",currency=currency,name=name,id=id,maturity=maturity)
+		quantity <- Saldo
+		value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
+		value <- repositories$exchangeRates$exchange(value,currency)
+		x <- new("PositionFondi_obbligazionari",
+				accruedInterest=new("AccruedInterest",toMoney(0.0,security@currency)),
+				rating=longTermRatingFactory("NR"),
+				id=id,
+				security=security,
+				quantity=quantity,
+				value=value)
+		return(x)
+		
+	}
+	testData$fondiObbligazionariNoAC <- createPositionFondi_obbligazionariNoAc()		
 	
 	
 	# ---------------------------------------
 	# create Fondi_obbligazionari from OpenCapital (accruedInterest set to NA_real_)
-	Moneta <- "EUR"
-	Saldo <- 10000
-	NumeroValore <- "LU0810451608"
-	Nome <- "20201231 - 0% <3Y - CB-Accent Lux Sicav - Fixed Income EUR 31-12-20"
-	ValoreMercatoMonetaCHF <- 227808
-	ID_AAA <- 825
-	ID_strumento <- 3
+	createPositionFondi_obbligazionari <- function() {
+		Moneta <- "EUR"
+		Saldo <- 10000
+		NumeroValore <- "LU0810451608"
+		Nome <- "20201231 - 0% <3Y - CB-Accent Lux Sicav - Fixed Income EUR 31-12-20"
+		ValoreMercatoMonetaCHF <- 227808
+		ID_AAA <- 825
+		ID_strumento <- 3
+		
+		currency <- new("Currency",Moneta)
+		name <- Nome
+		id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
+		maturity <- "2020-12-31"
+		
+		security <- new("Fondi_obbligazionari",currency=currency,name=name,id=id,maturity=maturity)
+		quantity <- Saldo
+		value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
+		value <- repositories$exchangeRates$exchange(value,currency)
+		x <- new("PositionFondi_obbligazionari",
+				accruedInterest=new("AccruedInterest",toMoney(NA_real_,security@currency)),
+				rating=longTermRatingFactory("NR"),
+				id=id,
+				security=security,
+				quantity=quantity,
+				value=value)		
+		
+		return(x)
+	}
+	testData$fondiObbligazionari <- createPositionFondi_obbligazionari()
 	
-	currency <- new("Currency",Moneta)
-	name <- Nome
-	id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
-	maturity <- "2020-12-31"
 	
-	security <- new("Fondi_obbligazionari",currency=currency,name=name,id=id,maturity=maturity)
-	quantity <- Saldo
-	value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
-	value <- repositories$exchangeRates$exchange(value,currency)
-	x <- new("PositionFondi_obbligazionari",
-			accruedInterest=new("AccruedInterest",toMoney(NA_real_,security@currency)),
-			rating=longTermRatingFactory("NR"),
-			id=id,
-			security=security,
-			quantity=quantity,
-			value=value)		
-	
-	A_fondiObbligazionari <- x
-	testData$fondiObbligazionari <- x
-	
-	
-
 	# ---------------------------------------
 	# create Strutturati_FI
-	Moneta <- "EUR"
-	Saldo <- 150000
-	NumeroValore <- "11439214"
-	Nome <- "20130521 - <3Y - Floored Floares with Cap 1.75%-4.625% p.a. On CS"
-	ValoreMercatoMonetaCHF <- 179299.42998
-	ID_AAA <- 98
-	ID_strumento <- 49
-	
-	currency <- new("Currency",Moneta)
-	name <- Nome
-	id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
-	expiryDate <- "2013-05-21"
-	underlyingHorizon <- "<3Y"
-	security <- new("Strutturati_FI",currency=currency,name=name,id=id,expiryDate=expiryDate,underlyingHorizon=underlyingHorizon)
-	quantity <- Saldo
-	value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
-	value <- repositories$exchangeRates$exchange(value,currency)
-	x <- new("PositionStrutturati_FI",,
-			id=id,
-			security=security,
-			quantity=quantity,
-			value=value)		
-	
-	A_strutturati_FI <- x
-	testData$strutturati_FI <- x
+	createPositionStrutturati_FI <- function() {
+		Moneta <- "EUR"
+		Saldo <- 150000
+		NumeroValore <- "11439214"
+		Nome <- "20130521 - <3Y - Floored Floares with Cap 1.75%-4.625% p.a. On CS"
+		ValoreMercatoMonetaCHF <- 179299.42998
+		ID_AAA <- 98
+		ID_strumento <- 49
+		
+		currency <- new("Currency",Moneta)
+		name <- Nome
+		id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
+		expiryDate <- "2013-05-21"
+		underlyingHorizon <- "<3Y"
+		security <- new("Strutturati_FI",currency=currency,name=name,id=id,expiryDate=expiryDate,underlyingHorizon=underlyingHorizon)
+		quantity <- Saldo
+		value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
+		value <- repositories$exchangeRates$exchange(value,currency)
+		x <- new("PositionStrutturati_FI",,
+				id=id,
+				security=security,
+				quantity=quantity,
+				value=value)		
+		
+		return(x)
+		
+	}
+	testData$strutturati_FI <- createPositionStrutturati_FI()
 	
 	
 	# ---------------------------------------
 	# create Fondi_misti
-	Moneta <- "CHF"
-	Saldo <- 400
-	NumeroValore <- "279211CH"
-	Nome <- "70-30 UBS Strategy Fund Yield CHF"
-	ValoreMercatoMonetaCHF <- 46988
-	ID_AAA <- 1476
-	ID_strumento <- 26
-	
-	currency <- new("Currency",Moneta)
-	name <- Nome
-	id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
-	security <- new("Fondi_misti",currency=currency,name=name,id=id)
-	quantity <- Saldo
-	value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
-	value <- repositories$exchangeRates$exchange(value,currency)
-	x <- new("PositionFondi_misti",
-			equityPart=30,
-			bondPart=70,
-			id=id,
-			security=security,
-			quantity=quantity,
-			value=value)		
-	
-	A_Fondi_misti <- x	
-	testData$Fondi_misti <- x
-	
+	createPositionFondi_misti <- function() {
+		Moneta <- "CHF"
+		Saldo <- 400
+		NumeroValore <- "279211CH"
+		Nome <- "70-30 UBS Strategy Fund Yield CHF"
+		ValoreMercatoMonetaCHF <- 46988
+		ID_AAA <- 1476
+		ID_strumento <- 26
+		
+		currency <- new("Currency",Moneta)
+		name <- Nome
+		id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
+		security <- new("Fondi_misti",currency=currency,name=name,id=id)
+		quantity <- Saldo
+		value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
+		value <- repositories$exchangeRates$exchange(value,currency)
+		x <- new("PositionFondi_misti",
+				equityPart=30,
+				bondPart=70,
+				id=id,
+				security=security,
+				quantity=quantity,
+				value=value)		
+		
+		return(x)
+	}
+	testData$Fondi_misti <- createPositionFondi_misti()
 	
 	
 	# ---------------------------------------
 	# create OpenCapital fund "Fixed Income"
-	Moneta <- "EUR"
-	Saldo <- 11000
-	NumeroValore <- "LU0810451608"
-	Nome <- "CB-Accent Lux Sicav - Fixed Income EUR 31-12-20"
-	ValoreMercatoMonetaCHF <- 1686274.5866043
-	ID_AAA <- 825
-	ID_strumento <- 3
-	
-	currency <- new("Currency",Moneta)
-	name <- Nome
-	id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
-	maturity <- "2020-12-31"
-	
-	security <- new("Fondi_obbligazionari",currency=currency,name=name,id=id,maturity=maturity)
-	quantity <- Saldo
-	value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
-	value <- repositories$exchangeRates$exchange(value,currency)
-	x <- new("PositionFondi_obbligazionari",
-			accruedInterest=new("AccruedInterest",toMoney(NA_real_,security@currency)),
-			rating=longTermRatingFactory("NR"),
-			id=id,
-			security=security,
-			quantity=quantity,
-			value=value)		
-
-	A_fixedIncome <- x
-	testData$fixedIncome <- x	
-	
+	createAyrtonFixedIncome <- function() {
+		Moneta <- "EUR"
+		Saldo <- 11000
+		NumeroValore <- "LU0810451608"
+		Nome <- "CB-Accent Lux Sicav - Fixed Income EUR 31-12-20"
+		ValoreMercatoMonetaCHF <- 1686274.5866043
+		ID_AAA <- 825
+		ID_strumento <- 3
+		
+		currency <- new("Currency",Moneta)
+		name <- Nome
+		id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
+		maturity <- "2020-12-31"
+		
+		security <- new("Fondi_obbligazionari",currency=currency,name=name,id=id,maturity=maturity)
+		quantity <- Saldo
+		value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
+		value <- repositories$exchangeRates$exchange(value,currency)
+		x <- new("PositionFondi_obbligazionari",
+				accruedInterest=new("AccruedInterest",toMoney(NA_real_,security@currency)),
+				rating=longTermRatingFactory("NR"),
+				id=id,
+				security=security,
+				quantity=quantity,
+				value=value)		
+		
+		return(x)
+	}
+	testData$fixedIncome <- createAyrtonFixedIncome()
 	
 	
 	# ---------------------------------------
 	# create OpenCapital fund "Global Economy"
-	Moneta <- "CHF"
-	Saldo <- 100
-	NumeroValore <- "11995588CH"
-	Nome <- "CB-Accent Global Economy"
-	ValoreMercatoMonetaCHF <- 9263
-	ID_AAA <- 2256
-	ID_strumento <- 14
-	
-	currency <- new("Currency",Moneta)
-	name <- Nome
-	id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
-	underlyingHorizon <- "<3Y"
-	security <- new("Fondi_azionari",currency=currency,name=name,id=id)
-	quantity <- Saldo
-	value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
-	value <- repositories$exchangeRates$exchange(value,currency)
-	x <- new("PositionFondi_azionari",
-			id=id,
-			security=security,
-			quantity=quantity,
-			value=value)		
-	
-	A_globalEconomy  <- x
-	testData$globalEconomy <- x
+	createAyrtonGlobalEconomy <- function() {
+		Moneta <- "CHF"
+		Saldo <- 100
+		NumeroValore <- "11995588CH"
+		Nome <- "CB-Accent Global Economy"
+		ValoreMercatoMonetaCHF <- 9263
+		ID_AAA <- 2256
+		ID_strumento <- 14
+		
+		currency <- new("Currency",Moneta)
+		name <- Nome
+		id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
+		underlyingHorizon <- "<3Y"
+		security <- new("Fondi_azionari",currency=currency,name=name,id=id)
+		quantity <- Saldo
+		value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
+		value <- repositories$exchangeRates$exchange(value,currency)
+		x <- new("PositionFondi_azionari",
+				id=id,
+				security=security,
+				quantity=quantity,
+				value=value)		
+		
+		return(x)
+	}
+	testData$globalEconomy <- createAyrtonGlobalEconomy() 
 	
 	
 	
 	# ---------------------------------------
 	# create position  Fondi_mercato_monetario
-	Moneta <- "USD"
-	Saldo <- 9
-	NumeroValore <- "1968421EU"
-	Nome <- "20201231 - 0% Aberdeen Liquidity Fund 31-12-20"
-	ValoreMercatoMonetaCHF <- 25246.17324864
-	ID_AAA <- 162
-	ID_strumento <- 4
-	
-	currency <- new("Currency",Moneta)
-	name <- Nome
-	id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
-	security <- new("Fondi_mercato_monetario",currency=currency,name=name,id=id)
-	quantity <- Saldo
-	value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
-	value <- repositories$exchangeRates$exchange(value,currency)
-	x <- new("Position",
-			id=id,
-			security=security,
-			quantity=quantity,
-			value=value)
-	
-	A_Fondi_mercato_monetario2  <- x
-	testData$Fondi_mercato_monetario2 <- x
-
-	
+	createPositionFondi_mercato_monetario2 <- function() {
+		Moneta <- "USD"
+		Saldo <- 9
+		NumeroValore <- "1968421EU"
+		Nome <- "20201231 - 0% Aberdeen Liquidity Fund 31-12-20"
+		ValoreMercatoMonetaCHF <- 25246.17324864
+		ID_AAA <- 162
+		ID_strumento <- 4
+		
+		currency <- new("Currency",Moneta)
+		name <- Nome
+		id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
+		security <- new("Fondi_mercato_monetario",currency=currency,name=name,id=id)
+		quantity <- Saldo
+		value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
+		value <- repositories$exchangeRates$exchange(value,currency)
+		x <- new("Position",
+				id=id,
+				security=security,
+				quantity=quantity,
+				value=value)
+		
+		return(x)
+		
+	}
+	testData$Fondi_mercato_monetario2 <- createPositionFondi_mercato_monetario2()
 	
 	# ---------------------------------------
 	# create position on Floating_rate_notes
@@ -489,64 +521,67 @@ createRepositoryPositions <- function() {
 	testData$Floating_rate_notes2 <- x
 	
 	
-	
-	
-	# ---------------------------------------
+	# -------------------------------------------
 	# create position on Anticipi_fissi
-	Moneta <- "CHF"
-	Saldo <- -1.0
-	NumeroValore <- ""
-	Nome <- "Anticipo fisso 01-04-09/02-04-12 Ipoteca tasso fisso 115.000 CHF 2.05%"
-	ValoreMercatoMonetaCHF <- -1.0
-	ID_AAA <- NA_real_
-	ID_strumento <- 6
-	
-	currency <- new("Currency",Moneta)
-	name <- Nome
-	id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
-	security <- new("Anticipi_fissi",currency=currency,name=name,id=id)
-	quantity <- Saldo
-	value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
-	value <- repositories$exchangeRates$exchange(value,currency)
-	x <- new("PositionAnticipi_fissi",
-			accruedInterest=new("AccruedInterest",toMoney(NA_real_,security@currency)),
-			id=id,
-			security=security,
-			quantity=quantity,
-			value=value)
-	
-	A_Anticipi_fissi1  <- x
-	testData$Anticipi_fissi1 <- x
+	createPositionAnticipi_fissi1 <- function() {
+		Moneta <- "CHF"
+		Saldo <- -1.0
+		NumeroValore <- ""
+		Nome <- "Anticipo fisso 01-04-09/02-04-12 Ipoteca tasso fisso 115.000 CHF 2.05%"
+		ValoreMercatoMonetaCHF <- -1.0
+		ID_AAA <- NA_real_
+		ID_strumento <- 6
+		
+		currency <- new("Currency",Moneta)
+		name <- Nome
+		id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
+		security <- new("Anticipi_fissi",currency=currency,name=name,id=id)
+		quantity <- Saldo
+		value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
+		value <- repositories$exchangeRates$exchange(value,currency)
+		x <- new("PositionAnticipi_fissi",
+				accruedInterest=new("AccruedInterest",toMoney(NA_real_,security@currency)),
+				id=id,
+				security=security,
+				quantity=quantity,
+				value=value)
+		
+		return(x)
+	}
+	testData$Anticipi_fissi1 <- createPositionAnticipi_fissi1() 
+
 	
 	
 
 	
 	# ---------------------------------------
 	# create position on Anticipi_fissi
-	Moneta <- "CHF"
-	Saldo <- -15.50
-	NumeroValore <- ""
-	Nome <- "Anticipo fisso 20-12-11/14-02-12 Novers 0.65%"
-	ValoreMercatoMonetaCHF <- -15.50
-	ID_AAA <- NA_real_
-	ID_strumento <- 6
-	
-	currency <- new("Currency",Moneta)
-	name <- Nome
-	id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
-	security <- new("Anticipi_fissi",currency=currency,name=name,id=id)
-	quantity <- Saldo
-	value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
-	value <- repositories$exchangeRates$exchange(value,currency)
-	x <- new("PositionAnticipi_fissi",
-			accruedInterest=new("AccruedInterest",toMoney(NA_real_,security@currency)),
-			id=id,
-			security=security,
-			quantity=quantity,
-			value=value)
-	
-	A_Anticipi_fissi2  <- x
-	testData$Anticipi_fissi2 <- x
+	createPositionAnticipi_fissi2  <- function() {
+		Moneta <- "CHF"
+		Saldo <- -15.50
+		NumeroValore <- ""
+		Nome <- "Anticipo fisso 20-12-11/14-02-12 Novers 0.65%"
+		ValoreMercatoMonetaCHF <- -15.50
+		ID_AAA <- NA_real_
+		ID_strumento <- 6
+		
+		currency <- new("Currency",Moneta)
+		name <- Nome
+		id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
+		security <- new("Anticipi_fissi",currency=currency,name=name,id=id)
+		quantity <- Saldo
+		value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
+		value <- repositories$exchangeRates$exchange(value,currency)
+		x <- new("PositionAnticipi_fissi",
+				accruedInterest=new("AccruedInterest",toMoney(NA_real_,security@currency)),
+				id=id,
+				security=security,
+				quantity=quantity,
+				value=value)
+		
+		return(x)
+	}
+	testData$Anticipi_fissi2 <- createPositionAnticipi_fissi2() 
 	
 	
 	

@@ -203,7 +203,5 @@ createRepositoryPositions <- function() {
 	Conto_corrente_fittizio <- positionFactory(repository$Conto_corrente_fittizio)
 	testData$Conto_corrente_fittizio <- Conto_corrente_fittizio
 	
-
-	
 	return(testData)
 }

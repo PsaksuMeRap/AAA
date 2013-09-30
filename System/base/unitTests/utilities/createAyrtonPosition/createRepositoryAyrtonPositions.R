@@ -9,7 +9,8 @@ createAyrtonAnticipi_fissi1 <- function() {
 	x@ValoreMercatoMonetaCHF <- -1.0
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 6
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -25,7 +26,8 @@ createAyrtonAnticipi_fissi2  <- function() {
 	x@ValoreMercatoMonetaCHF <- -15.50
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 6
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -41,7 +43,8 @@ createAyrtonAnticipi_fissiAccrual1 <- function() {
 	x@ValoreMercatoMonetaCHF <- -0.01
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 6
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -57,7 +60,8 @@ createAyrtonAnticipi_fissiAccrual2 <- function() {
 	x@ValoreMercatoMonetaCHF <- -0.15
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 6
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -75,7 +79,8 @@ createAyrtonBond1 <- function() {
 	x@ID_AAA <- 1218
 	x@ID_strumento <- 2
 	x@rating <- "AAA"
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -93,7 +98,8 @@ createAyrtonBond2 <- function() {
 	x@ID_AAA <- 1976
 	x@ID_strumento <- 2
 	x@rating <- "B"
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -111,7 +117,8 @@ createAyrtonBond3 <- function() {
 	x@ID_AAA <- 1967
 	x@ID_strumento <- 2
 	x@rating <- "C"
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -129,10 +136,27 @@ createAyrtonBond4 <- function() {
 	x@ID_AAA <- 1073
 	x@ID_strumento <- 2
 	x@rating <- "BB"
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
-
+createAyrtonBond_floater <- function() {
+# create a valid bond_floater
+	x <- new("AyrtonPosition")
+	x@Cliente <- "pippo98"
+	x@Strumento <- "O      "
+	x@Moneta <- "EUR"
+	x@Saldo <- 75000
+	x@NumeroValore <- "XS0439139998A"
+	x@Nome <- "20130109 - 0.415% EIB FRN [09.01.2015] 09-01-13"
+	x@PrezzoMercato <- 100.26
+	x@ValoreMercatoMonetaCHF <- 90861.23
+	x@ID_AAA <- 2242
+	x@ID_strumento <- 56
+	x@rating <- "AAA"
+	
+	return(x)
+}
 
 createAyrtonConto_corrente_fittizio <- function() {
 	# create a valid Conto_corrente_fittizio
@@ -146,7 +170,8 @@ createAyrtonConto_corrente_fittizio <- function() {
 	x@ValoreMercatoMonetaCHF <- 4590600
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 54
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -161,7 +186,8 @@ createAyrtonConto_corrente1 <- function() {
 	x@ValoreMercatoMonetaCHF <- 219365.039954224
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 40
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -177,7 +203,8 @@ createAyrtonConto_corrente2 <- function() {
 	x@ValoreMercatoMonetaCHF <- 39416.1310068511
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 40
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -193,7 +220,8 @@ createAyrtonCredit_linked_note <- function() {
 	x@ValoreMercatoMonetaCHF <- 600743.26
 	x@ID_AAA <- 169
 	x@ID_strumento <- 52
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -209,7 +237,8 @@ createAyrtonDeposito_a_termine_acc1 <- function() {
 	x@ValoreMercatoMonetaCHF <- 0.75
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 7
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 	
 }
 
@@ -226,7 +255,8 @@ createAyrtonDeposito_a_termine1 <- function() {
 	x@ValoreMercatoMonetaCHF <- 1.0
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 7
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -242,7 +272,8 @@ createAyrtonDiritti_aumento_capitale_azionario1 <- function() {
 	x@ValoreMercatoMonetaCHF <- 4623.4140158976
 	x@ID_AAA <- 2422
 	x@ID_strumento <- 30
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -261,8 +292,8 @@ createAyrtonEquity1 <- function() {
 	x@ID_AAA <- 824
 	x@ID_strumento <- 1
 	
-	class(x) <- "AyrtonPosition"
-	return(x)
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -280,7 +311,8 @@ createAyrtonEquity2 <- function() {
 	x@ID_AAA <- 1772
 	x@ID_strumento <- 1
 	
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -297,7 +329,8 @@ createAyrtonETF_commodities_gold <- function() {
 	x@ValoreMercatoMonetaCHF <- 434745.41
 	x@ID_AAA <- 2430
 	x@ID_strumento <- 51
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 	
 }
 
@@ -314,7 +347,8 @@ createAyrtonETF_commodities_platinum <- function() {
 	x@ValoreMercatoMonetaCHF <- 37192.09
 	x@ID_AAA <- 2461
 	x@ID_strumento <- 55
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -330,7 +364,8 @@ createAyrtonETF_equity1 <- function() {
 	x@ValoreMercatoMonetaCHF <- 134472.7632072
 	x@ID_AAA <- 2277
 	x@ID_strumento <- 45
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -346,7 +381,8 @@ createAyrtonETF_equity2 <- function() {
 	x@ValoreMercatoMonetaCHF <- 428690.281932
 	x@ID_AAA <- 2278
 	x@ID_strumento <- 45
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -363,7 +399,8 @@ createAyrtonFixedIncome <- function() {
 	x@ValoreMercatoMonetaCHF <- 1686274.5866043
 	x@ID_AAA <- 825
 	x@ID_strumento <- 3
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -379,7 +416,8 @@ createAyrtonFloating_rate_notes1 <- function() {
 	x@ValoreMercatoMonetaCHF <- 0
 	x@ID_AAA <- 1060
 	x@ID_strumento <- 5
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -395,7 +433,8 @@ createAyrtonFloating_rate_notes2 <- function() {
 	x@ValoreMercatoMonetaCHF <- 77853.223734
 	x@ID_AAA <- 1060
 	x@ID_strumento <- 5
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -411,7 +450,8 @@ createAyrtonFondi_azionari1 <- function() {
 	x@ValoreMercatoMonetaCHF <- 30388.376629908
 	x@ID_AAA <- 1840
 	x@ID_strumento <- 14
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -427,7 +467,8 @@ createAyrtonFondi_azionari2 <- function() {
 	x@ValoreMercatoMonetaCHF <- 17115
 	x@ID_AAA <- 1701
 	x@ID_strumento <- 14
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -444,7 +485,8 @@ createAyrtonFondi_Hedge1 <- function() {
 	x@ValoreMercatoMonetaCHF <- 291.9517
 	x@ID_AAA <- 1869
 	x@ID_strumento <- 44
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 	
 }
 
@@ -462,7 +504,8 @@ createAyrtonFondi_Hedge2 <- function() {
 	x@ValoreMercatoMonetaCHF <- 259474.944273368
 	x@ID_AAA <- 1953
 	x@ID_strumento <- 44
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 	
 }
 
@@ -479,7 +522,8 @@ createAyrtonFondi_immobiliari1 <- function() {
 	x@ValoreMercatoMonetaCHF <- 18225.6287818451
 	x@ID_AAA <- 1884
 	x@ID_strumento <- 25
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 	
 }
 
@@ -496,7 +540,8 @@ createAyrtonFondi_mercato_monetario1 <- function() {
 	x@ValoreMercatoMonetaCHF <- 0
 	x@ID_AAA <- 469
 	x@ID_strumento <- 4
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -512,7 +557,8 @@ createAyrtonFondi_mercato_monetario2 <- function() {
 	x@ValoreMercatoMonetaCHF <- 25246.17324864
 	x@ID_AAA <- 162
 	x@ID_strumento <- 4
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -529,7 +575,8 @@ createAyrtonFondi_misti <- function() {
 	x@ValoreMercatoMonetaCHF <- 46988
 	x@ID_AAA <- 1476
 	x@ID_strumento <- 26
-	class(x) <- "AyrtonPosition"	
+	class(x) <- "AyrtonPosition" 
+    return(x)	
 }
 
 
@@ -546,7 +593,8 @@ createAyrtonFondi_obbligazionari <- function() {
 	x@ValoreMercatoMonetaCHF <- 10300
 	x@ID_AAA <- 825
 	x@ID_strumento <- 3
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -563,7 +611,8 @@ createAyrtonFondi_obbligazionariNoAc <- function() {
 	x@ValoreMercatoMonetaCHF <- 227808
 	x@ID_AAA <- 363
 	x@ID_strumento <- 3
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -581,7 +630,8 @@ createAyrtonFutures_EQ1 <- function() {
 	x@ValoreMercatoMonetaCHF <- 0
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 50
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 	
 }
 
@@ -600,7 +650,8 @@ createAyrtonFX_Forward1 <- function() {
 	x@ValoreMercatoMonetaCHF <- -1e+06
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 22
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -617,7 +668,8 @@ createAyrtonGlobalEconomy <- function() {
 	x@ValoreMercatoMonetaCHF <- 9263
 	x@ID_AAA <- 2256
 	x@ID_strumento <- 14
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -634,7 +686,8 @@ createAyrtonGlobalEquity <- function() {
 	x@ValoreMercatoMonetaCHF <- 147480
 	x@ID_AAA <- 1701
 	x@ID_strumento <- 14
-	class(x) <- "AyrtonPosition"	
+	class(x) <- "AyrtonPosition" 
+    return(x)	
 }
 
 
@@ -650,7 +703,8 @@ createAyrtonIndex_certificate <- function() {
 	x@ValoreMercatoMonetaCHF <- 283354.88
 	x@ID_AAA <- 2272
 	x@ID_strumento <- 15
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -666,7 +720,8 @@ createAyrtonIndex_certificate2 <- function() {
 	x@ValoreMercatoMonetaCHF <- 201963.76
 	x@ID_AAA <- 2273
 	x@ID_strumento <- 15
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -684,7 +739,8 @@ createAyrtonIndexCertificate <- function() {
 	x@ID_AAA <- 283354.88
 	x@ID_strumento <- 15
 	
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -700,7 +756,8 @@ createAyrtonMetalli_preziosi1 <- function() {
 	x@ValoreMercatoMonetaCHF <- 284105.4768
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 21
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -717,7 +774,8 @@ createAyrtonNoExists <- function() {
 	x@ValoreMercatoMonetaCHF <- 88205
 	x@ID_AAA <- 100020202
 	x@ID_strumento <- 1
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 	A_noExists <- x	
 	testData$noExists <- x
 }
@@ -737,7 +795,8 @@ createAyrtonObbligazioni_convertibili <- function() {
 	x@ID_AAA <- 2209
 	x@ID_strumento <- 11
 	x@rating <- "BB"
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -753,7 +812,8 @@ createAyrtonOpzioni_su_azioni1 <- function() {
 	x@ValoreMercatoMonetaCHF <- -5840
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 18
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -769,7 +829,8 @@ createAyrtonOpzioni_su_azioni2 <- function() {
 	x@ValoreMercatoMonetaCHF <- -107100
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 18	
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 	
 }
 
@@ -786,7 +847,8 @@ createAyrtonOpzioni_su_azioni3 <- function() {
 	x@ValoreMercatoMonetaCHF <- 5840
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 18
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 	
 }
 
@@ -803,7 +865,8 @@ createAyrtonOpzioni_su_azioni4 <- function() {
 	x@ValoreMercatoMonetaCHF <- 107100
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 18
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -820,7 +883,8 @@ createAyrtonOpzioni_su_divise1 <- function() {
 	x@ValoreMercatoMonetaCHF <- 7751.37
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 19
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -838,7 +902,8 @@ createAyrtonOpzioni_su_divise2 <- function() {
 	x@ValoreMercatoMonetaCHF <- -44.03
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 19
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -855,7 +920,8 @@ createAyrtonOpzioni_su_divise3 <- function() {
 	x@ValoreMercatoMonetaCHF <- 7751.37
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 19
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -872,7 +938,8 @@ createAyrtonOpzioni_su_divise4 <- function() {
 	x@ValoreMercatoMonetaCHF <- -44.03
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 19
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -889,7 +956,8 @@ createAyrtonOpzioni_su_obbligazioni <- function() {
 	x@ValoreMercatoMonetaCHF <- 242.47
 	x@ID_AAA <- NA_real_
 	x@ID_strumento <- 20
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -906,7 +974,8 @@ createAyrtonProRata1 <- function() {
 	x@ValoreMercatoMonetaCHF <- 796.818833446452
 	x@ID_AAA <- 1073
 	x@ID_strumento <- 2
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 	
 }
 
@@ -924,7 +993,8 @@ createAyrtonProRataFondiObbligazionari <- function() {
 	x@ValoreMercatoMonetaCHF <- 0
 	x@ID_AAA <- 825
 	x@ID_strumento <- 3
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -941,7 +1011,8 @@ createAyrtonProRataObbligazioni_convertibili <- function() {
 	x@ValoreMercatoMonetaCHF <- 431.78
 	x@ID_AAA <- 2209
 	x@ID_strumento <- 11
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -957,7 +1028,8 @@ createAyrtonStrutturati_EQ1 <- function() {
 	x@ValoreMercatoMonetaCHF <- 350385.56
 	x@ID_AAA <- 119
 	x@ID_strumento <- 48
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -973,7 +1045,8 @@ createAyrtonStrutturati_EQ2 <- function() {
 	x@ValoreMercatoMonetaCHF <- 580316.156620992
 	x@ID_AAA <- 121
 	x@ID_strumento <- 48
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+     return(x)
 }
 
 
@@ -990,7 +1063,8 @@ createAyrtonStrutturati_FI <- function() {
 	x@ValoreMercatoMonetaCHF <- 179299.42998
 	x@ID_AAA <- 98
 	x@ID_strumento <- 49
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -1006,7 +1080,8 @@ createAyrtonStrutturati_FI1 <- function() {
 	x@ValoreMercatoMonetaCHF <- 179299.42998
 	x@ID_AAA <- 98
 	x@ID_strumento <- 49
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
 
 
@@ -1023,5 +1098,6 @@ createAyrtonUnclassified <- function() {
 	x@ValoreMercatoMonetaCHF <- 123.55
 	x@ID_AAA <- 1073
 	x@ID_strumento <- 53
-	class(x) <- "AyrtonPosition"
+	class(x) <- "AyrtonPosition" 
+    return(x)
 }
