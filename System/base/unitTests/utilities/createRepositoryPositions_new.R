@@ -496,29 +496,60 @@ createRepositoryPositions <- function() {
 	
 	# ---------------------------------------
 	# create position on Floating_rate_notes
-	Moneta <- "EUR"
-	Saldo <- 65000
-	NumeroValore <- "2122570B"
-	Nome <- "20130307 - 0% Commezbk (variabile da 07-03-2007 a 07-03-2013)"
-	ValoreMercatoMonetaCHF <- 77853.223734
-	ID_AAA <- 1060
-	ID_strumento <- 5
+	createAyrtonFloating_rate_notes1 <- function() {
+		Moneta <- "EUR"
+		Saldo <- 65000
+		NumeroValore <- "2122570B"
+		Nome <- "20130307 - 0% Commezbk (variabile da 07-03-2007 a 07-03-2013)"
+		ValoreMercatoMonetaCHF <- 0
+		ID_AAA <- 1060
+		ID_strumento <- 5
+		
+		currency <- new("Currency",Moneta)
+		name <- Nome
+		id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
+		security <- new("Floating_rate_notes",currency=currency,name=name,id=id)
+		quantity <- Saldo
+		value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
+		value <- repositories$exchangeRates$exchange(value,currency)
+		x <- new("Position",
+				id=id,
+				security=security,
+				quantity=quantity,
+				value=value)
+		
+		return(x)
+	}
+	testData$Floating_rate_notes1 <- createAyrtonFloating_rate_notes1()
 	
-	currency <- new("Currency",Moneta)
-	name <- Nome
-	id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
-	security <- new("Floating_rate_notes",currency=currency,name=name,id=id)
-	quantity <- Saldo
-	value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
-	value <- repositories$exchangeRates$exchange(value,currency)
-	x <- new("Position",
-			id=id,
-			security=security,
-			quantity=quantity,
-			value=value)
 	
-	A_Floating_rate_notes2  <- x
-	testData$Floating_rate_notes2 <- x
+	# ---------------------------------------
+	# create position on Floating_rate_notes
+	createAyrtonFloating_rate_notes2 <- function() {
+		Moneta <- "EUR"
+		Saldo <- 65000
+		NumeroValore <- "2122570B"
+		Nome <- "20130307 - 0% Commezbk (variabile da 07-03-2007 a 07-03-2013)"
+		ValoreMercatoMonetaCHF <- 77853.223734
+		ID_AAA <- 1060
+		ID_strumento <- 5
+		
+		currency <- new("Currency",Moneta)
+		name <- Nome
+		id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
+		security <- new("Floating_rate_notes",currency=currency,name=name,id=id)
+		quantity <- Saldo
+		value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
+		value <- repositories$exchangeRates$exchange(value,currency)
+		x <- new("Position",
+				id=id,
+				security=security,
+				quantity=quantity,
+				value=value)
+		
+		return(x)
+	}
+	testData$Floating_rate_notes2 <- createAyrtonFloating_rate_notes2()
 	
 	
 	# -------------------------------------------
@@ -587,31 +618,33 @@ createRepositoryPositions <- function() {
 	
 	# ---------------------------------------
 	# create position on Deposito_a_termine
-	Moneta <- "CHF"
-	Saldo <- 1
-	NumeroValore <- ""
-	Nome <- "Deposito singolo 01-04-09/02-04-12 deposito a termine al 2.05%"
-	maturity <- "2012-04-02"
-	ValoreMercatoMonetaCHF <- 1.0
-	ID_AAA <- NA_real_
-	ID_strumento <- 7
-	
-	currency <- new("Currency",Moneta)
-	name <- Nome
-	id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
-	security <- new("Deposito_a_termine",currency=currency,name=name,id=id,maturity=maturity)
-	quantity <- Saldo
-	value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
-	value <- repositories$exchangeRates$exchange(value,currency)
-	x <- new("PositionDeposito_a_termine",
-			accruedInterest=new("AccruedInterest",toMoney(NA_real_,security@currency)),
-			id=id,
-			security=security,
-			quantity=quantity,
-			value=value)
-	
-	A_Deposito_a_termine1  <- x
-	testData$Deposito_a_termine1 <- x
+	createAyrtonDeposito_a_termine1 <- function() {
+		Moneta <- "CHF"
+		Saldo <- 1
+		NumeroValore <- ""
+		Nome <- "Deposito singolo 01-04-09/02-04-12 deposito a termine al 2.05%"
+		maturity <- "2012-04-02"
+		ValoreMercatoMonetaCHF <- 1.0
+		ID_AAA <- NA_real_
+		ID_strumento <- 7
+		
+		currency <- new("Currency",Moneta)
+		name <- Nome
+		id <- new("IdAyrton",idAAA=new("IdAAA_character",NumeroValore),idStrumento=ID_strumento)
+		security <- new("Deposito_a_termine",currency=currency,name=name,id=id,maturity=maturity)
+		quantity <- Saldo
+		value <- toMoney(valoreMercatoMonetaCHF,new("Currency","CHF"))
+		value <- repositories$exchangeRates$exchange(value,currency)
+		x <- new("PositionDeposito_a_termine",
+				accruedInterest=new("AccruedInterest",toMoney(NA_real_,security@currency)),
+				id=id,
+				security=security,
+				quantity=quantity,
+				value=value)
+		
+		return(x)
+	}
+	testData$Deposito_a_termine1 <- createAyrtonDeposito_a_termine1()
 	
 	
 
