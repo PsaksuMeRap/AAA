@@ -38,7 +38,7 @@ test.shouldReweightPositions <- function() {
 	names(origin3) <- nomi
 	
 	origin4 <- list("pippo16","A","CHF",30050,"2742261CH",
-			"CB-Accent Global Equity Fund Cap B",99.9755741239983,73.74,
+			"OnCapital Global Equity Fund Cap B",99.9755741239983,73.74,
 			2215887,1660422.54258738,-0.262419839584604,"E","Azioni e simili",
 			2215887,1660422.54258738,2318115.91170625,1701,14,NA,NA,NA,NA)
 	names(origin4) <- nomi

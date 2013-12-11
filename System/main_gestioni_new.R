@@ -41,7 +41,6 @@ setwd(checkDirectory)
 
 ## -- inizializza la testSuite clienti privati
 
-
 clienti <- c(
 		"pippo3",
 		"pippo4",
@@ -152,6 +151,8 @@ if (FALSE) {
 	portfolios <- portfoliosFactory(portfolios)
 	
 	portfolios <- explodeAllPortfoliosByAllFunds(portfolios, only = c("GLOBAL ECONOMY"))
+	
+	portfolios <- explodeAndReplaceFundGlobalEquityAllPortfolios(portfolios,list(Eq=0.84,Fi=0.07))
 	
 	AyrtonTestSuite <- testSuiteFactory(testSuiteName="Clienti Ayrton",directories="./ClientiNew")
 	results <- lapply(AyrtonTestSuite@testSuitesParsed,applyTestSuite,portfolios)

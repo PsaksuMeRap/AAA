@@ -686,7 +686,7 @@ createRepositoryPositions <- function() {
 		Moneta <- "CHF"
 		Saldo <- 250
 		NumeroValore <- "LU0810451434"
-		Nome <- "CB-Accent Global Equity Fund Cap B"
+		Nome <- "OnCapital Global Equity Fund Cap B"
 		ValoreMercatoMonetaCHF <- 17115
 		ID_AAA <- 1701
 		ID_strumento <- 14
@@ -716,7 +716,7 @@ createRepositoryPositions <- function() {
 		Moneta <- "CHF"
 		Saldo <- 2000
 		NumeroValore <- "2742261CH"
-		Nome <- "CB-Accent Global Equity Fund Cap B"
+		Nome <- "OnCapital Global Equity Fund Cap B"
 		ValoreMercatoMonetaCHF <- 147480
 		ID_AAA <- 1701
 		ID_strumento <- 14

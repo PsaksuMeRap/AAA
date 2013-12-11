@@ -75,7 +75,8 @@ if (FALSE) {
 	}
 } else {
 	# caso data attuale
-	fundsOwners <- c("pippo53","pippo76","pippo210","pippo100","pippo101")
+	# fundsOwners <- c("pippo53","pippo76","pippo210","pippo100","pippo101")
+	fundsOwners <- c("pippo210")
 	
 	fundPortfolios <- filterLists(dati,"Cliente",value=fundsOwners)
 	

@@ -290,7 +290,7 @@ createRepositoryAyrtonPositions <- function() {
 	x@Moneta <- "CHF"
 	x@Saldo <- 2000
 	x@NumeroValore <- "LU0810451434"
-	x@Nome <- "CB-Accent Global Equity Fund Cap B"
+	x@Nome <- "OnCapital Global Equity Fund Cap B"
 	x@ValoreMercatoMonetaCHF <- 147480
 	x@ID_AAA <- 1701
 	x@ID_strumento <- 14
@@ -516,7 +516,7 @@ createRepositoryAyrtonPositions <- function() {
 	x@Moneta <- 'CHF'
 	x@Saldo <- 250
 	x@NumeroValore <- "2742261CH"
-	x@Nome <- 'CB-Accent Global Equity Fund Cap B'
+	x@Nome <- 'OnCapital Global Equity Fund Cap B'
 	x@ValoreMercatoMonetaCHF <- 17115
 	x@ID_AAA <- 1701
 	x@ID_strumento <- 14

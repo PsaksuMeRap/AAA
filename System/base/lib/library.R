@@ -105,6 +105,8 @@ source("./base/lib/methods/portfoliosFactory/portfoliosFactory.R")
 
 source("./base/lib/methods/parser/parser.R")
 source("./base/lib/methods/explode/explode.R")
+source("./base/lib/methods/explodeFundGlobalEquity/explodeFundGlobalEquity.R")
+source("./base/lib/methods/explodeAndReplaceFundGlobalEquity/explodeAndReplaceFundGlobalEquity.R")
 source("./base/lib/methods/Apply/Apply.R")
 source("./base/lib/fundsDB.R")
 
