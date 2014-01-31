@@ -7,9 +7,10 @@ testTarget: pippo5
 reportTo: claudio.ortelli@usi.ch; info@bacep.com
 outputDir: ./ClientiNew
 checkListStart:
-currency:EUR ; >= 70%
-security:Depositi_a_termine,Conto_corrente,Bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari; >= 85% :: explode:Fondi_misti
+currency:EUR ; >= 50%
+# controlla che gli strumenti utilizzati siano conformi, se non conformi devono essere autorizzati inserendoli nella lista del controllo
+security:Depositi_a_termine,Conto_corrente,Bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari,Obbligazioni_convertibili,Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity; = 100%
+security:Depositi_a_termine,Conto_corrente,Bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari; >= 70% :: explode:Fondi_misti
 security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity  ; <= 5% :: explode:Fondi_misti
-security:Obbligazioni_convertibili ; <= 7% :: explode:Fondi_misti
 checkListEnd:
 externalSuiteFileName:
