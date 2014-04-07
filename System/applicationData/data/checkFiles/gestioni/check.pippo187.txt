@@ -16,13 +16,13 @@ security:Depositi_a_termine,Conto_corrente,Fondi_mercato_monetario ; <= 100% :: 
 
 security:Conto_corrente & currency!: EUR ; <= 51645.69 EUR
 
-security:Bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari; >= 0 :: explode:Fondi_misti
+security:Bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari; >= 0% :: explode:Fondi_misti
 security:Bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari; <= 90% :: explode:Fondi_misti
 
-security:Equity,Fondi_azionari,ETF_equity ; >= 0 :: explode:Fondi_misti
+security:Equity,Fondi_azionari,ETF_equity ; >= 0% :: explode:Fondi_misti
 security:Equity,Fondi_azionari,ETF_equity ; <= 30% :: explode:Fondi_misti
 
-security:Fondi_commodities,Metalli_preziosi,ETF_commodities_gold,ETF_commodities_platinum,Conto_metallo_oro ; >= 0 :: explode:Fondi_misti
+security:Fondi_commodities,Metalli_preziosi,ETF_commodities_gold,ETF_commodities_platinum,Conto_metallo_oro ; >= 0% :: explode:Fondi_misti
 security:Fondi_commodities,Metalli_preziosi,ETF_commodities_gold,ETF_commodities_platinum,Conto_metallo_oro ; <= 30% :: explode:Fondi_misti
 
 

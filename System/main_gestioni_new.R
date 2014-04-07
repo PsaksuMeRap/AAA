@@ -102,7 +102,8 @@ clienti <- c(
 		"pippo223",
 		"pippo224",
 		"pippo227",
-		"pippo228"
+		"pippo228",
+		"pippo229"
 )
 
 		
@@ -153,7 +154,7 @@ if (FALSE) {
 	portfolios <- explodeAllPortfoliosByAllFunds(portfolios, only = c("GLOBAL ECONOMY"))
 	
 	## Marco devi cambiare i pesi qui!!!
-	portfolios <- explodeAndReplaceFundGlobalEquityAllPortfolios(portfolios,list(Eq=0.84,Fi=0.064))
+	portfolios <- explodeAndReplaceFundGlobalEquityAllPortfolios(portfolios,list(Eq=0.84,Fi=0.065))
 	
 	AyrtonTestSuite <- testSuiteFactory(testSuiteName="Clienti Ayrton",directories="./ClientiNew")
 	results <- lapply(AyrtonTestSuite@testSuitesParsed,applyTestSuite,portfolios)
