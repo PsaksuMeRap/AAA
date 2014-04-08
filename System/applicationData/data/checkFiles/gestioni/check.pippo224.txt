@@ -12,8 +12,8 @@ security:allowedSecurities ; = 100%
 currency:EUR ; >= 70%
 security:allowedSecurities & amount:<0% ; = 0%
 security:Depositi_a_termine,Conto_corrente,Floating_rate_notes ; <= 40%
-security:Fondi_obbligazionari,Certificate,Strutturati_FI + security:Bond & rating:>BBB ; <= 80% 
-security:Fondi_obbligazionari,Certificate,Strutturati_FI + security:Bond & rating:>BBB ; >= 60% 
+security:Fondi_obbligazionari,Certificate,Strutturati_FI + security:Bond & rating:>=BBB- ; <= 80% 
+security:Fondi_obbligazionari,Certificate,Strutturati_FI + security:Bond & rating:>=BBB- ; >= 60% 
 security:High_yield ; <= 15%
 security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity ; <= 20% 
 checkListEnd:
