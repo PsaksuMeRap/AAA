@@ -120,12 +120,13 @@ setMethod("applyTestSuite",signature(x="TestSuiteParsed",po="Positions"),
 			
 			# create a warning if a FALSE is detected
 			if (!all(checkResults)) {
+		print(ownerPrintName)			
 				outputFileName <- paste("warning_",valuationDate,".log",sep="")
 				outputDir <- x@configLines[["outputDir"]]
 				logFile <- paste(outputDir,outputFileName,sep="/")
-				logFile <- file(description=logFile,open="at")
+				# logFile <- file(description=logFile,open="at")
 				cat(ownerPrintName,file=logFile,sep="\n",append=TRUE)
-				close(logFile)
+		#		close(logFile)
 			}
 			names(checkResults) <- NULL
 			return(checkResults)

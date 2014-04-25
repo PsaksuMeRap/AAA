@@ -33,7 +33,7 @@ test.shouldExplodePositionFundGlobalEquity <- function() {
 	checkEquals(result[[1]]@security@id,p1@security@id)
 	checkEquals(result[[1]]@id,p1@id)
 	checkEquals(is(result[[1]]@security,"Fondi_azionari"),TRUE)
-	checkEquals(is(result[[2]]@security,"Conto_corrente_fittizio"),TRUE)
+	checkEquals(is(result[[2]]@security,"Conto_corrente"),TRUE)
 	checkEquals(result[[1]]@value@amount,p1@value@amount*0.85)
 	checkEquals(result[[2]]@value@amount,p1@value@amount*(1-0.85))
 	
