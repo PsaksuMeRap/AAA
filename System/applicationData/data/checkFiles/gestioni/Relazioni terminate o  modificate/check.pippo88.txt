@@ -12,3 +12,5 @@ security:Depositi_a_termine,Conto_corrente,Fondi_mercato_monetario,Bond,Capital_
 security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity  ; <= 70% :: explode:Fondi_misti
 checkListEnd:
 externalSuiteFileName:
+
+relazione chiusa 2014-04-29
