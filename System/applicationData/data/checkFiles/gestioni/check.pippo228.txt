@@ -10,6 +10,7 @@ groupDefinition: allowedSecurities = Depositi_a_termine,Conto_corrente,Bond,Capi
 checkListStart:
 security:allowedSecurities ; = 100%
 currency:EUR ; >= 70%
+security:Conto_corrente & currency:EUR ; >= 300000 EUR
 checkListEnd:
 externalSuiteFileName:
 
