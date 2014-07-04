@@ -187,3 +187,6 @@ whois <- function(names) {
 
 x <- c("pippo11","pippo72","pippo132","pippo13","pippo84")
 tmp <- extractFromList(dati,"Cliente") == "pippo221"
+
+Pippo 2010 problema "Bond / CHF /  NA / 20140702 - 0.672% Westpac FRN (02.04.2015) 02-07-14 rated: Aaa"
+
