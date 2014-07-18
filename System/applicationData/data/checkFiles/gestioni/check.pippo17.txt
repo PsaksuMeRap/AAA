@@ -8,7 +8,7 @@ reportTo: claudio.ortelli@usi.ch; info@bacep.com
 outputDir: ./ClientiNew
 checkListStart:
 currency:CHF ; >= 50%
-security:Depositi_a_termine,Conto_corrente,Bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari ; >= 50% :: explode:Fondi_misti
+security:Depositi_a_termine,Conto_corrente,Bond,ETF_bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari ; >= 50% :: explode:Fondi_misti
 security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity  ; <= 50% :: explode:Fondi_misti
 checkListEnd:
 externalSuiteFileName:

@@ -6,7 +6,7 @@ testSuiteKind: specific
 testTarget: pippo228
 reportTo: claudio.ortelli@opencapital.ch
 outputDir: ./ClientiNew
-groupDefinition: allowedSecurities = Depositi_a_termine,Conto_corrente,Bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari
+groupDefinition: allowedSecurities = Depositi_a_termine,Conto_corrente,Bond,ETF_bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari
 checkListStart:
 security:allowedSecurities ; = 100%
 currency:EUR ; >= 70%

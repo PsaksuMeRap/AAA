@@ -13,7 +13,7 @@ constraintFactory <- function(constraintString) {
 		paste(message,"\nGot",class(constraintString),"instead.")
 		stop(message)
 	}
-	
+
 	string <- removeStartEndSpaces(unclass(constraintString))
 	
 	# check for operator

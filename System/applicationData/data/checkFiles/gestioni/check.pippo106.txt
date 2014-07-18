@@ -9,6 +9,7 @@ testTarget: pippo106
 reportTo: claudio.ortelli@usi.ch; info@bacep.com
 outputDir: ./ClientiNew
 checkListStart:
+
 security:Conto_corrente,Depositi_a_termine,Fondi_azionari ; = 100% 
 checkListEnd:
 externalSuiteFileName:
