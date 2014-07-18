@@ -55,7 +55,6 @@ clienti <- c(
 		"pippo15",
 		"pippo16",
 		"pippo17",
-		"pippo26",
 		"pippo28",
 		"pippo42",
 		"pippo47",
@@ -70,7 +69,6 @@ clienti <- c(
 		"pippo95",
 		"pippo96",
 		"pippo98",
-		"pippo99",
 		"pippo102",
 		"pippo104",
 		"pippo106",
@@ -78,13 +76,11 @@ clienti <- c(
 		"pippo123",
 		"pippo124",
 		"pippo131",
-		"pippo135",
 		"pippo158",
 		"pippo159",
 		"pippo160",
 		"pippo161",
 		"pippo168",
-		"pippo172",
 		"pippo185",
 		"pippo187",
 		"pippo188",
@@ -187,3 +183,4 @@ whois <- function(names) {
 
 x <- c("pippo11","pippo72","pippo132","pippo13","pippo84")
 tmp <- extractFromList(dati,"Cliente") == "pippo221"
+
