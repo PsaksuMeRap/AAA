@@ -13,6 +13,7 @@ get_PID <- function(imageName) {
 		} else {
 			output <- output[-(1:3)]
 			extract_PID <- function(string) {
+				string <- sub(imageName,"",string)
 				PID <- as.integer(strsplit(string,split="\\s+")[[1]][2])
 				return(PID)
 			}

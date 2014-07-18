@@ -43,37 +43,8 @@ source("./adviceManagement/unitTests/t.advisors/advisors.R")
 
 ## test globale
 dirs = c(
-		"./adviceManagement/unitTests/t.archive",
-		#"./adviceManagement/unitTests/t.bloombergData",
-		#"./adviceManagement/unitTests/t.bloombergRequestHandler",
-		"./adviceManagement/unitTests/t.confirmationNoLock",
-		"./adviceManagement/unitTests/t.confirmationWithLock",
-		"./adviceManagement/unitTests/t.detectRprocesses",
-		"./adviceManagement/unitTests/t.fileMove",
-		"./adviceManagement/unitTests/t.logger",
-		"./adviceManagement/unitTests/t.loadPortfolio",
-		"./adviceManagement/unitTests/t.lock_unlock",
-		"./adviceManagement/unitTests/t.logger",
-		"./adviceManagement/unitTests/t.mail",
-		"./adviceManagement/unitTests/t.mailBox",
-		"./adviceManagement/unitTests/t.mainMessageProcessing",
-		"./adviceManagement/unitTests/t.messageFactory",
-		"./adviceManagement/unitTests/t.messageFileNameFactory",
-		"./adviceManagement/unitTests/t.newAdviceNoLock",
-		"./adviceManagement/unitTests/t.newAdviceWithLock",
-		"./adviceManagement/unitTests/t.postOffice",
-		"./adviceManagement/unitTests/t.saveLastObject",
-		"./adviceManagement/unitTests/t.sendStopToRProcess",
-		"./adviceManagement/unitTests/t.startBatchProcess",
-		"./adviceManagement/unitTests/t.subConfirmationProcessing",
-		"./adviceManagement/unitTests/t.subNewAdviceProcessing",
-		"./adviceManagement/unitTests/t.tradeFactory",
-		"./adviceManagement/unitTests/t.tradesToPositionsFactory",	
-		"./adviceManagement/unitTests/t.tradeToPositionFactory",
-		"./adviceManagement/unitTests/t.tradeToPositionsFactory",		
-	 	"./adviceManagement/unitTests/t.tradeToSecurityFactory",
-		"./adviceManagement/unitTests/t.zipResults"
-	)
+		"./adviceManagement/unitTests/t.detectRprocesses"
+		)
 
 testsuite.lists <- defineTestSuite("Test adviceManagement",dirs = dirs)
 testResult <- runTestSuite(testsuite.lists); printTextProtocol(testResult)
