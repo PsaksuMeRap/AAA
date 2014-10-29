@@ -6,18 +6,29 @@ testSuiteKind: specific
 testTarget: pippo224
 reportTo: claudio.ortelli@usi.ch; info@bacep.com
 outputDir: ./ClientiNew
-groupDefinition: allowedSecurities = Depositi_a_termine,Conto_corrente,Certificate,Fondi_Hedge,Bond,ETF_bond,High_yield,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari,Equity,Basket_certificate,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity,ETF_commodities_gold
+##groupDefinition: allowedSecurities = Depositi_a_termine,Conto_corrente,Certificate,Fondi_Hedge,Bond,ETF_bond,High_yield,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari,Equity,Basket_certificate,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity,ETF_commodities_gold
 checkListStart:
-security:allowedSecurities ; = 100%
-currency:EUR ; >= 70%
-security:allowedSecurities & amount:<0% ; = 0%
-security:Depositi_a_termine,Conto_corrente,Floating_rate_notes ; <= 40%
-security:Fondi_obbligazionari,ETF_bond,Certificate,Strutturati_FI + security:Bond & rating:>=BBB- ; <= 80% 
-security:Fondi_obbligazionari,ETF_bond,Certificate,Strutturati_FI + security:Bond & rating:>=BBB- ; >= 60% 
-security:High_yield ; <= 15%
-security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity ; <= 20% 
+## controllo dell'univeso titoli ammessi (se ci sono titoli non nella lista, inserirli se consentiti)
+security!:Depositi_a_termine,Conto_corrente,Bond,ETF_bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari,Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity,Fondi_Hedge; = 0 EUR
+
+## il vincolo sulla moneta nel mandato è inesistente, inserito per essere piu' conservativi
+currency:EUR ; >= 50%
+
+## mandato: monetario 0-100%
+security:Depositi_a_termine,Conto_corrente ; >= 0 EUR
+security:Depositi_a_termine,Conto_corrente ; <= 100%
+
+## mandato: obbligazionario 0-90%
+security:Bond,ETF_bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari; >=  0 EUR :: explode:Fondi_misti
+security:Bond,ETF_bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari; <= 90% :: explode:Fondi_misti
+
+## mandato: azionario 0-30%
+security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity  ; >= 0 EUR :: explode:Fondi_misti
+security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity  ; <= 30%   :: explode:Fondi_misti
+
+## mandato: altro 0-30%
+security:Fondi_Hedge ; >= 0 EUR
+security:Fondi_Hedge ; <= 30%
 checkListEnd:
 externalSuiteFileName:
 
-# log
-# 2013-09-11 Aggiunto Strutturati_FI ai vincoli riguardanti la parte obbligazionaria
