@@ -8,7 +8,6 @@ reportTo: claudio.ortelli@usi.ch; info@bacep.com
 outputDir: ./ClientiNew
 
 checkListStart:
-currency:BRL ; >= 20%
 
 security:Depositi_a_termine,Conto_corrente,Fondi_mercato_monetario,Anticipi_fissi,Bond,ETF_bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari,Equity,Fondi_azionari,ETF_equity,Fondi_commodities,Metalli_preziosi,ETF_commodities_gold,ETF_commodities_platinum,Conto_metallo_oro  ; = 100% :: explode:Fondi_misti
 
