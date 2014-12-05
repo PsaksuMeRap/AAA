@@ -6,13 +6,12 @@ testSuiteKind: specific
 testTarget: pippo13
 reportTo: claudio.ortelli@usi.ch; info@bacep.com
 outputDir: ./ClientiNew
-groupDefinition: azionario = Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity
+groupDefinition: azionario = Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity,Futures_EQ,Fondi_absolute_return
 groupDefinition: redditoFisso = Depositi_a_termine,Bond,ETF_bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari
-groupDefinition: liquidita = Conto_corrente
+groupDefinition: liquidita = Conto_corrente,Conto_corrente_fittizio,FX_Forward
 checkListStart:
-
 currency:CHF ; >= 70%
-security:liquidita,redditoFisso,azionario ; >= 99.99%
+security!:liquidita,redditoFisso,azionario ; = 0 CHF
 security:liquidita,redditoFisso ; >= 70% :: explode:Fondi_misti
 security:azionario  ; <= 30% :: explode:Fondi_misti
 checkListEnd:

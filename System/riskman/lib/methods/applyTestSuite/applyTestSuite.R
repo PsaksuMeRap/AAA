@@ -23,15 +23,16 @@ setMethod("applyTestSuite",signature(x="TestSuiteParsed",po="Portfolios"),
 			# filter the portfolios
 			portfolios <- filterLists(po,"owner",owners)
 			
-			if (length(portfolios)==1) {
+			
+			if (length(portfolios)==1) { # se si tratta di un unico portafoglio
 				portfolio <- portfolios[[1]]
-			} else {
+			} else { # altrimenti crea un unico portafoglio
 				portfolio <- new("Portfolio",owner=owner,
 						referenceCurrency=portfolios[[1]]@referenceCurrency,
 						unlist(lapply(portfolios,function(x)return(x@.Data)),recursive=FALSE))
 			}
 			
-			applyTestSuite(x,portfolio,valuationDate)
+			return(applyTestSuite(x,portfolio,valuationDate))
 		}
 )
 
@@ -45,7 +46,7 @@ setMethod("applyTestSuite",signature(x="TestSuiteParsed",po="Portfolio"),
 			owner <- paste(owners,collapse="_")
 			
 			if (po@owner!=owner) stop(paste("Wrong portfolio for owner",owner))
-			applyTestSuite(x,as(po,"Positions"),valuationDate,po@referenceCurrency)
+			return(applyTestSuite(x,as(po,"Positions"),valuationDate,po@referenceCurrency))
 		}
 )
 
@@ -69,10 +70,10 @@ setMethod("applyTestSuite",signature(x="TestSuiteParsed",po="Positions"),
 			
 			outputDir <- x@configLines[["outputDir"]]
 			inputDir  <- x@directory
+			
 			# open the logFile
-			logFile <- paste(outputDir,outputFileName,sep=.Platform$file.sep)
-	
-			logFile <- file(description=logFile,open="w")
+			logFileName <- paste(outputDir,outputFileName,sep=.Platform$file.sep)
+			logFile <- file(description=logFileName,open="w")
 			cat(paste("Portfolio:",ownerPrintName),file=logFile,sep="\n",append=TRUE)
 			cat(paste("Input file:",x@fileName),file=logFile,sep="\n",append=TRUE)
 			cat(paste("Inp. directory:",inputDir),file=logFile,sep="\n",append=TRUE)
@@ -108,10 +109,10 @@ setMethod("applyTestSuite",signature(x="TestSuiteParsed",po="Positions"),
 			# print the portfolio to a file
 			outputFileName <- paste("Portafoglio_",ownerPrintName,"_",valuationDate,".log",sep="")
 			outputDir <- x@configLines[["outputDir"]]
-			logFile <- paste(outputDir,outputFileName,sep="/")
+			logFileName <- paste(outputDir,outputFileName,sep="/")
 			
 		
-			logFile <- file(description=logFile,open="w")
+			logFile <- file(description=logFileName,open="w")
 			cat("\n",file=logFile,sep="\n",append=TRUE)
 			cat("Portfolio structure:",file=logFile,sep="\n",append=TRUE)
 			portfolioStrings <- paste(as.character(po),collapse="\n")
@@ -120,13 +121,17 @@ setMethod("applyTestSuite",signature(x="TestSuiteParsed",po="Positions"),
 			
 			# create a warning if a FALSE is detected
 			if (!all(checkResults)) {
-		print(ownerPrintName)			
 				outputFileName <- paste("warning_",valuationDate,".log",sep="")
 				outputDir <- x@configLines[["outputDir"]]
-				logFile <- paste(outputDir,outputFileName,sep="/")
-				# logFile <- file(description=logFile,open="at")
-				cat(ownerPrintName,file=logFile,sep="\n",append=TRUE)
-		#		close(logFile)
+				warningFileName <- file.path(outputDir,outputFileName)
+				if (file.exists(warningFileName)) {
+					warningFile <- file(description=warningFileName,open="at",encoding="UTF-8") 
+				} else {
+					warningFile <- file(description=warningFileName,open="wt",encoding="UTF-8")
+				} 
+				cat(ownerPrintName,file=warningFile,sep="\n",append=TRUE)
+				close(warningFile)
+				print(ownerPrintName)
 			}
 			names(checkResults) <- NULL
 			return(checkResults)

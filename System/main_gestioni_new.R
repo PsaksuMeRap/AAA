@@ -148,12 +148,19 @@ if (FALSE) {
 	
 	portfolios <- portfoliosFactory(portfolios)
 	
+	## parsa i clienti che non richiedono una esplosione dei fondi in portafoglio
+	AyrtonTestSuiteNoExplode <- testSuiteFactory(testSuiteName="Clienti Ayrton",
+			directories="./ClientiNew",testFileRegexp="^check_special\\..+\\.txt$")
+	
+	## esegui il controllo
+	resultsNoExplode <- lapply(AyrtonTestSuiteNoExplode@testSuitesParsed,applyTestSuite,portfolios)
+	
 	portfolios <- explodeAllPortfoliosByAllFunds(portfolios, only = c("GLOBAL ECONOMY"))
 	
 	## Marco devi cambiare i pesi qui!!!
-	portfolios <- explodeAndReplaceFundGlobalEquityAllPortfolios(portfolios,list(Eq=0.8949,Fi=0.0))
-	portfolios <- explodeAndReplaceFundDynamicMultistrategyAllPortfolios(portfolios,list(Eq=0.2645,Fi=0.4797))
-	portfolios <- explodeAndReplaceFundFixedIncomeAllPortfolios(portfolios,list(Eq=0,Fi=0.9631))
+	portfolios <- explodeAndReplaceFundGlobalEquityAllPortfolios(portfolios,list(Eq=0.8707,Fi=0.0))
+	portfolios <- explodeAndReplaceFundDynamicMultistrategyAllPortfolios(portfolios,list(Eq=0.2844,Fi=0.4720))
+	portfolios <- explodeAndReplaceFundFixedIncomeAllPortfolios(portfolios,list(Eq=0,Fi=0.9545))
 	
 	AyrtonTestSuite <- testSuiteFactory(testSuiteName="Clienti Ayrton",directories="./ClientiNew")
 	results <- lapply(AyrtonTestSuite@testSuitesParsed,applyTestSuite,portfolios)

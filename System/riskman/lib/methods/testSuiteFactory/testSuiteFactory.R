@@ -4,7 +4,7 @@
 ###############################################################################
 
 
-testSuiteFactory <- function(testSuiteName,directories,fileName,testFileRegexp="^check.+\\.txt$") {
+testSuiteFactory <- function(testSuiteName,directories,fileName,testFileRegexp="^check\\..+\\.txt$") {
 	
 	if (missing(directories)) {
 		stop("testSuiteFactory: argument 'directories' is missing without a default.")

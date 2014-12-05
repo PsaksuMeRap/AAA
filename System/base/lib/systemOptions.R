@@ -20,7 +20,8 @@ sys[["allowedCurrencies"]] <- c("ATS",
 		"INR","ITL","JPY","MXN",
 		"NLG","NOK","NZD","PLN",
 		"PTE","RUB","SEK","SGD",
-		"TRY","USD","ZAR","CHr"
+		"TRY","USD","ZAR","CHr",
+		"XAU"
 )
 
 sys[["tradedCurrencies"]] <- c(
