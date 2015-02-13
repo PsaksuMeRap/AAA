@@ -6,13 +6,25 @@ testSuiteKind: specific
 testTarget: pippo220
 reportTo: claudio.ortelli@usi.ch; info@bacep.com
 outputDir: ./ClientiNew
-groupDefinition: allowedSecurities = Depositi_a_termine,Conto_corrente,Conto_corrente_fittizio,FX_Forward,Bond,ETF_bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari,Equity,Futures_EQ,Fondi_azionari,Fondi_absolute_return,Opzioni_su_azioni,Strutturati_EQ,ETF_equity,ETF_commodities_gold
+
 checkListStart:
-security!:allowedSecurities ; = 0 EUR
+## controllo dell'univeso titoli ammessi (se ci sono titoli non nella lista, inserirli se consentiti)
+security!:Depositi_a_termine,Conto_corrente,Conto_corrente_fittizio,FX_Forward,Bond,ETF_bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari,Equity,Futures_EQ,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity,Fondi_absolute_return,Fondi_Hedge,ETF_commodities_gold; = 0 CHF
 currency:EUR ; >= 70%
-security:Fondi_Hedge ; = 0 EUR
-security:Equity ; <= 15%
-security:Depositi_a_termine,Conto_corrente,Bond,ETF_bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari; >= 80% :: explode:Fondi_misti
-security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity ; <= 20% :: explode:Fondi_misti
+## mandato: monetario 0-100%
+security:Depositi_a_termine,Conto_corrente ; >= 0 CHF
+security:Depositi_a_termine,Conto_corrente ; <= 100%
+
+## mandato: obbligazionario 0-90%
+security:Bond,ETF_bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari; >=  0 CHF :: explode:Fondi_misti
+security:Bond,ETF_bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari; <= 90% :: explode:Fondi_misti
+
+## mandato: azionario 0-20%
+security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity  ; >= 0 CHF :: explode:Fondi_misti
+security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity  ; <= 20%   :: explode:Fondi_misti
+
+## mandato: altro 0-30%
+security:Fondi_Hedge ; >= 0 CHF
+security:Fondi_Hedge ; <= 30%
 checkListEnd:
 externalSuiteFileName:

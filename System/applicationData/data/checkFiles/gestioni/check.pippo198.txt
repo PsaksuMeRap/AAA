@@ -28,5 +28,6 @@ security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity  ; <=
 ## mandato: altro 0-40%
 security:Fondi_Hedge ; >= 0 EUR
 security:Fondi_Hedge ; <= 40%
+
 checkListEnd:
 externalSuiteFileName:
