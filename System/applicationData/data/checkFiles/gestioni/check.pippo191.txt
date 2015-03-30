@@ -13,6 +13,9 @@ security!:Depositi_a_termine,Conto_corrente,Bond,ETF_bond,Capital_protected_note
 ## il vincolo sulla moneta nel mandato è inesistente, inserito per essere piu' conservativi
 currency:EUR ; >= 50%
 
+# vincolo legato alla fiduciaria statica
+security:Conto_corrente & currency!: EUR ; <= 51645.69 EUR
+
 ## mandato: monetario 0-100%
 security:Depositi_a_termine,Conto_corrente ; >= 0 EUR
 security:Depositi_a_termine,Conto_corrente ; <= 100%
