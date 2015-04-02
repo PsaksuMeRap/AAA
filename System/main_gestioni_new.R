@@ -133,7 +133,7 @@ if (FALSE) {
 		portfolios <- explodeAllPortfoliosByAllFunds(portfolios, only = c("GLOBAL ECONOMY"))
 		# portfolios <- explodeAllPortfoliosByAllFunds(portfolios)
 		
-		portfolios <- explodeAndReplaceFundGlobalEquityAllPortfolios(portfolios,list(Eq=0.84,Fi=0.07))
+		portfolios <- explodeAndReplaceFundGlobalEquityAllPortfolios(portfolios,list(Eq=0.8816,Fi=0.0253))
 		
 		AyrtonTestSuite <- testSuiteFactory(testSuiteName="Clienti Ayrton",directories="./ClientiNew")
 		results <- lapply(AyrtonTestSuite@testSuitesParsed,applyTestSuite,portfolios,date)
@@ -157,9 +157,9 @@ if (FALSE) {
 	portfolios <- explodeAllPortfoliosByAllFunds(portfolios, only = c("GLOBAL ECONOMY"))
 	
 	## Marco devi cambiare i pesi qui!!!
-	portfolios <- explodeAndReplaceFundGlobalEquityAllPortfolios(portfolios,list(Eq=0.8731,Fi=0.0251))
-	portfolios <- explodeAndReplaceFundDynamicMultistrategyAllPortfolios(portfolios,list(Eq=0.2876,Fi=0.4643))
-	portfolios <- explodeAndReplaceFundFixedIncomeAllPortfolios(portfolios,list(Eq=0,Fi=0.9564))
+	portfolios <- explodeAndReplaceFundGlobalEquityAllPortfolios(portfolios,list(Eq=0.8816,Fi=0.0253))
+	portfolios <- explodeAndReplaceFundDynamicMultistrategyAllPortfolios(portfolios,list(Eq=0.2580,Fi=0.5242))
+	portfolios <- explodeAndReplaceFundFixedIncomeAllPortfolios(portfolios,list(Eq=0,Fi=0.9562))
 	
 	AyrtonTestSuite <- testSuiteFactory(testSuiteName="Clienti Ayrton",directories="./ClientiNew")
 	results <- lapply(AyrtonTestSuite@testSuitesParsed,applyTestSuite,portfolios)
