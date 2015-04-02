@@ -99,7 +99,8 @@ clienti <- c(
 		"pippo228",
 		"pippo229",
 		"pippo230",
-		"pippo231"
+		"pippo231",
+		"pippo232"
 )
 
 		
