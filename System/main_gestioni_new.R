@@ -158,9 +158,9 @@ if (FALSE) {
 	portfolios <- explodeAllPortfoliosByAllFunds(portfolios, only = c("GLOBAL ECONOMY"))
 	
 	## Marco devi cambiare i pesi qui!!!
-	portfolios <- explodeAndReplaceFundGlobalEquityAllPortfolios(portfolios,list(Eq=0.8816,Fi=0.0253))
-	portfolios <- explodeAndReplaceFundDynamicMultistrategyAllPortfolios(portfolios,list(Eq=0.2580,Fi=0.5242))
-	portfolios <- explodeAndReplaceFundFixedIncomeAllPortfolios(portfolios,list(Eq=0,Fi=0.9562))
+	portfolios <- explodeAndReplaceFundGlobalEquityAllPortfolios(portfolios,list(Eq=0.9030,Fi=0.0255))
+	portfolios <- explodeAndReplaceFundDynamicMultistrategyAllPortfolios(portfolios,list(Eq=0.2505,Fi=0.5515))
+	portfolios <- explodeAndReplaceFundFixedIncomeAllPortfolios(portfolios,list(Eq=0,Fi=0.9785))
 	
 	AyrtonTestSuite <- testSuiteFactory(testSuiteName="Clienti Ayrton",directories="./ClientiNew")
 	results <- lapply(AyrtonTestSuite@testSuitesParsed,applyTestSuite,portfolios)

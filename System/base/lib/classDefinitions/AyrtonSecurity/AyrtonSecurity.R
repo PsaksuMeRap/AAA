@@ -98,6 +98,8 @@ setClass("Ayrton_Fondi_commodities",contains="AyrtonPosition")
 
 setClass("Ayrton_Fondi_absolute_return",contains="AyrtonPosition")
 
+setClass("Ayrton_Fondi_alternativi",contains="AyrtonPosition")
+
 setClass("Ayrton_Strutturati_EQ",contains="AyrtonPosition")
 
 setClass("Ayrton_Strutturati_FI",contains="AyrtonPosition")

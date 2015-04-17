@@ -9,7 +9,7 @@ outputDir: ./ClientiNew
 
 checkListStart:
 ## controllo dell'univeso titoli ammessi (se ci sono titoli non nella lista, inserirli se consentiti)
-security!:Depositi_a_termine,Conto_corrente,Conto_corrente_fittizio,FX_Forward,Bond,ETF_bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari,Equity,Futures_EQ,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity,Fondi_absolute_return,Fondi_Hedge,ETF_commodities_gold; = 0 CHF
+security!:Depositi_a_termine,Conto_corrente,Conto_corrente_fittizio,FX_Forward,Bond,ETF_bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari,Equity,Futures_EQ,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity,Fondi_absolute_return,Fondi_Hedge,Fondi_alternativi,ETF_commodities_gold; = 0 CHF
 currency:EUR ; >= 70%
 ## mandato: monetario 0-100%
 security:Depositi_a_termine,Conto_corrente ; >= 0 CHF
@@ -24,7 +24,7 @@ security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity  ; >=
 security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity  ; <= 20%   :: explode:Fondi_misti
 
 ## mandato: altro 0-30%
-security:Fondi_Hedge ; >= 0 CHF
-security:Fondi_Hedge ; <= 30%
+security:Fondi_Hedge,Fondi_alternativi ; >= 0 CHF
+security:Fondi_Hedge,Fondi_alternativi ; <= 30%
 checkListEnd:
 externalSuiteFileName:

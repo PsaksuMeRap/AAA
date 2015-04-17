@@ -6,18 +6,30 @@ testSuiteKind: specific
 testTarget: pippo11,pippo72,pippo163
 reportTo: claudio.ortelli@usi.ch; info@bacep.com
 outputDir: ./ClientiNew
-groupDefinition: azionario = Equity,ETF_equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ
-groupDefinition: redditoFisso = Depositi_a_termine,Fondi_mercato_monetario,Bond,ETF_bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari
-groupDefinition: liquidita = Conto_corrente,Depositi_a_termine
 checkListStart:
 
+## controllo dell'univeso titoli ammessi (se ci sono titoli non nella lista, inserirli se consentiti)
+security!:Depositi_a_termine,Conto_corrente,Conto_corrente_fittizio,FX_Forward,Fondi_mercato_monetario,Bond,ETF_bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari,Equity,Futures_EQ,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity,Fund_of_funds,Fondi_absolute_return,Fondi_Hedge,Fondi_alternativi,Metalli_preziosi,ETF_commodities_gold,ETF_commodities_platinum,Conto_metallo_oro ; = 0 CHF
+
+## il vincolo sulla moneta nel mandato è inesistente, inserito per essere piu' conservativi
 currency:CHF ; >= 50%
 
-# Aggiunto Fondi_mercato_monetario 2012-04-04 : security:Depositi_a_termine,Conto_corrente,Fondi_mercato_monetario,Bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari; >= 80% :: explode:Fondi_misti
-security:liquidita,redditoFisso,Fondi_Hedge ; >= 80% :: explode:Fondi_misti
+## mandato: monetario 0-100%
+security:Depositi_a_termine,Conto_corrente,Conto_corrente_fittizio,Fondi_mercato_monetario,FX_Forward ; >= 0 CHF
+security:Depositi_a_termine,Conto_corrente,Conto_corrente_fittizio,Fondi_mercato_monetario,FX_Forward ; <= 100%
 
-# Aggiunto Fondi_Hedge 2012-04-04 : security:Equity,Fondi_azionari,Fondi_Hedge,Opzioni_su_azioni,Strutturati_EQ,ETF_equity  ; <= 20% :: explode:Fondi_misti
-security:azionario ; <= 20% :: explode:Fondi_misti
+## mandato: obbligazionario 0-90%
+security:Bond,ETF_bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari; >=  0 CHF :: explode:Fondi_misti
+security:Bond,ETF_bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari; <= 90% :: explode:Fondi_misti
+
+## mandato: azionario 0-30%
+security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity  ; >= 0 CHF :: explode:Fondi_misti
+security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity  ; <= 30%   :: explode:Fondi_misti
+
+## mandato: altro 0-30%
+security:Fondi_Hedge,Fondi_alternativi,Fund_of_funds,Metalli_preziosi,ETF_commodities_gold,ETF_commodities_platinum,Conto_metallo_oro ; >= 0 CHF
+security:Fondi_Hedge,Fondi_alternativi,Fund_of_funds,Metalli_preziosi,ETF_commodities_gold,ETF_commodities_platinum,Conto_metallo_oro ; <= 30%
+
 checkListEnd:
 externalSuiteFileName:
 

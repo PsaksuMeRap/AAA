@@ -30,13 +30,12 @@ source("./riskman/lib/library.R")
 ## -- inizio procedura controllo - parte generale
 source("./odbc/connessioni.R")
 
-dati <- importDBPortfolioGenerale()
 
 repositories$politicaInvestimento <- create_repositoryPoliticaInvestimento()
 repositories$instruments <- create_repositoryInstruments()
 repositories$exchangeRates <- create_repositoryExchangeRates()
 
-checkDirectory <- "/home/claudio/XP/FondiNew"
+checkDirectory <- "/home/claudio/XP"
 setwd(checkDirectory)
 ## -- fine procedura controllo - parte generale
 
@@ -74,6 +73,7 @@ if (FALSE) {
 		results <- lapply(AyrtonTestSuite@testSuitesParsed,applyTestSuite,fundPortfolios,date)
 	}
 } else {
+	dati <- importDBPortfolioGenerale()
 	# caso data attuale
 	# fundsOwners <- c("pippo53","pippo76","pippo210","pippo100","pippo101")
 	fundsOwners <- c("pippo210")
@@ -82,7 +82,7 @@ if (FALSE) {
 	
 	fundPortfolios <- portfoliosFactory(fundPortfolios)
 	
-	AyrtonTestSuite <- testSuiteFactory(testSuiteName="Fondi OpenCapital",directories="./")
+	AyrtonTestSuite <- testSuiteFactory(testSuiteName="Fondi OpenCapital",directories="./FondiNew")
 
 	results <- lapply(AyrtonTestSuite@testSuitesParsed,applyTestSuite,fundPortfolios)
 }

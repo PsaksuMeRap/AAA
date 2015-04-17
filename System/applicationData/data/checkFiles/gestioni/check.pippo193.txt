@@ -9,7 +9,7 @@ outputDir: ./ClientiNew
 checkListStart:
 currency:EUR ; >= 50%
 
-security:Depositi_a_termine,Conto_corrente,Fondi_mercato_monetario,Bond,ETF_bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari,Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity,Fondi_commodities,Metalli_preziosi,ETF_commodities_gold,ETF_commodities_platinum,Conto_metallo_oro  ; = 100% :: explode:Fondi_misti
+security!:Depositi_a_termine,Conto_corrente,Fondi_mercato_monetario,Bond,ETF_bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari,Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity,Fondi_commodities,Fondi_Hedge,Fondi_alternativi,Metalli_preziosi,ETF_commodities_gold,ETF_commodities_platinum,Conto_metallo_oro  ; = 0 EUR
 
 security:Depositi_a_termine,Conto_corrente,Fondi_mercato_monetario ; >= 0% :: explode:Fondi_misti
 security:Depositi_a_termine,Conto_corrente,Fondi_mercato_monetario ; <= 100% :: explode:Fondi_misti
@@ -20,7 +20,7 @@ security:Bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_o
 security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity ; >= 0% :: explode:Fondi_misti
 security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity ; <= 30% :: explode:Fondi_misti
 
-security:Fondi_commodities,Metalli_preziosi,ETF_commodities_gold,ETF_commodities_platinum,Conto_metallo_oro ; >= 0% :: explode:Fondi_misti
-security:Fondi_commodities,Metalli_preziosi,ETF_commodities_gold,ETF_commodities_platinum,Conto_metallo_oro ; <= 30% :: explode:Fondi_misti
+security:Fondi_Hedge,Fondi_alternativi,Fondi_commodities,Metalli_preziosi,ETF_commodities_gold,ETF_commodities_platinum,Conto_metallo_oro ; >= 0% :: explode:Fondi_misti
+security:Fondi_Hedge,Fondi_alternativi,Fondi_commodities,Metalli_preziosi,ETF_commodities_gold,ETF_commodities_platinum,Conto_metallo_oro ; <= 30% :: explode:Fondi_misti
 checkListEnd:
 externalSuiteFileName:

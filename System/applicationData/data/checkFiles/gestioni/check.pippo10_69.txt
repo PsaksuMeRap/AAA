@@ -8,7 +8,7 @@ reportTo: claudio.ortelli@usi.ch; info@bacep.com
 outputDir: ./ClientiNew
 checkListStart:
 ## controllo dell'univeso titoli ammessi (se ci sono titoli non nella lista, inserirli se consentiti)
-security!:Depositi_a_termine,Conto_corrente,Conto_corrente_fittizio,FX_Forward,Bond,ETF_bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari,Equity,Futures_EQ,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity,Fondi_Hedge,Fondi_absolute_return; = 0 CHF
+security!:Depositi_a_termine,Conto_corrente,Conto_corrente_fittizio,FX_Forward,Bond,ETF_bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari,Equity,Futures_EQ,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity,Fondi_Hedge,Fondi_absolute_return,Fondi_alternativi,Fondi_commodities,Metalli_preziosi,ETF_commodities_gold,ETF_commodities_platinum,Conto_metallo_oro ; = 0 CHF
 
 currency:CHF ; >= 50%
 
@@ -25,8 +25,8 @@ security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity  ; >=
 security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity  ; <= 60%   :: explode:Fondi_misti
 
 ## mandato: altro 0-40%
-security:Fondi_Hedge ; >= 0 CHF 
-security:Fondi_Hedge ; <= 40%
+security:Fondi_Hedge,Fondi_alternativi,Fondi_commodities,Metalli_preziosi,ETF_commodities_gold,ETF_commodities_platinum,Conto_metallo_oro ; >= 0 CHF 
+security:Fondi_Hedge,Fondi_alternativi,Fondi_commodities,Metalli_preziosi,ETF_commodities_gold,ETF_commodities_platinum,Conto_metallo_oro ; <= 40%
 
 checkListEnd:
 externalSuiteFileName:

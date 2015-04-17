@@ -59,6 +59,7 @@ source("./base/lib/classDefinitions/Security/Diritti_aumento_capitale_azionario.
 source("./base/lib/classDefinitions/Security/Conto_corrente_fittizio.R")
 source("./base/lib/classDefinitions/Security/Fondi_absolute_return.R")
 source("./base/lib/classDefinitions/Security/Fund_private_equity.R")
+source("./base/lib/classDefinitions/Security/Fondi_alternativi.R")
 
 # Underlying requires definitions of securities and Index.
 source("./base/lib/classDefinitions/Underlying/Underlying.R")

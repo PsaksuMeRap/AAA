@@ -100,6 +100,8 @@ setClass("Ayrton_Fondi_Hedge",contains="AyrtonPosition")
 
 setClass("Ayrton_ETF_equity",contains="AyrtonPosition")
 
+setClass("Ayrton_Fondi_alternativi",contains="AyrtonPosition")
+
 setClass("Ayrton_ETF_bond",contains="AyrtonPosition")
 
 setClass("Ayrton_Fondi_commodities",contains="AyrtonPosition")

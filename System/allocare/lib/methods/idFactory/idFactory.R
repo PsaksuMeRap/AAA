@@ -3,7 +3,7 @@ setGeneric("idFactory",def=function(origin,...) standardGeneric("idFactory"))
 setMethod("idFactory",signature(origin="AllocarePosition"),
 		function(origin) {
 			
-			# available instruments at 2012-04-10
+			# available instruments at 2015-04-15
 			
 			## 1,Equity
 			## 2,Bond
@@ -62,8 +62,9 @@ setMethod("idFactory",signature(origin="AllocarePosition"),
 			## 55,ETF_commodities_platinum
 			## 56,Bond_floater
 			## 58,ETF_bond
+			## 59,Fondi_alternativi
 			
-			instrumentsWithISIN <- c(1,2,3,4,5,8:17,23:30,32:38,42:49,51:53,55,57,57)
+			instrumentsWithISIN <- c(1,2,3,4,5,8:17,23:30,32:38,42:49,51:53,55,57,57,58,59)
 			if (is.element(origin@ID_strumento,instrumentsWithISIN)) {
 				idAyrton <- new("IdAyrton",
 						idAAA=new("IdAAA_character",origin@NumeroValore),
@@ -215,8 +216,6 @@ setMethod("idFactory",signature(origin="AllocarePosition"),
 			stop(string)
 			
 		}
-
-
 
 )
 
