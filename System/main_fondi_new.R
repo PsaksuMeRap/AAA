@@ -35,7 +35,7 @@ repositories$politicaInvestimento <- create_repositoryPoliticaInvestimento()
 repositories$instruments <- create_repositoryInstruments()
 repositories$exchangeRates <- create_repositoryExchangeRates()
 
-checkDirectory <- "/home/claudio/XP"
+checkDirectory <- "/home/claudio/XP/FondiNew"
 setwd(checkDirectory)
 ## -- fine procedura controllo - parte generale
 
@@ -44,24 +44,22 @@ setwd(checkDirectory)
 
 # caso con data storica
 if (FALSE) {
-	fine  <- as.Date("2011-09-15")
-	dates <- seq(as.Date("2011-09-1"),to=fine,by=7)
-	dates <- c(dates,seq(as.Date("2011-09-2"),to=fine,by=7))
-	dates <- c(dates,seq(as.Date("2011-09-5"),to=fine,by=7))	
-	dates <- c(dates,seq(as.Date("2011-09-6"),to=fine,by=7))
-	dates <- c(dates,seq(as.Date("2011-09-7"),to=fine,by=7))
+	fine  <- as.Date("2015-04-17")
+	dates <- seq(as.Date("2013-12-30"),to=fine,by=7)
+	dates <- c(dates,seq(as.Date("2013-12-31"),to=fine,by=7))
+	dates <- c(dates,seq(as.Date("2014-01-1"),to=fine,by=7))	
+	dates <- c(dates,seq(as.Date("2014-01-2"),to=fine,by=7))
+	dates <- c(dates,seq(as.Date("2014-01-3"),to=fine,by=7))
+	dates <- sort(dates)
+	
 	# dates <- as.character(dates); dates <- dates[dates!="2011-01-18"]
 	# togli il 18 gennaio e 19 maggio
 	
-	dates <- c(as.Date("2011-09-14"),as.Date("2011-09-15"),as.Date("2011-09-16"))
-	dates <- c("2012-10-01","2012-10-02","2012-10-03","2012-10-04","2012-10-05",
-			"2012-10-08","2012-10-09","2012-10-10","2012-10-11","2012-10-12",
-			"2012-10-15","2012-10-16","2012-10-17","2012-10-18","2012-10-19")
 	for (date in as.character(dates)) {
 		print(date)
-		# controlla che la data sia dopo il "2011-05-31" altrimenti togli il fondo globalEconomy
-		if (as.Date(date) > as.Date("2011-05-31")) fundsOwners <- c("pippo53","pippo76","pippo210") else fundsOwners <- c("pippo53","pippo76")
-		if (as.Date(date) > as.Date("2012-09-01")) fundsOwners <- c(fundsOwners,"pippo100","pippo101")
+		## controlla che la data sia dopo il "2011-05-31" altrimenti togli il fondo globalEconomy
+		#if (as.Date(date) > as.Date("2011-05-31")) fundsOwners <- c("pippo53","pippo76","pippo210") else fundsOwners <- c("pippo53","pippo76")
+		#if (as.Date(date) > as.Date("2012-09-01")) fundsOwners <- c(fundsOwners,"pippo100","pippo101")
 		repositories$exchangeRates <- create_repositoryExchangeRates(exchangeRatesDate=date)
 		dati <- importDBPortfolioGeneraleByDate(date)		
 		fundPortfolios <- filterLists(dati,"Cliente",value=fundsOwners)
@@ -82,7 +80,7 @@ if (FALSE) {
 	
 	fundPortfolios <- portfoliosFactory(fundPortfolios)
 	
-	AyrtonTestSuite <- testSuiteFactory(testSuiteName="Fondi OpenCapital",directories="./FondiNew")
+	AyrtonTestSuite <- testSuiteFactory(testSuiteName="Fondi OpenCapital",directories="./")
 
 	results <- lapply(AyrtonTestSuite@testSuitesParsed,applyTestSuite,fundPortfolios)
 }

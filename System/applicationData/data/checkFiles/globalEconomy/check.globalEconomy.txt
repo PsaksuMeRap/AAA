@@ -18,20 +18,23 @@ amount:>=20% ; = 0%
 
 # 4) verifica che non ci siano altre monete al di fuori di 
 # EUR,CHF,USD,JPY,AUD,INR,BRL
-currency:EUR,CHF,USD,AUD,INR,NOK,BRL,RUB ; = 100%
+currency!:EUR,CHF,USD,AUD,INR,NOK,BRL,RUB,GBP,DKK,SEK ; = 0%
 
 # 5) verifica che non si vada corto nelle monete consentite
-currency:EUR ; >= 0EUR
-currency:CHF ; >= 0CHF
-currency:USD ; >= 0USD
-currency:AUD ; >= 0AUD
-currency:INR ; >= 0INR
-currency:NOK ; >= 0NOK
-currency:BRL ; >= 0BRL
-currency:RUB ; >= 0RUB
+currency:EUR ; >= -0.5 %
+currency:CHF ; >= -0.5 %
+currency:USD ; >= -0.5 %
+currency:AUD ; >= -0.5 %
+currency:INR ; >= -0.5 %
+currency:NOK ; >= -0.5 %
+currency:BRL ; >= -0.5 %
+currency:RUB ; >= -0.5 %
+currency:GBP ; >= -0.5 %
+currency:SEK ; >= -0.5 %
+currency:DKK ; >= -0.5 %
 
-# 6) rating:<BBB & rating:>NR ; = 0%
-rating:<BBB & rating:>NR ; = 0%
+# 6) rating:<BBB- & rating:>NR ; = 0%
+rating:<BBB- & rating:>NR ; = 0%
 
 checkListEnd:
 externalSuiteFileName:
