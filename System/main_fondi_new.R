@@ -44,7 +44,7 @@ setwd(checkDirectory)
 
 # caso con data storica
 if (FALSE) {
-	fine  <- as.Date("2015-04-17")
+	fine  <- as.Date("2015-04-21")
 	dates <- seq(as.Date("2013-12-30"),to=fine,by=7)
 	dates <- c(dates,seq(as.Date("2013-12-31"),to=fine,by=7))
 	dates <- c(dates,seq(as.Date("2014-01-1"),to=fine,by=7))	
@@ -52,13 +52,15 @@ if (FALSE) {
 	dates <- c(dates,seq(as.Date("2014-01-3"),to=fine,by=7))
 	dates <- sort(dates)
 	
+	dates <- dates[as.Date(dates)>=as.Date("2015-04-18")]
+	
 	# dates <- as.character(dates); dates <- dates[dates!="2011-01-18"]
 	# togli il 18 gennaio e 19 maggio
 	
 	for (date in as.character(dates)) {
 		print(date)
 		## controlla che la data sia dopo il "2011-05-31" altrimenti togli il fondo globalEconomy
-		#if (as.Date(date) > as.Date("2011-05-31")) fundsOwners <- c("pippo53","pippo76","pippo210") else fundsOwners <- c("pippo53","pippo76")
+		if (as.Date(date) > as.Date("2011-05-31")) fundsOwners <- c("pippo53","pippo76","pippo210") else fundsOwners <- c("pippo53","pippo76")
 		#if (as.Date(date) > as.Date("2012-09-01")) fundsOwners <- c(fundsOwners,"pippo100","pippo101")
 		repositories$exchangeRates <- create_repositoryExchangeRates(exchangeRatesDate=date)
 		dati <- importDBPortfolioGeneraleByDate(date)		
