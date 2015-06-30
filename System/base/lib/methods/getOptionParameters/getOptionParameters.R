@@ -68,3 +68,41 @@ setMethod("getOptionParameters",signature(origin="PositionOpzioni_su_divise"),
 
 )
 
+setMethod("getOptionParameters",signature(origin="PositionStrutturati_FX"),
+		function(origin) {
+			## esempio con origin@security@name: "20150918 - Put Warrant Vontobel EUR/CHF CHF 1"
+			
+			
+			name <- origin@security@name
+			tmp <- strsplit(name," ")[[1]]
+			## rimuovi "-"
+			tmp <- tmp[-2]
+			tmp <- remSpaces(tmp)
+			names(tmp) <- c("expiryDate","optionType","Nome","underlying","strikeIn-XXX","strike")
+			tmp[["underlying"]] <- substr(tmp[["underlying"]],1,3)
+			
+			tmp <- as.list(tmp)
+			tmp[["strike"]] <- new("Money",
+					amount=new("Amount",as.numeric(tmp[["strike"]])),
+					currency=new("Currency",tmp[["strikeIn-XXX"]]))
+			
+			tmp[["legCurrency2"]] <- origin@quantity
+			
+			tmp[["legCurrency1"]] <- origin@otherLag
+			
+			tmp[["premium"]] <- origin@
+			
+			
+			if (tolower(tmp[["optionType"]])=="put") {
+				tmp[["optionType"]] <- "P" 
+			} else {
+				tmp[["optionType"]] <- "C"
+			}
+			tmp[["expiryDate"]] <- format(strptime(tmp[["expiryDate"]],format="%Y%m%d"),"%Y-%m-%d")
+			
+
+			return(tmp)
+
+			
+		}
+)

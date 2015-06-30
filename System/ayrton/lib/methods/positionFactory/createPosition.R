@@ -325,3 +325,26 @@ setMethod("createPosition",signature(security="Opzioni_su_divise",origin="Ayrton
 		}
 )
 
+
+setMethod("createPosition",signature(security="Strutturati_FX",origin="AyrtonPosition"),
+		function(security,origin) {
+			
+			origin <- new("Ayrton_Strutturati_FX",origin)
+			info <- getOptionParameters(origin)
+			
+			value <- toMoney(origin@ValoreMercatoMonetaCHF,new("Currency","CHF"))
+			value <- repositories$exchangeRates$exchange(value,security@currency)
+			
+			position <- new("PositionStrutturati_FX",
+					id=security@id,
+					security=security,
+					quantity=info[["lagCurrency2"]],
+					otherLag=info[["lagCurrency1"]],
+					value=value)
+			
+			return(position)
+			
+		}
+
+)
+

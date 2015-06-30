@@ -63,8 +63,9 @@ setMethod("idFactory",signature(origin="AyrtonPosition"),
 			## 56,Bond_floater
 			## 58,ETF_bond
 			## 59,Fondi_alternativi
+			## 60,Strutturati_FX
 			
-			instrumentsWithISIN <- c(1,2,3,4,5,8:17,23:30,32:38,42:49,51:53,55,57,58,59)
+			instrumentsWithISIN <- c(1,2,3,4,5,8:17,23:30,32:38,42:49,51:53,55,57,58,59,60)
 			if (is.element(origin@ID_strumento,instrumentsWithISIN)) {
 				idAyrton <- new("IdAyrton",
 						idAAA=new("IdAAA_character",origin@NumeroValore),

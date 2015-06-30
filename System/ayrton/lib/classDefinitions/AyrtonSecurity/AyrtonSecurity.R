@@ -122,6 +122,8 @@ setClass("Ayrton_Credit_linked_note",contains="AyrtonPosition")
 
 setClass("Ayrton_Fund_private_equity",contains="AyrtonPosition")
 
+setClass("Ayrton_Strutturati_FX",contains="AyrtonPosition")
+
 #create_classDefinition <- function(instrument) {
 #	string <- paste("setClass(\"Ayrton_",instrument,"\",contains=\"AyrtonPosition\")\n\n",sep="")
 #	cat(string)
