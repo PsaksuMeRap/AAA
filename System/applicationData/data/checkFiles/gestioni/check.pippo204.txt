@@ -25,8 +25,8 @@ security:Bond,ETF_bond,Capital_protected_notes,Floating_rate_notes,Strutturati_F
 security:Bond,ETF_bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari; <= 90% :: explode:Fondi_misti
 
 ## mandato: azionario 0-30%
-security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity  ; >= 0 EUR :: explode:Fondi_misti
-security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity  ; <= 30%   :: explode:Fondi_misti
+security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity,Futures_EQ   ; >= 0 EUR :: explode:Fondi_misti
+security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity,Futures_EQ   ; <= 30%   :: explode:Fondi_misti
 
 ## mandato: altro 0-30%
 security:Fondi_Hedge,Fondi_alternativi ; >= 0 EUR

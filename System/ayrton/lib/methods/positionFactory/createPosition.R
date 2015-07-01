@@ -336,10 +336,11 @@ setMethod("createPosition",signature(security="Strutturati_FX",origin="AyrtonPos
 			value <- repositories$exchangeRates$exchange(value,security@currency)
 			
 			position <- new("PositionStrutturati_FX",
+					otherLeg=info[["legCurrency1"]],
+					premium=info[["premium"]],
 					id=security@id,
 					security=security,
-					quantity=info[["lagCurrency2"]],
-					otherLag=info[["lagCurrency1"]],
+					quantity=info[["legCurrency2"]],
 					value=value)
 			
 			return(position)

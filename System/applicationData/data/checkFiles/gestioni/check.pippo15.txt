@@ -12,7 +12,7 @@ security!:Depositi_a_termine,Conto_corrente,Bond,ETF_bond,Capital_protected_note
 
 security:Depositi_a_termine,Conto_corrente,Bond,ETF_bond,Capital_protected_notes,Floating_rate_notes,Strutturati_FI,Fondi_obbligazionari; >= 50% :: explode:Fondi_misti
 
-security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity,Fondi_alternativi ; <= 50% :: explode:Fondi_misti
+security:Equity,Fondi_azionari,Opzioni_su_azioni,Strutturati_EQ,ETF_equity,Futures_EQ,Fondi_alternativi ; <= 50% :: explode:Fondi_misti
 
 checkListEnd:
 externalSuiteFileName:

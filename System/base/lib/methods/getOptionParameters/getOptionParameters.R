@@ -90,7 +90,7 @@ setMethod("getOptionParameters",signature(origin="PositionStrutturati_FX"),
 			
 			tmp[["legCurrency1"]] <- origin@otherLag
 			
-			tmp[["premium"]] <- origin@
+			tmp[["premium"]] <- origin@premium
 			
 			
 			if (tolower(tmp[["optionType"]])=="put") {

@@ -91,6 +91,7 @@ source("./base/lib/classDefinitions/Position/PositionOpzioni_su_divise.R")
 source("./base/lib/classDefinitions/Position/PositionOpzioni_su_obbligazioni.R")
 source("./base/lib/classDefinitions/Position/PositionFX_Forward.R")
 source("./base/lib/classDefinitions/Position/PositionObbligazioni_convertibili.R")
+source("./base/lib/classDefinitions/Position/PositionStrutturati_FX.R")
 
 source("./base/lib/classDefinitions/Positions/Positions.R")
 source("./base/lib/classDefinitions/Portfolio/Portfolio.R")

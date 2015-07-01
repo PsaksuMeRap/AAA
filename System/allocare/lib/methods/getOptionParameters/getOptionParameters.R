@@ -21,7 +21,12 @@ setMethod("getOptionParameters",signature(origin="AyrtonPosition"),
 				return(getOptionParameters(origin))
 			}
 			
-			stop(paste("getOptionParameters not defined for an AyrtonPosition with ID_strumento",origin@ID_strumento))
+			if (origin@ID_strumento==60) {
+				origin <- new("Ayrton_Strutturati_FX",origin)
+				return(getOptionParameters(origin))
+			}
+			
+			stop(paste("Errore: getOptionParameters not defined for an AyrtonPosition with ID_strumento",origin@ID_strumento))
 		}
 )
 

@@ -178,3 +178,48 @@ setMethod("replaceDirective",
 		}
 )
 
+setMethod("replaceDirective",
+		signature(position="PositionStrutturati_FX"),
+		function(position) {
+			#"20150918 - Put Warrant Vontobel EUR/CHF CHF 1"
+			
+			## construct the leg based on the currency2, CHF
+	
+			idCharacter <- paste0(position@security@name,"-leg2")
+			id <- new("IdAyrton",
+					idAAA=new("IdAAA_character",idCharacter),
+					idStrumento=40)
+			
+			name <- paste("Leg 2 from",position@security@name)
+			
+			securityConto_corrente1 <- new("Conto_corrente",
+					currency=position@quantity@currency,name=name,id=id)
+			
+			positionConto_corrente1 <- new("PositionConto_corrente",
+					security=securityConto_corrente1,
+					id=securityConto_corrente1@id,
+					value=position@quantity,
+					quantity=1.0)
+			
+			## create the corresponding money flow
+			idCharacter <- paste0(position@security@name,"-leg1")
+			id <- new("IdAyrton",
+					idAAA=new("IdAAA_character",idCharacter),
+					idStrumento=40)
+			
+			name <- paste("Leg 1 from",position@security@name)
+			
+			securityConto_corrente2 <- new("Conto_corrente",
+					currency=position@otherLeg@currency,
+					name=name,id=id)
+			
+			positionConto_corrente2 <- new("PositionConto_corrente",
+					security=securityConto_corrente2,
+					id=securityConto_corrente2@id,
+					value=-1*position@otherLeg,
+					quantity=1.0)
+			
+			return(new("Positions",list(positionConto_corrente1,positionConto_corrente2)))		
+			
+		}
+)

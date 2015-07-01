@@ -21,7 +21,13 @@ setMethod("getOptionParameters",signature(origin="AyrtonPosition"),
 				return(getOptionParameters(origin))
 			}
 			
-			stop(paste("getOptionParameters not defined for an AyrtonPosition with ID_strumento",origin@ID_strumento))
+			if (origin@ID_strumento==60) {
+				origin <- new("Ayrton_Strutturati_FX",origin)
+				return(getOptionParameters(origin))
+			}
+
+			stop(paste("Errore: getOptionParameters not defined for an AyrtonPosition with ID_strumento",origin@ID_strumento))
+
 		}
 )
 
@@ -96,3 +102,47 @@ setMethod("getOptionParameters",signature(origin="Ayrton_Opzioni_su_obbligazioni
 			return(tmp)
 		}
 )
+
+
+setMethod("getOptionParameters",signature(origin="Ayrton_Strutturati_FX"),
+		function(origin) {
+			## esempio: "20150918 - Put Warrant Vontobel EUR/CHF CHF 1"
+			## CHF 1 si riferisce al prezzo di 1 EUR, il "Saldo" è in franchi
+			
+			name <- origin@Nome
+			tmp <- strsplit(name," ")[[1]]
+			## rimuovi "-"
+			tmp <- tmp[-2]
+			tmp <- remSpaces(tmp)
+			names(tmp) <- c("expiryDate","optionType","Nome","underlying","strikeIn-XXX","strike")
+			tmp[["underlying"]] <- substr(tmp[["underlying"]],1,3)
+			
+			tmp <- as.list(tmp)
+			tmp[["strike"]] <- new("Money",
+					amount=new("Amount",as.numeric(tmp[["strike"]])),
+					currency=new("Currency",tmp[["strikeIn-XXX"]]))
+			
+			tmp[["legCurrency2"]] <- new("Money",                  ## nell'esempio CHF
+					amount=new("Amount",as.numeric(origin@"Saldo")),
+					currency=new("Currency",tmp[["strikeIn-XXX"]]))
+			
+			tmp[["legCurrency1"]] <- new("Money",                  ## nell'esempio EUR  
+					amount=new("Amount",as.numeric(origin@"Saldo")/as.numeric(tmp[["strike"]]@amount)),
+					currency=new("Currency",tmp[["underlying"]]))
+			
+			tmp[["premium"]] <- new("Money",
+					amount=new("Amount",as.numeric(origin@"PrezzoMercato")),
+					currency=new("Currency",tmp[["strikeIn-XXX"]]))
+			
+			
+			if (tolower(tmp[["optionType"]])=="put") {
+				tmp[["optionType"]] <- "P" 
+			} else {
+				tmp[["optionType"]] <- "C"
+			}
+			tmp[["expiryDate"]] <- format(strptime(tmp[["expiryDate"]],format="%Y%m%d"),"%Y-%m-%d")
+			#"20150918 - Put Warrant Vontobel EUR/CHF CHF 1"
+			return(tmp)
+		}
+)
+

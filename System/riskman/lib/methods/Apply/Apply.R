@@ -58,7 +58,7 @@ setMethod("Apply",
 			if (any(toDelete)) x <- x[!toDelete]
 			
 			if (length(x)==0) return(positions)
-			validDirectives <- c("Futures_EQ","Opzioni_su_azioni","Opzioni_su_divise")
+			validDirectives <- c("Futures_EQ","Opzioni_su_azioni","Opzioni_su_divise","Strutturati_FX")
 			if (any(!is.element(x,validDirectives))) stop(paste("Invalid ReplaceDirectiveString:\n",x))
 			
 			# replace all futures on equities with the corresponding position in 
@@ -93,6 +93,14 @@ setMethod("Apply",
 					} 					
 				}
 				
+				if (directive=="Strutturati_FX") {
+					isDesiredPosition <- sapply(positions,is,"PositionStrutturati_FX")
+					if (any(isDesiredPosition)) {
+						p1 <- positions[!isDesiredPosition]
+						p2 <- unlist(lapply(positions[isDesiredPosition],replaceDirective),recursive=FALSE)
+						positions <- new("Positions",c(p1,p2))
+					} 					
+				}
 			}
 			return(positions)
 		}
@@ -110,7 +118,7 @@ setMethod("Apply",
 			checkStringParsed <- parser(x) 
 			directiveString <- checkStringParsed@directiveString
 			constraint <- checkStringParsed@constraint
-	
+
 			# utilizza la directiveString
 			if (!is.na(directiveString)) positions <- Apply(directiveString,positions)
 		
